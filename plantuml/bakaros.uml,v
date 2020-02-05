@@ -1,0 +1,120 @@
+head	1.1;
+access;
+symbols;
+locks
+	haist:1.1; strict;
+comment	@# @;
+
+
+1.1
+date	2017.04.08.18.32.13;	author haist;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@@@startuml
+class Light << (L,orchid) >>
+Light <|-- Ray
+note top of Ray : Ray Splitting zu durchdenken
+Light <|-- RayArray
+Light <|-- Wave
+Light <|-- Gaussian
+Light -- Lightgenerator
+Wave <|-- GaussField
+Wave <|-- WaveVectorial
+
+Ray -- RayAiming
+class WaveVectorial << Foo >>
+
+Interaction <|-- Refraction
+Interaction <|-- Reflection
+Interaction <|-- Diffraction
+Interaction <|-- Scattering
+Interaction <|-- Absorption
+Interaction -- InteractionPropagationFactory
+Propagation -- InteractionPropagationFactory
+
+class InteractionPropagationFactory {
+setGlobalInteractionsPropagations(Light*)
+}
+
+Propagation <|-- PropagationRays
+Propagation <|-- PropagationScalarWave
+Propagation <|-- PropagationWaveVectorial
+
+skinparam class {
+	BackgroundColor PaleBlue
+	ArrowColor SeaGreen
+	BorderColor SpringGreen
+	BackgroundColor<<Foo>> Wheat
+	BorderColor<<Foo>> Tomato
+}
+
+
+
+
+class PropagationScalarWave << Foo >>
+class PropagationWaveVectorial << Foo >>
+class Scattering << Foo >>
+class Gaussian << Foo >>
+
+class Light {
+ mLambda : Parameter
+ mCoherenceLength : ParameterDouble
+ mType : enum
+ mPower : ParameterDouble
+ mOPD : double
+}
+
+
+class Ray {
+ mX, mY, mZ : double
+ mCosA, mCosB, mCosC : double
+ mEX, mEY : ParameterDouble
+ mPolarizationType : ParameterInt
+}
+
+RayArray o-- Ray
+
+class RayArray {
+ mRays : Ray[]
+}
+
+Wave o-- complexArray
+Wave o-- Ray
+
+class complexArray << Foo >>
+
+class Wave << Foo >> {
+ mEx : complexArray
+ mEy : complexArray
+ mRay : Ray
+ mPixsize : double
+}
+
+GaussField o-- Gaussian
+
+
+class GaussField << Foo >> {
+ mRay : Gaussian[]
+ 
+}
+
+note right of Parameter : as a template with double, int, string
+class Parameter<Double> {
+getValue()
+setValue()
+}
+
+@@enduml
+
+@

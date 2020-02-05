@@ -1,0 +1,75 @@
+@startuml
+' test
+
+Interaction <|-- Refraction
+Interaction <|-- Reflection
+Interaction <|-- Diffraction
+Interaction <|-- Scattering
+Interaction <|-- Absorption
+Interaction -- InteractionPropagationFactory
+Propagation -- InteractionPropagationFactory
+
+Refraction <|-- RefractionRays
+Refraction <|-- RefractionWaves
+
+note right of Interaction : Konzept Licht rein, Licht raus funktioniert\n für Strahlen wie auch Wellen. Bei Strahlen ist die \n Interaktion lokal, bei Wellen nicht.\n Generell werden die geometrischen Sachen \n(Tangentenebene berechnen) in den Surface Klassen gemacht
+class Interaction {
+perform(Light*,Element*)
+
+}
+
+Tracing o-- Propagation
+Tracing o-- Interaction
+
+
+class Tracing {
+mInteraction : Interaction*
+mPropagation : Propagation*
+}
+
+note right of Propagation : Die eigentliche Berechnung von Schnittpunkt\n wird in den Surface Klassen vorgenommen
+class Propagation {
+perform(Light*, OpticalSystem*, Element*)
+setPosition(index)
+}
+
+class PropagationRays {
+findEndPoint(Ray*)
+}
+
+class PropagationScalarWave {
+findEndPlane(Wave*)
+}
+
+class PropagationVectorWave {
+findEndPlane(Wave*)
+}
+
+class InteractionPropagationFactory {
+setGlobalInteractions(Light*)
+setGlobalPropagations(Light*)
+}
+
+Propagation <|-- PropagationRays
+Propagation <|-- PropagationScalarWave
+Propagation <|-- PropagationVectorWave
+
+skinparam class {
+	BackgroundColor PaleBlue
+	ArrowColor SeaGreen
+	BorderColor SpringGreen
+	BackgroundColor<<Foo>> Wheat
+	BorderColor<<Foo>> Tomato
+}
+
+
+
+
+class PropagationScalarWave << Foo >>
+class PropagationVectorWave << Foo >>
+class Scattering << Foo >>
+
+
+
+@enduml
+

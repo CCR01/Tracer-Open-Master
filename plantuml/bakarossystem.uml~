@@ -1,0 +1,68 @@
+@startuml
+
+OpticalSystem o-- Element
+OpticalSystem o-- Stop
+Element <|-- ElementWithSurfaces
+Element <|-- ParaxialLens
+Element <|-- SurfaceIris
+Element <|-- Group
+Element o-- JonesMatrix
+
+class OpticalSystem {
+price : ParameterDouble
+weight : ParameterDouble
+Name : ParameterString
+...
+}
+
+class Element {
+weight : ParameterDouble
+price : ParameterDouble
+}
+
+class Surface {
+getZ(x,y)
+findIntersection(Ray*)
+findPlanePerpendicular(Position)
+mCoating : Coating
+mBRDF : BRDF*
+mAperture : Aperture
+mSurfaceError : SurfaceError*
+mGlass : Glass*
+}
+
+ElementWithSurfaces o-- Surface
+Surface <|-- Iris 
+Surface o-- Coating
+Surface o-- BRDF
+Surface o-- SurfaceError
+Surface o-- Aperture
+ElementWithSurfaces o-- Material
+Surface <|-- SurfaceSpherical
+Surface <|-- SurfaceAspherical
+Surface <|-- SurfaceSpline
+
+Group o-- Element
+class Group {
+mElements : Element
+}
+
+note right of Surface : File: Name von Coatings etc aber \n hier dann Pointer auf DB \n (beim Laden umkodieren)
+note right of Material : File: Name von Material aber \n hier dann Pointer auf DB \n (beim Laden umkodieren) \n Hersteller in Name kodiert
+class Material {
+getIndex(Light*)
+}
+
+
+Database <|-- DatabaseOpticalSystems
+Database <|-- DatabaseCoatings
+Database <|-- DatabaseMaterials
+
+DatabaseOpticalSystems o-- OpticalSystem
+DatabaseCoatings o-- Coating
+DatabaseMaterials o-- Material
+
+OpticalSystem o-- Variants 
+
+@enduml
+

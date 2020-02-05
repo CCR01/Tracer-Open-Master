@@ -1,0 +1,141 @@
+// ----- Das folgende Beispiel skizziert den Trace von einem Rayfan
+// ------ durch dasSystem ------------------------------------------
+
+generator = new LightGenerator(typeRay, 633_nm, ...);
+licht = generator.generate();
+gPropagation.setInteractionPropagations(licht);  // setzt Interaction und Propagation
+
+licht->setPosition(0.3, 0.3, 0);
+
+for(real px =0; px < 10; px+= 0.1)
+  for(real py =0; py < 10; py+= 0.1)
+    {
+      licht = gRayAimer.aim(optischesSystem, licht, px, py);
+      Element* element;   // Das ist der Pointer auf das jeweilige Element
+      
+      // -------- Jetzt durchtracen --------------------
+      gPropagation->setCurrentPos(0);   // für sequentiellen Trace
+       do
+	{
+	  done = gPropagation->do(optischesSystem, licht, element);
+	  gInteraction->do(licht, element);
+	  //	Beachte: diese Funktion muss die ganzen Sachen des Elements
+	  //  (Coating etc.) abklappern und geeignet reagieren !
+	  //  D.h. dort werden dann die per passenden Generator generierten Klassen
+	  // aufgerufen (siehe Beispiel unten)
+	}
+      while(done == false);
+
+      if(licht.alive())   // nur das nicht vigettierte Licht anzeigen
+	licht->print();
+    }
+----------------------
+// Jetzt dasselbe für ein RayBundle
+
+generator = new LightGenerator(typeRayBundle, 633_nm, ...);
+generator->setRayCount(100);
+
+licht = generator.generate();
+gPropagation.setInteractionPropagations(licht);  // setzt Interaction und Propagation
+
+// licht->setPos(0.3, 0.3, 0); // -------------- HIER !!!
+
+int count = 0;
+for(real px =0; px < 10; px+= 0.1)
+  for(real py =0; py < 10; py+= 0.1)
+    {
+      Ray* ray = licht->getRay(count++);
+      ray->setPos(0.3, 0.3, 0); // -------------- HIER !!!
+      licht = gRayAimer.aim(optischesSystem, ray, px, py);
+    }
+
+// Beachte: Man könnte nun mit dem ray weiterarbeiten, also einfach
+// alles wieder im Loop drin machen wie oben.
+// Und es stellt sich die Frage, ob wir überhaupt RayBundles brauchen.
+// An sich nicht. Aber bei Parallelisierung ist es ein Vorteil, wenn
+// die nachfolgenden eigentlichen Tracings speziell für Bundles
+// definiert werden. Daher also jetzt gleich parallele Schreibweise
+
+Element* element;   // Das ist der Pointer auf das jeweilige Element
+      
+// -------- Jetzt durchtracen --------------------
+gPropagation->setCurrentPos(0);   // für sequentiellen Trace
+do
+  {
+    done = gPropagation->do(optischesSystem, licht, element);
+    gInteraction->do(licht, element);
+	  //	Beachte: diese Funktion muss die ganzen Sachen des Elements
+	  //  (Coating etc.) abklappern und geeignet reagieren !
+	  //  D.h. dort werden dann die per passenden Generator generierten Klassen
+	  // aufgerufen (siehe Beispiel unten)
+  }
+ while(done == false);
+
+if(licht.alive())   // nur das nicht vigettierte Licht anzeigen
+  licht->print();
+}
+
+// ----------------------
+// Und jetzt nochmal für eine skalare Welle
+generator = new LightGenerator(typeWave, 633_nm, ...);
+generator->setPixelsize(1e-6);
+....
+
+licht = generator.generate();
+gPropagation.setInteractionPropagations(licht);  // setzt Interaction und Propagation
+
+// Beachte: Ab hier wird das definitiv per Definition für Wellen
+// Anders sein müssen, denn hier wird eben ein nichtlokales Lichtfeld
+// durchgeboxt.
+// Das Rayaiming muss hier genau durchdacht werden. Vermutlich machen
+// irgendwelche Pilotstrahlen Sinn.
+
+licht->setPos(0.3, 0.3, 0); // -------------- HIER !!! PunktquellenPosition
+licht = gRayAimer.aim(optischesSystem, ray, px, py);  // noch unklar
+
+Element* element;   // Das ist der Pointer auf das jeweilige Element
+
+// Ab hier ist es wieder gleich !-----------------------------
+// -------- Jetzt durchtracen --------------------
+gPropagation->setCurrentPos(0);   // für sequentiellen Trace
+do
+  {
+    done = gPropagation->do(optischesSystem, licht, element);
+    gInteraction->do(licht, element);
+  }
+ while(done == false);
+
+if(licht.alive())   // nur das nicht vigettierte Licht anzeigen
+  licht->print();
+}
+
+
+
+
+----------------------
+Interaction.do(optischesSyste, licht, element)
+  {
+    if(element.coating != NULL)
+      gInteractionCoating->perform(licht, element);
+    // beachte: gInteractionCoating wurde schon zu Beginn perfekt auf
+    // eine Klasse für den passenden Lichttyp (hier: Ray) gesetzt
+    // und mann kann daher auch beliebige casten, weil hier der Typ klar ist.
+    if(element.absorption != NULL)
+      gInteractionAbsorption->perform(licht, element);
+
+    // ---- Und ganz entsprechend hier die zentrale Brechung
+    if(element.refraction != NULL)
+      gInteractionRefraction->perform(licht, element);
+  }
+
+
+
+////////////////////////////////////////////////////////////
+Wo verorten wir diesen generellen Hauptablauf Kram.
+Den braucht man ja in vielfältiger Weise im Programm, z.B. für Analysen
+oder auch optimierungen
+
+Am besten eine Klasse Tracing. Dann sollten gPropagation etc.
+aber vielleicht auch doch keine globalen Parameter sein sondern
+eben konkrete Pointer in Tracing
+    

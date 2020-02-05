@@ -1,0 +1,24 @@
+@startuml
+' test
+
+
+class Parameter {
+get/setValue();
+get/setMaximum();
+get/setMinimum();
+}
+
+class TraceOpenError {
+}
+
+class TraceOpenTest {
+}
+
+class LOG {
+}
+
+
+
+
+@enduml
+

@@ -1,0 +1,5 @@
+- Indizes starten immer bei 0 und laufen bis länge-1
+- Dinge (Funktionsnamen) eher ausschreiben
+- set/get/is als Benamung
+- Reihenfolge der Parameter einheitlich: z.B. Immer System, Element,
+  light, ...

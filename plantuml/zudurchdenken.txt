@@ -1,0 +1,176 @@
+Todo:
+
+- Anfangen Klassen zu schreiben und zu dokumentieren
+  (das muss alles schön sein !)
+
+- Dann UML überarbeiten
+
+- Dann Zeug von Sergej einbauen
+
+
+
+----------------------------------------------------------
+Parameter können zur Optimierung verwendet werden.
+Dazu muss ihr Wert geändert werden können (pointer) und dazu brauchen
+sie auch max/min.
+
+Es gibt dann einfach eine globale Liste aller Variablen.
+
+
+------------------------------------------------------------
+Raysplitting Konzept ?
+
+Beachte: Purer MonteCarlo Ansicht geht nicht weil dann schwache
+Reflexionen unter den Tisch fallen werden.
+
+Letztlich kann bei interaction.do  das Raysplitting passieren.
+
+Die Frage ist, ob wir das nur für RayBundles erlauben oder
+aber auch für Einzelrays.
+
+Tendentiell: Sobald Raysplitting: Viele Strahlen ! -> RayBundles
+
+Bei Raysplitting sollte irgendwie genau die History eines Strahls
+definiert werden.
+
+Wichtig ist auch, dass es damit für RayBundles wichtig ist, wachsen zu
+können ! Und zwar kostengünstig !!! (Vorsicht mit den
+StandardContainern)
+
+Denkbar:
+Man verwaltet ein ganzes Array aus LightRayBundles.
+D.h. für jede Grenzfläche wird ein neues RayBundle Objekt
+angelegt (mit zunehmender Größe).
+
+
+
+------------------------------------------------------------
+Varianten/Konfigurationen
+
+Zwei Varianten: Entweder man hat pro Variante ein optisches System und
+verknüpft verknüpfte Variablen (praktisch alle !) miteinander
+oder man hat nur 1 System und arbeitet danach noch
+eine Liste ab, die jeweils entscheidet, welche Einzelparameter
+nun auf einen anderen Wert gesetzt werden müssen.
+
+Letzteres ist vermutlich a) effizienter und b) übersichtlicher
+(a la Zemax). Allerdings kann das schon kompliziert werden
+(das kann ja deutlich über Zemax raus gehen) und daher
+muss das in eigene Klasse rein
+
+------------------------------------------------------------
+Beachte bei Interaktionen / propagationen gibt man Element
+an, aber letztlich muss dann irgendwo entschieden werden,
+wie man durch ganzes System durchkommt.
+
+Nichtseq.: Einfach: Alle Elemente werden durchnummeriert und
+die Elemente werden dann weiter durchnummeriert bis man bei den
+Flächen landet.
+
+Seq.: Dennoch alle Flächen suchen und auf diesen Arbeiten (im
+Normalfall). Die größere Ebene (Element / Gruppe) braucht man mehr
+für HighLevel Verwaltung !
+
+Im Interface lassen wir trotzdem Element weil man dann noch
+Sonderfälle wie GRIN abarbeiten können will.
+
+
+------------------------------------------------------------
+Interaktionen finden für Strahlen an einer Position im Raum statt.
+Für Wellen ist das nicht der Fall. 
+Dennoch ist es so: Licht rein, Licht raus.
+
+Bei Strahlen ist das Licht eben entsprechend zu propagieren.
+
+Das Konzept bleibt also gut.
+
+------------------------------------------------------------
+Propagation:
+
+Hier wirds kompliziert. Wie soll man spezifizieren, wie lange
+propagiert wird.
+
+Strahlenoptisch ist klar: Bis zur nächsten relevanten Fläche.
+
+Aber: Was ist mit streuenden Volumen ? Grin Linsen ?
+
+Was ist mit Wellenoptik ?
+
+Vorgehen:
+Generell wird Problem geteilt in
+1.) Ebene  (Wellen) oder Punkt (Strahlen) bestimmen, in den propagiert wird
+2.) Propagation durchführen (trivial bei Strahl)
+
+Die Propagationsklasse ist im Prinzip komplett leer und dient
+nur als oberstes Interface.
+
+Bei Volumenstreuung oder GRIN ist die Propagation um kleine Delta Weg sinnvoll.
+  Dort wird dann geprüft, ob schon Fläche getroffen. Ansonsten einfach
+  um dieses "delta Weg" propagieren (da schauen wir später danach).
+
+Bei GRIN kann es auch sinnvoll sein, ganz anders vorzugehen (und für
+GRIN und Wellen dann sowieso !). Aber das gehört dann vermutlich
+konzeptionell besser in Interaction.
+
+Insgesamt muss man sich bewusst sein, dass es bei vielen verschiedenen
+Objekten natrülich unterschiedlichste Schnittpunktberechnungen gibt.
+Die Frage ist: Lagert man das in die Surface Klassen aus oder macht
+man das alles in die Propagationsklasse oder nochmal ein Konzept ?
+
+Beachte: Dasselbe gilt dann für die eigentliche Interaktion
+(z.B. Brechnung).
+
+
+Interaktion - Refraction
+            - Reflection
+	    - Diffraction
+	    
+Surface - SphericalSurface
+        - AsphericalSurface
+
+Neue Fläche -> User muss machen:
+
+- Mathematische Beschreibung
+<- evtl. Zusaztkram für den Plot>
+- Schnittpunkt Strahl
+- Lokale Steigung am Schnittpunkt
+- Für Wellenoptik: Ebene vor Fläche
+
+Die Frage ist nun: Wo gibt der User das
+am besten an.
+
+Antwort: Bei der Fläche !
+Dazu muss aber die Fläche konkret über
+Rays Bescheid wissen.
+
+Die Interaktions- und Propagationsklassen sind dafür
+verantwortlich, Rayfields in mehrere Rays zu zerlegen und
+damit die Flächen zu beauftragen.
+
+
+
+
+------------------------------------------------------------
+
+Vielleicht sollte man Sequentiell als Spezialfall von
+Nichtseq. verstehen bei dem der User die Abfolge der Flächenhits
+von Hand angibt. Damit wäre dann auch die Lästigkeit von Zemax
+weg, wenn man durch Spiegel nochmal durch System durchgeht.
+
+Außerdem wäre die künstliche Splitting in die zwei Modi vom Tisch.
+
+------------------------------------------------------------
+Geometrieangabe mittels Coordinate Breaks ist nervigst.
+Aber das schöne ist, dass man danach wieder bequem eine
+optische Achse hat.
+
+Man sollte also eine Eingabeform finden, die deutliche bequemer
+ist. Ist aber vermutlich mehr eine Sache der GUI bzw. der Umrechnung
+als der internen Geometrie.
+
+Die interne Geometrie ist vermutlich am stärksten wenn wir wirklich
+einfach einen 3D Raum (wie in Zemax Nonseq.) annehmen !
+
+Dezenterkram dann ganz simpel
+
+--------------------------------------------------------------

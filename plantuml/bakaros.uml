@@ -1,0 +1,117 @@
+@startuml
+' test
+
+class Light << (L,orchid) >>
+Light <|-- Ray
+note top of Ray : Ray Splitting zu durchdenken
+Light <|-- RayArray
+Light <|-- Wave
+Light <|-- Gaussian
+Wave <|-- GaussField
+Wave <|-- WaveVectorial
+
+Ray -- RayAiming
+class WaveVectorial << Foo >>
+
+class RayAiming {
+aim(Light*, System*, Point);
+aim(Light*, System*, px, py);
+}
+
+
+
+skinparam class {
+	BackgroundColor PaleBlue
+	ArrowColor SeaGreen
+	BorderColor SpringGreen
+	BackgroundColor<<Foo>> Wheat
+	BorderColor<<Foo>> Tomato
+}
+
+
+
+
+class Gaussian << Foo >>
+
+class Light {
+ mLambda : Parameter
+ mCoherenceLength : ParameterDouble
+ mType : enum
+ mPower : ParameterDouble
+ mOPD : double
+ setPosition(Point)
+ isAlive()
+}
+
+
+class Ray {
+ mPosition : Point
+ mDirection : Direction
+ mEX, mEY : ParameterDouble
+ mPolarizationType : ParameterInt
+}
+
+RayArray o-- Ray
+
+class RayArray {
+ mRays : Ray[]
+}
+
+Wave o-- complexArray
+Wave o-- Ray
+
+class complexArray << Foo >>
+
+class Wave << Foo >> {
+ mEx : complexArray
+ mEy : complexArray
+ mRay : Ray
+ mPixsize : double
+}
+
+GaussField o-- Gaussian
+
+
+class GaussField << Foo >> {
+ mRay : Gaussian[]
+ 
+}
+
+
+
+note "Die Lichtklassen sind im wesentlichen Container \n mit Zugriffs und Umrechenfunktionen \n Auf die Parameter wird per Funkionen zugegriffen \n Überdenken: Coordinate Breaks, Decenters etc."  as N1
+
+note right of Parameter : "als template mit double, int, string \n immer nehmen, wenn eventuell nützlich.\n Wird verwendet, um Variationen (z.B. Toleranz.)\n zu ermöglichen."
+class Parameter<Double> {
+mValueMean: double
+mStdDev: double
+mMinimum: double
+mMaximum: double
+getValue()
+setValue()
+setAverageMode(true | false)
+
+}
+
+
+class Point {
+mX: double
+mY: double
+mZ: double
+getX(), getY(), getZ()
+getX(CoordinateSystem)
+}
+
+class Direction {
+mDirCosX: double
+mDirCosZ: double
+mDirCosY: double
+getDirCosX(), getDirCosY(), getDirCosZ(),
+getAlpha()
+getAlpha(CoordinateSystem)
+}
+
+
+
+@enduml
+
