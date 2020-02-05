@@ -1,0 +1,14 @@
+﻿  RayAiming.cpp
+c:\tracer-open-master-source\rayaiming.cpp(1770): warning C4552: '+': result of expression not used
+c:\tracer-open-master-source\rayaiming.cpp(1798): warning C4552: '+': result of expression not used
+c:\tracer-open-master-source\rayaiming.cpp(1839): warning C4552: '+': result of expression not used
+c:\tracer-open-master-source\rayaiming.cpp(1896): warning C4552: '+': result of expression not used
+c:\tracer-open-master-source\rayaiming.cpp(1950): warning C4552: '+': result of expression not used
+c:\tracer-open-master-source\rayaiming.cpp(2206): warning C4101: 'intersecPointFirstRay4_S1': unreferenced local variable
+     Creating library C:\Tracer-Open-Master-Source\VS-Solution_tracer-open\x64\Release\VS-Solution_tracer-open.lib and object C:\Tracer-Open-Master-Source\VS-Solution_tracer-open\x64\Release\VS-Solution_tracer-open.exp
+  Generating code
+  3 of 2422 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  VS-Solution_tracer-open.vcxproj -> C:\Tracer-Open-Master-Source\VS-Solution_tracer-open\x64\Release\VS-Solution_tracer-open.exe

@@ -1,0 +1,315 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Array&lt;Type&gt;">
+    <Position X="22.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIEAAGAAAICAKAAAAIQAAQAAAAWCAIhARQQgAhAQSBU=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\array.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Computed">
+    <Position X="0.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\computed.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ComputedPickup">
+    <Position X="0.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACDBAAAAAAAIAAAAIAAABAAAA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\computedpickup.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Database">
+    <Position X="0.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQACEAAAAAAAAIAAAAAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\database.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DatabaseOpticalSystems">
+    <Position X="7.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\databaseopticalsystems.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Direction">
+    <Position X="2.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIQAAAAAACDgIgAAQAAAAAAAAAAQAAAAAQg=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\direction.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Element">
+    <Position X="24.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAIQAQAECQAGgAAAgIkZACAARAgAIgFQglAAAAAgA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\element.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EntryDatabase">
+    <Position X="3.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\entrydatabase.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EntryDatabaseOpticalSystems">
+    <Position X="20.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AYAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\entrydatabaseopticalsystems.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Environment">
+    <Position X="20.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAABAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\environment.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Error">
+    <Position X="20.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABCQAAAAAAAAACAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\error.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Interaction">
+    <Position X="2.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAABAAAAAAAAAAAAAAAAAAAEAAAAAAAAAEA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\interaction.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InteractionRay">
+    <Position X="4.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAgAAAAAAAAAAAEAAAAAAAAIEA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\interactionray.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InteractionWave">
+    <Position X="10" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAEA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\interactionwave.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="JonesMatrix">
+    <Position X="6.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAADA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\jonesmatrix.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Light">
+    <Position X="17" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAABAQAACIAAQAAgAEAQAAAAAIBAQgQAEAAAA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\light.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LightBundle">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAAAACAAAAEAAAAAAA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\lightbundle.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LowLevelSystem">
+    <Position X="3.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAEEAAgAAAAAAgAAAAAASAAAAIAABQggAAIAAAA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\lowlevelsystem.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Material">
+    <Position X="5.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAQAEAAAAAAAAAAAAABACAAAAAAgEAAAAAAA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\material.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MaterialIdeal">
+    <Position X="11.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAAAAgAAAABAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\materialideal.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OpticalSystem">
+    <Position X="13.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAEAgAgAAAAAAoAAAAAAAAAAgAAQBQgABAAAAAA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\opticalsystem.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Parameter&lt;Type&gt;">
+    <Position X="8.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABQAAGAIAAAAAQAQAAAAAIUAAAAAQBACAIEAAA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\parameter.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ParaxialLens">
+    <Position X="18.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAIQAAEACACAAAABAgAAIAAIABYAgAAAAAAA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\paraxiallens.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Point">
+    <Position X="9.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAABAAAEAgAAAgAAAAAAAACAAAEAAARBiAQAAIAA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\point.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ray">
+    <Position X="11.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAgAAAAACIAGAAAWAAAAAAAAAYAAbgAgAGABADA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\ray.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RayAiming">
+    <Position X="18.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAABAAARAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\rayaiming.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RayBundle">
+    <Position X="18.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\raybundle.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Refraction">
+    <Position X="11.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAACAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\refraction.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RefractionRays">
+    <Position X="13.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACCAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\refractionrays.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RefractionWaves">
+    <Position X="10" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\refractionwaves.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Surface">
+    <Position X="15.25" Y="0.5" Width="1.5" />
+    <InheritanceLine Type="Element" FixedFromPoint="true">
+      <Path>
+        <Point X="24.5" Y="8.843" />
+        <Point X="24.5" Y="9.083" />
+        <Point X="26.375" Y="9.083" />
+        <Point X="26.375" Y="0.375" />
+        <Point X="16" Y="0.375" />
+        <Point X="16" Y="0.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAYIAAAQAAQAEAAAAAIAACEAAAABAIAFQAhAAAAAAA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\surface.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SurfaceSpherical">
+    <Position X="15.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAEAAAAAAAAAAAAAACBIADQAgAAAAAAA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\surfacespherical.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TraceOpenError">
+    <Position X="7.25" Y="7.25" Width="1.5" />
+    <NestedTypes>
+      <Class Name="TraceOpenError::TraceOpenError" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\traceopenerror.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\traceopenerror.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tracing">
+    <Position X="17" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CRAIAAAAQIAAAAAAAAgAAAAAEAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\tracing.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Wave">
+    <Position X="18.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAACAAABAAAAAAAAAA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\wave.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="ParaxialLensParameters">
+    <Position X="13.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAgAAAAABAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\paraxiallens.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Typedef Name="real" Collapsed="true">
+    <Position X="22.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\basicdefinitions.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Enum Name="typePickup">
+    <Position X="17" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\computedpickup.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="typeLight">
+    <Position X="0.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAAAAAAAAAAEgAAAAAAAAAAAAAE=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\light.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="typeModifier">
+    <Position X="20.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAIQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\parameter.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="typeRayAiming">
+    <Position X="4.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAQ=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\rayaiming.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="typeRayBundlePattern">
+    <Position X="17" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>U:\privat\BaKaRoS\traceopen-master\traceopen-master\raybundle.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

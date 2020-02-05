@@ -1,0 +1,406 @@
+________________________
+ray Density: 3
+time trace optA : 8.83174e-05
+time trace field2 : 8.44852e-05
+time trace field4 : 7.65259e-05
+________________________
+
+________________________
+ray Density: 4
+time trace optA : 0.000185665
+time trace field2 : 0.000191669
+time trace field4 : 0.000168262
+________________________
+
+________________________
+ray Density: 5
+time trace optA : 0.000366602
+time trace field2 : 0.000370367
+time trace field4 : 0.000322193
+________________________
+
+________________________
+ray Density: 6
+time trace optA : 0.000779254
+time trace field2 : 0.000725773
+time trace field4 : 0.000723823
+________________________
+
+________________________
+ray Density: 7
+time trace optA : 0.00141269
+time trace field2 : 0.00138991
+time trace field4 : 0.00119558
+________________________
+
+________________________
+ray Density: 8
+time trace optA : 0.00267082
+time trace field2 : 0.00222341
+time trace field4 : 0.00223958
+________________________
+
+________________________
+ray Density: 9
+time trace optA : 0.0044512
+time trace field2 : 0.00328117
+time trace field4 : 0.00302101
+________________________
+
+________________________
+ray Density: 10
+time trace optA : 0.00584727
+time trace field2 : 0.00499302
+time trace field4 : 0.00452369
+________________________
+
+________________________
+ray Density: 11
+time trace optA : 0.0102572
+time trace field2 : 0.0102273
+time trace field4 : 0.00954589
+________________________
+
+________________________
+ray Density: 12
+time trace optA : 0.0201559
+time trace field2 : 0.0195314
+time trace field4 : 0.0188797
+________________________
+
+________________________
+ray Density: 13
+time trace optA : 0.032128
+time trace field2 : 0.0317079
+time trace field4 : 0.0321191
+________________________
+
+________________________
+ray Density: 14
+time trace optA : 0.0544597
+time trace field2 : 0.0532148
+time trace field4 : 0.0524699
+________________________
+
+________________________
+ray Density: 15
+time trace optA : 0.0784949
+time trace field2 : 0.0773904
+time trace field4 : 0.0762183
+________________________
+
+________________________
+ray Density: 16
+time trace optA : 0.106417
+time trace field2 : 0.106822
+time trace field4 : 0.105739
+________________________
+
+________________________
+ray Density: 17
+time trace optA : 0.150639
+time trace field2 : 0.152064
+time trace field4 : 0.14875
+________________________
+
+________________________
+ray Density: 18
+time trace optA : 0.202115
+time trace field2 : 0.200343
+time trace field4 : 0.197554
+________________________
+
+________________________
+ray Density: 19
+time trace optA : 0.259681
+time trace field2 : 0.25629
+time trace field4 : 0.252834
+________________________
+
+________________________
+ray Density: 20
+time trace optA : 0.328766
+time trace field2 : 0.324844
+time trace field4 : 0.324033
+________________________
+
+________________________
+ray Density: 21
+time trace optA : 0.41812
+time trace field2 : 0.415424
+time trace field4 : 0.413701
+________________________
+
+________________________
+ray Density: 22
+time trace optA : 0.517551
+time trace field2 : 0.516482
+time trace field4 : 0.514498
+________________________
+
+________________________
+ray Density: 23
+time trace optA : 0.627153
+time trace field2 : 0.625072
+time trace field4 : 0.624298
+________________________
+
+________________________
+ray Density: 24
+time trace optA : 0.749301
+time trace field2 : 0.74768
+time trace field4 : 0.742352
+________________________
+
+________________________
+ray Density: 25
+time trace optA : 0.914711
+time trace field2 : 0.90329
+time trace field4 : 0.900731
+________________________
+
+________________________
+ray Density: 26
+time trace optA : 1.08639
+time trace field2 : 1.08729
+time trace field4 : 1.07881
+________________________
+
+________________________
+ray Density: 27
+time trace optA : 1.28938
+time trace field2 : 1.28292
+time trace field4 : 1.29815
+________________________
+
+________________________
+ray Density: 28
+time trace optA : 1.49421
+time trace field2 : 1.488
+time trace field4 : 1.49928
+________________________
+
+________________________
+ray Density: 29
+time trace optA : 1.71773
+time trace field2 : 1.70944
+time trace field4 : 1.71918
+________________________
+
+________________________
+ray Density: 30
+time trace optA : 1.9821
+time trace field2 : 1.97281
+time trace field4 : 2.00437
+________________________
+
+________________________
+ray Density: 31
+time trace optA : 2.31064
+time trace field2 : 2.30536
+time trace field4 : 2.31622
+________________________
+
+________________________
+ray Density: 32
+time trace optA : 2.64778
+time trace field2 : 2.6503
+time trace field4 : 2.64507
+________________________
+
+________________________
+ray Density: 33
+time trace optA : 3.0182
+time trace field2 : 3.01657
+time trace field4 : 3.03966
+________________________
+
+________________________
+ray Density: 34
+time trace optA : 3.41032
+time trace field2 : 3.41514
+time trace field4 : 3.47555
+________________________
+
+________________________
+ray Density: 35
+time trace optA : 3.83364
+time trace field2 : 3.82518
+time trace field4 : 3.91603
+________________________
+
+________________________
+ray Density: 36
+time trace optA : 4.27151
+time trace field2 : 4.26392
+time trace field4 : 4.38004
+________________________
+
+________________________
+ray Density: 37
+time trace optA : 4.8061
+time trace field2 : 4.79134
+time trace field4 : 4.99332
+________________________
+
+________________________
+ray Density: 38
+time trace optA : 5.44153
+time trace field2 : 5.43279
+time trace field4 : 5.57881
+________________________
+
+________________________
+ray Density: 39
+time trace optA : 6.07772
+time trace field2 : 6.09693
+time trace field4 : 6.26394
+________________________
+
+________________________
+ray Density: 40
+time trace optA : 6.76509
+time trace field2 : 6.73452
+time trace field4 : 6.86802
+________________________
+
+________________________
+ray Density: 41
+time trace optA : 7.4861
+time trace field2 : 7.45879
+time trace field4 : 7.6982
+________________________
+
+________________________
+ray Density: 42
+time trace optA : 8.2468
+time trace field2 : 8.27045
+time trace field4 : 8.50654
+________________________
+
+________________________
+ray Density: 43
+time trace optA : 9.00853
+time trace field2 : 9.12537
+time trace field4 : 9.21329
+________________________
+
+________________________
+ray Density: 44
+time trace optA : 9.85028
+time trace field2 : 9.83285
+time trace field4 : 9.95343
+________________________
+
+________________________
+ray Density: 45
+time trace optA : 10.7878
+time trace field2 : 10.759
+time trace field4 : 11.0427
+________________________
+
+________________________
+ray Density: 46
+time trace optA : 11.8861
+time trace field2 : 11.9369
+time trace field4 : 12.1727
+________________________
+
+________________________
+ray Density: 47
+time trace optA : 13.0941
+time trace field2 : 13.023
+time trace field4 : 13.3055
+________________________
+
+________________________
+ray Density: 48
+time trace optA : 14.3139
+time trace field2 : 14.3045
+time trace field4 : 14.6043
+________________________
+
+________________________
+ray Density: 49
+time trace optA : 15.6306
+time trace field2 : 15.6061
+time trace field4 : 15.9083
+________________________
+
+________________________
+ray Density: 50
+time trace optA : 16.9614
+time trace field2 : 16.9381
+time trace field4 : 17.0745
+________________________
+
+________________________
+ray Density: 51
+time trace optA : 18.3056
+time trace field2 : 18.2357
+time trace field4 : 18.5841
+________________________
+
+________________________
+ray Density: 52
+time trace optA : 19.732
+time trace field2 : 19.7218
+time trace field4 : 19.7426
+________________________
+
+________________________
+ray Density: 53
+time trace optA : 21.1891
+time trace field2 : 21.1399
+time trace field4 : 21.1654
+________________________
+
+________________________
+ray Density: 54
+time trace optA : 22.7784
+time trace field2 : 22.665
+time trace field4 : 22.9514
+________________________
+
+________________________
+ray Density: 55
+time trace optA : 24.3846
+time trace field2 : 24.2813
+time trace field4 : 24.6121
+________________________
+
+________________________
+ray Density: 56
+time trace optA : 26.3627
+time trace field2 : 26.3485
+time trace field4 : 26.5825
+________________________
+
+________________________
+ray Density: 57
+time trace optA : 28.371
+time trace field2 : 28.2963
+time trace field4 : 28.4949
+________________________
+
+________________________
+ray Density: 58
+time trace optA : 30.4864
+time trace field2 : 30.4624
+time trace field4 : 30.8234
+________________________
+
+________________________
+ray Density: 59
+time trace optA : 32.6297
+time trace field2 : 32.552
+time trace field4 : 33.1372
+________________________
+
+________________________
+ray Density: 60
+time trace optA : 34.8784
+time trace field2 : 34.7769
+time trace field4 : 35.4667
+________________________
+

@@ -1,0 +1,224 @@
+﻿  CardinalPoints.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  OpticalPathDifferende.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  SeidelCoefficients.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  Spot.cpp
+c:\users\itoghoul\desktop\tom05.07.19\analyse\spot.cpp(37): warning C4244: "=": Konvertierung von "real" in "unsigned int", möglicher Datenverlust
+  TestAsphericalSurface_LLT.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  BechmarkExipPupilCalculation.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  BenchmarkImageSimulation.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  BenchmarkOpticalPathDifference.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  TestGlobalOPD.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  testPSF.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  BenchmarkComplexOptSys.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  BenchOpticalSystemElement.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  BechnSpehricalElemtn.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  BenchmakFillAS.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  BenchGlasses.cpp
+  BenchmarkMath.cpp
+  BenchmarkOpticalSystem.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  BenchmarkZemaxTest.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  BenchmarkParaxialLens_LLT.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  BenchmarkPlanSurface.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  Code wird generiert...
+  Kompilieren...
+  BenchmarkPlotOPD.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  BenchmarkPlotSpotDiagram.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  BenchPlot2D.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  BenchmarkRayAiming.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  testRMS_spot.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  BenchmarkSequentialRayTracer.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  BenchmarkSphericalLens_LLT.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  BenchmarkeSpot.cpp
+  testCompareTwoImagesAndImprove.cpp
+  TestImageProcessing.cpp
+c:\users\itoghoul\desktop\tom05.07.19\benchmark\testimageprocessing\testimageprocessing.cpp(66): warning C4305: "Argument": Verkürzung von "double" in "const float"
+  testImages.cpp
+  testImproveImageQuality.cpp
+  TestLensCatalogEO.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  testSeidelCoefficients.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  Cooke40DegreeField.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  DoubleGauss5DegreeField.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  CompareTwoImagesAndImprove.cpp
+c:\users\itoghoul\desktop\tom05.07.19\comparetwoimagesandimprove.cpp(138): warning C4305: "Argument": Verkürzung von "double" in "const float"
+c:\users\itoghoul\desktop\tom05.07.19\comparetwoimagesandimprove.cpp(183): warning C4305: "Argument": Verkürzung von "double" in "const float"
+  MaterialSellmeier1.cpp
+  Glasses.cpp
+  ImageProcessing.cpp
+c:\users\itoghoul\desktop\tom05.07.19\imageprocessing\imageprocessing.cpp(126): warning C4244: "Argument": Konvertierung von "int" in "_Tp", möglicher Datenverlust
+          with
+          [
+              _Tp=float
+          ]
+  Code wird generiert...
+  Kompilieren...
+  Images.cpp
+  ImageSimulation.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  ImproveImageQuality.cpp
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(487): warning C4244: "return": Konvertierung von "const double" in "int", möglicher Datenverlust
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(583): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(585): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(587): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(590): warning C4244: "Argument": Konvertierung von "_Ty" in "const int", möglicher Datenverlust
+          with
+          [
+              _Ty=double
+          ]
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(566): warning C4101: "temp_Gamma": Unreferenzierte lokale Variable
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(564): warning C4101: "temp_Alpha": Unreferenzierte lokale Variable
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(565): warning C4101: "temp_Beta": Unreferenzierte lokale Variable
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(633): warning C4244: "Initialisierung": Konvertierung von "double" in "const float", möglicher Datenverlust
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(709): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(758): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(760): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(885): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(915): warning C4244: "Argument": Konvertierung von "const double" in "unsigned int", möglicher Datenverlust
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(930): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(932): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(934): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(921): warning C4101: "bestSigmaColor": Unreferenzierte lokale Variable
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(920): warning C4101: "bestD": Unreferenzierte lokale Variable
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(922): warning C4101: "bestSigmaSpace": Unreferenzierte lokale Variable
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(983): warning C4244: "Initialisierung": Konvertierung von "double" in "const int", möglicher Datenverlust
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(984): warning C4244: "Initialisierung": Konvertierung von "double" in "const float", möglicher Datenverlust
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(1063): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(1093): warning C4244: "Argument": Konvertierung von "const double" in "unsigned int", möglicher Datenverlust
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(1094): warning C4244: "Argument": Konvertierung von "const double" in "unsigned int", möglicher Datenverlust
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(1095): warning C4244: "Argument": Konvertierung von "const double" in "unsigned int", möglicher Datenverlust
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(1096): warning C4244: "Argument": Konvertierung von "const double" in "unsigned int", möglicher Datenverlust
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(1112): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(1114): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(1116): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(1118): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(1120): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(1145): warning C4244: "Argument": Konvertierung von "_Ty" in "const int", möglicher Datenverlust
+          with
+          [
+              _Ty=double
+          ]
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(1101): warning C4101: "bestSigmaX": Unreferenzierte lokale Variable
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(1103): warning C4101: "bestThreshold": Unreferenzierte lokale Variable
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(1104): warning C4101: "bestAmount": Unreferenzierte lokale Variable
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(1102): warning C4101: "bestSigmaY": Unreferenzierte lokale Variable
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(1176): warning C4244: "Initialisierung": Konvertierung von "double" in "const int", möglicher Datenverlust
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(1177): warning C4244: "Initialisierung": Konvertierung von "double" in "const float", möglicher Datenverlust
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(1260): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(1304): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(1341): warning C4244: "Argument": Konvertierung von "const double" in "unsigned int", möglicher Datenverlust
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(1342): warning C4244: "Argument": Konvertierung von "const double" in "unsigned int", möglicher Datenverlust
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(1361): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(1363): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(1365): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(1348): warning C4101: "bestSigmaX": Unreferenzierte lokale Variable
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(1349): warning C4101: "bestSigmaY": Unreferenzierte lokale Variable
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(1415): warning C4244: "Initialisierung": Konvertierung von "double" in "const int", möglicher Datenverlust
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(1416): warning C4244: "Initialisierung": Konvertierung von "double" in "const float", möglicher Datenverlust
+c:\users\itoghoul\desktop\tom05.07.19\improveimagequality.cpp(1648): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+  EdmundOpticsLensCatalog.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  LensesThreeSurfaces.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  LensesTwoSurfaces.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  BaseTransformation_LLT.cpp
+  Absorb_LLT.cpp
+  DeflectedRayParaxialLens_LLT.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  DoNothingInteraction_LLT.cpp
+  InteractionRay_LLT.cpp
+  ReflectionRay_LLT.cpp
+  RefractedRay_LLT.cpp
+  OpticalSystem_LLT.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  ApertureStop_LLT.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  AsphericalSurface_LLT.cpp
+  ParaxialLens_LLT.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  PlanGeometry_LLT.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  SphericalSurface_LLT.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  OpticalSystemElement.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  Code wird generiert...
+c:\users\itoghoul\desktop\tom05.07.19\lowleveltracing\surfaces\asphericalsurface_llt.cpp(286): warning C4715: "AsphericalSurface_LLT::rise_Y_AsphericalSurface": Nicht alle Codepfade geben einen Wert zurück.
+c:\users\itoghoul\desktop\tom05.07.19\lowleveltracing\surfaces\asphericalsurface_llt.cpp(262): warning C4715: "AsphericalSurface_LLT::rise_X_AsphericalSurface": Nicht alle Codepfade geben einen Wert zurück.
+  Kompilieren...
+  OptimizeOpticalSystem.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  Plot.cpp
+  Plot2D.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  PlotOPD.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  PlotSpotDiagram.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  PSFfunction.cpp
+  RayAiming.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  FillApertureStop.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  ImportantStructures.cpp
+  Light_LLT.cpp
+  main_LLT.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  Ray_LLT.cpp
+  Math_LLT.cpp
+c:\users\itoghoul\desktop\tom05.07.19\lowleveltracing\math_llt.cpp(216): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\itoghoul\desktop\tom05.07.19\lowleveltracing\math_llt.cpp(232): warning C4101: "check": Unreferenzierte lokale Variable
+c:\users\itoghoul\desktop\tom05.07.19\lowleveltracing\math_llt.cpp(251): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\itoghoul\desktop\tom05.07.19\lowleveltracing\math_llt.cpp(311): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\itoghoul\desktop\tom05.07.19\lowleveltracing\math_llt.cpp(342): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\itoghoul\desktop\tom05.07.19\lowleveltracing\math_llt.cpp(391): warning C4244: "Argument": Konvertierung von "real" in "_Ty", möglicher Datenverlust
+          with
+          [
+              _Ty=float
+          ]
+c:\users\itoghoul\desktop\tom05.07.19\lowleveltracing\math_llt.cpp(408): warning C4244: "Argument": Konvertierung von "real" in "_Ty", möglicher Datenverlust
+          with
+          [
+              _Ty=int
+          ]
+c:\users\itoghoul\desktop\tom05.07.19\lowleveltracing\math_llt.cpp(424): warning C4018: "<": Konflikt zwischen "signed" und "unsigned"
+c:\users\itoghoul\desktop\tom05.07.19\lowleveltracing\math_llt.cpp(488): warning C4068: Unbekanntes Pragma
+  SequentialRayTracer.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  ApertureStopElement.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  AsphericalElement.cpp
+  PlanElement.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  SphericalElement.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  PlotQwt.cpp
+c:\users\itoghoul\desktop\tom05.07.19\qt\qwt-6.1.4\src\qwt_text.h(16): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "qfont.h": No such file or directory
+  Code wird generiert...

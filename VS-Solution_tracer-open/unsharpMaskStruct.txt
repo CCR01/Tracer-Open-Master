@@ -1,0 +1,96 @@
+
+___________________________________
+unsharp mask parameter
+kernel size: [7 x 7]
+sigma X: 0.0694
+sigma Y: 0.2773
+boarder type: 4
+threshold: 0
+amount: 1
+improvement: 1.00121
+___________________________________
+
+
+___________________________________
+unsharp mask parameter
+kernel size: [7 x 7]
+sigma X: 0.0694
+sigma Y: 0.2773
+boarder type: 4
+threshold: 0
+amount: 1
+improvement: 1.00121
+___________________________________
+
+
+___________________________________
+unsharp mask parameter
+kernel size: [7 x 7]
+sigma X: 0.0694
+sigma Y: 0.2773
+boarder type: 4
+threshold: 0
+amount: 1
+improvement: 1.00121
+___________________________________
+
+
+___________________________________
+unsharp mask parameter
+kernel size: [7 x 7]
+sigma X: 0.0694
+sigma Y: 0.2773
+boarder type: 4
+threshold: 0
+amount: 1
+improvement: 1.00121
+___________________________________
+
+
+___________________________________
+unsharp mask parameter
+kernel size: [7 x 7]
+sigma X: 0.0694
+sigma Y: 0.2773
+boarder type: 4
+threshold: 0
+amount: 1
+improvement: 1.00121
+___________________________________
+
+
+___________________________________
+unsharp mask parameter
+kernel size: [7 x 7]
+sigma X: 0.0694
+sigma Y: 0.2773
+boarder type: 4
+threshold: 0
+amount: 1
+improvement: 1.00121
+___________________________________
+
+
+___________________________________
+unsharp mask parameter
+kernel size: [7 x 7]
+sigma X: 0.0694
+sigma Y: 0.2773
+boarder type: 4
+threshold: 0
+amount: 1
+improvement: 1.00121
+___________________________________
+
+
+___________________________________
+unsharp mask parameter
+kernel size: [7 x 7]
+sigma X: 0.0694
+sigma Y: 0.2773
+boarder type: 4
+threshold: 0
+amount: 1
+improvement: 1.00121
+___________________________________
+
