@@ -6,7 +6,7 @@ enum typeLight { typeLightRay, typeWaveScalar, typeWaveVectorial, typeGaussian }
 
 class Light_LLT {
 public: Light_LLT() {};
-		Light_LLT(double wavelength, double intensity, JonesVector_LLT polarisation, typeLight lightType, int isAlive) :
+		Light_LLT(/*wavelength*/ double wavelength, /*intensity*/ double intensity,/*polarisation*/ JonesVector_LLT polarisation,/*light type*/ typeLight lightType,/*is alive*/ int isAlive) :
 			mWavelength(wavelength),
 			mIntensity(intensity),
 			mPolarisation(polarisation),

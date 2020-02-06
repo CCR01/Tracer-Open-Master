@@ -109,6 +109,8 @@
 
 #include "..\benchmark\IOC2020_Dresten\IOC2020_Dresden.h"
 
+#include "..\TOM(Logo)\TOM(Logo).h"
+
 int main()
 {
 
@@ -119,11 +121,16 @@ int main()
 	std::vector<bool> workTheSystem;
 	// *****************************************************************************************************************
 
-	IOC2020_Dresden system_IOC2020_Dresden;
-	bool checkSysIOC2020 = system_IOC2020_Dresden.systemFor_IOC2020_Dresten();
-	workTheSystem.push_back(checkSysIOC2020);
+	// plot TOM logo
+	TOM_LOGO tomLogo;
+	bool checkOlotLogoTOM = tomLogo.plotTOM_Logo();
+	workTheSystem.push_back(checkOlotLogoTOM);
 
-
+	//// test replace lenses for IOC 2020
+	//IOC2020_Dresden system_IOC2020_Dresden;
+	//bool checkSysIOC2020 = system_IOC2020_Dresden.systemFor_IOC2020_Dresten();
+	//workTheSystem.push_back(checkSysIOC2020);
+	
 	//// RayAiming
 	//BenchmarkRayAiming checkRayAiming;
 	//bool RayAiming = checkRayAiming.checkRayAimingSuperFct();

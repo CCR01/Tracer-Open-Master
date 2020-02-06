@@ -106,6 +106,7 @@
     <ClCompile Include="..\ImageProcessing\ImageProcessing.cpp" />
     <ClCompile Include="..\CompareTwoImagesAndImprove\CompareTwoImagesAndImprove.cpp" />
     <ClCompile Include="..\FillAptertureStop\FillApertureStop.cpp" />
+    <ClCompile Include="..\TOM(Logo)\TOM(LOGO).cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Analyse\CardinalPoints.h" />
@@ -219,5 +220,6 @@
     <ClInclude Include="..\Element\Element_CR.h" />
     <ClInclude Include="..\FillAptertureStop\FillApertureStop.h" />
     <ClInclude Include="..\Parameter\parameter.h" />
+    <ClInclude Include="..\TOM(Logo)\TOM(Logo).h" />
   </ItemGroup>
 </Project>

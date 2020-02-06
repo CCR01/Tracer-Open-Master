@@ -249,6 +249,7 @@
     <ClCompile Include="..\SurfaceElements\AsphericalElement.cpp" />
     <ClCompile Include="..\SurfaceElements\PlanElement.cpp" />
     <ClCompile Include="..\SurfaceElements\SphericalElement.cpp" />
+    <ClCompile Include="..\TOM(Logo)\TOM(LOGO).cpp" />
     <ClCompile Include="PlotQwt.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -362,6 +363,7 @@
     <ClInclude Include="..\SurfaceElements\AsphericalElement.h" />
     <ClInclude Include="..\SurfaceElements\PlanElement.h" />
     <ClInclude Include="..\SurfaceElements\SphericalElement.h" />
+    <ClInclude Include="..\TOM(Logo)\TOM(Logo).h" />
     <ClInclude Include="PlotQwt.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

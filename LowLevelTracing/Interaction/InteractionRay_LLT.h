@@ -9,7 +9,7 @@
 struct LightRayStruct
 {
 	LightRayStruct() {};
-	LightRayStruct(Light_LLT iLight, Ray_LLT iRay, unsigned int i_Alive)
+	LightRayStruct(/*light*/ Light_LLT iLight, /*ray*/ Ray_LLT iRay, /*is alive*/ unsigned int i_Alive)
 	{
 
 		light = iLight;
