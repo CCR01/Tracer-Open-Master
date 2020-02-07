@@ -1744,7 +1744,13 @@ bool BenchmarkRayAiming::checkRayAimingSingleRay_inf(/*opt sys LLT*/ OpticalSyst
 	SequentialRayTracing seqTrace(optSys_LLT);
 	seqTrace.sequentialRayTracing(testLightRay);
 	VectorStructR3 checkerPoint = seqTrace.getAllInterPointsAtSurf_i(RayAiming.getPositionApertureStop(optSys_LLT)).at(0);
-	bool returnChecker = Math::compareTwoVectorStructR3(targetPoint, checkerPoint, 4);
+	real disX = RayAiming.calcDistance_X(targetPoint, checkerPoint);
+	real disY = RayAiming.calcDistance_Y(targetPoint, checkerPoint);
+
+	bool checkDisX = std::abs(disX) <= RayAiming.getDefaultParameters().getTolerance_XandY();
+	bool checkDisY = std::abs(disY) <= RayAiming.getDefaultParameters().getTolerance_XandY();
+
+	bool returnChecker = checkDisX && checkDisY;
 
 	return returnChecker;
 }

@@ -121,20 +121,20 @@ int main()
 	std::vector<bool> workTheSystem;
 	// *****************************************************************************************************************
 
-	// plot TOM logo
-	TOM_LOGO tomLogo;
-	bool checkOlotLogoTOM = tomLogo.plotTOM_Logo();
-	workTheSystem.push_back(checkOlotLogoTOM);
+	//// plot TOM logo
+	//TOM_LOGO tomLogo;
+	//bool checkOlotLogoTOM = tomLogo.plotTOM_Logo();
+	//workTheSystem.push_back(checkOlotLogoTOM);
 
 	//// test replace lenses for IOC 2020
 	//IOC2020_Dresden system_IOC2020_Dresden;
 	//bool checkSysIOC2020 = system_IOC2020_Dresden.systemFor_IOC2020_Dresten();
 	//workTheSystem.push_back(checkSysIOC2020);
 	
-	//// RayAiming
-	//BenchmarkRayAiming checkRayAiming;
-	//bool RayAiming = checkRayAiming.checkRayAimingSuperFct();
-	//workTheSystem.push_back(RayAiming);
+	// RayAiming
+	BenchmarkRayAiming checkRayAiming;
+	bool RayAiming = checkRayAiming.checkRayAimingSuperFct();
+	workTheSystem.push_back(RayAiming);
 
 	//// lens replace
 	//testLensReplace testLensRep;

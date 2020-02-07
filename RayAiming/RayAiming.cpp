@@ -162,7 +162,7 @@ void defaultRayAimingStruct::setFactor(real factor)
 
 void defaultRayAimingStruct::loadDefaultParameter()
 {
-	mTolerance_XandY = 0.0000001;
+	mTolerance_XandY = 0.01;
 	mStartPointFactor = 1.0;
 	mMaxLoopsTraceToLastSurface = 5;
 	mMaxInterationsRayAiming = 30;
@@ -438,8 +438,9 @@ LightRayStruct RayAiming::infinityRayAiming(VectorStructR3 rayDirection, VectorS
 
 		lightRayi.setRay_LLT(startRayInfinity);
 		lightRayi.setLight_LLT(light);
+		lightRayi.setIsAlive(1);
 
-		return lightRayi;
+
 	}
 	else
 	{
@@ -510,580 +511,31 @@ LightRayStruct RayAiming::infinityRayAiming(VectorStructR3 rayDirection, VectorS
 				infosToReduce = traceNegOrPosSide_andReduce_X_inf(infosToReduce, targetPoint);
 				disXtoTarget = infosToReduce.getDistanceInterToTarget_X();
 				disYtoTarget = infosToReduce.getDistanceInterToTarget_Y();
+
+				++interation;
 			}
 			else //(disXtoTarget < disYtoTarget)
 			{
 				infosToReduce = traceNegOrPosSide_andReduce_Y_inf(infosToReduce, targetPoint);
 				disXtoTarget = infosToReduce.getDistanceInterToTarget_X();
 				disYtoTarget = infosToReduce.getDistanceInterToTarget_Y();
+
+				++interation;
 			}
 		}
 
-		// Zählt die Anzahl an RayTracing-Durchläufen. Für die endgültige Version kann dieser counter wieder gelöscht werden.
-		int counter = 0;
-		
-	
-		int interation2 = 0;
-		int maxInteration2 = 11;
-		double newStartX = startPoint.getX();
-		double newStartY = startPoint.getY();
-		VectorStructR3 newStartPoint = startPoint;
-		VectorStructR3 newStartPointS = startPoint;
 
-		mSeqTracModified_LLT.sequentialRayTracing(lightRayi);
-		counter++; // am Ende löschen
-
-		VectorStructR3 interPointAperture = interPointBestLightRay;
-		VectorStructR3 interPointApertureS = interPointBestLightRay;
-
-	
-		double disXtoTargetS;
-		double disYtoTargetS;
-		double factor = 0.09;
-
-		while (((std::abs(disYtoTarget) > mDefaultParaRayAiming.getTolerance_XandY() || std::abs(disXtoTarget) > mDefaultParaRayAiming.getTolerance_XandY())) && (interation < maxInteration))
+		if (interation >= maxInteration)
 		{
-			if (std::abs(disYtoTarget) > mDefaultParaRayAiming.getTolerance_XandY())
-			{
-				if (interPointAperture.getY() < targetPoint.getY())
-				{
-					disXtoTargetS = disXtoTarget;
-					disYtoTargetS = disYtoTarget;
-					interPointApertureS = interPointAperture;
-					newStartPointS = newStartPoint;
-					newStartY = newStartPoint.getY() + semiHeightFirstSurface * factor;
-					newStartX = newStartPoint.getX();
-					newStartPoint = { newStartX, newStartY, startPoint.getZ() };
-
-					Ray_LLT startRayInfinityNew(newStartPoint, rayDirection, curRefracIndex);
-					lightRayi.setRay_LLT(startRayInfinityNew);
-
-					if (checkRayAllElements(lightRayi))
-					{
-						SequentialRayTracing traceDominik(mOpticalSystemModified_LLT);
-						traceDominik.sequentialRayTracing(lightRayi);
-						interPointAperture = traceDominik.getAllInterInfosOfSurf_i(mPosApertureStopModify).at(0).getIntersectionPoint();
-						disXtoTarget = targetPoint.getX() - interPointAperture.getX();
-						disYtoTarget = targetPoint.getY() - interPointAperture.getY();
-					}
-					else
-					{
-						newStartPoint = newStartPointS;
-					}
-
-					if (std::abs(disYtoTarget) < std::abs(disYtoTargetS))
-					{
-						while ((interPointAperture.getY() < targetPoint.getY()) && (interation2 <= maxInteration2) && (std::abs(disYtoTarget) <= std::abs(disYtoTargetS)) && (std::abs(disYtoTarget) > mDefaultParaRayAiming.getTolerance_XandY()))
-						{
-							disXtoTargetS = disXtoTarget;
-							disYtoTargetS = disYtoTarget;
-							interPointApertureS = interPointAperture;
-							newStartPointS = newStartPoint;
-							newStartY = newStartPoint.getY() + semiHeightFirstSurface * factor;
-							newStartX = newStartPoint.getX();
-							newStartPoint = { newStartX, newStartY, startPoint.getZ() };
-
-							Ray_LLT startRayInfinityNew(newStartPoint, rayDirection, curRefracIndex);
-							lightRayi.setRay_LLT(startRayInfinityNew);
-
-							if (checkRayAllElements(lightRayi))
-							{
-								SequentialRayTracing traceDominik(mOpticalSystemModified_LLT);
-								traceDominik.sequentialRayTracing(lightRayi);
-								interPointAperture = traceDominik.getAllInterInfosOfSurf_i(mPosApertureStopModify).at(0).getIntersectionPoint();
-								disXtoTarget = targetPoint.getX() - interPointAperture.getX();
-								disYtoTarget = targetPoint.getY() - interPointAperture.getY();
-							}
-
-							if (std::abs(disYtoTarget) >= std::abs(disYtoTargetS))
-							{
-								newStartPoint = newStartPointS;
-								disXtoTarget = disXtoTargetS;
-								disYtoTarget = disYtoTargetS;
-								interPointAperture = interPointApertureS;
-								interation2 = maxInteration2;
-							}
-							interation2++;
-						}
-					}
-					else
-					{
-						newStartY = newStartPoint.getY() - semiHeightFirstSurface * factor * 2;
-						newStartX = newStartPoint.getX();
-						newStartPoint = { newStartX, newStartY, startPoint.getZ() };
-
-						Ray_LLT startRayInfinityNew(newStartPoint, rayDirection, curRefracIndex);
-						lightRayi.setRay_LLT(startRayInfinityNew);
-
-						if (checkRayAllElements(lightRayi))
-						{
-							SequentialRayTracing traceDominik(mOpticalSystemModified_LLT);
-							traceDominik.sequentialRayTracing(lightRayi);
-							interPointAperture = traceDominik.getAllInterInfosOfSurf_i(mPosApertureStopModify).at(0).getIntersectionPoint();
-							disXtoTarget = targetPoint.getX() - interPointAperture.getX();
-							disYtoTarget = targetPoint.getY() - interPointAperture.getY();
-						}
-						else
-						{
-							newStartPoint = newStartPointS;
-						}
-
-						if (std::abs(disYtoTarget) < std::abs(disYtoTargetS))
-						{
-							while ((interPointAperture.getY() < targetPoint.getY()) && (interation2 <= maxInteration2) && (std::abs(disYtoTarget) <= std::abs(disYtoTargetS)) && (std::abs(disYtoTarget) > mDefaultParaRayAiming.getTolerance_XandY()))
-							{
-								disXtoTargetS = disXtoTarget;
-								disYtoTargetS = disYtoTarget;
-								interPointApertureS = interPointAperture;
-								newStartPointS = newStartPoint;
-								newStartY = newStartPoint.getY() - semiHeightFirstSurface * factor;
-								newStartX = newStartPoint.getX();
-								newStartPoint = { newStartX, newStartY, startPoint.getZ() };
-
-								Ray_LLT startRayInfinityNew(newStartPoint, rayDirection, curRefracIndex);
-								lightRayi.setRay_LLT(startRayInfinityNew);
-
-								if (checkRayAllElements(lightRayi))
-								{
-									SequentialRayTracing traceDominik(mOpticalSystemModified_LLT);
-									traceDominik.sequentialRayTracing(lightRayi);
-									interPointAperture = traceDominik.getAllInterInfosOfSurf_i(mPosApertureStopModify).at(0).getIntersectionPoint();
-									disXtoTarget = targetPoint.getX() - interPointAperture.getX();
-									disYtoTarget = targetPoint.getY() - interPointAperture.getY();
-								}
-
-								if (std::abs(disYtoTarget) >= std::abs(disYtoTargetS))
-								{
-									newStartPoint = newStartPointS;
-									disXtoTarget = disXtoTargetS;
-									disYtoTarget = disYtoTargetS;
-									interPointAperture = interPointApertureS;
-									interation2 = maxInteration2;
-								}
-								interation2++;
-							}
-						}
-						else
-						{
-							newStartPoint = newStartPointS;
-							disXtoTarget = disXtoTargetS;
-							disYtoTarget = disYtoTargetS;
-							interPointAperture = interPointApertureS;
-							interation2 = maxInteration2;
-						}
-					}
-				}
-
-				else		// (interPointAperture.getY() >= targetPoint.getY())
-				{
-					disXtoTargetS = disXtoTarget;
-					disYtoTargetS = disYtoTarget;
-					interPointApertureS = interPointAperture;
-					newStartPointS = newStartPoint;
-					newStartY = newStartPoint.getY() - semiHeightFirstSurface * factor;
-					newStartX = newStartPoint.getX();
-					newStartPoint = { newStartX, newStartY, startPoint.getZ() };
-
-					Ray_LLT startRayInfinityNew(newStartPoint, rayDirection, curRefracIndex);
-					lightRayi.setRay_LLT(startRayInfinityNew);
-
-					if (checkRayAllElements(lightRayi))
-					{
-						SequentialRayTracing traceDominik(mOpticalSystemModified_LLT);
-						traceDominik.sequentialRayTracing(lightRayi);
-						interPointAperture = traceDominik.getAllInterInfosOfSurf_i(mPosApertureStopModify).at(0).getIntersectionPoint();
-						disXtoTarget = targetPoint.getX() - interPointAperture.getX();
-						disYtoTarget = targetPoint.getY() - interPointAperture.getY();
-					}
-					else
-					{
-						newStartPoint = newStartPointS;
-					}
-
-					if (std::abs(disYtoTarget) < std::abs(disYtoTargetS))
-					{
-						while ((interPointAperture.getY() > targetPoint.getY()) && (interation2 <= maxInteration2) && (std::abs(disYtoTarget) <= std::abs(disYtoTargetS)) && (std::abs(disYtoTarget) > mDefaultParaRayAiming.getTolerance_XandY()))
-						{
-							disXtoTargetS = disXtoTarget;
-							disYtoTargetS = disYtoTarget;
-							interPointApertureS = interPointAperture;
-							newStartPointS = newStartPoint;
-							newStartY = newStartPoint.getY() - semiHeightFirstSurface * factor;
-							newStartX = newStartPoint.getX();
-							newStartPoint = { newStartX, newStartY, startPoint.getZ() };
-
-							Ray_LLT startRayInfinityNew(newStartPoint, rayDirection, curRefracIndex);
-							lightRayi.setRay_LLT(startRayInfinityNew);
-
-							if (checkRayAllElements(lightRayi))
-							{
-								SequentialRayTracing traceDominik(mOpticalSystemModified_LLT);
-								traceDominik.sequentialRayTracing(lightRayi);
-								interPointAperture = traceDominik.getAllInterInfosOfSurf_i(mPosApertureStopModify).at(0).getIntersectionPoint();
-								disXtoTarget = targetPoint.getX() - interPointAperture.getX();
-								disYtoTarget = targetPoint.getY() - interPointAperture.getY();
-							}
-
-							if (std::abs(disYtoTarget) >= std::abs(disYtoTargetS))
-							{
-								newStartPoint = newStartPointS;
-								disXtoTarget = disXtoTargetS;
-								disYtoTarget = disYtoTargetS;
-								interPointAperture = interPointApertureS;
-								interation2 = maxInteration2;
-							}
-							interation2++;
-						}
-					}
-					else
-					{
-						interPointApertureS = interPointAperture;
-						newStartY = newStartPoint.getY() + semiHeightFirstSurface * factor * 2;
-						newStartX = newStartPoint.getX();
-						newStartPoint = { newStartX, newStartY, startPoint.getZ() };
-
-						Ray_LLT startRayInfinityNew(newStartPoint, rayDirection, curRefracIndex);
-						lightRayi.setRay_LLT(startRayInfinityNew);
-
-						if (checkRayAllElements(lightRayi))
-						{
-							SequentialRayTracing traceDominik(mOpticalSystemModified_LLT);
-							traceDominik.sequentialRayTracing(lightRayi);
-							interPointAperture = traceDominik.getAllInterInfosOfSurf_i(mPosApertureStopModify).at(0).getIntersectionPoint();
-							disXtoTarget = targetPoint.getX() - interPointAperture.getX();
-							disYtoTarget = targetPoint.getY() - interPointAperture.getY();
-						}
-						else
-						{
-							newStartPoint = newStartPointS;
-						}
-
-						if (std::abs(disYtoTarget) < std::abs(disYtoTargetS))
-						{
-							while ((interPointAperture.getY() > targetPoint.getY()) && (interation2 <= maxInteration2) && (std::abs(disYtoTarget) <= std::abs(disYtoTargetS)) && (std::abs(disYtoTarget) > mDefaultParaRayAiming.getTolerance_XandY()))
-							{
-								disXtoTargetS = disXtoTarget;
-								disYtoTargetS = disYtoTarget;
-								interPointApertureS = interPointAperture;
-								newStartPointS = newStartPoint;
-								newStartY = newStartPoint.getY() + semiHeightFirstSurface * factor;
-								newStartX = newStartPoint.getX();
-								newStartPoint = { newStartX, newStartY, startPoint.getZ() };
-
-								Ray_LLT startRayInfinityNew(newStartPoint, rayDirection, curRefracIndex);
-								lightRayi.setRay_LLT(startRayInfinityNew);
-
-								if (checkRayAllElements(lightRayi))
-								{
-									SequentialRayTracing traceDominik(mOpticalSystemModified_LLT);
-									traceDominik.sequentialRayTracing(lightRayi);
-									interPointAperture = traceDominik.getAllInterInfosOfSurf_i(mPosApertureStopModify).at(0).getIntersectionPoint();
-									disXtoTarget = targetPoint.getX() - interPointAperture.getX();
-									disYtoTarget = targetPoint.getY() - interPointAperture.getY();
-								}
-
-								if (std::abs(disYtoTarget) >= std::abs(disYtoTargetS))
-								{
-									newStartPoint = newStartPointS;
-									disXtoTarget = disXtoTargetS;
-									disYtoTarget = disYtoTargetS;
-									interPointAperture = interPointApertureS;
-									interation2 = maxInteration2;
-								}
-								interation2++;
-							}
-						}
-						else
-						{
-							newStartPoint = newStartPointS;
-							disXtoTarget = disXtoTargetS;
-							disYtoTarget = disYtoTargetS;
-							interPointAperture = interPointApertureS;
-							interation2 = maxInteration2;
-						}
-					}
-				}
-			}
-
-			interation2 = 0;
-
-			if (std::abs(disXtoTarget) > mDefaultParaRayAiming.getTolerance_XandY())
-			{
-				if (interPointAperture.getX() < targetPoint.getX())
-				{
-					disXtoTargetS = disXtoTarget;
-					disYtoTargetS = disYtoTarget;
-					interPointApertureS = interPointAperture;
-					newStartPointS = newStartPoint;
-					newStartX = newStartPoint.getX() + semiHeightFirstSurface * factor;
-					newStartY = newStartPoint.getY();
-					newStartPoint = { newStartX, newStartY, startPoint.getZ() };
-
-					Ray_LLT startRayInfinityNew(newStartPoint, rayDirection, curRefracIndex);
-					lightRayi.setRay_LLT(startRayInfinityNew);
-
-					if (checkRayAllElements(lightRayi))
-					{
-						SequentialRayTracing traceDominik(mOpticalSystemModified_LLT);
-						traceDominik.sequentialRayTracing(lightRayi);
-						interPointAperture = traceDominik.getAllInterInfosOfSurf_i(mPosApertureStopModify).at(0).getIntersectionPoint();
-						disXtoTarget = targetPoint.getX() - interPointAperture.getX();
-						disYtoTarget = targetPoint.getY() - interPointAperture.getY();
-					}
-					else
-					{
-						newStartPoint = newStartPointS;
-					}
-
-					if (std::abs(disXtoTarget) < std::abs(disXtoTargetS))
-					{
-						while ((interPointAperture.getX() < targetPoint.getX()) && (interation2 <= maxInteration2) && (std::abs(disXtoTarget) <= std::abs(disXtoTargetS)) && (std::abs(disXtoTarget) > mDefaultParaRayAiming.getTolerance_XandY()))
-						{
-							disXtoTargetS = disXtoTarget;
-							disYtoTargetS = disYtoTarget;
-							interPointApertureS = interPointAperture;
-							newStartPointS = newStartPoint;
-							newStartX = newStartPoint.getX() + semiHeightFirstSurface * factor;
-							newStartY = newStartPoint.getY();
-							newStartPoint = { newStartX, newStartY, startPoint.getZ() };
-
-							Ray_LLT startRayInfinityNew(newStartPoint, rayDirection, curRefracIndex);
-							lightRayi.setRay_LLT(startRayInfinityNew);
-
-							if (checkRayAllElements(lightRayi))
-							{
-								SequentialRayTracing traceDominik(mOpticalSystemModified_LLT);
-								traceDominik.sequentialRayTracing(lightRayi);
-								interPointAperture = traceDominik.getAllInterInfosOfSurf_i(mPosApertureStopModify).at(0).getIntersectionPoint();
-								disXtoTarget = targetPoint.getX() - interPointAperture.getX();
-								disYtoTarget = targetPoint.getY() - interPointAperture.getY();
-							}
-
-							if (std::abs(disXtoTarget) >= std::abs(disXtoTargetS))
-							{
-								newStartPoint = newStartPointS;
-								disXtoTarget = disXtoTargetS;
-								disYtoTarget = disYtoTargetS;
-								interPointAperture = interPointApertureS;
-								interation2 = maxInteration2;
-							}
-							interation2++;
-						}
-					}
-					else // (interPointAperture.getY() >= targetPoint.getY())
-					{
-						newStartX = newStartPoint.getX() - semiHeightFirstSurface * factor * 2;
-						newStartY = newStartPoint.getY();
-						newStartPoint = { newStartX, newStartY, startPoint.getZ() };
-
-						Ray_LLT startRayInfinityNew(newStartPoint, rayDirection, curRefracIndex);
-						lightRayi.setRay_LLT(startRayInfinityNew);
-
-						if (checkRayAllElements(lightRayi))
-						{
-							SequentialRayTracing traceDominik(mOpticalSystemModified_LLT);
-							traceDominik.sequentialRayTracing(lightRayi);
-							interPointAperture = traceDominik.getAllInterInfosOfSurf_i(mPosApertureStopModify).at(0).getIntersectionPoint();
-							disXtoTarget = targetPoint.getX() - interPointAperture.getX();
-							disYtoTarget = targetPoint.getY() - interPointAperture.getY();
-						}
-						else
-						{
-							newStartPoint = newStartPointS;
-						}
-
-						if (std::abs(disXtoTarget) < std::abs(disXtoTargetS))
-						{
-							while ((interPointAperture.getX() < targetPoint.getX()) && (interation2 <= maxInteration2) && (std::abs(disXtoTarget) <= std::abs(disXtoTargetS)) && (std::abs(disXtoTarget) > mDefaultParaRayAiming.getTolerance_XandY()))
-							{
-								disXtoTargetS = disXtoTarget;
-								disYtoTargetS = disYtoTarget;
-								interPointApertureS = interPointAperture;
-								newStartPointS = newStartPoint;
-								newStartX = newStartPoint.getX() - semiHeightFirstSurface * factor;
-								newStartY = newStartPoint.getY();
-								newStartPoint = { newStartX, newStartY, startPoint.getZ() };
-
-								Ray_LLT startRayInfinityNew(newStartPoint, rayDirection, curRefracIndex);
-								lightRayi.setRay_LLT(startRayInfinityNew);
-
-								if (checkRayAllElements(lightRayi))
-								{
-									SequentialRayTracing traceDominik(mOpticalSystemModified_LLT);
-									traceDominik.sequentialRayTracing(lightRayi);
-									interPointAperture = traceDominik.getAllInterInfosOfSurf_i(mPosApertureStopModify).at(0).getIntersectionPoint();
-									disXtoTarget = targetPoint.getX() - interPointAperture.getX();
-									disYtoTarget = targetPoint.getY() - interPointAperture.getY();
-								}
-
-								if (std::abs(disXtoTarget) >= std::abs(disXtoTargetS))
-								{
-									newStartPoint = newStartPointS;
-									disXtoTarget = disXtoTargetS;
-									disYtoTarget = disYtoTargetS;
-									interPointAperture = interPointApertureS;
-									interation2 = maxInteration2;
-								}
-								interation2++;
-							}
-						}
-						else
-						{
-							newStartPoint = newStartPointS;
-							disXtoTarget = disXtoTargetS;
-							disYtoTarget = disYtoTargetS;
-							interPointAperture = interPointApertureS;
-							interation2 = maxInteration2;
-						}
-					}
-				}
-
-				else // (interPointAperture.getX() > targetPoint.getX())
-				{
-					disXtoTargetS = disXtoTarget;
-					disYtoTargetS = disYtoTarget;
-					interPointApertureS = interPointAperture;
-					newStartPointS = newStartPoint;
-					newStartX = newStartPoint.getX() - semiHeightFirstSurface * factor;
-					newStartY = newStartPoint.getY();
-					newStartPoint = { newStartX, newStartY, startPoint.getZ() };
-
-					Ray_LLT startRayInfinityNew(newStartPoint, rayDirection, curRefracIndex);
-					lightRayi.setRay_LLT(startRayInfinityNew);
-
-					if (checkRayAllElements(lightRayi))
-					{
-						SequentialRayTracing traceDominik(mOpticalSystemModified_LLT);
-						traceDominik.sequentialRayTracing(lightRayi);
-						interPointAperture = traceDominik.getAllInterInfosOfSurf_i(mPosApertureStopModify).at(0).getIntersectionPoint();
-						disXtoTarget = targetPoint.getX() - interPointAperture.getX();
-						disYtoTarget = targetPoint.getY() - interPointAperture.getY();
-					}
-					else
-					{
-						newStartPoint = newStartPointS;
-					}
-
-					if (std::abs(disXtoTarget) < std::abs(disXtoTargetS))
-					{
-						while ((interPointAperture.getX() > targetPoint.getX()) && (interation2 <= maxInteration2) && (std::abs(disXtoTarget) <= std::abs(disXtoTargetS)) && (std::abs(disXtoTarget) > mDefaultParaRayAiming.getTolerance_XandY()))
-						{
-							disXtoTargetS = disXtoTarget;
-							disYtoTargetS = disYtoTarget;
-							interPointApertureS = interPointAperture;
-							newStartPointS = newStartPoint;
-							newStartX = newStartPoint.getX() - semiHeightFirstSurface * factor;
-							newStartY = newStartPoint.getY();
-							newStartPoint = { newStartX, newStartY, startPoint.getZ() };
-
-							Ray_LLT startRayInfinityNew(newStartPoint, rayDirection, curRefracIndex);
-							lightRayi.setRay_LLT(startRayInfinityNew);
-
-							if (checkRayAllElements(lightRayi))
-							{
-								SequentialRayTracing traceDominik(mOpticalSystemModified_LLT);
-								traceDominik.sequentialRayTracing(lightRayi);
-								interPointAperture = traceDominik.getAllInterInfosOfSurf_i(mPosApertureStopModify).at(0).getIntersectionPoint();
-								disXtoTarget = targetPoint.getX() - interPointAperture.getX();
-								disYtoTarget = targetPoint.getY() - interPointAperture.getY();
-							}
-
-							if (std::abs(disXtoTarget) >= std::abs(disXtoTargetS))
-							{
-								newStartPoint = newStartPointS;
-								disXtoTarget = disXtoTargetS;
-								disYtoTarget = disYtoTargetS;
-								interPointAperture = interPointApertureS;
-								interation2 = maxInteration2;
-							}
-							interation2++;
-						}
-					}
-					else
-					{
-						newStartX = newStartPoint.getX() + semiHeightFirstSurface * factor * 2;
-						newStartY = newStartPoint.getY();
-						newStartPoint = { newStartX, newStartY, startPoint.getZ() };
-
-						Ray_LLT startRayInfinityNew(newStartPoint, rayDirection, curRefracIndex);
-						lightRayi.setRay_LLT(startRayInfinityNew);
-
-						if (checkRayAllElements(lightRayi))
-						{
-							SequentialRayTracing traceDominik(mOpticalSystemModified_LLT);
-							traceDominik.sequentialRayTracing(lightRayi);
-							interPointAperture = traceDominik.getAllInterInfosOfSurf_i(mPosApertureStopModify).at(0).getIntersectionPoint();
-							disXtoTarget = targetPoint.getX() - interPointAperture.getX();
-							disYtoTarget = targetPoint.getY() - interPointAperture.getY();
-						}
-						else
-						{
-							newStartPoint = newStartPointS;
-						}
-
-						if (std::abs(disXtoTarget) < std::abs(disXtoTargetS))
-						{
-							while ((interPointAperture.getX() > targetPoint.getX()) && (interation2 <= maxInteration2) && (std::abs(disXtoTarget) <= std::abs(disXtoTargetS)) && (std::abs(disXtoTarget) > mDefaultParaRayAiming.getTolerance_XandY()))
-							{
-								disXtoTargetS = disXtoTarget;
-								disYtoTargetS = disYtoTarget;
-								interPointApertureS = interPointAperture;
-								newStartPointS = newStartPoint;
-								newStartX = newStartPoint.getX() + semiHeightFirstSurface * factor;
-								newStartY = newStartPoint.getY();
-								newStartPoint = { newStartX, newStartY, startPoint.getZ() };
-
-								Ray_LLT startRayInfinityNew(newStartPoint, rayDirection, curRefracIndex);
-								lightRayi.setRay_LLT(startRayInfinityNew);
-
-								if (checkRayAllElements(lightRayi))
-								{
-									SequentialRayTracing traceDominik(mOpticalSystemModified_LLT);
-									traceDominik.sequentialRayTracing(lightRayi);
-									interPointAperture = traceDominik.getAllInterInfosOfSurf_i(mPosApertureStopModify).at(0).getIntersectionPoint();
-									disXtoTarget = targetPoint.getX() - interPointAperture.getX();
-									disYtoTarget = targetPoint.getY() - interPointAperture.getY();
-								}
-
-								if (std::abs(disXtoTarget) >= std::abs(disXtoTargetS))
-								{
-									newStartPoint = newStartPointS;
-									disXtoTarget = disXtoTargetS;
-									disYtoTarget = disYtoTargetS;
-									interPointAperture = interPointApertureS;
-									interation2 = maxInteration2;
-								}
-								interation2++;
-							}
-						}
-						else
-						{
-							newStartPoint = newStartPointS;
-							disXtoTarget = disXtoTargetS;
-							disYtoTarget = disYtoTargetS;
-							interPointAperture = interPointApertureS;
-							interation2 = maxInteration2;
-						}
-					}
-				}
-			}
-			// new Ray
-			Ray_LLT startRayInfinityNew(newStartPoint, rayDirection, curRefracIndex);
-			lightRayi.setRay_LLT(startRayInfinityNew);
-			SequentialRayTracing newTrace(mOpticalSystemModified_LLT);
-			newTrace.sequentialRayTracing(lightRayi);
-
-			interPointAperture = newTrace.getAllInterInfosOfSurf_i(mPosApertureStopModify).at(0).getIntersectionPoint();
-			disXtoTarget = targetPoint.getX() - interPointAperture.getX();
-			disYtoTarget = targetPoint.getY() - interPointAperture.getY();
-
-			semiHeightFirstSurface = semiHeightFirstSurface / 10;
-
-			interation++;
-			interation2 = 0;
+			std::cout << "attention!!! ray aiming did not work perfectly!!!" << std::endl;
+			std::cout << "fix that bug!!!" << std::endl;
 		}
-		return lightRayi;
+		
+
+		lightRayi = infosToReduce.getLightRay();
 	}
+
+	return lightRayi;
 }
 
 //_______________________________________________________
@@ -2813,6 +2265,8 @@ VectorStructR3 RayAiming::getInterPointApertureStop(LightRayStruct lightRay)
 lightRay_intP_dis_negPos_factor RayAiming::traceNegOrPosSide_andReduce_X_inf(lightRay_intP_dis_negPos_factor initialInfos, VectorStructR3 targetPoint)
 {
 	lightRay_intP_dis_negPos_factor returnLightRay_intP_dis_negPos_fac;
+	real initialFactorY = initialInfos.getFactorY();
+	
 	real semiHeightFirstSurface = mOpticalSystem_LLT.getPosAndInteractingSurface()[0].getSurfaceInterRay_ptr()->getSemiHeight();
 	
 	LightRayStruct initialLightRay = initialInfos.getLightRay();
@@ -2829,17 +2283,19 @@ lightRay_intP_dis_negPos_factor RayAiming::traceNegOrPosSide_andReduce_X_inf(lig
 	LightRayStruct lightRayToTracePos = initialLightRay;
 	LightRayStruct lightRayToTraceNeg = initialLightRay;
 
-	real disPosTrace_X;
-	real disNegTrace_X;
-
 	real initialOrigin_X = originPlus.getX();
 	real originPlus_X = initialOrigin_X + semiHeightFirstSurface * initialFactorX;
 	real originMinus_X = initialOrigin_X - semiHeightFirstSurface * initialFactorX;
 	originPlus.setX(originPlus_X);
 	originNeg.setX(originMinus_X);
 	
-	lightRayToTracePos.getRay_LLT().setOriginRay(originPlus);
-	lightRayToTraceNeg.getRay_LLT().setOriginRay(originNeg);
+	Ray_LLT rayPos = lightRayToTracePos.getRay_LLT();
+	rayPos.setOriginRay(originPlus);
+	lightRayToTracePos.setRay_LLT(rayPos);
+
+	Ray_LLT rayNeg = lightRayToTraceNeg.getRay_LLT();
+	rayNeg.setOriginRay(originNeg);
+	lightRayToTraceNeg.setRay_LLT(rayNeg);
 
 	// pos trace
 	SequentialRayTracing tracePLus(mOpticalSystem_LLT);
@@ -2849,55 +2305,72 @@ lightRay_intP_dis_negPos_factor RayAiming::traceNegOrPosSide_andReduce_X_inf(lig
 	SequentialRayTracing traceNeg(mOpticalSystem_LLT);
 	traceNeg.sequentialRayTracing(lightRayToTraceNeg);
 
-	VectorStructR3 interPointAS_pos = tracePLus.getAllInterPointsAtSurf_i(mPosApertureStop)[0];
-	VectorStructR3 interPointAS_neg = traceNeg.getAllInterPointsAtSurf_i(mPosApertureStop)[0];
+	IntersectInformationStruct interPointAS_pos = tracePLus.getAllInterInfosOfSurf_i_notFiltered(mPosApertureStop)[0];
+	IntersectInformationStruct interPointAS_neg = traceNeg.getAllInterInfosOfSurf_i_notFiltered(mPosApertureStop)[0];
 
-	disPosTrace_X = calcDistance_X(interPointAS_pos, targetPoint);
-	disNegTrace_X = calcDistance_X(interPointAS_neg, targetPoint);
+	// pos trace
+	real disPosTrace_X = calcDistance_X(interPointAS_pos.getIntersectionPoint(), targetPoint);
+	real disPosTrace_Y = calcDistance_Y(interPointAS_pos.getIntersectionPoint(), targetPoint);
 
-	if (disPosTrace_X < disNegTrace_X) 
+	// neg trace
+	real disNegTrace_X = calcDistance_X(interPointAS_neg.getIntersectionPoint(), targetPoint);
+	real disNegTrace_Y = calcDistance_Y(interPointAS_neg.getIntersectionPoint(), targetPoint);
+
+	if (disPosTrace_X < disNegTrace_X && interPointAS_pos.getSurfaceSide() != 'N')
 	{
-		if (disPosTrace_X < initialDistanceX)
+		if (disPosTrace_X < initialDistanceX )
 		{
+			returnLightRay_intP_dis_negPos_fac.setDistanceInterToTarger_Y(disPosTrace_Y);
+			returnLightRay_intP_dis_negPos_fac.setFactorY(initialFactorY);
+
 			returnLightRay_intP_dis_negPos_fac.setLightRay(lightRayToTracePos);
-			returnLightRay_intP_dis_negPos_fac.setInterPoint(interPointAS_pos);
+			returnLightRay_intP_dis_negPos_fac.setInterPoint(interPointAS_pos.getIntersectionPoint());
 			returnLightRay_intP_dis_negPos_fac.setDistanceInterToTarger_X(disPosTrace_X);
 			returnLightRay_intP_dis_negPos_fac.setNegOrPosSide(posSide);
-			returnLightRay_intP_dis_negPos_fac.setFactorX(initialFactorX / 2);
+			returnLightRay_intP_dis_negPos_fac.setFactorX(initialFactorX / 1.9);
 
 		}
 		else if (initialDistanceX < disPosTrace_X)
 		{
 			returnLightRay_intP_dis_negPos_fac = initialInfos;
 			returnLightRay_intP_dis_negPos_fac.setNegOrPosSide(stay);
-			returnLightRay_intP_dis_negPos_fac.setFactorX(initialFactorX / 2);
+			returnLightRay_intP_dis_negPos_fac.setFactorX(initialFactorX / 1.9);
 		}
 
 
 		
 	}
 
-	else if (disNegTrace_X < disPosTrace_X)
+	else if (disNegTrace_X < disPosTrace_X && interPointAS_neg.getSurfaceSide() != 'N')
 	{
 
-		if (disNegTrace_X < initialDistanceX)
+		if (disNegTrace_X < initialDistanceX )
 		{
+			returnLightRay_intP_dis_negPos_fac.setDistanceInterToTarger_Y(disNegTrace_Y);
+			returnLightRay_intP_dis_negPos_fac.setFactorY(initialFactorY);
+
 			returnLightRay_intP_dis_negPos_fac.setLightRay(lightRayToTraceNeg);
-			returnLightRay_intP_dis_negPos_fac.setInterPoint(interPointAS_neg);
+			returnLightRay_intP_dis_negPos_fac.setInterPoint(interPointAS_neg.getIntersectionPoint());
 			returnLightRay_intP_dis_negPos_fac.setDistanceInterToTarger_X(disNegTrace_X);
 			returnLightRay_intP_dis_negPos_fac.setNegOrPosSide(negSide);
-			returnLightRay_intP_dis_negPos_fac.setFactorX(initialFactorX / 2);
+			returnLightRay_intP_dis_negPos_fac.setFactorX(initialFactorX / 1.9);
 
 		}
 		else if (initialDistanceX < disNegTrace_X)
 		{
 			returnLightRay_intP_dis_negPos_fac = initialInfos;
 			returnLightRay_intP_dis_negPos_fac.setNegOrPosSide(stay);
-			returnLightRay_intP_dis_negPos_fac.setFactorX(initialFactorX / 2);
+			returnLightRay_intP_dis_negPos_fac.setFactorX(initialFactorX / 1.9);
 		}
 
 	}
-	
+
+	else // there is no intersection point with the aperture stop
+	{
+		returnLightRay_intP_dis_negPos_fac = initialInfos;
+		returnLightRay_intP_dis_negPos_fac.setNegOrPosSide(stay);
+		returnLightRay_intP_dis_negPos_fac.setFactorX(initialFactorX / 1.9);
+	}
 	
 
 	return returnLightRay_intP_dis_negPos_fac;
@@ -2906,6 +2379,7 @@ lightRay_intP_dis_negPos_factor RayAiming::traceNegOrPosSide_andReduce_X_inf(lig
 lightRay_intP_dis_negPos_factor RayAiming::traceNegOrPosSide_andReduce_Y_inf(lightRay_intP_dis_negPos_factor initialInfos, VectorStructR3 targetPoint)
 {
 	lightRay_intP_dis_negPos_factor returnLightRay_intP_dis_negPos_fac;
+	real initalFactorX = initialInfos.getFactorX();
 	real semiHeightFirstSurface = mOpticalSystem_LLT.getPosAndInteractingSurface()[0].getSurfaceInterRay_ptr()->getSemiHeight();
 
 	LightRayStruct initialLightRay = initialInfos.getLightRay();
@@ -2921,9 +2395,6 @@ lightRay_intP_dis_negPos_factor RayAiming::traceNegOrPosSide_andReduce_Y_inf(lig
 
 	LightRayStruct lightRayToTracePos = initialLightRay;
 	LightRayStruct lightRayToTraceNeg = initialLightRay;
-
-	real disPosTrace_Y;
-	real disNegTrace_Y;
 
 	real initialOrigin_Y = originPlus.getY();
 	real originPlus_Y = initialOrigin_Y + semiHeightFirstSurface * initialFactorY;
@@ -2949,60 +2420,81 @@ lightRay_intP_dis_negPos_factor RayAiming::traceNegOrPosSide_andReduce_Y_inf(lig
 	SequentialRayTracing traceNeg(mOpticalSystem_LLT);
 	traceNeg.sequentialRayTracing(lightRayToTraceNeg);
 
-	VectorStructR3 interPointAS_pos = tracePLus.getAllInterInfosOfSurf_i_notFiltered(mPosApertureStop)[0].getIntersectionPoint();
-	VectorStructR3 interPointAS_neg = traceNeg.getAllInterInfosOfSurf_i_notFiltered(mPosApertureStop)[0].getIntersectionPoint();
+	IntersectInformationStruct interPointAS_pos = tracePLus.getAllInterInfosOfSurf_i_notFiltered(mPosApertureStop)[0];
+	IntersectInformationStruct interPointAS_neg = traceNeg.getAllInterInfosOfSurf_i_notFiltered(mPosApertureStop)[0];
 
 	//disPosTrace_Y = Math::distanceTwoVectors(interPointAS_pos, targetPoint);
 	
-	disPosTrace_Y = calcDistance_X(interPointAS_pos, targetPoint);
+	real disPosTrace_Y = calcDistance_Y(interPointAS_pos.getIntersectionPoint(), targetPoint);
+	real disPosTrace_X = calcDistance_X(interPointAS_pos.getIntersectionPoint(), targetPoint);
 	std::cout << "reduce Y disPosTrace Y: " << disPosTrace_Y << std::endl;
-	disNegTrace_Y = calcDistance_X(interPointAS_neg, targetPoint);
+	real disNegTrace_Y = calcDistance_Y(interPointAS_neg.getIntersectionPoint(), targetPoint);
+	real disNegTrace_X = calcDistance_X(interPointAS_neg.getIntersectionPoint(), targetPoint);
 	std::cout << "reduce Y disNegTrace Y: " << disNegTrace_Y << std::endl;
 
 
-	if (disPosTrace_Y < disNegTrace_Y)
+	if (disPosTrace_Y < disNegTrace_Y && interPointAS_pos.getSurfaceSide() != 'N')
 	{
 		if (disPosTrace_Y < initialDistanceY)
 		{
+			returnLightRay_intP_dis_negPos_fac.setDistanceInterToTarger_X(disPosTrace_X);
+			returnLightRay_intP_dis_negPos_fac.setFactorX(initalFactorX);
+
 			returnLightRay_intP_dis_negPos_fac.setLightRay(lightRayToTracePos);
-			returnLightRay_intP_dis_negPos_fac.setInterPoint(interPointAS_pos);
+			returnLightRay_intP_dis_negPos_fac.setInterPoint(interPointAS_pos.getIntersectionPoint());
 			returnLightRay_intP_dis_negPos_fac.setDistanceInterToTarger_Y(disPosTrace_Y);
 			returnLightRay_intP_dis_negPos_fac.setNegOrPosSide(posSide);
-			returnLightRay_intP_dis_negPos_fac.setFactorY(initialFactorY / 2);
+			returnLightRay_intP_dis_negPos_fac.setFactorY(initialFactorY / 1.9);
 
 		}
 		else if (initialDistanceY < disPosTrace_Y)
 		{
 			returnLightRay_intP_dis_negPos_fac = initialInfos;
 			returnLightRay_intP_dis_negPos_fac.setNegOrPosSide(stay);
-			returnLightRay_intP_dis_negPos_fac.setFactorY(initialFactorY / 2);
+			returnLightRay_intP_dis_negPos_fac.setFactorY(initialFactorY / 1.9);
 		}
 
 
 
 	}
 
-	else if (disNegTrace_Y < disPosTrace_Y)
+	else if (disNegTrace_Y < disPosTrace_Y && interPointAS_neg.getSurfaceSide() != 'N')
 	{
 
 		if (disNegTrace_Y < initialDistanceY)
 		{
+			returnLightRay_intP_dis_negPos_fac.setDistanceInterToTarger_X(disNegTrace_X);
+			returnLightRay_intP_dis_negPos_fac.setFactorX(initalFactorX);
+
 			returnLightRay_intP_dis_negPos_fac.setLightRay(lightRayToTraceNeg);
-			returnLightRay_intP_dis_negPos_fac.setInterPoint(interPointAS_neg);
+			returnLightRay_intP_dis_negPos_fac.setInterPoint(interPointAS_neg.getIntersectionPoint());
 			returnLightRay_intP_dis_negPos_fac.setDistanceInterToTarger_Y(disNegTrace_Y);
 			returnLightRay_intP_dis_negPos_fac.setNegOrPosSide(negSide);
-			returnLightRay_intP_dis_negPos_fac.setFactorY(initialFactorY / 2);
+			returnLightRay_intP_dis_negPos_fac.setFactorY(initialFactorY / 1.9);
 
 		}
 		else if (initialDistanceY < disNegTrace_Y)
 		{
 			returnLightRay_intP_dis_negPos_fac = initialInfos;
 			returnLightRay_intP_dis_negPos_fac.setNegOrPosSide(stay);
-			returnLightRay_intP_dis_negPos_fac.setFactorY(initialFactorY / 2);
+			returnLightRay_intP_dis_negPos_fac.setFactorY(initialFactorY / 1.9);
 		}
 
 	}
 
+	else // there is no intersection point with the aperture stop
+	{ 
+		returnLightRay_intP_dis_negPos_fac = initialInfos;
+		returnLightRay_intP_dis_negPos_fac.setNegOrPosSide(stay);
+		returnLightRay_intP_dis_negPos_fac.setFactorY(initialFactorY / 1.9);
+	}
 
-	return returnLightRay_intP_dis_negPos_fac;
+
+
+return returnLightRay_intP_dis_negPos_fac;
+}
+
+defaultRayAimingStruct RayAiming::getDefaultParameters()
+{
+	return mDefaultParaRayAiming;
 }

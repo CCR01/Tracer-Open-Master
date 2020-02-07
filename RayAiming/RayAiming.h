@@ -178,6 +178,9 @@ public: RayAiming() {};
 		lightRay_intP_dis_negPos_factor traceNegOrPosSide_andReduce_X_inf(lightRay_intP_dis_negPos_factor initialInfos, VectorStructR3 targetPoint);
 		lightRay_intP_dis_negPos_factor traceNegOrPosSide_andReduce_Y_inf(lightRay_intP_dis_negPos_factor initialInfos, VectorStructR3 targetPoint);
 
+		// get default parametes
+		defaultRayAimingStruct getDefaultParameters();
+
 private:
 
 	OpticalSystem_LLT mOpticalSystem_LLT;
