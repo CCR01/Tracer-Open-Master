@@ -1,1 +1,17 @@
-﻿  VS-Solution_tracer-open.vcxproj -> C:\Tracer-Open-Master\VS-Solution_tracer-open\x64\Debug\VS-Solution_tracer-open.exe
+﻿  RayAiming.cpp
+c:\tracer-open-master\lowleveltracing\importantstructures.h(69): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\tracer-open-master\lowleveltracing\importantstructures.h(73): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\tracer-open-master\lowleveltracing\importantstructures.h(93): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\tracer-open-master\lowleveltracing\importantstructures.h(108): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\tracer-open-master\lowleveltracing\importantstructures.h(134): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\tracer-open-master\rayaiming\rayaiming.cpp(308): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\rayaiming\rayaiming.cpp(559): warning C4018: '>=': signed/unsigned mismatch
+c:\tracer-open-master\rayaiming\rayaiming.cpp(1388): warning C4552: '+': result of expression not used
+c:\tracer-open-master\rayaiming\rayaiming.cpp(1416): warning C4552: '+': result of expression not used
+c:\tracer-open-master\rayaiming\rayaiming.cpp(1457): warning C4552: '+': result of expression not used
+c:\tracer-open-master\rayaiming\rayaiming.cpp(1514): warning C4552: '+': result of expression not used
+c:\tracer-open-master\rayaiming\rayaiming.cpp(1568): warning C4552: '+': result of expression not used
+c:\tracer-open-master\rayaiming\rayaiming.cpp(1940): warning C4267: 'argument': conversion from 'size_t' to 'const unsigned int', possible loss of data
+c:\tracer-open-master\rayaiming\rayaiming.cpp(2262): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\rayaiming\rayaiming.cpp(2703): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+  VS-Solution_tracer-open.vcxproj -> C:\Tracer-Open-Master\VS-Solution_tracer-open\x64\Debug\VS-Solution_tracer-open.exe

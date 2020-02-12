@@ -15,21 +15,62 @@
 #include "..\..\Glasses\Glasses.h"
 #include "..\..\FillAptertureStop\FillApertureStop.h"
 
+// analyse
 #include "..\..\Analyse\Spot.h"
+#include "..\..\Analyse\CardinalPoints.h"
 
 // Für timer, später löschen:
 #include <iostream>
 #include <cstdio>
 #include <ctime>
 
+
+lightRay_interPoint_onTarget::lightRay_interPoint_onTarget() {};
+lightRay_interPoint_onTarget::lightRay_interPoint_onTarget(/*light ray*/ LightRayStruct lightRay, /*intersection point*/ VectorStructR3 interPoint, /*on target*/ bool onTarger):
+	mLightRay(lightRay),
+	mInterPoint(interPoint),
+	mOnTarget(onTarger)
+{}
+
+	// light ray
+LightRayStruct lightRay_interPoint_onTarget::getLightRay()
+{
+	return mLightRay;
+}
+void lightRay_interPoint_onTarget::setLightRay(LightRayStruct lightRay)
+{
+	mLightRay = lightRay;
+}
+
+// intersection point
+VectorStructR3 lightRay_interPoint_onTarget::getIntersectionPoint()
+{
+	return mInterPoint;
+}
+void lightRay_interPoint_onTarget::setIntersectionPoint(VectorStructR3 interPoint)
+{
+	mInterPoint = interPoint;
+}
+
+// on target
+bool lightRay_interPoint_onTarget::getOnTarget()
+{
+	return mOnTarget;
+}
+void lightRay_interPoint_onTarget::setOnTarget(bool onTarget)
+{
+	mOnTarget = onTarget;
+}
+
 bool BenchmarkRayAiming::checkRayAimingSuperFct()
 {
 	std::vector<bool> checkRayAiming_SuperFct;
-	// E0
-	bool checkE0 = checkRayAimingE0();
-	checkRayAiming_SuperFct.push_back(checkE0);
-
-
+	// E0 inf
+	//bool checkE0 = checkRayAimingE0_inf();
+	//checkRayAiming_SuperFct.push_back(checkE0);
+	// E0 inf
+	bool checkE1 = checkRayAimingE1_inf();
+	checkRayAiming_SuperFct.push_back(checkE1);
 
 
 	bool returnCheckSuperFct = Math::checkTrueOfVectorElements(checkRayAiming_SuperFct);
@@ -37,8 +78,8 @@ bool BenchmarkRayAiming::checkRayAimingSuperFct()
 
 }
 
-// check ray aiming E0
-bool BenchmarkRayAiming::checkRayAimingE0()
+// check ray aiming E0 inf
+bool BenchmarkRayAiming::checkRayAimingE0_inf()
 {
 	std::vector<bool> checkRayAiming_E0;
 	
@@ -49,24 +90,22 @@ bool BenchmarkRayAiming::checkRayAimingE0()
 	Light_LLT light;
 	light.setWavelength(550.0);
 	light.setIntensity(1.0);
-	unsigned int rings = 4;
-	unsigned int arms = 6;
+	unsigned int rings = 6;
+	unsigned int arms = 8;
 	real refIndexAir = 1.0;
-	VectorStructR3 startRay0 = { 0.0,0.0,0.0 };
-	VectorStructR3 startRay1 = { 0.0,1.0,0.0 };
 	//*** ------  ***//
 
 	// TestSystem00 ///////////////////////////////////////////////////
 	OpticalSystem_LLT TestSystem00;
 
 	// 0 surface
-	SphericalSurface_LLT SphericalSurfaceTS00_0(/*radius*/9.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0,0.0,15.0 },
+	SphericalSurface_LLT SphericalSurfaceTS00_0(/*radius*/12.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0,0.0,15.0 },
 		/*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.7);
 	// 1 surface
-	SphericalSurface_LLT SphericalSurfaceTS00_1(/*radius*/9.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0,0.0,17.0 },
+	SphericalSurface_LLT SphericalSurfaceTS00_1(/*radius*/12.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0,0.0,17.0 },
 		/*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.7);
 	// 2 surface
-	ApertureStop_LLT AperturStopTS00_2{/*semiHeight*/ 0.8, /*Apex*/{ 0.0,0.0,20.0 },/*direction*/ { 0.0,0.0,20.0 },
+	ApertureStop_LLT AperturStopTS00_2{/*semiHeight*/ 1.0, /*Apex*/{ 0.0,0.0,20.0 },/*direction*/ { 0.0,0.0,20.0 },
 		/*refIndex*/ 1.0 };
 	// 3 surface
 	PlanGeometry_LLT PlanSurfaceTS00_3(/*semiHeight*/ 4.0, /*Apex*/{ 0.0,0.0,23.0 }, /*Direction*/{ 0.0,0.0,1.0 },
@@ -78,94 +117,162 @@ bool BenchmarkRayAiming::checkRayAimingE0()
 	TestSystem00.fillVectorSurfaceAndInteractingData(2, &AperturStopTS00_2, doNothing.clone());
 	TestSystem00.fillVectorSurfaceAndInteractingData(3, &PlanSurfaceTS00_3, absorb.clone());
 
-//	// Object 0
-//	VectorStructR3 startPoint00_0{ 0.0,0.0,0.0 };
-//	VectorStructR3 targetPoint00_0{ 0.4,-0.399,20.0 };
-//	bool ch00_obj_0 = checkRayAimingSingleRay_obj(TestSystem00, startPoint00_0, targetPoint00_0, light);
-//	checkRayAiming_E0.push_back(ch00_obj_0);
-//	
-//	// Field
-//	VectorStructR3 startPoint00_01{ 0.0,0.5,0.0 };
-//	VectorStructR3 targetPoint00_1{ -0.145,0.356,20.0 };
-//	bool ch00_obj_1 = checkRayAimingSingleRay_obj(TestSystem00, startPoint00_01, targetPoint00_1, light);
-//	checkRayAiming_E0.push_back(ch00_obj_1);
-//
-//	// many ray	
-//	bool cTS00_0_obj = checkRayAimingManyRay_obj(TestSystem00, startRay0, rings, arms, refIndexAir, light);
-//	checkRayAiming_E0.push_back(cTS00_0_obj);
-//	bool cTS00_1_obj = checkRayAimingManyRay_obj(TestSystem00, startRay1, rings, arms, refIndexAir, light);
-//	checkRayAiming_E0.push_back(cTS00_1_obj);
-
-	
-	//// ***********************************
-	//// ray aiming with test system 0 with rays from infinity !!!
-	//// ***********************************
-
+	///// ***********************************
+	///// ray aiming with test system 0 with rays from infinity !!!
+	///// ***********************************
+	/// *** direction Z = 1 *** //
 	VectorStructR3 rayDirectionTS00_1 = { 0.0,0.0,1.0 };
-
-	//VectorStructR3 targetPointTS00_0 = { 0.7 ,-0.02,20.0 };
-	//bool ch00_inf_0 = checkRayAimingSingleRay_inf(/*opt sys LLT*/TestSystem00, /*ray direction*/ rayDirectionTS00_1, /*target point*/ targetPointTS00_0, /*light*/ light);
-	//checkRayAiming_E0.push_back(ch00_inf_0);
-
+	
+	VectorStructR3 targetPointTS00_0 = { 0.7 ,-0.02,20.0 };
+	lightRay_interPoint_onTarget ch00_inf_0 = checkRayAimingSingleRay_inf(/*opt sys LLT*/TestSystem00, /*ray direction*/ rayDirectionTS00_1, /*target point*/ targetPointTS00_0, /*light*/ light, /*accurancy*/ 0.00001);
+	checkRayAiming_E0.push_back(ch00_inf_0.getOnTarget());
+	
 	VectorStructR3 targetPointTS00_1 = { -0.4 ,-0.69282,20.0 };
-	bool ch00_inf_1 = checkRayAimingSingleRay_inf(/*opt sys LLT*/TestSystem00, /*ray direction*/ rayDirectionTS00_1, /*target point*/ targetPointTS00_1, /*light*/ light);
-	checkRayAiming_E0.push_back(ch00_inf_1);
+	lightRay_interPoint_onTarget ch00_inf_1 = checkRayAimingSingleRay_inf(/*opt sys LLT*/TestSystem00, /*ray direction*/ rayDirectionTS00_1, /*target point*/ targetPointTS00_1, /*light*/ light, /*accurancy*/ 0.00001);
+	checkRayAiming_E0.push_back(ch00_inf_1.getOnTarget());
+	
+	bool ch00_inf_many_0 = checkRayAimingManyRay_inf(/*opt sys LLT*/ TestSystem00, /*ray direction*/ rayDirectionTS00_1, /*rings*/ rings,/*arms*/ arms,/*light*/ light, /*compare rms*/ 300.496, /*tolerance*/  1.0, /*decimals*/ 3, /*accurancy*/ 0.00001);
+	checkRayAiming_E0.push_back(ch00_inf_many_0);
+	// *** *** //
+	
+	// *** angle y 0.5 *** //
+	VectorStructR3 rayDirectionTS00_05 = Math::convertAngleInDirection(0.0, 0.5);
+	
+	VectorStructR3 targetPointTS00_05_0 = { 0.254 ,-0.249,20.0 };
+	lightRay_interPoint_onTarget ch00_inf_05_0 = checkRayAimingSingleRay_inf(/*opt sys LLT*/TestSystem00, /*ray direction*/ rayDirectionTS00_05, /*target point*/ targetPointTS00_05_0, /*light*/ light, /*accurancy*/ 0.00001);
+	checkRayAiming_E0.push_back(ch00_inf_05_0.getOnTarget());
+	bool checkStartP_E0_05_0 = checkStartPointRay(ch00_inf_05_0, { 0.4300800456,-0.49798195051,13.0 }, 3);
+	checkRayAiming_E0.push_back(checkStartP_E0_05_0);
+	bool checkDirection_E0_05_0 = checkDirection_inf(0.0, 0.5, ch00_inf_05_0.getLightRay().getRay_LLT().getDirectionRayUnit(), 3);
+	checkRayAiming_E0.push_back(checkDirection_E0_05_0);
+	
+	VectorStructR3 targetPointTS00_05_1 = { 0.0 ,-0.8,20.0 };
+	lightRay_interPoint_onTarget ch00_inf_05_1 = checkRayAimingSingleRay_inf(/*opt sys LLT*/TestSystem00, /*ray direction*/ rayDirectionTS00_05, /*target point*/ targetPointTS00_05_1, /*light*/ light, /*accurancy*/ 0.00001);
+	checkRayAiming_E0.push_back(ch00_inf_05_1.getOnTarget());
+	bool checkStartP_E0_05_1 = checkStartPointRay(ch00_inf_05_1, { 0.0,-1.4601280734,13.0 }, 3);
+	checkRayAiming_E0.push_back(checkStartP_E0_05_1);
+	bool checkDirection_E0_05_1 = checkDirection_inf(0.0, 0.5, ch00_inf_05_1.getLightRay().getRay_LLT().getDirectionRayUnit(),3);
+	checkRayAiming_E0.push_back(checkDirection_E0_05_1);
+	
+	VectorStructR3 targetPointTS00_05_2 = { 0.5 ,0.5,20.0 };
+	lightRay_interPoint_onTarget ch00_inf_05_2 = checkRayAimingSingleRay_inf(/*opt sys LLT*/TestSystem00, /*ray direction*/ rayDirectionTS00_05, /*target point*/ targetPointTS00_05_2, /*light*/ light, /*accurancy*/ 0.00001);
+	checkRayAiming_E0.push_back(ch00_inf_05_2.getOnTarget());
+	bool checkStartP_E0_05_2 = checkStartPointRay(ch00_inf_05_2, { 0.85508961601,0.77763913885,13.0 }, 2);
+	checkRayAiming_E0.push_back(checkStartP_E0_05_2);
+	bool checkDirection_E0_05_2 = checkDirection_inf(0.0, 0.5, ch00_inf_05_2.getLightRay().getRay_LLT().getDirectionRayUnit(), 3);
+	checkRayAiming_E0.push_back(checkDirection_E0_05_2);
+	
+	bool ch00_inf_many_05 = checkRayAimingManyRay_inf(/*opt sys LLT*/ TestSystem00, /*ray direction*/ rayDirectionTS00_05, /*rings*/ rings,/*arms*/ arms,/*light*/ light,  /*compare rms*/ 300.214, /*tolerance*/  1.0, /*decimals*/ 3, /*accurancy*/ 0.00001);
+	checkRayAiming_E0.push_back(ch00_inf_many_05);	
 
-	bool ch00_inf_many = checkRayAimingManyRay_inf(/*opt sys LLT*/ TestSystem00, /*ray direction*/ rayDirectionTS00_1, /*rings*/ rings,/*arms*/ arms,/*light*/ light);
-	checkRayAiming_E0.push_back(ch00_inf_many);
+	// *** angle x 0.5 / y 0.5 *** //
+	VectorStructR3 rayDirectionTS00_05_05 = Math::convertAngleInDirection(0.5, 0.5);
 
-	
-	
-	
-	
-	
-	// Ray Aiming from infinity   
-	RayAiming checkRayAimingTS00_2(TestSystem00);
-	SequentialRayTracing seqTrace00_2(TestSystem00);
-	VectorStructR3 rayDirection00_2 = { 0.0,0.0,1.0 };
-	LightRayStruct testLightRay00_2_inf;
-	VectorStructR3 checkTS00_2;
-	std::vector<bool> bool00_2;
-	std::vector<VectorStructR3> interPoints00_1;
-	real semiHeightTest00_0 = 0.8;
-	VectorStructR3 apexAperture00_0{ 0.0,0.0,20.0 };
-	FillApertureStop fillAperStopRayAiming00_3;
-	std::vector<VectorStructR3> pointsInApStopTS00_3 = fillAperStopRayAiming00_3.fillAS_withPointsDithered(5, apexAperture00_0, { 0.0,0.0,1.0 }, semiHeightTest00_0);
-	FillApertureStop fillAperStopRayAiming00_2;
-	std::vector<VectorStructR3> pointsInApStopTS00_2 = fillAperStopRayAiming00_2.fillAS_withPointsSquare(5, apexAperture00_0, { 0.0,0.0,1.0 }, semiHeightTest00_0);
-	FillApertureStop fillAperStopRayAiming00_4;
-	std::vector<VectorStructR3> pointsInApStopTS00_1 = fillAperStopRayAiming00_4.fillAS_withPoints(5, apexAperture00_0, { 0.0,0.0,1.0 }, semiHeightTest00_0);
-	
-	//std::clock_t start1;
-	//double duration1;
-	//start1 = std::clock();
-	//duration1 = (std::clock() - start1) / (double)CLOCKS_PER_SEC;
-	//std::cout << "printf2: " << duration1 << '\n';
-	
-	//for (unsigned int i = 0; i < pointsInApStopTS00_1.size(); i++)
-	//{
-	//	testLightRay00_2_inf = checkRayAimingTS00_2.infinityRayAiming(rayDirection00_2, pointsInApStopTS00_1.at(i), light, 1.0);
-	//	seqTrace00_2.sequentialRayTracing(testLightRay00_2_inf);
-	//	checkTS00_2 = seqTrace00_2.getAllInterPointsAtSurf_i(checkRayAimingTS00_2.getPositionApertureStop(TestSystem00)).at(i);
-	//	interPoints00_1.push_back(checkTS00_2);
-	//	cTS00_0_obj = Math::compareTwoVectorStructR3(pointsInApStopTS00_1.at(i), checkTS00_2, 4);
-	//	bool00_2.push_back(cTS00_0_obj);
-	//
-	//}
-	
-	//std::cout << '\n' << "Duration Objekt: " << duration0 << '\n';
-	//std::cout << "RMS Objekt: " << rmsTS00_0 << '\n';
-	
-	//duration1 = (std::clock() - start1) / (double)CLOCKS_PER_SEC;
-	//std::cout << '\n' << "Duration infinity: " << duration1 << '\n';
-	//
-	//Spot spotTS00_2;
-	//real rmsTS00_2 = spotTS00_1.calcRMS(seqTrace00_2.getAllInterPointsAtSurf_i(3), seqTrace00_2.getAllInterPointsAtSurf_i(3).at(0)) * 1000;
-	//
-	//std::cout << "RMS Infinity: " << rmsTS00_1 << '\n';
-	//
+	VectorStructR3 targetPointTS00_05_05_0 = { 0.3 ,-0.4,20.0 };
+	lightRay_interPoint_onTarget ch00_inf_05_05_0 = checkRayAimingSingleRay_inf(/*opt sys LLT*/TestSystem00, /*ray direction*/ rayDirectionTS00_05_05, /*target point*/ targetPointTS00_05_05_0, /*light*/ light,/*accurancy*/ 0.00001);
+	checkRayAiming_E0.push_back(ch00_inf_05_05_0.getOnTarget());
+	bool checkDirection_E0_05_05_0 = checkDirection_inf(0.5, 0.5, ch00_inf_05_05_0.getLightRay().getRay_LLT().getDirectionRayUnit(), 3);
+	checkRayAiming_E0.push_back(checkDirection_E0_05_05_0);
+
+	bool ch00_inf_many_05_05 = checkRayAimingManyRay_inf(/*opt sys LLT*/ TestSystem00, /*ray direction*/ rayDirectionTS00_05_05, /*rings*/ rings,/*arms*/ arms,/*light*/ light,  /*compare rms*/ 299.931, /*tolerance*/  1.0, /*decimals*/ 3, /*accurancy*/ 0.00001 );
+	checkRayAiming_E0.push_back(ch00_inf_many_05_05);
+
+
+
 	bool returnCheckerE0 = Math::checkTrueOfVectorElements(checkRayAiming_E0);
 	return returnCheckerE0;
+
+}
+
+
+
+
+bool BenchmarkRayAiming::checkRayAimingE1_inf()
+{
+	std::vector<bool> checkRayAiming_E1;
+
+	//*** standart ***//
+	RefractedRay_LLT refrac;
+	Absorb_LLT absorb;
+	DoNothingInteraction_LLT doNothing;
+	Light_LLT light;
+	light.setWavelength(550.0);
+	light.setIntensity(1.0);
+	unsigned int rings = 6;
+	unsigned int arms = 8;
+	real refIndexAir = 1.0;
+	//*** ------  ***//
+
+
+	// TestSystem01 ///////////////////////////////////////////////////
+	OpticalSystem_LLT TestSystem01_DG;
+
+	// 0 surface
+	SphericalSurface_LLT SphericalSurfaceTS01_0(/*radius*/3.55191, /*semiHeight*/2.215, /*Apex of the sphere*/{ 0.0,0.0,5.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.846663);
+	// 1 surface
+	PlanGeometry_LLT PlanSurfaceTS01_1(/*semiHeight*/2.215,/*Apex*/{ 0.0,0.0,6.39909 }, /*Direction*/{ 0.0,0.0,1.0 }, /*refIndexSideA*/  1.846663,  /*refIndexSideB*/ 1.0);;
+	// 2 surface
+	SphericalSurface_LLT SphericalSurfaceTS01_2(/*radius*/1.70434, /*semiHeight*/1.47, /*Apex of the sphere*/{ 0.0,0.0,6.40786 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.552322);
+	// 3 surface
+	SphericalSurface_LLT SphericalSurfaceTS01_3(/*radius*/16.23815, /*semiHeight*/1.47, /*Apex of the sphere*/{ 0.0,0.0,7.346384 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.717360, /*refIndexSideB*/1.552322);
+	// 4 surface
+	SphericalSurface_LLT SphericalSurfaceTS01_4(/*radius*/0.98604, /*semiHeight*/0.81, /*Apex of the sphere*/{ 0.0,0.0,7.598577}, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.717360, /*refIndexSideB*/1.0);
+	// 5 surface
+	ApertureStop_LLT AperturStopTS01_5{/*semiHeight*/ 0.50, /*Apex*/{ 0.0,0.0,8.03220600 },/*direction*/ { 0.0,0.0,1.0 }, /*refIndex*/ 1.0 };
+	// 6 surface
+	SphericalSurface_LLT SphericalSurfaceTS01_6(/*radius*/1.642380, /*semiHeight*/0.81, /*Apex of the sphere*/{ 0.0,0.0,8.3098700 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.717360, /*refIndexSideB*/1.0);
+	// 7 surface
+	SphericalSurface_LLT SphericalSurfaceTS01_7(/*radius*/1.80278, /*semiHeight*/1.024999980, /*Apex of the sphere*/{ 0.0,0.0,8.580042 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.717360, /*refIndexSideB*/1.744002);
+	// 8 surface
+	SphericalSurface_LLT SphericalSurfaceTS01_8(/*radius*/2.33364, /*semiHeight*/1.024999980, /*Apex of the sphere*/{ 0.0,0.0,9.738626 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.744002);
+	// 9 surface
+	SphericalSurface_LLT SphericalSurfaceTS01_9(/*radius*/1.65927, /*semiHeight*/0.93, /*Apex of the sphere*/{ 0.0,0.0,10.185872 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.744002);
+	// 10 surface
+	SphericalSurface_LLT SphericalSurfaceTS01_10(/*radius*/14.41124, /*semiHeight*/0.93, /*Apex of the sphere*/{ 0.0,0.0,11.229631 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.744002, /*refIndexSideB*/1.0);
+	// 11 surface
+	PlanGeometry_LLT PlanSurfaceTS01_11(/*semiHeight*/ 1.0, /*Apex*/{ 0.0,0.0,11.55521134}, /*Direction*/{ 0.0,0.0,1.0 }, /*refIndexSideA*/  1.0,  /*refIndexSideB*/ 1.0);
+	
+	
+	// build the optical system
+	TestSystem01_DG.fillVectorSurfaceAndInteractingData(0, SphericalSurfaceTS01_0.clone(), refrac.clone());
+	TestSystem01_DG.fillVectorSurfaceAndInteractingData(1, PlanSurfaceTS01_1.clone(), refrac.clone());
+	TestSystem01_DG.fillVectorSurfaceAndInteractingData(2, SphericalSurfaceTS01_2.clone(), refrac.clone());
+	TestSystem01_DG.fillVectorSurfaceAndInteractingData(3, SphericalSurfaceTS01_3.clone(), refrac.clone());
+	TestSystem01_DG.fillVectorSurfaceAndInteractingData(4, SphericalSurfaceTS01_4.clone(), refrac.clone());
+	TestSystem01_DG.fillVectorSurfaceAndInteractingData(5, AperturStopTS01_5.clone(), doNothing.clone());
+	TestSystem01_DG.fillVectorSurfaceAndInteractingData(6, SphericalSurfaceTS01_6.clone(), refrac.clone());
+	TestSystem01_DG.fillVectorSurfaceAndInteractingData(7, SphericalSurfaceTS01_7.clone(), refrac.clone());
+	TestSystem01_DG.fillVectorSurfaceAndInteractingData(8, SphericalSurfaceTS01_8.clone(), refrac.clone());
+	TestSystem01_DG.fillVectorSurfaceAndInteractingData(9, SphericalSurfaceTS01_9.clone(), refrac.clone());
+	TestSystem01_DG.fillVectorSurfaceAndInteractingData(10, SphericalSurfaceTS01_10.clone(), refrac.clone());
+	TestSystem01_DG.fillVectorSurfaceAndInteractingData(11, PlanSurfaceTS01_11.clone(), absorb.clone());
+
+	/// ***********************************
+	/// ray aiming with test system 1 with rays from infinity !!!
+	/// ***********************************
+	/// *** direction Z = 1 *** //
+	VectorStructR3 rayDirectionTS1_1 = { 0.0,0.0,1.0 };
+	
+	bool checkSingleRay = checkRayTracing_inf(TestSystem01_DG, { 0.0,1.4006185992,0.0 }, 0.0, 0.0, 1.0, light, { 0.0,-0.02700151822,11.552572675 }, 11, 0.00001);
+	
+	VectorStructR3 targetPointTS1_0 = { -0.31 ,0.21,20.0 };
+	lightRay_interPoint_onTarget ch1_inf_0 = checkRayAimingSingleRay_inf(/*opt sys LLT*/TestSystem01_DG, /*ray direction*/ rayDirectionTS1_1, /*target point*/ targetPointTS1_0, /*light*/ light, /*accurancy*/ 0.00001);
+	checkRayAiming_E1.push_back(ch1_inf_0.getOnTarget());
+	
+	VectorStructR3 targetPointTS1_2 = { -0.39 ,0.21,20.0 };
+	lightRay_interPoint_onTarget ch1_inf_1 = checkRayAimingSingleRay_inf(/*opt sys LLT*/TestSystem01_DG, /*ray direction*/ rayDirectionTS1_1, /*target point*/ targetPointTS1_2, /*light*/ light, /*accurancy*/ 0.00001);
+	checkRayAiming_E1.push_back(ch1_inf_1.getOnTarget());
+	
+	bool ch1_inf_many_05_05 = checkRayAimingManyRay_inf(/*opt sys LLT*/ TestSystem01_DG, /*ray direction*/ rayDirectionTS1_1, /*rings*/ rings,/*arms*/ arms,/*light*/ light,  /*compare rms*/ 2.216, /*tolerance*/  0.1, /*decimals*/ 3, /*accurancy*/ 0.00001);
+	checkRayAiming_E1.push_back(ch1_inf_many_05_05);
+	
+	
+	// hier gehts weiter! 
+	// direction 0.5 ... 0.5
+
+
+	bool returnCheckerE1 = Math::checkTrueOfVectorElements(checkRayAiming_E1);
+	return returnCheckerE1;
 
 }
 
@@ -325,172 +432,10 @@ bool  BenchmarkRayAiming::checkMethodesRayAiming()
 	Light_LLT lightVal;
 
 
-	// TestSystem05 ///////////////////////////////////////////////////
-	OpticalSystem_LLT DoubleGauss5DegreeField;
-	
-	// 0 surface
-	SphericalSurface_LLT SphericalSurfaceTS05_0(/*radius*/3.552, /*semiHeight*/1.5, /*Apex of the sphere*/{ 0.0,0.0,5.0 },
-		/*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.74);
-	// 1 surface
-	SphericalSurface_LLT SphericalSurfaceTS05_1(/*radius*/ 200.0, /*semiHeight*/1.5,/*Apex*/{ 0.0,0.0,6.4 }, /*Direction*/{ 0.0,0.0,1.0 },
-		/*refIndexSideA*/  1.74,  /*refIndexSideB*/ 1.0);;
-	// 2 surface
-	SphericalSurface_LLT SphericalSurfaceTS05_2(/*radius*/1.704, /*semiHeight*/1.5, /*Apex of the sphere*/{ 0.0,0.0,6.5 },
-		/*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.55);
-	// 3 surface
-	SphericalSurface_LLT SphericalSurfaceTS05_3(/*radius*/16.238, /*semiHeight*/1.5, /*Apex of the sphere*/{ 0.0,0.0,7.5 },
-		/*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.71, /*refIndexSideB*/1.55);
-	// 4 surface
-	SphericalSurface_LLT SphericalSurfaceTS05_4(/*radius*/0.986, /*semiHeight*/0.8, /*Apex of the sphere*/{ 0.0,0.0,7.8 },
-		/*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.71, /*refIndexSideB*/1.0);
-	// 5 surface
-	ApertureStop_LLT AperturStopTS05_5{/*semiHeight*/ 0.42, /*Apex*/{ 0.0,0.0,8.2 },/*direction*/ { 0.0,0.0,1.0 },
-		/*refIndex*/ 1.0 };
-	// 6 surface
-	SphericalSurface_LLT SphericalSurfaceTS05_6(/*radius*/1.642, /*semiHeight*/0.8, /*Apex of the sphere*/{ 0.0,0.0,8.5 },
-		/*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.71, /*refIndexSideB*/1.0);
-	// 7 surface
-	SphericalSurface_LLT SphericalSurfaceTS05_7(/*radius*/1.803, /*semiHeight*/1.0, /*Apex of the sphere*/{ 0.0,0.0,8.8 },
-		/*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.71, /*refIndexSideB*/1.74);
-	// 8 surface
-	SphericalSurface_LLT SphericalSurfaceTS05_8(/*radius*/2.334, /*semiHeight*/1.0, /*Apex of the sphere*/{ 0.0,0.0,10.0 },
-		/*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.74);
-	// 9 surface
-	SphericalSurface_LLT SphericalSurfaceTS05_9(/*radius*/1.659, /*semiHeight*/1.1, /*Apex of the sphere*/{ 0.0,0.0,10.4 },
-		/*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.74);
-	// 10 surface
-	SphericalSurface_LLT SphericalSurfaceTS05_10(/*radius*/14.411, /*semiHeight*/1.1, /*Apex of the sphere*/{ 0.0,0.0,11.4 },
-		/*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.74, /*refIndexSideB*/1.0);
-	// 11 surface
-	PlanGeometry_LLT PlanSurfaceTS05_11(/*semiHeight*/ 2.0, /*Apex*/{ 0.0,0.0,12.2 }, /*Direction*/{ 0.0,0.0,1.0 },
-		/*refIndexSideA*/  1.0,  /*refIndexSideB*/ 1.0);
-	
-	// build the optical system
-	DoubleGauss5DegreeField.fillVectorSurfaceAndInteractingData(0, &SphericalSurfaceTS05_0, refrac.clone());
-	DoubleGauss5DegreeField.fillVectorSurfaceAndInteractingData(1, &SphericalSurfaceTS05_1, refrac.clone());
-	DoubleGauss5DegreeField.fillVectorSurfaceAndInteractingData(2, &SphericalSurfaceTS05_2, refrac.clone());
-	DoubleGauss5DegreeField.fillVectorSurfaceAndInteractingData(3, &SphericalSurfaceTS05_3, refrac.clone());
-	DoubleGauss5DegreeField.fillVectorSurfaceAndInteractingData(4, &SphericalSurfaceTS05_4, refrac.clone());
-	DoubleGauss5DegreeField.fillVectorSurfaceAndInteractingData(5, &AperturStopTS05_5, doNothing.clone());
-	DoubleGauss5DegreeField.fillVectorSurfaceAndInteractingData(6, &SphericalSurfaceTS05_6, refrac.clone());
-	DoubleGauss5DegreeField.fillVectorSurfaceAndInteractingData(7, &SphericalSurfaceTS05_7, refrac.clone());
-	DoubleGauss5DegreeField.fillVectorSurfaceAndInteractingData(8, &SphericalSurfaceTS05_8, refrac.clone());
-	DoubleGauss5DegreeField.fillVectorSurfaceAndInteractingData(9, &SphericalSurfaceTS05_9, refrac.clone());
-	DoubleGauss5DegreeField.fillVectorSurfaceAndInteractingData(10, &SphericalSurfaceTS05_10, refrac.clone());
-	DoubleGauss5DegreeField.fillVectorSurfaceAndInteractingData(11, &PlanSurfaceTS05_11, absorb.clone());
 	
 	
-	// Object 0
-	RayAiming checkRayAimingTS05_0(DoubleGauss5DegreeField);
-	VectorStructR3 startPoint05_0{ 0.0,0.0,0.0 };
-	VectorStructR3 targetPoint05_0{ 0.0,0.4,8.2};
-	LightRayStruct testLightRay05_0 = checkRayAimingTS05_0.calcRayThrowPointInApertureStop(startPoint05_0, targetPoint05_0, light, 1.0);
-	SequentialRayTracing seqTrace05_0(DoubleGauss5DegreeField);
-	seqTrace05_0.sequentialRayTracing(testLightRay05_0);
-	VectorStructR3 checkTS05 = seqTrace05_0.getAllInterPointsAtSurf_i(checkRayAimingTS05_0.getPositionApertureStop(DoubleGauss5DegreeField)).at(0);
-	bool ch05 = Math::compareTwoVectorStructR3(targetPoint05_0, checkTS05, 4);
-	checkRayAiming.push_back(ch05);
-	
-	// Field
-	RayAiming checkRayAimingTS05_1(DoubleGauss5DegreeField);
-	VectorStructR3 startPoint05_1{ 0.0,-0.40,0.0 };
-	VectorStructR3 targetPoint05_1{ -0.3,0.23,8.2 };
-	LightRayStruct testLightRay05_1 = checkRayAimingTS05_1.calcRayThrowPointInApertureStop(startPoint05_1, targetPoint05_1, light, 1.0);
-	SequentialRayTracing seqTrace05_1(DoubleGauss5DegreeField);
-	seqTrace05_1.sequentialRayTracing(testLightRay05_1);
-	checkTS05 = seqTrace05_1.getAllInterPointsAtSurf_i(checkRayAimingTS05_1.getPositionApertureStop(DoubleGauss5DegreeField)).at(0);
-	ch05 = Math::compareTwoVectorStructR3(targetPoint05_1, checkTS05, 4);
-	checkRayAiming.push_back(ch05);
-	
-	// Infinity 0
-	RayAiming checkRayAimingTS05_2(DoubleGauss5DegreeField);
-	VectorStructR3 rayDirectionTS05_2 = { 0.0,0.0,1.0 };
-	VectorStructR3 targetPointTS05_2 = { 0.2111111,-0.07856,8.2 };
-	LightRayStruct testLightRay05_2 = checkRayAimingTS05_2.infinityRayAiming(rayDirectionTS05_2, targetPointTS05_2, light, 1.0);
-	SequentialRayTracing seqTraceTS05_2(DoubleGauss5DegreeField);
-	seqTraceTS05_2.sequentialRayTracing(testLightRay05_2);
-	checkTS05 = seqTraceTS05_2.getAllInterPointsAtSurf_i(checkRayAimingTS05_2.getPositionApertureStop(DoubleGauss5DegreeField)).at(0);
-	ch05 = Math::compareTwoVectorStructR3(targetPointTS05_2, checkTS05, 4);
-	checkRayAiming.push_back(ch05);
-	
-	// Infinity 1
-	RayAiming checkRayAimingTS05_3(DoubleGauss5DegreeField);
-	VectorStructR3 rayDirectionTS05_3 = { 0.0,0.05,1.0 };
-	VectorStructR3 targetPointTS05_3 = { 0.142,-0.1134,8.2 };
-	LightRayStruct testLightRay05_3 = checkRayAimingTS05_3.infinityRayAiming(rayDirectionTS05_3, targetPointTS05_3, light, 1.0);
-	SequentialRayTracing seqTraceTS05_3(DoubleGauss5DegreeField);
-	seqTraceTS05_3.sequentialRayTracing(testLightRay05_3);
-	checkTS05 = seqTraceTS05_3.getAllInterPointsAtSurf_i(checkRayAimingTS05_3.getPositionApertureStop(DoubleGauss5DegreeField)).at(0);
-	ch05 = Math::compareTwoVectorStructR3(targetPointTS05_3, checkTS05, 4);
-	checkRayAiming.push_back(ch05);
 	
 	
-	// Ray aiming from one point
-	RayAiming checkRayAimingTS05_4(DoubleGauss5DegreeField);
-	SequentialRayTracing seqTrace05_4(DoubleGauss5DegreeField);
-	// Test targets Ring
-	double semiHeightTest05_4 = 0.4;
-	VectorStructR3 startPoint05_4 = { 0.0,0.0,0.0 };
-	VectorStructR3 apexAperture05_4 = { 0.0,0.0,8.2 };
-	std::vector<bool> bool05_4;
-	std::vector<VectorStructR3> interPoints05_4;
-	LightRayStruct testLightRay05_4;
-	VectorStructR3 checkTS05_4;
-	bool cTS05_4;
-	
-	FillApertureStop fillAperStopRayAiming05_4;
-	std::vector<VectorStructR3> pointsInApStopTS05_4 = fillAperStopRayAiming05_4.fillAS_withPoints(6, apexAperture05_4, { 0.0,0.0,1.0 }, semiHeightTest05_4);
-	
-	std::clock_t start;
-	double duration;
-	start = std::clock();
-	duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
-	std::cout << "printf: " << duration << '\n';
-	
-	for (unsigned int i = 0; i < pointsInApStopTS05_4.size(); i++)
-	{
-		testLightRay05_4 = checkRayAimingTS05_4.calcRayThrowPointInApertureStop(startPoint05_4, pointsInApStopTS05_4.at(i), light, 1.0);
-		seqTrace05_4.sequentialRayTracing(testLightRay05_4);
-		checkTS05_4 = seqTrace05_4.getAllInterPointsAtSurf_i(checkRayAimingTS05_4.getPositionApertureStop(DoubleGauss5DegreeField)).at(i);
-		interPoints05_4.push_back(checkTS05_4);
-		cTS05_4 = Math::compareTwoVectorStructR3(pointsInApStopTS05_4.at(i), checkTS05_4, 4);
-		bool05_4.push_back(cTS05_4);
-	}
-	
-	duration = (std::clock() - start) / (double)CLOCKS_PER_SEC;
-	std::cout << "printf: " << duration << '\n';
-	
-	Spot spotTS05_4;
-	real rmsTS05_4 = spotTS05_4.calcRMS(seqTrace05_4.getAllInterPointsAtSurf_i(11), seqTrace05_4.getAllInterPointsAtSurf_i(11).at(0)) * 1000;
-	std::cout << "RMS: " << rmsTS05_4 << '\n';
-	
-	// Ray Aiming from infinity   
-	RayAiming checkRayAimingTS05_5(DoubleGauss5DegreeField);
-	SequentialRayTracing seqTrace05_5(DoubleGauss5DegreeField);
-	VectorStructR3 rayDirection05_5 = { 0.0,0.0,1.0 };
-	LightRayStruct testLightRay05_5;
-	VectorStructR3 checkTS05_5;
-	std::vector<bool> bool05_5;
-	std::vector<VectorStructR3> interPoints05_5;
-	FillApertureStop fillAperStopRayAiming05_5;
-	std::vector<VectorStructR3> pointsInApStopTS05_52 = fillAperStopRayAiming05_5.fillAS_withPointsDithered(4, apexAperture05_4, { 0.0,0.0,1.0 }, semiHeightTest05_4);
-	FillApertureStop fillAperStopRayAiming05_51;
-	std::vector<VectorStructR3> pointsInApStopTS05_51 = fillAperStopRayAiming05_51.fillAS_withPointsSquare(3, apexAperture05_4, { 0.0,0.0,1.0 }, semiHeightTest05_4);
-	FillApertureStop fillAperStopRayAiming05_52;
-	std::vector<VectorStructR3> pointsInApStopTS05_5 = fillAperStopRayAiming05_52.fillAS_withPoints(5, apexAperture05_4, { 0.0,0.0,1.0 }, semiHeightTest05_4);
-	
-	for (unsigned int i = 0; i < pointsInApStopTS05_5.size(); i++)
-	{
-		testLightRay05_5 = checkRayAimingTS05_5.infinityRayAiming(rayDirection05_5, pointsInApStopTS05_5.at(i), light, 1.0);
-		seqTrace05_5.sequentialRayTracing(testLightRay05_5);
-		checkTS05_5 = seqTrace05_5.getAllInterPointsAtSurf_i(checkRayAimingTS05_5.getPositionApertureStop(DoubleGauss5DegreeField)).at(i);
-		interPoints05_5.push_back(checkTS05_5);
-		cTS05_4 = Math::compareTwoVectorStructR3(pointsInApStopTS05_5.at(i), checkTS05_5, 4);
-		bool05_4.push_back(cTS05_4);
-	}
-	
-	Spot spotTS05_5;
-	real rmsTS05_5 = spotTS05_5.calcRMS(seqTrace05_5.getAllInterPointsAtSurf_i(11), seqTrace05_5.getAllInterPointsAtSurf_i(11).at(0)) * 1000;
 	
 	
 
@@ -1734,10 +1679,11 @@ bool BenchmarkRayAiming::checkRayAimingSingleRay_obj(/*opt sys LLT*/ OpticalSyst
 	return returnChecker;
 }
 
-bool BenchmarkRayAiming::checkRayAimingSingleRay_inf(/*opt sys LLT*/ OpticalSystem_LLT& const optSys_LLT, /*ray direction*/ VectorStructR3& const rayDirection, /*target point*/ VectorStructR3& const  targetPoint, /*light*/ Light_LLT& const Light)
+lightRay_interPoint_onTarget BenchmarkRayAiming::checkRayAimingSingleRay_inf(/*opt sys LLT*/ OpticalSystem_LLT& const optSys_LLT, /*ray direction*/ VectorStructR3& const rayDirection, /*target point*/ VectorStructR3& const  targetPoint, /*light*/ Light_LLT& const Light, /*accurency*/ real accurency)
 {
 
 	RayAiming RayAiming(optSys_LLT);
+	RayAiming.setToleranceX_Y(accurency);
 	////VectorStructR3 rayDirectionTS00_2 = { 0.0,0.0,1.0 };
 	//VectorStructR3 targetPointTS00_2 = { 0.7 ,-0.02,20.0 };
 	LightRayStruct testLightRay = RayAiming.infinityRayAiming(rayDirection, targetPoint, Light, 1.0);
@@ -1750,12 +1696,14 @@ bool BenchmarkRayAiming::checkRayAimingSingleRay_inf(/*opt sys LLT*/ OpticalSyst
 	bool checkDisX = std::abs(disX) <= RayAiming.getDefaultParameters().getTolerance_XandY();
 	bool checkDisY = std::abs(disY) <= RayAiming.getDefaultParameters().getTolerance_XandY();
 
-	bool returnChecker = checkDisX && checkDisY;
+	bool onTarget = checkDisX && checkDisY;
 
-	return returnChecker;
+	lightRay_interPoint_onTarget returnLR_IP_OT(testLightRay, checkerPoint, onTarget);
+
+	return returnLR_IP_OT;
 }
 
-bool BenchmarkRayAiming::checkRayAimingManyRay_inf(/*opt sys LLT*/ OpticalSystem_LLT& const optSys_LLT, /*ray direction*/ VectorStructR3& const rayDirection, /*rings*/ unsigned int& const ringsAB,/*arms*/ unsigned int& const armsAB,/*light*/ Light_LLT& const Light)
+bool BenchmarkRayAiming::checkRayAimingManyRay_inf(/*opt sys LLT*/ OpticalSystem_LLT& const optSys_LLT, /*ray direction*/ VectorStructR3& const rayDirection, /*rings*/ unsigned int& const ringsAB,/*arms*/ unsigned int& const armsAB,/*light*/ Light_LLT& const Light, /*compare rms*/ real checkRMS, real tolerance, unsigned int decimals, real accurancy )
 {
 	// find position aperture stop in opt sys
 	unsigned int posApertureStop = optSys_LLT.getPosApertureStop();
@@ -1767,34 +1715,123 @@ bool BenchmarkRayAiming::checkRayAimingManyRay_inf(/*opt sys LLT*/ OpticalSystem
 	VectorStructR3 directionApertureStop = optSys_LLT.getPosAndInteractingSurface()[posApertureStop].getSurfaceInterRay_ptr()->getDirection();
 
 	// Ray Aiming from infinity   
-	bool checker{};
 	RayAiming RayAiming(optSys_LLT);
 	SequentialRayTracing seqTrace(optSys_LLT);
 	LightRayStruct testLightRay;
-	VectorStructR3 checkerPoint;
 	std::vector<bool> cheker_vec;
 	//std::vector<VectorStructR3> interPoints05_5;
 	FillApertureStop fillAperStop;
 	std::vector<VectorStructR3> pointsInApStop = fillAperStop.fillAS_withPoints(ringsAB, pointApertureStop, directionApertureStop, semiHeightApertureStop);
 
+	std::vector<LightRayStruct> lightRays_vec;
+	lightRay_interPoint_onTarget checker;
+
+	// check all intersectio points at the aperture stop
 	for (unsigned int i = 0; i < pointsInApStop.size(); i++)
 	{
-		testLightRay = RayAiming.infinityRayAiming(rayDirection, pointsInApStop.at(i), Light, 1.0);
-		seqTrace.sequentialRayTracing(testLightRay);
-		checkerPoint = seqTrace.getAllInterPointsAtSurf_i(posApertureStop)[i];
-		checker = Math::compareTwoVectorStructR3(pointsInApStop.at(i), checkerPoint, 3);
-		if (checker == false)
+		checker = checkRayAimingSingleRay_inf(/*opt sys LLT*/ optSys_LLT, /*ray direction*/ rayDirection, /*target point*/ pointsInApStop[i], /*light*/ Light, accurancy);
+		
+		if (checker.getOnTarget() == false)
 		{
 			std::cout << "target point: " << std::endl;
 			pointsInApStop[i].print();
-			std::cout << "point by ray tracing: " << std::endl;
-			checkerPoint.print();
+			std::cout << "point by ray tracing: " << i << std::endl;
 		}
 
-		cheker_vec.push_back(checker);
+		cheker_vec.push_back(checker.getOnTarget());
+		lightRays_vec.push_back(checker.getLightRay());
 	}
 	
+	// just for debugging
+	optSys_LLT.printAllOptSysParameter_LLT(optSys_LLT);
+	
+	// check rms on image surface
+	unsigned int posLastSurface = optSys_LLT.getPosAndInteractingSurface().size() - 1;
+	SequentialRayTracing seqTraceForRMS(optSys_LLT);
+	seqTraceForRMS.seqRayTracingWithVectorOfLightRays(lightRays_vec);
+	Spot Spot(seqTraceForRMS.getAllInterPointsAtSurf_i(posLastSurface), seqTraceForRMS.getAllInterPointsAtSurf_i(posLastSurface)[0]);
+	real rmsTOM = Spot.getRMS_µm();
+	bool checkRMS_bool =std::abs(rmsTOM - checkRMS) < tolerance;
+	cheker_vec.push_back(checkRMS_bool);
+
+	// check for vignetting
+	unsigned int sizeFilterInterPoint = seqTraceForRMS.getAllInterInfosOfSurf_i(posLastSurface).size();
+	unsigned int sizeNotFilterInterPoint = seqTraceForRMS.getAllInterInfosOfSurf_i_notFiltered(posLastSurface).size();
+	bool checkVignetting = sizeFilterInterPoint == sizeNotFilterInterPoint;
+	cheker_vec.push_back(checkVignetting);
+
+	// check all directions
+	twoVaulesReal angel_X_Y = Math::convertDirectionInAngle(rayDirection);
+	real angle_X = angel_X_Y.getVal_1();
+	real angle_Y = angel_X_Y.getVal_2();
+	bool checkDirection = checkDirectionManyLightRay_inf(angle_X, angle_Y, lightRays_vec, decimals);
 
 	return Math::checkTrueOfVectorElements(cheker_vec);
+
+}
+
+
+bool BenchmarkRayAiming::checkStartPointRay(lightRay_interPoint_onTarget lightRay_IP_OT, VectorStructR3 checkStartPoint, unsigned int decimals)
+{
+	VectorStructR3 startPointTOM = lightRay_IP_OT.getLightRay().getRay_LLT().getOriginRay();
+
+	bool returnChecker = Math::compareTwoVectorStructR3(checkStartPoint, startPointTOM, decimals);
+
+	return returnChecker;
+}
+
+bool BenchmarkRayAiming::checkDirection_inf(real targetAngel_X, real targetAngle_Y, VectorStructR3 direction, unsigned int decimals)
+{
+
+	twoVaulesReal angelX_Y = Math::convertDirectionInAngle(direction);
+
+	bool checkAngle_X = Math::compareTwoNumbers(angelX_Y.getVal_1(), targetAngel_X, decimals);
+	bool checkAngle_Y = Math::compareTwoNumbers(angelX_Y.getVal_2(), targetAngle_Y, decimals);
+
+	return checkAngle_X && checkAngle_Y;
+
+}
+
+bool BenchmarkRayAiming::checkDirectionManyLightRay_inf(real targetAngel_X, real targetAngle_Y, std::vector<LightRayStruct> lightRayVec, unsigned int decimals)
+{
+	unsigned int size = lightRayVec.size();
+	VectorStructR3 tempDirection;
+	std::vector<bool> checker_vec;
+	checker_vec.resize(size);
+	bool tempChecker;
+
+	for (unsigned int i = 0; i < size; ++i)
+	{
+		tempDirection = lightRayVec[i].getRay_LLT().getDirectionRayUnit();
+		tempChecker = checkDirection_inf(targetAngel_X, targetAngle_Y, tempDirection, decimals);
+
+		checker_vec[i] = tempChecker;
+	}
+
+	bool returnChecker = Math::checkTrueOfVectorElements(checker_vec);
+
+	return returnChecker;
+
+}
+
+bool BenchmarkRayAiming::checkRayTracing_inf(OpticalSystem_LLT optSys_LLT, VectorStructR3 origin, real angle_X, real angle_Y, real refIndex, Light_LLT light, VectorStructR3 targetPoint, unsigned int posSurface, unsigned int decimals)
+{
+	SequentialRayTracing seqTrace(optSys_LLT);
+	
+	// build the light ray
+	VectorStructR3 direction = Math::convertAngleInDirection(angle_X, angle_Y);
+	Ray_LLT ray(origin, direction, refIndex);
+	LightRayStruct lightRay(light, ray, 1);
+
+	// trace the ray
+	seqTrace.sequentialRayTracing(lightRay);
+
+	//unsigned int posAperStop = optSys_LLT.getPosApertureStop();
+
+	VectorStructR3 intersecPointAS = seqTrace.getAllInterPointsAtSurf_i(posSurface)[0];
+
+	bool checkInterPoint = Math::compareTwoVectorStructR3(targetPoint, intersecPointAS, decimals);
+
+	return checkInterPoint;
 
 }

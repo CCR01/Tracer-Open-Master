@@ -5,6 +5,38 @@
 #include <algorithm>
 	
 
+// calc new value variance percent
+/*CR*/real Math::calcNewValueVariancePercent(real initilaValue, real percent)
+{
+	return initilaValue * (percent + 100.0) / 100.0;
+}
+
+
+// convert an angle in direction
+/*CR*/ VectorStructR3 Math::convertAngleInDirection(real angleDegreesX, real angleDegreesY)
+{
+	VectorStructR3 returnVec3;
+	returnVec3.setX(tan(angleDegreesX * PI / 180));
+	returnVec3.setY(tan(angleDegreesY * PI / 180));
+	returnVec3.setZ(1);
+	
+	return returnVec3;
+}
+
+/*CR*/ twoVaulesReal Math::convertDirectionInAngle(VectorStructR3 direction)
+{
+	real dir_X = direction.getX();
+	real dir_Y = direction.getY();
+	real dir_Z = direction.getZ();
+
+	twoVaulesReal returnTwoVal_angles;
+
+	returnTwoVal_angles.setVal_1(tan(dir_X / dir_Z) * 180 / PI); // angle X
+	returnTwoVal_angles.setVal_2(tan(dir_Y / dir_Z) * 180 / PI); // angle Y
+	
+	return returnTwoVal_angles;	
+}
+
 	void Math::print(VectorStructR3 VectorPrint)
 	{
 		std::cout << VectorPrint.getX() << std::endl
@@ -52,9 +84,9 @@
 	VectorStructR3 Math::scaleVector(double const& scaleFactor, VectorStructR3 const& Vscale)
 	{
 		VectorStructR3 ReturnVectorScale;
-		ReturnVectorScale.x = scaleFactor * Vscale.getX();
-		ReturnVectorScale.y = scaleFactor * Vscale.getY();
-		ReturnVectorScale.z = scaleFactor * Vscale.getZ();
+		ReturnVectorScale.setX(scaleFactor * Vscale.getX());
+		ReturnVectorScale.setY(scaleFactor * Vscale.getY());
+		ReturnVectorScale.setZ(scaleFactor * Vscale.getZ());
 
 		return ReturnVectorScale;
 	}
@@ -84,14 +116,14 @@
 		VectorStructR3 ReturnCrossProductVector;
 
 		VectorStructR3 helpVector1;
-		helpVector1.x = CrProVec1.y * CrProVec2.z;
-		helpVector1.y = CrProVec1.z * CrProVec2.x;
-		helpVector1.z = CrProVec1.x * CrProVec2.y;
+		helpVector1.setX(CrProVec1.getY() * CrProVec2.getZ());
+		helpVector1.setY(CrProVec1.getZ() * CrProVec2.getX());
+		helpVector1.setZ(CrProVec1.getX() * CrProVec2.getY());
 
 		VectorStructR3 helpVector2;
-		helpVector2.x = CrProVec1.z * CrProVec2.y;
-		helpVector2.y = CrProVec1.x * CrProVec2.z;
-		helpVector2.z = CrProVec1.y * CrProVec2.x;
+		helpVector2.setX(CrProVec1.getZ() * CrProVec2.getY());
+		helpVector2.setY(CrProVec1.getX() * CrProVec2.getZ());
+		helpVector2.setZ(CrProVec1.getY() * CrProVec2.getX());
 
 		return ReturnCrossProductVector = subVectors(helpVector1, helpVector2);
 	}
@@ -120,9 +152,9 @@
 	VectorStructR3 Math::multiplyMatrix3x3VectorR3(double mat[3][3], VectorStructR3 vec)
 	{
 		VectorStructR3 returnVector;
-		returnVector.x = mat[0][0] * vec.x + mat[0][1] * vec.y + mat[0][2] * vec.z;
-		returnVector.y = mat[1][0] * vec.x + mat[1][1] * vec.y + mat[1][2] * vec.z;
-		returnVector.z = mat[2][0] * vec.x + mat[2][1] * vec.y + mat[2][2] * vec.z;
+		returnVector.setX(mat[0][0] * vec.getX() + mat[0][1] * vec.getY() + mat[0][2] * vec.getZ());
+		returnVector.setY(mat[1][0] * vec.getX() + mat[1][1] * vec.getY() + mat[1][2] * vec.getZ());
+		returnVector.setZ(mat[2][0] * vec.getX() + mat[2][1] * vec.getY() + mat[2][2] * vec.getZ());
 		return returnVector;
 
 	}
@@ -131,7 +163,7 @@
 	//calculate length of vector
 	double Math::lengthOfVector(VectorStructR3 vLength)
 	{
-		return sqrt(vLength.x*vLength.x + vLength.y*vLength.y + vLength.z*vLength.z);
+		return sqrt(vLength.getX()*vLength.getX() + vLength.getY()*vLength.getY() + vLength.getZ()*vLength.getZ());
 	}
 	
 	// calculate distance between two points in R3

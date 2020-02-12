@@ -2,6 +2,8 @@
 #pragma once
 #include "ImportantStructures.h"
 #include <vector>
+
+
 //***********************************************************************
 // add two vectors in R3
 VectorStructR3 operator+ (VectorStructR3 const& l, VectorStructR3 const&  r);
@@ -49,6 +51,16 @@ double operator*(VectorStructR2 const& l, VectorStructR2 const& v);
 
 namespace Math {
 
+	// calc new value variance percent
+	/*CR*/real calcNewValueVariancePercent(real initilaValue, real percent);
+
+	// convert an angle in direction
+	/*CR*/ VectorStructR3 convertAngleInDirection(real angleDegreesX, real angleDegreesY);
+
+	// convert an direction in angle
+	/*CR*/ twoVaulesReal convertDirectionInAngle(VectorStructR3 direction);
+
+	// sum all values in a vector
 	real sumAllVectorValues(std::vector<real> vec);
 
 	// print the vector

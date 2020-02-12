@@ -3,6 +3,7 @@
 #include "Math_LLT.h"
 
 
+
 pointAndIntensity::pointAndIntensity() {};
 pointAndIntensity::~pointAndIntensity() {};
 
@@ -11,22 +12,22 @@ pointAndIntensity::pointAndIntensity(VectorStructR3 /*intersection point*/ const
 	mIntensity(intensity) {};
 
 //get point
-VectorStructR3 pointAndIntensity::getPoint() const&
+VectorStructR3 pointAndIntensity::getPoint() const
 {
 	return mPoint;
 }
 // set point
-void pointAndIntensity::setPoint(VectorStructR3 const& setPoint)
+void pointAndIntensity::setPoint(VectorStructR3& const setPoint)
 {
 	mPoint = setPoint;
 }
 //get intesity
-real pointAndIntensity::getIntensity() const&
+real pointAndIntensity::getIntensity() const
 {
 	return mIntensity;
 }
 //set intesity
-void pointAndIntensity::setIntesity(real const& setIntensity)
+void pointAndIntensity::setIntesity(real const setIntensity)
 {
 	mIntensity = setIntensity;
 }
@@ -70,42 +71,51 @@ void  Matrix3x3AndExist::getMatrix(real mat[3][3])
 
 
 //____________________________________________________
+
+VectorStructR3::VectorStructR3() {};
+VectorStructR3::VectorStructR3(real X, real Y, real Z) :
+	mX(X),
+	mY(Y),
+	mZ(Z)
+{}
+VectorStructR3::~VectorStructR3() {};
+
 // Vector R3
 void VectorStructR3::print() const
 {
 
-	std::cout << "{" << x << "," << y << "," << z << "}" << std::endl;
+	std::cout << "{" << mX << "," << mY << "," << mZ << "}" << std::endl;
 }
 
 // set X
-void VectorStructR3::setX(real const& X_set)
+void VectorStructR3::setX(real const X_set)
 {
-	x = X_set;
+	mX = X_set;
 }
 // get X
-double VectorStructR3::getX() const&
+double VectorStructR3::getX() const
 {
-	return x;
+	return mX;
 }
 // set Y
-void VectorStructR3::setY(real const& Y_set)
+void VectorStructR3::setY(real const Y_set)
 {
-	y = Y_set;
+	mY = Y_set;
 }
 //get Y
-double VectorStructR3::getY() const&
+double VectorStructR3::getY() const
 {
-	return y;
+	return mY;
 }
 // set Z
-void VectorStructR3::setZ(real const& Z_set)
+void VectorStructR3::setZ(real const Z_set)
 {
-	z = Z_set;
+	mZ = Z_set;
 }
 //get Z
-double VectorStructR3::getZ() const&
+double VectorStructR3::getZ() const
 {
-	return z;
+	return mZ;
 }
 //____________________________________________________
 
@@ -115,37 +125,37 @@ double VectorStructR3::getZ() const&
 // IntersectInformationStruct
 
 // set intersection point
-void IntersectInformationStruct::setIntersectionPoint(VectorStructR3 const& interPoint)
+void IntersectInformationStruct::setIntersectionPoint(VectorStructR3& const interPoint)
 {
 	mIntersectionPoint = interPoint;
 }
 
 // get intersection point
-VectorStructR3 IntersectInformationStruct::getIntersectionPoint() const&
+VectorStructR3 IntersectInformationStruct::getIntersectionPoint() const
 {
 	return mIntersectionPoint;
 }
 
 // set normal unit vector
-void IntersectInformationStruct::setNormalUnitVector(VectorStructR3 const& norUnVec)
+void IntersectInformationStruct::setNormalUnitVector(VectorStructR3& const norUnVec)
 {
 	mNormaleUnitVector = norUnVec;
 }
 
 // get normal unit vector
-VectorStructR3 IntersectInformationStruct::getNormalUnitVector() const&
+VectorStructR3 IntersectInformationStruct::getNormalUnitVector() const
 {
 	return mNormaleUnitVector;
 }
 
 // set surface side
-void IntersectInformationStruct::setSurface(surfaceSide const& surSid)
+void IntersectInformationStruct::setSurface(surfaceSide const surSid)
 {
 	mSurfaceSideABN = surSid;
 }
 
 // get surface side
-char IntersectInformationStruct::getSurfaceSide() const&
+char IntersectInformationStruct::getSurfaceSide() const
 {
 	// TODO Question: Gibt es hier eine bessere Alternative?!
 	// Was passiert, wenn hier ein neues enum dazukommt -> in Bezug auf die Reihenfolge?
@@ -168,68 +178,68 @@ char IntersectInformationStruct::getSurfaceSide() const&
 }
 
 // set steps to walk
-void IntersectInformationStruct::setStepsToWalk(real const& steps)
+void IntersectInformationStruct::setStepsToWalk(real const steps)
 {
 	mStepsToWalk = steps;
 }
 
 // get steps to walk
-real IntersectInformationStruct::getStepsToWalk() const&
+real IntersectInformationStruct::getStepsToWalk() const
 {
 	return mStepsToWalk;
 }
 
 
 // set refractive index side A
-void IntersectInformationStruct::setRefractiveIndex_A(real refractiveIndex)
+void IntersectInformationStruct::setRefractiveIndex_A(real& refractiveIndex)
 {
 	mRefractiveIndexA = refractiveIndex;
 }
 
 // get refractive index side A
-real IntersectInformationStruct::getRefractiveIndex_A() const&
+real IntersectInformationStruct::getRefractiveIndex_A() const
 {
 	return mRefractiveIndexA;
 }
 
 // set refractive index side B
-void IntersectInformationStruct::setRefractiveIndex_B(real refractiveIndex)
+void IntersectInformationStruct::setRefractiveIndex_B(real& refractiveIndex)
 {
 	mRefractiveIndexB = refractiveIndex;
 }
 
 // get refractive index side B
-real IntersectInformationStruct::getRefractiveIndex_B() const&
+real IntersectInformationStruct::getRefractiveIndex_B() const
 {
 	return mRefractiveIndexB;
 }
 
 // set direction ray unit
-void IntersectInformationStruct::setDirectionRayUnit(VectorStructR3 const& direction)
+void IntersectInformationStruct::setDirectionRayUnit(VectorStructR3& const direction)
 {
 	mDirectionRayUnit = Math::unitVector(direction);
 }
 
 // get direction ray unit
-VectorStructR3 IntersectInformationStruct::getDirectionRayUnit() const&
+VectorStructR3 IntersectInformationStruct::getDirectionRayUnit() const
 {
 	return mDirectionRayUnit;
 }
 
 // set light
-void IntersectInformationStruct::setLight(const Light_LLT light)
+void IntersectInformationStruct::setLight(const Light_LLT& light)
 {
 	mLight = light;
 }
 // get Light
-Light_LLT IntersectInformationStruct::getLight() const&
+Light_LLT IntersectInformationStruct::getLight() const
 {
 	return mLight;
 }
 
 
 // print intersect information
-void IntersectInformationStruct::printIntersectInformation() const&
+void IntersectInformationStruct::printIntersectInformation() const
 {
 
 	std::cout << "intersection point: \n";
@@ -247,47 +257,93 @@ void IntersectInformationStruct::printIntersectInformation() const&
 
 
 // calculate unit vector
-VectorStructR3 IntersectInformationStruct::unitVectorForIntersectInfoStruct(VectorStructR3 const& V)
+VectorStructR3 IntersectInformationStruct::unitVectorForIntersectInfoStruct(VectorStructR3& const V)
 {
 	VectorStructR3 returnUnitVector;
-	double lenghtOfVector = 1 / (std::sqrt(V.getX()*V.getX() + V.getY()*V.getY() + V.getZ()*V.getZ()));
-	returnUnitVector.setX(lenghtOfVector * V.getX());
-	returnUnitVector.setY(lenghtOfVector * V.getY());
-	returnUnitVector.setZ(lenghtOfVector * V.getZ());
+	real lenghtOfVector = 1 / (std::sqrt(V.getX()*V.getX() + V.getY()*V.getY() + V.getZ()*V.getZ()));
+
+	real xUnit = lenghtOfVector * V.getX();
+	real yUnit = lenghtOfVector * V.getY();
+	real zUnit = lenghtOfVector * V.getZ();
+
+
+	returnUnitVector.setX(xUnit);
+	returnUnitVector.setY(yUnit);
+	returnUnitVector.setZ(zUnit);
+
 	return returnUnitVector;
 }
 
 
 //get value in vector
-double VectorElementAndPosition::getValue() const&
+double VectorElementAndPosition::getValue() const
 {
 	return value;
 }
 //get position in vector
-unsigned int  VectorElementAndPosition::getPosInVector() const&
+unsigned int  VectorElementAndPosition::getPosInVector() const
 {
 	return posInVector;
 };
 
 
+VectorStructR2::VectorStructR2() {};
+VectorStructR2::VectorStructR2(real x, real y):
+	mX(x),
+	mY(y)
+{};
+
+VectorStructR2::~VectorStructR2() {};
+
 // set X
-void VectorStructR2::setX(real const& X_set)
+void VectorStructR2::setX(const real X_set)
 {
-	x = X_set;
+	mX = X_set;
 }
 // get X
-real VectorStructR2::getX() const&
+real VectorStructR2::getX() const
 {
-	return x;
+	return mX;
 }
 
 // set Y
-void VectorStructR2::setY(real const& Y_set)
+void VectorStructR2::setY(const real Y_set)
 {
-	y = Y_set;
+	mY = Y_set;
 }
 // get Y
-real VectorStructR2::getY() const&
+real VectorStructR2::getY() const
 {
-	return y;
+	return mY;
 }
+
+/*CR*/
+// ---
+twoVaulesReal::twoVaulesReal() {};
+twoVaulesReal::twoVaulesReal(real val_1, real val_2) :
+	mVal_1(val_1),
+	mVal_2(val_2)
+{};
+twoVaulesReal::~twoVaulesReal() {};
+
+// value 1
+real twoVaulesReal::getVal_1()
+{
+	return mVal_1;
+}
+void twoVaulesReal::setVal_1(real val1)
+{
+	mVal_1 = val1;
+}
+
+// value 2
+real twoVaulesReal::getVal_2()
+{
+	return mVal_2;
+}
+void twoVaulesReal::setVal_2(real val2)
+{
+	mVal_2 = val2;
+}
+
+// ---

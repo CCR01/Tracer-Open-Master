@@ -31,6 +31,15 @@ public:
 	real getFactor();
 	void setFactor(real factor);
 
+	// turn on robust ray aiming
+	void turn_On_RobustRayAiming();
+	void turn_Off_RobustRayAiming();
+	bool getRobustRayAiming();
+
+	// variance percent robust ray aiming
+	void setVariancePercentRRA(real percent);
+	real getVariancePercentRRA();
+
 	void loadDefaultParameter();
 
 private:
@@ -39,6 +48,9 @@ private:
 	unsigned int mMaxLoopsTraceToLastSurface;
 	unsigned int mMaxInterationsRayAiming;
 	real mFactor;
+	bool mRobustRayAiming;
+	real mVariancePercentRobustRA;
+
 };
 
 struct  lightRayAndInterPointAperStop
@@ -63,7 +75,7 @@ enum betterSide{posSide, negSide, stay};
 struct lightRay_intP_dis_negPos_factor
 {
 	lightRay_intP_dis_negPos_factor();
-	lightRay_intP_dis_negPos_factor(LightRayStruct lightRay, VectorStructR3 interPoint, real distanceX, real distanceY, betterSide negOrPos, real factorX, real factorY);
+	lightRay_intP_dis_negPos_factor(LightRayStruct lightRay, VectorStructR3 interPoint, real distanceX, real distanceY, betterSide negOrPos, real factorX, real factorY, VectorStructR3 targerPoint, real interations);
 	~lightRay_intP_dis_negPos_factor();
 
 	// light ray
@@ -94,6 +106,13 @@ struct lightRay_intP_dis_negPos_factor
 	real getFactorY();
 	void setFactorY(real factorY);
 	
+	// target point
+	VectorStructR3 getTargetPoint();
+	void setTargetPoint(VectorStructR3 targetPoint);
+
+	// get interations
+	unsigned int getInterations();
+	void setInterations(unsigned int interations);
 
 private:
 	LightRayStruct mLightRay;
@@ -103,6 +122,9 @@ private:
 	betterSide mNegPosStay;
 	real mFactorX;
 	real mFactorY;
+
+	VectorStructR3 mTargetPoint;
+	unsigned int mInterations;
 };
 
 class RayAiming {
@@ -146,7 +168,7 @@ public: RayAiming() {};
 		bool RayAiming::checkRayAllElements(LightRayStruct lightRay);
 
 		//		// Ändert die Intensität eines Strahls anhand des nach einer .csv-Tabelle gegebenen Gradzahl
-		//		LightRayStruct RayAiming::changeIntensityByDegree(LightRayStruct lightRay, std::vector<VectorStructR2> vec1);
+		// LightRayStruct RayAiming::changeIntensityByDegree(LightRayStruct lightRay, std::vector<VectorStructR2> vec1);
 
 		// instert a plan surface LLT before firest surface of optical system_LLT
 		void insertPlanBeforFirstSur();
@@ -175,11 +197,24 @@ public: RayAiming() {};
 		VectorStructR3 getInterPointApertureStop(LightRayStruct lightRay);
 
 		// check if we have to trace to neg of pos side
-		lightRay_intP_dis_negPos_factor traceNegOrPosSide_andReduce_X_inf(lightRay_intP_dis_negPos_factor initialInfos, VectorStructR3 targetPoint);
-		lightRay_intP_dis_negPos_factor traceNegOrPosSide_andReduce_Y_inf(lightRay_intP_dis_negPos_factor initialInfos, VectorStructR3 targetPoint);
+		lightRay_intP_dis_negPos_factor traceNegOrPosSide_andReduce_X_inf(lightRay_intP_dis_negPos_factor initialInfos);
+		lightRay_intP_dis_negPos_factor traceNegOrPosSide_andReduce_Y_inf(lightRay_intP_dis_negPos_factor initialInfos);
+		lightRay_intP_dis_negPos_factor reduceDistancesIn_X_AND_X_ing(lightRay_intP_dis_negPos_factor initialInfos);
 
 		// get default parametes
 		defaultRayAimingStruct getDefaultParameters();
+		void setToleranceX_Y(real tolerance);
+		void turn_ON_RobustRayAiming();
+		void turn_OFF_RobustRayAiming();
+
+		// robust ray aiming
+		LightRayStruct robustRayAiming_inf(lightRay_intP_dis_negPos_factor initialInfos);
+
+		// calculate new origin variance in percent
+		lightRay_intP_dis_negPos_factor calcNewBestInfos(lightRay_intP_dis_negPos_factor initialInfos);
+
+		// get positon ray with lowest distance
+		unsigned int getPosRayLowestDistance(std::vector<VectorStructR3> allInterPoints, VectorStructR3 targetPoint);
 
 private:
 

@@ -54,10 +54,10 @@ std::vector<LightRayStruct> DeflectedRayParaxialLens_LLT::calcInteraction(Inters
 					// calculate focal plan
 					VectorStructR3 FocalPoint = mAddInfos.getPointofIntersectSurface() + mAddInfos.getFocalLengthOfIntersecSurface_Side_B() * mAddInfos.getDirectionOfIntersecSurfaceUNIT();
 					// flat in coordinate form: E:Nx * X+ Ny * Y+ Nz * Z= d 
-					double d = FocalPoint.x * mAddInfos.getDirectionOfIntersecSurfaceUNIT().x + FocalPoint.y * mAddInfos.getDirectionOfIntersecSurfaceUNIT().y + FocalPoint.z * mAddInfos.getDirectionOfIntersecSurfaceUNIT().z;
+					double d = FocalPoint.getX() * mAddInfos.getDirectionOfIntersecSurfaceUNIT().getX() + FocalPoint.getY() * mAddInfos.getDirectionOfIntersecSurfaceUNIT().getY() + FocalPoint.getZ() * mAddInfos.getDirectionOfIntersecSurfaceUNIT().getZ();
 					// calculate Intersection point ray and plan in focal point
-					double denominator = mAddInfos.getDirectionOfIntersecSurfaceUNIT().x*dirNodalRayUnit.getX() + mAddInfos.getDirectionOfIntersecSurfaceUNIT().y*dirNodalRayUnit.getY() + mAddInfos.getDirectionOfIntersecSurfaceUNIT().z*dirNodalRayUnit.getZ();
-					double numerator = d - mAddInfos.getDirectionOfIntersecSurfaceUNIT().x*intersectInformation.getIntersectionPoint().x - mAddInfos.getDirectionOfIntersecSurfaceUNIT().y*intersectInformation.getIntersectionPoint().y - mAddInfos.getDirectionOfIntersecSurfaceUNIT().z*intersectInformation.getIntersectionPoint().z;
+					double denominator = mAddInfos.getDirectionOfIntersecSurfaceUNIT().getX()*dirNodalRayUnit.getX() + mAddInfos.getDirectionOfIntersecSurfaceUNIT().getY()*dirNodalRayUnit.getY() + mAddInfos.getDirectionOfIntersecSurfaceUNIT().getZ()*dirNodalRayUnit.getZ();
+					double numerator = d - mAddInfos.getDirectionOfIntersecSurfaceUNIT().getX()*intersectInformation.getIntersectionPoint().getX() - mAddInfos.getDirectionOfIntersecSurfaceUNIT().getY()*intersectInformation.getIntersectionPoint().getY() - mAddInfos.getDirectionOfIntersecSurfaceUNIT().getZ()*intersectInformation.getIntersectionPoint().getZ();
 					double stepsT = numerator / denominator;
 					VectorStructR3 intersectionPoint = mAddInfos.getPointofIntersectSurface() + stepsT * dirNodalRayUnit;
 					VectorStructR3 newDirection = intersectionPoint - intersectInformation.getIntersectionPoint();
@@ -93,10 +93,10 @@ std::vector<LightRayStruct> DeflectedRayParaxialLens_LLT::calcInteraction(Inters
 					// calculate focal plan
 					VectorStructR3 FocalPoint = mAddInfos.getPointofIntersectSurface() + mAddInfos.getFocalLengthOfIntersecSurface_Side_A() * mAddInfos.getDirectionOfIntersecSurfaceUNIT();
 					// flat in coordinate form: E:Nx * X+ Ny * Y+ Nz * Z= d 
-					double d = FocalPoint.getX() * mAddInfos.getDirectionOfIntersecSurfaceUNIT().x + FocalPoint.y * mAddInfos.getDirectionOfIntersecSurfaceUNIT().y + FocalPoint.z * mAddInfos.getDirectionOfIntersecSurfaceUNIT().z;
+					double d = FocalPoint.getX() * mAddInfos.getDirectionOfIntersecSurfaceUNIT().getX() + FocalPoint.getY() * mAddInfos.getDirectionOfIntersecSurfaceUNIT().getY() + FocalPoint.getZ() * mAddInfos.getDirectionOfIntersecSurfaceUNIT().getZ();
 					// calculate Intersection point ray and plan in focal point
-					double denominator = mAddInfos.getDirectionOfIntersecSurfaceUNIT().x*dirNodalRayUnit.getX() + mAddInfos.getDirectionOfIntersecSurfaceUNIT().y*dirNodalRayUnit.getY() + mAddInfos.getDirectionOfIntersecSurfaceUNIT().z*dirNodalRayUnit.getZ();
-					double numerator = d - mAddInfos.getDirectionOfIntersecSurfaceUNIT().x*intersectInformation.getIntersectionPoint().x - mAddInfos.getDirectionOfIntersecSurfaceUNIT().y*intersectInformation.getIntersectionPoint().y - mAddInfos.getDirectionOfIntersecSurfaceUNIT().z*intersectInformation.getIntersectionPoint().z;
+					double denominator = mAddInfos.getDirectionOfIntersecSurfaceUNIT().getX()*dirNodalRayUnit.getX() + mAddInfos.getDirectionOfIntersecSurfaceUNIT().getY()*dirNodalRayUnit.getY() + mAddInfos.getDirectionOfIntersecSurfaceUNIT().getZ()*dirNodalRayUnit.getZ();
+					double numerator = d - mAddInfos.getDirectionOfIntersecSurfaceUNIT().getX()*intersectInformation.getIntersectionPoint().getX() - mAddInfos.getDirectionOfIntersecSurfaceUNIT().getY()*intersectInformation.getIntersectionPoint().getY() - mAddInfos.getDirectionOfIntersecSurfaceUNIT().getZ()*intersectInformation.getIntersectionPoint().getZ();
 					double stepsT = numerator / denominator;
 					VectorStructR3 intersectionPoint = mAddInfos.getPointofIntersectSurface() + stepsT * dirNodalRayUnit;
 					VectorStructR3 newDirection = intersectInformation.getIntersectionPoint() - intersectionPoint;
@@ -131,10 +131,10 @@ std::vector<LightRayStruct> DeflectedRayParaxialLens_LLT::calcInteraction(Inters
 					// calculate focal plan
 					VectorStructR3 FocalPoint = mAddInfos.getPointofIntersectSurface() - mAddInfos.getFocalLengthOfIntersecSurface_Side_A() * mAddInfos.getDirectionOfIntersecSurfaceUNIT();
 					// flat in coordinate form: E:Nx * X+ Ny * Y+ Nz * Z= d 
-					double d = FocalPoint.x * mAddInfos.getDirectionOfIntersecSurfaceUNIT().x + FocalPoint.y * mAddInfos.getDirectionOfIntersecSurfaceUNIT().y + FocalPoint.z * mAddInfos.getDirectionOfIntersecSurfaceUNIT().z;
+					double d = FocalPoint.getX() * mAddInfos.getDirectionOfIntersecSurfaceUNIT().getX() + FocalPoint.getY() * mAddInfos.getDirectionOfIntersecSurfaceUNIT().getY() + FocalPoint.getZ() * mAddInfos.getDirectionOfIntersecSurfaceUNIT().getZ();
 					// calculate Intersection point ray and plan in focal point
-					double denominator = mAddInfos.getDirectionOfIntersecSurfaceUNIT().x*dirNodalRayUnit.getX() + mAddInfos.getDirectionOfIntersecSurfaceUNIT().y*dirNodalRayUnit.getY() + mAddInfos.getDirectionOfIntersecSurfaceUNIT().z*dirNodalRayUnit.getZ();
-					double numerator = d - mAddInfos.getDirectionOfIntersecSurfaceUNIT().x*intersectInformation.getIntersectionPoint().x - mAddInfos.getDirectionOfIntersecSurfaceUNIT().y*intersectInformation.getIntersectionPoint().y - mAddInfos.getDirectionOfIntersecSurfaceUNIT().z*intersectInformation.getIntersectionPoint().z;
+					double denominator = mAddInfos.getDirectionOfIntersecSurfaceUNIT().getX()*dirNodalRayUnit.getX() + mAddInfos.getDirectionOfIntersecSurfaceUNIT().getY()*dirNodalRayUnit.getY() + mAddInfos.getDirectionOfIntersecSurfaceUNIT().getZ()*dirNodalRayUnit.getZ();
+					double numerator = d - mAddInfos.getDirectionOfIntersecSurfaceUNIT().getX()*intersectInformation.getIntersectionPoint().getX() - mAddInfos.getDirectionOfIntersecSurfaceUNIT().getY()*intersectInformation.getIntersectionPoint().getY() - mAddInfos.getDirectionOfIntersecSurfaceUNIT().getZ()*intersectInformation.getIntersectionPoint().getZ();
 					double stepsT = numerator / denominator;
 					VectorStructR3 intersectionPoint = mAddInfos.getPointofIntersectSurface() + stepsT * dirNodalRayUnit;
 					VectorStructR3 newDirection = intersectionPoint - intersectInformation.getIntersectionPoint();
@@ -167,10 +167,10 @@ std::vector<LightRayStruct> DeflectedRayParaxialLens_LLT::calcInteraction(Inters
 					// calculate focal plan
 					VectorStructR3 FocalPoint = mAddInfos.getPointofIntersectSurface() - mAddInfos.getFocalLengthOfIntersecSurface_Side_A() * mAddInfos.getDirectionOfIntersecSurfaceUNIT();
 					// flat in coordinate form: E:Nx * X+ Ny * Y+ Nz * Z= d 
-					double d = FocalPoint.x * mAddInfos.getDirectionOfIntersecSurfaceUNIT().x + FocalPoint.y * mAddInfos.getDirectionOfIntersecSurfaceUNIT().y + FocalPoint.z * mAddInfos.getDirectionOfIntersecSurfaceUNIT().z;
+					double d = FocalPoint.getX() * mAddInfos.getDirectionOfIntersecSurfaceUNIT().getX() + FocalPoint.getY() * mAddInfos.getDirectionOfIntersecSurfaceUNIT().getY() + FocalPoint.getZ() * mAddInfos.getDirectionOfIntersecSurfaceUNIT().getZ();
 					// calculate Intersection point ray and plan in focal point
-					double denominator = mAddInfos.getDirectionOfIntersecSurfaceUNIT().x*dirNodalRayUnit.getX() + mAddInfos.getDirectionOfIntersecSurfaceUNIT().y*dirNodalRayUnit.getY() + mAddInfos.getDirectionOfIntersecSurfaceUNIT().z*dirNodalRayUnit.getZ();
-					double numerator = d - mAddInfos.getDirectionOfIntersecSurfaceUNIT().x*intersectInformation.getIntersectionPoint().x - mAddInfos.getDirectionOfIntersecSurfaceUNIT().y*intersectInformation.getIntersectionPoint().y - mAddInfos.getDirectionOfIntersecSurfaceUNIT().z*intersectInformation.getIntersectionPoint().z;
+					double denominator = mAddInfos.getDirectionOfIntersecSurfaceUNIT().getX()*dirNodalRayUnit.getX() + mAddInfos.getDirectionOfIntersecSurfaceUNIT().getY()*dirNodalRayUnit.getY() + mAddInfos.getDirectionOfIntersecSurfaceUNIT().getZ()*dirNodalRayUnit.getZ();
+					double numerator = d - mAddInfos.getDirectionOfIntersecSurfaceUNIT().getX()*intersectInformation.getIntersectionPoint().getX() - mAddInfos.getDirectionOfIntersecSurfaceUNIT().getY()*intersectInformation.getIntersectionPoint().getY() - mAddInfos.getDirectionOfIntersecSurfaceUNIT().getZ()*intersectInformation.getIntersectionPoint().getZ();
 					double stepsT = numerator / denominator;
 
 					VectorStructR3 intersectionPoint = mAddInfos.getPointofIntersectSurface() + stepsT * dirNodalRayUnit;
