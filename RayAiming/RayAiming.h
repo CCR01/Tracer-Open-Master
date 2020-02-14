@@ -7,7 +7,7 @@
 #include "..\LowLevelTracing/Interaction/DoNothingInteraction_LLT.h"
 
 
-struct defaultRayAimingStruct 
+struct defaultRayAimingStruct
 {
 public:
 
@@ -70,7 +70,7 @@ private:
 	VectorStructR3 mInterPointAperStop;
 };
 
-enum betterSide{posSide, negSide, stay};
+enum betterSide { posSide, negSide, stay };
 
 struct lightRay_intP_dis_negPos_factor
 {
@@ -105,7 +105,7 @@ struct lightRay_intP_dis_negPos_factor
 	// factor Y
 	real getFactorY();
 	void setFactorY(real factorY);
-	
+
 	// target point
 	VectorStructR3 getTargetPoint();
 	void setTargetPoint(VectorStructR3 targetPoint);
@@ -186,10 +186,10 @@ public: RayAiming() {};
 		real calcDistance_X(VectorStructR3 point, VectorStructR3 targetPoint);
 		// calc distance Y
 		real calcDistance_Y(VectorStructR3 point, VectorStructR3 targetPoint);
-		
+
 
 		// reduce distance X from light ray
-		lightRayAndInterPointAperStop reduceDistanceFormLightRay_X_inf(LightRayStruct startLightRay, VectorStructR3 interPointAperStop,  VectorStructR3 targetPoint, real initialDistance);
+		lightRayAndInterPointAperStop reduceDistanceFormLightRay_X_inf(LightRayStruct startLightRay, VectorStructR3 interPointAperStop, VectorStructR3 targetPoint, real initialDistance);
 		// reduce distance Y from light ray
 		//LightRayStruct reduceDistanveFromLightRay_Y_inf(LightRayStruct startLightRay, VectorStructR3 interPointAperStop,  VectorStructR3 targetPoint, real initialDistance);
 
@@ -231,7 +231,7 @@ private:
 	VectorStructR3 mDirectionFirstSurface;
 
 	VectorStructR3 negLensHelper;
-		
+
 	DoNothingInteraction_LLT doNothing;
 	SequentialRayTracing mSeqTracModified_LLT;
 };

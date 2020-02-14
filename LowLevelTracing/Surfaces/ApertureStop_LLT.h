@@ -45,13 +45,11 @@ public:
 		mDirectionAperture(direction),
 		mRrefractiveIndex(refractiveIndex)
 	{
-		ApertureStopUp_Qwt_Ptr = new ApertureStopQwtUp(mSemiHeightAperture, mPointAperture, mDirectionAperture);
-		ApertureStopDown_Qwt_Ptr = new ApertureStopQwtDown(mSemiHeightAperture, mPointAperture, mDirectionAperture);
-		pointsofApertureStopUp = ApertureStopUp_Qwt_Ptr->getPoints();
-		pointsofApertureStopDown = ApertureStopDown_Qwt_Ptr->getPoints();
+		calcApertureStopQwtCoord();
+		
 	}
 	
-
+	void calcApertureStopQwtCoord();
 	// get semt height
 	double getSemiHeight() override;
 	//set semi height

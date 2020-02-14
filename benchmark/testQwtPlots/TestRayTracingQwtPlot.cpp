@@ -3,7 +3,7 @@
 //Qwt
 #include <qwt_plot.h>
 #include <qwt_plot_curve.h>
-#include "..\..\VS-Solution_tracer-open\PlotQwt.h"
+#include "..\..\Plot\PlotQwt.h"
 
 // surfaces
 #include "..\..\LowLevelTracing\Surfaces\SphericalSurface_LLT.h"
@@ -28,8 +28,7 @@
 #include "..\..\Analyse\OpticalPathDifference.h"
 
 // plot
-#include "..\..\Plot\PlotSpotDiagram.h"
-#include "..\..\Plot\PlotOPD.h"
+#include "..\..\Plot\PlotParameterQwt.h"
 
 
 testRayTracingQwtPlot::testRayTracingQwtPlot() {};
@@ -39,11 +38,11 @@ bool testRayTracingQwtPlot::superFuncTestRayTracingQwtPlot()
 {
 	std::vector<bool> checkQwtPlot;
 
-	bool testE0 = testRayTracingQwtPlotE0();
+	bool testE0 =  testRayTracingQwtPlotE0();
 	checkQwtPlot.push_back(testE0);
-	bool testE1 = testRayTracingQwtPlotE1();
+	bool testE1 =  testRayTracingQwtPlotE1();
 	checkQwtPlot.push_back(testE1);
-	bool testE2 = testRayTracingQwtPlotE2();
+	bool testE2 =  testRayTracingQwtPlotE2();
 	checkQwtPlot.push_back(testE2);
 
 
@@ -142,16 +141,17 @@ bool testRayTracingQwtPlot::testRayTracingQwtPlotE0()
 	RayTracSysE0.fillVectorRayTracing(&seqTrace_E0_optA, { 192,192,192 });
 	RayTracSysE0.fillVectorRayTracing(&seqTrace_E0_field1, { 240,128,128 });
 
-	//// show surfaces with rays
+	//change Plot Parameter 
+	PlotParameterQwt ParameterPlotOptSysE0;
 	//Add a comment to the plot
-	optSysE0.AddCommentToRayTracingPlot("Add-Comment", { 80,200 });
+	ParameterPlotOptSysE0.AddCommentToRayTracingPlot("Add-Comment", { 80,200 });
 	//change the colour of the surfaces
-	optSysE0.setColorSurfaces({ 0,128,0 });
+	ParameterPlotOptSysE0.setColorSurfaces({ 0,128,0 });
 	//change the thickness of the surfaces
-	optSysE0.setThicknessSurfaces(3);
-
-
-	mRayTracingQwtPlotSystem2 = new RayTracingQwtPlot(optSysE0, RayTracSysE0);
+	ParameterPlotOptSysE0.setThicknessSurfaces(3);
+	
+	//// show surfaces with rays
+	mRayTracingQwtPlotSystem2 = new RayTracingQwtPlot(optSysE0, RayTracSysE0, ParameterPlotOptSysE0);
 	mRayTracingQwtPlotSystem2->show();
 	return mRayTracingQwtPlotSystem2->isVisible();
 }
@@ -159,6 +159,7 @@ bool testRayTracingQwtPlot::testRayTracingQwtPlotE0()
 
 bool testRayTracingQwtPlot::testRayTracingQwtPlotE1()
 {
+
 	//define all the surfaces of the system
 	SphericalSurface_LLT S1E1(/*radius*/38.73360379131933, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, -0.6, 15.0 }, /*Direction*/ VectorStructR3{ 0.0, -0.2, -1.0 }, /*refIndexSideA*/1.5, /*refIndexSideB*/1.0);
 	SphericalSurface_LLT S2E1(/*radius*/10.33817058758478, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.2, 20.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.1, /*refIndexSideB*/1.5);
@@ -276,15 +277,21 @@ bool testRayTracingQwtPlot::testRayTracingQwtPlotE1()
 	RayTracSysE1.fillVectorRayTracing(&SeqTraceE1_plot2D_field7, { 198,200,110 });
 
 
+	//initiate the plot parameter
+	PlotParameterQwt ParameterPlotOptSysE1;
 	//// show surfaces with rays
-
-	mRayTracingQwtPlotSystem2 = new RayTracingQwtPlot(optSysE1, RayTracSysE1);
+	mRayTracingQwtPlotSystem2 = new RayTracingQwtPlot(optSysE1, RayTracSysE1, ParameterPlotOptSysE1);
 	mRayTracingQwtPlotSystem2->show();
+	
 	return mRayTracingQwtPlotSystem2->isVisible();
 }
 
 bool testRayTracingQwtPlot::testRayTracingQwtPlotE2()
 {
+
+	typedef std::shared_ptr<SurfaceIntersectionRay_LLT> surfaceLLT_ptr;
+	typedef std::shared_ptr<InteractionRay_LLT> interactionLLT_ptr;
+
 	SphericalSurface_LLT S1E2(/*radius*/28.73360379131933, /*semiHeight*/4.0, /*Apex of the sphere*/{ 0.0, 0.0, 15.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.5, /*refIndexSideB*/1.0);
 	SphericalSurface_LLT S2E2(/*radius*/50.33817058758478, /*semiHeight*/4.0, /*Apex of the sphere*/{ 0.0, 0.0, 20.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
 	SphericalSurface_LLT S3E2(/*radius*/51.02696739895755, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 22.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.6);
@@ -299,17 +306,14 @@ bool testRayTracingQwtPlot::testRayTracingQwtPlotE2()
 
 	// build the optical system
 	RefractedRay_LLT refrac;
-	OpticalSystem_LLT optSysE2;
-	optSysE2.fillVectorSurfaceAndInteractingData(0, S1E2.clone(), refrac.clone());
-	optSysE2.fillVectorSurfaceAndInteractingData(1, S2E2.clone(), refrac.clone());
-	optSysE2.fillVectorSurfaceAndInteractingData(2, S3E2.clone(), refrac.clone());
-	optSysE2.fillVectorSurfaceAndInteractingData(3, S4E2.clone(), refrac.clone());
-	optSysE2.fillVectorSurfaceAndInteractingData(4, S5E2.clone(), refrac.clone());
-	optSysE2.fillVectorSurfaceAndInteractingData(5, S6E2.clone(), refrac.clone());
-	optSysE2.fillVectorSurfaceAndInteractingData(6, S7E2.clone(), refrac.clone());
-	optSysE2.fillVectorSurfaceAndInteractingData(7, S8E2.clone(), refrac.clone());
-	optSysE2.fillVectorSurfaceAndInteractingData(8, S9E2.clone(), refrac.clone());
-	optSysE2.fillVectorSurfaceAndInteractingData(9, S10E2.clone(), refrac.clone());
+
+	// vector with surfaces
+	std::vector<surfaceLLT_ptr> surfaces_vec{ S1E2.clone(),S2E2.clone(),S3E2.clone(),S4E2.clone(),S5E2.clone(),S6E2.clone(),S7E2.clone(),S8E2.clone(),S9E2.clone(),S10E2.clone()};
+	// vector with interactions
+	std::vector<interactionLLT_ptr> interaction_vec{ refrac.clone(),refrac.clone(),refrac.clone(),refrac.clone(),refrac.clone(),refrac.clone(),refrac.clone(),refrac.clone(),refrac.clone(),refrac.clone() };
+
+	OpticalSystem_LLT optSysE2(surfaces_vec, interaction_vec);
+	
 
 
 	//// plot 2d
@@ -342,12 +346,14 @@ bool testRayTracingQwtPlot::testRayTracingQwtPlotE2()
 	//fill vector Ray Tracing
 	RayTracingSystem RayTracSysE2;
 	RayTracSysE2.fillVectorRayTracing(&SeqTraceE2_plot2D, { 0,255,215 });
-	RayTracSysE2.fillVectorRayTracing(&SeqTraceE2_plot2D_field, { 0,0,200 });
+	RayTracSysE2.fillVectorRayTracing(&SeqTraceE2_plot2D_field, { 0,40,200 });
 	RayTracSysE2.fillVectorRayTracing(&SeqTraceE2_plot2D_field2, { 150,0,255 });
 
 	//// show surfaces with rays
-	mRayTracingQwtPlotSystem2 = new RayTracingQwtPlot(optSysE2, RayTracSysE2);
+	PlotParameterQwt ParameterPlotOptSysE2;
+	mRayTracingQwtPlotSystem2 = new RayTracingQwtPlot(optSysE2, RayTracSysE2, ParameterPlotOptSysE2);
 	mRayTracingQwtPlotSystem2->show();
+	
 	return mRayTracingQwtPlotSystem2->isVisible();
 
 }

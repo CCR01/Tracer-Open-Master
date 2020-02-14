@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClCompile Include="..\Analyse\CardinalPoints.cpp" />
     <ClCompile Include="..\Analyse\OpticalPathDifferende.cpp" />
+    <ClCompile Include="..\Analyse\RayFan.cpp" />
     <ClCompile Include="..\Analyse\SeidelCoefficients.cpp" />
     <ClCompile Include="..\Analyse\Spot.cpp" />
     <ClCompile Include="..\benchmark\AsphericalSurface_LLT\TestAsphericalSurface_LLT.cpp" />
@@ -191,6 +192,7 @@
     <ClCompile Include="..\benchmark\testOptimizer_Paper\testOptimizer_Paper_P0.cpp" />
     <ClCompile Include="..\benchmark\testOptimizer_Paper\testOptimizer_Paper_P1.cpp" />
     <ClCompile Include="..\benchmark\testQwtPlots\testOPDQwtPlot.cpp" />
+    <ClCompile Include="..\benchmark\testQwtPlots\testRayFanQwtPlot.cpp" />
     <ClCompile Include="..\benchmark\testQwtPlots\TestRayTracingQwtPlot.cpp" />
     <ClCompile Include="..\benchmark\testQwtPlots\TestSpotDiagramQwtPlot.cpp" />
     <ClCompile Include="..\benchmark\testSeidelCoefficients\testSeidelCoefficients.cpp" />
@@ -236,7 +238,11 @@
     <ClCompile Include="..\Plot\Plot.cpp" />
     <ClCompile Include="..\Plot\Plot2D.cpp" />
     <ClCompile Include="..\Plot\PlotOPD.cpp" />
+    <ClCompile Include="..\Plot\PlotParameterQwt.cpp" />
+    <ClCompile Include="..\Plot\PlotQwt.cpp" />
+    <ClCompile Include="..\Plot\PlotRayFan.cpp" />
     <ClCompile Include="..\Plot\PlotSpotDiagram.cpp" />
+    <ClCompile Include="..\Plot\QwtPloItems.cpp" />
     <ClCompile Include="..\PSFfunction\PSFfunction.cpp" />
     <ClCompile Include="..\LowLevelTracing\ImportantStructures.cpp" />
     <ClCompile Include="..\LowLevelTracing\Light_LLT.cpp" />
@@ -250,11 +256,11 @@
     <ClCompile Include="..\SurfaceElements\PlanElement.cpp" />
     <ClCompile Include="..\SurfaceElements\SphericalElement.cpp" />
     <ClCompile Include="..\TOM(Logo)\TOM(LOGO).cpp" />
-    <ClCompile Include="PlotQwt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Analyse\CardinalPoints.h" />
     <ClInclude Include="..\Analyse\OpticalPathDifference.h" />
+    <ClInclude Include="..\Analyse\RayFan.h" />
     <ClInclude Include="..\Analyse\Seidel Coefficients.h" />
     <ClInclude Include="..\Analyse\Spot.h" />
     <ClInclude Include="..\basicdefinition\basicdefinitions.h" />
@@ -300,6 +306,7 @@
     <ClInclude Include="..\benchmark\testOptimizer_Paper\testOptimizer_Paper_P0.h" />
     <ClInclude Include="..\benchmark\testOptimizer_Paper\testOptimizer_Paper_P1.h" />
     <ClInclude Include="..\benchmark\testQwtPlots\testOPDQwtPlot.h" />
+    <ClInclude Include="..\benchmark\testQwtPlots\testRayFanQwtPlot.h" />
     <ClInclude Include="..\benchmark\testQwtPlots\TestRayTracingQwtPlot.h" />
     <ClInclude Include="..\benchmark\testQwtPlots\TestSpotDiagramQwtPlot.h" />
     <ClInclude Include="..\benchmark\testSeidelCoefficients\testSeidelCoefficients.h" />
@@ -349,7 +356,11 @@
     <ClInclude Include="..\Plot\Plot.h" />
     <ClInclude Include="..\Plot\Plot2D.h" />
     <ClInclude Include="..\Plot\PlotOPD.h" />
+    <ClInclude Include="..\Plot\PlotParameterQwt.h" />
+    <ClInclude Include="..\Plot\PlotQwt.h" />
+    <ClInclude Include="..\Plot\PlotRayFan.h" />
     <ClInclude Include="..\Plot\PlotSpotDiagram.h" />
+    <ClInclude Include="..\Plot\QwtPloItems.h" />
     <ClInclude Include="..\PSFfunction\PSFfunction.h" />
     <ClInclude Include="..\LowLevelTracing\ImportantStructures.h" />
     <ClInclude Include="..\LowLevelTracing\JonesVector.h" />
@@ -364,7 +375,6 @@
     <ClInclude Include="..\SurfaceElements\PlanElement.h" />
     <ClInclude Include="..\SurfaceElements\SphericalElement.h" />
     <ClInclude Include="..\TOM(Logo)\TOM(Logo).h" />
-    <ClInclude Include="PlotQwt.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

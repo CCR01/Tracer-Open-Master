@@ -61,12 +61,12 @@ struct PosAndCurveStructToPlot
 	PosAndCurveStructToPlot(int pos, QwtPlotCurve *curve)
 	{
 		position = pos;
-		interaction = curve;
+		Qwtcurve = curve;
 	}
 	~PosAndCurveStructToPlot() {};
 
 	int position;
-	QwtPlotCurve *interaction = new QwtPlotCurve();
+	QwtPlotCurve *Qwtcurve = new QwtPlotCurve();
 
 	// set position
 	void setPosition(unsigned int const& pos);
@@ -74,7 +74,7 @@ struct PosAndCurveStructToPlot
 	unsigned int getPosition() const&;
 
 	// set interaction at surface
-	void setCurve(QwtPlotCurve* curve);
+	void setCurve(QwtPlotCurve* const& curve);
 	// get interaction at surface
 	QwtPlotCurve* getCurve() const&;
 
@@ -205,53 +205,7 @@ public:
 
 	void cleanSurfaceAndInteractionStartAt_i(unsigned int aimSize);
 
-	//**load parameters of QwtPlot:
-//*********************************RayTracing
-//get the color of the surfaces in the optical system
-	QColor getColorSurfaces();
-	//get the thickness of the line of the plotted surfaces 
-	double getThicknessSurfaces();
-	//change the color of the surfaces to be plotted
-	void setColorSurfaces(QColor color);
-	//change the thickness of the surfaces to be plotted
-	void setThicknessSurfaces(double thickness);
-	//add a comment information to the vector of comments to be plotted on the Ray tracing plot
-	void AddCommentToRayTracingPlot(QString comment, VectorStructR2 position);
-	//return the vector containing the comments to be added to the plot of ray tracing
-	std::vector<CommentandPosCommentToPlotInRayTracing> getVectorCommentsRayTracingPlot();
-	//***********************************Spot Diagram
-	//add a comment information to the vector of the spot diagramm to be plotted
-	void AddCommentToSpotDiagramPlot(QString comment, VectorStructR2 position);
-	//return the vector containing the comments to be added on the spot diagram
-	std::vector<CommentandPosCommentToPlotInRayTracing> getVectorCommentsSpotDiagramPlot();
-	//change the color of the airy disk on the spot diagram
-	void setAiryDiskColor(QColor AiryDiskColor);
-	//get the color of the airydisk curve of the spot diagram
-	QColor getAiryDiskColor();
-	//change the thickness of the curve of the airydisc
-	void setAiryDiskThickness(int AiryDiskThickness);
-	//get the thickness of the airydisc curve
-	int getAiryDiskThickness();
-	//change the color of the Spot Diagram plot
-	void setSymbolColorOfSpotDiagrammPoints(QBrush SymbolColor);
-	//get the color of the spot diagram plot
-	QBrush getSymbolColorOfSpotDiagrammPoints();
-	//change the shape of the Spot diagram plot points
-	void setSymbolStyleOfSpotDiagrammPoints(QwtSymbol::Style SymbolStyle);
-	//get the shape of the Spot diagram plot points
-	QwtSymbol::Style getSymbolStyleOfSpotDiagrammPoints();
-	//change the color of the contour of the symbol of the spot diagram spots
-	void setContourColorSymbolOfSpotDiagrammPoints(QPen SymbolPen);
-	//get the color of the contour of the symbol of the spot diagram spots
-	QPen getContourColorSymbolOfSpotDiagrammPoints();
-	//change the size of the spot diagram curve points
-	void setSizeSymbolOfSpotDiagrammPoints(QSize SymbolSize);
-	//get the size of the spot diagram curve points
-	QSize getSizeSymbolOfSpotDiagrammPoints();
-	//change the color of the frame of the spot diagramms
-	void setFrameColorOfSpotDiagrammPoints(QPen ColorOfTheFrame);
-	//get the color of the frame of the spot diagramms
-	QPen getFrameColorOfSpotDiagrammPoints();
+	
 
 	void printAllPositions();
 	void printAllRadii();
@@ -273,16 +227,6 @@ private:
 
 	int CurveCounter = 0;
 
-	QColor mColorSurfaces = { 255,0,0 };
-	double mThicknessSurfaces = 2;
-	QString mAddedComment;
-	VectorStructR2 PositionOfAddedComment;
-	QColor mAiryDiskColor = QColor("black");
-	int mAiryDiskThickness = 1;
-	QBrush mSymbolColorSpotDiagram = QBrush(Qt::blue);
-	QwtSymbol::Style mSymbolStyleSpotDiagram = QwtSymbol::Ellipse;
-	QPen mSymbolPenSpotDiagram = QPen(Qt::blue, 1);
-	QSize mSymbolSizeSpotDiagram = QSize(2, 2);
-	QPen mColorOfTheFrameSpotDiagram = QColor("lightGrey");
+	
 
 };

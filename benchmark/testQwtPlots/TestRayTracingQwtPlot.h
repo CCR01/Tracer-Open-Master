@@ -1,6 +1,6 @@
 #pragma once
 #include <qwt_plot.h>
-#include "../../VS-Solution_tracer-open/PlotQwt.h"
+#include "..\..\Plot\PlotQwt.h"
 
 class testRayTracingQwtPlot
 {
@@ -17,8 +17,8 @@ public:
 
 
 private:
+	RayTracingQwtPlot* mRayTracingQwtPlotSystem0;
 	RayTracingQwtPlot* mRayTracingQwtPlotSystem1;
 	RayTracingQwtPlot* mRayTracingQwtPlotSystem2;
-	RayTracingQwtPlot* mRayTracingQwtPlotSystem3;
 };
 

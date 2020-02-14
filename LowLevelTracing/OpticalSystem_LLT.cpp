@@ -35,16 +35,16 @@ unsigned int PosAndCurveStructToPlot::getPosition() const&
 }
 
 // set interacting surface
-void PosAndCurveStructToPlot::setCurve(QwtPlotCurve * curve)
+void PosAndCurveStructToPlot::setCurve(QwtPlotCurve * const& curve)
 {
-	interaction = curve;
+	Qwtcurve = curve;
 }
 
 
 // get interaction surface
 QwtPlotCurve*  PosAndCurveStructToPlot::getCurve() const&
 {
-	return interaction;
+	return Qwtcurve;
 };
 
 PosAndIntsectionSurfaceStruct::PosAndIntsectionSurfaceStruct() {};
@@ -440,116 +440,6 @@ std::string TitelandPlotSpotDiagramToPlot::getImageName()
 
 
 
-//load parameters of QwtPlot
-QColor OpticalSystem_LLT::getColorSurfaces()
-{
-	return mColorSurfaces;
-}
-
-
-double OpticalSystem_LLT::getThicknessSurfaces()
-{
-	return mThicknessSurfaces;
-}
-
-void OpticalSystem_LLT::setColorSurfaces(QColor color)
-{
-	mColorSurfaces = color;
-
-}
-
-void OpticalSystem_LLT::setThicknessSurfaces(double thickness)
-{
-	mThicknessSurfaces = thickness;
-}
-
-void OpticalSystem_LLT::AddCommentToRayTracingPlot(QString comment, VectorStructR2 position)
-{
-	CommentandPosCommentToPlotInRayTracing CommentInfo;
-	CommentInfo.setComment(comment);
-	CommentInfo.setPositionComment(position);
-	mCommentandPosCommentToRayTracingPlot.push_back(CommentInfo);
-}
-
-std::vector<CommentandPosCommentToPlotInRayTracing> OpticalSystem_LLT::getVectorCommentsRayTracingPlot()
-{
-	return mCommentandPosCommentToRayTracingPlot;
-}
-
-void OpticalSystem_LLT::AddCommentToSpotDiagramPlot(QString comment, VectorStructR2 position)
-{
-	CommentandPosCommentToPlotInRayTracing CommentInfo;
-	CommentInfo.setComment(comment);
-	CommentInfo.setPositionComment(position);
-	mCommentandPosCommentToSpotDiagramPlot.push_back(CommentInfo);
-}
-
-std::vector<CommentandPosCommentToPlotInRayTracing> OpticalSystem_LLT::getVectorCommentsSpotDiagramPlot()
-{
-	return mCommentandPosCommentToSpotDiagramPlot;
-}
-
-void OpticalSystem_LLT::setAiryDiskColor(QColor AiryDiskColor)
-{
-	mAiryDiskColor = AiryDiskColor;
-}
-
-QColor OpticalSystem_LLT::getAiryDiskColor()
-{
-	return mAiryDiskColor;
-}
-
-void OpticalSystem_LLT::setAiryDiskThickness(int AiryDiskThickness)
-{
-	mAiryDiskThickness = AiryDiskThickness;
-}
-
-int OpticalSystem_LLT::getAiryDiskThickness()
-{
-	return mAiryDiskThickness;
-}
-
-void OpticalSystem_LLT::setSymbolColorOfSpotDiagrammPoints(QBrush SymbolColor)
-{
-	mSymbolColorSpotDiagram = SymbolColor;
-}
-QBrush OpticalSystem_LLT::getSymbolColorOfSpotDiagrammPoints()
-{
-	return mSymbolColorSpotDiagram;
-}
-void OpticalSystem_LLT::setSymbolStyleOfSpotDiagrammPoints(QwtSymbol::Style SymbolStyle)
-{
-	mSymbolStyleSpotDiagram = SymbolStyle;
-}
-QwtSymbol::Style OpticalSystem_LLT::getSymbolStyleOfSpotDiagrammPoints()
-{
-	return mSymbolStyleSpotDiagram;
-}
-void OpticalSystem_LLT::setContourColorSymbolOfSpotDiagrammPoints(QPen SymbolPen)
-{
-	mSymbolPenSpotDiagram = SymbolPen;
-}
-QPen OpticalSystem_LLT::getContourColorSymbolOfSpotDiagrammPoints()
-{
-	return mSymbolPenSpotDiagram;
-}
-void OpticalSystem_LLT::setSizeSymbolOfSpotDiagrammPoints(QSize SymbolSize)
-{
-	mSymbolSizeSpotDiagram = SymbolSize;
-}
-QSize OpticalSystem_LLT::getSizeSymbolOfSpotDiagrammPoints()
-{
-	return mSymbolSizeSpotDiagram;
-}
-
-void OpticalSystem_LLT::setFrameColorOfSpotDiagrammPoints(QPen ColorOfTheFrame)
-{
-	mColorOfTheFrameSpotDiagram = ColorOfTheFrame;
-}
-QPen OpticalSystem_LLT::getFrameColorOfSpotDiagrammPoints()
-{
-	return mColorOfTheFrameSpotDiagram;
-}
 
 double OpticalSystem_LLT::getMinSpotDiagrammScale()
 {

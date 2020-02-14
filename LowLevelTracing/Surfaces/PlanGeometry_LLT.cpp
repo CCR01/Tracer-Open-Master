@@ -15,7 +15,7 @@ PlanGeometryQwt::PlanGeometryQwt(double semiHeight, VectorStructR3 point, Vector
 	int boarterLeft_Qwt = 50;
 	int scale = 20;
 
-	VectorStructR2 dir2D{ direction.getZ(), direction.getY() };
+	VectorStructR2 dir2D{ -direction.getZ(), direction.getY() };
 	VectorStructR2 ortoUnit = Math::calcOrtoVec2D_Unit(dir2D);
 
 
@@ -78,7 +78,7 @@ VectorStructR3 PlanGeometry_LLT::getPoint()
 	return mPointPlan;
 }
 // set point
-void PlanGeometry_LLT::setPoint(VectorStructR3 point) 
+void PlanGeometry_LLT::setPoint(VectorStructR3 point)
 {
 	mPointPlan = point;
 }
@@ -112,14 +112,14 @@ void PlanGeometry_LLT::setRefractiveIndexSide_B(double const& refractiveIndex)
 
 // calculate the intersection information
 IntersectInformationStruct PlanGeometry_LLT::calculateIntersection(LightRayStruct const& lightRay)
-{	
+{
 	IntersectInformationStruct returnIntersectInfos;
 	Ray_LLT ray = lightRay.getRay_LLT();
 	Light_LLT light = lightRay.getLight_LLT();
 
 
 	// flat in coordinate form: E:Nx * X+ Ny * Y+ Nz * Z= d 
-	double d =  mDirectionPlan * mPointPlan;
+	double d = mDirectionPlan * mPointPlan;
 	// calculate steps to walk from origin ray to flat
 	//double checkDX = ray.getDirectionRayUnit().X;
 	//double checkDY = ray.getDirectionRayUnit().getY();
@@ -139,10 +139,10 @@ IntersectInformationStruct PlanGeometry_LLT::calculateIntersection(LightRayStruc
 		returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, light }; //'N' there is NO intersection poin
 		// -> Das ist ja dann eigentlich falsch?! -> es gibt ja viele Schnittpunkte!
 	}
-	
+
 	else {//there must be an intersection point!
-		
-		
+
+
 		double stepsT = numerator / denominator;
 
 
@@ -152,11 +152,11 @@ IntersectInformationStruct PlanGeometry_LLT::calculateIntersection(LightRayStruc
 		}
 
 		else // calculate the intersection point
-		{	
+		{
 			VectorStructR3 intersectionPoint = ray.getOriginRay() + stepsT * ray.getDirectionRayUnit();
 
-			
-			
+
+
 			/*
 			std::cout << "____________________________________ \n";
 			std::cout << "____________________________________ \n";
@@ -174,8 +174,8 @@ IntersectInformationStruct PlanGeometry_LLT::calculateIntersection(LightRayStruc
 			std::cout << "____________________________________ \n";
 			std::cout << "____________________________________ \n";
 			*/
-			
-			
+
+
 
 			// calculate distance from intersection point to the "point" from the plan geometry
 			double distance = std::sqrt(std::pow((intersectionPoint.getX() - mPointPlan.getX()), 2) + pow((intersectionPoint.getY() - mPointPlan.getY()), 2) + pow((intersectionPoint.getZ() - mPointPlan.getZ()), 2));
@@ -197,7 +197,7 @@ IntersectInformationStruct PlanGeometry_LLT::calculateIntersection(LightRayStruc
 				// the intersection point is not on the plan geometry
 				returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, light }; //'N' there is NO intersection poin
 			}
-			
+
 			else // the intersection point is in the plan geometry
 			{
 				if (ray.getDirectionRayUnit() * mDirectionPlan > 0) // switch normale on plan geometry and from side A
@@ -210,7 +210,7 @@ IntersectInformationStruct PlanGeometry_LLT::calculateIntersection(LightRayStruc
 				}
 			}
 
-			
+
 		}
 
 	}
@@ -230,13 +230,13 @@ void PlanGeometry_LLT::plot2D(cv::Mat image, unsigned int scale, unsigned int th
 	VectorStructR2 point2D{ mPointPlan.getZ(), mPointPlan.getY() };
 	VectorStructR2 dir2D{ mDirectionPlan.getZ(), mDirectionPlan.getY() };
 	VectorStructR2 ortoUnit = Math::calcOrtoVec2D_Unit(dir2D);
-		
+
 
 	// attention open cv has a specific coordinat system!!! 
 
 	int startX = boarterLeft + mPointPlan.getZ() * scale + ortoUnit.getX() * mSemiHeightPlan * scale;
-	int startY = height/2 - mPointPlan.getY() * scale - ortoUnit.getY() * mSemiHeightPlan * scale;
-		
+	int startY = height / 2 - mPointPlan.getY() * scale - ortoUnit.getY() * mSemiHeightPlan * scale;
+
 	int endX = boarterLeft + mPointPlan.getZ() * scale - ortoUnit.getX() * mSemiHeightPlan * scale;
 	int endY = height / 2 - mPointPlan.getY() * scale + ortoUnit.getY() * mSemiHeightPlan * scale;
 
@@ -257,7 +257,7 @@ double PlanGeometry_LLT::getRadius()
 
 // get focal length side A
 real PlanGeometry_LLT::getFocalLength_A()
-{	
+{
 	std::cout << "the plane surface has an focal length of -inf (-999999999999999999)" << std::endl;
 	return -999999999999999999;
 }
@@ -291,9 +291,9 @@ PlanGeometry_LLT::PlanGeometry_LLT(PlanGeometry_LLT &source)
 	mDirectionPlan = source.mDirectionPlan;
 	mRefractiveIndexA_Plan = source.mRefractiveIndexA_Plan;
 	mRefractiveIndexB_Plan = source.mRefractiveIndexB_Plan;
+	PlanGeometry_Qwt_Ptr = source.PlanGeometry_Qwt_Ptr;
+	pointsofPlanGeometry = source.pointsofPlanGeometry;
 
-	// TODO: Also copy the spherical informaltion to plot!
-	// SphericalSurfaceQwt* SphericalSurface_Qwt_Ptr = new SphericalSurfaceQwt(mRadius, mSemiHeight, mDirection, mPointSphere);
 }
 
 PlanGeometry_LLT& PlanGeometry_LLT::operator=(PlanGeometry_LLT& source)
@@ -308,7 +308,8 @@ PlanGeometry_LLT& PlanGeometry_LLT::operator=(PlanGeometry_LLT& source)
 	mDirectionPlan = source.mDirectionPlan;
 	mRefractiveIndexA_Plan = source.mRefractiveIndexA_Plan;
 	mRefractiveIndexB_Plan = source.mRefractiveIndexB_Plan;
-
+	PlanGeometry_Qwt_Ptr = source.PlanGeometry_Qwt_Ptr;
+	pointsofPlanGeometry = source.pointsofPlanGeometry;
 
 	return *this;
 }
@@ -340,3 +341,8 @@ PlanGeometryQwt* PlanGeometry_LLT::getPointerPlot()
 	return PlanGeometry_Qwt_Ptr;
 };
 
+void PlanGeometry_LLT::calcSphericalSurfaceQwtCoord()
+{
+	PlanGeometry_Qwt_Ptr = new PlanGeometryQwt(mSemiHeightPlan, mPointPlan, mDirectionPlan);
+	pointsofPlanGeometry = PlanGeometry_Qwt_Ptr->getPoints();
+}

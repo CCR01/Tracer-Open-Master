@@ -288,7 +288,7 @@ unsigned int  VectorElementAndPosition::getPosInVector() const
 
 
 VectorStructR2::VectorStructR2() {};
-VectorStructR2::VectorStructR2(real x, real y):
+VectorStructR2::VectorStructR2(real x, real y) :
 	mX(x),
 	mY(y)
 {};

@@ -111,9 +111,12 @@
 
 #include "..\TOM(Logo)\TOM(Logo).h"
 
-int main()
-{
+#include "..\benchmark\testQwtPlots\testRayFanQwtPlot.h"
 
+
+int main(int argc, char **argv)
+{
+	QApplication a(argc, argv);
 
 	// *****************************************************************************************************************
 	// Benchmark for traceropen
@@ -121,20 +124,36 @@ int main()
 	std::vector<bool> workTheSystem;
 	// *****************************************************************************************************************
 
-	//// plot TOM logo
-	//TOM_LOGO tomLogo;
-	//bool checkOlotLogoTOM = tomLogo.plotTOM_Logo();
-	//workTheSystem.push_back(checkOlotLogoTOM);
+	// plot TOM logo
+	TOM_LOGO tomLogo;
+    bool checkOlotLogoTOM = tomLogo.plotTOM_Logo();
+	workTheSystem.push_back(checkOlotLogoTOM);
+	
+	testRayTracingQwtPlot checkRayTracingPlot;
+    bool checkCardinal_superFct_RayTracing = checkRayTracingPlot.superFuncTestRayTracingQwtPlot();
+    workTheSystem.push_back(checkCardinal_superFct_RayTracing);
 
+	testRayFanQwtPlot checkRayFanPlot;
+	bool checkCardinal_superFct_RayFan = checkRayFanPlot.superFuncTestRayFanQwtPlot();
+	workTheSystem.push_back(checkCardinal_superFct_RayFan);
+
+	testSpotDiagramQwtPlot checkSpotDiagramPlot;
+	bool checkCardinal_superFct_SpotDiagram = checkSpotDiagramPlot.superFuncTestSpotDiagramQwtPlot();
+	workTheSystem.push_back(checkCardinal_superFct_SpotDiagram);
+
+	testOPDQwtPlot checkOPDPlot;
+	bool checkCardinal_superFct_OPD = checkOPDPlot.superFuncTestOPDQwtPlot();
+	workTheSystem.push_back(checkCardinal_superFct_OPD);
+	
 	//// test replace lenses for IOC 2020
 	//IOC2020_Dresden system_IOC2020_Dresden;
 	//bool checkSysIOC2020 = system_IOC2020_Dresden.systemFor_IOC2020_Dresten();
 	//workTheSystem.push_back(checkSysIOC2020);
 	
-	// RayAiming
-	BenchmarkRayAiming checkRayAiming;
-	bool RayAiming = checkRayAiming.checkRayAimingSuperFct();
-	workTheSystem.push_back(RayAiming);
+	//// RayAiming
+	//BenchmarkRayAiming checkRayAiming;
+	//bool RayAiming = checkRayAiming.checkRayAimingSuperFct();
+	//workTheSystem.push_back(RayAiming);
 
 	//// lens replace
 	//testLensReplace testLensRep;
@@ -282,12 +301,13 @@ int main()
 	if (checker == true) std::cout << "The system works perfectly\n";
 	else std::cout << "There is a fuck fuck fuck fuck fuck in the system\n" << std::endl;
 	//*****************************************************************************************************************
+	
 
-	int i;
+	/*int i;
 	std::cout << "insert a rendom number" << std::endl;
-	std::cin >> i;
+	std::cin >> i;*/
 
-	return 0;
+	return a.exec();
 }
 
 
@@ -618,150 +638,4 @@ int main()
 //BenchmarkFillAS testFillAS;
 //bool checkFillAS = testFillAS.chekMethodesFillAS();
 //workTheSystem.push_back(checkFillAS);
-//
-
-
-
-
-
-
-// Aya *******************************************************************
-//int main(int argc, char **argv)
-//{
-
-	//QApplication a(argc, argv);
-
-
-	////all the surfaces
-	//SphericalSurface_LLT S1(/*radius*/38.73360379131933, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 15.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.5, /*refIndexSideB*/1.0);
-	//SphericalSurface_LLT S2(/*radius*/10.33817058758478, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 20.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
-	//SphericalSurface_LLT S3(/*radius*/51.02696739895755, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 22.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
-	//PlanGeometry_LLT S4(/*semiHeight*/5.0, /*point*/{ 0.0,0.0,27.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.5, /*refractiveSideB*/ 1.0);
-	//SphericalSurface_LLT S5(/*radius*/61.48513190056155, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 29.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
-	//PlanGeometry_LLT S6(/*semiHeight*/5.0, /*point*/{ 0.0,0.0,34.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.5, /*refractiveSideB*/ 1.0);
-	//SphericalSurface_LLT S7(/*radius*/13.22318498941039, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 36.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
-	//PlanGeometry_LLT S8(/*semiHeight*/5.0, /*point*/{ 0.0,0.0,41.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.5, /*refractiveSideB*/ 1.0);
-	//SphericalSurface_LLT S9(/*radius*/12.07896133399859, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 43.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.5, /*refIndexSideB*/1.0);
-	//SphericalSurface_LLT S10(/*radius*/26.46510860484050, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 48.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.5, /*refIndexSideB*/1.6);
-	//SphericalSurface_LLT S11(/*radius*/21.48098096423011, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 53.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.6);
-	//SphericalSurface_LLT S12(/*radius*/30.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 55.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
-	//SphericalSurface_LLT S13(/*radius*/70.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 60.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.6, /*refIndexSideB*/1.5);
-	//SphericalSurface_LLT S14(/*radius*/40.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 65.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.6, /*refIndexSideB*/1.0);
-	//PlanGeometry_LLT S15(/*semiHeight*/5.0, /*point*/{ 0.0,0.0,75.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
-	//
-	//
-	//// build the optical system
-	//RefractedRay_LLT refrac;
-	//OpticalSystem_LLT optSysE1;
-	//optSysE1.fillVectorSurfaceAndInteractingData(0, &S1, refrac.clone());
-	//optSysE1.fillVectorSurfaceAndInteractingData(1, &S2, refrac.clone());
-	//optSysE1.fillVectorSurfaceAndInteractingData(2, &S3, refrac.clone());
-	//optSysE1.fillVectorSurfaceAndInteractingData(3, &S4, refrac.clone());
-	//optSysE1.fillVectorSurfaceAndInteractingData(4, &S5, refrac.clone());
-	//optSysE1.fillVectorSurfaceAndInteractingData(5, &S6, refrac.clone());
-	//optSysE1.fillVectorSurfaceAndInteractingData(6, &S7, refrac.clone());
-	//optSysE1.fillVectorSurfaceAndInteractingData(7, &S8, refrac.clone());
-	//optSysE1.fillVectorSurfaceAndInteractingData(8, &S9, refrac.clone());
-	//optSysE1.fillVectorSurfaceAndInteractingData(9, &S10, refrac.clone());
-	//optSysE1.fillVectorSurfaceAndInteractingData(10, &S11, refrac.clone());
-	//optSysE1.fillVectorSurfaceAndInteractingData(11, &S12, refrac.clone());
-	//optSysE1.fillVectorSurfaceAndInteractingData(12, &S13, refrac.clone());
-	//optSysE1.fillVectorSurfaceAndInteractingData(13, &S14, refrac.clone());
-	//optSysE1.fillVectorSurfaceAndInteractingData(14, &S15, refrac.clone());
-	//
-	//Light_LLT light;
-	//light.setWavelength(550.0);
-	//
-	//// fill aperture stop
-	//FillApertureStop fillAperStopE1_optAchse({ 0.0,0.0,0.0 }, 1, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, light);
-	//SequentialRayTracing seqTraceE1_OptAchse(optSysE1);
-	//seqTraceE1_OptAchse.seqRayTracingWithVectorOfLightRays(fillAperStopE1_optAchse.getVectorWithLightRays());
-	//
-	//// fill aperture stop
-	//FillApertureStop fillAperStopE1_field({ 0.0,0.5,0.0 }, 1, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, light);
-	//SequentialRayTracing seqTraceE1_field(optSysE1);
-	//seqTraceE1_field.seqRayTracingWithVectorOfLightRays(fillAperStopE1_field.getVectorWithLightRays());
-	//
-	//
-	////// plot 2d
-	//
-	//optSysE1.fillVectorToPlot2DQwt(0, S1.getPointerPlot());
-	//optSysE1.fillVectorToPlot2DQwt(1, S2.getPointerPlot());
-	//optSysE1.fillVectorToPlot2DQwt(2, S3.getPointerPlot());
-	//optSysE1.fillVectorToPlot2DQwt(3, S4.getPointerPlot());
-	//optSysE1.fillVectorToPlot2DQwt(4, S5.getPointerPlot());
-	//optSysE1.fillVectorToPlot2DQwt(5, S6.getPointerPlot());
-	//optSysE1.fillVectorToPlot2DQwt(6, S7.getPointerPlot());
-	//optSysE1.fillVectorToPlot2DQwt(7, S8.getPointerPlot());
-	//optSysE1.fillVectorToPlot2DQwt(8, S9.getPointerPlot());
-	//optSysE1.fillVectorToPlot2DQwt(9, S10.getPointerPlot());
-	//optSysE1.fillVectorToPlot2DQwt(10, S11.getPointerPlot());
-	//optSysE1.fillVectorToPlot2DQwt(11, S12.getPointerPlot());
-	//optSysE1.fillVectorToPlot2DQwt(12, S13.getPointerPlot());
-	//optSysE1.fillVectorToPlot2DQwt(13, S14.getPointerPlot());
-	//optSysE1.fillVectorToPlot2DQwt(14, S15.getPointerPlot());
-	//
-	//// single ray tracing
-	//SequentialRayTracing SeqTraceE1_plot2D(optSysE1);
-	//std::vector<LightRayStruct> lightRayAlong_Y_E1 = SequentialRayTracing::lightRayAlongY({ 0.0, -0.5, 0.0 }, 3, 10.0, -2.0, 2.0, 550, 1.0);
-	//SeqTraceE1_plot2D.seqRayTracingWithVectorOfLightRays(lightRayAlong_Y_E1);
-	//
-	////// single ray tracing
-	//SequentialRayTracing SeqTraceE1_plot2D_field(optSysE1);
-	//std::vector<LightRayStruct> lightRayAlong_E1_field = SequentialRayTracing::lightRayAlongY({ 0.0, 0.5, 0.0 }, 3, 10.0, -2.0, 2.0, 550, 1.0);
-	//SeqTraceE1_plot2D_field.seqRayTracingWithVectorOfLightRays(lightRayAlong_E1_field);
-	//
-	//
-	////// single ray tracing
-	//SequentialRayTracing SeqTraceE1_plot2D_field1(optSysE1);
-	//std::vector<LightRayStruct> lightRayAlong_E1_field1 = SequentialRayTracing::lightRayAlongY({ 0.0, 0.0, 0.0 }, 3, 10.0, -2.0, 2.0, 550, 1.0);
-	//SeqTraceE1_plot2D_field1.seqRayTracingWithVectorOfLightRays(lightRayAlong_E1_field1);
-	//
-	//
-	////fill vector Ray Tracing
-	//RayTracingSystem RayTracSys;
-	//RayTracSys.fillVectorRayTracing(&SeqTraceE1_plot2D, { 0,255,0 });
-	//RayTracSys.fillVectorRayTracing(&SeqTraceE1_plot2D_field, { 0,0,255 });
-	//RayTracSys.fillVectorRayTracing(&SeqTraceE1_plot2D_field1, { 50,0,10 });
-	//
-	//
-	////// show surfaces with rays:
-	//QwtWindow RayTracingPlot(optSysE1, RayTracSys);
-	//RayTracingPlot.resize(1600, 1000);
-	//RayTracingPlot.show();
-	//
-	//////save the plot:
-	////RayTracingPlot.SaveQwtPlot("../benchmark/Plot/images/Qwt2.jpg");
-	//
-	//
-	////define the Spot Diagramms
-	//Spot spotE1_optAchese(seqTraceE1_OptAchse.getAllInterPointsAtSurf_i(14), seqTraceE1_OptAchse.getAllInterPointsAtSurf_i(14).at(0));
-	//std::vector<Spot> vecSpotE1_optAchese{ spotE1_optAchese };
-	//PlotSpotDiagramm PlotSpotE1_optAchse(spotE1_optAchese.getRefPoint(), vecSpotE1_optAchese, 0.09950372, 550);
-	//
-	//Spot spotE1_field(seqTraceE1_field.getAllInterPointsAtSurf_i(14), seqTraceE1_field.getAllInterPointsAtSurf_i(14).at(0));
-	//std::vector<Spot> vecSpotE1_field{ spotE1_field };
-	//PlotSpotDiagramm PlotSpotE1_field(spotE1_field.getRefPoint(), vecSpotE1_field, 0.09950372, 550);
-	//
-	//Spot spotE1_field1(SeqTraceE1_plot2D_field1.getAllInterPointsAtSurf_i(14), SeqTraceE1_plot2D_field1.getAllInterPointsAtSurf_i(14).at(0));
-	//std::vector<Spot> vecSpotE1_field1{ spotE1_field1 };
-	//PlotSpotDiagramm PlotSpotE1_field1(spotE1_field1.getRefPoint(), vecSpotE1_field1, 0.09950372, 550);
-	//
-	////fill vectorSpotDiagram
-	//optSysE1.fillVectorSpotDiagramToPlot("Spot Diagram optical achse", &PlotSpotE1_optAchse);
-	//optSysE1.fillVectorSpotDiagramToPlot("Spot Diagram field 1", &PlotSpotE1_field);
-	//optSysE1.fillVectorSpotDiagramToPlot("Spot Diagram field 2", &PlotSpotE1_field1);
-	////optSysE1.fillVectorSpotDiagramToPlot("Spot Diagram optical achse", &PlotSpotE1_optAchse);
-	////optSysE1.fillVectorSpotDiagramToPlot("Spot Diagram field", &PlotSpotE1_field);
-	//
-	//
-	//// Plot spot diagram opt achse and field
-	//QwtWindow SpotDiagrammPlot(optSysE1);
-	//SpotDiagrammPlot.resize(400, 400);
-	//SpotDiagrammPlot.show();
-	//
-	//
-	//return a.exec();
 //}
-// Aya *******************************************************************
-

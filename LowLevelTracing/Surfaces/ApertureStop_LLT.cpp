@@ -387,3 +387,11 @@ QPolygonF* ApertureStop_LLT::getQPolygonFCurve()
 {
 	return &pointsofApertureStopUp;
 }
+
+void ApertureStop_LLT::calcApertureStopQwtCoord()
+{
+	ApertureStopUp_Qwt_Ptr = new ApertureStopQwtUp(mSemiHeightAperture, mPointAperture, mDirectionAperture);
+	ApertureStopDown_Qwt_Ptr = new ApertureStopQwtDown(mSemiHeightAperture, mPointAperture, mDirectionAperture);
+	pointsofApertureStopUp = ApertureStopUp_Qwt_Ptr->getPoints();
+	pointsofApertureStopDown = ApertureStopDown_Qwt_Ptr->getPoints();
+}

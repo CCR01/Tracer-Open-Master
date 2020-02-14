@@ -52,7 +52,7 @@ void AsphericalSurface_LLT::setDirectionUnitAsphere(VectorStructR3 const& direct
 }
 
 //get direction asphere
-VectorStructR3 AsphericalSurface_LLT::getDirection() 
+VectorStructR3 AsphericalSurface_LLT::getDirection()
 {
 	return mDirectionAsphereUnit;
 }
@@ -198,7 +198,7 @@ void AsphericalSurface_LLT::setA8(real const& A8)
 //calculate z of an aspherical surface in point Q projected on the aspherical surface
 
 is_Z_ValueAsphere AsphericalSurface_LLT::calc_Z_ValueAsphere(double const& x, double const& y)
-{	
+{
 	is_Z_ValueAsphere returnIs_Z_ValueAsphere;
 	double PointToZ_Achse = pow(x, 2) + pow(y, 2);
 	double sqrtTerm = 1.0 - (1.0 + mConic)*pow(1.0 / mRadiusAsphere, 2)*PointToZ_Achse;
@@ -208,18 +208,18 @@ is_Z_ValueAsphere AsphericalSurface_LLT::calc_Z_ValueAsphere(double const& x, do
 	}
 	else //there must be an intersection point
 	{
-					returnIs_Z_ValueAsphere = {
-			 (1 / mRadiusAsphere*PointToZ_Achse) / (1.0 + std::sqrt(sqrtTerm)) +
-			mPrefix * m_A1 * /*r^2*/ PointToZ_Achse +
-			mPrefix * m_A2 * /*r^4*/ pow(PointToZ_Achse, 2) +
-			mPrefix * m_A3 * /*r^6*/ pow(PointToZ_Achse, 3) +
-			mPrefix * m_A4 * /*r^8*/ pow(PointToZ_Achse, 4) +
-			mPrefix * m_A5 * /*r^10*/pow(PointToZ_Achse, 5) +
-			mPrefix * m_A6 * /*r^12*/pow(PointToZ_Achse, 6) +
-			mPrefix * m_A7 * /*r^14*/pow(PointToZ_Achse, 7) +
-			mPrefix * m_A8 * /*r^16*/pow(PointToZ_Achse, 8)
-			,
-			1 };
+		returnIs_Z_ValueAsphere = {
+ (1 / mRadiusAsphere * PointToZ_Achse) / (1.0 + std::sqrt(sqrtTerm)) +
+mPrefix * m_A1 * /*r^2*/ PointToZ_Achse +
+mPrefix * m_A2 * /*r^4*/ pow(PointToZ_Achse, 2) +
+mPrefix * m_A3 * /*r^6*/ pow(PointToZ_Achse, 3) +
+mPrefix * m_A4 * /*r^8*/ pow(PointToZ_Achse, 4) +
+mPrefix * m_A5 * /*r^10*/pow(PointToZ_Achse, 5) +
+mPrefix * m_A6 * /*r^12*/pow(PointToZ_Achse, 6) +
+mPrefix * m_A7 * /*r^14*/pow(PointToZ_Achse, 7) +
+mPrefix * m_A8 * /*r^16*/pow(PointToZ_Achse, 8)
+,
+1 };
 
 
 	};
@@ -286,7 +286,7 @@ isDerivationAsphere AsphericalSurface_LLT::rise_Y_AsphericalSurface(double const
 }
 
 IntersectInformationStruct AsphericalSurface_LLT::calculateIntersection(LightRayStruct const& lightRay)
-{	
+{
 
 	IntersectInformationStruct returnIntersectInfos;
 	Ray_LLT ray = lightRay.getRay_LLT();
@@ -303,12 +303,12 @@ IntersectInformationStruct AsphericalSurface_LLT::calculateIntersection(LightRay
 	VectorStructR3 P1_IntersectionPointRayTangenteLOCALCoordiSystem;
 	Matrix3x3AndExist TransformationMatrix = BaseTransformation_LLT::CalcBaseTransformationMatrix(mDirectionAsphereUnit);
 	VectorStructR3 transDirectionRay = Math::multiplyMatrix3x3VectorR3(TransformationMatrix.Matrix, ray.getDirectionRayUnit());
-	
+
 	// in com
 	Ray_LLT transRay = BaseTransformation_LLT::transformRayInNewBase(ray, TransformationMatrix.Matrix, mPointAsphere);
 	VectorStructR3 transAspherePoint = { 0.0,0.0,0.0 };
 	VectorStructR3 transAsphereDirecUnit = Math::multiplyMatrix3x3VectorR3(TransformationMatrix.Matrix, mDirectionAsphereUnit);
-	
+
 	isDerivationAsphere riseXLocalCoodiSystem;
 	isDerivationAsphere riseYLocalCoordiSystem;
 
@@ -324,14 +324,14 @@ IntersectInformationStruct AsphericalSurface_LLT::calculateIntersection(LightRay
 	//__________________________________________________________
 	// 1. Intersection Point Q0 with the vertex plane of the asphere
 	// d = Dx*X+Dy*Y+Dz*Z
-	double d_VertexPlaneAsphericalSurface = transAsphereDirecUnit*transAspherePoint;
+	double d_VertexPlaneAsphericalSurface = transAsphereDirecUnit * transAspherePoint;
 	// calculate the intersection point of the ray and the vertex plane
 	//d = Dx*(Ox+t*Dx)+Dy*(Oy+t*Dy)+Dz*(Oz+t*Dz) => t
-	double denominator = transAsphereDirecUnit*transRay.getDirectionRayUnit();
-	
-	if ( abs(denominator) < tolerance)
+	double denominator = transAsphereDirecUnit * transRay.getDirectionRayUnit();
+
+	if (abs(denominator) < tolerance)
 	{
-		returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 },light}; //'N' there is NO intersection poin
+		returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 },light }; //'N' there is NO intersection poin
 	}
 	else
 	{
@@ -353,23 +353,23 @@ IntersectInformationStruct AsphericalSurface_LLT::calculateIntersection(LightRay
 				returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, light }; //'N' there is NO intersection poin
 			}
 			else
-			{	
+			{
 				// calculate the intersection point Q0 - ray with vertex plane of the asphere 
-				VectorStructR3 Q0_vertex_LocalCoordinateSystem = transRay.getOriginRay() + stepsT*transRay.getDirectionRayUnit();
+				VectorStructR3 Q0_vertex_LocalCoordinateSystem = transRay.getOriginRay() + stepsT * transRay.getDirectionRayUnit();
 				real zero = 0.0;
 				Q0_vertex_LocalCoordinateSystem.setZ(zero); //to stop rounding error
 
 				// TODO QUESTION siehe unten -> hier soll dann der loop beginnen
 
 				//double stepsQ0LocalToVertexPlane = (d_VertexPlaneAsphericalSurface - mDirectionAsphereUnit*Q0_vertex_LocalCoordinateSystem) / (mDirectionAsphereUnit*mDirectionAsphereUnit);
-				int Interations = 1; 
+				int Interations = 1;
 				while (distanceQP > limit)/*TODOQUESTION: Welcher Wert ist hier angemessen*/ //&& Interations < 1000)
 				{
 
-					
+
 					// calculate the z value of the asphere for the projected point Q0
 					zValueAsphere = calc_Z_ValueAsphere(Q0_vertex_LocalCoordinateSystem.getX(), Q0_vertex_LocalCoordinateSystem.getY());
-					
+
 					if (zValueAsphere.yesNo == 0) //there is no intersection point
 					{
 						distanceQP = limit - 1.0; /*check Value! to go out of "while"*/
@@ -388,48 +388,48 @@ IntersectInformationStruct AsphericalSurface_LLT::calculateIntersection(LightRay
 							returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, light }; //'N' there is NO intersection poin
 						}
 						else
-						{ 
-						// Calculate rise of asphere in y-direction
-						riseYLocalCoordiSystem = rise_Y_AsphericalSurface(Q1_projectionLocalCoordiSystem.getX(), Q1_projectionLocalCoordiSystem.getY());
-						if (riseYLocalCoordiSystem.yesNo == 0)
 						{
-							distanceQP = limit - 1.0;
-							returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, light }; //'N' there is NO intersection poin
+							// Calculate rise of asphere in y-direction
+							riseYLocalCoordiSystem = rise_Y_AsphericalSurface(Q1_projectionLocalCoordiSystem.getX(), Q1_projectionLocalCoordiSystem.getY());
+							if (riseYLocalCoordiSystem.yesNo == 0)
+							{
+								distanceQP = limit - 1.0;
+								returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, light }; //'N' there is NO intersection poin
+							}
+							else
+							{
+								/*With the equation
+								z=z0+fx(x0,y0)*(x-x0)+fy(x0,y0)*(y-y0) we get the coordinate form of the tangential plane on the
+								aspherical surface in point Q1(x1,y1).
+								Next we put the ray: g: (x,y,z)=(xs,ys,zs)+ stepT * (xd,yd,zd) into the tangential plane
+								and solve for stepsT.
+								So we get:
+								*/
+
+
+								//steps_T_RayToTangentialPlane = (ray.getOriginRay().Z - Q1_projectionGlobalCoordindatSystem.Z + mPointAsphere.Z + riseX*(ray.getOriginRay().X - Q1_projection.X + mPointAsphere.X) + riseY*(ray.getOriginRay().Y - Q1_projection.Y + mPointAsphere.Y)) / (ray.getDirectionRayUnit().Z - ray.getDirectionRayUnit().X*riseX - ray.getDirectionRayUnit().Y*riseY);
+								steps_T_RayToTangentialPlaneLocalCoordiSystem = (-transRay.getOriginRay().getZ() + Q1_projectionLocalCoordiSystem.getZ() + riseXLocalCoodiSystem.derivation*(transRay.getOriginRay().getX() - Q1_projectionLocalCoordiSystem.getX()) + riseYLocalCoordiSystem.derivation*(transRay.getOriginRay().getY() - Q1_projectionLocalCoordiSystem.getY())) / (-riseXLocalCoodiSystem.derivation*transRay.getDirectionRayUnit().getX() - riseYLocalCoordiSystem.derivation*transRay.getDirectionRayUnit().getY() + transRay.getDirectionRayUnit().getZ());
+								// To get the  intersection point between ray and tangential plane we put stepsT into the Ray equation
+								P1_IntersectionPointRayTangenteLOCALCoordiSystem = transRay.getOriginRay() + steps_T_RayToTangentialPlaneLocalCoordiSystem * transRay.getDirectionRayUnit();
+
+								// Calculate the distance between the intersection point between ray and tangential plane =P1= "P1_IntersectionPointRayTangente" and 
+								// approximate solution Q1 on the surface as a z-projection
+
+								distanceQP = Math::distanceTwoVectors(Q1_projectionLocalCoordiSystem, P1_IntersectionPointRayTangenteLOCALCoordiSystem);
+								//zValueAsphere = calc_Z_ValueAsphere(P1_IntersectionPointRayTangente.X - mPointAsphere.X, P1_IntersectionPointRayTangente.Y-mPointAsphere.Y);
+
+								real X_P1 = P1_IntersectionPointRayTangenteLOCALCoordiSystem.getX();
+								real Y_P1 = P1_IntersectionPointRayTangenteLOCALCoordiSystem.getY();
+
+								Q0_vertex_LocalCoordinateSystem.setX(X_P1);
+								Q0_vertex_LocalCoordinateSystem.setY(Y_P1);
+
+								//Q1_projection = Q_projection(P1_IntersectionPointRayTangente.X - mPointAsphere.X, P1_IntersectionPointRayTangente.Y - mPointAsphere.Y, zValueAsphere.Z_Value);
+								//______________________
+								++Interations;
+								//______________________
+							}
 						}
-						else
-						{
-						/*With the equation
-						z=z0+fx(x0,y0)*(x-x0)+fy(x0,y0)*(y-y0) we get the coordinate form of the tangential plane on the
-						aspherical surface in point Q1(x1,y1).
-						Next we put the ray: g: (x,y,z)=(xs,ys,zs)+ stepT * (xd,yd,zd) into the tangential plane
-						and solve for stepsT.
-						So we get:
-						*/
-						
-
-						//steps_T_RayToTangentialPlane = (ray.getOriginRay().Z - Q1_projectionGlobalCoordindatSystem.Z + mPointAsphere.Z + riseX*(ray.getOriginRay().X - Q1_projection.X + mPointAsphere.X) + riseY*(ray.getOriginRay().Y - Q1_projection.Y + mPointAsphere.Y)) / (ray.getDirectionRayUnit().Z - ray.getDirectionRayUnit().X*riseX - ray.getDirectionRayUnit().Y*riseY);
-						steps_T_RayToTangentialPlaneLocalCoordiSystem = (-transRay.getOriginRay().getZ() + Q1_projectionLocalCoordiSystem.getZ() + riseXLocalCoodiSystem.derivation*(transRay.getOriginRay().getX() - Q1_projectionLocalCoordiSystem.getX()) + riseYLocalCoordiSystem.derivation*(transRay.getOriginRay().getY() - Q1_projectionLocalCoordiSystem.getY())) / (-riseXLocalCoodiSystem.derivation*transRay.getDirectionRayUnit().getX() - riseYLocalCoordiSystem.derivation*transRay.getDirectionRayUnit().getY() + transRay.getDirectionRayUnit().getZ());
-						// To get the  intersection point between ray and tangential plane we put stepsT into the Ray equation
-						P1_IntersectionPointRayTangenteLOCALCoordiSystem = transRay.getOriginRay() + steps_T_RayToTangentialPlaneLocalCoordiSystem * transRay.getDirectionRayUnit();
-						
-						// Calculate the distance between the intersection point between ray and tangential plane =P1= "P1_IntersectionPointRayTangente" and 
-						// approximate solution Q1 on the surface as a z-projection
-
-						distanceQP = Math::distanceTwoVectors(Q1_projectionLocalCoordiSystem, P1_IntersectionPointRayTangenteLOCALCoordiSystem);
-						//zValueAsphere = calc_Z_ValueAsphere(P1_IntersectionPointRayTangente.X - mPointAsphere.X, P1_IntersectionPointRayTangente.Y-mPointAsphere.Y);
-						
-						real X_P1 = P1_IntersectionPointRayTangenteLOCALCoordiSystem.getX();
-						real Y_P1 = P1_IntersectionPointRayTangenteLOCALCoordiSystem.getY();
-
-						Q0_vertex_LocalCoordinateSystem.setX(X_P1);
-						Q0_vertex_LocalCoordinateSystem.setY(Y_P1);
-						
-						//Q1_projection = Q_projection(P1_IntersectionPointRayTangente.X - mPointAsphere.X, P1_IntersectionPointRayTangente.Y - mPointAsphere.Y, zValueAsphere.Z_Value);
-						//______________________
-						++Interations;
-						//______________________
-						}
-					}
 					}
 				}
 
@@ -459,13 +459,13 @@ IntersectInformationStruct AsphericalSurface_LLT::calculateIntersection(LightRay
 					{
 						returnIntersectInfos.setSurface(A);
 						returnIntersectInfos.setNormalUnitVector(Math::multiplyMatrix3x3VectorR3(backTransMatrix.Matrix, Math::unitVector({ riseXLocalCoodiSystem.getDerivation(),riseYLocalCoordiSystem.getDerivation(),-1 })));
-											
+
 					}
 					else // ray must come from side B
 					{
 						returnIntersectInfos.setSurface(B);
 						returnIntersectInfos.setNormalUnitVector(-1 * Math::multiplyMatrix3x3VectorR3(backTransMatrix.Matrix, Math::unitVector({ riseXLocalCoodiSystem.getDerivation(),riseYLocalCoordiSystem.getDerivation(),-1 })));
-						
+
 					}
 
 				}
@@ -483,9 +483,9 @@ double AsphericalSurface_LLT::calcFolcalLengthAsphericalSurface()
 {
 	// TODO: Das muss ich noch fertig machen^^
 	double focalLenAsphericalSurface = 1.0;
-	
+
 	return focalLenAsphericalSurface;
-	
+
 }
 
 //set and get the prefix of the aspherical lens.

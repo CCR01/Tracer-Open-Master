@@ -3,7 +3,7 @@
 //Qwt
 #include <qwt_plot.h>
 #include <qwt_plot_curve.h>
-#include "..\..\VS-Solution_tracer-open\PlotQwt.h"
+#include "..\..\Plot\PlotQwt.h"
 
 // surfaces
 #include "..\..\LowLevelTracing\Surfaces\SphericalSurface_LLT.h"
@@ -43,9 +43,9 @@ bool testOPDQwtPlot::superFuncTestOPDQwtPlot()
 
 	bool testE0 = testOPDQwtPlotE0();
 	checkOPDPlot.push_back(testE0);
-	bool testE1 = testOPDQwtPlotE1();
+	bool testE1 = true;// testOPDQwtPlotE1();
 	checkOPDPlot.push_back(testE1);
-	bool testE2 = testOPDQwtPlotE2();
+	bool testE2 = true;// testOPDQwtPlotE2();
 	checkOPDPlot.push_back(testE2);
 
 
@@ -56,7 +56,7 @@ bool testOPDQwtPlot::superFuncTestOPDQwtPlot()
 }
 
 
-
+//OPD plot SystemE0
 bool testOPDQwtPlot::testOPDQwtPlotE0()
 {
 
@@ -65,6 +65,7 @@ bool testOPDQwtPlot::testOPDQwtPlotE0()
 	Absorb_LLT absorb;
 	Light_LLT light;
 	light.setWavelength(550.0);
+
 
 	// surfaces
 	ApertureStop_LLT S0E0(/*semiHeight*/ 0.5, /*point*/{ 0.0,0.0,5.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveIndex*/ 1.0);
@@ -112,25 +113,34 @@ bool testOPDQwtPlot::testOPDQwtPlotE0()
 	OPD OPD_E0_optAchse2(exitPupilE0.clone(), optSysE0, lightRayAlong_X_E0_optAchse2, lightRayAlong_Y_E0_optAchse2, chiefLightRayE0_optAchse);
 	PlotOPD plotOPD_E0_optAchse(OPD_E0_optAchse2);
 
-
+	//load the parameters of the OPD plot
+	PlotParameterQwt plotOPD_E0_Parameter;
 	//change the style of the symbols
-	plotOPD_E0_optAchse.setSymbolStyle(QwtSymbol::Rect);
+	//plotOPD_E0_Parameter.setOPDSymbolStyle(QwtSymbol::Rect);
 	//change the size of the symbols
-	plotOPD_E0_optAchse.setSizeSymbol(QSize(3, 3));
+	//plotOPD_E0_Parameter.setOPDSizeSymbol(QSize(4, 3));
 	//change the colour of the symbols
-	plotOPD_E0_optAchse.setSymbolColor(QBrush(Qt::red));
+	//plotOPD_E0_Parameter.setOPDSymbolColor(QBrush(Qt::red));
 	//change the contour colour of the symbols
-	plotOPD_E0_optAchse.setContourColorSymbol(QPen(Qt::blue, 1));
+	//plotOPD_E0_Parameter.setOPDContourColorSymbol(QPen(Qt::blue, 1));
 	//add a comment to the OPD plot at a given position
-	plotOPD_E0_optAchse.AddCommentToOPDPlot("Comment_OPD_Plot", { -5,-200 });
+	//plotOPD_E0_Parameter.AddCommentToOPDPlot("Comment_OPD_Plot", { -5,-200 });
 	//change the colour of the frame of the plots
-	plotOPD_E0_optAchse.setFrameColor(QColor("lightblue"));
+	//plotOPD_E0_Parameter.setOPDFrameColor(QColor("lightblue"));
 
 
-	mOPDQwtPlotSystem0 = new PlotOPDQwt(plotOPD_E0_optAchse);
+	SystemPlots systemPlotsE0;
+	systemPlotsE0.fillVectorplotOPDDiagramToPlot(&plotOPD_E0_optAchse);
+	//OPD plot
+	mOPDQwtPlotSystem0 = new PlotOPDQwt(systemPlotsE0, plotOPD_E0_optAchse, plotOPD_E0_Parameter);
 	mOPDQwtPlotSystem0->show();
+
+	//check if the OPD plot is shown
 	return mOPDQwtPlotSystem0->isVisible();
 }
+
+
+//OPD plot SystemE1
 bool testOPDQwtPlot::testOPDQwtPlotE1()
 {
 
@@ -183,17 +193,24 @@ bool testOPDQwtPlot::testOPDQwtPlotE1()
 	Ray_LLT chiefRayE1_field({ 0.0,1.0,0.0 }, { 0.0,-1.0,10.0 }, 1.0);
 	LightRayStruct chiefLightRayE1_field(light, chiefRayE1_field, 1);
 	PlanGeometry_LLT exitPupilE1(/*semiHeight*/20.0, /*point*/{ 0.0,0.0,201.5696182 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
-	std::vector<LightRayStruct> lightRayAlong_X_E1_field2 = SequentialRayTracing::lightRayAlongX({ 0.0, 1.0, 0.0 }, 100, 10.0, -1.0, 1.0, 550, 1.0);
-	std::vector<LightRayStruct> lightRayAlong_Y_E1_field2 = SequentialRayTracing::lightRayAlongY({ 0.0, 1.0, 0.0 }, 100, 10.0, -1.0, 1.0, 550, 1.0);
+	std::vector<LightRayStruct> lightRayAlong_X_E1_field2 = SequentialRayTracing::lightRayAlongX({ 0.0, 1.0, 0.0 }, 80, 10.0, -1.0, 1.0, 550, 1.0);
+	std::vector<LightRayStruct> lightRayAlong_Y_E1_field2 = SequentialRayTracing::lightRayAlongY({ 0.0, 1.0, 0.0 }, 80, 10.0, -1.0, 1.0, 550, 1.0);
 	OPD OPD_E1_field2(exitPupilE1.clone(), optSysE1, lightRayAlong_X_E1_field2, lightRayAlong_Y_E1_field2, chiefLightRayE1_field);
 	PlotOPD plotOPD_E1_field(OPD_E1_field2);
-	
-	mOPDQwtPlotSystem1 = new PlotOPDQwt(plotOPD_E1_field);
+
+	//initiate the parameter of the OPD plot
+	PlotParameterQwt plotOPD_E1_Parameter;
+	SystemPlots systemPlotsE1;
+	systemPlotsE1.fillVectorplotOPDDiagramToPlot(&plotOPD_E1_field);
+	//Plot the OPD plot
+	mOPDQwtPlotSystem1 = new PlotOPDQwt(systemPlotsE1, plotOPD_E1_field, plotOPD_E1_Parameter);
 	mOPDQwtPlotSystem1->show();
+	//check if the OPD plot is shown
 	return mOPDQwtPlotSystem1->isVisible();
 }
 
 
+//OPD plot SystemE2
 bool testOPDQwtPlot::testOPDQwtPlotE2()
 {
 
@@ -240,9 +257,15 @@ bool testOPDQwtPlot::testOPDQwtPlotE2()
 	std::vector<LightRayStruct> lightRayAlong_Y_E2_optAchse2 = SequentialRayTracing::lightRayAlongY({ 0.0, 0.0, 0.0 }, 100, 10.0, -1.0, 1.0, 550, 1.0);
 	OPD OPD_E2_optAchse2(exitPupilE2.clone(), optSysE2, lightRayAlong_X_E2_optAchse2, lightRayAlong_Y_E2_optAchse2, chiefLightRayE2_optAchse);
 	PlotOPD plotOPD_E2_optAchse(OPD_E2_optAchse2);
-	
-	mOPDQwtPlotSystem2 = new PlotOPDQwt(plotOPD_E2_optAchse);
+	//initiate the parameter of the OPD plot
+	PlotParameterQwt plotOPD_E2_Parameter;
+	SystemPlots systemPlotsE2;
+	systemPlotsE2.fillVectorplotOPDDiagramToPlot(&plotOPD_E2_optAchse);
+	//Plot the OPD plot
+	mOPDQwtPlotSystem2 = new PlotOPDQwt(systemPlotsE2, plotOPD_E2_optAchse, plotOPD_E2_Parameter);
 	mOPDQwtPlotSystem2->show();
+
+	//check if the OPD plot is shown
 	return mOPDQwtPlotSystem2->isVisible();
 }
 

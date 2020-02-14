@@ -44,6 +44,7 @@ public:
 		calcCenterSphereAfterRotation();
 		mFocalLengthSphericalSurfaceSide_A = calcFocallLengthSphericalSurface(getRefractivIndexSide_B(), getRefractivIndexSide_A(), getRadius());
 		mFocalLengthSphericalSurfaceSide_B = calcFocallLengthSphericalSurface(getRefractivIndexSide_A(), getRefractivIndexSide_B(), getRadius());
+		setPointerPlotQwt();
 	}
 
 
@@ -151,6 +152,9 @@ public:
 	//IntersectInformationStruct publicIntersectInformation = intersectInformation();
 	//void getPublicIntersectionInformation();
 
+	//allocate qwt curve to a pointer
+	void setPointerPlotQwt();
+
 	//get the pointer of the qwt curve
 	SphericalSurfaceQwt* getPointerPlot();
 
@@ -168,10 +172,8 @@ private:
 	real mFocalLengthSphericalSurfaceSide_A;
 	real mFocalLengthSphericalSurfaceSide_B;
 
-	SphericalSurfaceQwt* SphericalSurface_Qwt_Ptr; // = new SphericalSurfaceQwt(mRadius, mSemiHeight, mDirection, mPointSphere);
-	QPolygonF pointsofSphericalSurface; // = SphericalSurface_Qwt_Ptr->points(mRadius, mSemiHeight, mDirection, mPointSphere);
+	SphericalSurfaceQwt* SphericalSurface_Qwt_Ptr; 
+	QPolygonF pointsofSphericalSurface; 
 
-	// TODO: Attention!!!
-	// Here we must be carefull! Maybe we can also use here smart pointe to delete the object (bacause of new)!
-	// SphericalSurfaceQwt* SphericalSurface_Qwt_Ptr = new SphericalSurfaceQwt(mRadius, mSemiHeight, mDirection, mPointSphere);
+	
 };

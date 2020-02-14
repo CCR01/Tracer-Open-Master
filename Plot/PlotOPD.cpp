@@ -264,7 +264,7 @@ cv::Mat PlotOPD::getMatrixToPlotOPD_Y_Plane()
 }
 
 
-QPolygonF PlotOPD::getPointsVectorPolygon_X_Plane()
+QPolygonF PlotOPD::getPointsVectorPolygon_X_Plane(double scale, double StartX, double StartY)
 {
 	double edge = 20;
 	// hight 
@@ -275,7 +275,7 @@ QPolygonF PlotOPD::getPointsVectorPolygon_X_Plane()
 	double wideOPDFanHalfe = (wide - 2 * edge) / 2;
 
 	double symmetrie = height / 2;
-
+	double Shiftintheplot = 550;
 	unsigned howManyPointsX = mOPD.getPointsOPD_X().size();
 
 	double maxX = PlotCarsten::getMaxValueOfPointX(mOPD.getPointsOPD_X());
@@ -334,8 +334,6 @@ QPolygonF PlotOPD::getPointsVectorPolygon_X_Plane()
 	for (unsigned int i = 0; i < howManyPointsX; i++)
 	{
 
-
-
 		double currentPointX = mOPD.getPointsOPD_X().at(i).x;
 		//real refY = mOPD.getRefPoints().getY();
 
@@ -352,7 +350,7 @@ QPolygonF PlotOPD::getPointsVectorPolygon_X_Plane()
 				tempScaleOPD = (height) / 2 - tempOPD / absMaxY * heightOPDF / 2;
 			}
 
-			double currentScaledPointX = middleDiagramX_Achse + std::abs(currentPointX - pointXmiddle) / (minX - pointXmiddle) * wideOPDFanHalfe + 550;
+			double currentScaledPointX = middleDiagramX_Achse + std::abs(currentPointX - pointXmiddle) / (minX - pointXmiddle) * wideOPDFanHalfe + Shiftintheplot;
 			QPointF centerP(currentScaledPointX, tempScaleOPD);
 			OPD_Image_X_Plane_Qwt << centerP;
 		}
@@ -369,7 +367,7 @@ QPolygonF PlotOPD::getPointsVectorPolygon_X_Plane()
 				tempScaleOPD = (heightOPDF + 2 * edge) / 2 - tempOPD / absMaxY * heightOPDF / 2;
 			}
 
-			double currentScaledPointX = middleDiagramX_Achse + std::abs(currentPointX - pointXmiddle) / (maxX - pointXmiddle) * wideOPDFanHalfe + 550;
+			double currentScaledPointX = middleDiagramX_Achse + std::abs(currentPointX - pointXmiddle) / (maxX - pointXmiddle) * wideOPDFanHalfe + Shiftintheplot;
 			QPointF centerP(currentScaledPointX, tempScaleOPD);
 			OPD_Image_X_Plane_Qwt << centerP;
 		}
@@ -382,7 +380,7 @@ QPolygonF PlotOPD::getPointsVectorPolygon_X_Plane()
 }
 
 
-QPolygonF PlotOPD::getPointsVectorPolygon()
+QPolygonF PlotOPD::getPointsVectorPolygon(double scale, double StartX, double StartY)
 {
 	double edge = 20;
 	// hight 
@@ -459,7 +457,7 @@ QPolygonF PlotOPD::getPointsVectorPolygon()
 			}
 
 			double currentScaledPointX = middleDiagramX_Achse + std::abs(currentPointX - pointXmiddle) / (minX - pointXmiddle) * wideOPDFanHalfe;
-			QPointF centerP(currentScaledPointX, tempScaleOPD - 20);
+			QPointF centerP(currentScaledPointX, tempScaleOPD);
 			OPD_Image_Y_Plane_Qwt << centerP;
 		}
 		else
@@ -476,7 +474,7 @@ QPolygonF PlotOPD::getPointsVectorPolygon()
 			}
 
 			double currentScaledPointX = middleDiagramX_Achse + std::abs(currentPointX - pointXmiddle) / (maxX - pointXmiddle) * wideOPDFanHalfe;
-			QPointF centerP(currentScaledPointX, tempScaleOPD - 20);
+			QPointF centerP(currentScaledPointX, tempScaleOPD);
 			OPD_Image_Y_Plane_Qwt << centerP;
 		}
 
@@ -516,8 +514,8 @@ QPolygonF PlotOPD::getPointsVectorPolygon()
 				tempScaleOPD = (height) / 2 - tempOPD / absMaxY * heightOPDF / 2;
 			}
 
-			double currentScaledPointX = middleDiagramX_Achse + std::abs(currentPointX - pointXmiddle) / (minX - pointXmiddle) * wideOPDFanHalfe + 550;
-			QPointF centerP(currentScaledPointX, tempScaleOPD - 20);
+			double currentScaledPointX = middleDiagramX_Achse + std::abs(currentPointX - pointXmiddle) / (minX - pointXmiddle) * wideOPDFanHalfe + 520;
+			QPointF centerP(currentScaledPointX, tempScaleOPD);
 			OPD_Image_Y_Plane_Qwt << centerP;
 		}
 		else
@@ -533,8 +531,8 @@ QPolygonF PlotOPD::getPointsVectorPolygon()
 				tempScaleOPD = (heightOPDF + 2 * edge) / 2 - tempOPD / absMaxY * heightOPDF / 2;
 			}
 
-			double currentScaledPointX = middleDiagramX_Achse + std::abs(currentPointX - pointXmiddle) / (maxX - pointXmiddle) * wideOPDFanHalfe + 550;
-			QPointF centerP(currentScaledPointX, tempScaleOPD - 20);
+			double currentScaledPointX = middleDiagramX_Achse + std::abs(currentPointX - pointXmiddle) / (maxX - pointXmiddle) * wideOPDFanHalfe + 520;
+			QPointF centerP(currentScaledPointX, tempScaleOPD);
 			OPD_Image_Y_Plane_Qwt << centerP;
 		}
 
@@ -545,57 +543,40 @@ QPolygonF PlotOPD::getPointsVectorPolygon()
 	return OPD_Image_Y_Plane_Qwt;
 }
 
-void PlotOPD::AddCommentToOPDPlot(QString comment, VectorStructR2 position)
-{
-	CommentandPosCommentToPlotInOPD CommentInfo;
-	CommentInfo.setComment(comment);
-	CommentInfo.setPositionComment(position);
-	mCommentandPosCommentToPlot.push_back(CommentInfo);
-}
 
-std::vector<CommentandPosCommentToPlotInOPD> PlotOPD::getVectorComments()
+double PlotOPD::getScaleOPDPlot()
 {
-	return mCommentandPosCommentToPlot;
-}
 
-void PlotOPD::setSymbolColor(QBrush SymbolColor)
-{
-	mSymbolColorOPD = SymbolColor;
-}
-QBrush PlotOPD::getSymbolColor()
-{
-	return mSymbolColorOPD;
-}
-void PlotOPD::setSymbolStyle(QwtSymbol::Style SymbolStyle)
-{
-	mSymbolStyleOPD = SymbolStyle;
-}
-QwtSymbol::Style PlotOPD::getSymbolStyle()
-{
-	return mSymbolStyleOPD;
-}
-void PlotOPD::setContourColorSymbol(QPen SymbolPen)
-{
-	mSymbolPenOPD = SymbolPen;
-}
-QPen PlotOPD::getContourColorSymbol()
-{
-	return mSymbolPenOPD;
-}
-void PlotOPD::setSizeSymbol(QSize SymbolSize)
-{
-	mSymbolSizeOPD = SymbolSize;
-}
-QSize PlotOPD::getSizeSymbol()
-{
-	return mSymbolSizeOPD;
-}
 
-void PlotOPD::setFrameColor(QPen ColorOfTheFrame)
-{
-	mColorOfTheFrameOPD = ColorOfTheFrame;
-}
-QPen PlotOPD::getFrameColor()
-{
-	return mColorOfTheFrameOPD;
+	double maxX = PlotCarsten::getMaxValueOfPointX(mOPD.getPointsOPD_Y());
+	double minX = PlotCarsten::getMinValueOfPointX(mOPD.getPointsOPD_Y());
+
+	double maxY = PlotCarsten::getMaxValueOfPointY(mOPD.getPointsOPD_Y());
+	double minY = PlotCarsten::getMinValueOfPointY(mOPD.getPointsOPD_Y());
+
+
+
+	if (maxY < PlotCarsten::getMaxValueOfPointY(mOPD.getPointsOPD_X()))
+	{
+		maxY = PlotCarsten::getMaxValueOfPointY(mOPD.getPointsOPD_X());
+	}
+
+	if (minY > PlotCarsten::getMinValueOfPointY(mOPD.getPointsOPD_X()))
+	{
+		minY = PlotCarsten::getMinValueOfPointY(mOPD.getPointsOPD_X());
+	}
+
+	double scaleOPD;
+	if (std::abs(maxY) > std::abs(minY))
+	{
+		scaleOPD = maxY;
+	}
+	else // if(std::abs(maxY) < std::abs(minY))
+	{
+		scaleOPD = minY;
+	}
+
+
+
+	return scaleOPD;
 }

@@ -73,14 +73,14 @@ namespace Math {
 	void printSystemMatrix2x2(std::vector<std::vector<real>> m);
 
 	// print the vector
-	void print(VectorStructR3 VectorPrint); 
-	
+	void print(VectorStructR3 VectorPrint);
+
 	// scale a Vector
 	VectorStructR3 scaleVector(double const& scaleFactor, VectorStructR3 const& Vscale);
 
 	// calculate unit vector
 	VectorStructR3 unitVector(VectorStructR3 const& V);
-	
+
 	// subtract two vectors
 	VectorStructR3 subVectors(VectorStructR3 V1sub, VectorStructR3 V2sub);
 
@@ -102,7 +102,7 @@ namespace Math {
 
 	// Multiply matrix (3x3) with Vector in R3
 	VectorStructR3 multiplyMatrix3x3VectorR3(double mat[3][3], VectorStructR3 vec);
-		
+
 	// to compare two numbers it is sometimes helpful to round them
 	//Quelle: https://www.c-plusplus.net/forum/39342-full
 	double roundNumber(double Zahl, unsigned int Stellen);
@@ -178,7 +178,7 @@ namespace Math {
 
 	// find max delta X,Y,Z in std::vector<VectorStructR3>
 	VectorStructR3 findMaxDelta_X_Y_Z_inStdV_VectorStructR3(std::vector<VectorStructR3> const& stdV_VecStrR3, VectorStructR3 refPoint);
-	
+
 	// add 4 values
 	real add4values_ptr(real* a, real* b, real* c, real* d);
 }

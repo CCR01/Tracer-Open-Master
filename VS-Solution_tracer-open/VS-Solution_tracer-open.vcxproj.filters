@@ -68,7 +68,6 @@
     <ClCompile Include="..\SurfaceElements\ApertureStopElement.cpp" />
     <ClCompile Include="..\Analyse\SeidelCoefficients.cpp" />
     <ClCompile Include="..\benchmark\testSeidelCoefficients\testSeidelCoefficients.cpp" />
-    <ClCompile Include="PlotQwt.cpp" />
     <ClCompile Include="..\LensElements\AsphericalLensTwoSurfaces.cpp" />
     <ClCompile Include="..\benchmark\testOptimizer_Paper\testOptimizer_Paper_P0.cpp" />
     <ClCompile Include="..\benchmark\testOptimizer_Paper\testOptimizer_Paper_P1.cpp" />
@@ -107,6 +106,12 @@
     <ClCompile Include="..\CompareTwoImagesAndImprove\CompareTwoImagesAndImprove.cpp" />
     <ClCompile Include="..\FillAptertureStop\FillApertureStop.cpp" />
     <ClCompile Include="..\TOM(Logo)\TOM(LOGO).cpp" />
+    <ClCompile Include="..\Plot\QwtPloItems.cpp" />
+    <ClCompile Include="..\Plot\PlotParameterQwt.cpp" />
+    <ClCompile Include="..\Plot\PlotRayFan.cpp" />
+    <ClCompile Include="..\Analyse\RayFan.cpp" />
+    <ClCompile Include="..\benchmark\testQwtPlots\testRayFanQwtPlot.cpp" />
+    <ClCompile Include="..\Plot\PlotQwt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Analyse\CardinalPoints.h" />
@@ -177,7 +182,6 @@
     <ClInclude Include="..\SurfaceElements\ApertureStopElement.h" />
     <ClInclude Include="..\Analyse\Seidel Coefficients.h" />
     <ClInclude Include="..\benchmark\testSeidelCoefficients\testSeidelCoefficients.h" />
-    <ClInclude Include="PlotQwt.h" />
     <ClInclude Include="..\OptimizeSystem\OptimizeOpticalSystem.h" />
     <ClInclude Include="..\LensElements\AsphericalLensTwoSurfaces.h" />
     <ClInclude Include="..\benchmark\testOptimizer_Paper\testOptimizer_Paper_P0.h" />
@@ -221,5 +225,11 @@
     <ClInclude Include="..\FillAptertureStop\FillApertureStop.h" />
     <ClInclude Include="..\Parameter\parameter.h" />
     <ClInclude Include="..\TOM(Logo)\TOM(Logo).h" />
+    <ClInclude Include="..\Plot\QwtPloItems.h" />
+    <ClInclude Include="..\Plot\PlotParameterQwt.h" />
+    <ClInclude Include="..\Plot\PlotRayFan.h" />
+    <ClInclude Include="..\Analyse\RayFan.h" />
+    <ClInclude Include="..\benchmark\testQwtPlots\testRayFanQwtPlot.h" />
+    <ClInclude Include="..\Plot\PlotQwt.h" />
   </ItemGroup>
 </Project>

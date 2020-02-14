@@ -42,13 +42,13 @@ public:
 	virtual ~AsphericalSurface_LLT() {};
 	AsphericalSurface_LLT(/*radius*/ double radius, /*semi height*/ double semiHeight,/*point*/ VectorStructR3  point, /*direction*/ VectorStructR3  direction,/*refractive index A*/ double refractiveSideA,/*refractive index B*/ double refractiveSideB,/*conic*/ double  conic,
 		/*second order term*/ double  A1, /*fourth order term*/ double  A2, /*sixth order term*/ double  A3, /*eighth order term*/ double  A4,/*tenth order term*/ double  A5,/*twelfth oder term*/ double  A6,
-		/*fourteenth order term*/ double  A7,/*sixteenth order tem*/ double  A8):
+		/*fourteenth order term*/ double  A7,/*sixteenth order tem*/ double  A8) :
 		mRadiusAsphere(radius),
-		mSemiHeightAsphere (std::abs(semiHeight)),
+		mSemiHeightAsphere(std::abs(semiHeight)),
 		mPointAsphere(point),
 		mDirectionAsphereUnit(Math::unitVector(direction)),
 		mDirectionAsphere(direction),
-		mRefractiveSideA_Asphere(refractiveSideA), 
+		mRefractiveSideA_Asphere(refractiveSideA),
 		mRefractiveSideB_Asphere(refractiveSideB),
 		mConic(conic),
 		m_A1(A1),
@@ -62,7 +62,7 @@ public:
 	{
 		setPrefixAsphere(mDirectionAsphere); // we need that to switch the prefix of the height order terms
 	};
-	
+
 
 
 	//get radius asphere
@@ -138,7 +138,7 @@ public:
 	//calculate z of an aspherical surface in point Q projected on the aspherical surface
 	is_Z_ValueAsphere calc_Z_ValueAsphere(double const& x, double const& y);
 	// Projection of a point in z direction
-	VectorStructR3 Q_projection (double const& x, double const& y, double const& z);
+	VectorStructR3 Q_projection(double const& x, double const& y, double const& z);
 	// Calculate rise of asphere in x-direction
 	isDerivationAsphere rise_X_AsphericalSurface(double const& x, double const& y);
 	// Calculate rise of asphere in Y-direction
@@ -154,7 +154,7 @@ public:
 	virtual real getRefractiveIndex_A() override;
 	// get refractive index side B
 	virtual real getRefractiveIndex_B() override;
-	
+
 	virtual void setRadius(real radius) override;
 	virtual void setPosition(VectorStructR3 position) override;
 

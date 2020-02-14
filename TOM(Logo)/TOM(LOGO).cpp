@@ -17,6 +17,9 @@
 // math
 #include "..\LowLevelTracing\Math_LLT.h"
 
+//QwtPlot
+#include "..\Plot\PlotQwt.h"
+
 TOM_LOGO::TOM_LOGO(){}
 TOM_LOGO::~TOM_LOGO(){}
 
@@ -110,9 +113,53 @@ bool TOM_LOGO::plotTOM_Logo()
 	// *** *** //
 
 	// plot the system
+	// build optical system
 
+	optSysTOM_LLT.fillVectorToPlot2DQwt(0,A0.getPointerPlotUp());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(1,A0.getPointerPlotDown());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(2, P1.getPointerPlot());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(3, M2.getPointerPlot());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(4, M3.getPointerPlot());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(5, M4.getPointerPlot());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(6, M5.getPointerPlot());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(7, P6.getPointerPlot());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(8, P7.getPointerPlot());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(9, M8.getPointerPlot());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(10,M9.getPointerPlot());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(11,M10.getPointerPlot());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(12,M11.getPointerPlot());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(13,P12.getPointerPlot());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(14,P13.getPointerPlot());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(15,M14.getPointerPlot());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(16,M15.getPointerPlot());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(17,M16.getPointerPlot());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(18,M17.getPointerPlot());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(19,M18.getPointerPlot());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(20,M19.getPointerPlot());
 
+	SequentialRayTracing SeqTraceTOM_plot2D_optachse(optSysTOM_LLT);
+	
+	std::vector<LightRayStruct> lightRayAlong_PlotTOM_optachse = SequentialRayTracing::lightRayAlongY({ 0.0, 0.0, 0.0 }, 7, 50.0, -70.0, 100.0, 550, 1.0);
+	SeqTraceTOM_plot2D_optachse.seqRayTracingWithVectorOfLightRays(lightRayAlong_PlotTOM_optachse);
+	
+	SequentialRayTracing SeqTraceTOM_plot2D_Field1(optSysTOM_LLT);
+	std::vector<LightRayStruct> lightRayAlong_PlotTOM_field1 = SequentialRayTracing::lightRayAlongY({ 0.0, -0.01, 0.0 }, 7, 50.0, -70.0, 100.0, 550, 1.0);
+	SeqTraceTOM_plot2D_Field1.seqRayTracingWithVectorOfLightRays(lightRayAlong_PlotTOM_field1);
+	
+	SequentialRayTracing SeqTraceTOM_plot2D_Field2(optSysTOM_LLT);
+	std::vector<LightRayStruct> lightRayAlong_PlotTOM_field2 = SequentialRayTracing::lightRayAlongY({ 0.0, 0.01, 0.0 }, 7, 50.0, -70.0, 100.0, 550, 1.0);
+	SeqTraceTOM_plot2D_Field2.seqRayTracingWithVectorOfLightRays(lightRayAlong_PlotTOM_field2);
 
+	//fill vector Ray Tracing
+	RayTracingSystem RayTracSysTOM_LLT;
+	RayTracSysTOM_LLT.fillVectorRayTracing(&SeqTraceTOM_plot2D_optachse, { 0,0,255 });
+	RayTracSysTOM_LLT.fillVectorRayTracing(&SeqTraceTOM_plot2D_Field1, { 255,0,0 });
+	RayTracSysTOM_LLT.fillVectorRayTracing(&SeqTraceTOM_plot2D_Field2, { 80,200, 100});
+	
+	PlotParameterQwt ParameterTOM;
+
+	RayTracingQwtPlot* SysTOMPlot = new RayTracingQwtPlot(optSysTOM_LLT, RayTracSysTOM_LLT, ParameterTOM);
+	SysTOMPlot->show();
 	bool checkerTOM = Math::checkTrueOfVectorElements(checkPlotTOM);
 
 	return checkerTOM;

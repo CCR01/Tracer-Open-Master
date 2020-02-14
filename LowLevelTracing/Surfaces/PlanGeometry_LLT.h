@@ -39,22 +39,21 @@ public:
 		mDirectionPlan(direction),
 		mRefractiveIndexA_Plan(refractiveSideA),
 		mRefractiveIndexB_Plan(refractiveSideB)
-		{
-		PlanGeometry_Qwt_Ptr = new PlanGeometryQwt(mSemiHeightPlan, mPointPlan, mDirectionPlan);
-		pointsofPlanGeometry = PlanGeometry_Qwt_Ptr->getPoints();
-		};
-	
+	{
+		calcSphericalSurfaceQwtCoord();
+	};
+
 
 	// get semt height
 	double getSemiHeight() override;
 	//set semi height
 	void setSemiHeight(double semiHeight);
-	
+
 	//get point
 	VectorStructR3 getPoint();
 	// set point
 	void setPoint(VectorStructR3 point);
-	
+
 	// get direction
 	VectorStructR3 getDirection() override;
 	//set direction
@@ -62,7 +61,7 @@ public:
 
 	// set refractive index side A
 	virtual void setRefractiveIndexSide_A(double const& refractiveIndex) override;
-	
+
 	// set refractive index side B
 	virtual void setRefractiveIndexSide_B(double const& refractiveIndex) override;
 
@@ -91,9 +90,11 @@ public:
 
 	//get pointer of the qwt curve
 	PlanGeometryQwt* getPointerPlot();
-	
+
 	//get QPolygonF of the surface
 	virtual QPolygonF* getQPolygonFCurve();
+
+	void calcSphericalSurfaceQwtCoord();
 
 private:
 	double mSemiHeightPlan;
@@ -102,8 +103,8 @@ private:
 	double mRefractiveIndexA_Plan;
 	double mRefractiveIndexB_Plan;
 
-	PlanGeometryQwt* PlanGeometry_Qwt_Ptr{};
-	QPolygonF pointsofPlanGeometry{};
+	PlanGeometryQwt* PlanGeometry_Qwt_Ptr;
+	QPolygonF pointsofPlanGeometry;
 
 	// TODO: Attention!!!
 	// Here we must be carefull! Maybe we can also use here smart pointe to delete the object (bacause of new)!

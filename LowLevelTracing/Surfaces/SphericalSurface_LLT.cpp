@@ -134,11 +134,6 @@ QPolygonF SphericalSurfaceQwt::points(double radius, double semiHeight, VectorSt
 }
 
 
-//SphericalSurfaceQwt* SphericalSurface_LLT::getPointerPlot()
-//{
-//	return SphericalSurface_Qwt_Ptr;
-//}
-
 
 //get Radius
 double SphericalSurface_LLT::getRadius()
@@ -709,9 +704,9 @@ SphericalSurface_LLT::SphericalSurface_LLT(SphericalSurface_LLT &source)
 	mCenterSphereAfterRotation = source.mCenterSphereAfterRotation;
 	mFocalLengthSphericalSurfaceSide_A = source.mFocalLengthSphericalSurfaceSide_A;
 	mFocalLengthSphericalSurfaceSide_B = source.mFocalLengthSphericalSurfaceSide_B;
-
-	// TODO: Also copy the spherical informaltion to plot!
-	// SphericalSurfaceQwt* SphericalSurface_Qwt_Ptr = new SphericalSurfaceQwt(mRadius, mSemiHeight, mDirection, mPointSphere);
+	SphericalSurface_Qwt_Ptr = source.SphericalSurface_Qwt_Ptr;
+	pointsofSphericalSurface = source.pointsofSphericalSurface;
+	
 }
 
 SphericalSurface_LLT& SphericalSurface_LLT::operator=(SphericalSurface_LLT& source)
@@ -730,7 +725,8 @@ SphericalSurface_LLT& SphericalSurface_LLT::operator=(SphericalSurface_LLT& sour
 	mCenterSphereAfterRotation = source.mCenterSphereAfterRotation;
 	mFocalLengthSphericalSurfaceSide_A = source.mFocalLengthSphericalSurfaceSide_A;
 	mFocalLengthSphericalSurfaceSide_B = source.mFocalLengthSphericalSurfaceSide_B;
-
+	SphericalSurface_Qwt_Ptr = source.SphericalSurface_Qwt_Ptr;
+	pointsofSphericalSurface = source.pointsofSphericalSurface;
 	return *this;
 }
 
@@ -761,4 +757,11 @@ SphericalSurfaceQwt* SphericalSurface_LLT::getPointerPlot()
 QPolygonF*  SphericalSurface_LLT::getQPolygonFCurve()
 {
 	return &pointsofSphericalSurface;
+}
+
+
+void SphericalSurface_LLT::setPointerPlotQwt()
+{
+	SphericalSurface_Qwt_Ptr = new SphericalSurfaceQwt(mRadius, mSemiHeight, mDirection, mPointSphere);
+	pointsofSphericalSurface = SphericalSurface_Qwt_Ptr->points(mRadius, mSemiHeight, mDirection, mPointSphere);
 }

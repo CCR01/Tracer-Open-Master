@@ -3,7 +3,7 @@
 //Qwt
 #include <qwt_plot.h>
 #include <qwt_plot_curve.h>
-#include "..\..\VS-Solution_tracer-open\PlotQwt.h"
+#include "..\..\Plot\PlotQwt.h"
 
 // surfaces
 #include "..\..\LowLevelTracing\Surfaces\SphericalSurface_LLT.h"
@@ -30,7 +30,7 @@
 // plot
 #include "..\..\Plot\PlotSpotDiagram.h"
 #include "..\..\Plot\PlotOPD.h"
-
+#include "..\..\Plot\PlotParameterQwt.h"
 
 
 testSpotDiagramQwtPlot::testSpotDiagramQwtPlot() {};
@@ -119,6 +119,7 @@ bool testSpotDiagramQwtPlot::testSpotDiagramQwtPlotE0()
 	std::vector<Spot> vecSpotE0_field{ spotE1_field };
 	PlotSpotDiagramm PlotSpotE0_field(spotE1_field.getRefPoint(), vecSpotE0_field, 0.09950372, 550);
 
+	PlotParameterQwt ParameterPlotSpotDiagramE0;
 
 	//fill vectorSpotDiagram
 	optSysE0.fillVectorSpotDiagramToPlot("Spot Diagram optical achse", &PlotSpotE0_optAchse);
@@ -127,30 +128,30 @@ bool testSpotDiagramQwtPlot::testSpotDiagramQwtPlotE0()
 	//***********Modify the plot:
 
 	//-add comment at a given position
-	optSysE0.AddCommentToSpotDiagramPlot("Comment1_SpotDiagram", { 550,-150 });
-	optSysE0.AddCommentToSpotDiagramPlot("Comment2_SpotDiagram", { 550,-225 });
+	ParameterPlotSpotDiagramE0.AddCommentToSpotDiagramPlot("Comment1_SpotDiagram", { 550,-150 });
+	ParameterPlotSpotDiagramE0.AddCommentToSpotDiagramPlot("Comment2_SpotDiagram", { 550,-225 });
 
 	//-change the attributes of the airy disc:
 	//-----Airy disc color:
-	optSysE0.setAiryDiskColor(QColor("red"));
+	ParameterPlotSpotDiagramE0.setAiryDiskColor(QColor("red"));
 	//-----Airy disc thickness
-	optSysE0.setAiryDiskThickness(2);
-	
+	ParameterPlotSpotDiagramE0.setAiryDiskThickness(2);
+
 	//-change the attributes of the points of the spot diagram
 	//-----Style:Ellipse,Rect,Diamond,Triangle, DTriangle, UTriangle, LTriangle, Cross, HLine, Star1, Hexagon, ...
-	optSysE0.setSymbolStyleOfSpotDiagrammPoints(QwtSymbol::LTriangle);
+	ParameterPlotSpotDiagramE0.setSymbolStyleOfSpotDiagrammPoints(QwtSymbol::LTriangle);
 	//-----Color of the inside of the symbol
-	optSysE0.setSymbolColorOfSpotDiagrammPoints(QBrush(Qt::yellow));
+	ParameterPlotSpotDiagramE0.setSymbolColorOfSpotDiagrammPoints(QBrush(Qt::yellow));
 	//-----Color of the outline of the symbol
-	optSysE0.setContourColorSymbolOfSpotDiagrammPoints(QPen(Qt::darkGreen, 1));
+	ParameterPlotSpotDiagramE0.setContourColorSymbolOfSpotDiagrammPoints(QPen(Qt::darkGreen, 1));
 	//-----Size:
-	optSysE0.setSizeSymbolOfSpotDiagrammPoints(QSize(4, 4));
+	ParameterPlotSpotDiagramE0.setSizeSymbolOfSpotDiagrammPoints(QSize(4, 4));
 	//-----Color of the grid
-	optSysE0.setFrameColorOfSpotDiagrammPoints(QPen(Qt::white, 2));
+	ParameterPlotSpotDiagramE0.setFrameColorOfSpotDiagrammPoints(QPen(Qt::white, 2));
 
 
 	//Plot spot diagram opt achse and field
-	mSpotDiagramQwtPlotSystem0 = new SpotPlotDiagramQwt(optSysE0, 10, 40);
+	mSpotDiagramQwtPlotSystem0 = new SpotPlotDiagramQwt(optSysE0, ParameterPlotSpotDiagramE0, 10, 40);
 	mSpotDiagramQwtPlotSystem0->show();
 	return mSpotDiagramQwtPlotSystem0->isVisible();
 
@@ -191,17 +192,17 @@ bool testSpotDiagramQwtPlot::testSpotDiagramQwtPlotE1()
 	optSysE1.fillVectorSurfaceAndInteractingData(7, S8E1.clone(), refrac.clone());
 	optSysE1.fillVectorSurfaceAndInteractingData(8, S9E1.clone(), refrac.clone());
 	optSysE1.fillVectorSurfaceAndInteractingData(9, S10E1.clone(), refrac.clone());
-	optSysE1.fillVectorSurfaceAndInteractingData(10,S11E1.clone(), refrac.clone());
-	optSysE1.fillVectorSurfaceAndInteractingData(11,S12E1.clone(), refrac.clone());
-	optSysE1.fillVectorSurfaceAndInteractingData(12,S13E1.clone(), refrac.clone());
-	optSysE1.fillVectorSurfaceAndInteractingData(13,S14E1.clone(), refrac.clone());
-	optSysE1.fillVectorSurfaceAndInteractingData(14,S15E1.clone(), refrac.clone());
+	optSysE1.fillVectorSurfaceAndInteractingData(10, S11E1.clone(), refrac.clone());
+	optSysE1.fillVectorSurfaceAndInteractingData(11, S12E1.clone(), refrac.clone());
+	optSysE1.fillVectorSurfaceAndInteractingData(12, S13E1.clone(), refrac.clone());
+	optSysE1.fillVectorSurfaceAndInteractingData(13, S14E1.clone(), refrac.clone());
+	optSysE1.fillVectorSurfaceAndInteractingData(14, S15E1.clone(), refrac.clone());
 
 	Light_LLT light;
 	light.setWavelength(550.0);
 
-	 // fill aperture stops:
-    //-optische achse
+	// fill aperture stops:
+   //-optische achse
 	FillApertureStop fillAperStopE1_optAchse(/*the start point of the ray*/{ 0.0,0.0,0.0 },/*the semi-height of the apertur*/ 1, /*the position of the apertur */{ 0.0,0.0,10.0 },
 		/*the direction of the apertur */{ 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, light);
 	SequentialRayTracing seqTraceE1_OptAchse(optSysE1);
@@ -309,9 +310,9 @@ bool testSpotDiagramQwtPlot::testSpotDiagramQwtPlotE1()
 	optSysE1.fillVectorSpotDiagramToPlot("Spot Diagram field 7", &PlotSpotE1_field7);
 
 
-
+	PlotParameterQwt ParameterPlotSpotDiagramE1;
 	//Plot spot diagram opt achse and field
-	mSpotDiagramQwtPlotSystem1 = new SpotPlotDiagramQwt(optSysE1, 5, 40);
+	mSpotDiagramQwtPlotSystem1 = new SpotPlotDiagramQwt(optSysE1, ParameterPlotSpotDiagramE1, 5, 40);
 	mSpotDiagramQwtPlotSystem1->show();
 	return mSpotDiagramQwtPlotSystem1->isVisible();
 
@@ -403,7 +404,9 @@ bool testSpotDiagramQwtPlot::testSpotDiagramQwtPlotE2()
 	optSysE2.fillVectorSpotDiagramToPlot("Spot Diagram field 2", &PlotSpotE2_field2);
 
 	//Plot spot diagram opt achse and field
-	mSpotDiagramQwtPlotSystem2 = new SpotPlotDiagramQwt(optSysE2, 3, 50);
+	PlotParameterQwt ParameterPlotSpotDiagramE2;
+	mSpotDiagramQwtPlotSystem2 = new SpotPlotDiagramQwt(optSysE2, ParameterPlotSpotDiagramE2, 3, 50);
 	mSpotDiagramQwtPlotSystem2->show();
+
 	return mSpotDiagramQwtPlotSystem2->isVisible();
 }

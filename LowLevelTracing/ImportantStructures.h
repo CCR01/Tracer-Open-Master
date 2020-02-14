@@ -53,11 +53,11 @@ private:
 
 };
 
-enum surfaceSide {A ,B, N};
+enum surfaceSide { A, B, N };
 
 
 
-struct IntersectInformationStruct 
+struct IntersectInformationStruct
 {
 	IntersectInformationStruct();
 	~IntersectInformationStruct();
@@ -116,7 +116,7 @@ public:
 	real mRefractiveIndexB;
 	VectorStructR3 mDirectionRayUnit;
 	Light_LLT mLight;
-	
+
 	// TODO: write functions gethitPoint, sethitPoint,...
 };
 

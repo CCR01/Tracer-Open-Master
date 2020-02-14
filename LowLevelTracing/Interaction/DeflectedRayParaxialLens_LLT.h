@@ -18,7 +18,7 @@ public:
 	DeflectedRayParaxialLens_LLT(IntersectInformationStruct intersectInformation, additionalInfosDeflectedRayParaLensStruct addInfos) :
 		mIntersectInformation(intersectInformation)
 	{};
-	
+
 
 	RaysRangeStruct howManyRays() override
 		//TODO: in cpp

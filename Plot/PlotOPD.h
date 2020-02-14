@@ -53,36 +53,13 @@ public:
 	cv::Mat getMatrixToPlotOPD_Y_Plane();
 
 	//get points to plot in x plane mit Qwt
-	QPolygonF getPointsVectorPolygon_X_Plane();
+	QPolygonF getPointsVectorPolygon_X_Plane(double scale, double StartX, double StartY);
 
-	//get points to plot in x plane mit Qwt
-	QPolygonF getPointsVectorPolygon();
+	//get points to plot in y plane mit Qwt
+	QPolygonF getPointsVectorPolygon(double scale, double StartX, double StartY);
 
-	//load Informations to OPD plot:
-	//add a comment to the vector containing the comments to be added to the OPD plot
-	void AddCommentToOPDPlot(QString comment, VectorStructR2 position);
-	//get the vector containing comments information to be plotted on the OPD plot
-	std::vector<CommentandPosCommentToPlotInOPD> getVectorComments();
-	//change the color of the OPD plot points
-	void setSymbolColor(QBrush SymbolColor);
-	//get the color of the OPD plot points
-	QBrush getSymbolColor();
-	//change the chape of the OPD plot points
-	void setSymbolStyle(QwtSymbol::Style SymbolStyle);
-	//get the shape of the OPD plot shape
-	QwtSymbol::Style getSymbolStyle();
-	//change the color of the contour of the points of the OPD curve points
-	void setContourColorSymbol(QPen SymbolPen);
-	//get the color of the contour of the points of the OPD curve points
-	QPen getContourColorSymbol();
-	//change the size of the OPD plot points 
-	void setSizeSymbol(QSize SymbolSize);
-	//get the size of the OPD plot points
-	QSize getSizeSymbol();
-	//change the frame color 
-	void setFrameColor(QPen ColorOfTheFrame);
-	//get the frame color
-	QPen getFrameColor();
+	//calculate the scale of the OPD plot
+	double getScaleOPDPlot();
 
 private:
 	OPD mOPD;
@@ -90,12 +67,5 @@ private:
 	unsigned int mWide;
 	cv::Mat mImageOPD_X_Plane;
 	cv::Mat mImageOPD_Y_Plane;
-	std::vector<CommentandPosCommentToPlotInOPD> mCommentandPosCommentToPlot;
-	QBrush mSymbolColorOPD = QBrush(Qt::white);
-	QwtSymbol::Style mSymbolStyleOPD = QwtSymbol::Ellipse;
-	QPen mSymbolPenOPD = QPen(Qt::black, 1);
-	QSize mSymbolSizeOPD = QSize(2, 2);
-	QPen mColorOfTheFrameOPD = QColor("lightGrey");
-
 };
 

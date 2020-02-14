@@ -3,9 +3,9 @@
 #include "..\LowLevelTracing\Math_LLT.h"
 #include "..\LowLevelTracing\OpticalSystem_LLT.h"
 
-#include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/highgui/highgui.hpp"
 
 #include <math.h>
 #include <fstream>
@@ -32,7 +32,7 @@
 
 
 
-// TODO: es wäre bestimmt hilfreich, wenn die Größe und Lager der Ein- und Austrittspupille direkt im optischen System gespeichert wird
+// TODO: es wäre bestimmt hilfreich, wenn die Größe und Lage der Ein- und Austrittspupille direkt im optischen System gespeichert wird
 // --> dann muss man das hier nicht als Parameter übergeben!
 
 class OPD
