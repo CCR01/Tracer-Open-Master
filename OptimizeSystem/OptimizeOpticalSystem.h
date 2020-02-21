@@ -12,13 +12,13 @@ struct OptSysEleAndMeritStruct
 	~OptSysEleAndMeritStruct();
 
 	// get optical system
-	OpticalSystemElement getOptSysEle() const&;
+	OpticalSystemElement getOptSysEle() const;
 	// set optical system
-	void setOptSysEle(OpticalSystemElement const& optSysEle);
+	void setOptSysEle(OpticalSystemElement const optSysEle);
 	// get merit
-	real getMerit() const&;
+	real getMerit() const;
 	// set merit
-	void setMerit(real const& merit);
+	void setMerit(real const merit);
 
 public:
 	OpticalSystemElement mOptSysEle;
@@ -34,17 +34,17 @@ struct DistanceAdjustmentStruct
 	~DistanceAdjustmentStruct();
 
 	// get position
-	unsigned int getPosition() const&;
+	unsigned int getPosition() const;
 	// set position
-	void setPosition(unsigned int const& position);
+	void setPosition(unsigned int const position);
 	// get distance
-	real getDistanceZ() const&;
+	real getDistanceZ() const;
 	// set distance Z
-	void setDistance(real const& distanceZ);
+	void setDistance(real const distanceZ);
 	// get type modifier
-	typeModifier getTypeModifier() const&;
+	typeModifier getTypeModifier() const;
 	// set type modifier
-	void setTypeModifier(typeModifier const& typeMod);
+	void setTypeModifier(typeModifier const typeMod);
 
 	public:
 	unsigned int mPosition;
@@ -71,19 +71,19 @@ public:
 	void setMinStep_radius(real minStep);
 	void setMinStep_position(real minStep);
 
-	real getStepRadiusLocal() const&;
-	real getStepDistanceLocal() const&;
-	real getStopCtiterialLocal() const&;
-	real getMaxStepsLocalOpti() const&;
-	real getStopCriteria_genetic() const&;
-	real getMinGapSurface() const&;
-	real getMinStep_radius() const&;
-	real getMinStep_position() const&;
-	bool getCheckAllLocalComb() const&;
-	unsigned int get_gettingWorseGeneticLimit() const&;
-	unsigned int getCounterLocalInterations() const&;
-	unsigned int getRings() const&;
-	unsigned int getArms() const&;
+	real getStepRadiusLocal() const;
+	real getStepDistanceLocal() const;
+	real getStopCtiterialLocal() const;
+	real getMaxStepsLocalOpti() const;
+	real getStopCriteria_genetic() const;
+	real getMinGapSurface() const;
+	real getMinStep_radius() const;
+	real getMinStep_position() const;
+	bool getCheckAllLocalComb() const;
+	unsigned int get_gettingWorseGeneticLimit() const;
+	unsigned int getCounterLocalInterations() const;
+	unsigned int getRings() const;
+	unsigned int getArms() const;
 
 private:
 	real mStepRadiusLocal;
@@ -107,34 +107,43 @@ private:
 
 struct MeritConfiguration {
 
-	real EFL_Target;
-	real EFL_Weight;
-
-	real RMS_Weight;
-
-	real EXPP_Target;
-	real EXPP_Weight;
-
-	real EXPD_Target;
-	real EXPD_Weight;
-
-	real imageQuality_Weight;
-
+public:
 	void DEFAFULT_SETTINGS();
 
-	void SET_RMS_WEIGHT(real rms_weight);
+	void setRMSWeight(real rms_weight);
+	real getRMSWeight();
 
-	void SET_EFL_TARGET_VALUE(real efl_target);
-	void SET_EFL_TARGET_WEIGHT(real efl_weight);
+	void setEFL_targetValue(real efl_target);
+	real getEFL_targetValue();
+	void setEFL_weight(real efl_weight);
+	real getEFL_weight();
 
-	void SET_EXPP_TARGET_VALUE(real expp_target);
-	void SET_EXPP_TARGET_WEIGHT(real expp_weight);
+	void setEXPP_targetValue(real expp_target);
+	real getEXPP_targetValue();
+	void setEXPP_weight(real expp_weight);
+	real getEXPP_weight();
 
-	void SET_EXPD_TARGET_VALUE(real expd_target);
-	void SET_EXPD_TARGET_WEIGHT(real expd_weight);
+	void setEXPD_targetValue(real expd_target);
+	real getEXPD_targetValue();
+	void setEXPD_weight(real expd_weight);
+	real getEXPD_weight();
 
-	void SET_Image_Quality_Weight(real imageQuality_weight);
+	void setImageQuality_weight(real imageQuality_weight);
+	real getImageQuality_weight();
 
+private:
+	real mEFL_Target;
+	real mEFL_Weight;
+
+	real mRMS_Weight;
+
+	real mEXPP_Target;
+	real mEXPP_Weight;
+
+	real mEXPD_Target;
+	real mEXPD_Weight;
+
+	real mImageQuality_Weight;
 
 };
 
@@ -150,9 +159,9 @@ public:
 	void addLight(Light_LLT light_LLT);
 	void addField(VectorStructR3 field, real weight);
 
-	std::vector<Light_LLT> getLightVec() const&;
-	std::vector<VectorStructR3>	getFieldVec() const&;
-	std::vector<real> getWeightFieldVec() const&;
+	std::vector<Light_LLT> getLightVec() const;
+	std::vector<VectorStructR3>	getFieldVec() const;
+	std::vector<real> getWeightFieldVec() const;
 
 private:
 	std::vector<Light_LLT> mLight_LLT_vec;
@@ -279,7 +288,7 @@ public:
 	void optimizeSUPERFUNCTION();
 
 	// get optimized optical system element
-	OpticalSystemElement getOptSysOptimized_Ele() const&;
+	OpticalSystemElement getOptSysOptimized_Ele() const;
 
 	// get optimized optical system LLT
 	OpticalSystem_LLT getOptSysOptimized_LLT();
@@ -316,6 +325,12 @@ public:
 	real getDurationTimeLocalOptiInMin();
 
 	unsigned int getNumberGenerations();
+	real getPopulation();
+	FieldAndLightStruct getFieldAndLightConfig();
+	MeritConfiguration getMeritConfig();
+	OptimizeParameters getOptimizeParameters();
+	real getMutationRate();
+
 
 private:
 
@@ -335,7 +350,7 @@ private:
 
 	unsigned int	mPopulation;
 	localStart	mLocalStart;
-	real	mutationRate;
+	real	mMutationRate;
 	real	mLengthOpticalSystem;
 
 	unsigned int mGenerationCount;

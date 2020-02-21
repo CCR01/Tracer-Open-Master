@@ -161,7 +161,7 @@ bool testSystemsPeterMA::calcTestSystemPeterMA_E0(testWhatEnum testWhat)
 	Spot spotE0(seqTraceE0_checker.getAllInterPointsAtSurf_i(9), seqTraceE0_checker.getAllInterPointsAtSurf_i(9).at(0));
 	real rmsSpotE0 = spotE0.getRMS_µm();
 	real excelBest_Zemax_RMS = 209.256;
-	bool checkE0_rmsBest = Math::compareTwoNumbers(excelBest_Zemax_RMS, rmsSpotE0, 2);
+	bool checkE0_rmsBest = Math::compareTwoNumbers_decimals(excelBest_Zemax_RMS, rmsSpotE0, 2);
 	workTestSystemsPeterMA_E0.push_back(checkE0_rmsBest);
 	// ***
 	   
@@ -551,7 +551,7 @@ bool testSystemsPeterMA::calcTestSystemPeterMA_E1(testWhatEnum testWhat)
 	Spot spotE1(seqTraceE1_checker.getAllInterPointsAtSurf_i(11), seqTraceE1_checker.getAllInterPointsAtSurf_i(11).at(0));
 	real rmsSpotE1 = spotE1.getRMS_µm();
 	real excelBest_Zemax_RMS = 68.245;
-	bool checkE1_rmsBest = Math::compareTwoNumbers(excelBest_Zemax_RMS, rmsSpotE1, 1);
+	bool checkE1_rmsBest = Math::compareTwoNumbers_decimals(excelBest_Zemax_RMS, rmsSpotE1, 1);
 	workTestSystemsPeterMA_E1.push_back(checkE1_rmsBest);
 	// ***
 
@@ -746,7 +746,7 @@ bool testSystemsPeterMA::calcTestSystemPeterMA_E2(testWhatEnum testWhat)
 	Spot spotE2(seqTraceE2_checker.getAllInterPointsAtSurf_i(9), seqTraceE2_checker.getAllInterPointsAtSurf_i(9).at(0));
 	real rmsSpotE2 = spotE2.getRMS_µm();
 	real excelBest_Zemax_RMS = 131.716;
-	bool checkE2_rmsBest = Math::compareTwoNumbers(excelBest_Zemax_RMS, rmsSpotE2, 1);
+	bool checkE2_rmsBest = Math::compareTwoNumbers_decimals(excelBest_Zemax_RMS, rmsSpotE2, 1);
 	workTestSystemsPeterMA_E2.push_back(checkE2_rmsBest);
 	// ***
 	
@@ -948,7 +948,7 @@ bool testSystemsPeterMA::calcTestSystemPeterMA_E3(testWhatEnum testWhat)
 	Spot spotE3(seqTraceE3_checker.getAllInterPointsAtSurf_i(12), seqTraceE3_checker.getAllInterPointsAtSurf_i(12).at(0));
 	real rmsSpotE3 = spotE3.getRMS_µm();
 	real excelBest_Zemax_RMS = 316.664;
-	bool checkE3_rmsBest = Math::compareTwoNumbers(excelBest_Zemax_RMS, rmsSpotE3, 1);
+	bool checkE3_rmsBest = Math::compareTwoNumbers_decimals(excelBest_Zemax_RMS, rmsSpotE3, 1);
 	workTestSystemsPeterMA_E3.push_back(checkE3_rmsBest);
 	// ***
 	
@@ -1142,7 +1142,7 @@ bool testSystemsPeterMA::calcTestSystemPeterMA_E4(testWhatEnum testWhat)
 	Spot spotE4(seqTraceE4_checker.getAllInterPointsAtSurf_i(9), seqTraceE4_checker.getAllInterPointsAtSurf_i(9).at(0));
 	real rmsSpotE4 = spotE4.getRMS_µm();
 	real excelBest_Zemax_RMS = 281.402;
-	bool checkE4_rmsBest = Math::compareTwoNumbers(excelBest_Zemax_RMS, rmsSpotE4, 1);
+	bool checkE4_rmsBest = Math::compareTwoNumbers_decimals(excelBest_Zemax_RMS, rmsSpotE4, 1);
 	workTestSystemsPeterMA_E4.push_back(checkE4_rmsBest);
 	// ***
 	
@@ -1329,7 +1329,7 @@ bool testSystemsPeterMA::calcTestSystemPeterMA_E5(testWhatEnum testWhat)
 	Spot spotE5(seqTraceE5_checker.getAllInterPointsAtSurf_i(6), seqTraceE5_checker.getAllInterPointsAtSurf_i(6).at(0));
 	real rmsSpotE5 = spotE5.getRMS_µm();
 	real excelBest_Zemax_RMS = 382.642;
-	bool checkE5_rmsBest = Math::compareTwoNumbers(excelBest_Zemax_RMS, rmsSpotE5, 1);
+	bool checkE5_rmsBest = Math::compareTwoNumbers_decimals(excelBest_Zemax_RMS, rmsSpotE5, 1);
 	workTestSystemsPeterMA_E5.push_back(checkE5_rmsBest);
 	// ***
 	
@@ -1513,7 +1513,7 @@ bool testSystemsPeterMA::calcTestSystemPeterMA_E6(testWhatEnum testWhat)
 	Spot spotE6(seqTraceE6_checker.getAllInterPointsAtSurf_i(4), seqTraceE6_checker.getAllInterPointsAtSurf_i(4).at(0));
 	real rmsSpotE6 = spotE6.getRMS_µm();
 	real excelBest_Zemax_RMS = 1032.04;
-	bool checkE6_rmsBest = Math::compareTwoNumbers(excelBest_Zemax_RMS, rmsSpotE6, 1);
+	bool checkE6_rmsBest = Math::compareTwoNumbers_decimals(excelBest_Zemax_RMS, rmsSpotE6, 1);
 	workTestSystemsPeterMA_E6.push_back(checkE6_rmsBest);
 	// ***
 
@@ -1696,7 +1696,7 @@ bool testSystemsPeterMA::calcTestSystemPeterMA_E7(testWhatEnum testWhat)
 	Spot spotE7(seqTraceE7_checker.getAllInterPointsAtSurf_i(4), seqTraceE7_checker.getAllInterPointsAtSurf_i(4).at(0));
 	real rmsSpotE7 = spotE7.getRMS_µm();
 	real excelBest_Zemax_RMS = 1031.21;
-	bool checkE7_rmsBest = Math::compareTwoNumbers(excelBest_Zemax_RMS, rmsSpotE7, 1);
+	bool checkE7_rmsBest = Math::compareTwoNumbers_decimals(excelBest_Zemax_RMS, rmsSpotE7, 1);
 	workTestSystemsPeterMA_E7.push_back(checkE7_rmsBest);
 	// ***
 
@@ -1886,7 +1886,7 @@ bool testSystemsPeterMA::calcTestSystemPeterMA_E8(testWhatEnum testWhat)
 	Spot spotE8(seqTraceE8_checker.getAllInterPointsAtSurf_i(7), seqTraceE8_checker.getAllInterPointsAtSurf_i(7).at(0));
 	real rmsSpotE8 = spotE8.getRMS_µm();
 	real excelBest_Zemax_RMS = 341.198;
-	bool checkE8_rmsBest = Math::compareTwoNumbers(excelBest_Zemax_RMS, rmsSpotE8, 1);
+	bool checkE8_rmsBest = Math::compareTwoNumbers_decimals(excelBest_Zemax_RMS, rmsSpotE8, 1);
 	workTestSystemsPeterMA_E8.push_back(checkE8_rmsBest);
 	// ***
 
@@ -2077,7 +2077,7 @@ bool testSystemsPeterMA::calcTestSystemPeterMA_E9(testWhatEnum testWhat)
 	Spot spotE9(seqTraceE9_checker.getAllInterPointsAtSurf_i(8), seqTraceE9_checker.getAllInterPointsAtSurf_i(8).at(0));
 	real rmsSpotE9 = spotE9.getRMS_µm();
 	real excelBest_Zemax_RMS = 1272.95;
-	bool checkE9_rmsBest = Math::compareTwoNumbers(excelBest_Zemax_RMS, rmsSpotE9, 1);
+	bool checkE9_rmsBest = Math::compareTwoNumbers_decimals(excelBest_Zemax_RMS, rmsSpotE9, 1);
 	workTestSystemsPeterMA_E9.push_back(checkE9_rmsBest);
 	// ***
 	

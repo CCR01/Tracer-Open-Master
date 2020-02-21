@@ -65,12 +65,12 @@ bool BenchOpticalSystemElement::checkMethodesOpticalSystemElement()
 
 	Spot SpotE0_optA(seqTrace_E0_optA.getAllInterPointsAndIntensityAtSurface_i(4), seqTrace_E0_optA.getAllInterPointsAtSurf_i(4).at(0));
 	real rmsOptAchseE0 = SpotE0_optA.getRMS_µm();
-	bool checkRMS_OptA_E0 = Math::compareTwoNumbers(rmsOptAchseE0, 123.579, 2);
+	bool checkRMS_OptA_E0 = Math::compareTwoNumbers_decimals(rmsOptAchseE0, 123.579, 2);
 	workOptSysEle.push_back(checkRMS_OptA_E0);
 
 	Spot SpotE0_field1(seqTrace_E0_field1.getAllInterPointsAndIntensityAtSurface_i(4), seqTrace_E0_field1.getAllInterPointsAtSurf_i(4).at(0));
 	real rmsField1E0 = SpotE0_field1.getRMS_µm();
-	bool checkRMS_feidl1_E0 = Math::compareTwoNumbers(rmsField1E0, 178.189, 2);
+	bool checkRMS_feidl1_E0 = Math::compareTwoNumbers_decimals(rmsField1E0, 178.189, 2);
 	workOptSysEle.push_back(checkRMS_feidl1_E0);
 
 

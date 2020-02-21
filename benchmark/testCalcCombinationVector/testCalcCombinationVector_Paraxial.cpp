@@ -108,7 +108,7 @@ bool testCalcComVec_Paraxial::testCalcComVec_E0()
 	Spot spotE0(seqTraceE0.getAllInterPointsAtSurf_i(5), seqTraceE0.getAllInterPointsAtSurf_i(5).at(0));
 	real rmsSpotE0 = spotE0.getRMS_µm();
 	real excelBest_Zemax_RMS = 47.641;
-	bool checkE0_rmsBest = Math::compareTwoNumbers(excelBest_Zemax_RMS, rmsSpotE0, 2);
+	bool checkE0_rmsBest = Math::compareTwoNumbers_decimals(excelBest_Zemax_RMS, rmsSpotE0, 2);
 	workCalcComVec_E0.push_back(checkE0_rmsBest);
 
 
@@ -198,7 +198,7 @@ bool testCalcComVec_Paraxial::testCalcComVec_E1()
 	SequentialRayTracing singleRayTrace(bestOptSys);
 	singleRayTrace.sequentialRayTracing(lightRaySingleE1);
 	VectorStructR3 singleRayTraceZemax{ 0.0,-0.18611, 55.0 };
-	bool checkSingleRay = Math::compareTwoVectorStructR3(singleRayTraceZemax, singleRayTrace.getAllIntersectionPointsSRT()[7], 0.01);
+	bool checkSingleRay = Math::compareTwoVectorStructR3_decimals(singleRayTraceZemax, singleRayTrace.getAllIntersectionPointsSRT()[7], 0.01);
 	workCalcComVec_E1.push_back(checkSingleRay);
 
 	FillApertureStop fillAperE1(/*start point rays*/{ 0.0,0.0,0.0 },/*semi height of aperture stop*/ 1.0,/*point of aperture stop*/{ 0.0,0.0,5.0 },/*direction of aperture stop*/{ 0.0,0.0,1.0 }, /*rings*/6,/*arms*/ 8,/*refractive index*/ 1.0,/*wavelength*/ light);
@@ -207,7 +207,7 @@ bool testCalcComVec_Paraxial::testCalcComVec_E1()
 	Spot spotE1(seqTraceE1.getAllInterPointsAtSurf_i(7), seqTraceE1.getAllInterPointsAtSurf_i(7).at(0));
 	real rmsSpotE1 = spotE1.getRMS_µm();
 	real excelBest_Zemax_RMS = 109.061;
-	bool checkE1_rmsBest = Math::compareTwoNumbers(excelBest_Zemax_RMS, rmsSpotE1, 2);
+	bool checkE1_rmsBest = Math::compareTwoNumbers_decimals(excelBest_Zemax_RMS, rmsSpotE1, 2);
 	workCalcComVec_E1.push_back(checkE1_rmsBest);
 
 
@@ -289,7 +289,7 @@ bool testCalcComVec_Paraxial::testCalcComVec_E2()
 	Spot spotE2(seqTraceE2.getAllInterPointsAtSurf_i(5), seqTraceE2.getAllInterPointsAtSurf_i(5).at(0));
 	real rmsSpotE2 = spotE2.getRMS_µm();
 	real excelBest_Zemax_RMS = 534.690;
-	bool checkE2_rmsBest = Math::compareTwoNumbers(excelBest_Zemax_RMS, rmsSpotE2, 2);
+	bool checkE2_rmsBest = Math::compareTwoNumbers_decimals(excelBest_Zemax_RMS, rmsSpotE2, 2);
 	workCalcComVec_E2.push_back(checkE2_rmsBest);
 
 
@@ -374,7 +374,7 @@ bool testCalcComVec_Paraxial::testCalcComVec_E3()
 	Spot spotE3(seqTraceE3.getAllInterPointsAtSurf_i(6), seqTraceE3.getAllInterPointsAtSurf_i(6).at(0));
 	real rmsSpotE3 = spotE3.getRMS_µm();
 	real excelBest_Zemax_RMS = 91.162;
-	bool checkE3_rmsBest = Math::compareTwoNumbers(excelBest_Zemax_RMS, rmsSpotE3, 2);
+	bool checkE3_rmsBest = Math::compareTwoNumbers_decimals(excelBest_Zemax_RMS, rmsSpotE3, 2);
 	workCalcComVec_E3.push_back(checkE3_rmsBest);
 
 

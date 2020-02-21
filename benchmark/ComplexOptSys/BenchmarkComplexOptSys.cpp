@@ -142,8 +142,8 @@ bool BechmarkComplexOpticalSystem::checkComplexOpticalSystem()
 	real rmsZemaxE1_optAchse = 2.312; // it is for Ray Density 6 -> rings = 6, arms =8
 	real geoE1_optAchse = spotE1_optAchese.getGeoRadius() * 1000;
 	real geoZemaxE1_optAchse = 3.620; // it is for Ray Density 6 -> rings = 6, arms =8
-	bool checkRSM_optAchse = Math::compareTwoNumbers(rmsE1_optAchse, rmsZemaxE1_optAchse,2);
-	bool checkGeoE1_optAchse = Math::compareTwoNumbers (geoE1_optAchse, geoZemaxE1_optAchse, 2);
+	bool checkRSM_optAchse = Math::compareTwoNumbers_decimals(rmsE1_optAchse, rmsZemaxE1_optAchse,2);
+	bool checkGeoE1_optAchse = Math::compareTwoNumbers_decimals (geoE1_optAchse, geoZemaxE1_optAchse, 2);
 	checkComOptSys.push_back(checkRSM_optAchse);
 	checkComOptSys.push_back(checkGeoE1_optAchse);
 
@@ -156,8 +156,8 @@ bool BechmarkComplexOpticalSystem::checkComplexOpticalSystem()
 	real rmsZemaxE1_field = 10.724; // it is for Ray Density 6 -> rings = 6, arms =8
 	real geoE1_field = spotE1_field.getGeoRadius() * 1000;
 	real geoZemaxE1_field = 23.782; // it is for Ray Density 6 -> rings = 6, arms =8
-	bool checkRSM_field = Math::compareTwoNumbers(rmsE1_field, rmsZemaxE1_field,2);
-	bool checkGeoE1_field = Math::compareTwoNumbers(geoE1_field, geoZemaxE1_field,2);
+	bool checkRSM_field = Math::compareTwoNumbers_decimals(rmsE1_field, rmsZemaxE1_field,2);
+	bool checkGeoE1_field = Math::compareTwoNumbers_decimals(geoE1_field, geoZemaxE1_field,2);
 	checkComOptSys.push_back(checkRSM_field);
 	checkComOptSys.push_back(checkGeoE1_field);
 
@@ -171,19 +171,19 @@ bool BechmarkComplexOpticalSystem::checkComplexOpticalSystem()
 	LightRayStruct chiefLightRayE1_optAchse(light, chiefRayE1_optAchse, 1);
 	OPD OPD_E1_optAchse(exitPupilE1_ptr, optSysE1, lightRayAlong_X_E1_optAchse, lightRayAlong_Y_E1_optAchse, chiefLightRayE1_optAchse);
 	real OPD_E1_optAchse_neg1 = OPD_E1_optAchse.getOPD_Y_inVec().at(0);
-	bool check_OPD_E1_optAchse_neg1 = Math::compareTwoNumbers(-0.142047768537, OPD_E1_optAchse_neg1,5);
+	bool check_OPD_E1_optAchse_neg1 = Math::compareTwoNumbers_decimals(-0.142047768537, OPD_E1_optAchse_neg1,5);
 	checkComOptSys.push_back(check_OPD_E1_optAchse_neg1);
 	real OPD_E1_optAchse_neg05 = OPD_E1_optAchse.getOPD_Y_inVec().at(1);
-	bool check_OPD_E1_optAchse_neg05 = Math::compareTwoNumbers(-0.020161259362, OPD_E1_optAchse_neg05, 5);
+	bool check_OPD_E1_optAchse_neg05 = Math::compareTwoNumbers_decimals(-0.020161259362, OPD_E1_optAchse_neg05, 5);
 	checkComOptSys.push_back(check_OPD_E1_optAchse_neg05);
 	real OPD_E1_optAchse_0 = OPD_E1_optAchse.getOPD_Y_inVec().at(2);
-	bool check_OPD_E1_optAchse_0 = Math::compareTwoNumbers(0.0, OPD_E1_optAchse_0,5);
+	bool check_OPD_E1_optAchse_0 = Math::compareTwoNumbers_decimals(0.0, OPD_E1_optAchse_0,5);
 	checkComOptSys.push_back(check_OPD_E1_optAchse_0);
 	real OPD_E1_optAchse_05 = OPD_E1_optAchse.getOPD_Y_inVec().at(3);
-	bool check_OPD_E1_optAchse_05 = Math::compareTwoNumbers(-0.020161259362, OPD_E1_optAchse_05,5);
+	bool check_OPD_E1_optAchse_05 = Math::compareTwoNumbers_decimals(-0.020161259362, OPD_E1_optAchse_05,5);
 	checkComOptSys.push_back(check_OPD_E1_optAchse_05);
 	real OPD_E1_optAchse_1 = OPD_E1_optAchse.getOPD_Y_inVec().at(4);
-	bool check_OPD_E1_optAchse_1 = Math::compareTwoNumbers(-0.142047768537, OPD_E1_optAchse_1,5);
+	bool check_OPD_E1_optAchse_1 = Math::compareTwoNumbers_decimals(-0.142047768537, OPD_E1_optAchse_1,5);
 	checkComOptSys.push_back(check_OPD_E1_optAchse_1);
 
 //	// calc OPD field
@@ -194,19 +194,19 @@ bool BechmarkComplexOpticalSystem::checkComplexOpticalSystem()
 	LightRayStruct chiefLightRayE1_field(light, chiefRayE1_field, 1);
 	OPD OPD_E1_field(exitPupilE1_ptr, optSysE1, lightRayAlong_X_E1_field, lightRayAlong_Y_E1_field, chiefLightRayE1_field);
 	real OPD_E1_field_neg1 = OPD_E1_field.getOPD_Y_inVec().at(0);
-	bool check_E1_field_neg1 = Math::compareTwoNumbers(OPD_E1_field_neg1, 0.9275625741142, 5);
+	bool check_E1_field_neg1 = Math::compareTwoNumbers_decimals(OPD_E1_field_neg1, 0.9275625741142, 5);
 	checkComOptSys.push_back(check_E1_field_neg1);
 	real OPD_E1_field_neg05 = OPD_E1_field.getOPD_Y_inVec().at(1);
-	bool check_OPD_E1_field_neg05 = Math::compareTwoNumbers(OPD_E1_field_neg05, 0.3238029237669, 5);
+	bool check_OPD_E1_field_neg05 = Math::compareTwoNumbers_decimals(OPD_E1_field_neg05, 0.3238029237669, 5);
 	checkComOptSys.push_back(check_OPD_E1_field_neg05);
 	real OPD_E1_field_0 = OPD_E1_field.getOPD_Y_inVec().at(2);
-	bool check_OPD_E1_field_0 = Math::compareTwoNumbers(OPD_E1_field_0, 0.0, 5);
+	bool check_OPD_E1_field_0 = Math::compareTwoNumbers_decimals(OPD_E1_field_0, 0.0, 5);
 	checkComOptSys.push_back(check_OPD_E1_field_0);
 	real OPD_E1_field_05 = OPD_E1_field.getOPD_Y_inVec().at(3);
-	bool check_OPD_E1_field_05 = Math::compareTwoNumbers(OPD_E1_field_05, 0.3891952335191, 5);
+	bool check_OPD_E1_field_05 = Math::compareTwoNumbers_decimals(OPD_E1_field_05, 0.3891952335191, 5);
 	checkComOptSys.push_back(check_OPD_E1_field_05);
 	real OPD_E1_field_1 = OPD_E1_field.getOPD_Y_inVec().at(4);
-	bool check_OPD_E1_field_1 = Math::compareTwoNumbers(OPD_E1_field_1, 1.5631132361715, 5);
+	bool check_OPD_E1_field_1 = Math::compareTwoNumbers_decimals(OPD_E1_field_1, 1.5631132361715, 5);
 	checkComOptSys.push_back(check_OPD_E1_field_1);
 
 	// Plot spot diagram opt achse

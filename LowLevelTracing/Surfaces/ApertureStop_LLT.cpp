@@ -87,7 +87,11 @@ real ApertureStop_LLT::getRefractiveIndex_B()
 
 IntersectInformationStruct ApertureStop_LLT::calculateIntersection(LightRayStruct const& lightRay)
 {
-	real tolerance = 0.000001;
+	// ***
+	// ATTENTION: we set that tolerance not so height because of ray aiming
+	// the tolerance for ray aiming must be lower than the tolerance for the aperture stop
+	real tolerance = 1.0;
+	// ***
 	IntersectInformationStruct returnIntersectInfos;
 	Ray_LLT ray = lightRay.getRay_LLT();
 	Light_LLT light = lightRay.getLight_LLT();
@@ -141,7 +145,7 @@ IntersectInformationStruct ApertureStop_LLT::calculateIntersection(LightRayStruc
 				returnIntersectInfos = { intersectionPoint,mDirectionAperture ,B, stepsT,mRrefractiveIndex,mRrefractiveIndex,ray.getDirectionRayUnit(), light };
 			}
 
-
+			
 			if ((distance - mSemiHeightAperture) > tolerance) // ray get absorbed by the aperture stop
 			{
 				returnIntersectInfos.setSurface(N);

@@ -207,6 +207,26 @@ real defaultRayAimingStruct::getVariancePercentRRA()
 	return mVariancePercentRobustRA;
 }
 
+// stay counter
+unsigned int defaultRayAimingStruct::getMaxStayCounter()
+{
+	return mMaxStayCounter;
+}
+void defaultRayAimingStruct::setMayStayCounter(unsigned int maxStayCounter)
+{
+	mMaxStayCounter = maxStayCounter;
+}
+
+// increaser factor times
+real defaultRayAimingStruct::getIncreaserFactorTimes()
+{
+	return mIncreaserFactorTimes;
+}
+void defaultRayAimingStruct::setIncreaserFactorTimes(real increaserFactorTimes)
+{
+	mIncreaserFactorTimes = increaserFactorTimes;
+}
+
 void defaultRayAimingStruct::loadDefaultParameter()
 {
 	mTolerance_XandY = 0.0001;
@@ -214,8 +234,10 @@ void defaultRayAimingStruct::loadDefaultParameter()
 	mMaxLoopsTraceToLastSurface = 5;
 	mMaxInterationsRayAiming = 50;
 	mFactor = 0.9;
-	turn_Off_RobustRayAiming();
+	turn_On_RobustRayAiming();
 	mVariancePercentRobustRA = 0.1;
+	mMaxStayCounter = 3;
+	mIncreaserFactorTimes = 10.0;
 }
 
 
@@ -553,21 +575,35 @@ LightRayStruct RayAiming::infinityRayAiming(VectorStructR3 rayDirection, VectorS
 		unsigned int curInteration = 0;
 		lightRay_intP_dis_negPos_factor infosToReduce(bestLightRay, interPointBestLightRay, disXtoTarget, disYtoTarget, stay, mDefaultParaRayAiming.getFactor(), mDefaultParaRayAiming.getFactor(), targetPoint, curInteration);
 
-		infosToReduce = reduceDistancesIn_X_AND_X_ing(infosToReduce);
+
+		// reduce distance in X and Y
+		infosToReduce = reduceDistancesIn_X_AND_Y_inf(infosToReduce);
 
 		curInteration = infosToReduce.getInterations();
+
 		if (curInteration >= maxInteration)
 		{
+
+
+			printInterP_Target_distance_X_Y(infosToReduce);
+
 			// here we can start robust ray aiming!
 			if (mDefaultParaRayAiming.getRobustRayAiming())
 			{
 				std::cout << "start robust ray aiming" << std::endl;
+				
+				infosToReduce = robustRayAiming_inf(infosToReduce);
+
+				std::cout << "results from robust ray aiming" << std::endl;
+				printInterP_Target_distance_X_Y(infosToReduce);
 			}
 
-
+			else // no robust ray aiming
+			{ 
 			std::cout << "attention!!! ray aiming did not work perfectly!!!" << std::endl;
-			std::cout << "maybe it would help to turn in robust ray aiming!!!" << std::endl;
-			std::cout << "fix that bug!!!" << std::endl;
+			std::cout << "maybe it would help to turn on robust ray aiming!!!" << std::endl;
+			std::cout << "maybe the results are not correct!" << std::endl;
+			}
 		}
 
 
@@ -2360,9 +2396,9 @@ lightRay_intP_dis_negPos_factor RayAiming::traceNegOrPosSide_andReduce_X_inf(lig
 	real disNegTrace_X = calcDistance_X(interPointAS_neg.getIntersectionPoint(), targetPoint);
 	real disNegTrace_Y = calcDistance_Y(interPointAS_neg.getIntersectionPoint(), targetPoint);
 
-	if (disPosTrace_X < disNegTrace_X && interPointAS_pos.getSurfaceSide() != 'N')
+	if (disPosTrace_X <= disNegTrace_X && interPointAS_pos.getSurfaceSide() != 'N')
 	{
-		if (disPosTrace_X < initialDistanceX)
+		if (disPosTrace_X <= initialDistanceX)
 		{
 			returnLightRay_intP_dis_negPos_fac.setDistanceInterToTarger_Y(disPosTrace_Y);
 			returnLightRay_intP_dis_negPos_fac.setFactorY(initialFactorY);
@@ -2374,7 +2410,7 @@ lightRay_intP_dis_negPos_factor RayAiming::traceNegOrPosSide_andReduce_X_inf(lig
 			returnLightRay_intP_dis_negPos_fac.setFactorX(initialFactorX / 1.9);
 
 		}
-		else if (initialDistanceX < disPosTrace_X)
+		else if (initialDistanceX <= disPosTrace_X)
 		{
 			returnLightRay_intP_dis_negPos_fac = initialInfos;
 			returnLightRay_intP_dis_negPos_fac.setNegOrPosSide(stay);
@@ -2413,7 +2449,7 @@ lightRay_intP_dis_negPos_factor RayAiming::traceNegOrPosSide_andReduce_X_inf(lig
 	{
 		returnLightRay_intP_dis_negPos_fac = initialInfos;
 		returnLightRay_intP_dis_negPos_fac.setNegOrPosSide(stay);
-		returnLightRay_intP_dis_negPos_fac.setFactorX(initialFactorX / 1.9);
+		returnLightRay_intP_dis_negPos_fac.setFactorX(initialFactorX / 1.5);
 	}
 
 
@@ -2482,9 +2518,9 @@ lightRay_intP_dis_negPos_factor RayAiming::traceNegOrPosSide_andReduce_Y_inf(lig
 	std::cout << "reduce Y disNegTrace Y: " << disNegTrace_Y << std::endl;
 
 
-	if (disPosTrace_Y < disNegTrace_Y && interPointAS_pos.getSurfaceSide() != 'N')
+	if (disPosTrace_Y <= disNegTrace_Y && interPointAS_pos.getSurfaceSide() != 'N')
 	{
-		if (disPosTrace_Y < initialDistanceY)
+		if (disPosTrace_Y <= initialDistanceY)
 		{
 			returnLightRay_intP_dis_negPos_fac.setDistanceInterToTarger_X(disPosTrace_X);
 			returnLightRay_intP_dis_negPos_fac.setFactorX(initalFactorX);
@@ -2496,7 +2532,7 @@ lightRay_intP_dis_negPos_factor RayAiming::traceNegOrPosSide_andReduce_Y_inf(lig
 			returnLightRay_intP_dis_negPos_fac.setFactorY(initialFactorY / 1.9);
 
 		}
-		else if (initialDistanceY < disPosTrace_Y)
+		else if (initialDistanceY <= disPosTrace_Y)
 		{
 			returnLightRay_intP_dis_negPos_fac = initialInfos;
 			returnLightRay_intP_dis_negPos_fac.setNegOrPosSide(stay);
@@ -2535,7 +2571,7 @@ lightRay_intP_dis_negPos_factor RayAiming::traceNegOrPosSide_andReduce_Y_inf(lig
 	{
 		returnLightRay_intP_dis_negPos_fac = initialInfos;
 		returnLightRay_intP_dis_negPos_fac.setNegOrPosSide(stay);
-		returnLightRay_intP_dis_negPos_fac.setFactorY(initialFactorY / 1.9);
+		returnLightRay_intP_dis_negPos_fac.setFactorY(initialFactorY / 1.5);
 	}
 
 
@@ -2563,7 +2599,7 @@ void RayAiming::turn_OFF_RobustRayAiming()
 }
 
 // robust ray aiming
-LightRayStruct RayAiming::robustRayAiming_inf(lightRay_intP_dis_negPos_factor initialInfos)
+lightRay_intP_dis_negPos_factor RayAiming::robustRayAiming_inf(lightRay_intP_dis_negPos_factor initialInfos)
 {
 	real disYtoTarget = initialInfos.getDistanceInterToTarget_Y();
 	real disXtoTarget = initialInfos.getDistanceInterToTarget_X();
@@ -2573,19 +2609,29 @@ LightRayStruct RayAiming::robustRayAiming_inf(lightRay_intP_dis_negPos_factor in
 	lightRay_intP_dis_negPos_factor interInfosRA_new = initialInfos;
 	interInfosRA_new.setInterations(interation);
 
+	real factorReduceX = initialInfos.getFactorX();
+	real factorReduceY = initialInfos.getFactorY();
+
+	real newFactorX = mDefaultParaRayAiming.getFactor();
+	real newFactorY = mDefaultParaRayAiming.getFactor();
+
+	interInfosRA_new.setFactorX(newFactorX);
+	interInfosRA_new.setFactorY(newFactorY);
+
+
 	while (((std::abs(disYtoTarget) > mDefaultParaRayAiming.getTolerance_XandY() || std::abs(disXtoTarget) > mDefaultParaRayAiming.getTolerance_XandY())) && (interation < maxInteration))
 	{
 		interInfosRA_new = calcNewBestInfos(interInfosRA_new);
-		interInfosRA_new = reduceDistancesIn_X_AND_X_ing(interInfosRA_new);
+		interInfosRA_new = reduceDistancesIn_X_AND_Y_inf(interInfosRA_new);
 
-		disYtoTarget = initialInfos.getDistanceInterToTarget_Y();
-		disXtoTarget = initialInfos.getDistanceInterToTarget_X();
-		interation = initialInfos.getInterations();
+		disYtoTarget = interInfosRA_new.getDistanceInterToTarget_Y();
+		disXtoTarget = interInfosRA_new.getDistanceInterToTarget_X();
+		interation = interInfosRA_new.getInterations();
 	}
 
-	LightRayStruct returnLightRay = interInfosRA_new.getLightRay();
+	//LightRayStruct returnLightRay = interInfosRA_new.getLightRay();
 
-	return returnLightRay;
+	return interInfosRA_new;
 }
 
 lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos(lightRay_intP_dis_negPos_factor initialInfos)
@@ -2595,87 +2641,111 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos(lightRay_intP_dis_ne
 	VectorStructR3 targetPoint = initialInfos.getTargetPoint();
 
 	LightRayStruct initialLightRay = initialInfos.getLightRay();
-
-
-
-	VectorStructR3 rayDirectionUnit = initialLightRay.getRay_LLT().getDirectionRayUnit();
-	real currentRefIndex = initialLightRay.getRay_LLT().getCurrentRefractiveIndex();
-	Light_LLT light = initialLightRay.getLight_LLT();
-
-	real X_origin = initialLightRay.getRay_LLT().getOriginRay().getX();
-	real Y_origin = initialLightRay.getRay_LLT().getOriginRay().getY();
-	real Z_origin = initialLightRay.getRay_LLT().getOriginRay().getZ();
-
-	real X_Plus = Math::calcNewValueVariancePercent(X_origin, variancePercent);
-	real X_Neg = Math::calcNewValueVariancePercent(X_origin, -variancePercent);
-	real Y_Plus = Math::calcNewValueVariancePercent(Y_origin, variancePercent);
-	real Y_Neg = Math::calcNewValueVariancePercent(Y_origin, -variancePercent);
-
-
-	// origin 0
-	VectorStructR3 origin0(X_origin, Y_Plus, Z_origin);
-	// origin 1
-	VectorStructR3 origin1(X_origin, Y_Neg, Z_origin);
-	// origin 2
-	VectorStructR3 origin2(X_Neg, Y_origin, Z_origin);
-	// origin 3
-	VectorStructR3 origin3(X_Plus, Y_origin, Z_origin);
-	// origin 4
-	VectorStructR3 origin4(X_Neg, Y_Plus, Z_origin);
-	// origin 5
-	VectorStructR3 origin5(X_Plus, Y_Plus, Z_origin);
-	// origin 6
-	VectorStructR3 origin6(X_Plus, Y_Neg, Z_origin);
-	// origin 7
-	VectorStructR3 origin7(X_Neg, Y_Neg, Z_origin);
-
-	// ray0
-	Ray_LLT ray0(origin0, rayDirectionUnit, currentRefIndex);
-	// ray1
-	Ray_LLT ray1(origin1, rayDirectionUnit, currentRefIndex);
-	// ray2
-	Ray_LLT ray2(origin2, rayDirectionUnit, currentRefIndex);
-	// ray3
-	Ray_LLT ray3(origin3, rayDirectionUnit, currentRefIndex);
-	// ray4
-	Ray_LLT ray4(origin4, rayDirectionUnit, currentRefIndex);
-	// ray5
-	Ray_LLT ray5(origin5, rayDirectionUnit, currentRefIndex);
-	// ray6
-	Ray_LLT ray6(origin6, rayDirectionUnit, currentRefIndex);
-	// ray7
-	Ray_LLT ray7(origin7, rayDirectionUnit, currentRefIndex);
-
-
-	//light ray 0
-	LightRayStruct lightRay0(light, ray0, 1);
-	//light ray 1
-	LightRayStruct lightRay1(light, ray1, 1);
-	//light ray 2
-	LightRayStruct lightRay2(light, ray2, 1);
-	//light ray 3
-	LightRayStruct lightRay3(light, ray3, 1);
-	//light ray 4
-	LightRayStruct lightRay4(light, ray4, 1);
-	//light ray 5
-	LightRayStruct lightRay5(light, ray5, 1);
-	//light ray 6
-	LightRayStruct lightRay6(light, ray6, 1);
-	//light ray 7
-	LightRayStruct lightRay7(light, ray7, 1);
-
-	std::vector<LightRayStruct> lightRay_vec{ lightRay0,lightRay1,lightRay2,lightRay3,lightRay4,lightRay5,lightRay6,lightRay7 };
+	bool allInterPointsApertStop = true;
+	std::vector<VectorStructR3> interPointsAS_vec;
+	std::vector<LightRayStruct> lightRay_vec;
+	lightRay_vec.resize(8);
 	SequentialRayTracing seqTrace(mOpticalSystem_LLT);
-	seqTrace.seqRayTracingWithVectorOfLightRays(lightRay_vec);
 
-	unsigned int posApertureStop = mOpticalSystem_LLT.getPosApertureStop();
-	std::vector<VectorStructR3> interPointsAS_vec = seqTrace.getAllInterPointsAtSurf_i(posApertureStop);
+	while (allInterPointsApertStop)
+	{
+		VectorStructR3 rayDirectionUnit = initialLightRay.getRay_LLT().getDirectionRayUnit();
+		real currentRefIndex = initialLightRay.getRay_LLT().getCurrentRefractiveIndex();
+		Light_LLT light = initialLightRay.getLight_LLT();
 
+		real X_origin = initialLightRay.getRay_LLT().getOriginRay().getX();
+		real Y_origin = initialLightRay.getRay_LLT().getOriginRay().getY();
+		real Z_origin = initialLightRay.getRay_LLT().getOriginRay().getZ();
+
+		real X_Plus = Math::calcNewValueVariancePercent(X_origin, variancePercent);
+		real X_Neg = Math::calcNewValueVariancePercent(X_origin, -variancePercent);
+		real Y_Plus = Math::calcNewValueVariancePercent(Y_origin, variancePercent);
+		real Y_Neg = Math::calcNewValueVariancePercent(Y_origin, -variancePercent);
+
+
+		// origin 0
+		VectorStructR3 origin0(X_origin, Y_Plus, Z_origin);
+		// origin 1
+		VectorStructR3 origin1(X_origin, Y_Neg, Z_origin);
+		// origin 2
+		VectorStructR3 origin2(X_Neg, Y_origin, Z_origin);
+		// origin 3
+		VectorStructR3 origin3(X_Plus, Y_origin, Z_origin);
+		// origin 4
+		VectorStructR3 origin4(X_Neg, Y_Plus, Z_origin);
+		// origin 5
+		VectorStructR3 origin5(X_Plus, Y_Plus, Z_origin);
+		// origin 6
+		VectorStructR3 origin6(X_Plus, Y_Neg, Z_origin);
+		// origin 7
+		VectorStructR3 origin7(X_Neg, Y_Neg, Z_origin);
+
+		// ray0
+		Ray_LLT ray0(origin0, rayDirectionUnit, currentRefIndex);
+		// ray1
+		Ray_LLT ray1(origin1, rayDirectionUnit, currentRefIndex);
+		// ray2
+		Ray_LLT ray2(origin2, rayDirectionUnit, currentRefIndex);
+		// ray3
+		Ray_LLT ray3(origin3, rayDirectionUnit, currentRefIndex);
+		// ray4
+		Ray_LLT ray4(origin4, rayDirectionUnit, currentRefIndex);
+		// ray5
+		Ray_LLT ray5(origin5, rayDirectionUnit, currentRefIndex);
+		// ray6
+		Ray_LLT ray6(origin6, rayDirectionUnit, currentRefIndex);
+		// ray7
+		Ray_LLT ray7(origin7, rayDirectionUnit, currentRefIndex);
+
+
+		//light ray 0
+		LightRayStruct lightRay0(light, ray0, 1);
+		//light ray 1
+		LightRayStruct lightRay1(light, ray1, 1);
+		//light ray 2
+		LightRayStruct lightRay2(light, ray2, 1);
+		//light ray 3
+		LightRayStruct lightRay3(light, ray3, 1);
+		//light ray 4
+		LightRayStruct lightRay4(light, ray4, 1);
+		//light ray 5
+		LightRayStruct lightRay5(light, ray5, 1);
+		//light ray 6
+		LightRayStruct lightRay6(light, ray6, 1);
+		//light ray 7
+		LightRayStruct lightRay7(light, ray7, 1);
+
+		lightRay_vec[0] = lightRay0;
+		lightRay_vec[1] = lightRay1;
+		lightRay_vec[2] = lightRay2;
+		lightRay_vec[3] = lightRay3;
+		lightRay_vec[4] = lightRay4;
+		lightRay_vec[5] = lightRay5;
+		lightRay_vec[6] = lightRay6;
+		lightRay_vec[7] = lightRay7;
+
+		
+		seqTrace.seqRayTracingWithVectorOfLightRays(lightRay_vec);
+
+		interPointsAS_vec = seqTrace.getAllInterPointsAtSurf_i(mPosApertureStop);
+		
+
+		if (interPointsAS_vec.size() == 8)
+		{
+			allInterPointsApertStop = false;
+		}
+
+		else
+		{
+			variancePercent = variancePercent / 1.9;
+			seqTrace.clearAllTracedRays();
+		}
+	}
 	unsigned posBestRay = getPosRayLowestDistance(interPointsAS_vec, targetPoint);
 
 	// new infos 
 	LightRayStruct newBestRay = lightRay_vec[posBestRay];
-	VectorStructR3 newInterPointAS = seqTrace.getAllInterPointsAtSurf_i(posApertureStop)[posBestRay];
+	VectorStructR3 newInterPointAS = seqTrace.getAllInterPointsAtSurf_i(mPosApertureStop)[posBestRay];
 	real distance_X = calcDistance_X(newInterPointAS, targetPoint);
 	real distance_Y = calcDistance_Y(newInterPointAS, targetPoint);
 	// ***
@@ -2688,7 +2758,7 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos(lightRay_intP_dis_ne
 	return returnInfos;
 }
 
-lightRay_intP_dis_negPos_factor RayAiming::reduceDistancesIn_X_AND_X_ing(lightRay_intP_dis_negPos_factor initialInfos)
+lightRay_intP_dis_negPos_factor RayAiming::reduceDistancesIn_X_AND_Y_inf(lightRay_intP_dis_negPos_factor initialInfos)
 {
 
 	real disYtoTarget = initialInfos.getDistanceInterToTarget_Y();
@@ -2696,23 +2766,56 @@ lightRay_intP_dis_negPos_factor RayAiming::reduceDistancesIn_X_AND_X_ing(lightRa
 	unsigned int interation = initialInfos.getInterations();
 	real maxInteration = mDefaultParaRayAiming.getMaxInterationRayAiming();
 
+	unsigned int stayCounter = 0;
+	reduceWhat redWhat = reduce_X;
+
 	while (((std::abs(disYtoTarget) > mDefaultParaRayAiming.getTolerance_XandY() || std::abs(disXtoTarget) > mDefaultParaRayAiming.getTolerance_XandY())) && (interation < maxInteration))
 	{
-		if (disXtoTarget > disYtoTarget)
+		if (disXtoTarget >= disYtoTarget && redWhat == reduce_X)
 		{
+
 			initialInfos = traceNegOrPosSide_andReduce_X_inf(initialInfos);
 			disXtoTarget = initialInfos.getDistanceInterToTarget_X();
 			disYtoTarget = initialInfos.getDistanceInterToTarget_Y();
 
+			if (initialInfos.getNegOrPosSide() == stay)
+			{
+				++stayCounter;
+				if (stayCounter > mDefaultParaRayAiming.getMaxStayCounter())
+				{
+					redWhat = reduce_Y;
+					stayCounter = 0;
+				}
+			}
+			else
+			{
+				stayCounter = 0;
+			}
+
 			++interation;
 		}
-		else //(disXtoTarget < disYtoTarget)
+		else
 		{
 			initialInfos = traceNegOrPosSide_andReduce_Y_inf(initialInfos);
 			disXtoTarget = initialInfos.getDistanceInterToTarget_X();
 			disYtoTarget = initialInfos.getDistanceInterToTarget_Y();
 
+			if (initialInfos.getNegOrPosSide() == stay)
+			{
+				++stayCounter;
+				if (stayCounter > mDefaultParaRayAiming.getMaxStayCounter())
+				{
+					redWhat = reduce_X;
+					stayCounter = 0;
+				}
+			}
+			else
+			{
+				stayCounter = 0;
+			}
+
 			++interation;
+			redWhat = reduce_X;
 		}
 	}
 
@@ -2742,4 +2845,20 @@ unsigned int RayAiming::getPosRayLowestDistance(std::vector<VectorStructR3> allI
 	}
 
 	return bestPos;
+}
+
+
+// print
+void RayAiming::printInterP_Target_distance_X_Y(lightRay_intP_dis_negPos_factor infosToReduce)
+{
+	VectorStructR3 interPointTace = infosToReduce.getInterPoint();
+	VectorStructR3 targetPoint = infosToReduce.getTargetPoint();
+	real distanceX = infosToReduce.getDistanceInterToTarget_X();
+	real distanceY = infosToReduce.getDistanceInterToTarget_Y();
+
+
+	std::cout << "inter point: X: " << interPointTace.getX() << " Y: " << interPointTace.getY() << " Z: " << interPointTace.getZ() << std::endl;
+	std::cout << "target point: X: " << targetPoint.getX() << " Y: " << targetPoint.getY() << " Z: " << targetPoint.getZ() << std::endl;
+	std::cout << "distance X: " << distanceX << std::endl;
+	std::cout << "distance Y: " << distanceY << std::endl;
 }

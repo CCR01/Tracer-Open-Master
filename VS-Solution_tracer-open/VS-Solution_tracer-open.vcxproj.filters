@@ -112,6 +112,8 @@
     <ClCompile Include="..\Analyse\RayFan.cpp" />
     <ClCompile Include="..\benchmark\testQwtPlots\testRayFanQwtPlot.cpp" />
     <ClCompile Include="..\Plot\PlotQwt.cpp" />
+    <ClCompile Include="..\benchmark\Optikkreis\Optikkreis.cpp" />
+    <ClCompile Include="..\oftenUseNamespace\oftenUseNamespace.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Analyse\CardinalPoints.h" />
@@ -231,5 +233,7 @@
     <ClInclude Include="..\Analyse\RayFan.h" />
     <ClInclude Include="..\benchmark\testQwtPlots\testRayFanQwtPlot.h" />
     <ClInclude Include="..\Plot\PlotQwt.h" />
+    <ClInclude Include="..\benchmark\Optikkreis\Optikkreis.h" />
+    <ClInclude Include="..\oftenUseNamespace\oftenUseNamespace.h" />
   </ItemGroup>
 </Project>

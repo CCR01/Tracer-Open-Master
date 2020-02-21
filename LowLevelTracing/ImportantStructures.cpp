@@ -317,7 +317,6 @@ real VectorStructR2::getY() const
 	return mY;
 }
 
-/*CR*/
 // ---
 twoVaulesReal::twoVaulesReal() {};
 twoVaulesReal::twoVaulesReal(real val_1, real val_2) :

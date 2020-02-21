@@ -1,37 +1,19 @@
-﻿  main_LLT.cpp
+﻿  BenchmarkRayAiming.cpp
 c:\tracer-open-master\lowleveltracing\importantstructures.h(69): warning C4227: anachronism used: qualifiers on reference are ignored
 c:\tracer-open-master\lowleveltracing\importantstructures.h(73): warning C4227: anachronism used: qualifiers on reference are ignored
 c:\tracer-open-master\lowleveltracing\importantstructures.h(93): warning C4227: anachronism used: qualifiers on reference are ignored
 c:\tracer-open-master\lowleveltracing\importantstructures.h(108): warning C4227: anachronism used: qualifiers on reference are ignored
 c:\tracer-open-master\lowleveltracing\importantstructures.h(134): warning C4227: anachronism used: qualifiers on reference are ignored
-c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.h(18): warning C4227: anachronism used: qualifiers on reference are ignored
-c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.h(19): warning C4227: anachronism used: qualifiers on reference are ignored
-c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.h(20): warning C4227: anachronism used: qualifiers on reference are ignored
-c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.h(21): warning C4227: anachronism used: qualifiers on reference are ignored
-c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\corecrt_math_defines.h(17): warning C4005: 'M_E': macro redefinition
-  c:\tracer-open-master\qt\include\qtcore\qmath.h(155): note: see previous definition of 'M_E'
-c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\corecrt_math_defines.h(18): warning C4005: 'M_LOG2E': macro redefinition
-  c:\tracer-open-master\qt\include\qtcore\qmath.h(159): note: see previous definition of 'M_LOG2E'
-c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\corecrt_math_defines.h(19): warning C4005: 'M_LOG10E': macro redefinition
-  c:\tracer-open-master\qt\include\qtcore\qmath.h(163): note: see previous definition of 'M_LOG10E'
-c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\corecrt_math_defines.h(20): warning C4005: 'M_LN2': macro redefinition
-  c:\tracer-open-master\qt\include\qtcore\qmath.h(167): note: see previous definition of 'M_LN2'
-c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\corecrt_math_defines.h(21): warning C4005: 'M_LN10': macro redefinition
-  c:\tracer-open-master\qt\include\qtcore\qmath.h(171): note: see previous definition of 'M_LN10'
-c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\corecrt_math_defines.h(22): warning C4005: 'M_PI': macro redefinition
-  c:\tracer-open-master\qt\include\qtcore\qmath.h(175): note: see previous definition of 'M_PI'
-c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\corecrt_math_defines.h(23): warning C4005: 'M_PI_2': macro redefinition
-  c:\tracer-open-master\qt\include\qtcore\qmath.h(179): note: see previous definition of 'M_PI_2'
-c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\corecrt_math_defines.h(24): warning C4005: 'M_PI_4': macro redefinition
-  c:\tracer-open-master\qt\include\qtcore\qmath.h(183): note: see previous definition of 'M_PI_4'
-c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\corecrt_math_defines.h(25): warning C4005: 'M_1_PI': macro redefinition
-  c:\tracer-open-master\qt\include\qtcore\qmath.h(187): note: see previous definition of 'M_1_PI'
-c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\corecrt_math_defines.h(26): warning C4005: 'M_2_PI': macro redefinition
-  c:\tracer-open-master\qt\include\qtcore\qmath.h(191): note: see previous definition of 'M_2_PI'
-c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\corecrt_math_defines.h(27): warning C4005: 'M_2_SQRTPI': macro redefinition
-  c:\tracer-open-master\qt\include\qtcore\qmath.h(195): note: see previous definition of 'M_2_SQRTPI'
-c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\corecrt_math_defines.h(28): warning C4005: 'M_SQRT2': macro redefinition
-  c:\tracer-open-master\qt\include\qtcore\qmath.h(199): note: see previous definition of 'M_SQRT2'
-c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\corecrt_math_defines.h(29): warning C4005: 'M_SQRT1_2': macro redefinition
-  c:\tracer-open-master\qt\include\qtcore\qmath.h(203): note: see previous definition of 'M_SQRT1_2'
+c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.h(42): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.h(45): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.h(46): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.h(47): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.cpp(1823): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.cpp(1857): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.cpp(1870): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.cpp(1894): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.cpp(1945): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.cpp(1954): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.cpp(1955): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.cpp(1992): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
   VS-Solution_tracer-open.vcxproj -> C:\Tracer-Open-Master\VS-Solution_tracer-open\x64\Debug\VS-Solution_tracer-open.exe

@@ -238,9 +238,9 @@ bool BenchmarkSequentialRayTracing::checkMethodesElement()
 	//	std::cout << RMSvalue << std::endl;
 	//	std::cout << geoRadius << std::endl;
 
-	bool checkRMSvalue1 = Math::compareTwoNumbers(RMSvalue1, 0.249246, 6);
+	bool checkRMSvalue1 = Math::compareTwoNumbers_decimals(RMSvalue1, 0.249246, 6);
 	workTheSystem.push_back(checkRMSvalue1);
-	bool checkGeoRadius1 = Math::compareTwoNumbers(geoRadius1, 0.419460, 6);
+	bool checkGeoRadius1 = Math::compareTwoNumbers_decimals(geoRadius1, 0.419460, 6);
 	workTheSystem.push_back(checkGeoRadius1);
 	// *****************************************************************************************************************
 	// *****************************************************************************************************************
@@ -291,9 +291,9 @@ bool BenchmarkSequentialRayTracing::checkMethodesElement()
 	real RMSvalueE4 = ClassSpotE4.getRMS_mm();
 	real geoRadiusE4 = ClassSpotE4.getGeoRadius();
 
-	bool checkRMSvalueE4 = Math::compareTwoNumbers(RMSvalueE4, 0.183559, 6);
+	bool checkRMSvalueE4 = Math::compareTwoNumbers_decimals(RMSvalueE4, 0.183559, 6);
 	workTheSystem.push_back(checkRMSvalueE4);
-	bool checkGeoRadiusE4 = Math::compareTwoNumbers(geoRadiusE4, 0.241762, 6);
+	bool checkGeoRadiusE4 = Math::compareTwoNumbers_decimals(geoRadiusE4, 0.241762, 6);
 	workTheSystem.push_back(checkGeoRadiusE4);
 
 
@@ -370,9 +370,9 @@ bool BenchmarkSequentialRayTracing::checkMethodesElement()
 	real RMSvalueE5 = ClassSpotE5.getRMS_mm();
 	real geoRadiusE5 = ClassSpotE5.getGeoRadius();
 
-	bool checkRMSvalueE5 = Math::compareTwoNumbers(RMSvalueE5, 0.533412, 6);
+	bool checkRMSvalueE5 = Math::compareTwoNumbers_decimals(RMSvalueE5, 0.533412, 6);
 	workTheSystem.push_back(checkRMSvalueE5);
-	bool checkGeoRadiusE5 = Math::compareTwoNumbers(geoRadiusE5, 1.57639, 5);
+	bool checkGeoRadiusE5 = Math::compareTwoNumbers_decimals(geoRadiusE5, 1.57639, 5);
 	workTheSystem.push_back(checkGeoRadiusE5);
 
 	//******************************************************************************************************************
@@ -413,36 +413,36 @@ bool BenchmarkSequentialRayTracing::checkMethodesElement()
 	// marginal ray -> y=1
 	real distance0 = SeqTraceParaxialMarg.getInterInf_PosSurface_TotalSteps_ofSur_i(0).at(0).getIntersecInfos().getStepsToWalk();
 	real checkDis0 = 40.04996879;
-	bool compDis0 = Math::compareTwoNumbers(distance0, checkDis0, 8); //8
+	bool compDis0 = Math::compareTwoNumbers_decimals(distance0, checkDis0, 8); //8
 	real distance1 = SeqTraceParaxialMarg.getInterInf_PosSurface_TotalSteps_ofSur_i(1).at(0).getIntersecInfos().getStepsToWalk();
 	real checkDis1 = 5.00007715990;
-	bool compDis1 = Math::compareTwoNumbers(distance1, checkDis1, 8); //8
+	bool compDis1 = Math::compareTwoNumbers_decimals(distance1, checkDis1, 8); //8
 	real distance2 = SeqTraceParaxialMarg.getInterInf_PosSurface_TotalSteps_ofSur_i(2).at(0).getIntersecInfos().getStepsToWalk();
 	real checkDis2 = 21.25636257;
-	bool compDis2 = Math::compareTwoNumbers(distance2, checkDis2, 6); //6
+	bool compDis2 = Math::compareTwoNumbers_decimals(distance2, checkDis2, 6); //6
 	real distance3 = SeqTraceParaxialMarg.getInterInf_PosSurface_TotalSteps_ofSur_i(3).at(0).getIntersecInfos().getStepsToWalk();
 	real checkDis3 = 17.8881988;
-	bool compDis3 = Math::compareTwoNumbers(distance3, checkDis3, 8); //6
+	bool compDis3 = Math::compareTwoNumbers_decimals(distance3, checkDis3, 8); //6
 	real sumDisMargY1 = distance0 + distance1 + distance2 + distance3;
 	real checkSumY1 = 84.19460731990;
-	bool compSum = Math::compareTwoNumbers(sumDisMargY1, checkSumY1, 7); //7
+	bool compSum = Math::compareTwoNumbers_decimals(sumDisMargY1, checkSumY1, 7); //7
 	workTheSystem.push_back(compSum);
 																		 // opt achs ray -> y=0
 	real distance0OA = SeqTraceParaxialOptAch.getInterInf_PosSurface_TotalSteps_ofSur_i(0).at(0).getIntersecInfos().getStepsToWalk();
 	real checkDis0OA = 40.0;
-	bool compDis0OA = Math::compareTwoNumbers(distance0OA, checkDis0OA, 8); //8
+	bool compDis0OA = Math::compareTwoNumbers_decimals(distance0OA, checkDis0OA, 8); //8
 	real distance1OA = SeqTraceParaxialOptAch.getInterInf_PosSurface_TotalSteps_ofSur_i(1).at(0).getIntersecInfos().getStepsToWalk();
 	real checkDis1OA = 5.0;
-	bool compDis1OA = Math::compareTwoNumbers(distance1OA, checkDis1OA, 8); //8
+	bool compDis1OA = Math::compareTwoNumbers_decimals(distance1OA, checkDis1OA, 8); //8
 	real distance2OA = SeqTraceParaxialOptAch.getInterInf_PosSurface_TotalSteps_ofSur_i(2).at(0).getIntersecInfos().getStepsToWalk();
 	real checkDis2OA = 21.15942029;
-	bool compDis2OA = Math::compareTwoNumbers(distance2OA, checkDis2OA, 6); //6
+	bool compDis2OA = Math::compareTwoNumbers_decimals(distance2OA, checkDis2OA, 6); //6
 	real distance3OA = SeqTraceParaxialOptAch.getInterInf_PosSurface_TotalSteps_ofSur_i(3).at(0).getIntersecInfos().getStepsToWalk();
 	real checkDis3OA = 17.8881987580;
-	bool compDis3OA = Math::compareTwoNumbers(distance3OA, checkDis3OA, 7); //7
+	bool compDis3OA = Math::compareTwoNumbers_decimals(distance3OA, checkDis3OA, 7); //7
 	real sumDisMargY1OA = distance0OA + distance1OA + distance2OA + distance3OA;
 	real checkSumOA = 84.047619048;
-	bool compSumOA = Math::compareTwoNumbers(sumDisMargY1OA, checkSumOA, 6); //6
+	bool compSumOA = Math::compareTwoNumbers_decimals(sumDisMargY1OA, checkSumOA, 6); //6
 	workTheSystem.push_back(compSumOA);
 
 	//******************************************************************************************************************

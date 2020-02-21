@@ -13,7 +13,7 @@ public:
 	bool testRayTracingQwtPlotE0();
 	bool testRayTracingQwtPlotE1();
 	bool testRayTracingQwtPlotE2();
-
+	bool testRayTracingQwtPlotE3();
 
 
 private:

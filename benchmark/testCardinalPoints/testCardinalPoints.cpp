@@ -100,17 +100,17 @@ bool testCardinalPoints::testCalcCardinalPointsE0()
 	real mEXPD_calc = calcCardinalPointsE0.getExitPupilDiameter();
 	real mMag_calc = calcCardinalPointsE0.getMagnification();
 
-	bool checkEFL = Math::compareTwoNumbers(mEFL_ref, mEFL_calc, 4);
+	bool checkEFL = Math::compareTwoNumbers_decimals(mEFL_ref, mEFL_calc, 4);
 	checkE0_vecBool.push_back(checkEFL);
-	bool checkPP = Math::compareTwoNumbers(mPP_ref, mPP_calc, 4);
+	bool checkPP = Math::compareTwoNumbers_decimals(mPP_ref, mPP_calc, 4);
 	checkE0_vecBool.push_back(checkPP);
-	bool checkAntiPP = Math::compareTwoNumbers(mAntiPP_ref, mAntiPP_calc, 4);
+	bool checkAntiPP = Math::compareTwoNumbers_decimals(mAntiPP_ref, mAntiPP_calc, 4);
 	checkE0_vecBool.push_back(checkAntiPP);
-	bool checkEXPP = Math::compareTwoNumbers(mEXPP_accordingToLastSurface_ref, mEXPP_accordingToLastSurface_calc, 4);
+	bool checkEXPP = Math::compareTwoNumbers_decimals(mEXPP_accordingToLastSurface_ref, mEXPP_accordingToLastSurface_calc, 4);
 	checkE0_vecBool.push_back(checkEXPP);
-	bool checkEXPD = Math::compareTwoNumbers(mEXPD_ref, mEXPD_calc, 4);
+	bool checkEXPD = Math::compareTwoNumbers_decimals(mEXPD_ref, mEXPD_calc, 4);
 	checkE0_vecBool.push_back(checkEXPD);
-	bool checkMag = Math::compareTwoNumbers(mMag_ref, mMag_calc, 4);
+	bool checkMag = Math::compareTwoNumbers_decimals(mMag_ref, mMag_calc, 4);
 	checkE0_vecBool.push_back(checkMag);
 
 
@@ -172,17 +172,17 @@ bool testCardinalPoints::testCalcCardinalPointsE1()
 	real mEXPD_calc = calcCardinalPointsE1.getExitPupilDiameter();
 	real mMag_calc = calcCardinalPointsE1.getMagnification();
 
-	bool checkEFL = Math::compareTwoNumbers(mEFL_ref, mEFL_calc, 4);
+	bool checkEFL = Math::compareTwoNumbers_decimals(mEFL_ref, mEFL_calc, 4);
 	checkE1_vecBool.push_back(checkEFL);
-	bool checkPP = Math::compareTwoNumbers(mPP_ref, mPP_calc, 4);
+	bool checkPP = Math::compareTwoNumbers_decimals(mPP_ref, mPP_calc, 4);
 	checkE1_vecBool.push_back(checkPP);
-	bool checkAntiPP = Math::compareTwoNumbers(mAntiPP_ref, mAntiPP_calc, 4);
+	bool checkAntiPP = Math::compareTwoNumbers_decimals(mAntiPP_ref, mAntiPP_calc, 4);
 	checkE1_vecBool.push_back(checkAntiPP);
-	bool checkEXPP = Math::compareTwoNumbers(mEXPP_accordingToLastSurface_ref, mEXPP_accordingToLastSurface_calc, 4);
+	bool checkEXPP = Math::compareTwoNumbers_decimals(mEXPP_accordingToLastSurface_ref, mEXPP_accordingToLastSurface_calc, 4);
 	checkE1_vecBool.push_back(checkEXPP);
-	bool checkEXPD = Math::compareTwoNumbers(mEXPD_ref, mEXPD_calc, 4);
+	bool checkEXPD = Math::compareTwoNumbers_decimals(mEXPD_ref, mEXPD_calc, 4);
 	checkE1_vecBool.push_back(checkEXPD);
-	bool checkMag = Math::compareTwoNumbers(mMag_ref, mMag_calc, 4);
+	bool checkMag = Math::compareTwoNumbers_decimals(mMag_ref, mMag_calc, 4);
 	checkE1_vecBool.push_back(checkMag);
 
 
@@ -257,17 +257,17 @@ bool testCardinalPoints::testCalcCardinalPointsE2()
 	real mEXPD_calc = calcCardinalPointsE2.getExitPupilDiameter();
 	real mMag_calc = calcCardinalPointsE2.getMagnification();
 
-	bool checkEFL = Math::compareTwoNumbers(mEFL_ref, mEFL_calc, 4);
+	bool checkEFL = Math::compareTwoNumbers_decimals(mEFL_ref, mEFL_calc, 4);
 	checkE2_vecBool.push_back(checkEFL);
-	bool checkPP = Math::compareTwoNumbers(mPP_ref, mPP_calc, 4);
+	bool checkPP = Math::compareTwoNumbers_decimals(mPP_ref, mPP_calc, 4);
 	checkE2_vecBool.push_back(checkPP);
-	bool checkAntiPP = Math::compareTwoNumbers(mAntiPP_ref, mAntiPP_calc, 4);
+	bool checkAntiPP = Math::compareTwoNumbers_decimals(mAntiPP_ref, mAntiPP_calc, 4);
 	checkE2_vecBool.push_back(checkAntiPP);
-	bool checkEXPP = Math::compareTwoNumbers(mEXPP_accordingToLastSurface_ref, mEXPP_accordingToLastSurface_calc, 4);
+	bool checkEXPP = Math::compareTwoNumbers_decimals(mEXPP_accordingToLastSurface_ref, mEXPP_accordingToLastSurface_calc, 4);
 	checkE2_vecBool.push_back(checkEXPP);
-	bool checkEXPD = Math::compareTwoNumbers(mEXPD_ref, mEXPD_calc, 4);
+	bool checkEXPD = Math::compareTwoNumbers_decimals(mEXPD_ref, mEXPD_calc, 4);
 	checkE2_vecBool.push_back(checkEXPD);
-	bool checkMag = Math::compareTwoNumbers(mMag_ref, mMag_calc, 4);
+	bool checkMag = Math::compareTwoNumbers_decimals(mMag_ref, mMag_calc, 4);
 	checkE2_vecBool.push_back(checkMag);
 
 	bool checkE2 = Math::checkTrueOfVectorElements(checkE2_vecBool);
@@ -340,17 +340,17 @@ bool testCardinalPoints::testCalcCardinalPointsE3()
 	real mEXPD_calc = calcCardinalPointsE3.getExitPupilDiameter();
 	real mMag_calc = calcCardinalPointsE3.getMagnification();
 
-	bool checkEFL = Math::compareTwoNumbers(mEFL_ref, mEFL_calc, 4);
+	bool checkEFL = Math::compareTwoNumbers_decimals(mEFL_ref, mEFL_calc, 4);
 	checkE3_vecBool.push_back(checkEFL);
-	bool checkPP = Math::compareTwoNumbers(mPP_ref, mPP_calc, 4);
+	bool checkPP = Math::compareTwoNumbers_decimals(mPP_ref, mPP_calc, 4);
 	checkE3_vecBool.push_back(checkPP);
-	bool checkAntiPP = Math::compareTwoNumbers(mAntiPP_ref, mAntiPP_calc, 4);
+	bool checkAntiPP = Math::compareTwoNumbers_decimals(mAntiPP_ref, mAntiPP_calc, 4);
 	checkE3_vecBool.push_back(checkAntiPP);
-	bool checkEXPP = Math::compareTwoNumbers(mEXPP_accordingToLastSurface_ref, mEXPP_accordingToLastSurface_calc, 4);
+	bool checkEXPP = Math::compareTwoNumbers_decimals(mEXPP_accordingToLastSurface_ref, mEXPP_accordingToLastSurface_calc, 4);
 	checkE3_vecBool.push_back(checkEXPP);
-	bool checkEXPD = Math::compareTwoNumbers(mEXPD_ref, mEXPD_calc, 4);
+	bool checkEXPD = Math::compareTwoNumbers_decimals(mEXPD_ref, mEXPD_calc, 4);
 	checkE3_vecBool.push_back(checkEXPD);
-	bool checkMag = Math::compareTwoNumbers(mMag_ref, mMag_calc, 4);
+	bool checkMag = Math::compareTwoNumbers_decimals(mMag_ref, mMag_calc, 4);
 	checkE3_vecBool.push_back(checkMag);
 
 

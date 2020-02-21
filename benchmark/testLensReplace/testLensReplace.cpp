@@ -82,7 +82,7 @@ bool testLensReplace::testLensReplace_E0()
 	Spot spotE0(seqTraceE0.getAllInterPointsAtSurf_i(3),/*reference point*/ seqTraceE0.getAllInterPointsAtSurf_i(3)[0]);
 	real rmsZemax_E0 = 1476.21;
 	real rmsTOM_E0 = spotE0.getRMS_µm();
-	bool checkerSystem_E0 = Math::compareTwoNumbers(rmsTOM_E0, rmsZemax_E0, 0);
+	bool checkerSystem_E0 = Math::compareTwoNumbers_decimals(rmsTOM_E0, rmsZemax_E0, 0);
 	workLensReplace_E0.push_back(checkerSystem_E0);
 	// *** *** //
 
@@ -90,7 +90,7 @@ bool testLensReplace::testLensReplace_E0()
 	LensReplace lensReplace;
 	real focalLengthTOM = lensReplace.calcFocalLenghtOptSys(OptSysE0);
 	real focalLengthZemax = 18.7599;
-	bool checkCalcFocalLength = Math::compareTwoNumbers(focalLengthTOM, focalLengthZemax, 3);
+	bool checkCalcFocalLength = Math::compareTwoNumbers_decimals(focalLengthTOM, focalLengthZemax, 3);
 	workLensReplace_E0.push_back(checkCalcFocalLength);
 
 	// only the optical system (achromatic lens)
@@ -102,14 +102,14 @@ bool testLensReplace::testLensReplace_E0()
 	// check thickness
 	real thicknessTOM = lensReplace.calculateThickness_Z(Achromat_E0);
 	real thicknessZemax = 7.0;
-	bool checkCalcThickness_E0 = Math::compareTwoNumbers(thicknessTOM, thicknessZemax, 3);
+	bool checkCalcThickness_E0 = Math::compareTwoNumbers_decimals(thicknessTOM, thicknessZemax, 3);
 	workLensReplace_E0.push_back(checkCalcThickness_E0);
 
 
 	// check calc heihest semi height
 	real semiHeightTOM = lensReplace.calcMaxSemiHeigh(Achromat_E0);
 	real semiHeightZemax = 5.0;
-	bool checkCalcHeighestSemiHeitght_E0 = Math::compareTwoNumbers(semiHeightTOM, semiHeightZemax, 3);
+	bool checkCalcHeighestSemiHeitght_E0 = Math::compareTwoNumbers_decimals(semiHeightTOM, semiHeightZemax, 3);
 	workLensReplace_E0.push_back(checkCalcHeighestSemiHeitght_E0);
 
 
@@ -161,7 +161,7 @@ bool testLensReplace::testLensReplace_E1()
 	seqTraceE1_single.sequentialRayTracing(lightRayE0);
 	VectorStructR3 interPointZemax{ 0.0,-0.025229984226,105.91112797 };
 	VectorStructR3 interPointTOM = seqTraceE1_single.getAllInterPointsAtSurf_i(13)[0];
-	bool checkSingRayTrace_E1 = Math::compareTwoVectorStructR3(interPointZemax, interPointTOM, 3);
+	bool checkSingRayTrace_E1 = Math::compareTwoVectorStructR3_decimals(interPointZemax, interPointTOM, 3);
 	workLensReplace_E1.push_back(checkSingRayTrace_E1);
 
 	// test rms
@@ -171,7 +171,7 @@ bool testLensReplace::testLensReplace_E1()
 	Spot spotE1(seqTraceE1.getAllInterPointsAtSurf_i(13),/*reference point*/ seqTraceE1.getAllInterPointsAtSurf_i(13)[0]);
 	real rmsZemax_E1 = 16.160;
 	real rmsTOM_E1 = spotE1.getRMS_µm();
-	bool checkerSystem_E1 = Math::compareTwoNumbers(rmsTOM_E1, rmsZemax_E1, 0);
+	bool checkerSystem_E1 = Math::compareTwoNumbers_decimals(rmsTOM_E1, rmsZemax_E1, 0);
 	workLensReplace_E1.push_back(checkerSystem_E1);
 	// *** *** //
 
@@ -181,22 +181,22 @@ bool testLensReplace::testLensReplace_E1()
 	// check focal lenght
 	real focalLengthTOM = lensReplace_E1.calcFocalLenghtOptSys(optSye_LLT_E1);
 	real focalLengthZemax = 24.8177;
-	bool checkCalcFocalLength_E1 = Math::compareTwoNumbers(focalLengthTOM, focalLengthZemax, 3);
+	bool checkCalcFocalLength_E1 = Math::compareTwoNumbers_decimals(focalLengthTOM, focalLengthZemax, 3);
 	workLensReplace_E1.push_back(checkCalcFocalLength_E1);
 
 	// check find lenses in opt sys
 	std::vector<OpticalSystem_LLT> lensesInOptSys_E1 = lensReplace_E1.findLensesInOptSys_LLT(optSye_LLT_E1);
 	real numSur0 = lensesInOptSys_E1[0].getPosAndInteractingSurface().size();
-	bool checkNumSur0 = Math::compareTwoNumbers(numSur0,3,0);
+	bool checkNumSur0 = Math::compareTwoNumbers_decimals(numSur0,3,0);
 	workLensReplace_E1.push_back(checkNumSur0);
 	real numSur1 = lensesInOptSys_E1[1].getPosAndInteractingSurface().size();
-	bool checkNumSur1 = Math::compareTwoNumbers(numSur1, 3, 0);
+	bool checkNumSur1 = Math::compareTwoNumbers_decimals(numSur1, 3, 0);
 	workLensReplace_E1.push_back(checkNumSur1);
 	real numSur2 = lensesInOptSys_E1[2].getPosAndInteractingSurface().size();
-	bool checkNumSur2 = Math::compareTwoNumbers(numSur2, 3, 0);
+	bool checkNumSur2 = Math::compareTwoNumbers_decimals(numSur2, 3, 0);
 	workLensReplace_E1.push_back(checkNumSur2);
 	real numSur3 = lensesInOptSys_E1[3].getPosAndInteractingSurface().size();
-	bool checkNumSur3 = Math::compareTwoNumbers(numSur3, 3, 0);
+	bool checkNumSur3 = Math::compareTwoNumbers_decimals(numSur3, 3, 0);
 	workLensReplace_E1.push_back(checkNumSur3);
 
 	// calculate parameter lenses
@@ -259,7 +259,7 @@ bool testLensReplace::testLensReplace_E2()
 	Spot spotE2(seqTraceE2.getAllInterPointsAtSurf_i(4),/*reference point*/ seqTraceE2.getAllInterPointsAtSurf_i(4)[0]);
 	real rmsZemax_E2 = 45.274;
 	real rmsTOM_E2 = spotE2.getRMS_µm();
-	bool checkerSystem_E2 = Math::compareTwoNumbers(rmsTOM_E2, rmsZemax_E2, 0);
+	bool checkerSystem_E2 = Math::compareTwoNumbers_decimals(rmsTOM_E2, rmsZemax_E2, 0);
 	workLensReplace_E2.push_back(checkerSystem_E2);
 	// *** *** //
 
@@ -281,7 +281,7 @@ bool testLensReplace::testLensReplace_E2()
 	Spot spotE2_rotate(seqTraceE2_rotate.getAllInterPointsAtSurf_i(4),/*reference point*/ seqTraceE2_rotate.getAllInterPointsAtSurf_i(4)[0]);
 	real rmsZemax_E2_rotate = 48.048;
 	real rmsTOM_E2_rotate = spotE2_rotate.getRMS_µm();
-	bool checkerSystem_E2_rotate = Math::compareTwoNumbers(rmsTOM_E2_rotate, rmsZemax_E2_rotate, 0);
+	bool checkerSystem_E2_rotate = Math::compareTwoNumbers_decimals(rmsTOM_E2_rotate, rmsZemax_E2_rotate, 0);
 	workLensReplace_E2.push_back(checkerSystem_E2_rotate);
 	// *** *** //
 

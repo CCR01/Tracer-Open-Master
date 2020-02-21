@@ -166,14 +166,14 @@ bool IOC2020_Dresden::systemFor_IOC2020_Dresten()
 	seqTraceIOC_single_replace0.sequentialRayTracing(lightRayE0_replace0);
 	VectorStructR3 interPointZemax_replace0{ 0.0,-0.0091558,51.60988 };
 	VectorStructR3 interPointTOM_replace0 = seqTraceIOC_single_replace0.getAllInterPointsAtSurf_i(7)[0];
-	bool checkSingRayTrace_IOC_replace0 = Math::compareTwoVectorStructR3(interPointZemax_replace0, interPointTOM_replace0, 3);
+	bool checkSingRayTrace_IOC_replace0 = Math::compareTwoVectorStructR3_decimals(interPointZemax_replace0, interPointTOM_replace0, 3);
 	workTheSystem_IOC2020.push_back(checkSingRayTrace_IOC_replace0);
 
 	SequentialRayTracing seqTraceReplace_replace0(/*optical system element*/ optSysEle_IOC_replace0, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, light_IOC_vec);
 	Spot spotIOC_replace0(seqTraceReplace_replace0.getAllInterPointsAtSurf_i(7),/*reference point*/ seqTraceReplace_replace0.getAllInterPointsAtSurf_i(7)[0]);
 	real rmsZemax_IOC_replace0 = 18.510;
 	real rmsTOM_IOC_replace0 = spotIOC_replace0.getRMS_µm();
-	bool checkerSystem_IOC_replace0 = Math::compareTwoNumbers(rmsTOM_IOC_replace0, rmsZemax_IOC_replace0, 2);
+	bool checkerSystem_IOC_replace0 = Math::compareTwoNumbers_decimals(rmsTOM_IOC_replace0, rmsZemax_IOC_replace0, 2);
 	workTheSystem_IOC2020.push_back(checkerSystem_IOC_replace0);
 	// *** *** //
 

@@ -55,9 +55,9 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 	double RMS_E1 = SpotValue.getRMS_mm();
 	double GEO_E1 = SpotValue.getGeoRadius();
 
-	bool checkRMSvalueE1 = Math::compareTwoNumbers(RMS_E1, 0.007607, 6);
+	bool checkRMSvalueE1 = Math::compareTwoNumbers_decimals(RMS_E1, 0.007607, 6);
 	checkParaxialLens.push_back(checkRMSvalueE1);
-	bool checkGeoRadiusE5 = Math::compareTwoNumbers(GEO_E1, 0.01, 2);
+	bool checkGeoRadiusE5 = Math::compareTwoNumbers_decimals(GEO_E1, 0.01, 2);
 	checkParaxialLens.push_back(checkGeoRadiusE5);
 
 	// *****************************************************************************************************************
@@ -123,7 +123,7 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 	Spot SpotDiaCR1(SeqTraceCR1.getAllInterPointsAtSurf_i(1), SeqTraceCR1.getAllInterPointsAtSurf_i(1).at(0));
 	real rmsCR1 = SpotDiaCR1.getRMS_mm();
 	real RMSCR1_Z = 0.030430;
-	bool checkRMS_CR1 = Math::compareTwoNumbers(rmsCR1, RMSCR1_Z, 5);
+	bool checkRMS_CR1 = Math::compareTwoNumbers_decimals(rmsCR1, RMSCR1_Z, 5);
 	checkParaxialLens.push_back(checkRMS_CR1);
 
 	SequentialRayTracing SeqTraceFieldCR1(OptSysCR1);
@@ -131,7 +131,7 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 	Spot SpotDiaFiledCR1(SeqTraceFieldCR1.getAllInterPointsAtSurf_i(1), SeqTraceFieldCR1.getAllInterPointsAtSurf_i(1).at(0));
 	real rmsFild_CR1 = SpotDiaFiledCR1.getRMS_mm();
 	real RMS_Field_CR1_Z = 0.030430;
-	bool checkFieldRMS_CR1 = Math::compareTwoNumbers(rmsFild_CR1, RMS_Field_CR1_Z, 5);
+	bool checkFieldRMS_CR1 = Math::compareTwoNumbers_decimals(rmsFild_CR1, RMS_Field_CR1_Z, 5);
 	checkParaxialLens.push_back(checkFieldRMS_CR1);
 
 	// *****************************************************************************************************************
@@ -158,7 +158,7 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 	Spot SpotDiaCR2(SeqTraceCR2.getAllInterPointsAtSurf_i(1), SeqTraceCR2.getAllInterPointsAtSurf_i(1).at(0));
 	real rmsCR2 = SpotDiaCR2.getRMS_mm();
 	real RMS_ZemaxCR2 = 0.527453;
-	bool checkRMS_CR2 = Math::compareTwoNumbers(rmsCR2, RMS_ZemaxCR2, 1);
+	bool checkRMS_CR2 = Math::compareTwoNumbers_decimals(rmsCR2, RMS_ZemaxCR2, 1);
 	checkParaxialLens.push_back(checkRMS_CR2);
 
 	SequentialRayTracing SeqTraceFieldCR2(OptSysCR2);
@@ -166,7 +166,7 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 	Spot SpotDiaFieldCR2(SeqTraceFieldCR2.getAllInterPointsAtSurf_i(1), SeqTraceFieldCR2.getAllInterPointsAtSurf_i(1).at(0));
 	real rmsFild_CR2 = SpotDiaFieldCR2.getRMS_mm();
 	real RMS_ZemaxFieldCR2 = 0.527453;
-	bool checkFieldRMS_CR2 = Math::compareTwoNumbers(rmsFild_CR2, RMS_ZemaxFieldCR2, 1);
+	bool checkFieldRMS_CR2 = Math::compareTwoNumbers_decimals(rmsFild_CR2, RMS_ZemaxFieldCR2, 1);
 	checkParaxialLens.push_back(checkFieldRMS_CR2);
 
 
@@ -188,7 +188,7 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 	Spot SpotDiaCR3(SeqTraceCR3.getAllInterPointsAtSurf_i(1), SeqTraceCR3.getAllInterPointsAtSurf_i(1).at(0));
 	real rmsCR3 = SpotDiaCR3.getRMS_mm();
 	real RMS_ZemaxCR3 = 0.775965;
-	bool checkRMS_CR3 = Math::compareTwoNumbers(rmsCR3, RMS_ZemaxCR3, 1);
+	bool checkRMS_CR3 = Math::compareTwoNumbers_decimals(rmsCR3, RMS_ZemaxCR3, 1);
 	checkParaxialLens.push_back(checkRMS_CR3);
 
 	// *****************************************************************************************************************

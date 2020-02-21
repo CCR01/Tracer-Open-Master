@@ -79,20 +79,20 @@ bool TestGlobalOPD::checkMethodesGlobalOPD()
 	//check if the system works 
 	IntersectInformationStruct interInfosPoint0 = seqTraceE0_single.getAllInterInfosOfSurf_i(5).at(0);
 	VectorStructR3 checkInterPoint0 = { 0.0,-3.0317900054E-003,91.0 };
-	bool checkcheckInterP0 = Math::compareTwoVectorStructR3(interInfosPoint0.getIntersectionPoint(), checkInterPoint0, 6);
+	bool checkcheckInterP0 = Math::compareTwoVectorStructR3_decimals(interInfosPoint0.getIntersectionPoint(), checkInterPoint0, 6);
 	workTheSystem.push_back(checkcheckInterP0);
 	IntersectInformationStruct interInfosPoint1 = seqTraceE0_single.getAllInterInfosOfSurf_i(5).at(1);
 	VectorStructR3 checkInterPoint1 = { 0.0,-1.8961760243E-003,91.0 };
-	bool checkcheckInterP1 = Math::compareTwoVectorStructR3(interInfosPoint1.getIntersectionPoint(), checkInterPoint1, 6);
+	bool checkcheckInterP1 = Math::compareTwoVectorStructR3_decimals(interInfosPoint1.getIntersectionPoint(), checkInterPoint1, 6);
 	workTheSystem.push_back(checkcheckInterP1);
 	IntersectInformationStruct interInfosPoint2 = seqTraceE0_single.getAllInterInfosOfSurf_i(5).at(2);
 	VectorStructR3 checkInterPoint2 = { 3.0317900054E-003,0.0,91.0 };
 	VectorStructR3 interPoint2 = interInfosPoint2.getIntersectionPoint();
-	bool checkcheckInterP2 = Math::compareTwoVectorStructR3(interPoint2, checkInterPoint2, 5);
+	bool checkcheckInterP2 = Math::compareTwoVectorStructR3_decimals(interPoint2, checkInterPoint2, 5);
 	workTheSystem.push_back(checkcheckInterP2);
 	IntersectInformationStruct interInfosPoint3 = seqTraceE0_single.getAllInterInfosOfSurf_i(5).at(3);
 	VectorStructR3 checkInterPoint3 = { 7.6245887800E-004,7.6245887800E-004,91.0 };
-	bool checkcheckInterP3 = Math::compareTwoVectorStructR3(interInfosPoint3.getIntersectionPoint(), checkInterPoint3, 6);
+	bool checkcheckInterP3 = Math::compareTwoVectorStructR3_decimals(interInfosPoint3.getIntersectionPoint(), checkInterPoint3, 6);
 	workTheSystem.push_back(checkcheckInterP3);
 
 

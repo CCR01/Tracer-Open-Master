@@ -75,7 +75,7 @@ bool BenchmarkOpticalPathDifference::checkMethodesOPD()
 
 	real sumOPDPy1 = distance0 + distance1 + distance2 + distance3;
 	real OPDPy1sys = SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(3).at(0).getTotalSteps();
-	bool checkOPDPy = Math::compareTwoNumbers(sumOPDPy1, OPDPy1sys, 7);
+	bool checkOPDPy = Math::compareTwoNumbers_decimals(sumOPDPy1, OPDPy1sys, 7);
 	checkOPD.push_back(checkOPDPy);
 	//**********************************************************************************************
 
@@ -89,7 +89,7 @@ bool BenchmarkOpticalPathDifference::checkMethodesOPD()
 
 	real sumOPDoptAx = distance0OA + distance1OA + distance2OA + distance3OA;
 	real OPDoptAxSys = SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(3).at(0).getTotalSteps();
-	bool checkOPDoptAx = Math::compareTwoNumbers(sumOPDoptAx, OPDoptAxSys, 7);
+	bool checkOPDoptAx = Math::compareTwoNumbers_decimals(sumOPDoptAx, OPDoptAxSys, 7);
 	checkOPD.push_back(checkOPDoptAx);
 
 
@@ -99,11 +99,11 @@ bool BenchmarkOpticalPathDifference::checkMethodesOPD()
 	//**********************************************************************************************
 	real OPDPy1 = (sumOPDoptAx - sumOPDPy1) * 1000; //µm
 	//**********************************************************************************************
-	bool checkOPDPy1 = Math::compareTwoNumbers(OPDPy1, -96.1683399876, 3);
+	bool checkOPDPy1 = Math::compareTwoNumbers_decimals(OPDPy1, -96.1683399876, 3);
 	//**********************************************************************************************
 	real OPDYHalf = (sumOPDoptAx - sumOPD_Py_Half) * 1000; //µm
 	 //**********************************************************************************************
-	bool checkOPDYHalf = Math::compareTwoNumbers(OPDYHalf, -20.71933545669, 4);
+	bool checkOPDYHalf = Math::compareTwoNumbers_decimals(OPDYHalf, -20.71933545669, 4);
 	//**********************************************************************************************
 	std::vector<LightRayStruct> lightRayAlong_YE1 = SequentialRayTracing::lightRayAlongY({ 0.0,0.0,0.0 }, 21, 20, -1, +1, 550, 1.0);
 	SeqTrac1.clearAllTracedRays();

@@ -20,8 +20,8 @@
 //QwtPlot
 #include "..\Plot\PlotQwt.h"
 
-TOM_LOGO::TOM_LOGO(){}
-TOM_LOGO::~TOM_LOGO(){}
+TOM_LOGO::TOM_LOGO() {}
+TOM_LOGO::~TOM_LOGO() {}
 
 bool TOM_LOGO::plotTOM_Logo()
 {
@@ -29,14 +29,14 @@ bool TOM_LOGO::plotTOM_Logo()
 	typedef std::shared_ptr<InteractionRay_LLT> interactionLLT_ptr;
 
 	std::vector<bool> checkPlotTOM;
-	
+
 	// interactions
 	DoNothingInteraction_LLT doNothing;
 	Absorb_LLT absorb;
 	ReflectionRay_LLT reflect;
 
-	ApertureStop_LLT A0(/*semi height*/ 8.0, /*point*/{ 0.0,0.0,5.0 }, /*direction*/{ 0.0,0.0,1.0}, /*refractive index*/ 1.0);
-	ParaxialLens_LLT P1(/*semi height*/ 10.5, /*point*/{ 0.0,0.0,6.0 }, /*direction*/{ 0.0,0.0,1.0}, /*focal length*/ 6.0, /*refractive index A*/ 1.0, /*refractive index B*/ 1.0);
+	ApertureStop_LLT A0(/*semi height*/ 8.0, /*point*/{ 0.0,0.0,5.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index*/ 1.0);
+	ParaxialLens_LLT P1(/*semi height*/ 10.5, /*point*/{ 0.0,0.0,6.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*focal length*/ 6.0, /*refractive index A*/ 1.0, /*refractive index B*/ 1.0);
 	PlanGeometry_LLT M2(/*semi height*/ 10.5, /*point*/{ 0.0,0.0,106.0 },/*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/1.0, /*refractive index B*/ 1.0);
 	PlanGeometry_LLT M3(/*semi height*/ 14.5, /*point*/{ 0.0,0.0,56.0 },/*direction*/{ 0.0,-1.0,1.0 }, /*refractive index A*/1.0, /*refractive index B*/ 1.0);
 	PlanGeometry_LLT M4(/*semi height*/ 10.5, /*point*/{ 0.0,-110.0,56.0 },/*direction*/{ 0.0,1.0,0.0 }, /*refractive index A*/1.0, /*refractive index B*/ 1.0);
@@ -62,7 +62,7 @@ bool TOM_LOGO::plotTOM_Logo()
 	DeflectedRayParaxialLens_LLT deflectRay_P7(P7.getInfosForDefelction());
 	DeflectedRayParaxialLens_LLT deflectRay_P12(P12.getInfosForDefelction());
 	DeflectedRayParaxialLens_LLT deflectRay_P13(P13.getInfosForDefelction());
-	   
+
 
 	// vector with surfaces
 	std::vector<surfaceLLT_ptr> surfaces_vec{ A0.clone(),P1.clone(),M2.clone(),M3.clone(),M4.clone(),M5.clone(),P6.clone(),P7.clone(),M8.clone(),M9.clone(),
@@ -73,7 +73,7 @@ bool TOM_LOGO::plotTOM_Logo()
 
 	// optical system LLT
 	OpticalSystem_LLT optSysTOM_LLT(surfaces_vec, interaction_vec);
-	
+
 	// check by single ray trace
 	JonesVector_LLT polarisation;
 	typeLight lightType = typeLightRay;
@@ -88,7 +88,7 @@ bool TOM_LOGO::plotTOM_Logo()
 	seqTrace_optA.sequentialRayTracing(lightRay_optA);
 	VectorStructR3 rayOptA_Zemax_optA = { 0.0,-110.0,359.42533317 };
 	VectorStructR3 rayOptA_TOM_optA = seqTrace_optA.getAllInterPointsAtSurf_i(19)[0];
-	bool checkRayOptA = Math::compareTwoVectorStructR3(rayOptA_Zemax_optA, rayOptA_TOM_optA, 3);
+	bool checkRayOptA = Math::compareTwoVectorStructR3_decimals(rayOptA_Zemax_optA, rayOptA_TOM_optA, 3);
 	checkPlotTOM.push_back(checkRayOptA);
 
 	// field y=0.01
@@ -98,7 +98,7 @@ bool TOM_LOGO::plotTOM_Logo()
 	seqTrace_field1.sequentialRayTracing(lightRay_field1);
 	VectorStructR3 rayOptA_Zemax_field1 = { 0.0,-110.0,371.29649984 };
 	VectorStructR3 rayOptA_TOM_field1 = seqTrace_field1.getAllInterPointsAtSurf_i(19)[0];
-	bool checkRayField1 = Math::compareTwoVectorStructR3(rayOptA_Zemax_field1, rayOptA_TOM_field1, 3);
+	bool checkRayField1 = Math::compareTwoVectorStructR3_decimals(rayOptA_Zemax_field1, rayOptA_TOM_field1, 3);
 	checkPlotTOM.push_back(checkRayField1);
 
 	// field y=-0.01
@@ -108,15 +108,15 @@ bool TOM_LOGO::plotTOM_Logo()
 	seqTrace_field2.sequentialRayTracing(lightRay_field2);
 	VectorStructR3 rayOptA_Zemax_field2 = { 0.0,-110.0,347.55416651 };
 	VectorStructR3 rayOptA_TOM_field2 = seqTrace_field2.getAllInterPointsAtSurf_i(19)[0];
-	bool checkRayfield2 = Math::compareTwoVectorStructR3(rayOptA_Zemax_field2, rayOptA_TOM_field2, 3);
+	bool checkRayfield2 = Math::compareTwoVectorStructR3_decimals(rayOptA_Zemax_field2, rayOptA_TOM_field2, 3);
 	checkPlotTOM.push_back(checkRayfield2);
 	// *** *** //
 
 	// plot the system
 	// build optical system
 
-	optSysTOM_LLT.fillVectorToPlot2DQwt(0,A0.getPointerPlotUp());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(1,A0.getPointerPlotDown());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(0, A0.getPointerPlotUp());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(1, A0.getPointerPlotDown());
 	optSysTOM_LLT.fillVectorToPlot2DQwt(2, P1.getPointerPlot());
 	optSysTOM_LLT.fillVectorToPlot2DQwt(3, M2.getPointerPlot());
 	optSysTOM_LLT.fillVectorToPlot2DQwt(4, M3.getPointerPlot());
@@ -125,27 +125,27 @@ bool TOM_LOGO::plotTOM_Logo()
 	optSysTOM_LLT.fillVectorToPlot2DQwt(7, P6.getPointerPlot());
 	optSysTOM_LLT.fillVectorToPlot2DQwt(8, P7.getPointerPlot());
 	optSysTOM_LLT.fillVectorToPlot2DQwt(9, M8.getPointerPlot());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(10,M9.getPointerPlot());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(11,M10.getPointerPlot());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(12,M11.getPointerPlot());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(13,P12.getPointerPlot());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(14,P13.getPointerPlot());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(15,M14.getPointerPlot());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(16,M15.getPointerPlot());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(17,M16.getPointerPlot());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(18,M17.getPointerPlot());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(19,M18.getPointerPlot());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(20,M19.getPointerPlot());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(10, M9.getPointerPlot());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(11, M10.getPointerPlot());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(12, M11.getPointerPlot());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(13, P12.getPointerPlot());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(14, P13.getPointerPlot());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(15, M14.getPointerPlot());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(16, M15.getPointerPlot());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(17, M16.getPointerPlot());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(18, M17.getPointerPlot());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(19, M18.getPointerPlot());
+	optSysTOM_LLT.fillVectorToPlot2DQwt(20, M19.getPointerPlot());
 
 	SequentialRayTracing SeqTraceTOM_plot2D_optachse(optSysTOM_LLT);
-	
+
 	std::vector<LightRayStruct> lightRayAlong_PlotTOM_optachse = SequentialRayTracing::lightRayAlongY({ 0.0, 0.0, 0.0 }, 7, 50.0, -70.0, 100.0, 550, 1.0);
 	SeqTraceTOM_plot2D_optachse.seqRayTracingWithVectorOfLightRays(lightRayAlong_PlotTOM_optachse);
-	
+
 	SequentialRayTracing SeqTraceTOM_plot2D_Field1(optSysTOM_LLT);
 	std::vector<LightRayStruct> lightRayAlong_PlotTOM_field1 = SequentialRayTracing::lightRayAlongY({ 0.0, -0.01, 0.0 }, 7, 50.0, -70.0, 100.0, 550, 1.0);
 	SeqTraceTOM_plot2D_Field1.seqRayTracingWithVectorOfLightRays(lightRayAlong_PlotTOM_field1);
-	
+
 	SequentialRayTracing SeqTraceTOM_plot2D_Field2(optSysTOM_LLT);
 	std::vector<LightRayStruct> lightRayAlong_PlotTOM_field2 = SequentialRayTracing::lightRayAlongY({ 0.0, 0.01, 0.0 }, 7, 50.0, -70.0, 100.0, 550, 1.0);
 	SeqTraceTOM_plot2D_Field2.seqRayTracingWithVectorOfLightRays(lightRayAlong_PlotTOM_field2);
@@ -154,8 +154,8 @@ bool TOM_LOGO::plotTOM_Logo()
 	RayTracingSystem RayTracSysTOM_LLT;
 	RayTracSysTOM_LLT.fillVectorRayTracing(&SeqTraceTOM_plot2D_optachse, { 0,0,255 });
 	RayTracSysTOM_LLT.fillVectorRayTracing(&SeqTraceTOM_plot2D_Field1, { 255,0,0 });
-	RayTracSysTOM_LLT.fillVectorRayTracing(&SeqTraceTOM_plot2D_Field2, { 80,200, 100});
-	
+	RayTracSysTOM_LLT.fillVectorRayTracing(&SeqTraceTOM_plot2D_Field2, { 80,200, 100 });
+
 	PlotParameterQwt ParameterTOM;
 
 	RayTracingQwtPlot* SysTOMPlot = new RayTracingQwtPlot(optSysTOM_LLT, RayTracSysTOM_LLT, ParameterTOM);

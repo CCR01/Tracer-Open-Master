@@ -113,6 +113,7 @@
 
 #include "..\benchmark\testQwtPlots\testRayFanQwtPlot.h"
 
+#include "..\benchmark\Optikkreis\Optikkreis.h"
 
 int main(int argc, char **argv)
 {
@@ -124,36 +125,41 @@ int main(int argc, char **argv)
 	std::vector<bool> workTheSystem;
 	// *****************************************************************************************************************
 
-	// plot TOM logo
-	TOM_LOGO tomLogo;
-    bool checkOlotLogoTOM = tomLogo.plotTOM_Logo();
-	workTheSystem.push_back(checkOlotLogoTOM);
+	//// Optikkreis
+	//Optikkreis optKreis;
+	//bool checkOptKreis = optKreis.systemForOptikkreis();
+	//workTheSystem.push_back(checkOptKreis);
+
+	//// plot TOM logo
+	//TOM_LOGO tomLogo;
+    //bool checkOlotLogoTOM = tomLogo.plotTOM_Logo();
+	//workTheSystem.push_back(checkOlotLogoTOM);
 	
-	testRayTracingQwtPlot checkRayTracingPlot;
-    bool checkCardinal_superFct_RayTracing = checkRayTracingPlot.superFuncTestRayTracingQwtPlot();
-    workTheSystem.push_back(checkCardinal_superFct_RayTracing);
+	//testRayTracingQwtPlot checkRayTracingPlot;
+	//bool checkCardinal_superFct_RayTracing = checkRayTracingPlot.superFuncTestRayTracingQwtPlot();
+	//workTheSystem.push_back(checkCardinal_superFct_RayTracing);
 
-	testRayFanQwtPlot checkRayFanPlot;
-	bool checkCardinal_superFct_RayFan = checkRayFanPlot.superFuncTestRayFanQwtPlot();
-	workTheSystem.push_back(checkCardinal_superFct_RayFan);
-
-	testSpotDiagramQwtPlot checkSpotDiagramPlot;
-	bool checkCardinal_superFct_SpotDiagram = checkSpotDiagramPlot.superFuncTestSpotDiagramQwtPlot();
-	workTheSystem.push_back(checkCardinal_superFct_SpotDiagram);
-
-	testOPDQwtPlot checkOPDPlot;
-	bool checkCardinal_superFct_OPD = checkOPDPlot.superFuncTestOPDQwtPlot();
-	workTheSystem.push_back(checkCardinal_superFct_OPD);
+	//testRayFanQwtPlot checkRayFanPlot;
+	//bool checkCardinal_superFct_RayFan = checkRayFanPlot.superFuncTestRayFanQwtPlot();
+	//workTheSystem.push_back(checkCardinal_superFct_RayFan);
+	//
+	//testSpotDiagramQwtPlot checkSpotDiagramPlot;
+	//bool checkCardinal_superFct_SpotDiagram = checkSpotDiagramPlot.superFuncTestSpotDiagramQwtPlot();
+	//workTheSystem.push_back(checkCardinal_superFct_SpotDiagram);
+	//
+	//testOPDQwtPlot checkOPDPlot;
+	//bool checkCardinal_superFct_OPD = checkOPDPlot.superFuncTestOPDQwtPlot();
+	//workTheSystem.push_back(checkCardinal_superFct_OPD);
 	
 	//// test replace lenses for IOC 2020
 	//IOC2020_Dresden system_IOC2020_Dresden;
 	//bool checkSysIOC2020 = system_IOC2020_Dresden.systemFor_IOC2020_Dresten();
 	//workTheSystem.push_back(checkSysIOC2020);
 	
-	//// RayAiming
-	//BenchmarkRayAiming checkRayAiming;
-	//bool RayAiming = checkRayAiming.checkRayAimingSuperFct();
-	//workTheSystem.push_back(RayAiming);
+	// RayAiming
+	BenchmarkRayAiming checkRayAiming;
+	bool RayAiming = checkRayAiming.checkRayAimingSuperFct();
+	workTheSystem.push_back(RayAiming);
 
 	//// lens replace
 	//testLensReplace testLensRep;
@@ -298,6 +304,7 @@ int main(int argc, char **argv)
 
 	// *****************************************************************************************************************
 	bool checker = Math::checkTrueOfVectorElements(workTheSystem);
+	std::cout << "" << std::endl;
 	if (checker == true) std::cout << "The system works perfectly\n";
 	else std::cout << "There is a fuck fuck fuck fuck fuck in the system\n" << std::endl;
 	//*****************************************************************************************************************

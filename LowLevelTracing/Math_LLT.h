@@ -52,13 +52,13 @@ double operator*(VectorStructR2 const& l, VectorStructR2 const& v);
 namespace Math {
 
 	// calc new value variance percent
-	/*CR*/real calcNewValueVariancePercent(real initilaValue, real percent);
+	real calcNewValueVariancePercent(real initilaValue, real percent);
 
 	// convert an angle in direction
-	/*CR*/ VectorStructR3 convertAngleInDirection(real angleDegreesX, real angleDegreesY);
+	 VectorStructR3 convertAngleInDirection(real angleDegreesX, real angleDegreesY);
 
 	// convert an direction in angle
-	/*CR*/ twoVaulesReal convertDirectionInAngle(VectorStructR3 direction);
+	twoVaulesReal convertDirectionInAngle(VectorStructR3 direction);
 
 	// sum all values in a vector
 	real sumAllVectorValues(std::vector<real> vec);
@@ -104,17 +104,21 @@ namespace Math {
 	VectorStructR3 multiplyMatrix3x3VectorR3(double mat[3][3], VectorStructR3 vec);
 
 	// to compare two numbers it is sometimes helpful to round them
-	//Quelle: https://www.c-plusplus.net/forum/39342-full
+	//source: https://www.c-plusplus.net/forum/39342-full
 	double roundNumber(double Zahl, unsigned int Stellen);
 
 	// compare two reounded numbers
-	bool compareTwoNumbers(double num1, double num2, unsigned int decimals);
+	bool compareTwoNumbers_decimals(double num1, double num2, unsigned int decimals);
+	bool compareTwoNumbers_tolrance(real num1, real num2, real tolerance);
 
 	// compare two vectors struct R3
-	bool compareTwoVectorStructR3(VectorStructR3 const& V1, VectorStructR3 const& V2, unsigned int const& decimals);
+	bool compareTwoVectorStructR3_decimals(VectorStructR3 const V1, VectorStructR3 const V2, unsigned int decimals);
+	bool compareTwoVectorStructR3_tolerance(VectorStructR3 const V1, VectorStructR3 const V2, real tolerance);
+
 
 	// compate two vectors struct R2
-	bool compareTwoVectorStruct2D(VectorStructR2 const& V1, VectorStructR2 const& V2, unsigned int const& decimals);
+	bool compareTwoVectorStruct2D_decimals(VectorStructR2 const V1, VectorStructR2 const& V2, unsigned int const& decimals);
+	bool compareTwoVectorStruct2D_tolerance(VectorStructR2 const V1, VectorStructR2 const V2, real tolerance);
 
 	// check if all vector elements are true
 	bool checkTrueOfVectorElements(std::vector<bool> V);

@@ -103,17 +103,17 @@ bool testSeidelCoefficients::checkCalculationOfSeidelCoefficients()
 
 	VectorStructR3 checkRayOptA = seqTrace_E0_optA.getAllInterPointsAtSurf_i(7).at(0);
 	VectorStructR3 testZemaxOptA{ 0.0, 0.0, 1.2786607000E2 };
-	bool checkOptA = Math::compareTwoVectorStructR3(checkRayOptA, testZemaxOptA, 3);
+	bool checkOptA = Math::compareTwoVectorStructR3_decimals(checkRayOptA, testZemaxOptA, 3);
 	checkCalcSeidel.push_back(checkOptA);
 
 	VectorStructR3 checkRayMarginal = seqTrace_E0_marginalRay.getAllInterPointsAtSurf_i(7).at(0);
 	VectorStructR3 testZemaxMarginal{ 0.0, 0.014, 1.2786607000E2 };
-	bool checkMarginalRay = Math::compareTwoVectorStructR3(testZemaxMarginal, checkRayMarginal, 3);
+	bool checkMarginalRay = Math::compareTwoVectorStructR3_decimals(testZemaxMarginal, checkRayMarginal, 3);
 	checkCalcSeidel.push_back(checkMarginalRay);
 
 	VectorStructR3 checkRayChief = seqTrace_E0_chiefRay.getAllInterPointsAtSurf_i(7).at(0);
 	VectorStructR3 testZemaxCheifRay{ 0.0, 36.7981, 1.2786607000E2 };
-	bool checkCheifRay = Math::compareTwoVectorStructR3(checkRayChief, testZemaxCheifRay, 2);
+	bool checkCheifRay = Math::compareTwoVectorStructR3_decimals(checkRayChief, testZemaxCheifRay, 2);
 	checkCalcSeidel.push_back(checkCheifRay);
 
 
@@ -224,17 +224,17 @@ bool testSeidelCoefficients::checkCalculationOfSeidelCoefficients()
 
 	VectorStructR3 checkRayChiefRay_optA = seqTrace_E1_optA.getAllInterPointsAtSurf_i(14).at(0);
 	VectorStructR3 testZemaxChiefRayOptA{ 0.0, 0.0, 1.6856010000E2 };
-	bool checkChiefRayOptA = Math::compareTwoVectorStructR3(checkRayChiefRay_optA, testZemaxChiefRayOptA, 3);
+	bool checkChiefRayOptA = Math::compareTwoVectorStructR3_decimals(checkRayChiefRay_optA, testZemaxChiefRayOptA, 3);
 	checkCalcSeidel.push_back(checkChiefRayOptA);
 
 	VectorStructR3 checkMarginalRay_E1 = seqTrace_E1_Marginal.getAllInterPointsAtSurf_i(14).at(0);
 	VectorStructR3 testZemaxMarginal_E1{ 0.0, 36.67526, 1.6856010000E2 };
-	bool checkMarginal = Math::compareTwoVectorStructR3(checkMarginalRay_E1, testZemaxMarginal_E1, 3);
+	bool checkMarginal = Math::compareTwoVectorStructR3_decimals(checkMarginalRay_E1, testZemaxMarginal_E1, 3);
 	checkCalcSeidel.push_back(checkMarginal);
 
 	VectorStructR3 checkChiefRayField = seqTrace_E1_ChiefRayField.getAllInterPointsAtSurf_i(14).at(0);
 	VectorStructR3 testZemaxCheifRayField{ 0.0, -1.8632, 1.6856010000E2 };
-	bool checkCheifRayField = Math::compareTwoVectorStructR3(checkChiefRayField, testZemaxCheifRayField, 3);
+	bool checkCheifRayField = Math::compareTwoVectorStructR3_decimals(checkChiefRayField, testZemaxCheifRayField, 3);
 	checkCalcSeidel.push_back(checkCheifRayField);
 
 

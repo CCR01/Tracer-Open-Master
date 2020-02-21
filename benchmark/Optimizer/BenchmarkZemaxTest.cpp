@@ -1261,17 +1261,17 @@ bool BenchmarkZemaxTest::checkMethodesZemaxTest()
 	// calculate rms value
 	Spot spot_E12_optA(seqTrace_E12_optA.getAllInterPointsAtSurf_i(7), seqTrace_E12_optA.getAllInterPointsAtSurf_i(7).at(0));
 	real rms_E12_optA = spot_E12_optA.getRMS_µm();
-	bool checkRMSoptA_E12 = Math::compareTwoNumbers(rms_E12_optA, 299.028, 3);
+	bool checkRMSoptA_E12 = Math::compareTwoNumbers_decimals(rms_E12_optA, 299.028, 3);
 	workTheOptimizer.push_back(checkRMSoptA_E12);
 	std::cout << "Organic RMS optA : " << rms_E12_optA << "\n";
 	Spot spot_E12_field1(seqTrace_E12_field1.getAllInterPointsAtSurf_i(7), seqTrace_E12_field1.getAllInterPointsAtSurf_i(7).at(0));
 	real rms_E12_field1 = spot_E12_field1.getRMS_µm();
-	bool checkRMSfield1_E12 = Math::compareTwoNumbers(rms_E12_field1, 294.895, 3);
+	bool checkRMSfield1_E12 = Math::compareTwoNumbers_decimals(rms_E12_field1, 294.895, 3);
 	workTheOptimizer.push_back(checkRMSfield1_E12);
 	std::cout << "Organic RMS field1 : " << rms_E12_field1 << "\n";
 	Spot spot_E12_field2(seqTrace_E12_field2.getAllInterPointsAtSurf_i(7), seqTrace_E12_field2.getAllInterPointsAtSurf_i(7).at(0));
 	real rms_E12_field2 = spot_E12_field2.getRMS_µm();
-	bool checkRMSfield2_E12 = Math::compareTwoNumbers(rms_E12_field2, 282.642, 3);
+	bool checkRMSfield2_E12 = Math::compareTwoNumbers_decimals(rms_E12_field2, 282.642, 3);
 	workTheOptimizer.push_back(checkRMSfield2_E12);
 	std::cout << "Organic RMS field2 : " << rms_E12_field2 << "\n";
 	
@@ -1369,15 +1369,15 @@ bool BenchmarkZemaxTest::checkMethodesZemaxTest()
 	// calculate rms value
 	Spot spot_E13_optA(seqTrace_E13_optA.getAllInterPointsAtSurf_i(4), seqTrace_E13_optA.getAllInterPointsAtSurf_i(4).at(0));
 	real rms_E13_optA = spot_E13_optA.getRMS_µm();
-	bool checkRMSoptA_E13 = Math::compareTwoNumbers(rms_E13_optA, 3015.10, 2);
+	bool checkRMSoptA_E13 = Math::compareTwoNumbers_decimals(rms_E13_optA, 3015.10, 2);
 	workTheOptimizer.push_back(checkRMSoptA_E13);
 	Spot spot_E13_field2(seqTrace_E13_field2.getAllInterPointsAtSurf_i(4), seqTrace_E13_field2.getAllInterPointsAtSurf_i(4).at(0));
 	real rms_E13_field2 = spot_E13_field2.getRMS_µm();
-	bool checkRMSfield2_E13 = Math::compareTwoNumbers(rms_E13_field2, 2999.52, 2);
+	bool checkRMSfield2_E13 = Math::compareTwoNumbers_decimals(rms_E13_field2, 2999.52, 2);
 	workTheOptimizer.push_back(checkRMSfield2_E13);
 	Spot spot_E13_field4(seqTrace_E13_field4.getAllInterPointsAtSurf_i(4), seqTrace_E13_field4.getAllInterPointsAtSurf_i(4).at(0));
 	real rms_E13_field4 = spot_E13_field4.getRMS_µm();
-	bool checkRMSfield4_E13 = Math::compareTwoNumbers(rms_E13_field4, 2953.19, 2);
+	bool checkRMSfield4_E13 = Math::compareTwoNumbers_decimals(rms_E13_field4, 2953.19, 2);
 	workTheOptimizer.push_back(checkRMSfield4_E13);
 
 	localStart localOp_P0 = radiusStart;

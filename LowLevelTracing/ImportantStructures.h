@@ -177,7 +177,7 @@ private:
 	real mY;
 };
 
-/*CR*/
+
 struct twoVaulesReal
 {
 public:

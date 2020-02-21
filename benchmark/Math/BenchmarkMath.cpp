@@ -15,10 +15,10 @@ bool BenchmarkMath::checkMethodesMath()
 	std::vector<double> testVec1 = {-5.0, 3.0, -10.0, 7.0, 1.0, 0.5, -0.5, -0.1};
 	VectorElementAndPosition test1 = Math::ValueInVectorNearZeroPosSide(testVec1);
 	VectorElementAndPosition test2 = Math::ValueInVectorNearZeroNegSide(testVec1);
-	bool checkTestNum1 = Math::compareTwoNumbers(test1.getValue(),0.5,1);
-	bool checkTestPos1 = Math::compareTwoNumbers(test1.getPosInVector(), 5.0, 1);
-	bool checkTestNum2 = Math::compareTwoNumbers(test2.getValue(), -0.1, 1);
-	bool checkchekTestPos2 = Math::compareTwoNumbers(test2.getPosInVector(), 7.0, 1);
+	bool checkTestNum1 = Math::compareTwoNumbers_decimals(test1.getValue(),0.5,1);
+	bool checkTestPos1 = Math::compareTwoNumbers_decimals(test1.getPosInVector(), 5.0, 1);
+	bool checkTestNum2 = Math::compareTwoNumbers_decimals(test2.getValue(), -0.1, 1);
+	bool checkchekTestPos2 = Math::compareTwoNumbers_decimals(test2.getPosInVector(), 7.0, 1);
 	checkMath.push_back(checkTestNum1);
 	checkMath.push_back(checkTestNum2);
 	// *****************************************************************************************************************
@@ -26,8 +26,8 @@ bool BenchmarkMath::checkMethodesMath()
 	std::vector<double> testVec2 = { -5.0, 3.0, -10.0, 7.0, 1.0, 0.5, -0.5, -0.1,-100.0,100.0,5.0 };
 	double test3 = Math::minValueOfVector(testVec2);
 	double test4 = Math::maxValueOfVactor(testVec2);
-	bool checkTest3 = Math::compareTwoNumbers(test3, -100.0, 1);
-	bool checkTest4 = Math::compareTwoNumbers(test4, 100.0, 1);
+	bool checkTest3 = Math::compareTwoNumbers_decimals(test3, -100.0, 1);
+	bool checkTest4 = Math::compareTwoNumbers_decimals(test4, 100.0, 1);
 	checkMath.push_back(checkTest3);
 	checkMath.push_back(checkTest4);
 	// *****************************************************************************************************************
@@ -46,32 +46,32 @@ bool BenchmarkMath::checkMethodesMath()
 	VectorStructR2 Vec2D0{ 0 , 1 };
 	VectorStructR2 checkVec2D{ 1 , 0 };
 	VectorStructR2 testVec2D0 = Math::calcOrtoVec2D_Unit(Vec2D0);
-	bool checkVec0 = Math::compareTwoVectorStruct2D(testVec2D0, checkVec2D, 5);
+	bool checkVec0 = Math::compareTwoVectorStruct2D_decimals(testVec2D0, checkVec2D, 5);
 	checkMath.push_back(checkVec0);
 	VectorStructR2 Vec2D1{ 1 , 0 };
 	VectorStructR2 checkVec2D1{ 0 , 1 };
 	VectorStructR2 testVec2D1 = Math::calcOrtoVec2D_Unit(Vec2D1);
-	bool checkVec1 = Math::compareTwoVectorStruct2D(testVec2D1, checkVec2D1, 5);
+	bool checkVec1 = Math::compareTwoVectorStruct2D_decimals(testVec2D1, checkVec2D1, 5);
 	checkMath.push_back(checkVec1);
 	VectorStructR2 Vec2D2{ 1 , 1 };
 	VectorStructR2 checkVec2D2{ 0.707106 , -0.707106 };
 	VectorStructR2 testVec222 = Math::calcOrtoVec2D_Unit(Vec2D2);
-	bool checkVec2 = Math::compareTwoVectorStruct2D(testVec222, checkVec2D2, 5);
+	bool checkVec2 = Math::compareTwoVectorStruct2D_decimals(testVec222, checkVec2D2, 5);
 	checkMath.push_back(checkVec2);
 	VectorStructR2 Vec2D3{ -1 , 1 };
 	VectorStructR2 checkVec2D3{ 0.707106 , 0.707106 };
 	VectorStructR2 testVec2D3 = Math::calcOrtoVec2D_Unit(Vec2D3);
-	bool checkVec3 = Math::compareTwoVectorStruct2D(testVec2D3, checkVec2D3, 5);
+	bool checkVec3 = Math::compareTwoVectorStruct2D_decimals(testVec2D3, checkVec2D3, 5);
 	checkMath.push_back(checkVec3);
 	VectorStructR2 Vec2D4{ -3 , 1 };
 	VectorStructR2 checkVec2D4{ 0.31622777 , 0.948683298 };
 	VectorStructR2 testVec2D4 = Math::calcOrtoVec2D_Unit(Vec2D4);
-	bool checkVec4 = Math::compareTwoVectorStruct2D(testVec2D4, checkVec2D4, 5);
+	bool checkVec4 = Math::compareTwoVectorStruct2D_decimals(testVec2D4, checkVec2D4, 5);
 	checkMath.push_back(checkVec4);
 	VectorStructR2 Vec2D5{ 1 , 5 };
 	VectorStructR2 checkVec2D5{ 0.980580676, -0.196116135 };
 	VectorStructR2 testVec2D5 = Math::calcOrtoVec2D_Unit(Vec2D5);
-	bool checkVec5 = Math::compareTwoVectorStruct2D(testVec2D5, checkVec2D5, 5);
+	bool checkVec5 = Math::compareTwoVectorStruct2D_decimals(testVec2D5, checkVec2D5, 5);
 	checkMath.push_back(checkVec5);
 	// *****************************************************************************************************************
 	// *****************************************************************************************************************
@@ -99,7 +99,7 @@ bool BenchmarkMath::checkMethodesMath()
 	testStdVec_VecStrR3.push_back({ 0.0,-8.0,10.0 });
 	VectorStructR3 refPoint{ -1.0,1.0,-1.0 };
 	VectorStructR3 absDeltaMax_X_Y_Z = Math::findMaxDelta_X_Y_Z_inStdV_VectorStructR3(testStdVec_VecStrR3,refPoint);
-	bool checkFindAbsMax_X_Y_Z = Math::compareTwoVectorStructR3(absDeltaMax_X_Y_Z, { 8.0,9.0,11.0 }, 5);
+	bool checkFindAbsMax_X_Y_Z = Math::compareTwoVectorStructR3_decimals(absDeltaMax_X_Y_Z, { 8.0,9.0,11.0 }, 5);
 	checkMath.push_back(checkFindAbsMax_X_Y_Z);
 	// *****************************************************************************************************************
 	// *****************************************************************************************************************

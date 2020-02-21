@@ -123,15 +123,15 @@ bool testOptimizer_Paper_P1::checkTestOptimizer_paper_p1(double startR1, double 
 		// calculate rms value
 		Spot spot_E12_optA(seqTrace_P1_optA.getAllInterPointsAtSurf_i(9), seqTrace_P1_optA.getAllInterPointsAtSurf_i(9).at(0));
 		real rms_E12_optA = spot_E12_optA.getRMS_µm();
-		bool checkRMSoptA_E12 = Math::compareTwoNumbers(rms_E12_optA, 562.646, 3);
+		bool checkRMSoptA_E12 = Math::compareTwoNumbers_decimals(rms_E12_optA, 562.646, 3);
 		workTheOptimizer.push_back(checkRMSoptA_E12);
 		Spot spot_E12_field2(seqTrace_P1_field2.getAllInterPointsAtSurf_i(9), seqTrace_P1_field2.getAllInterPointsAtSurf_i(9).at(0));
 		real rms_E12_field2 = spot_E12_field2.getRMS_µm();
-		bool checkRMSfield2_E12 = Math::compareTwoNumbers(rms_E12_field2, 595.267, 3);
+		bool checkRMSfield2_E12 = Math::compareTwoNumbers_decimals(rms_E12_field2, 595.267, 3);
 		workTheOptimizer.push_back(checkRMSfield2_E12);
 		Spot spot_E12_field4(seqTrace_P1_field4.getAllInterPointsAtSurf_i(9), seqTrace_P1_field4.getAllInterPointsAtSurf_i(9).at(0));
 		real rms_E12_field4 = spot_E12_field4.getRMS_µm();
-		bool checkRMSfield4_E12 = Math::compareTwoNumbers(rms_E12_field4, 693.648, 3);
+		bool checkRMSfield4_E12 = Math::compareTwoNumbers_decimals(rms_E12_field4, 693.648, 3);
 		workTheOptimizer.push_back(checkRMSfield4_E12);
 
 		// next we start the optimasation

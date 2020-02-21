@@ -9,4 +9,3 @@ public:
 	bool checkMethodesOpticalSystem();
 
 };
-///ggggggggggg

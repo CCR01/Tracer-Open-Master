@@ -69,34 +69,34 @@ bool testCalcPraxialDistances::checkCalcParaxialDistances()
 
 
 	// check all s
-	bool checkS1 = Math::compareTwoNumbers(calcParaDis_E0.getS_atSurface_i(1), -25.0, 2);
+	bool checkS1 = Math::compareTwoNumbers_decimals(calcParaDis_E0.getS_atSurface_i(1), -25.0, 2);
 	workCalcPraxialDistances.push_back(checkS1);
-	bool checkS2 = Math::compareTwoNumbers(calcParaDis_E0.getS_atSurface_i(2), 123.12, 2);
+	bool checkS2 = Math::compareTwoNumbers_decimals(calcParaDis_E0.getS_atSurface_i(2), 123.12, 2);
 	workCalcPraxialDistances.push_back(checkS2);
-	bool checkS3 = Math::compareTwoNumbers(calcParaDis_E0.getS_atSurface_i(3), 16.14, 2);
+	bool checkS3 = Math::compareTwoNumbers_decimals(calcParaDis_E0.getS_atSurface_i(3), 16.14, 2);
 	workCalcPraxialDistances.push_back(checkS3);
-	bool checkS4 = Math::compareTwoNumbers(calcParaDis_E0.getS_atSurface_i(4), 29.04, 2);
+	bool checkS4 = Math::compareTwoNumbers_decimals(calcParaDis_E0.getS_atSurface_i(4), 29.04, 2);
 	workCalcPraxialDistances.push_back(checkS4);
 
 
 	// check all s_dash
-	bool checkS1_dash = Math::compareTwoNumbers(calcParaDis_E0.getS_dash_atSurface_i(1), 128.12, 2);
+	bool checkS1_dash = Math::compareTwoNumbers_decimals(calcParaDis_E0.getS_dash_atSurface_i(1), 128.12, 2);
 	workCalcPraxialDistances.push_back(checkS1_dash);
-	bool checkS2_dash = Math::compareTwoNumbers(calcParaDis_E0.getS_dash_atSurface_i(2), 26.14, 2);
+	bool checkS2_dash = Math::compareTwoNumbers_decimals(calcParaDis_E0.getS_dash_atSurface_i(2), 26.14, 2);
 	workCalcPraxialDistances.push_back(checkS2_dash);
-	bool checkS3_dash = Math::compareTwoNumbers(calcParaDis_E0.getS_dash_atSurface_i(3), 34.04, 2);
+	bool checkS3_dash = Math::compareTwoNumbers_decimals(calcParaDis_E0.getS_dash_atSurface_i(3), 34.04, 2);
 	workCalcPraxialDistances.push_back(checkS3_dash);
-	bool checkS4_dash = Math::compareTwoNumbers(calcParaDis_E0.getS_dash_atSurface_i(4), 13.32, 2);
+	bool checkS4_dash = Math::compareTwoNumbers_decimals(calcParaDis_E0.getS_dash_atSurface_i(4), 13.32, 2);
 	workCalcPraxialDistances.push_back(checkS4_dash);
 
 	//check all focallengths
-	bool check_focal1_E0 = Math::compareTwoNumbers(calcParaDis_E0.getFocallength_atSurface_i(1), 29.2856, 2);
+	bool check_focal1_E0 = Math::compareTwoNumbers_decimals(calcParaDis_E0.getFocallength_atSurface_i(1), 29.2856, 2);
 	workCalcPraxialDistances.push_back(check_focal1_E0);
-	bool check_focal2_E0 = Math::compareTwoNumbers(calcParaDis_E0.getFocallength_atSurface_i(2), 38.5711, 2);
+	bool check_focal2_E0 = Math::compareTwoNumbers_decimals(calcParaDis_E0.getFocallength_atSurface_i(2), 38.5711, 2);
 	workCalcPraxialDistances.push_back(check_focal2_E0);
-	bool check_focal3_E0 = Math::compareTwoNumbers(calcParaDis_E0.getFocallength_atSurface_i(3), -163.7795, 2);
+	bool check_focal3_E0 = Math::compareTwoNumbers_decimals(calcParaDis_E0.getFocallength_atSurface_i(3), -163.7795, 2);
 	workCalcPraxialDistances.push_back(check_focal3_E0);
-	bool check_focal4_E0 = Math::compareTwoNumbers(calcParaDis_E0.getFocallength_atSurface_i(4), 66.9853, 2);
+	bool check_focal4_E0 = Math::compareTwoNumbers_decimals(calcParaDis_E0.getFocallength_atSurface_i(4), 66.9853, 2);
 	workCalcPraxialDistances.push_back(check_focal4_E0);
 
 
@@ -126,34 +126,34 @@ bool testCalcPraxialDistances::checkCalcParaxialDistances()
 
 
 	// check all s
-	bool checkS1_E1_best = Math::compareTwoNumbers(calcParaDis_E1_best.getS_atSurface_i(1), -25.00, 2);
+	bool checkS1_E1_best = Math::compareTwoNumbers_decimals(calcParaDis_E1_best.getS_atSurface_i(1), -25.00, 2);
 	workCalcPraxialDistances.push_back(checkS1_E1_best);
-	bool checkS2_E1_best = Math::compareTwoNumbers(calcParaDis_E1_best.getS_atSurface_i(2), -51.59, 2);
+	bool checkS2_E1_best = Math::compareTwoNumbers_decimals(calcParaDis_E1_best.getS_atSurface_i(2), -51.59, 2);
 	workCalcPraxialDistances.push_back(checkS2_E1_best);
-	bool checkS3_E1_best = Math::compareTwoNumbers(calcParaDis_E1_best.getS_atSurface_i(3), -295.09, 2);
+	bool checkS3_E1_best = Math::compareTwoNumbers_decimals(calcParaDis_E1_best.getS_atSurface_i(3), -295.09, 2);
 	workCalcPraxialDistances.push_back(checkS3_E1_best);
-	bool checkS4_E1_best = Math::compareTwoNumbers(calcParaDis_E1_best.getS_atSurface_i(4), 19.51, 2);
+	bool checkS4_E1_best = Math::compareTwoNumbers_decimals(calcParaDis_E1_best.getS_atSurface_i(4), 19.51, 2);
 	workCalcPraxialDistances.push_back(checkS4_E1_best);
 
 
 	// check all s_dash
-	bool checkS1_dash_E1_best = Math::compareTwoNumbers(calcParaDis_E1_best.getS_dash_atSurface_i(1), -46.59, 2);
+	bool checkS1_dash_E1_best = Math::compareTwoNumbers_decimals(calcParaDis_E1_best.getS_dash_atSurface_i(1), -46.59, 2);
 	workCalcPraxialDistances.push_back(checkS1_dash_E1_best);
-	bool checkS2_dash_E1_best = Math::compareTwoNumbers(calcParaDis_E1_best.getS_dash_atSurface_i(2), -285.0886, 2);
+	bool checkS2_dash_E1_best = Math::compareTwoNumbers_decimals(calcParaDis_E1_best.getS_dash_atSurface_i(2), -285.0886, 2);
 	workCalcPraxialDistances.push_back(checkS2_dash_E1_best);
-	bool checkS3_dash_E1_best = Math::compareTwoNumbers(calcParaDis_E1_best.getS_dash_atSurface_i(3), 24.5098, 2);
+	bool checkS3_dash_E1_best = Math::compareTwoNumbers_decimals(calcParaDis_E1_best.getS_dash_atSurface_i(3), 24.5098, 2);
 	workCalcPraxialDistances.push_back(checkS3_dash_E1_best);
-	bool checkS4_dash_E1_best = Math::compareTwoNumbers(calcParaDis_E1_best.getS_dash_atSurface_i(4), 9.5745, 2);
+	bool checkS4_dash_E1_best = Math::compareTwoNumbers_decimals(calcParaDis_E1_best.getS_dash_atSurface_i(4), 9.5745, 2);
 	workCalcPraxialDistances.push_back(checkS4_dash_E1_best);
 
 	//check all focallengths
-	bool check_focal1_E1_best = Math::compareTwoNumbers(calcParaDis_E1_best.getFocallength_atSurface_i(1), 204.999, 2);
+	bool check_focal1_E1_best = Math::compareTwoNumbers_decimals(calcParaDis_E1_best.getFocallength_atSurface_i(1), 204.999, 2);
 	workCalcPraxialDistances.push_back(check_focal1_E1_best);
-	bool check_focal2_E1_best = Math::compareTwoNumbers(calcParaDis_E1_best.getFocallength_atSurface_i(2), 38.5711, 2);
+	bool check_focal2_E1_best = Math::compareTwoNumbers_decimals(calcParaDis_E1_best.getFocallength_atSurface_i(2), 38.5711, 2);
 	workCalcPraxialDistances.push_back(check_focal2_E1_best);
-	bool check_focal3_E1_best = Math::compareTwoNumbers(calcParaDis_E1_best.getFocallength_atSurface_i(3), 23.3971, 2);
+	bool check_focal3_E1_best = Math::compareTwoNumbers_decimals(calcParaDis_E1_best.getFocallength_atSurface_i(3), 23.3971, 2);
 	workCalcPraxialDistances.push_back(check_focal3_E1_best);
-	bool check_focal4_E1_best = Math::compareTwoNumbers(calcParaDis_E1_best.getFocallength_atSurface_i(4), 66.9853, 2);
+	bool check_focal4_E1_best = Math::compareTwoNumbers_decimals(calcParaDis_E1_best.getFocallength_atSurface_i(4), 66.9853, 2);
 	workCalcPraxialDistances.push_back(check_focal4_E1_best);
 
 	//real SF6_refIndex = glasses.getSF13_S1().calcRefractiveIndexSnellmeier1(550.0);
@@ -187,45 +187,45 @@ bool testCalcPraxialDistances::checkCalcParaxialDistances()
 
 
 	// check all s
-	bool checkS1_E1 = Math::compareTwoNumbers(calcParaDis_E1.getS_atSurface_i(1), -10.00, 2);
+	bool checkS1_E1 = Math::compareTwoNumbers_decimals(calcParaDis_E1.getS_atSurface_i(1), -10.00, 2);
 	workCalcPraxialDistances.push_back(checkS1_E1);
-	bool checkS2_E1 = Math::compareTwoNumbers(calcParaDis_E1.getS_atSurface_i(2), -36.54, 2);
+	bool checkS2_E1 = Math::compareTwoNumbers_decimals(calcParaDis_E1.getS_atSurface_i(2), -36.54, 2);
 	workCalcPraxialDistances.push_back(checkS2_E1);
-	bool checkS3_E1 = Math::compareTwoNumbers(calcParaDis_E1.getS_atSurface_i(3), -44.60, 2);
+	bool checkS3_E1 = Math::compareTwoNumbers_decimals(calcParaDis_E1.getS_atSurface_i(3), -44.60, 2);
 	workCalcPraxialDistances.push_back(checkS3_E1);
-	bool checkS4_E1 = Math::compareTwoNumbers(calcParaDis_E1.getS_atSurface_i(4), -46.01, 2);
+	bool checkS4_E1 = Math::compareTwoNumbers_decimals(calcParaDis_E1.getS_atSurface_i(4), -46.01, 2);
 	workCalcPraxialDistances.push_back(checkS4_E1);
-	bool checkS5_E1 = Math::compareTwoNumbers(calcParaDis_E1.getS_atSurface_i(5), 57.31, 2);
+	bool checkS5_E1 = Math::compareTwoNumbers_decimals(calcParaDis_E1.getS_atSurface_i(5), 57.31, 2);
 	workCalcPraxialDistances.push_back(checkS5_E1);
-	bool checkS6_E1 = Math::compareTwoNumbers(calcParaDis_E1.getS_atSurface_i(6), 74.60, 2);
+	bool checkS6_E1 = Math::compareTwoNumbers_decimals(calcParaDis_E1.getS_atSurface_i(6), 74.60, 2);
 	workCalcPraxialDistances.push_back(checkS6_E1);
 
 	// check all s_dash
-	bool checkS1_dash_E1 = Math::compareTwoNumbers(calcParaDis_E1.getS_dash_atSurface_i(1), -31.54, 2);
+	bool checkS1_dash_E1 = Math::compareTwoNumbers_decimals(calcParaDis_E1.getS_dash_atSurface_i(1), -31.54, 2);
 	workCalcPraxialDistances.push_back(checkS1_dash_E1);
-	bool checkS2_dash_E1 = Math::compareTwoNumbers(calcParaDis_E1.getS_dash_atSurface_i(2), -39.60, 2);
+	bool checkS2_dash_E1 = Math::compareTwoNumbers_decimals(calcParaDis_E1.getS_dash_atSurface_i(2), -39.60, 2);
 	workCalcPraxialDistances.push_back(checkS2_dash_E1);
-	bool checkS3_dash_E1 = Math::compareTwoNumbers(calcParaDis_E1.getS_dash_atSurface_i(3), -41.01, 2);
+	bool checkS3_dash_E1 = Math::compareTwoNumbers_decimals(calcParaDis_E1.getS_dash_atSurface_i(3), -41.01, 2);
 	workCalcPraxialDistances.push_back(checkS3_dash_E1);
-	bool checkS4_dash_E1 = Math::compareTwoNumbers(calcParaDis_E1.getS_dash_atSurface_i(4), 62.31, 2);
+	bool checkS4_dash_E1 = Math::compareTwoNumbers_decimals(calcParaDis_E1.getS_dash_atSurface_i(4), 62.31, 2);
 	workCalcPraxialDistances.push_back(checkS4_dash_E1);
-	bool checkS5_dash_E1 = Math::compareTwoNumbers(calcParaDis_E1.getS_dash_atSurface_i(5), 79.60, 2);
+	bool checkS5_dash_E1 = Math::compareTwoNumbers_decimals(calcParaDis_E1.getS_dash_atSurface_i(5), 79.60, 2);
 	workCalcPraxialDistances.push_back(checkS5_dash_E1);
-	bool checkS6_dash_E1 = Math::compareTwoNumbers(calcParaDis_E1.getS_dash_atSurface_i(6), 26.57, 2);
+	bool checkS6_dash_E1 = Math::compareTwoNumbers_decimals(calcParaDis_E1.getS_dash_atSurface_i(6), 26.57, 2);
 	workCalcPraxialDistances.push_back(checkS6_dash_E1);
 
 	//check all focallengths
-	bool check_focal1_E1 = Math::compareTwoNumbers(calcParaDis_E1.getFocallength_atSurface_i(1), 29.29, 2);
+	bool check_focal1_E1 = Math::compareTwoNumbers_decimals(calcParaDis_E1.getFocallength_atSurface_i(1), 29.29, 2);
 	workCalcPraxialDistances.push_back(check_focal1_E1);
-	bool check_focal2_E1 = Math::compareTwoNumbers(calcParaDis_E1.getFocallength_atSurface_i(2), -432.37, 2);
+	bool check_focal2_E1 = Math::compareTwoNumbers_decimals(calcParaDis_E1.getFocallength_atSurface_i(2), -432.37, 2);
 	workCalcPraxialDistances.push_back(check_focal2_E1);
-	bool check_focal3_E1 = Math::compareTwoNumbers(calcParaDis_E1.getFocallength_atSurface_i(3), 61.59, 2);
+	bool check_focal3_E1 = Math::compareTwoNumbers_decimals(calcParaDis_E1.getFocallength_atSurface_i(3), 61.59, 2);
 	workCalcPraxialDistances.push_back(check_focal3_E1);
-	bool check_focal4_E1 = Math::compareTwoNumbers(calcParaDis_E1.getFocallength_atSurface_i(4), 35.10, 2);
+	bool check_focal4_E1 = Math::compareTwoNumbers_decimals(calcParaDis_E1.getFocallength_atSurface_i(4), 35.10, 2);
 	workCalcPraxialDistances.push_back(check_focal4_E1);
-	bool check_focal5_E1 = Math::compareTwoNumbers(calcParaDis_E1.getFocallength_atSurface_i(5), -133.26, 2);
+	bool check_focal5_E1 = Math::compareTwoNumbers_decimals(calcParaDis_E1.getFocallength_atSurface_i(5), -133.26, 2);
 	workCalcPraxialDistances.push_back(check_focal5_E1);
-	bool check_focal6_E1 = Math::compareTwoNumbers(calcParaDis_E1.getFocallength_atSurface_i(6), 57.86, 2);
+	bool check_focal6_E1 = Math::compareTwoNumbers_decimals(calcParaDis_E1.getFocallength_atSurface_i(6), 57.86, 2);
 	workCalcPraxialDistances.push_back(check_focal6_E1);
 
 
@@ -257,34 +257,34 @@ bool testCalcPraxialDistances::checkCalcParaxialDistances()
 
 
 	// check all s
-	bool checkS1_E2 = Math::compareTwoNumbers(calcParaDis_E2.getS_atSurface_i(1), -6.00, 2);
+	bool checkS1_E2 = Math::compareTwoNumbers_decimals(calcParaDis_E2.getS_atSurface_i(1), -6.00, 2);
 	workCalcPraxialDistances.push_back(checkS1_E2);
-	bool checkS2_E2 = Math::compareTwoNumbers(calcParaDis_E2.getS_atSurface_i(2), -18.23, 2);
+	bool checkS2_E2 = Math::compareTwoNumbers_decimals(calcParaDis_E2.getS_atSurface_i(2), -18.23, 2);
 	workCalcPraxialDistances.push_back(checkS2_E2);
-	bool checkS3_E2 = Math::compareTwoNumbers(calcParaDis_E2.getS_atSurface_i(3), -33.78, 2);
+	bool checkS3_E2 = Math::compareTwoNumbers_decimals(calcParaDis_E2.getS_atSurface_i(3), -33.78, 2);
 	workCalcPraxialDistances.push_back(checkS3_E2);
-	bool checkS4_E2 = Math::compareTwoNumbers(calcParaDis_E2.getS_atSurface_i(4), 33.77, 2);
+	bool checkS4_E2 = Math::compareTwoNumbers_decimals(calcParaDis_E2.getS_atSurface_i(4), 33.77, 2);
 	workCalcPraxialDistances.push_back(checkS4_E2);
 
 	// check all s_dash
-	bool checkS1_dash_E2 = Math::compareTwoNumbers(calcParaDis_E2.getS_dash_atSurface_i(1), -13.23, 2);
+	bool checkS1_dash_E2 = Math::compareTwoNumbers_decimals(calcParaDis_E2.getS_dash_atSurface_i(1), -13.23, 2);
 	workCalcPraxialDistances.push_back(checkS1_dash_E2);
-	bool checkS2_dash_E2 = Math::compareTwoNumbers(calcParaDis_E2.getS_dash_atSurface_i(2), -31.78, 2);
+	bool checkS2_dash_E2 = Math::compareTwoNumbers_decimals(calcParaDis_E2.getS_dash_atSurface_i(2), -31.78, 2);
 	workCalcPraxialDistances.push_back(checkS2_dash_E2);
-	bool checkS3_dash_E2 = Math::compareTwoNumbers(calcParaDis_E2.getS_dash_atSurface_i(3), 38.77, 2);
+	bool checkS3_dash_E2 = Math::compareTwoNumbers_decimals(calcParaDis_E2.getS_dash_atSurface_i(3), 38.77, 2);
 	workCalcPraxialDistances.push_back(checkS3_dash_E2);
-	bool checkS4_dash_E2 = Math::compareTwoNumbers(calcParaDis_E2.getS_dash_atSurface_i(4), 6.90, 2);
+	bool checkS4_dash_E2 = Math::compareTwoNumbers_decimals(calcParaDis_E2.getS_dash_atSurface_i(4), 6.90, 2);
 	workCalcPraxialDistances.push_back(checkS4_dash_E2);
 
 
 	//check all focallengths
-	bool check_focal1_E2 = Math::compareTwoNumbers(calcParaDis_E2.getFocallength_atSurface_i(1), 29.29, 2);
+	bool check_focal1_E2 = Math::compareTwoNumbers_decimals(calcParaDis_E2.getFocallength_atSurface_i(1), 29.29, 2);
 	workCalcPraxialDistances.push_back(check_focal1_E2);
-	bool check_focal2_E2 = Math::compareTwoNumbers(calcParaDis_E2.getFocallength_atSurface_i(2), 19.29, 2);
+	bool check_focal2_E2 = Math::compareTwoNumbers_decimals(calcParaDis_E2.getFocallength_atSurface_i(2), 19.29, 2);
 	workCalcPraxialDistances.push_back(check_focal2_E2);
-	bool check_focal3_E2 = Math::compareTwoNumbers(calcParaDis_E2.getFocallength_atSurface_i(3), 23.40, 2);
+	bool check_focal3_E2 = Math::compareTwoNumbers_decimals(calcParaDis_E2.getFocallength_atSurface_i(3), 23.40, 2);
 	workCalcPraxialDistances.push_back(check_focal3_E2);
-	bool check_focal4_E2 = Math::compareTwoNumbers(calcParaDis_E2.getFocallength_atSurface_i(4), 10.72, 2);
+	bool check_focal4_E2 = Math::compareTwoNumbers_decimals(calcParaDis_E2.getFocallength_atSurface_i(4), 10.72, 2);
 	workCalcPraxialDistances.push_back(check_focal4_E2);
 
 
@@ -318,39 +318,39 @@ bool testCalcPraxialDistances::checkCalcParaxialDistances()
 
 
 	// check all s
-	bool checkS1_E3 = Math::compareTwoNumbers(calcParaDis_E3.getS_atSurface_i(1), -11.0, 2);
+	bool checkS1_E3 = Math::compareTwoNumbers_decimals(calcParaDis_E3.getS_atSurface_i(1), -11.0, 2);
 	workCalcPraxialDistances.push_back(checkS1_E3);
-	bool checkS2_E3 = Math::compareTwoNumbers(calcParaDis_E3.getS_atSurface_i(2), -54.26, 2);
+	bool checkS2_E3 = Math::compareTwoNumbers_decimals(calcParaDis_E3.getS_atSurface_i(2), -54.26, 2);
 	workCalcPraxialDistances.push_back(checkS2_E3);
-	bool checkS3_E3 = Math::compareTwoNumbers(calcParaDis_E3.getS_atSurface_i(3), -62.98, 2);
+	bool checkS3_E3 = Math::compareTwoNumbers_decimals(calcParaDis_E3.getS_atSurface_i(3), -62.98, 2);
 	workCalcPraxialDistances.push_back(checkS3_E3);
-	bool checkS4_E3 = Math::compareTwoNumbers(calcParaDis_E3.getS_atSurface_i(4), -31.44, 2);
+	bool checkS4_E3 = Math::compareTwoNumbers_decimals(calcParaDis_E3.getS_atSurface_i(4), -31.44, 2);
 	workCalcPraxialDistances.push_back(checkS4_E3);
-	bool checkS5_E3 = Math::compareTwoNumbers(calcParaDis_E3.getS_atSurface_i(5), -901.26, 2);
+	bool checkS5_E3 = Math::compareTwoNumbers_decimals(calcParaDis_E3.getS_atSurface_i(5), -901.26, 2);
 	workCalcPraxialDistances.push_back(checkS5_E3);
 
 	// check all s_dash
-	bool checkS1_dash_E3 = Math::compareTwoNumbers(calcParaDis_E3.getS_dash_atSurface_i(1), -49.26, 2);
+	bool checkS1_dash_E3 = Math::compareTwoNumbers_decimals(calcParaDis_E3.getS_dash_atSurface_i(1), -49.26, 2);
 	workCalcPraxialDistances.push_back(checkS1_dash_E3);
-	bool checkS2_dash_E3 = Math::compareTwoNumbers(calcParaDis_E3.getS_dash_atSurface_i(2), -57.98, 2);
+	bool checkS2_dash_E3 = Math::compareTwoNumbers_decimals(calcParaDis_E3.getS_dash_atSurface_i(2), -57.98, 2);
 	workCalcPraxialDistances.push_back(checkS2_dash_E3);
-	bool checkS3_dash_E3 = Math::compareTwoNumbers(calcParaDis_E3.getS_dash_atSurface_i(3), -23.44, 2);
+	bool checkS3_dash_E3 = Math::compareTwoNumbers_decimals(calcParaDis_E3.getS_dash_atSurface_i(3), -23.44, 2);
 	workCalcPraxialDistances.push_back(checkS3_dash_E3);
-	bool checkS4_dash_E3 = Math::compareTwoNumbers(calcParaDis_E3.getS_dash_atSurface_i(4), -896.26, 2);
+	bool checkS4_dash_E3 = Math::compareTwoNumbers_decimals(calcParaDis_E3.getS_dash_atSurface_i(4), -896.26, 2);
 	workCalcPraxialDistances.push_back(checkS4_dash_E3);
-	bool checkS5_dash_E3 = Math::compareTwoNumbers(calcParaDis_E3.getS_dash_atSurface_i(5), 43.59, 2);
+	bool checkS5_dash_E3 = Math::compareTwoNumbers_decimals(calcParaDis_E3.getS_dash_atSurface_i(5), 43.59, 2);
 	workCalcPraxialDistances.push_back(checkS5_dash_E3);
 
 	//check all focallengths
-	bool check_focal1_E3 = Math::compareTwoNumbers(calcParaDis_E3.getFocallength_atSurface_i(1), 33.48, 2);
+	bool check_focal1_E3 = Math::compareTwoNumbers_decimals(calcParaDis_E3.getFocallength_atSurface_i(1), 33.48, 2);
 	workCalcPraxialDistances.push_back(check_focal1_E3);
-	bool check_focal2_E3 = Math::compareTwoNumbers(calcParaDis_E3.getFocallength_atSurface_i(2), 533.86, 2);
+	bool check_focal2_E3 = Math::compareTwoNumbers_decimals(calcParaDis_E3.getFocallength_atSurface_i(2), 533.86, 2);
 	workCalcPraxialDistances.push_back(check_focal2_E3);
-	bool check_focal3_E3 = Math::compareTwoNumbers(calcParaDis_E3.getFocallength_atSurface_i(3), -66.99, 2);
+	bool check_focal3_E3 = Math::compareTwoNumbers_decimals(calcParaDis_E3.getFocallength_atSurface_i(3), -66.99, 2);
 	workCalcPraxialDistances.push_back(check_focal3_E3);
-	bool check_focal4_E3 = Math::compareTwoNumbers(calcParaDis_E3.getFocallength_atSurface_i(4), 58.49, 2);
+	bool check_focal4_E3 = Math::compareTwoNumbers_decimals(calcParaDis_E3.getFocallength_atSurface_i(4), 58.49, 2);
 	workCalcPraxialDistances.push_back(check_focal4_E3);
-	bool check_focal5_E3 = Math::compareTwoNumbers(calcParaDis_E3.getFocallength_atSurface_i(5), 40.19, 2);
+	bool check_focal5_E3 = Math::compareTwoNumbers_decimals(calcParaDis_E3.getFocallength_atSurface_i(5), 40.19, 2);
 	workCalcPraxialDistances.push_back(check_focal5_E3);
 
 

@@ -110,7 +110,7 @@ bool testEvaluateManyOptSys_RayTracing::testEvaManyOptSys_RT_E0()
 	Spot spotE0(seqTraceE0.getAllInterPointsAtSurf_i(5), seqTraceE0.getAllInterPointsAtSurf_i(5).at(0));
 	real rmsSpotE0 = spotE0.getRMS_µm();
 	real excelBest_Zemax_RMS = 312.523;
-	bool checkE0_rmsBest = Math::compareTwoNumbers(excelBest_Zemax_RMS, rmsSpotE0, 2);
+	bool checkE0_rmsBest = Math::compareTwoNumbers_decimals(excelBest_Zemax_RMS, rmsSpotE0, 2);
 	workTestEva_RT_E0.push_back(checkE0_rmsBest);
 	
 	

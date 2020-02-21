@@ -40,6 +40,14 @@ public:
 	void setVariancePercentRRA(real percent);
 	real getVariancePercentRRA();
 
+	// stay counter
+	unsigned int getMaxStayCounter();
+	void setMayStayCounter(unsigned int maxStayCounter);
+
+	// increaser factor times
+	real getIncreaserFactorTimes();
+	void setIncreaserFactorTimes(real increaserFactorTimes);
+
 	void loadDefaultParameter();
 
 private:
@@ -50,7 +58,8 @@ private:
 	real mFactor;
 	bool mRobustRayAiming;
 	real mVariancePercentRobustRA;
-
+	unsigned int mMaxStayCounter;
+	real mIncreaserFactorTimes;
 };
 
 struct  lightRayAndInterPointAperStop
@@ -71,6 +80,7 @@ private:
 };
 
 enum betterSide { posSide, negSide, stay };
+enum reduceWhat {reduce_X, reduce_Y, neutral};
 
 struct lightRay_intP_dis_negPos_factor
 {
@@ -199,7 +209,7 @@ public: RayAiming() {};
 		// check if we have to trace to neg of pos side
 		lightRay_intP_dis_negPos_factor traceNegOrPosSide_andReduce_X_inf(lightRay_intP_dis_negPos_factor initialInfos);
 		lightRay_intP_dis_negPos_factor traceNegOrPosSide_andReduce_Y_inf(lightRay_intP_dis_negPos_factor initialInfos);
-		lightRay_intP_dis_negPos_factor reduceDistancesIn_X_AND_X_ing(lightRay_intP_dis_negPos_factor initialInfos);
+		lightRay_intP_dis_negPos_factor reduceDistancesIn_X_AND_Y_inf(lightRay_intP_dis_negPos_factor initialInfos);
 
 		// get default parametes
 		defaultRayAimingStruct getDefaultParameters();
@@ -208,13 +218,16 @@ public: RayAiming() {};
 		void turn_OFF_RobustRayAiming();
 
 		// robust ray aiming
-		LightRayStruct robustRayAiming_inf(lightRay_intP_dis_negPos_factor initialInfos);
+		lightRay_intP_dis_negPos_factor robustRayAiming_inf(lightRay_intP_dis_negPos_factor initialInfos);
 
 		// calculate new origin variance in percent
 		lightRay_intP_dis_negPos_factor calcNewBestInfos(lightRay_intP_dis_negPos_factor initialInfos);
 
 		// get positon ray with lowest distance
 		unsigned int getPosRayLowestDistance(std::vector<VectorStructR3> allInterPoints, VectorStructR3 targetPoint);
+
+		// print
+		void printInterP_Target_distance_X_Y(lightRay_intP_dis_negPos_factor infosToReduce);
 
 private:
 

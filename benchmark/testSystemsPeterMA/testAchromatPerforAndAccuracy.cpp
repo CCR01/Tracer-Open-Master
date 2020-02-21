@@ -189,7 +189,7 @@ bool testAchroPerforAndAccur::testAchromatPerformanceAndAccurancy(double startSt
 	Spot spotE0(seqTraceE0.getAllInterPointsAtSurf_i(4), seqTraceE0.getAllInterPointsAtSurf_i(4).at(0));
 	real rmsSpotE0 = spotE0.getRMS_µm();
 	real excelBest_Zemax_RMS = 1031.21;
-	bool checkE0_rmsBest = Math::compareTwoNumbers(excelBest_Zemax_RMS, rmsSpotE0, 2);
+	bool checkE0_rmsBest = Math::compareTwoNumbers_decimals(excelBest_Zemax_RMS, rmsSpotE0, 2);
 	workTestSystemsPeterMA_E0.push_back(checkE0_rmsBest);
 	
 	bool returnCheckerE0 = Math::checkTrueOfVectorElements(workTestSystemsPeterMA_E0);

@@ -88,15 +88,15 @@ bool testLocalOpti_BM::checkLocalOpti_BM()
 	// calculate rms value
 	Spot spot_E0_optA(seqTrace_E0_optA.getAllInterPointsAtSurf_i(4), seqTrace_E0_optA.getAllInterPointsAtSurf_i(4).at(0));
 	real rms_E0_optA = spot_E0_optA.getRMS_µm();
-	bool checkRMSoptA_E0 = Math::compareTwoNumbers(rms_E0_optA, 354.553, 2);
+	bool checkRMSoptA_E0 = Math::compareTwoNumbers_decimals(rms_E0_optA, 354.553, 2);
 	workLocalOpti_BM.push_back(checkRMSoptA_E0);
 	Spot spot_E0_field2(seqTrace_E0_field2.getAllInterPointsAtSurf_i(4), seqTrace_E0_field2.getAllInterPointsAtSurf_i(4).at(0));
 	real rms_E0_field2 = spot_E0_field2.getRMS_µm();
-	bool checkRMSfield2_E0 = Math::compareTwoNumbers(rms_E0_field2, 339.605, 3);
+	bool checkRMSfield2_E0 = Math::compareTwoNumbers_decimals(rms_E0_field2, 339.605, 3);
 	workLocalOpti_BM.push_back(checkRMSfield2_E0);
 	Spot spot_E0_field4(seqTrace_E0_field4.getAllInterPointsAtSurf_i(4), seqTrace_E0_field4.getAllInterPointsAtSurf_i(4).at(0));
 	real rms_E0_field4 = spot_E0_field4.getRMS_µm();
-	bool checkRMSfield4_E0 = Math::compareTwoNumbers(rms_E0_field4, 302.609, 2);
+	bool checkRMSfield4_E0 = Math::compareTwoNumbers_decimals(rms_E0_field4, 302.609, 2);
 	workLocalOpti_BM.push_back(checkRMSfield4_E0);
 
 

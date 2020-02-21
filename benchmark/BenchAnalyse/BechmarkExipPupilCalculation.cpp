@@ -86,7 +86,7 @@ bool BenchExitPupilCalc::checkMethodesExitPupilCalculation()
 	checkExpPupCalc.push_back(checkRefIndex);
 	real diameterApertureStop = calcExitPupilE0.getDiameterAperture();
 	real realDimApertStop = 2.0;
-	bool checkAperStopDia = Math::compareTwoNumbers(diameterApertureStop, realDimApertStop, 5);
+	bool checkAperStopDia = Math::compareTwoNumbers_decimals(diameterApertureStop, realDimApertStop, 5);
 	checkExpPupCalc.push_back(checkAperStopDia);
 
 	//*************

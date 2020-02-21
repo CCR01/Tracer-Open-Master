@@ -26,32 +26,32 @@ DistanceAdjustmentStruct::DistanceAdjustmentStruct(unsigned int postition, real 
 DistanceAdjustmentStruct::~DistanceAdjustmentStruct() {};
 
 // get position
-unsigned int DistanceAdjustmentStruct::getPosition() const&
+unsigned int DistanceAdjustmentStruct::getPosition() const
 {
 	return mPosition;
 }
 // set position
-void DistanceAdjustmentStruct::setPosition(unsigned int const& position)
+void DistanceAdjustmentStruct::setPosition(unsigned int const position)
 {
 	mPosition = position;
 }
 // get distance
-real DistanceAdjustmentStruct::getDistanceZ() const&
+real DistanceAdjustmentStruct::getDistanceZ() const
 {
 	return mDistanceZ;
 }
 // set distance Z
-void DistanceAdjustmentStruct::setDistance(real const& distanceZ)
+void DistanceAdjustmentStruct::setDistance(real const distanceZ)
 {
 	mDistanceZ = distanceZ;
 }
 // get type modifier
-typeModifier DistanceAdjustmentStruct::getTypeModifier() const&
+typeModifier DistanceAdjustmentStruct::getTypeModifier() const
 {
 	return mTypeMod;
 }
 // set type modifier
-void DistanceAdjustmentStruct::setTypeModifier(typeModifier const& typeMod)
+void DistanceAdjustmentStruct::setTypeModifier(typeModifier const typeMod)
 {
 	mTypeMod = typeMod;
 }
@@ -83,39 +83,39 @@ void OptimizeParameters::setCheckAllLocalCombinations(bool checkAllLocalCombinat
 
 }
 
-real OptimizeParameters::getStepRadiusLocal() const&
+real OptimizeParameters::getStepRadiusLocal() const
 {
 	return mStepRadiusLocal;
 }
-real OptimizeParameters::getStepDistanceLocal() const&
+real OptimizeParameters::getStepDistanceLocal() const
 {
 	return mStepDistanceLocal;
 }
-real OptimizeParameters::getStopCtiterialLocal() const&
+real OptimizeParameters::getStopCtiterialLocal() const
 {
 	return mStopCriteriaLocal;
 }
-real OptimizeParameters::getMaxStepsLocalOpti() const&
+real OptimizeParameters::getMaxStepsLocalOpti() const
 {
 	return maxStepsLocalOpti;
 }
-real OptimizeParameters::getStopCriteria_genetic() const&
+real OptimizeParameters::getStopCriteria_genetic() const
 {
 	return mStopCriteriaGenetic;
 }
-real OptimizeParameters::getMinGapSurface() const&
+real OptimizeParameters::getMinGapSurface() const
 {
 	return m_minGapSurfaces;
 }
-bool OptimizeParameters::getCheckAllLocalComb() const&
+bool OptimizeParameters::getCheckAllLocalComb() const
 {
 	return mCheckAllLocalCombinations;
 }
-unsigned int OptimizeParameters::get_gettingWorseGeneticLimit() const&
+unsigned int OptimizeParameters::get_gettingWorseGeneticLimit() const
 {
 	return gettingWorseGeneticLimit;
 }
-unsigned int OptimizeParameters::getCounterLocalInterations() const&
+unsigned int OptimizeParameters::getCounterLocalInterations() const
 {
 	return counterLocalInterations;
 }
@@ -126,7 +126,7 @@ void OptimizeParameters::setMinStep_radius(real minStep)
 }
 
 
-real OptimizeParameters::getMinStep_radius() const&
+real OptimizeParameters::getMinStep_radius() const
 {
 	return m_minStep_radius;
 }
@@ -138,16 +138,16 @@ void OptimizeParameters::setMinStep_position(real minStep)
 }
 
 
-real OptimizeParameters::getMinStep_position() const&
+real OptimizeParameters::getMinStep_position() const
 {
 	return m_minStep_position;
 }
 
-unsigned int OptimizeParameters::getRings() const&
+unsigned int OptimizeParameters::getRings() const
 {
 	return mRings;
 }
-unsigned int OptimizeParameters::getArms() const&
+unsigned int OptimizeParameters::getArms() const
 {
 	return mArms;
 }
@@ -160,22 +160,22 @@ OptSysEleAndMeritStruct::OptSysEleAndMeritStruct(OpticalSystemElement optSysEle,
 OptSysEleAndMeritStruct::~OptSysEleAndMeritStruct() {};
 
 // get optical system
-OpticalSystemElement OptSysEleAndMeritStruct::getOptSysEle() const&
+OpticalSystemElement OptSysEleAndMeritStruct::getOptSysEle() const
 {
 	return mOptSysEle;
 }
 // set optical system
-void OptSysEleAndMeritStruct::setOptSysEle(OpticalSystemElement const& optSysEle)
+void OptSysEleAndMeritStruct::setOptSysEle(OpticalSystemElement const optSysEle)
 {
 	mOptSysEle = optSysEle;
 }
 // get merit
-real OptSysEleAndMeritStruct::getMerit() const&
+real OptSysEleAndMeritStruct::getMerit() const
 {
 	return mMerit;
 }
 // set merit
-void OptSysEleAndMeritStruct::setMerit(real const& merit)
+void OptSysEleAndMeritStruct::setMerit(real const merit)
 {
 	mMerit = merit;
 }
@@ -204,9 +204,9 @@ void OptimizeParameters::setArms(unsigned int arms)
 }
 
 
-void MeritConfiguration::SET_Image_Quality_Weight(real imageQuality_weight)
+void MeritConfiguration::setImageQuality_weight(real imageQuality_weight)
 {
-	imageQuality_Weight = imageQuality_weight;
+	mImageQuality_Weight = imageQuality_weight;
 }
 
 
@@ -214,44 +214,89 @@ void MeritConfiguration::SET_Image_Quality_Weight(real imageQuality_weight)
 void MeritConfiguration::DEFAFULT_SETTINGS()
 {
 
-	RMS_Weight = 1.0;
+	mRMS_Weight = 1.0;
 
-	EFL_Target = std::numeric_limits<double>::quiet_NaN();
-	EFL_Weight = std::numeric_limits<double>::quiet_NaN();
+	mEFL_Target = std::numeric_limits<double>::quiet_NaN();
+	mEFL_Weight = std::numeric_limits<double>::quiet_NaN();
 
-	EXPP_Target = std::numeric_limits<double>::quiet_NaN();
-	EXPP_Weight = std::numeric_limits<double>::quiet_NaN();
+	mEXPP_Target = std::numeric_limits<double>::quiet_NaN();
+	mEXPP_Weight = std::numeric_limits<double>::quiet_NaN();
 
-	EXPD_Target = std::numeric_limits<double>::quiet_NaN();
-	EXPD_Weight = std::numeric_limits<double>::quiet_NaN();
+	mEXPD_Target = std::numeric_limits<double>::quiet_NaN();
+	mEXPD_Weight = std::numeric_limits<double>::quiet_NaN();
 
-	imageQuality_Weight = std::numeric_limits<double>::quiet_NaN();
+	mImageQuality_Weight = std::numeric_limits<double>::quiet_NaN();
 
 }
 
-void MeritConfiguration::SET_RMS_WEIGHT(real rms_weight) {
-	RMS_Weight = rms_weight;
-}
-void MeritConfiguration::SET_EFL_TARGET_VALUE(real efl_target) {
-	EFL_Target = efl_target;
-}
-void MeritConfiguration::SET_EFL_TARGET_WEIGHT(real efl_weight) {
-	EFL_Weight = efl_weight;
+void MeritConfiguration::setRMSWeight(real rms_weight) {
+	mRMS_Weight = rms_weight;
 }
 
-void MeritConfiguration::SET_EXPP_TARGET_VALUE(real expp_target) {
-	EXPP_Target = expp_target;
-}
-void MeritConfiguration::SET_EXPP_TARGET_WEIGHT(real expp_weight) {
-	EXPP_Weight = expp_weight;
-}
-void MeritConfiguration::SET_EXPD_TARGET_VALUE(real expd_target) {
-	EXPD_Target = expd_target;
-}
-void MeritConfiguration::SET_EXPD_TARGET_WEIGHT(real expd_weight) {
-	EXPD_Weight = expd_weight;
+real MeritConfiguration::getRMSWeight()
+{
+	return mRMS_Weight;
 }
 
+void MeritConfiguration::setEFL_targetValue(real efl_target) 
+{
+	mEFL_Target = efl_target;
+}
+real MeritConfiguration::getEFL_targetValue()
+{
+	return mEFL_Target;
+}
+void MeritConfiguration::setEFL_weight(real efl_weight) 
+{
+	mEFL_Weight = efl_weight;
+}
+real MeritConfiguration::getEFL_weight()
+{
+	return mEFL_Weight;
+}
+
+void MeritConfiguration::setEXPP_targetValue(real expp_target) 
+{
+	mEXPP_Target = expp_target;
+}
+real MeritConfiguration::getEXPP_targetValue()
+{
+	return mEXPP_Target;
+}
+
+void MeritConfiguration::setEXPP_weight(real expp_weight) {
+	mEXPP_Weight = expp_weight;
+}
+real MeritConfiguration::getEXPP_weight()
+{
+	return mEXPP_Weight;
+}
+
+void MeritConfiguration::setEXPD_targetValue(real expd_target) {
+	mEXPD_Target = expd_target;
+}
+real MeritConfiguration::getEXPD_targetValue()
+{
+	return mEXPD_Target;
+}
+
+void MeritConfiguration::setEXPD_weight(real expd_weight) 
+{
+	mEXPD_Weight = expd_weight;
+}
+real MeritConfiguration::getEXPD_weight()
+{
+	return mEXPD_Weight;
+}
+
+void OptimizeOpticalSystem::add_IMAGEQuality_Weight(real IQ_weight)
+{
+	mMF_Config.setImageQuality_weight(IQ_weight);
+}
+real MeritConfiguration::getImageQuality_weight()
+{
+	return mImageQuality_Weight;
+}
 
 void FieldAndLightStruct::DEFAULT_SETTINGS() {
 
@@ -287,18 +332,18 @@ void FieldAndLightStruct::addField(VectorStructR3 field, real weight)
 	mWeightingFieldVector.push_back(weight);
 }
 
-std::vector<Light_LLT> FieldAndLightStruct::getLightVec() const&
+std::vector<Light_LLT> FieldAndLightStruct::getLightVec() const
 {
 	return mLight_LLT_vec;
 }
 
-std::vector<VectorStructR3>	FieldAndLightStruct::getFieldVec() const&
+std::vector<VectorStructR3>	FieldAndLightStruct::getFieldVec() const
 {
 	return mFieldVector;
 }
 
 
-std::vector<real> FieldAndLightStruct::getWeightFieldVec() const&
+std::vector<real> FieldAndLightStruct::getWeightFieldVec() const
 {
 	return mWeightingFieldVector;
 }
@@ -324,7 +369,7 @@ OptimizeOpticalSystem::~OptimizeOpticalSystem() {};
 
 OptimizeOpticalSystem::OptimizeOpticalSystem(OpticalSystemElement optSysEle, real length, unsigned int population, real mutationRate, localStart localOptStart) :
 	mOptSysElementStart(optSysEle),
-	mutationRate(mutationRate),
+	mMutationRate(mutationRate),
 	mPopulation(population),
 	mLengthOpticalSystem(length),
 	mLocalStart(localOptStart)
@@ -349,7 +394,7 @@ OptimizeOpticalSystem::OptimizeOpticalSystem(OpticalSystemElement optSysEle, rea
 
 OptimizeOpticalSystem::OptimizeOpticalSystem(OpticalSystemElement optSysEle, unsigned int population, real mutationRate, localStart localOptStart) :
 	mOptSysElementStart(optSysEle),
-	mutationRate(mutationRate),
+	mMutationRate(mutationRate),
 	mPopulation(population),
 	mLocalStart(localOptStart)
 {
@@ -406,8 +451,8 @@ void OptimizeOpticalSystem::set_Light(Light_LLT light)
 
 void OptimizeOpticalSystem::add_TargetEFL(real EFL_target, real EFL_weight) 
 {
-	mMF_Config.SET_EFL_TARGET_VALUE(EFL_target);
-	mMF_Config.SET_EFL_TARGET_WEIGHT(EFL_weight);
+	mMF_Config.setEFL_targetValue(EFL_target);
+	mMF_Config.setEFL_weight(EFL_weight);
 }
 
 //void OptimizeOpticalSystem::add_RMSWeight(real RMS_weight) {
@@ -415,19 +460,16 @@ void OptimizeOpticalSystem::add_TargetEFL(real EFL_target, real EFL_weight)
 //}
 
 void OptimizeOpticalSystem::add_TargetEXPP(real EXPP_target, real EXPP_weight) {
-	mMF_Config.SET_EXPP_TARGET_VALUE(EXPP_target);
-	mMF_Config.SET_EXPP_TARGET_WEIGHT(EXPP_weight);
+	mMF_Config.setEXPP_targetValue(EXPP_target);
+	mMF_Config.setEXPP_weight(EXPP_weight);
 }
 
 void OptimizeOpticalSystem::add_TargetEXPD(real EXPD_target, real EXPD_weight) {
-	mMF_Config.SET_EXPD_TARGET_VALUE(EXPD_target);
-	mMF_Config.SET_EXPD_TARGET_WEIGHT(EXPD_weight);
+	mMF_Config.setEXPD_targetValue(EXPD_target);
+	mMF_Config.setEXPD_weight(EXPD_weight);
 }
 
-void OptimizeOpticalSystem::add_IMAGEQuality_Weight(real IQ_weight)
-{
-	mMF_Config.SET_Image_Quality_Weight(IQ_weight);
-}
+
 
 real OptimizeOpticalSystem::getApertureHeight()
 {
@@ -571,7 +613,7 @@ void OptimizeOpticalSystem::RANDOMIZE_SYSTEMS()
 
 void OptimizeOpticalSystem::MERIT_CALCULATE()
 {
-
+	std::cout << "calculate merit values" << std::endl;
 	real calculatedMerit;
 
 	for (int i = 0; i < mGenerationOfSystems.size(); i++)
@@ -597,7 +639,7 @@ void OptimizeOpticalSystem::MERIT_CALCULATE()
 
 //calculating the Fitness of all the members based on RMS values
 void OptimizeOpticalSystem::FITNESS_CALCULATE() {
-
+	std::cout << "calculate fitness values" << std::endl;
 	mFITNESS_VALUES.resize(mPopulation);
 	real tempFitness;
 	for (unsigned int i = 0; i < mPopulation; i++)
@@ -706,7 +748,7 @@ OpticalSystemElement OptimizeOpticalSystem::crossoverPermutation(OpticalSystemEl
 void OptimizeOpticalSystem::CrossOverPopulation() {
 
 	//std::vector<OpticalSystemElement> nextGeneration;
-
+	std::cout << "start cross over" << std::endl;
 	OpticalSystemElement bestOptSysFromGeneration = pickBestParent();
 	//bestOptSysFromGeneration.printValues();
 	calculateSumFitnessValuse();
@@ -718,7 +760,7 @@ void OptimizeOpticalSystem::CrossOverPopulation() {
 		unsigned int chanceMutation = rand() % 100;
 
 		// Mutate the start system
-		if (mutationRate > chanceMutation)
+		if (mMutationRate > chanceMutation)
 		{
 			std::shared_ptr<Element_CR> tempElement;
 
@@ -818,6 +860,7 @@ OpticalSystemElement OptimizeOpticalSystem::caseSwitcher(OpticalSystemElement op
 
 		while (stopper)
 		{
+			std::cout << "interations for local optimization: " << counter << std::endl;
 
 			// optimize radius
 			optSysOptiLocal = optimizeRadius(optSysEle, mOP_Config.getStepRadiusLocal(), meritCalcLocalSave);
@@ -958,6 +1001,7 @@ real OptimizeOpticalSystem::calculateRMSallFieldAndWavelength(OpticalSystemEleme
 	
 	// the first wavelength is the reference point (intersection point chief ray at the image surface)
 	Spot tempSpot(seqTrac.getAllInterPointsAndIntensityAtSurface_i(lastSurface), seqTrac.getAllInterPointsAtSurf_i(lastSurface).at(0));
+
 	tempRMS = tempSpot.getRMS_µm();
 	weightFieldRMS = tempWeightField * tempRMS;
 	allRMS_weight.push_back(weightFieldRMS);
@@ -998,9 +1042,9 @@ void OptimizeOpticalSystem::optimizeSUPERFUNCTION() {
 
 	mOptimizedOptSysEle_LocalOptimizer = tempOptSysEleOptimized_local.getDeepCopyOptSysEle();
 
-
+	std::cout << "" << std::endl;
 	std::cout << "OPTIMIZE SUPERCLASS DONE ! \n";
-
+	std::cout << "" << std::endl;
 }
 
 
@@ -1021,12 +1065,14 @@ OpticalSystemElement OptimizeOpticalSystem::genetic_algorithm() {
 
 	auto startTimeGenetic = std::chrono::high_resolution_clock::now();
 
+	std::cout << "randomize generation 0" << std::endl;
 	RANDOMIZE_SYSTEMS();
 	
 	if (distanceChecker(mGenerationOfSystems, mDistanceAdjustment) == false)
 	{
 		mGenerationOfSystems = adjustDistances(mGenerationOfSystems, mDistanceAdjustment);
 	}
+
 
 	MERIT_CALCULATE();
 	FITNESS_CALCULATE();
@@ -1046,8 +1092,7 @@ OpticalSystemElement OptimizeOpticalSystem::genetic_algorithm() {
 
 	mBest_MERIT_VALUE_of_Gen.push_back(mMERIT_VALUES.at(bestSystemIndex));
 
-	std::cout << "GENERATION : " << mGenerationCount << "\n";
-	std::cout << "BEST MERIT / RMS: " << best_merit_of_generation.at(mGenerationCount) << "\n";
+	std::cout << "Best merit value of generation " << mGenerationCount << ": " << best_merit_of_generation.at(mGenerationCount) << std::endl;
 
 	//printStartSystem();
 	std::cout << "\n";
@@ -1076,8 +1121,6 @@ OpticalSystemElement OptimizeOpticalSystem::genetic_algorithm() {
 		mBest_MERIT_VALUE_of_Gen.push_back(mMERIT_VALUES.at(bestSystemIndex));
 
 		mGenerationCount++;
-		std::cout << "GENERATION : " << mGenerationCount << "\n";
-		std::cout << "BEST MERIT / RMS: " << mBest_MERIT_VALUE_of_Gen.at(mGenerationCount) << "\n";
 		real lastbestvalue = mBest_MERIT_VALUE_of_Gen[mBest_MERIT_VALUE_of_Gen.size() - 1];
 		if (bestFoundValue > lastbestvalue)
 		{
@@ -1102,6 +1145,7 @@ OpticalSystemElement OptimizeOpticalSystem::genetic_algorithm() {
 			geneticlimites = false;
 		}
 
+		std::cout << "Best merit value of generation " << mGenerationCount << ": " << bestFoundValue << std::endl;
 		//delAndFreeMemory(mGenerationOfSystems);
 		//std::vector<OpticalSystemElement>().swap(mGenerationOfSystems);
 		//mGenerationOfSystems.resize(mPopulation);
@@ -1144,7 +1188,7 @@ real OptimizeOpticalSystem::calculateMerit(OpticalSystemElement optSysEle)
 	real EXPD_TARGET_INSTANCE;
 	real EXPD_WEIGHT_INSTANCE;
 
-	if (std::isnan(mMF_Config.EFL_Target) && std::isnan(mMF_Config.EXPD_Target) && std::isnan(mMF_Config.EXPP_Target))
+	if (std::isnan(mMF_Config.getEFL_targetValue()) && std::isnan(mMF_Config.getEXPD_targetValue()) && std::isnan(mMF_Config.getEXPP_targetValue()))
 	{
 		mEFL_LOCAL = 1.0;
 		mEXPP_LOCAL = 1.0;
@@ -1159,57 +1203,57 @@ real OptimizeOpticalSystem::calculateMerit(OpticalSystemElement optSysEle)
 	}
 
 
-	if (std::isnan(mMF_Config.EFL_Target)) {
+	if (std::isnan(mMF_Config.getEFL_targetValue())) {
 		EFL_TARGET_INSTANCE = 1.0;
 		EFL_WEIGHT_INSTANCE = 0.0;
 		//expEFL = 0;
 	}
 	else {
-		EFL_TARGET_INSTANCE = mMF_Config.EFL_Target;
-		EFL_WEIGHT_INSTANCE = mMF_Config.EFL_Weight;
+		EFL_TARGET_INSTANCE = mMF_Config.getEFL_targetValue();
+		EFL_WEIGHT_INSTANCE = mMF_Config.getEFL_weight();
 
 	}
 
-	if (std::isnan(mMF_Config.EXPD_Target)) {
+	if (std::isnan(mMF_Config.getEXPD_targetValue())) {
 		EXPD_TARGET_INSTANCE = 1.0;
 		EXPD_WEIGHT_INSTANCE = 0.0;
 		//expEXPD = 0;
 	}
 	else {
-		EXPD_TARGET_INSTANCE = mMF_Config.EXPD_Target;
-		EXPD_WEIGHT_INSTANCE = mMF_Config.EXPD_Weight;
+		EXPD_TARGET_INSTANCE = mMF_Config.getEXPD_targetValue();
+		EXPD_WEIGHT_INSTANCE = mMF_Config.getEXPD_weight();
 
 	}
 
-	if (std::isnan(mMF_Config.EXPP_Target)) {
+	if (std::isnan(mMF_Config.getEXPP_targetValue())) {
 		EXPP_TARGET_INSTANCE = 1;
 		EXPP_WEIGHT_INSTANCE = 0.0;
 		//expEXPP = 0;
 	}
 	else {
-		EXPP_TARGET_INSTANCE = mMF_Config.EXPP_Target;
-		EXPP_WEIGHT_INSTANCE = mMF_Config.EXPP_Weight;
+		EXPP_TARGET_INSTANCE = mMF_Config.getEXPP_targetValue();
+		EXPP_WEIGHT_INSTANCE = mMF_Config.getEXPP_weight();
 
 	}
 
-	if (std::isnan(mMF_Config.RMS_Weight)) {
+	if (std::isnan(mMF_Config.getRMSWeight())) {
 		RMS_WEIGHT_INSTANCE = 0.0;
 		//expRMS = 0;
 	}
-	else { RMS_WEIGHT_INSTANCE = mMF_Config.RMS_Weight; }
+	else { RMS_WEIGHT_INSTANCE = mMF_Config.getRMSWeight(); }
 
-	if (std::isnan(mMF_Config.EFL_Target) && std::isnan(mMF_Config.EXPD_Target) && std::isnan(mMF_Config.EXPP_Target)) {
+	if (std::isnan(mMF_Config.getEFL_targetValue()) && std::isnan(mMF_Config.getEXPD_targetValue()) && std::isnan(mMF_Config.getEXPP_targetValue())) {
 		//expRMS = 1;
 		RMS_WEIGHT_INSTANCE = 1.0;
 	}
 
-	if (std::isnan(mMF_Config.imageQuality_Weight))
+	if (std::isnan(mMF_Config.getImageQuality_weight()))
 	{
 		imageQuality_WEIGHT_INSTANCE = 0.0;
 	}
 	else
 	{
-		imageQuality_WEIGHT_INSTANCE = mMF_Config.imageQuality_Weight;
+		imageQuality_WEIGHT_INSTANCE = mMF_Config.getImageQuality_weight();
 	}
 
 
@@ -1280,7 +1324,7 @@ OpticalSystem_LLT OptimizeOpticalSystem::getOptSysOptimized_LLT()
 }
 
 // get optimized optical system element
-OpticalSystemElement OptimizeOpticalSystem::getOptSysOptimized_Ele() const&
+OpticalSystemElement OptimizeOpticalSystem::getOptSysOptimized_Ele() const
 {
 	return mOptimizedOptSysEle_LocalOptimizer;
 }
@@ -1844,6 +1888,7 @@ OpticalSystemElement OptimizeOpticalSystem::optimizeRadius(OpticalSystemElement 
 	std::vector<std::vector<int>> startOptiRadius_vecVec_rand;
 	startOptiRadius_vecVec_rand.push_back(mRadiusVariable);
 
+	
 	if (mOP_Config.getCheckAllLocalComb())
 		{
 			while (std::next_permutation(mRadiusVariable.begin(), mRadiusVariable.end()))
@@ -1852,8 +1897,15 @@ OpticalSystemElement OptimizeOpticalSystem::optimizeRadius(OpticalSystemElement 
 			}
 		}
 
+	int combosToCheck = startOptiRadius_vecVec_rand.size();
+	std::cout << "" << std::endl;
+	std::cout << "check combination number: " << combosToCheck << std::endl;
+	std::cout << "" << std::endl;
+
 	for (int i = 0; i < startOptiRadius_vecVec_rand.size(); i++)
 	{
+		std::cout << "local optimization combo: " << i << std::endl;
+
 		// here we have to use the optimized system
 		OpticalSystemElement saveOptSysEle = optSysEle.getDeepCopyOptSysEle();
 		saveOptSysEle.convertHLTSurfacesToLLTSurfaces();
@@ -1867,14 +1919,18 @@ OpticalSystemElement OptimizeOpticalSystem::optimizeRadius(OpticalSystemElement 
 			checkRadSteps = 0;
 			real stepsPos = mOP_Config.getStepRadiusLocal();
 			real stepsNeg = - mOP_Config.getStepRadiusLocal();
-			
+			unsigned int radiusNumToOptimize;
+
 			// if the radius of the surface is variable
 			if (saveOptSysEle.getPosAndElement().at(startOptiRadius_vecVec_rand.at(i).at(j)).getElementInOptSys_ptr()->getRadiusTypeModifier() == typeModifierVariable)
 			{
+				radiusNumToOptimize = startOptiRadius_vecVec_rand.at(i).at(j);
+				std::cout << "optimize radius num: " << radiusNumToOptimize << std::endl;
+
 				while (radius)
 				{
 
-				
+					
 									   					 
 					
 
@@ -1989,8 +2045,9 @@ OpticalSystemElement OptimizeOpticalSystem::optimizeRadius(OpticalSystemElement 
 
 	}
 
-
-
+	std::cout << "" << std::endl;
+	std::cout << "get best optical system local optimization" << std::endl;
+	std::cout << "" << std::endl;
 	return getBestOptSys(optSysAndMerit_vec);
 }
 
@@ -2043,6 +2100,29 @@ void OptimizeOpticalSystem::exportTimesAndPupulation_txt(std::string location, s
 unsigned int OptimizeOpticalSystem::getNumberGenerations()
 {
 	return mGenerationCount + 1;
+}
+
+real OptimizeOpticalSystem::getPopulation()
+{
+	return mPopulation;
+}
+
+real OptimizeOpticalSystem::getMutationRate()
+{
+	return mMutationRate;
+}
+
+FieldAndLightStruct OptimizeOpticalSystem::getFieldAndLightConfig()
+{
+	return mFWL_Config;
+}
+MeritConfiguration OptimizeOpticalSystem::getMeritConfig()
+{
+	return mMF_Config;
+}
+OptimizeParameters OptimizeOpticalSystem::getOptimizeParameters()
+{
+	return mOP_Config;
 }
 
 //// delete and free momory of vector with points

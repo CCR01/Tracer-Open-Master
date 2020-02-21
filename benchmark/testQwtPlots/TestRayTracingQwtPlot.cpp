@@ -38,13 +38,14 @@ bool testRayTracingQwtPlot::superFuncTestRayTracingQwtPlot()
 {
 	std::vector<bool> checkQwtPlot;
 
-	bool testE0 =  testRayTracingQwtPlotE0();
+	bool testE0 = testRayTracingQwtPlotE0();
 	checkQwtPlot.push_back(testE0);
-	bool testE1 =  testRayTracingQwtPlotE1();
+	bool testE1 = testRayTracingQwtPlotE1();
 	checkQwtPlot.push_back(testE1);
-	bool testE2 =  testRayTracingQwtPlotE2();
+	bool testE2 = testRayTracingQwtPlotE2();
 	checkQwtPlot.push_back(testE2);
-
+	bool testE3 = testRayTracingQwtPlotE3();
+	checkQwtPlot.push_back(testE3);
 
 	bool returnCheck = Math::checkTrueOfVectorElements(checkQwtPlot);
 
@@ -58,6 +59,7 @@ bool testRayTracingQwtPlot::testRayTracingQwtPlotE0()
 	RefractedRay_LLT refrac;
 	Absorb_LLT absorb;
 	Light_LLT light;
+	DoNothingInteraction_LLT doNothing;
 	light.setWavelength(550.0);
 
 	// surfaces
@@ -84,7 +86,7 @@ bool testRayTracingQwtPlot::testRayTracingQwtPlotE0()
 
 	// build optical system
 	OpticalSystem_LLT optSysE0;
-	optSysE0.fillVectorSurfaceAndInteractingData(0, S0E0.clone(), refrac.clone());
+	optSysE0.fillVectorSurfaceAndInteractingData(0, S0E0.clone(), doNothing.clone());
 	optSysE0.fillVectorSurfaceAndInteractingData(1, S1E0.clone(), refrac.clone());
 	optSysE0.fillVectorSurfaceAndInteractingData(2, S2E0.clone(), refrac.clone());
 	optSysE0.fillVectorSurfaceAndInteractingData(3, S3E0.clone(), deflectCR3.clone());
@@ -149,7 +151,7 @@ bool testRayTracingQwtPlot::testRayTracingQwtPlotE0()
 	ParameterPlotOptSysE0.setColorSurfaces({ 0,128,0 });
 	//change the thickness of the surfaces
 	ParameterPlotOptSysE0.setThicknessSurfaces(3);
-	
+
 	//// show surfaces with rays
 	mRayTracingQwtPlotSystem2 = new RayTracingQwtPlot(optSysE0, RayTracSysE0, ParameterPlotOptSysE0);
 	mRayTracingQwtPlotSystem2->show();
@@ -220,56 +222,56 @@ bool testRayTracingQwtPlot::testRayTracingQwtPlotE1()
 	optSysE1.fillVectorToPlot2DQwt(13, S14E1.getPointerPlot());
 	optSysE1.fillVectorToPlot2DQwt(14, S15E1.getPointerPlot());
 
-	// single ray tracing
-	SequentialRayTracing SeqTraceE1_plot2D(optSysE1);
-	std::vector<LightRayStruct> lightRayAlong_Y_E1 = SequentialRayTracing::lightRayAlongY({ 0.0, -0.5, 0.0 }, 3, 10.0, -2.0, 2.0, 550, 1.0);
-	SeqTraceE1_plot2D.seqRayTracingWithVectorOfLightRays(lightRayAlong_Y_E1);
+	//// single ray tracing
+	//SequentialRayTracing SeqTraceE1_plot2D(optSysE1);
+	//std::vector<LightRayStruct> lightRayAlong_Y_E1 = SequentialRayTracing::lightRayAlongY({ 0.0, -0.5, 0.0 }, 3, 10.0, -1.0, 1.0, 550, 1.0);
+	//SeqTraceE1_plot2D.seqRayTracingWithVectorOfLightRays(lightRayAlong_Y_E1);
 
 	//// single ray tracing
 	SequentialRayTracing SeqTraceE1_plot2D_field(optSysE1);
-	std::vector<LightRayStruct> lightRayAlong_E1_field = SequentialRayTracing::lightRayAlongY({ 0.0, 0.4, 0.0 }, 3, 10.0, -2.0, 2.0, 550, 1.0);
+	std::vector<LightRayStruct> lightRayAlong_E1_field = SequentialRayTracing::lightRayAlongY({ 0.0, 0.4, 0.0 }, 3, 10.0, -1.0, 1.0, 550, 1.0);
 	SeqTraceE1_plot2D_field.seqRayTracingWithVectorOfLightRays(lightRayAlong_E1_field);
 
 
-	//// single ray tracing
-	SequentialRayTracing SeqTraceE1_plot2D_field2(optSysE1);
-	std::vector<LightRayStruct> lightRayAlong_E1_field2 = SequentialRayTracing::lightRayAlongY({ 0.0, -0.4, 0.0 }, 3, 10.0, -2.0, 2.0, 550, 1.0);
-	SeqTraceE1_plot2D_field2.seqRayTracingWithVectorOfLightRays(lightRayAlong_E1_field2);
+	////// single ray tracing
+	//SequentialRayTracing SeqTraceE1_plot2D_field2(optSysE1);
+	//std::vector<LightRayStruct> lightRayAlong_E1_field2 = SequentialRayTracing::lightRayAlongY({ 0.0, -0.4, 0.0 }, 3, 10.0, -1.0, 1.0, 550, 1.0);
+	//SeqTraceE1_plot2D_field2.seqRayTracingWithVectorOfLightRays(lightRayAlong_E1_field2);
 
 	//// single ray tracing
 	SequentialRayTracing SeqTraceE1_plot2D_field3(optSysE1);
-	std::vector<LightRayStruct> lightRayAlong_E1_field3 = SequentialRayTracing::lightRayAlongY({ 0.0, -0.3, 0.0 }, 3, 10.0, -2.0, 2.0, 550, 1.0);
+	std::vector<LightRayStruct> lightRayAlong_E1_field3 = SequentialRayTracing::lightRayAlongY({ 0.0, -0.3, 0.0 }, 3, 10.0, -1.0, 1.0, 550, 1.0);
 	SeqTraceE1_plot2D_field3.seqRayTracingWithVectorOfLightRays(lightRayAlong_E1_field3);
 
 
 	//// single ray tracing
 	SequentialRayTracing SeqTraceE1_plot2D_field4(optSysE1);
-	std::vector<LightRayStruct> lightRayAlong_E1_field4 = SequentialRayTracing::lightRayAlongY({ 0.0, -0.2, 0.0 }, 3, 10.0, -2.0, 2.0, 550, 1.0);
+	std::vector<LightRayStruct> lightRayAlong_E1_field4 = SequentialRayTracing::lightRayAlongY({ 0.0, -0.2, 0.0 }, 3, 10.0, -1.0, 1.0, 550, 1.0);
 	SeqTraceE1_plot2D_field4.seqRayTracingWithVectorOfLightRays(lightRayAlong_E1_field4);
 
 	//// single ray tracing
 	SequentialRayTracing SeqTraceE1_plot2D_field5(optSysE1);
-	std::vector<LightRayStruct> lightRayAlong_E1_field5 = SequentialRayTracing::lightRayAlongY({ 0.0, -0.1, 0.0 }, 3, 10.0, -2.0, 2.0, 550, 1.0);
+	std::vector<LightRayStruct> lightRayAlong_E1_field5 = SequentialRayTracing::lightRayAlongY({ 0.0, -0.1, 0.0 }, 3, 10.0, -1.0, 1.0, 550, 1.0);
 	SeqTraceE1_plot2D_field5.seqRayTracingWithVectorOfLightRays(lightRayAlong_E1_field5);
 
 	//// single ray tracing
 	SequentialRayTracing SeqTraceE1_plot2D_field6(optSysE1);
-	std::vector<LightRayStruct> lightRayAlong_E1_field6 = SequentialRayTracing::lightRayAlongY({ 0.0, 0.1, 0.0 }, 3, 10.0, -2.0, 2.0, 550, 1.0);
+	std::vector<LightRayStruct> lightRayAlong_E1_field6 = SequentialRayTracing::lightRayAlongY({ 0.0, 0.1, 0.0 }, 3, 10.0, -1.0, 1.0, 550, 1.0);
 	SeqTraceE1_plot2D_field6.seqRayTracingWithVectorOfLightRays(lightRayAlong_E1_field6);
 
 
 	//// single ray tracing
 	SequentialRayTracing SeqTraceE1_plot2D_field7(optSysE1);
-	std::vector<LightRayStruct> lightRayAlong_E1_field7 = SequentialRayTracing::lightRayAlongY({ 0.0, 0.2, 0.0 }, 3, 10.0, -2.0, 2.0, 550, 1.0);
+	std::vector<LightRayStruct> lightRayAlong_E1_field7 = SequentialRayTracing::lightRayAlongY({ 0.0, 0.2, 0.0 }, 3, 10.0, -1.0, 1.0, 550, 1.0);
 	SeqTraceE1_plot2D_field7.seqRayTracingWithVectorOfLightRays(lightRayAlong_E1_field7);
 
 
 
 	//fill vector Ray Tracing
 	RayTracingSystem RayTracSysE1;
-	RayTracSysE1.fillVectorRayTracing(&SeqTraceE1_plot2D, { 0,100,0 });
+	//RayTracSysE1.fillVectorRayTracing(&SeqTraceE1_plot2D, { 0,100,0 });
 	RayTracSysE1.fillVectorRayTracing(&SeqTraceE1_plot2D_field, { 0,0,255 });
-	RayTracSysE1.fillVectorRayTracing(&SeqTraceE1_plot2D_field2, { 150,0,10 });
+	//RayTracSysE1.fillVectorRayTracing(&SeqTraceE1_plot2D_field2, { 150,0,10 });
 	RayTracSysE1.fillVectorRayTracing(&SeqTraceE1_plot2D_field3, { 250,225,0 });
 	RayTracSysE1.fillVectorRayTracing(&SeqTraceE1_plot2D_field4, { 150,20,210 });
 	RayTracSysE1.fillVectorRayTracing(&SeqTraceE1_plot2D_field5, { 240,40,90 });
@@ -282,7 +284,7 @@ bool testRayTracingQwtPlot::testRayTracingQwtPlotE1()
 	//// show surfaces with rays
 	mRayTracingQwtPlotSystem2 = new RayTracingQwtPlot(optSysE1, RayTracSysE1, ParameterPlotOptSysE1);
 	mRayTracingQwtPlotSystem2->show();
-	
+
 	return mRayTracingQwtPlotSystem2->isVisible();
 }
 
@@ -308,12 +310,12 @@ bool testRayTracingQwtPlot::testRayTracingQwtPlotE2()
 	RefractedRay_LLT refrac;
 
 	// vector with surfaces
-	std::vector<surfaceLLT_ptr> surfaces_vec{ S1E2.clone(),S2E2.clone(),S3E2.clone(),S4E2.clone(),S5E2.clone(),S6E2.clone(),S7E2.clone(),S8E2.clone(),S9E2.clone(),S10E2.clone()};
+	std::vector<surfaceLLT_ptr> surfaces_vec{ S1E2.clone(),S2E2.clone(),S3E2.clone(),S4E2.clone(),S5E2.clone(),S6E2.clone(),S7E2.clone(),S8E2.clone(),S9E2.clone(),S10E2.clone() };
 	// vector with interactions
 	std::vector<interactionLLT_ptr> interaction_vec{ refrac.clone(),refrac.clone(),refrac.clone(),refrac.clone(),refrac.clone(),refrac.clone(),refrac.clone(),refrac.clone(),refrac.clone(),refrac.clone() };
 
 	OpticalSystem_LLT optSysE2(surfaces_vec, interaction_vec);
-	
+
 
 
 	//// plot 2d
@@ -330,17 +332,17 @@ bool testRayTracingQwtPlot::testRayTracingQwtPlotE2()
 
 	// single ray tracing
 	SequentialRayTracing SeqTraceE2_plot2D(optSysE2);
-	std::vector<LightRayStruct> lightRayAlong_Y_E2 = SequentialRayTracing::lightRayAlongY({ 0.0, -0.5, 0.0 }, 3, 10.0, -2.0, 2.0, 550, 1.0);
+	std::vector<LightRayStruct> lightRayAlong_Y_E2 = SequentialRayTracing::lightRayAlongY({ 0.0, -0.5, 0.0 }, 3, 10.0, -1.0, 1.0, 550, 1.0);
 	SeqTraceE2_plot2D.seqRayTracingWithVectorOfLightRays(lightRayAlong_Y_E2);
 
 	//// single ray tracing
 	SequentialRayTracing SeqTraceE2_plot2D_field(optSysE2);
-	std::vector<LightRayStruct> lightRayAlong_E2_field = SequentialRayTracing::lightRayAlongY({ 0.0, -0.3, 0.0 }, 3, 10.0, -2.0, 2.0, 550, 1.0);
+	std::vector<LightRayStruct> lightRayAlong_E2_field = SequentialRayTracing::lightRayAlongY({ 0.0, -0.3, 0.0 }, 3, 10.0, -1.0, 1.0, 550, 1.0);
 	SeqTraceE2_plot2D_field.seqRayTracingWithVectorOfLightRays(lightRayAlong_E2_field);
 
 	//// single ray tracing
 	SequentialRayTracing SeqTraceE2_plot2D_field2(optSysE2);
-	std::vector<LightRayStruct> lightRayAlong_E1_field2 = SequentialRayTracing::lightRayAlongY({ 0.0, -0.7, 0.0 }, 3, 10.0, -2.0, 2.0, 550, 1.0);
+	std::vector<LightRayStruct> lightRayAlong_E1_field2 = SequentialRayTracing::lightRayAlongY({ 0.0, -0.7, 0.0 }, 3, 10.0, -1.0, 1.0, 550, 1.0);
 	SeqTraceE2_plot2D_field2.seqRayTracingWithVectorOfLightRays(lightRayAlong_E1_field2);
 
 	//fill vector Ray Tracing
@@ -353,8 +355,135 @@ bool testRayTracingQwtPlot::testRayTracingQwtPlotE2()
 	PlotParameterQwt ParameterPlotOptSysE2;
 	mRayTracingQwtPlotSystem2 = new RayTracingQwtPlot(optSysE2, RayTracSysE2, ParameterPlotOptSysE2);
 	mRayTracingQwtPlotSystem2->show();
-	
+
 	return mRayTracingQwtPlotSystem2->isVisible();
 
 }
 
+bool testRayTracingQwtPlot::testRayTracingQwtPlotE3()
+{
+	//define all the surfaces of the system
+	SphericalSurface_LLT S1E3(/*radius*/38.73360379131933, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 15.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.5, /*refIndexSideB*/1.0);
+	SphericalSurface_LLT S2E3(/*radius*/10.33817058758478, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 20.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.1, /*refIndexSideB*/1.5);
+	SphericalSurface_LLT S3E3(/*radius*/51.02696739895755, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 22.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
+	PlanGeometry_LLT S4E3(/*semiHeight*/5.0, /*point*/{ 0.0,0.0,27.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.5, /*refractiveSideB*/ 1.0);
+	SphericalSurface_LLT S5E3(/*radius*/61.48513190056155, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 29.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
+	PlanGeometry_LLT S6E3(/*semiHeight*/5.0, /*point*/{ 0.0,0.0,34.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.5, /*refractiveSideB*/ 1.0);
+	SphericalSurface_LLT S7E3(/*radius*/13.22318498941039, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 36.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
+	PlanGeometry_LLT S8E3(/*semiHeight*/5.0, /*point*/{ 0.0,0.0,41.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.5, /*refractiveSideB*/ 1.1);
+	SphericalSurface_LLT S9E3(/*radius*/12.07896133399859, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 43.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.5, /*refIndexSideB*/1.1);
+	SphericalSurface_LLT S10E3(/*radius*/26.46510860484050, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 48.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.4, /*refIndexSideB*/1.6);
+	SphericalSurface_LLT S11E3(/*radius*/21.48098096423011, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 53.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.6);
+	SphericalSurface_LLT S12E3(/*radius*/30.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 55.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
+	SphericalSurface_LLT S13E3(/*radius*/70.0, /*semiHeight*/6.0, /*Apex of the sphere*/{ 0.0, 0.0, 60.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.6, /*refIndexSideB*/1.5);
+	SphericalSurface_LLT S14E3(/*radius*/40.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 65.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.6, /*refIndexSideB*/1.0);
+	PlanGeometry_LLT S15E3(/*semiHeight*/5.0, /*point*/{ 0.0,0.0,73.5 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
+
+
+
+
+	// build the optical system by giving the position of each surface, its referance and its interaction
+	RefractedRay_LLT refrac;
+	OpticalSystem_LLT optSysE3;
+	optSysE3.fillVectorSurfaceAndInteractingData(0, S1E3.clone(), refrac.clone());
+	optSysE3.fillVectorSurfaceAndInteractingData(1, S2E3.clone(), refrac.clone());
+	optSysE3.fillVectorSurfaceAndInteractingData(2, S3E3.clone(), refrac.clone());
+	optSysE3.fillVectorSurfaceAndInteractingData(3, S4E3.clone(), refrac.clone());
+	optSysE3.fillVectorSurfaceAndInteractingData(4, S5E3.clone(), refrac.clone());
+	optSysE3.fillVectorSurfaceAndInteractingData(5, S6E3.clone(), refrac.clone());
+	optSysE3.fillVectorSurfaceAndInteractingData(6, S7E3.clone(), refrac.clone());
+	optSysE3.fillVectorSurfaceAndInteractingData(7, S8E3.clone(), refrac.clone());
+	optSysE3.fillVectorSurfaceAndInteractingData(8, S9E3.clone(), refrac.clone());
+	optSysE3.fillVectorSurfaceAndInteractingData(9, S10E3.clone(), refrac.clone());
+	optSysE3.fillVectorSurfaceAndInteractingData(10, S11E3.clone(), refrac.clone());
+	optSysE3.fillVectorSurfaceAndInteractingData(11, S12E3.clone(), refrac.clone());
+	optSysE3.fillVectorSurfaceAndInteractingData(12, S13E3.clone(), refrac.clone());
+	optSysE3.fillVectorSurfaceAndInteractingData(13, S14E3.clone(), refrac.clone());
+	optSysE3.fillVectorSurfaceAndInteractingData(14, S15E3.clone(), refrac.clone());
+
+	Light_LLT light;
+	light.setWavelength(550.0);
+
+	//// plot 2d
+
+	optSysE3.fillVectorToPlot2DQwt(0, S1E3.getPointerPlot());
+	optSysE3.fillVectorToPlot2DQwt(1, S2E3.getPointerPlot());
+	optSysE3.fillVectorToPlot2DQwt(2, S3E3.getPointerPlot());
+	optSysE3.fillVectorToPlot2DQwt(3, S4E3.getPointerPlot());
+	optSysE3.fillVectorToPlot2DQwt(4, S5E3.getPointerPlot());
+	optSysE3.fillVectorToPlot2DQwt(5, S6E3.getPointerPlot());
+	optSysE3.fillVectorToPlot2DQwt(6, S7E3.getPointerPlot());
+	optSysE3.fillVectorToPlot2DQwt(7, S8E3.getPointerPlot());
+	optSysE3.fillVectorToPlot2DQwt(8, S9E3.getPointerPlot());
+	optSysE3.fillVectorToPlot2DQwt(9, S10E3.getPointerPlot());
+	optSysE3.fillVectorToPlot2DQwt(10, S11E3.getPointerPlot());
+	optSysE3.fillVectorToPlot2DQwt(11, S12E3.getPointerPlot());
+	optSysE3.fillVectorToPlot2DQwt(12, S13E3.getPointerPlot());
+	optSysE3.fillVectorToPlot2DQwt(13, S14E3.getPointerPlot());
+	optSysE3.fillVectorToPlot2DQwt(14, S15E3.getPointerPlot());
+
+	// single ray tracing
+	SequentialRayTracing SeqTraceE3_plot2D(optSysE3);
+	std::vector<LightRayStruct> lightRayAlong_Y_E3 = SequentialRayTracing::lightRayAlongY({ 0.0, -0.5, 0.0 }, 7, 10.0, -2.0, 2.0, 550, 1.0);
+	SeqTraceE3_plot2D.seqRayTracingWithVectorOfLightRays(lightRayAlong_Y_E3);
+
+	//// single ray tracing
+	SequentialRayTracing SeqTraceE3_plot2D_field(optSysE3);
+	std::vector<LightRayStruct> lightRayAlong_E3_field = SequentialRayTracing::lightRayAlongY({ 0.0, 0.5, 0.0 }, 7, 10.0, -2.0, 2.0, 550, 1.0);
+	SeqTraceE3_plot2D_field.seqRayTracingWithVectorOfLightRays(lightRayAlong_E3_field);
+
+
+	//// single ray tracing
+	SequentialRayTracing SeqTraceE3_plot2D_field2(optSysE3);
+	std::vector<LightRayStruct> lightRayAlong_E3_field2 = SequentialRayTracing::lightRayAlongY({ 0.0, 0.0, 0.0 }, 7, 10.0, -2.0, 2.0, 550, 1.0);
+	SeqTraceE3_plot2D_field2.seqRayTracingWithVectorOfLightRays(lightRayAlong_E3_field2);
+
+	////// single ray tracing
+	//SequentialRayTracing SeqTraceE3_plot2D_field3(optSysE3);
+	//std::vector<LightRayStruct> lightRayAlong_E3_field3 = SequentialRayTracing::lightRayAlongY({ 0.0, -0.3, 0.0 }, 3, 10.0, -2.0, 2.0, 550, 1.0);
+	//SeqTraceE3_plot2D_field3.seqRayTracingWithVectorOfLightRays(lightRayAlong_E3_field3);
+	//
+	//
+	////// single ray tracing
+	//SequentialRayTracing SeqTraceE3_plot2D_field4(optSysE3);
+	//std::vector<LightRayStruct> lightRayAlong_E3_field4 = SequentialRayTracing::lightRayAlongY({ 0.0, -0.2, 0.0 }, 3, 10.0, -2.0, 2.0, 550, 1.0);
+	//SeqTraceE3_plot2D_field4.seqRayTracingWithVectorOfLightRays(lightRayAlong_E3_field4);
+	//
+	////// single ray tracing
+	//SequentialRayTracing SeqTraceE3_plot2D_field5(optSysE3);
+	//std::vector<LightRayStruct> lightRayAlong_E3_field5 = SequentialRayTracing::lightRayAlongY({ 0.0, -0.1, 0.0 }, 3, 10.0, -2.0, 2.0, 550, 1.0);
+	//SeqTraceE3_plot2D_field5.seqRayTracingWithVectorOfLightRays(lightRayAlong_E3_field5);
+	//
+	////// single ray tracing
+	//SequentialRayTracing SeqTraceE3_plot2D_field6(optSysE3);
+	//std::vector<LightRayStruct> lightRayAlong_E3_field6 = SequentialRayTracing::lightRayAlongY({ 0.0, 0.1, 0.0 }, 3, 10.0, -2.0, 2.0, 550, 1.0);
+	//SeqTraceE3_plot2D_field6.seqRayTracingWithVectorOfLightRays(lightRayAlong_E3_field6);
+	//
+	//
+	////// single ray tracing
+	//SequentialRayTracing SeqTraceE3_plot2D_field7(optSysE3);
+	//std::vector<LightRayStruct> lightRayAlong_E3_field7 = SequentialRayTracing::lightRayAlongY({ 0.0, 0.2, 0.0 }, 3, 10.0, -2.0, 2.0, 550, 1.0);
+	//SeqTraceE3_plot2D_field7.seqRayTracingWithVectorOfLightRays(lightRayAlong_E3_field7);
+
+
+
+	//fill vector Ray Tracing
+	RayTracingSystem RayTracSysE3;
+	RayTracSysE3.fillVectorRayTracing(&SeqTraceE3_plot2D, { 255,0,0 });
+	RayTracSysE3.fillVectorRayTracing(&SeqTraceE3_plot2D_field, { 0,255,0 });
+	RayTracSysE3.fillVectorRayTracing(&SeqTraceE3_plot2D_field2, { 0,0,255 });
+	//RayTracSysE3.fillVectorRayTracing(&SeqTraceE3_plot2D_field3, { 250,225,0 });
+	//RayTracSysE3.fillVectorRayTracing(&SeqTraceE3_plot2D_field4, { 150,20,210 });
+	//RayTracSysE3.fillVectorRayTracing(&SeqTraceE3_plot2D_field5, { 240,40,90 });
+	//RayTracSysE3.fillVectorRayTracing(&SeqTraceE3_plot2D_field6, { 125,225,180 });
+	//RayTracSysE3.fillVectorRayTracing(&SeqTraceE3_plot2D_field7, { 198,200,110 });
+
+
+	//initiate the plot parameter
+	PlotParameterQwt ParameterPlotOptSysE3;
+	//// show surfaces with rays
+	mRayTracingQwtPlotSystem2 = new RayTracingQwtPlot(optSysE3, RayTracSysE3, ParameterPlotOptSysE3);
+	mRayTracingQwtPlotSystem2->show();
+
+	return mRayTracingQwtPlotSystem2->isVisible();
+}

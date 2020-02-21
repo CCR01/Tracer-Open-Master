@@ -226,7 +226,4 @@ private:
 	std::vector<CommentandPosCommentToPlotInRayTracing> mCommentandPosCommentToSpotDiagramPlot;
 
 	int CurveCounter = 0;
-
-	
-
 };

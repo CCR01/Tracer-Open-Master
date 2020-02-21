@@ -1079,11 +1079,5 @@ private:
 	LensThreeSurfaces EO45417;
 	LensThreeSurfaces EO45418;
 	LensThreeSurfaces EO45419;
-
-
-
-
-
-
 };
 

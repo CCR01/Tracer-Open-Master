@@ -6,24 +6,46 @@
 
 
 // calc new value variance percent
-/*CR*/real Math::calcNewValueVariancePercent(real initilaValue, real percent)
+real Math::calcNewValueVariancePercent(real initilaValue, real percent)
 {
 	return initilaValue * (percent + 100.0) / 100.0;
 }
 
 
 // convert an angle in direction
-/*CR*/ VectorStructR3 Math::convertAngleInDirection(real angleDegreesX, real angleDegreesY)
+VectorStructR3 Math::convertAngleInDirection(real angleDegreesX, real angleDegreesY)
 {
-	VectorStructR3 returnVec3;
-	returnVec3.setX(tan(angleDegreesX * PI / 180));
-	returnVec3.setY(tan(angleDegreesY * PI / 180));
-	returnVec3.setZ(1);
+	//real prefix_X = 1.0;
+	//real prefix_Y = 1.0;
+
+	////*** strange things about Zemax *** //
+	//if (angleDegreesX != 0.0 && angleDegreesY != 0.0)
+	//{
+	//	if (angleDegreesX < 0.0)
+	//	{
+	//		prefix_X = -1.0;
+	//	}
+	//
+	//	if (angleDegreesY < 0.0)
+	//	{
+	//		prefix_Y = -1.0;
+	//	}
+	//
+	//	angleDegreesX = prefix_X * std::sqrt(std::abs(angleDegreesX));
+	//	angleDegreesY = prefix_Y * std::sqrt(std::abs(angleDegreesY));
+	//}
+	//// *** *** //
+
+	VectorStructR3 returnVec3(0.0,0.0,1.0);
+	returnVec3.setY((tan(angleDegreesY * PI / 180)));
+	returnVec3.setX((tan(angleDegreesX * PI / 180)));
+
+	   	 
 
 	return returnVec3;
 }
 
-/*CR*/ twoVaulesReal Math::convertDirectionInAngle(VectorStructR3 direction)
+twoVaulesReal Math::convertDirectionInAngle(VectorStructR3 direction)
 {
 	real dir_X = direction.getX();
 	real dir_Y = direction.getY();
@@ -216,7 +238,7 @@ double Math::roundNumber(double Zahl, unsigned int decimals)
 
 //TODO QUESTION: This methode does not really fit to this class -> create maybe a class called "BasicMath"
 // compare two reounded numbers
-bool  Math::compareTwoNumbers(double num1, double num2, unsigned int decimals)
+bool  Math::compareTwoNumbers_decimals(double num1, double num2, unsigned int decimals)
 {
 	double roundedNumber1 = roundNumber(num1, decimals);
 	double roundedNumber2 = roundNumber(num2, decimals);
@@ -232,6 +254,15 @@ bool  Math::compareTwoNumbers(double num1, double num2, unsigned int decimals)
 	}
 }
 
+bool Math::compareTwoNumbers_tolrance(real num1, real num2, real tolerance)
+{
+	if (std::abs(num1 - num2) < tolerance)
+	{
+		return true;
+	}
+
+	return false;
+}
 
 
 // Round the numbers of a matrix
@@ -251,7 +282,7 @@ Matrix3x3AndExist Math::RoundNumberMatrix(real Matrix[3][3], int decimal)
 }
 
 // compare two vectors struct R3
-bool Math::compareTwoVectorStructR3(VectorStructR3 const& V1, VectorStructR3 const& V2, unsigned int const& decimals)
+bool Math::compareTwoVectorStructR3_decimals(VectorStructR3 const V1, VectorStructR3 const V2, unsigned int decimals)
 {
 	bool bEqual = true;
 
@@ -262,8 +293,17 @@ bool Math::compareTwoVectorStructR3(VectorStructR3 const& V1, VectorStructR3 con
 	return bEqual;
 }
 
+bool Math::compareTwoVectorStructR3_tolerance(VectorStructR3 const V1, VectorStructR3 const V2, real tolerance)
+{
+	bool check0 = compareTwoNumbers_tolrance(V1.getX(), V2.getX(), tolerance);
+	bool check1 = compareTwoNumbers_tolrance(V1.getY(), V2.getY(), tolerance);
+	bool check2 = compareTwoNumbers_tolrance(V1.getZ(), V2.getZ(), tolerance);
+
+	return(check0 && check1 && check2);
+}
+
 // compate two vectors struct R2
-bool Math::compareTwoVectorStruct2D(VectorStructR2 const& V1, VectorStructR2 const& V2, unsigned int const& decimals)
+bool Math::compareTwoVectorStruct2D_decimals(VectorStructR2 const V1, VectorStructR2 const& V2, unsigned int const& decimals)
 {
 	bool bEqual = true;
 
@@ -272,6 +312,15 @@ bool Math::compareTwoVectorStruct2D(VectorStructR2 const& V1, VectorStructR2 con
 
 	return bEqual;
 
+}
+
+bool Math::compareTwoVectorStruct2D_tolerance(VectorStructR2 const V1, VectorStructR2 const V2, real tolerance)
+{
+	bool check0 = compareTwoNumbers_tolrance(V1.getX(), V2.getX(), tolerance);
+	bool check1 = compareTwoNumbers_tolrance(V1.getY(), V2.getY(), tolerance);
+
+
+	return(check0 && check1);
 }
 
 // check if all vector elements are true
@@ -301,7 +350,7 @@ bool Math::compareRoundedTwoMatrices3x3(real Matrix1[3][3], real Matrix2[3][3], 
 	for (int i = 0; i < 3; i++)
 	{
 		for (int j = 0; j < 3; j++)
-			if (!compareTwoNumbers(Matrix1[i][j], Matrix2[i][j], decimals)) beEqual = false;
+			if (!compareTwoNumbers_decimals(Matrix1[i][j], Matrix2[i][j], decimals)) beEqual = false;
 	}
 
 	return beEqual;
@@ -471,10 +520,10 @@ std::vector<real> Math::linDistriAlongTwoValues_double(real valueMin, real Value
 {
 
 	std::vector<real> output;
-	real delta = std::abs(valueMin - ValueMax) / (number);
+	real delta = std::abs(valueMin - ValueMax) / (number - 1);
 
 	// this loop can not be parallelized so easily using omp
-	for (unsigned int i = 0; i <= number; i++)
+	for (unsigned int i = 0; i <= number - 1; i++)
 	{
 		output.push_back(valueMin + delta * i);
 
@@ -488,10 +537,10 @@ std::vector<real> Math::linDistriAlongTwoValues_double(real valueMin, real Value
 std::vector<float> Math::linDistriAlongTwoValues_float(float const& valueMin, float const& ValueMax, unsigned int const& number)
 {
 	std::vector<float> output;
-	real delta = std::abs(valueMin - ValueMax) / (number);
+	real delta = std::abs(valueMin - ValueMax) / (number - 1);
 
 	// this loop can not be parallelized so easily using omp
-	for (unsigned int i = 0; i <= number; i++)
+	for (unsigned int i = 0; i <= number - 1; i++)
 	{
 		output.push_back(valueMin + delta * i);
 
@@ -557,7 +606,7 @@ bool Math::compareTwoSTDVecors(std::vector<real> V1, std::vector<real> V2, unsig
 		//#pragma omp for
 		for (int i = 0; i < V1.size(); i++)
 		{
-			output = compareTwoNumbers(V1.at(i), V2.at(i), decimals);
+			output = compareTwoNumbers_decimals(V1.at(i), V2.at(i), decimals);
 		}
 	}
 
