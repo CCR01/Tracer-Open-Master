@@ -4,16 +4,16 @@ c:\tracer-open-master\lowleveltracing\importantstructures.h(73): warning C4227: 
 c:\tracer-open-master\lowleveltracing\importantstructures.h(93): warning C4227: anachronism used: qualifiers on reference are ignored
 c:\tracer-open-master\lowleveltracing\importantstructures.h(108): warning C4227: anachronism used: qualifiers on reference are ignored
 c:\tracer-open-master\lowleveltracing\importantstructures.h(134): warning C4227: anachronism used: qualifiers on reference are ignored
-c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.h(42): warning C4227: anachronism used: qualifiers on reference are ignored
-c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.h(45): warning C4227: anachronism used: qualifiers on reference are ignored
-c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.h(46): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.h(44): warning C4227: anachronism used: qualifiers on reference are ignored
 c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.h(47): warning C4227: anachronism used: qualifiers on reference are ignored
-c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.cpp(1823): warning C4227: anachronism used: qualifiers on reference are ignored
-c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.cpp(1857): warning C4227: anachronism used: qualifiers on reference are ignored
-c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.cpp(1870): warning C4227: anachronism used: qualifiers on reference are ignored
-c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.cpp(1894): warning C4227: anachronism used: qualifiers on reference are ignored
-c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.cpp(1945): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
-c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.cpp(1954): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
-c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.cpp(1955): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
-c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.cpp(1992): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.h(48): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.h(49): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.cpp(544): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.cpp(578): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.cpp(591): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.cpp(615): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.cpp(666): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.cpp(675): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.cpp(676): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\benchmark\rayaiming\benchmarkrayaiming.cpp(713): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
   VS-Solution_tracer-open.vcxproj -> C:\Tracer-Open-Master\VS-Solution_tracer-open\x64\Debug\VS-Solution_tracer-open.exe

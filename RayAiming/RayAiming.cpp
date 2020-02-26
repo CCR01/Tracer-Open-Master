@@ -492,7 +492,7 @@ LightRayStruct RayAiming::infinityRayAiming(VectorStructR3 rayDirection, VectorS
 
 	LightRayStruct lightRayi;
 
-	if (mPosApertureStopModify == 0)
+	if (mPosApertureStop == 0)
 	{
 		//TODO Carsten: Das muss ich mir noch ganeu anschauen!
 

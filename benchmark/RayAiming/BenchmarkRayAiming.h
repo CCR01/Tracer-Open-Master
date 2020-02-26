@@ -36,11 +36,11 @@ public:
 	bool checkRayAimingE0_inf();
 	bool checkRayAimingE1_inf();
 	bool checkRayAimingE2_inf();
-
+	bool checkRayAimingE3_inf();
+	bool checkRayAimingE4_inf();
 
 	bool checkRayAimingSuperFct();
 
-	bool checkMethodesRayAiming();
 	bool checkRayAimingSingleRay_obj(/*opt sys LLT*/ OpticalSystem_LLT& const optSys_LLT, /*start point Ray*/ VectorStructR3& const startPointRay, /*target point*/ VectorStructR3& const  targetPoint, /*light*/ Light_LLT& const Light);
 
 	// check ray aiming sing*/ OpticalSystem_LLT& const optSys_LLT, /*start point Ray*/ VectorStructR3& const startPointRay, /*target point*/ VectorStructR3& const  targetPoint, /*light*/ Light_LLT& const Light);
