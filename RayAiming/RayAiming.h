@@ -187,7 +187,7 @@ public: RayAiming() {};
 		lightRayAndInterPointAperStop getBestLightRayAndInterPoint_inf(LightRayStruct lightRay0, LightRayStruct lightRay1, LightRayStruct lightRay2, LightRayStruct lightRay3, LightRayStruct lightRay4, VectorStructR3 targetPoint);
 
 		// trace one ray until it comes to the last surface;
-		lightRayAndInterPointAperStop traceOneRayUntilLastSurface_infRayAiming(LightRayStruct lightRay, unsigned int maxLoop);
+		lightRayAndInterPointAperStop traceOneRayUntilInApertureStop_infRayAiming(LightRayStruct lightRay, unsigned int maxLoop);
 
 		// calc all distances
 		std::vector<real> calcAllDistances(const std::vector<lightRayAndInterPointAperStop>& vecLightRaysAndInterPoints, const VectorStructR3& targetPoint);

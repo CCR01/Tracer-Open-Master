@@ -5,6 +5,7 @@
 #include "..\LowLevelTracing\Math_LLT.h"
 #include "..\SequentialRayTracing\SequentialRayTracer.h"
 #include <iomanip> 
+#include "..\oftenUseNamespace\oftenUseNamespace.h"
 
 lightRay_intP_dis_negPos_factor::lightRay_intP_dis_negPos_factor() {};
 lightRay_intP_dis_negPos_factor::~lightRay_intP_dis_negPos_factor() {};
@@ -235,7 +236,7 @@ void defaultRayAimingStruct::loadDefaultParameter()
 	mMaxInterationsRayAiming = 50;
 	mFactor = 0.9;
 	turn_On_RobustRayAiming();
-	mVariancePercentRobustRA = 0.1;
+	mVariancePercentRobustRA = 5.0;
 	mMaxStayCounter = 3;
 	mIncreaserFactorTimes = 10.0;
 }
@@ -308,7 +309,7 @@ void RayAiming::insertPlanBeforFirstSur()
 
 
 // trace one ray until it comes to the last surface;
-lightRayAndInterPointAperStop RayAiming::traceOneRayUntilLastSurface_infRayAiming(LightRayStruct lightRay, unsigned int maxLoop)
+lightRayAndInterPointAperStop RayAiming::traceOneRayUntilInApertureStop_infRayAiming(LightRayStruct lightRay, unsigned int maxLoop)
 {
 	lightRayAndInterPointAperStop tempLightRayAndInterPointAS{};
 
@@ -316,7 +317,12 @@ lightRayAndInterPointAperStop RayAiming::traceOneRayUntilLastSurface_infRayAimin
 	VectorStructR3 interpointApertureStop{};
 
 	SequentialRayTracing seqTrace(mOpticalSystem_LLT);
+	// trace ray only to aperture stop
+	seqTrace.setTraceToSurface(mPosApertureStop);
+	// trace the light ray
 	seqTrace.sequentialRayTracing(lightRay);
+
+
 
 	real curRefIndex = lightRay.getRay_LLT().getCurrentRefractiveIndex();
 	VectorStructR3 DirectionUnit = lightRay.getRay_LLT().getDirectionRayUnit();
@@ -327,12 +333,12 @@ lightRayAndInterPointAperStop RayAiming::traceOneRayUntilLastSurface_infRayAimin
 	VectorStructR3 newOrigin;
 	Ray_LLT newRay;
 
-	unsigned int posLastSurface = mOpticalSystem_LLT.getPosAndInteractingSurface().size() - 1;
+	//unsigned int posLastSurface = mOpticalSystem_LLT.getPosAndInteractingSurface().size() - 1;
 	bool ray_NOT_AtLastSurface = true;
 	// check if light ray comes to last surface
 	while (ray_NOT_AtLastSurface)
 	{
-		char surfSide = seqTrace.getAllInterInfosOfSurf_i_notFiltered(posLastSurface)[loopCounter].getSurfaceSide();
+		char surfSide = seqTrace.getAllInterInfosOfSurf_i_notFiltered(mPosApertureStop)[loopCounter].getSurfaceSide();
 
 		if ('N' == surfSide) // ray comes not to last surface
 		{
@@ -387,11 +393,11 @@ lightRayAndInterPointAperStop RayAiming::getBestLightRayAndInterPoint_inf(LightR
 	lightRayAndInterPointAS.resize(5);
 	unsigned maxLoops = mDefaultParaRayAiming.getMaxLoopsTraceToLastSurface();
 
-	lightRayAndInterPointAS.at(0) = traceOneRayUntilLastSurface_infRayAiming(lightRay0, maxLoops);
-	lightRayAndInterPointAS.at(1) = traceOneRayUntilLastSurface_infRayAiming(lightRay1, maxLoops);
-	lightRayAndInterPointAS.at(2) = traceOneRayUntilLastSurface_infRayAiming(lightRay2, maxLoops);
-	lightRayAndInterPointAS.at(3) = traceOneRayUntilLastSurface_infRayAiming(lightRay3, maxLoops);
-	lightRayAndInterPointAS.at(4) = traceOneRayUntilLastSurface_infRayAiming(lightRay4, maxLoops);
+	lightRayAndInterPointAS.at(0) = traceOneRayUntilInApertureStop_infRayAiming(lightRay0, maxLoops);
+	lightRayAndInterPointAS.at(1) = traceOneRayUntilInApertureStop_infRayAiming(lightRay1, maxLoops);
+	lightRayAndInterPointAS.at(2) = traceOneRayUntilInApertureStop_infRayAiming(lightRay2, maxLoops);
+	lightRayAndInterPointAS.at(3) = traceOneRayUntilInApertureStop_infRayAiming(lightRay3, maxLoops);
+	lightRayAndInterPointAS.at(4) = traceOneRayUntilInApertureStop_infRayAiming(lightRay4, maxLoops);
 
 	std::vector<real> dis = calcAllDistances(lightRayAndInterPointAS, targetPoint);
 
@@ -2019,10 +2025,12 @@ lightRayAndInterPointAperStop RayAiming::reduceDistanceFormLightRay_X_inf(LightR
 
 		// pos trace
 		SequentialRayTracing tracePLus(mOpticalSystem_LLT);
+		tracePLus.setTraceToSurface(mPosApertureStop);
 		tracePLus.sequentialRayTracing(lightRayToTracePos);
 
 		// neg trace
 		SequentialRayTracing traceNeg(mOpticalSystem_LLT);
+		traceNeg.setTraceToSurface(mPosApertureStop);
 		traceNeg.sequentialRayTracing(lightRayToTraceNeg);
 
 		disPosTrace = Math::distanceTwoVectors(tracePLus.getAllInterPointsAtSurf_i(mPosApertureStop)[0], targetPoint);
@@ -2379,10 +2387,12 @@ lightRay_intP_dis_negPos_factor RayAiming::traceNegOrPosSide_andReduce_X_inf(lig
 
 	// pos trace
 	SequentialRayTracing tracePLus(mOpticalSystem_LLT);
+	tracePLus.setTraceToSurface(mPosApertureStop);
 	tracePLus.sequentialRayTracing(lightRayToTracePos);
 
 	// neg trace
 	SequentialRayTracing traceNeg(mOpticalSystem_LLT);
+	traceNeg.setTraceToSurface(mPosApertureStop);
 	traceNeg.sequentialRayTracing(lightRayToTraceNeg);
 
 	IntersectInformationStruct interPointAS_pos = tracePLus.getAllInterInfosOfSurf_i_notFiltered(mPosApertureStop)[0];
@@ -2642,10 +2652,18 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos(lightRay_intP_dis_ne
 
 	LightRayStruct initialLightRay = initialInfos.getLightRay();
 	bool allInterPointsApertStop = true;
-	std::vector<VectorStructR3> interPointsAS_vec;
+	std::vector<VectorStructR3> interPointsAS;
+	std::vector<IntersectInformationStruct> interInfosAS_vec;
 	std::vector<LightRayStruct> lightRay_vec;
-	lightRay_vec.resize(8);
+
 	SequentialRayTracing seqTrace(mOpticalSystem_LLT);
+	seqTrace.setTraceToSurface(mPosApertureStop);
+
+	// light rays to trace
+	std::vector<unsigned int> rayNumToTrace{ 0,1,2,3,4,5,6,7 };
+	unsigned int sizeRayToTace = rayNumToTrace.size();
+	lightRay_vec.resize(sizeRayToTace);
+	unsigned int putLightAtPos = 0;
 
 	while (allInterPointsApertStop)
 	{
@@ -2663,74 +2681,115 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos(lightRay_intP_dis_ne
 		real Y_Neg = Math::calcNewValueVariancePercent(Y_origin, -variancePercent);
 
 
-		// origin 0
-		VectorStructR3 origin0(X_origin, Y_Plus, Z_origin);
-		// origin 1
-		VectorStructR3 origin1(X_origin, Y_Neg, Z_origin);
-		// origin 2
-		VectorStructR3 origin2(X_Neg, Y_origin, Z_origin);
-		// origin 3
-		VectorStructR3 origin3(X_Plus, Y_origin, Z_origin);
-		// origin 4
-		VectorStructR3 origin4(X_Neg, Y_Plus, Z_origin);
-		// origin 5
-		VectorStructR3 origin5(X_Plus, Y_Plus, Z_origin);
-		// origin 6
-		VectorStructR3 origin6(X_Plus, Y_Neg, Z_origin);
-		// origin 7
-		VectorStructR3 origin7(X_Neg, Y_Neg, Z_origin);
+		if (oftenUse::checkIfUnsIntIsInVector(0, rayNumToTrace))
+		{
+			// origin 0
+			VectorStructR3 origin0(X_origin, Y_Plus, Z_origin);
+			// ray0
+			Ray_LLT ray0(origin0, rayDirectionUnit, currentRefIndex);
+			//light ray 0
+			LightRayStruct lightRay0(light, ray0, 1);
+			lightRay_vec[putLightAtPos] = lightRay0;
+			++putLightAtPos;
+		}
 
-		// ray0
-		Ray_LLT ray0(origin0, rayDirectionUnit, currentRefIndex);
-		// ray1
-		Ray_LLT ray1(origin1, rayDirectionUnit, currentRefIndex);
-		// ray2
-		Ray_LLT ray2(origin2, rayDirectionUnit, currentRefIndex);
-		// ray3
-		Ray_LLT ray3(origin3, rayDirectionUnit, currentRefIndex);
-		// ray4
-		Ray_LLT ray4(origin4, rayDirectionUnit, currentRefIndex);
-		// ray5
-		Ray_LLT ray5(origin5, rayDirectionUnit, currentRefIndex);
-		// ray6
-		Ray_LLT ray6(origin6, rayDirectionUnit, currentRefIndex);
-		// ray7
-		Ray_LLT ray7(origin7, rayDirectionUnit, currentRefIndex);
+		if (oftenUse::checkIfUnsIntIsInVector(1, rayNumToTrace))
+		{
+			// origin 1
+			VectorStructR3 origin1(X_origin, Y_Neg, Z_origin);
+			// ray1
+			Ray_LLT ray1(origin1, rayDirectionUnit, currentRefIndex);
+			//light ray 1
+			LightRayStruct lightRay1(light, ray1, 1);
+			lightRay_vec[putLightAtPos] = lightRay1;
+			++putLightAtPos;
+		}
 
+		if (oftenUse::checkIfUnsIntIsInVector(2, rayNumToTrace))
+		{
+			// origin 2
+			VectorStructR3 origin2(X_Neg, Y_origin, Z_origin);
+			// ray2
+			Ray_LLT ray2(origin2, rayDirectionUnit, currentRefIndex);
+			//light ray 2
+			LightRayStruct lightRay2(light, ray2, 1);
+			lightRay_vec[putLightAtPos] = lightRay2;
+			++putLightAtPos;
+		}
 
-		//light ray 0
-		LightRayStruct lightRay0(light, ray0, 1);
-		//light ray 1
-		LightRayStruct lightRay1(light, ray1, 1);
-		//light ray 2
-		LightRayStruct lightRay2(light, ray2, 1);
-		//light ray 3
-		LightRayStruct lightRay3(light, ray3, 1);
-		//light ray 4
-		LightRayStruct lightRay4(light, ray4, 1);
-		//light ray 5
-		LightRayStruct lightRay5(light, ray5, 1);
-		//light ray 6
-		LightRayStruct lightRay6(light, ray6, 1);
-		//light ray 7
-		LightRayStruct lightRay7(light, ray7, 1);
+		if (oftenUse::checkIfUnsIntIsInVector(3, rayNumToTrace))
+		{
 
-		lightRay_vec[0] = lightRay0;
-		lightRay_vec[1] = lightRay1;
-		lightRay_vec[2] = lightRay2;
-		lightRay_vec[3] = lightRay3;
-		lightRay_vec[4] = lightRay4;
-		lightRay_vec[5] = lightRay5;
-		lightRay_vec[6] = lightRay6;
-		lightRay_vec[7] = lightRay7;
+			// origin 3
+			VectorStructR3 origin3(X_Plus, Y_origin, Z_origin);
+			// ray3
+			Ray_LLT ray3(origin3, rayDirectionUnit, currentRefIndex);
+			//light ray 3
+			LightRayStruct lightRay3(light, ray3, 1);
+			lightRay_vec[putLightAtPos] = lightRay3;
+			++putLightAtPos;
+		}
 
+		if (oftenUse::checkIfUnsIntIsInVector(4, rayNumToTrace))
+		{
+			// origin 4
+			VectorStructR3 origin4(X_Neg, Y_Plus, Z_origin);
+			// ray4
+			Ray_LLT ray4(origin4, rayDirectionUnit, currentRefIndex);
+			//light ray 4
+			LightRayStruct lightRay4(light, ray4, 1);
+			lightRay_vec[putLightAtPos] = lightRay4;
+			++putLightAtPos;
+		}
+
+		if (oftenUse::checkIfUnsIntIsInVector(5, rayNumToTrace))
+		{
+			// origin 5
+			VectorStructR3 origin5(X_Plus, Y_Plus, Z_origin);
+			// ray5
+			Ray_LLT ray5(origin5, rayDirectionUnit, currentRefIndex);
+			//light ray 5
+			LightRayStruct lightRay5(light, ray5, 1);
+			lightRay_vec[putLightAtPos] = lightRay5;
+			++putLightAtPos;
+
+		}
+
+		if (oftenUse::checkIfUnsIntIsInVector(6, rayNumToTrace))
+		{
+			// origin 6
+			VectorStructR3 origin6(X_Plus, Y_Neg, Z_origin);
+			// ray6
+			Ray_LLT ray6(origin6, rayDirectionUnit, currentRefIndex);
+			//light ray 6
+			LightRayStruct lightRay6(light, ray6, 1);
+			lightRay_vec[putLightAtPos] = lightRay6;
+			++putLightAtPos;
+		}
+
+		if (oftenUse::checkIfUnsIntIsInVector(7, rayNumToTrace))
+		{
+			// origin 7
+			VectorStructR3 origin7(X_Neg, Y_Neg, Z_origin);
+			// ray7
+			Ray_LLT ray7(origin7, rayDirectionUnit, currentRefIndex);
+			//light ray 7
+			LightRayStruct lightRay7(light, ray7, 1);
+			lightRay_vec[putLightAtPos] = lightRay7;
+			++putLightAtPos;
+		}
+
+		// trace the rays
+		for (unsigned int i = 0; i < sizeRayToTace; ++i)
+		{
+			seqTrace.sequentialRayTracing(lightRay_vec[i]);
+		}
 		
-		seqTrace.seqRayTracingWithVectorOfLightRays(lightRay_vec);
 
-		interPointsAS_vec = seqTrace.getAllInterPointsAtSurf_i(mPosApertureStop);
-		
+		interInfosAS_vec = seqTrace.getAllInterInfosOfSurf_i_notFiltered(mPosApertureStop);
+		interPointsAS = seqTrace.getAllInterPointsAtSurf_i(mPosApertureStop);
 
-		if (interPointsAS_vec.size() == 8)
+		if (interPointsAS.size() == 8)
 		{
 			allInterPointsApertStop = false;
 		}
@@ -2738,10 +2797,25 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos(lightRay_intP_dis_ne
 		else
 		{
 			variancePercent = variancePercent / 1.9;
-			seqTrace.clearAllTracedRays();
+			rayNumToTrace.clear();
+			rayNumToTrace.resize(0);
+			// check which ray we have to trace with less variance in percent
+			for (unsigned int i = 0; i < sizeRayToTace; ++i)
+			{
+				if (interInfosAS_vec[i].getSurfaceSide() == 'N') // we have to trace that ray again
+				{
+					rayNumToTrace.push_back(i);
+				}
+			}
+
+			sizeRayToTace = rayNumToTrace.size();
+			lightRay_vec.clear();
+			lightRay_vec.resize(sizeRayToTace);
+			putLightAtPos = 0;
+			//seqTrace.clearAllTracedRays();
 		}
 	}
-	unsigned posBestRay = getPosRayLowestDistance(interPointsAS_vec, targetPoint);
+	unsigned posBestRay = getPosRayLowestDistance(interPointsAS, targetPoint);
 
 	// new infos 
 	LightRayStruct newBestRay = lightRay_vec[posBestRay];
