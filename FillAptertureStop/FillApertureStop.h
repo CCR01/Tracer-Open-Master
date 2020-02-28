@@ -82,11 +82,7 @@ public:
 	// Ändert die Intensität eines Strahls anhand des nach einer .csv-Tabelle/Vector gegebenen Gradzahl
 	LightRayStruct changeIntensityByDegree(LightRayStruct lightRay, std::vector<VectorStructR2> vec1);
 
-	// fill aperture stop with ray including ray aiming
-	std::vector<LightRayStruct> fillAperStopRayAimingInfinity(std::vector<VectorStructR3> targetPointVec, VectorStructR3 direction, Light_LLT light, real curRefractiveIndex, OpticalSystem_LLT opticalSys);
 
-	// fill aperture stop with ray including ray aiming
-	std::vector<LightRayStruct> fillAperStopRayAimingFromPoint(std::vector<VectorStructR3> targetPointVec, VectorStructR3 startPointRay, Light_LLT light, real curRefractiveIndex, OpticalSystem_LLT opticalSys);
 
 private:
 	VectorStructR3 mStartPointRay;

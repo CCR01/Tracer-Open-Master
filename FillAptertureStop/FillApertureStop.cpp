@@ -459,36 +459,3 @@ LightRayStruct FillApertureStop::changeIntensityByDegree(LightRayStruct lightRay
 
 
 
-// fill aperture stop with ray including ray aiming
-std::vector<LightRayStruct> FillApertureStop::fillAperStopRayAimingInfinity(std::vector<VectorStructR3> targetPointVec, VectorStructR3 direction, Light_LLT light, real curRefractiveIndex, OpticalSystem_LLT opticalSys)
-{
-	LightRayStruct tempLightRayStr;
-	RayAiming TempRayAiming(opticalSys);
-	std::vector<LightRayStruct> returnLightRaySt;
-
-	for (unsigned int i = 0; i < targetPointVec.size(); i++)
-	{
-		tempLightRayStr = TempRayAiming.infinityRayAiming(direction, targetPointVec.at(i), light, 1.0);
-		returnLightRaySt.push_back(tempLightRayStr);
-	}
-
-	return returnLightRaySt;
-
-}
-
-// fill aperture stop with ray including ray aiming
-std::vector<LightRayStruct> FillApertureStop::fillAperStopRayAimingFromPoint(std::vector<VectorStructR3> targetPointVec, VectorStructR3 startPointRay, Light_LLT light, real curRefractiveIndex, OpticalSystem_LLT opticalSys)
-{
-	LightRayStruct tempLightRayStr;
-	RayAiming TempRayAiming(opticalSys);
-	std::vector<LightRayStruct> returnLightRaySt;
-
-	for (unsigned int i = 0; i < targetPointVec.size(); i++)
-	{
-		tempLightRayStr = TempRayAiming.calcRayThrowPointInApertureStop(startPointRay, targetPointVec.at(i), light, 1.0);
-		returnLightRaySt.push_back(tempLightRayStr);
-	}
-
-	return returnLightRaySt;
-
-}
