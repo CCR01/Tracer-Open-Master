@@ -37,6 +37,8 @@ public:
 	bool checkRayAimingE0_obj();
 	bool checkRayAimingE1_obj();
 	bool checkRayAimingE2_obj();
+	bool checkRayAimingE3_obj();
+	bool checkRayAimingE4_obj();
 
 	// check ray aiming --> inf
 	bool checkRayAimingSuperFct_inf();

@@ -175,9 +175,9 @@ public: RayAiming() {};
 		// Ray Aiming for a ray starting at an object point
 		LightRayStruct rayAiming_obj(VectorStructR3 rayOrigin, VectorStructR3 targetPoint, Light_LLT light, real curRefracIndex);
 		// trace all rays until all of them comes to the last surface
-		lightRayAndInterPointAperStop getBestLightRayAndInterPoint_obj(LightRayStruct lightRay0, LightRayStruct lightRay1, LightRayStruct lightRay2, LightRayStruct lightRay3, LightRayStruct lightRay4, VectorStructR3 targetPoint);
+		lightRayAndInterPointAperStop getBestLightRayAndInterPoint_obj(LightRayStruct lightRay0, LightRayStruct lightRay1, LightRayStruct lightRay2, LightRayStruct lightRay3, LightRayStruct lightRay4, VectorStructR3 targetPoint, VectorStructR3 vectorToCalc1, VectorStructR3 vectorRoCalc2);
 		// trace one ray until it comes to the last surface;
-		lightRayAndInterPointAperStop traceOneRayUntilInApertureStop_obj(LightRayStruct lightRay, unsigned int maxLoop);
+		lightRayAndInterPointAperStop traceOneRayUntilInApertureStop_obj(LightRayStruct lightRay, VectorStructR3 vectorToCalcDir, unsigned int maxLoop);
 		// check if we have to trace to neg of pos side
 		lightRay_intP_dis_negPos_factor traceNegOrPosSide_andReduce_X_obj(lightRay_intP_dis_negPos_factor initialInfos);
 		lightRay_intP_dis_negPos_factor traceNegOrPosSide_andReduce_Y_obj(lightRay_intP_dis_negPos_factor initialInfos);
@@ -208,25 +208,7 @@ public: RayAiming() {};
 		// calculate new origin variance in percent
 		lightRay_intP_dis_negPos_factor calcNewBestInfos_inf(lightRay_intP_dis_negPos_factor initialInfos);
 		// *** *** //
-		
-
-		
-
-		
-
-
-
-		
-
-
-
-
-
-
-
-
-
-
+	
 
 
 private:

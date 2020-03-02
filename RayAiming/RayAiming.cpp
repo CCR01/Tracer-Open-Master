@@ -248,7 +248,7 @@ void defaultRayAimingStruct::loadDefaultParameter()
 	mFactor_obj = 0.1;
 	turn_On_RobustRayAiming();
 	mVariancePercentRobustRA = 5.0;
-	mMaxStayCounter = 3;
+	mMaxStayCounter = 2;
 	mIncreaserFactorTimes = 10.0;
 }
 
@@ -259,7 +259,7 @@ RayAiming::RayAiming(OpticalSystem_LLT opticalSystem) :
 {
 	loadImportantInfosForRayAiming();
 	mDefaultParaRayAiming.loadDefaultParameter();
-	mPosApertureStop = mOpticalSystem_LLT.getPosApertureStop();
+	
 };
 
 // load important infomation for ray aiming
@@ -269,6 +269,7 @@ void RayAiming::loadImportantInfosForRayAiming()
 	mRadiusFirstSurface = mOpticalSystem_LLT.getPosAndInteractingSurface().at(0).getSurfaceInterRay_ptr()->getRadius();
 	mPositionFirstSurface = mOpticalSystem_LLT.getPosAndInteractingSurface().at(0).getSurfaceInterRay_ptr()->getPoint();
 	mDirectionFirstSurface = mOpticalSystem_LLT.getPosAndInteractingSurface().at(0).getSurfaceInterRay_ptr()->getDirection();
+	mPosApertureStop = mOpticalSystem_LLT.getPosApertureStop();
 }
 
 
@@ -434,15 +435,16 @@ LightRayStruct RayAiming::rayAiming_inf(VectorStructR3 rayDirection, VectorStruc
 {
 
 	LightRayStruct lightRayi;
+	real startPointFactor = mDefaultParaRayAiming.getStartPointFactor();
 
 	if (mPosApertureStop == 0)
 	{
 		// tan(a) = Gegenkath / Ankath
 		real tanDegreeXZ = rayDirection.getX() / rayDirection.getZ();
 		real tanDegreeYZ = rayDirection.getY() / rayDirection.getZ();
-		real startPointX = targetPoint.getX() - tanDegreeXZ * mDefaultParaRayAiming.getStartPointFactor();
-		real startPointY = targetPoint.getY() - tanDegreeYZ * mDefaultParaRayAiming.getStartPointFactor();
-		real startPointZ = targetPoint.getZ() - mDefaultParaRayAiming.getStartPointFactor();
+		real startPointX = targetPoint.getX() - tanDegreeXZ * startPointFactor;
+		real startPointY = targetPoint.getY() - tanDegreeYZ * startPointFactor;
+		real startPointZ = targetPoint.getZ() - startPointFactor;
 		VectorStructR3 startPoint = { startPointX , startPointY, startPointZ };
 
 
@@ -459,9 +461,9 @@ LightRayStruct RayAiming::rayAiming_inf(VectorStructR3 rayDirection, VectorStruc
 		std::shared_ptr<SurfaceIntersectionRay_LLT> firstSurface_ptr = mOpticalSystem_LLT.getPosAndInteractingSurface()[0].getSurfaceInterRay_ptr();
 
 		VectorStructR3 startPoint = firstSurface_ptr->getPoint();
-		VectorStructR3 directionFirstSurface = firstSurface_ptr->getDirection();
-		real directionFirstSurface_Z = directionFirstSurface.getZ();
-		real semiHeightFirstSurface = firstSurface_ptr->getSemiHeight();
+		//VectorStructR3 directionFirstSurface = firstSurface_ptr->getDirection();
+		real directionFirstSurface_Z = mDirectionFirstSurface.getZ();
+		//real semiHeightFirstSurface = firstSurface_ptr->getSemiHeight();
 		// check if first surface is negativ
 		if (directionFirstSurface_Z < 0)
 		{
@@ -478,8 +480,9 @@ LightRayStruct RayAiming::rayAiming_inf(VectorStructR3 rayDirection, VectorStruc
 		VectorStructR3 BaseVecor1 = { 1.0,1.0,0.0 };
 		VectorStructR3 BaseVecor2 = { 1.0,-1.0,0.0 };
 
-		VectorStructR3 Vector1ToCalcDir = 0.5 * semiHeightFirstSurface * Math::DoCrossProduct(BaseVecor1, directionFirstSurface);
-		VectorStructR3 Vector2ToCalcDir = 0.5 * semiHeightFirstSurface * Math::DoCrossProduct(BaseVecor2, directionFirstSurface);
+		VectorStructR3 Vector1ToCalcDir = 0.5 * mSemiHeightFirstSurface * Math::unitVector(Math::DoCrossProduct(BaseVecor1, mDirectionFirstSurface));
+		VectorStructR3 Vector2ToCalcDir = 0.5 * mSemiHeightFirstSurface * Math::unitVector(Math::DoCrossProduct(BaseVecor2, mDirectionFirstSurface));
+
 		VectorStructR3 startPointRay0 = { startPoint.getX() - Vector1ToCalcDir.getX(), startPoint.getY() - Vector1ToCalcDir.getY(), startPoint.getZ() - mDefaultParaRayAiming.getStartPointFactor() };
 		VectorStructR3 startPointRay1 = { startPoint.getX() + Vector1ToCalcDir.getX(), startPoint.getY() - Vector1ToCalcDir.getY(), startPoint.getZ() - mDefaultParaRayAiming.getStartPointFactor() };
 		VectorStructR3 startPointRay2 = { startPoint.getX() - Vector1ToCalcDir.getX(), startPoint.getY() + Vector1ToCalcDir.getY(), startPoint.getZ() - mDefaultParaRayAiming.getStartPointFactor() };
@@ -1047,8 +1050,8 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos_inf(lightRay_intP_di
 			}
 
 			sizeRayToTace = rayNumToTrace.size();
-			lightRay_vec.clear();
-			lightRay_vec.resize(sizeRayToTace);
+			//lightRay_vec.clear();
+			//lightRay_vec.resize(sizeRayToTace);
 			putLightAtPos = 0;
 			//seqTrace.clearAllTracedRays();
 		}
@@ -1204,13 +1207,13 @@ LightRayStruct RayAiming::rayAiming_obj(VectorStructR3 rayOrigin, VectorStructR3
 		VectorStructR3 BaseVecor1 = { 1.0,1.0,0.0 };
 		VectorStructR3 BaseVecor2 = { 1.0,-1.0,0.0 };
 
-		VectorStructR3 Vector1ToCalcDir = 0.5 * semiHeightFirstSurface * Math::DoCrossProduct(BaseVecor1, directionFirstSurface);
-		VectorStructR3 Vector2ToCalcDir = 0.5 * semiHeightFirstSurface * Math::DoCrossProduct(BaseVecor2, directionFirstSurface);
+		VectorStructR3 Vector1ToCalcDir = 0.5 * semiHeightFirstSurface * Math::unitVector(Math::DoCrossProduct(BaseVecor1, directionFirstSurface));
+		VectorStructR3 Vector2ToCalcDir = 0.5 * semiHeightFirstSurface * Math::unitVector(Math::DoCrossProduct(BaseVecor2, directionFirstSurface));
 
 		VectorStructR3 rayDirection0 = { originFirstSurface - rayOrigin + Vector1ToCalcDir };
 		VectorStructR3 rayDirection1 = { originFirstSurface - rayOrigin - Vector1ToCalcDir };
 		VectorStructR3 rayDirection2 = { originFirstSurface - rayOrigin + Vector2ToCalcDir };
-		VectorStructR3 rayDirection3 = { originFirstSurface - rayOrigin + Vector2ToCalcDir };
+		VectorStructR3 rayDirection3 = { originFirstSurface - rayOrigin - Vector2ToCalcDir };
 		VectorStructR3 rayDirection4 = { originFirstSurface - rayOrigin };
 
 		Ray_LLT startRay0(rayOrigin, rayDirection0, curRefracIndex);
@@ -1227,7 +1230,7 @@ LightRayStruct RayAiming::rayAiming_obj(VectorStructR3 rayOrigin, VectorStructR3
 
 
 		// trace all rays until all of them comes to the last surface
-		lightRayAndInterPointAperStop bestLightRayAndInterPoint = getBestLightRayAndInterPoint_obj(lightRayStart0, lightRayStart1, lightRayStart2, lightRayStart3, lightRayStart4, targetPoint);
+		lightRayAndInterPointAperStop bestLightRayAndInterPoint = getBestLightRayAndInterPoint_obj(lightRayStart0, lightRayStart1, lightRayStart2, lightRayStart3, lightRayStart4, targetPoint, Vector1ToCalcDir, Vector2ToCalcDir);
 
 		LightRayStruct bestLightRay = bestLightRayAndInterPoint.getLightRay();
 		VectorStructR3 interPointBestLightRay = bestLightRayAndInterPoint.getInterPointAperStop();
@@ -1281,7 +1284,7 @@ LightRayStruct RayAiming::rayAiming_obj(VectorStructR3 rayOrigin, VectorStructR3
 
 
 // trace all rays until all of them comes to the last surface
-lightRayAndInterPointAperStop RayAiming::getBestLightRayAndInterPoint_obj(LightRayStruct lightRay0, LightRayStruct lightRay1, LightRayStruct lightRay2, LightRayStruct lightRay3, LightRayStruct lightRay4, VectorStructR3 targetPoint)
+lightRayAndInterPointAperStop RayAiming::getBestLightRayAndInterPoint_obj(LightRayStruct lightRay0, LightRayStruct lightRay1, LightRayStruct lightRay2, LightRayStruct lightRay3, LightRayStruct lightRay4, VectorStructR3 targetPoint, VectorStructR3 vectorToCalc1, VectorStructR3 vectorRoCalc2)
 {
 	lightRayAndInterPointAperStop bestLightRayAndInterPoint;
 
@@ -1289,11 +1292,12 @@ lightRayAndInterPointAperStop RayAiming::getBestLightRayAndInterPoint_obj(LightR
 	lightRayAndInterPointAS.resize(5);
 	unsigned maxLoops = mDefaultParaRayAiming.getMaxLoopsTraceToLastSurface();
 
-	lightRayAndInterPointAS.at(0) = traceOneRayUntilInApertureStop_obj(lightRay0, maxLoops);
-	lightRayAndInterPointAS.at(1) = traceOneRayUntilInApertureStop_obj(lightRay1, maxLoops);
-	lightRayAndInterPointAS.at(2) = traceOneRayUntilInApertureStop_obj(lightRay2, maxLoops);
-	lightRayAndInterPointAS.at(3) = traceOneRayUntilInApertureStop_obj(lightRay3, maxLoops);
-	lightRayAndInterPointAS.at(4) = traceOneRayUntilInApertureStop_obj(lightRay4, maxLoops);
+
+	lightRayAndInterPointAS.at(0) = traceOneRayUntilInApertureStop_obj(lightRay0, vectorToCalc1, maxLoops);
+	lightRayAndInterPointAS.at(1) = traceOneRayUntilInApertureStop_obj(lightRay1, -1.0 * vectorToCalc1, maxLoops);
+	lightRayAndInterPointAS.at(2) = traceOneRayUntilInApertureStop_obj(lightRay2, vectorRoCalc2,  maxLoops);
+	lightRayAndInterPointAS.at(3) = traceOneRayUntilInApertureStop_obj(lightRay3, -1.0 * vectorRoCalc2, maxLoops);
+	lightRayAndInterPointAS.at(4) = traceOneRayUntilInApertureStop_obj(lightRay4, vectorToCalc1, maxLoops);
 
 	std::vector<real> dis = calcAllDistances(lightRayAndInterPointAS, targetPoint);
 
@@ -1318,7 +1322,7 @@ lightRayAndInterPointAperStop RayAiming::getBestLightRayAndInterPoint_obj(LightR
 }
 
 // trace one ray until it comes to the last surface;
-lightRayAndInterPointAperStop RayAiming::traceOneRayUntilInApertureStop_obj(LightRayStruct lightRay, unsigned int maxLoop)
+lightRayAndInterPointAperStop RayAiming::traceOneRayUntilInApertureStop_obj(LightRayStruct lightRay, VectorStructR3 vectorToCalcDir, unsigned int maxLoop)
 {
 	lightRayAndInterPointAperStop tempLightRayAndInterPointAS{};
 
@@ -1331,16 +1335,13 @@ lightRayAndInterPointAperStop RayAiming::traceOneRayUntilInApertureStop_obj(Ligh
 	// trace the light ray
 	seqTrace.sequentialRayTracing(lightRay);
 
-
+	VectorStructR3 originFirstSurface = mOpticalSystem_LLT.getPosAndInteractingSurface()[0].getSurfaceInterRay_ptr()->getPoint();
 
 	real curRefIndex = lightRay.getRay_LLT().getCurrentRefractiveIndex();
 	VectorStructR3 originRay = lightRay.getRay_LLT().getOriginRay();
+	VectorStructR3 tempVecToCalcDir = vectorToCalcDir;
+	VectorStructR3 newRayDirection;
 
-	real oldDirection_Z;
-	VectorStructR3 oldDirection;
-	real newDirection_Z;
-	VectorStructR3 newDrection;
-	VectorStructR3 newDirectionUnit;
 	Ray_LLT newRay;
 
 	//unsigned int posLastSurface = mOpticalSystem_LLT.getPosAndInteractingSurface().size() - 1;
@@ -1353,22 +1354,18 @@ lightRayAndInterPointAperStop RayAiming::traceOneRayUntilInApertureStop_obj(Ligh
 		if ('N' == surfSide) 
 		{
 			// build new ray to trace
-			oldDirection = lightRay.getRay_LLT().getDirectionRayUnit();
-			oldDirection_Z = oldDirection.getZ();
-			newDrection = oldDirection;
-			newDirection_Z = oldDirection_Z * 2;
-			newDrection.setZ(newDirection_Z);
-			newDirectionUnit = Math::unitVector(newDrection);
+			tempVecToCalcDir = tempVecToCalcDir * 0.5;
+			newRayDirection = { originFirstSurface - originRay + tempVecToCalcDir };
 
+			newRay.setDirectionRayUnit(newRayDirection);
 			newRay.setCurrentRefractiveIndex(curRefIndex);
-			newRay.setDirectionRayUnit(newDrection);
-			newRay.setDirectionRayUnit(newDirectionUnit);
 			newRay.setOriginRay(originRay);
 
 			lightRay.setRay_LLT(newRay);
 
 			// trace new ray
 			seqTrace.sequentialRayTracing(lightRay);
+			
 		}
 
 		else if ('A' == surfSide || 'B' == surfSide) // ray comes to the last surface
@@ -1913,8 +1910,8 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos_obj(lightRay_intP_di
 			}
 
 			sizeRayToTace = rayNumToTrace.size();
-			lightRay_vec.clear();
-			lightRay_vec.resize(sizeRayToTace);
+			//lightRay_vec.clear();
+			//lightRay_vec.resize(sizeRayToTace);
 			putLightAtPos = 0;
 			//seqTrace.clearAllTracedRays();
 		}

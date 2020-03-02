@@ -158,8 +158,8 @@ int main(int argc, char **argv)
 	
 	// RayAiming
 	BenchmarkRayAiming checkRayAiming;
-	//bool checkRayAiming_inf = checkRayAiming.checkRayAimingSuperFct_inf();
-	//workTheSystem.push_back(checkRayAiming_inf);
+	bool checkRayAiming_inf = checkRayAiming.checkRayAimingSuperFct_inf();
+	workTheSystem.push_back(checkRayAiming_inf);
 	bool checkRayAiming_obj = checkRayAiming.checkRayAimingSuperFct_obj();
 	workTheSystem.push_back(checkRayAiming_obj);
 
