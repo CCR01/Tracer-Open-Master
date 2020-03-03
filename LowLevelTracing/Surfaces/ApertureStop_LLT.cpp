@@ -92,9 +92,10 @@ IntersectInformationStruct ApertureStop_LLT::calculateIntersection(LightRayStruc
 	// the tolerance for ray aiming must be lower than the tolerance for the aperture stop
 	real tolerance = 1.0;
 	// ***
-	IntersectInformationStruct returnIntersectInfos;
+	
 	Ray_LLT ray = lightRay.getRay_LLT();
 	Light_LLT light = lightRay.getLight_LLT();
+	IntersectInformationStruct returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, light };
 
 	// flat in coordinate form: E:Nx * X+ Ny * Y+ Nz * Z= d 
 	double d = mDirectionAperture * mPointAperture;
@@ -104,13 +105,13 @@ IntersectInformationStruct ApertureStop_LLT::calculateIntersection(LightRayStruc
 	if (denominator == 0.0)
 	{
 		// there is no intersection point
-		returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, light }; //'N' there is NO intersection poin
+		return returnIntersectInfos; //'N' there is NO intersection poin
 	}
 	else if (numerator == 0.0)
 	{
 		// ray is in flat!
 		// TODO Question Sergej: Was soll dann gemacht werden?!?!?! hier hat man ja dann unendlich viele Schnittpunkte 	
-		returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, light }; //'N' there is NO intersection poin
+		return returnIntersectInfos; //'N' there is NO intersection poin
 		// -> Das ist ja dann eigentlich falsch?! -> es gibt ja viele Schnittpunkte!
 	}
 
@@ -122,7 +123,7 @@ IntersectInformationStruct ApertureStop_LLT::calculateIntersection(LightRayStruc
 
 		if (stepsT < 0) // ray would walk in the wrong direction
 		{
-			returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, /*ray walk in wrong direction*/-1.0,0.0,0.0,{ 0.0,0.0,0.0 }, light }; //'N' there is NO intersection poin
+			return returnIntersectInfos; //'N' there is NO intersection poin
 		}
 
 		else // calculate the intersection point

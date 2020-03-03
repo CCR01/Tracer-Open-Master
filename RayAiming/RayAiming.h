@@ -168,6 +168,8 @@ public: RayAiming() {};
 		unsigned int getPosRayLowestDistance(std::vector<VectorStructR3> allInterPoints, VectorStructR3 targetPoint);
 		// print
 		void printInterP_Target_distance_X_Y(lightRay_intP_dis_negPos_factor infosToReduce);
+		// shift start point ray from infinity
+		VectorStructR3 RayAiming::shiftFirstSurface(real radius, real semiHeight, VectorStructR3 apexOfSphere);
 		// *** *** //
 
 

@@ -230,7 +230,7 @@ int main(int argc, char **argv)
 	//bool ImageSimulation = checkImgSim.checkMethodesImgSim();
 	//workTheSystem.push_back(ImageSimulation);
 
-	//// check optimizer
+	////// check optimizer
 	//BenchmarkZemaxTest testOpimizer;
 	//bool checkOptimizer = testOpimizer.checkMethodesZemaxTest();
 	//workTheSystem.push_back(checkOptimizer);

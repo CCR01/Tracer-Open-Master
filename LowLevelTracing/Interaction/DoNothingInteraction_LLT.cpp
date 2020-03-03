@@ -5,7 +5,7 @@ std::vector<LightRayStruct> DoNothingInteraction_LLT::calcInteraction(IntersectI
 {
 	Ray_LLT ray(/*origin*/{ 0.0, 0.0, 0.0 }, /*direction*/{ 0.0, 0.0, 0.0 }, 1.0);
 	Light_LLT light = intersectInformation.getLight();
-	LightRayStruct output;
+	LightRayStruct output{};
 	output.setIsAlive(1);
 	std::vector<LightRayStruct> returnLightRay;
 	
