@@ -1,6 +1,7 @@
 #include <cmath>
 
 #include "Math_LLT.h"
+#include "..\oftenUseNamespace\oftenUseNamespace.h"
 #include <iostream>
 #include <algorithm>
 
@@ -103,7 +104,7 @@ void Math::printSystemMatrix2x2(std::vector<std::vector<real>> m)
 
 
 // scale a Vector
-VectorStructR3 Math::scaleVector(double const& scaleFactor, VectorStructR3 const& Vscale)
+VectorStructR3 Math::scaleVector(double const scaleFactor, VectorStructR3 const Vscale)
 {
 	VectorStructR3 ReturnVectorScale;
 	ReturnVectorScale.setX(scaleFactor * Vscale.getX());
@@ -114,7 +115,7 @@ VectorStructR3 Math::scaleVector(double const& scaleFactor, VectorStructR3 const
 }
 
 // calculate unit vector
-VectorStructR3 Math::unitVector(VectorStructR3 const& V)
+VectorStructR3 Math::unitVector(VectorStructR3 const V)
 {
 	double lenghtOfVector = 1 / (std::sqrt(V.getX()*V.getX() + V.getY()*V.getY() + V.getZ()*V.getZ()));
 	return scaleVector(lenghtOfVector, V);
@@ -151,7 +152,7 @@ VectorStructR3 Math::DoCrossProduct(VectorStructR3 CrProVec1, VectorStructR3 CrP
 }
 
 // Check if two vectors are linearly dependent
-bool Math::checkLinearlyDependent(VectorStructR3 const& V1, VectorStructR3 const& V2)
+bool Math::checkLinearlyDependent(VectorStructR3 const V1, VectorStructR3 const V2)
 {
 	double first = V1.getX() / V2.getX();
 	double second = V1.getY() / V2.getY();
@@ -189,7 +190,7 @@ double Math::lengthOfVector(VectorStructR3 vLength)
 }
 
 // calculate distance between two points in R3
-double Math::distanceTwoVectors(VectorStructR3 const& V1, VectorStructR3 const& V2)
+double Math::distanceTwoVectors(VectorStructR3 const V1, VectorStructR3 const V2)
 {
 	return sqrt(pow(V1.getX() - V2.getX(), 2) + pow(V1.getY() - V2.getY(), 2) + pow(V1.getZ() - V2.getZ(), 2));
 }
@@ -197,7 +198,7 @@ double Math::distanceTwoVectors(VectorStructR3 const& V1, VectorStructR3 const& 
 
 // calculate rotate matrix around an axis n
 // source https://en.wikipedia.org/wiki/Rotation_matrix
-Matrix3x3AndExist Math::calcRotationMatrixAroundVector(VectorStructR3 const& direction, double const& /*in radiant*/ rotationAngle)
+Matrix3x3AndExist Math::calcRotationMatrixAroundVector(VectorStructR3 const direction, double const /*in radiant*/ rotationAngle)
 {
 
 
@@ -254,7 +255,7 @@ bool  Math::compareTwoNumbers_decimals(double num1, double num2, unsigned int de
 	}
 }
 
-bool Math::compareTwoNumbers_tolrance(real num1, real num2, real tolerance)
+bool Math::compareTwoNumbers_tolerance(real num1, real num2, real tolerance)
 {
 	if (std::abs(num1 - num2) < tolerance)
 	{
@@ -295,15 +296,15 @@ bool Math::compareTwoVectorStructR3_decimals(VectorStructR3 const V1, VectorStru
 
 bool Math::compareTwoVectorStructR3_tolerance(VectorStructR3 const V1, VectorStructR3 const V2, real tolerance)
 {
-	bool check0 = compareTwoNumbers_tolrance(V1.getX(), V2.getX(), tolerance);
-	bool check1 = compareTwoNumbers_tolrance(V1.getY(), V2.getY(), tolerance);
-	bool check2 = compareTwoNumbers_tolrance(V1.getZ(), V2.getZ(), tolerance);
+	bool check0 = compareTwoNumbers_tolerance(V1.getX(), V2.getX(), tolerance);
+	bool check1 = compareTwoNumbers_tolerance(V1.getY(), V2.getY(), tolerance);
+	bool check2 = compareTwoNumbers_tolerance(V1.getZ(), V2.getZ(), tolerance);
 
 	return(check0 && check1 && check2);
 }
 
 // compate two vectors struct R2
-bool Math::compareTwoVectorStruct2D_decimals(VectorStructR2 const V1, VectorStructR2 const& V2, unsigned int const& decimals)
+bool Math::compareTwoVectorStruct2D_decimals(VectorStructR2 const V1, VectorStructR2 const V2, unsigned int const decimals)
 {
 	bool bEqual = true;
 
@@ -316,8 +317,8 @@ bool Math::compareTwoVectorStruct2D_decimals(VectorStructR2 const V1, VectorStru
 
 bool Math::compareTwoVectorStruct2D_tolerance(VectorStructR2 const V1, VectorStructR2 const V2, real tolerance)
 {
-	bool check0 = compareTwoNumbers_tolrance(V1.getX(), V2.getX(), tolerance);
-	bool check1 = compareTwoNumbers_tolrance(V1.getY(), V2.getY(), tolerance);
+	bool check0 = compareTwoNumbers_tolerance(V1.getX(), V2.getX(), tolerance);
+	bool check1 = compareTwoNumbers_tolerance(V1.getY(), V2.getY(), tolerance);
 
 
 	return(check0 && check1);
@@ -373,12 +374,12 @@ bool Math::compareAllVectorElements(std::vector<VectorStructR3> V1, std::vector<
 	return bEqual;
 }
 
-double  Math::calc_D_ofPlane(VectorStructR3 const& normalVector, VectorStructR3 const& P)
+double  Math::calc_D_ofPlane(VectorStructR3 const normalVector, VectorStructR3 const P)
 {
 	return normalVector.getX()*P.getX() + normalVector.getY()*P.getY() + normalVector.getZ()*P.getZ();
 }
 // calc "t" (steps to walk) unsing line and plan (coordinate form)
-double Math::calc_T_ofPlanAndLine(VectorStructR3  const& originLine, VectorStructR3  const& coordFormPlan, double const& d_coordForm)
+double Math::calc_T_ofPlanAndLine(VectorStructR3  const originLine, VectorStructR3  const coordFormPlan, double const d_coordForm)
 {
 	double numerator = d_coordForm - (coordFormPlan*originLine);
 	double denominator = coordFormPlan * coordFormPlan;
@@ -534,7 +535,7 @@ std::vector<real> Math::linDistriAlongTwoValues_double(real valueMin, real Value
 }
 
 // linear distribution along two values -> float
-std::vector<float> Math::linDistriAlongTwoValues_float(float const& valueMin, float const& ValueMax, unsigned int const& number)
+std::vector<float> Math::linDistriAlongTwoValues_float(float const valueMin, float const ValueMax, unsigned int const number)
 {
 	std::vector<float> output;
 	real delta = std::abs(valueMin - ValueMax) / (number - 1);
@@ -579,7 +580,7 @@ std::vector<real> Math::calcVecRealMinMaxSteps_withoutMinMax(real min, real max,
 }
 
 // linear distribution along two values -> int
-std::vector<int> Math::linDistriAlongTwoValues_int(int const& valueMin, int const& ValueMax, unsigned int const& number)
+std::vector<int> Math::linDistriAlongTwoValues_int(int const valueMin, int const ValueMax, unsigned int const number)
 {
 	std::vector<int> output;
 
@@ -655,20 +656,20 @@ VectorStructR2 Math::unitVec2D(VectorStructR2 v)
 }
 
 // find max delta X,Y,Z in std::vector<VectorStructR3>
-VectorStructR3 Math::findMaxDelta_X_Y_Z_inStdV_VectorStructR3(std::vector<VectorStructR3> const& stdV_VecStrR3, VectorStructR3 refPoint)
+VectorStructR3 Math::findMaxDelta_X_Y_Z_inStdV_VectorStructR3(std::vector<VectorStructR3> const stdV_VecStrR3, VectorStructR3 refPoint)
 {
-	unsigned int const& sizeStdV = stdV_VecStrR3.size();
+	unsigned int const sizeStdV = stdV_VecStrR3.size();
 	real X = stdV_VecStrR3.at(0).getX();
 	real Y = stdV_VecStrR3.at(0).getY();
 	real Z = stdV_VecStrR3.at(0).getZ();
 
-	real const& Ref_X = refPoint.getX();
-	real const& Ref_Y = refPoint.getY();
-	real const& Ref_Z = refPoint.getZ();
+	real const Ref_X = refPoint.getX();
+	real const Ref_Y = refPoint.getY();
+	real const Ref_Z = refPoint.getZ();
 
 	VectorStructR3 startAbsMaxDeltaVec = { std::abs(X - Ref_X) , std::abs(Y - Ref_Y) , std::abs(Z - Ref_Z) };
 
-#pragma parallel for
+//#pragma parallel for
 	for (unsigned int i = 1; i < sizeStdV; i++)
 	{
 		real absTempDeltaValue_X = std::abs(stdV_VecStrR3.at(i).getX() - Ref_X);
@@ -697,6 +698,87 @@ VectorStructR3 Math::findMaxDelta_X_Y_Z_inStdV_VectorStructR3(std::vector<Vector
 
 }
 
+std::vector<std::vector<real>> Math::calculateInverse(const std::vector<std::vector<real>>& inpusMatrix)
+{
+
+
+	std::vector<std::vector<real>> workMatrix = inpusMatrix;
+
+	unsigned int sizeInputCol = inpusMatrix[0].size();
+	oftenUse::resizeAllRowsMatrix(workMatrix, 2 * sizeInputCol);
+
+	for (int i = 0; i < sizeInputCol; i++) 
+	{
+		workMatrix[i][sizeInputCol + i] = 1;
+	}
+
+	for (int i = 0; i < sizeInputCol; i++) {
+		// Search for maximum in this column
+		double maxEl = abs(workMatrix[i][i]);
+		int maxRow = i;
+		for (int k = i + 1; k < sizeInputCol; k++) {
+			if (abs(workMatrix[k][i]) > maxEl) {
+				maxEl = workMatrix[k][i];
+				maxRow = k;
+			}
+		}
+
+		// Swap maximum row with current row (column by column)
+		for (int k = i; k < 2 * sizeInputCol; k++) {
+			double tmp = workMatrix[maxRow][k];
+			workMatrix[maxRow][k] = workMatrix[i][k];
+			workMatrix[i][k] = tmp;
+		}
+
+		// Make all rows below this one 0 in current column
+		for (int k = i + 1; k < sizeInputCol; k++) {
+			double c = -workMatrix[k][i] / workMatrix[i][i];
+			for (int j = i; j < 2 * sizeInputCol; j++) {
+				if (i == j) {
+					workMatrix[k][j] = 0;
+				}
+				else {
+					workMatrix[k][j] += c * workMatrix[i][j];
+				}
+			}
+		}
+	}
+
+	// Solve equation Ax=b for an upper triangular matrix A
+	for (int i = sizeInputCol - 1; i >= 0; i--) {
+		for (int k = sizeInputCol; k < 2 * sizeInputCol; k++) {
+			workMatrix[i][k] /= workMatrix[i][i];
+		}
+
+
+		for (int rowModify = i - 1; rowModify >= 0; rowModify--) {
+			for (int columModify = sizeInputCol; columModify < 2 * sizeInputCol; columModify++) {
+				workMatrix[rowModify][columModify] -= workMatrix[i][columModify]
+					* workMatrix[rowModify][i];
+			}
+
+		}
+	}
+
+	// save only the inverted matrix
+	std::vector<std::vector<real>> outputMatrix;
+
+	outputMatrix.resize(sizeInputCol);
+	oftenUse::resizeAllRowsMatrix(outputMatrix, sizeInputCol);
+	for (unsigned int i = sizeInputCol; i < 2 * sizeInputCol; ++i)
+	{
+		for(unsigned int j = 0; j < sizeInputCol; ++j)
+		
+		outputMatrix[j][i - sizeInputCol] = workMatrix[j][i];
+	}
+
+	//outputMatrix
+	//= inpusMatrix;
+
+	return outputMatrix;
+
+}
+
 // add 4 values
 real Math::add4values_ptr(real* a, real* b, real* c, real* d)
 {
@@ -707,9 +789,40 @@ real Math::add4values_ptr(real* a, real* b, real* c, real* d)
 	return sum;
 }
 
+// add all values in std::vector
+real Math::addAllValuesInVector_real(std::vector<real> v)
+{
+	real sum_of_elems;
+	for (real& n : v) 	sum_of_elems += n;
+
+	return sum_of_elems;
+}
+
+float Math::addAllValuesInVector_float(std::vector<float> v)
+{
+	float sum_of_elems;
+	for (float& n : v) 	sum_of_elems += n;
+
+	return sum_of_elems;
+}
+int Math::addAllValuesInVector_int(std::vector<int> v)
+{
+	int sum_of_elems;
+	for (int& n : v) 	sum_of_elems += n;
+
+	return sum_of_elems;
+}
+unsigned int Math::addAllValuesInVector_unsignedInt(std::vector<unsigned int> v)
+{
+	unsigned int sum_of_elems;
+	for (unsigned int& n : v) 	sum_of_elems += n;
+
+	return sum_of_elems;
+}
+
 //***********************************************************************
 // add two vectors in R3
-VectorStructR3 operator+ (VectorStructR3 const& l, VectorStructR3 const&  r)
+VectorStructR3 operator+ (VectorStructR3 const l, VectorStructR3 const  r)
 {
 	return VectorStructR3
 	{ l.getX() + r.getX() ,
@@ -719,7 +832,7 @@ VectorStructR3 operator+ (VectorStructR3 const& l, VectorStructR3 const&  r)
 }
 
 //decide two vectors in R3
-VectorStructR3 operator/ (VectorStructR3 const& l, double const&  d)
+VectorStructR3 operator/ (VectorStructR3 const l, double const  d)
 {
 	return VectorStructR3
 	{ l.getX() / d ,
@@ -729,7 +842,7 @@ VectorStructR3 operator/ (VectorStructR3 const& l, double const&  d)
 }
 
 //decide two vectors in R3
-VectorStructR3 operator/ (double const&  d, VectorStructR3 const& l)
+VectorStructR3 operator/ (double const  d, VectorStructR3 const l)
 {
 	return VectorStructR3
 	{ l.getX() / d ,
@@ -738,7 +851,7 @@ VectorStructR3 operator/ (double const&  d, VectorStructR3 const& l)
 }
 
 // multiply two vectors in R3
-double operator*(VectorStructR3 const& l, VectorStructR3 const&  r)
+double operator*(VectorStructR3 const l, VectorStructR3 const  r)
 {
 	return double{
 		l.getX() * r.getX() +
@@ -747,7 +860,7 @@ double operator*(VectorStructR3 const& l, VectorStructR3 const&  r)
 }
 
 // multiply two vectors in R3
-VectorStructR3 operator*(VectorStructR3 const& v, double const s)
+VectorStructR3 operator*(VectorStructR3 const v, double const s)
 {
 	return VectorStructR3{
 		v.getX() * s,
@@ -756,7 +869,7 @@ VectorStructR3 operator*(VectorStructR3 const& v, double const s)
 }
 
 // subtract two vectors in R3
-VectorStructR3 operator-(VectorStructR3 const& l, VectorStructR3 const&  r)
+VectorStructR3 operator-(VectorStructR3 const l, VectorStructR3 const  r)
 {
 	return VectorStructR3{
 		l.getX() - r.getX(),
@@ -767,7 +880,7 @@ VectorStructR3 operator-(VectorStructR3 const& l, VectorStructR3 const&  r)
 
 
 // calculate scalarproduct of two vectors in R3
-VectorStructR3 operator*(double const& s, VectorStructR3 const& v)
+VectorStructR3 operator*(double const s, VectorStructR3 const v)
 {
 	return VectorStructR3{
 		v.getX() * s,
@@ -778,7 +891,7 @@ VectorStructR3 operator*(double const& s, VectorStructR3 const& v)
 
 //***********************************************************************
 // add two vectors in R2
-VectorStructR2 operator+ (VectorStructR2 const& l, VectorStructR2 const&  r)
+VectorStructR2 operator+ (VectorStructR2 const l, VectorStructR2 const  r)
 {
 	return VectorStructR2
 	{ l.getX() + r.getX() ,
@@ -787,7 +900,7 @@ VectorStructR2 operator+ (VectorStructR2 const& l, VectorStructR2 const&  r)
 }
 
 //decide two vectors in R3
-VectorStructR2 operator/ (VectorStructR2 const& l, double const&  d)
+VectorStructR2 operator/ (VectorStructR2 const l, double const  d)
 {
 	return VectorStructR2
 	{ l.getX() / d ,
@@ -796,7 +909,7 @@ VectorStructR2 operator/ (VectorStructR2 const& l, double const&  d)
 }
 
 //decide two vectors in R3
-VectorStructR2 operator/ (double const&  d, VectorStructR2 const& l)
+VectorStructR2 operator/ (double const d, VectorStructR2 const l)
 {
 	return VectorStructR2
 	{ l.getX() / d ,
@@ -804,7 +917,7 @@ VectorStructR2 operator/ (double const&  d, VectorStructR2 const& l)
 }
 
 // multiply two vectors in R3
-double operator*(VectorStructR2 const& l, VectorStructR2 const&  r)
+double operator*(VectorStructR2 const l, VectorStructR2 const r)
 {
 	return double{
 		l.getX() * r.getX() +
@@ -812,7 +925,7 @@ double operator*(VectorStructR2 const& l, VectorStructR2 const&  r)
 }
 
 // multiply two vectors in R3
-VectorStructR2 operator*(VectorStructR2 const& v, double const s)
+VectorStructR2 operator*(VectorStructR2 const v, double const s)
 {
 	return VectorStructR2{
 		v.getX() * s,
@@ -820,7 +933,7 @@ VectorStructR2 operator*(VectorStructR2 const& v, double const s)
 }
 
 // subtract two vectors in R3
-VectorStructR2 operator-(VectorStructR2 const& l, VectorStructR2 const&  r)
+VectorStructR2 operator-(VectorStructR2 const l, VectorStructR2 const  r)
 {
 	return VectorStructR2{
 		l.getX() - r.getX(),
@@ -828,7 +941,7 @@ VectorStructR2 operator-(VectorStructR2 const& l, VectorStructR2 const&  r)
 }
 
 // calculate scalarproduct of two vectors in R3
-VectorStructR2 operator*(double const& s, VectorStructR2 const& v)
+VectorStructR2 operator*(double const s, VectorStructR2 const v)
 {
 	return VectorStructR2{
 		v.getX() * s,
@@ -836,6 +949,90 @@ VectorStructR2 operator*(double const& s, VectorStructR2 const& v)
 }
 //***********************************************************************
 
+// subtract two std vectors
+std::vector<real> operator- (const std::vector<real> l, const std::vector<real> r)
+{
+	unsigned int size_l = l.size();
+	unsigned int size_r = r.size();
+	
+	std::vector<real> returnVec{};
 
+	if (size_l != size_r)
+	{
+		std::cout << "the std::vectors must have the same size!!!!" << std::endl;
+		return returnVec;
+	}
+
+	returnVec.resize(size_l);
+
+	for (unsigned int i = 0; i < size_l; ++i)
+	{
+		returnVec[i] = l[i] - r[i];
+	}
+
+	return returnVec;
+}
+
+// add two std vectors
+std::vector<real> operator+ (const std::vector<real> l, const std::vector<real> r)
+{
+	unsigned int size_l = l.size();
+	unsigned int size_r = r.size();
+
+	std::vector<real> returnVec{};
+
+	if (size_l != size_r)
+	{
+		std::cout << "the std::vectors must have the same size!!!!" << std::endl;
+		return returnVec;
+	}
+
+	returnVec.resize(size_l);
+
+	for (unsigned int i = 0; i < size_l; ++i)
+	{
+		returnVec[i] = l[i] + r[i];
+	}
+
+	return returnVec;
+}
+
+// multiply scalar with matrix (std::vector<std::vectot<real>>)
+std::vector<std::vector<real>> operator* (const real& s, std::vector<std::vector<real>>& matrix)
+{
+	std::vector<std::vector<real>> returnMatrix = matrix;
+
+	unsigned int numColumns = matrix.size();
+	unsigned int numRows = matrix[0].size();
+	returnMatrix.resize(numColumns);
+	oftenUse::resizeAllRowsMatrix(returnMatrix, numRows);
+
+	for (unsigned int i = 0; i < numColumns; ++i)
+	{
+		for (unsigned int j = 0; j < numRows; ++j)
+		{
+			returnMatrix[i][j] = s * matrix[i][j];
+		}
+
+	}
+
+	return returnMatrix;
+
+}
+
+// multiply scalar with std::vector 
+std::vector<real> operator*(const real& s, std::vector<real>& v)
+{
+	std::vector<real> returnVector;
+	unsigned int sizeVector = v.size();
+	returnVector.resize(sizeVector);
+
+	for (unsigned int i = 0; i < sizeVector; ++i)
+	{
+		returnVector[i] = s * v[i];
+	}
+
+	return returnVector;
+}
 
 

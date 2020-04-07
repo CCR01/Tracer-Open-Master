@@ -114,6 +114,8 @@
     <ClCompile Include="..\Plot\PlotQwt.cpp" />
     <ClCompile Include="..\benchmark\Optikkreis\Optikkreis.cpp" />
     <ClCompile Include="..\oftenUseNamespace\oftenUseNamespace.cpp" />
+    <ClCompile Include="..\OptimizeSystem\DampedLeastSquares.cpp" />
+    <ClCompile Include="..\benchmark\Optimizer\DLS\testDLS.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Analyse\CardinalPoints.h" />
@@ -235,5 +237,7 @@
     <ClInclude Include="..\Plot\PlotQwt.h" />
     <ClInclude Include="..\benchmark\Optikkreis\Optikkreis.h" />
     <ClInclude Include="..\oftenUseNamespace\oftenUseNamespace.h" />
+    <ClInclude Include="..\OptimizeSystem\DampedLeastSquares.h" />
+    <ClInclude Include="..\benchmark\Optimizer\DLS\testDLS.h" />
   </ItemGroup>
 </Project>

@@ -167,6 +167,7 @@
     <ClCompile Include="..\benchmark\OpticalSystem\BenchmarkOpticalSystem.cpp" />
     <ClCompile Include="..\benchmark\Optikkreis\Optikkreis.cpp" />
     <ClCompile Include="..\benchmark\Optimizer\BenchmarkZemaxTest.cpp" />
+    <ClCompile Include="..\benchmark\Optimizer\DLS\testDLS.cpp" />
     <ClCompile Include="..\benchmark\Optimizer\localOptimizer\testLocalOptimizer_BM.cpp" />
     <ClCompile Include="..\benchmark\Optimizer\testBuildSysForCombination.cpp" />
     <ClCompile Include="..\benchmark\ParaxialLens_LLT\BenchmarkParaxialLens_LLT.cpp" />
@@ -233,6 +234,7 @@
     <ClCompile Include="..\OpticalSystemElement\OpticalSystemElement.cpp" />
     <ClCompile Include="..\OptimizeSystem\BuildSystemsForCombination.cpp" />
     <ClCompile Include="..\OptimizeSystem\calculateParaxialDistances.cpp" />
+    <ClCompile Include="..\OptimizeSystem\DampedLeastSquares.cpp" />
     <ClCompile Include="..\OptimizeSystem\EvaluateManyOptSystems_ParaxialDistances.cpp" />
     <ClCompile Include="..\OptimizeSystem\EvaluateManyOptSystems_SeidelCoef.cpp" />
     <ClCompile Include="..\OptimizeSystem\EvaluateManyOptSys_RayTracing.cpp" />
@@ -283,6 +285,7 @@
     <ClInclude Include="..\benchmark\OpticalSystem\BenchmarkOpticalSystem.h" />
     <ClInclude Include="..\benchmark\Optikkreis\Optikkreis.h" />
     <ClInclude Include="..\benchmark\Optimizer\BenchmarkZemaxTest.h" />
+    <ClInclude Include="..\benchmark\Optimizer\DLS\testDLS.h" />
     <ClInclude Include="..\benchmark\Optimizer\localOptimizer\testLocalOptimizer_BM.h" />
     <ClInclude Include="..\benchmark\Optimizer\testBuildSysForCombination.h" />
     <ClInclude Include="..\benchmark\ParaxialLens_LLT\BenchmarkParaxialLens_LLT.h" />
@@ -352,6 +355,7 @@
     <ClInclude Include="..\OpticalSystemElement\OpticalSystemElement.h" />
     <ClInclude Include="..\OptimizeSystem\BuildSystemsForCombination.h" />
     <ClInclude Include="..\OptimizeSystem\calculateParaxialDistances.h" />
+    <ClInclude Include="..\OptimizeSystem\DampedLeastSquares.h" />
     <ClInclude Include="..\OptimizeSystem\EvaluateManyOptSystems_ParaxialDistances.h" />
     <ClInclude Include="..\OptimizeSystem\EvaluateManyOptSystems_RayTracing.h" />
     <ClInclude Include="..\OptimizeSystem\EvaluateManyOptSystems_SeidelCoef.h" />

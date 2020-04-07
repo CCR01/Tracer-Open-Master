@@ -1,1 +1,47 @@
-﻿
+﻿  OpticalSystemElement.cpp
+c:\tracer-open-master\lowleveltracing\importantstructures.h(69): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\tracer-open-master\lowleveltracing\importantstructures.h(73): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\tracer-open-master\lowleveltracing\importantstructures.h(93): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\tracer-open-master\lowleveltracing\importantstructures.h(108): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\tracer-open-master\lowleveltracing\importantstructures.h(134): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\tracer-open-master\opticalsystemelement\opticalsystemelement.cpp(64): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\opticalsystemelement\opticalsystemelement.cpp(141): warning C4267: 'return': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\opticalsystemelement\opticalsystemelement.cpp(156): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\opticalsystemelement\opticalsystemelement.cpp(181): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\opticalsystemelement\opticalsystemelement.cpp(218): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\opticalsystemelement\opticalsystemelement.cpp(327): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\opticalsystemelement\opticalsystemelement.cpp(338): warning C4018: '<': signed/unsigned mismatch
+c:\tracer-open-master\opticalsystemelement\opticalsystemelement.cpp(358): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\opticalsystemelement\opticalsystemelement.cpp(374): warning C4018: '<': signed/unsigned mismatch
+c:\tracer-open-master\opticalsystemelement\opticalsystemelement.cpp(326): warning C4101: 'tempDirection_Z': unreferenced local variable
+c:\tracer-open-master\opticalsystemelement\opticalsystemelement.cpp(409): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\opticalsystemelement\opticalsystemelement.cpp(461): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\opticalsystemelement\opticalsystemelement.cpp(479): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\opticalsystemelement\opticalsystemelement.cpp(526): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\opticalsystemelement\opticalsystemelement.cpp(537): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\opticalsystemelement\opticalsystemelement.cpp(584): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\opticalsystemelement\opticalsystemelement.cpp(664): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\tracer-open-master\opticalsystemelement\opticalsystemelement.cpp(667): warning C4018: '<': signed/unsigned mismatch
+c:\tracer-open-master\opticalsystemelement\opticalsystemelement.cpp(691): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\opticalsystemelement\opticalsystemelement.cpp(708): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+  oftenUseNamespace.cpp
+c:\tracer-open-master\lowleveltracing\importantstructures.h(69): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\tracer-open-master\lowleveltracing\importantstructures.h(73): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\tracer-open-master\lowleveltracing\importantstructures.h(93): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\tracer-open-master\lowleveltracing\importantstructures.h(108): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\tracer-open-master\lowleveltracing\importantstructures.h(134): warning C4227: anachronism used: qualifiers on reference are ignored
+c:\tracer-open-master\oftenusenamespace\oftenusenamespace.cpp(44): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\oftenusenamespace\oftenusenamespace.cpp(53): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\oftenusenamespace\oftenusenamespace.cpp(54): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\oftenusenamespace\oftenusenamespace.cpp(56): warning C4018: '<': signed/unsigned mismatch
+c:\tracer-open-master\oftenusenamespace\oftenusenamespace.cpp(58): warning C4018: '<': signed/unsigned mismatch
+c:\tracer-open-master\oftenusenamespace\oftenusenamespace.cpp(69): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\oftenusenamespace\oftenusenamespace.cpp(87): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
+c:\tracer-open-master\oftenusenamespace\oftenusenamespace.cpp(114): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\oftenusenamespace\oftenusenamespace.cpp(136): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\oftenusenamespace\oftenusenamespace.cpp(138): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\oftenusenamespace\oftenusenamespace.cpp(139): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\oftenusenamespace\oftenusenamespace.cpp(140): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\tracer-open-master\oftenusenamespace\oftenusenamespace.cpp(163): warning C4101: 'tempRMS': unreferenced local variable
+  Generating Code...
+  VS-Solution_tracer-open.vcxproj -> C:\Tracer-Open-Master\VS-Solution_tracer-open\x64\Debug\VS-Solution_tracer-open.exe

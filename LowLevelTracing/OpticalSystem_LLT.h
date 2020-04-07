@@ -7,6 +7,33 @@
 #include <qwt_plot_curve.h>
 #include "..\Plot\PlotSpotDiagram.h"
 
+
+struct infosAS
+{
+public:
+
+	// pos AS
+	unsigned int getPosAS();
+	void setPosAS(unsigned int posAS);
+	// semiHeight AS
+	real getSemiHeightAS();
+	void setSemiHeightAS(real semiHeightAS);
+	// point AS
+	VectorStructR3 getPointAS();
+	void setPointAS(VectorStructR3 pointAS);
+	// direction
+	VectorStructR3 getDirAS();
+	void setDirAS(VectorStructR3 dirAS);
+
+
+private:
+	unsigned mPosAS;
+	real mSemiHeightAS;
+	VectorStructR3 mPointAS;
+	VectorStructR3 mDirectionAS;
+};
+
+
 struct CommentandPosCommentToPlotInRayTracing
 {
 	CommentandPosCommentToPlotInRayTracing() {};
@@ -69,14 +96,14 @@ struct PosAndCurveStructToPlot
 	QwtPlotCurve *Qwtcurve = new QwtPlotCurve();
 
 	// set position
-	void setPosition(unsigned int const& pos);
+	void setPosition(unsigned int const pos);
 	// get position
-	unsigned int getPosition() const&;
+	unsigned int getPosition() const;
 
 	// set interaction at surface
-	void setCurve(QwtPlotCurve* const& curve);
+	void setCurve(QwtPlotCurve* const curve);
 	// get interaction at surface
-	QwtPlotCurve* getCurve() const&;
+	QwtPlotCurve* getCurve() const;
 
 };
 
@@ -87,14 +114,14 @@ struct PosAndInteractionStruct
 	~PosAndInteractionStruct();
 	   
 	// set position
-	void setPosition(unsigned int const& pos);
+	void setPosition(unsigned int const pos);
 	// get position
-	unsigned int getPosition() const&;
+	unsigned int getPosition() const;
 
 	// set interaction at surface
 	void setInteractionAtSur(std::shared_ptr<InteractionRay_LLT> setInteractionRay_LLT);
 	// get interaction at surface
-	std::shared_ptr<InteractionRay_LLT> getInteractionAtSur_ptr() const&;
+	std::shared_ptr<InteractionRay_LLT> getInteractionAtSur_ptr() const;
 
 public:
 	int mPosition;
@@ -105,18 +132,18 @@ public:
 struct PosAndIntsectionSurfaceStruct
 {
 	PosAndIntsectionSurfaceStruct();
-	PosAndIntsectionSurfaceStruct(unsigned int const& pos, std::shared_ptr<SurfaceIntersectionRay_LLT> interactinSur);
+	PosAndIntsectionSurfaceStruct(unsigned int const pos, std::shared_ptr<SurfaceIntersectionRay_LLT> interactinSur);
 	~PosAndIntsectionSurfaceStruct();
 	
 	// set position
-	void setPosition(unsigned int const& pos);
+	void setPosition(unsigned int const pos);
 	// get position
-	unsigned int getPosition() const&;
+	unsigned int getPosition() const;
 
 	// set interacting surface
 	void setInteractionSurface_prt(std::shared_ptr<SurfaceIntersectionRay_LLT> setSurInterRay_LLT_ptr);
 	// get interaction surface
-	std::shared_ptr<SurfaceIntersectionRay_LLT> getSurfaceInterRay_ptr() const&;
+	std::shared_ptr<SurfaceIntersectionRay_LLT> getSurfaceInterRay_ptr() const;
 
 public:
 	int mPosition;
@@ -131,14 +158,14 @@ struct PosAndInteraSurfaceToPlot2D
 	~PosAndInteraSurfaceToPlot2D();
 
 	// set position
-	void setPosition(unsigned int const& pos);
+	void setPosition(unsigned int const pos);
 	// get position
-	unsigned int getPosition() const&;
+	unsigned int getPosition() const;
 
 	// set surface to plot 2D
 	void setSurfaceToPlo2D_ptr(SurfaceIntersectionRay_LLT* setSurfaceToPlot2D);
 	// get surface to plot 2D
-	SurfaceIntersectionRay_LLT* getSurfaceToPlot2D_ptr() const&;
+	SurfaceIntersectionRay_LLT* getSurfaceToPlot2D_ptr() const;
 
 public:
 	int mPosition;
@@ -171,7 +198,7 @@ public:
 	std::vector<PosAndInteractionStruct> getPosAndInteraction();
 
 	// fill in surface at position i
-	void fillInSurfaceAndInteracAtPos_i(unsigned int const& position, std::shared_ptr<SurfaceIntersectionRay_LLT> interactinSurface, std::shared_ptr<InteractionRay_LLT> interaction);
+	void fillInSurfaceAndInteracAtPos_i(unsigned int const position, std::shared_ptr<SurfaceIntersectionRay_LLT> interactinSurface, std::shared_ptr<InteractionRay_LLT> interaction);
 
 	// get number of surfaces in optical system
 	unsigned int getNumberOfSurfaces();
@@ -213,6 +240,8 @@ public:
 
 	unsigned int getPosApertureStop();
 	void clean_optSys_LLT();
+
+	infosAS getInforAS();
 
 private:
 	std::vector<PosAndIntsectionSurfaceStruct> mPosAndIntersectionSurfaceVector;

@@ -1073,8 +1073,8 @@ bool BenchmarkRayAiming::checkDirection_inf(real targetAngel_X, real targetAngle
 
 	twoVaulesReal angelX_Y = Math::convertDirectionInAngle(direction);
 
-	bool checkAngle_X = Math::compareTwoNumbers_tolrance(angelX_Y.getVal_1(), targetAngel_X, tolerance);
-	bool checkAngle_Y = Math::compareTwoNumbers_tolrance(angelX_Y.getVal_2(), targetAngle_Y, tolerance);
+	bool checkAngle_X = Math::compareTwoNumbers_tolerance(angelX_Y.getVal_1(), targetAngel_X, tolerance);
+	bool checkAngle_Y = Math::compareTwoNumbers_tolerance(angelX_Y.getVal_2(), targetAngle_Y, tolerance);
 
 	return checkAngle_X && checkAngle_Y;
 

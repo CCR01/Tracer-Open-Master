@@ -258,8 +258,6 @@ RayAiming::RayAiming(OpticalSystem_LLT opticalSystem) :
 	mOpticalSystem_LLT(opticalSystem)
 {
 	loadImportantInfosForRayAiming();
-	mDefaultParaRayAiming.loadDefaultParameter();
-	
 };
 
 // load important infomation for ray aiming
@@ -270,6 +268,8 @@ void RayAiming::loadImportantInfosForRayAiming()
 	mPositionFirstSurface = mOpticalSystem_LLT.getPosAndInteractingSurface().at(0).getSurfaceInterRay_ptr()->getPoint();
 	mDirectionFirstSurface = mOpticalSystem_LLT.getPosAndInteractingSurface().at(0).getSurfaceInterRay_ptr()->getDirection();
 	mPosApertureStop = mOpticalSystem_LLT.getPosApertureStop();
+
+	mDefaultParaRayAiming.loadDefaultParameter();
 }
 
 
@@ -1966,4 +1966,31 @@ VectorStructR3 RayAiming::shiftFirstSurface(real radius, real semiHeight, Vector
 	double val = radius - std::sqrt(std::pow(radius, 2) - std::pow(semiHeight, 2));
 	VectorStructR3 returnApex = { apexOfSphere.getX(), apexOfSphere.getY(), apexOfSphere.getZ() - val /*to stop errors acording to rounding mistakes*/ - mDefaultParaRayAiming.getStartPointFactor() };
 	return returnApex;
+}
+
+// ray aiming many obj
+std::vector<LightRayStruct> RayAiming::rayAimingMany_obj(std::vector<VectorStructR3> pointsInAS, VectorStructR3 startPointRay, Light_LLT light, real curRefracIndex)
+{
+	std::vector<LightRayStruct> returnLightRay_vec;
+	unsigned int numRay = pointsInAS.size();
+	returnLightRay_vec.resize(numRay);
+
+	LightRayStruct aimedTempLightRay;
+	VectorStructR3 tempTargetPoint;
+	
+	for (unsigned int i = 0; i < numRay; ++i)
+	{
+		tempTargetPoint = pointsInAS[i];
+		aimedTempLightRay = rayAiming_obj(startPointRay, tempTargetPoint, light, curRefracIndex);
+		returnLightRay_vec[i] = aimedTempLightRay;
+
+	}
+
+	return returnLightRay_vec;
+}
+
+// set opt sys LLT
+void RayAiming::setOpticalSystem_LLT(OpticalSystem_LLT optSys_LLT)
+{
+	mOpticalSystem_LLT = optSys_LLT;
 }

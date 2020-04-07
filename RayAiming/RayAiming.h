@@ -6,6 +6,7 @@
 
 #include "..\LowLevelTracing/Interaction/DoNothingInteraction_LLT.h"
 
+#include "..\FillAptertureStop\FillApertureStop.h"
 
 struct defaultRayAimingStruct
 {
@@ -189,6 +190,10 @@ public: RayAiming() {};
 		lightRay_intP_dis_negPos_factor robustRayAiming_obj(lightRay_intP_dis_negPos_factor initialInfos);
 		// calculate new origin variance in percent
 		lightRay_intP_dis_negPos_factor calcNewBestInfos_obj(lightRay_intP_dis_negPos_factor initialInfos);
+		// ray aiming many obj
+		std::vector<LightRayStruct> rayAimingMany_obj(std::vector<VectorStructR3> pointsInAS, VectorStructR3 startPointRay, Light_LLT light, real curRefracIndex);
+		// set opt sys LLT
+		void setOpticalSystem_LLT(OpticalSystem_LLT optSys_LLT);
 		// *** *** //
 
 

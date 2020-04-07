@@ -5,6 +5,45 @@
 #include <qwt_plot_curve.h>
 #include "Surfaces/ApertureStop_LLT.h"
 
+
+// pos AS
+unsigned int infosAS::getPosAS()
+{
+	return mPosAS;
+}
+void infosAS::setPosAS(unsigned int posAS)
+{
+	mPosAS = posAS;
+}
+// semiHeight AS
+real infosAS::getSemiHeightAS()
+{
+	return mSemiHeightAS;
+}
+void infosAS::setSemiHeightAS(real semiHeightAS)
+{
+	mSemiHeightAS = semiHeightAS;
+}
+
+// point AS
+VectorStructR3 infosAS::getPointAS()
+{
+	return mPointAS;
+}
+void infosAS::setPointAS(VectorStructR3 pointAS)
+{
+	mPointAS = pointAS;
+}
+// direction
+VectorStructR3 infosAS::getDirAS()
+{
+	return mDirectionAS;
+}
+void infosAS::setDirAS(VectorStructR3 dirAS)
+{
+	mDirectionAS = dirAS;
+}
+
 void TitelandPlotSpotDiagramToPlot::setImageName(std::string imageName)
 {
 	mimageName = imageName;
@@ -23,32 +62,32 @@ PlotSpotDiagramm* TitelandPlotSpotDiagramToPlot::getPlotSpotDiagramm()
 	return mplotSpot;
 }
 
-void PosAndCurveStructToPlot::setPosition(unsigned int const& pos)
+void PosAndCurveStructToPlot::setPosition(unsigned int const pos)
 {
 	position = pos;
 }
 
 // get position
-unsigned int PosAndCurveStructToPlot::getPosition() const&
+unsigned int PosAndCurveStructToPlot::getPosition() const
 {
 	return position;
 }
 
 // set interacting surface
-void PosAndCurveStructToPlot::setCurve(QwtPlotCurve * const& curve)
+void PosAndCurveStructToPlot::setCurve(QwtPlotCurve * const curve)
 {
 	Qwtcurve = curve;
 }
 
 
 // get interaction surface
-QwtPlotCurve*  PosAndCurveStructToPlot::getCurve() const&
+QwtPlotCurve*  PosAndCurveStructToPlot::getCurve() const
 {
 	return Qwtcurve;
 };
 
 PosAndIntsectionSurfaceStruct::PosAndIntsectionSurfaceStruct() {};
-PosAndIntsectionSurfaceStruct::PosAndIntsectionSurfaceStruct(unsigned int const& pos, std::shared_ptr<SurfaceIntersectionRay_LLT> interactinSur) :
+PosAndIntsectionSurfaceStruct::PosAndIntsectionSurfaceStruct(unsigned int const pos, std::shared_ptr<SurfaceIntersectionRay_LLT> interactinSur) :
 	mPosition(pos),
 	mInteractinSurface(interactinSur)
 {}
@@ -59,13 +98,13 @@ PosAndIntsectionSurfaceStruct::~PosAndIntsectionSurfaceStruct()
 
 
 // set position
-void PosAndIntsectionSurfaceStruct::setPosition(unsigned int const& pos)
+void PosAndIntsectionSurfaceStruct::setPosition(unsigned int const pos)
 {
 	mPosition = pos;
 }
 
 // get position
-unsigned int PosAndIntsectionSurfaceStruct::getPosition() const&
+unsigned int PosAndIntsectionSurfaceStruct::getPosition() const
 {
 	return mPosition;
 }
@@ -80,7 +119,7 @@ void PosAndIntsectionSurfaceStruct::setInteractionSurface_prt(std::shared_ptr<Su
 
 
 // get interaction surface
-std::shared_ptr<SurfaceIntersectionRay_LLT> PosAndIntsectionSurfaceStruct::getSurfaceInterRay_ptr() const&
+std::shared_ptr<SurfaceIntersectionRay_LLT> PosAndIntsectionSurfaceStruct::getSurfaceInterRay_ptr() const
 {
 	return mInteractinSurface;
 }
@@ -97,12 +136,12 @@ PosAndInteractionStruct::~PosAndInteractionStruct()
 }
 
 // set position
-void PosAndInteractionStruct::setPosition(unsigned int const& pos)
+void PosAndInteractionStruct::setPosition(unsigned int const pos)
 {
 	mPosition = pos;
 }
 // get position
-unsigned int PosAndInteractionStruct::getPosition() const&
+unsigned int PosAndInteractionStruct::getPosition() const
 {
 	return mPosition;
 }
@@ -113,7 +152,7 @@ void PosAndInteractionStruct::setInteractionAtSur(std::shared_ptr<InteractionRay
 	mInteraction = setInteractionRay_LLT_ptr;
 }
 // get interaction at surface
-std::shared_ptr<InteractionRay_LLT> PosAndInteractionStruct::getInteractionAtSur_ptr() const&
+std::shared_ptr<InteractionRay_LLT> PosAndInteractionStruct::getInteractionAtSur_ptr() const
 {
 	return mInteraction;
 }
@@ -129,13 +168,13 @@ PosAndInteraSurfaceToPlot2D::~PosAndInteraSurfaceToPlot2D()
 };
 
 // set position
-void PosAndInteraSurfaceToPlot2D::setPosition(unsigned int const& pos)
+void PosAndInteraSurfaceToPlot2D::setPosition(unsigned int const pos)
 {
 	mPosition = pos;
 }
 
 // get position
-unsigned int PosAndInteraSurfaceToPlot2D::getPosition() const&
+unsigned int PosAndInteraSurfaceToPlot2D::getPosition() const
 {
 	return mPosition;
 }
@@ -147,7 +186,7 @@ void PosAndInteraSurfaceToPlot2D::setSurfaceToPlo2D_ptr(SurfaceIntersectionRay_L
 }
 
 // get surface to plot 2D
-SurfaceIntersectionRay_LLT* PosAndInteraSurfaceToPlot2D::getSurfaceToPlot2D_ptr() const&
+SurfaceIntersectionRay_LLT* PosAndInteraSurfaceToPlot2D::getSurfaceToPlot2D_ptr() const
 {
 	return mPlotSur_ptr;
 }
@@ -230,7 +269,7 @@ std::vector<PosAndInteractionStruct> OpticalSystem_LLT::getPosAndInteraction()
 }
 
 // fill in surface at position i
-void OpticalSystem_LLT::fillInSurfaceAndInteracAtPos_i(unsigned int const& position, std::shared_ptr<SurfaceIntersectionRay_LLT> interactinSurface, std::shared_ptr<InteractionRay_LLT> interaction)
+void OpticalSystem_LLT::fillInSurfaceAndInteracAtPos_i(unsigned int const position, std::shared_ptr<SurfaceIntersectionRay_LLT> interactinSurface, std::shared_ptr<InteractionRay_LLT> interaction)
 {
 	std::vector<PosAndIntsectionSurfaceStruct> tempPosAndIntersectionSurfaceVector;
 	std::vector<PosAndInteractionStruct> tempmPosAndInteraction;
@@ -529,7 +568,7 @@ void OpticalSystem_LLT::clean_optSys_LLT()
 
 }
 
-/*Peter*/ void OpticalSystem_LLT::printAllOptSysParameter_LLT(OpticalSystem_LLT optSys_LLT)
+void OpticalSystem_LLT::printAllOptSysParameter_LLT(OpticalSystem_LLT optSys_LLT)
 {
 	unsigned int size = optSys_LLT.getPosAndInteractingSurface().size();
 	std::shared_ptr<SurfaceIntersectionRay_LLT> tempSurface_ptr;
@@ -577,4 +616,22 @@ void OpticalSystem_LLT::clean_optSys_LLT()
 		std::cout << "surface: " << i << "   radius: " << tempRadius << "   thickness: " << thickness << "   semi height: " << semiHeight << std::endl;
 
 	}
+}
+
+infosAS OpticalSystem_LLT::getInforAS()
+{
+
+	infosAS returnInfosAS;
+
+	unsigned int posAS = getPosApertureStop();
+	returnInfosAS.setPosAS(posAS);
+	real semiHeightAS = mPosAndIntersectionSurfaceVector[posAS].getSurfaceInterRay_ptr()->getSemiHeight();
+	returnInfosAS.setSemiHeightAS(semiHeightAS);
+	VectorStructR3 pointAS = mPosAndIntersectionSurfaceVector[posAS].getSurfaceInterRay_ptr()->getPoint();
+	returnInfosAS.setPointAS(pointAS);
+	VectorStructR3 directionAS = mPosAndIntersectionSurfaceVector[posAS].getSurfaceInterRay_ptr()->getDirection();
+	returnInfosAS.setDirAS(directionAS);
+
+	return returnInfosAS;
+
 }

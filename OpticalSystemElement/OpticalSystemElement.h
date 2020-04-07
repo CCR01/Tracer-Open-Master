@@ -163,6 +163,10 @@ public:
 	// fill pos and element
 	void fillPosAndElement(unsigned int position, std::shared_ptr<Element_CR> element);
 
+	// get relavant infos about the aperture stop
+	infosAS getInfoAS();
+
+	unsigned int getPosApertureStop();
 
 	void convertSurfacesToLLT();
 	OpticalSystem_LLT getOptSys_LLT_buildSystem();

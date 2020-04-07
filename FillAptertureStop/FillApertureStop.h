@@ -5,18 +5,21 @@
 
 #include "..\LowLevelTracing/OpticalSystem_LLT.h"
 
+
 class FillApertureStop
 {
 public:
 	FillApertureStop() {};
+	FillApertureStop(OpticalSystem_LLT optSys, unsigned int rings, unsigned int arms);
+	FillApertureStop(infosAS infosAS_fillAS, unsigned int rings, unsigned int arms);
 	// Object height given by the start point of the ray
 	FillApertureStop(/*start point rays*/VectorStructR3 startPointLightRay,/*semi height of aperture stop*/ real semiHeightAB,/*point of aperture stop*/ VectorStructR3 pointAB,/*direction of aperture stop*/ VectorStructR3 directionAB, /*rings*/ unsigned int ringsAB,/*arms*/ unsigned int armsAB,/*refractive index*/ double refractiveIndex,/*light*/ Light_LLT Light) :
 		mStartPointRay(startPointLightRay),
 		mSemiHeightAS(semiHeightAB),
 		mPointAS(pointAB),
 		mDirectionAS_Unit(Math::unitVector(directionAB)),
-		mNumberOfRingsAS(ringsAB),
-		mArmsAS(armsAB),
+		mRings(ringsAB),
+		mArms(armsAB),
 		mRefractiveIndex(refractiveIndex),
 		mLight(Light)
 	{
@@ -30,8 +33,8 @@ public:
 		mSemiHeightAS(semiHeightAB),
 		mPointAS(pointAB),
 		mDirectionAS_Unit(Math::unitVector(directionAB)),
-		mNumberOfRingsAS(ringsAB),
-		mArmsAS(armsAB),
+		mRings(ringsAB),
+		mArms(armsAB),
 		mRefractiveIndex(refractiveIndex),
 		mLight(Light)
 	{
@@ -65,7 +68,7 @@ public:
 	// In the SpotDiagram Zemax use the "Ray Density" to calculate the RMS radius
 	// There are 6 rays in the first ring, 12 in the second 18 ind the third,...
 	// build LightRays to calculate the RMS radius
-	std::vector<VectorStructR3> fillAS_withPoints(unsigned int const& rayDensity, VectorStructR3 const& PointApertureStop, VectorStructR3 const& directionApertureStop, real const& SemiHeightEntrancePupil);
+	std::vector<VectorStructR3> fillAS_withPoints(unsigned int const& rayDensity, VectorStructR3 const& PointApertureStop, VectorStructR3 const& directionApertureStop, real const& semiHeightAS);
 
 	// Gibt einen Vektor mit ringförmig angeordneten Targetpunkten in der Aperturblende zurück
 	std::vector<VectorStructR3> fillAS_withPointsRing(int nrOfRings, double semiHeightAperture, VectorStructR3 apexApertureStop);
@@ -92,13 +95,15 @@ private:
 	VectorStructR3 mPointAS;
 	VectorStructR3 mDirectionAS_Unit;
 
-	unsigned int mNumberOfRingsAS;
-	unsigned int mRayDensity = mNumberOfRingsAS;
-	unsigned int mArmsAS;
+	unsigned int mRings;
+	unsigned int mRayDensity = mRings;
+	unsigned int mArms;
 
 	real mRefractiveIndex;
 	Light_LLT mLight;
 
 	std::vector<VectorStructR3> mVectorWithManyPointsInAS;
 	std::vector<LightRayStruct> mVectorWithLightRays;
+
+	OpticalSystem_LLT mOptSys_LLT;
 };

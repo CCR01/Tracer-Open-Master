@@ -6,54 +6,71 @@
 
 //***********************************************************************
 // add two vectors in R3
-VectorStructR3 operator+ (VectorStructR3 const& l, VectorStructR3 const&  r);
+VectorStructR3 operator+ (VectorStructR3 const l, VectorStructR3 const  r);
 
 // subtract two vectors in R3
-VectorStructR3 operator-(VectorStructR3 const& l, VectorStructR3 const&  r);
+VectorStructR3 operator-(VectorStructR3 const l, VectorStructR3 const  r);
 
 // divide two vectors in R3
-VectorStructR3 operator/ (VectorStructR3 const& l, double const&  d);
+VectorStructR3 operator/ (VectorStructR3 const l, double const d);
 
 // devide two vectors in R3
-VectorStructR3 operator/ (double const&  d, VectorStructR3 const& l);
+VectorStructR3 operator/ (double const  d, VectorStructR3 const l);
 
 // multiply two vectors in R3
-VectorStructR3 operator*(VectorStructR3 const& v, double const s);
+VectorStructR3 operator*(VectorStructR3 const v, double const s);
 
 // multiply two vectors in R3
-VectorStructR3 operator*(double const& s, VectorStructR3 const& v);
+VectorStructR3 operator*(double const s, VectorStructR3 const v);
 
 // calculate scalarproduct of two vectors in R3
-double operator*(VectorStructR3 const& l, VectorStructR3 const& v);
+double operator*(VectorStructR3 const l, VectorStructR3 const v);
+
+
 //***********************************************************************
 //***********************************************************************
 // add two vectors in R2
-VectorStructR2 operator+ (VectorStructR2 const& l, VectorStructR2 const&  r);
+VectorStructR2 operator+ (VectorStructR2 const l, VectorStructR2 const  r);
 
 // subtract two vectors in R2
-VectorStructR2 operator-(VectorStructR2 const& l, VectorStructR2 const&  r);
+VectorStructR2 operator-(VectorStructR2 const l, VectorStructR2 const  r);
 
 // divide two vectors in R2
-VectorStructR2 operator/ (VectorStructR2 const& l, double const&  d);
+VectorStructR2 operator/ (VectorStructR2 const l, double const  d);
 
 // devide two vectors in R2
-VectorStructR2 operator/ (double const&  d, VectorStructR2 const& l);
+VectorStructR2 operator/ (double const  d, VectorStructR2 const l);
 
 // multiply two vectors in R2
-VectorStructR2 operator*(VectorStructR2 const& v, double const s);
+VectorStructR2 operator*(VectorStructR2 const v, double const s);
 
 // multiply two vectors in R2
-VectorStructR2 operator*(double const& s, VectorStructR2 const& v);
+VectorStructR2 operator*(double const s, VectorStructR2 const v);
 
 // calculate scalarproduct of two vectors in R2
-double operator*(VectorStructR2 const& l, VectorStructR2 const& v);
+double operator*(VectorStructR2 const l, VectorStructR2 const v);
 //***********************************************************************
+
+// subtract two std vectors
+std::vector<real> operator- (const std::vector<real> l, const std::vector<real> r);
+
+// add two std vectors
+std::vector<real> operator+ (const std::vector<real> l, const std::vector<real> r);
+
+// multiply scalar with matrix (std::vector<std::vectot<real>>)
+std::vector<std::vector<real>> operator* (const real& s, std::vector<std::vector<real>>& matrix);
+
+// multiply scalar with std::vector 
+std::vector<real> operator*(const real& s, std::vector<real>& v);
+
+
 
 namespace Math {
 
 	// calc new value variance percent
 	real calcNewValueVariancePercent(real initilaValue, real percent);
 
+	// convert an angle in direction
 	// convert an angle in direction
 	 VectorStructR3 convertAngleInDirection(real angleDegreesX, real angleDegreesY);
 
@@ -76,10 +93,10 @@ namespace Math {
 	void print(VectorStructR3 VectorPrint);
 
 	// scale a Vector
-	VectorStructR3 scaleVector(double const& scaleFactor, VectorStructR3 const& Vscale);
+	VectorStructR3 scaleVector(double const scaleFactor, VectorStructR3 const Vscale);
 
 	// calculate unit vector
-	VectorStructR3 unitVector(VectorStructR3 const& V);
+	VectorStructR3 unitVector(VectorStructR3 const V);
 
 	// subtract two vectors
 	VectorStructR3 subVectors(VectorStructR3 V1sub, VectorStructR3 V2sub);
@@ -91,14 +108,14 @@ namespace Math {
 	double lengthOfVector(VectorStructR3 vLength);
 
 	// calculate distance between two points in R3
-	double distanceTwoVectors(VectorStructR3 const& V1, VectorStructR3 const& V2);
+	double distanceTwoVectors(VectorStructR3 const V1, VectorStructR3 const V2);
 
 	// check if two vectors are linearly dependent
-	bool checkLinearlyDependent(VectorStructR3 const& V1, VectorStructR3 const& V2);
+	bool checkLinearlyDependent(VectorStructR3 const V1, VectorStructR3 const V2);
 
 	// calculate rotate matrix around an axis n
 	// source https://en.wikipedia.org/wiki/Rotation_matrix
-	Matrix3x3AndExist calcRotationMatrixAroundVector(VectorStructR3 const& direction, double const& /*in radiant*/ rotationAngle);
+	Matrix3x3AndExist calcRotationMatrixAroundVector(VectorStructR3 const direction, double const /*in radiant*/ rotationAngle);
 
 	// Multiply matrix (3x3) with Vector in R3
 	VectorStructR3 multiplyMatrix3x3VectorR3(double mat[3][3], VectorStructR3 vec);
@@ -109,7 +126,7 @@ namespace Math {
 
 	// compare two reounded numbers
 	bool compareTwoNumbers_decimals(double num1, double num2, unsigned int decimals);
-	bool compareTwoNumbers_tolrance(real num1, real num2, real tolerance);
+	bool compareTwoNumbers_tolerance(real num1, real num2, real tolerance);
 
 	// compare two vectors struct R3
 	bool compareTwoVectorStructR3_decimals(VectorStructR3 const V1, VectorStructR3 const V2, unsigned int decimals);
@@ -117,7 +134,7 @@ namespace Math {
 
 
 	// compate two vectors struct R2
-	bool compareTwoVectorStruct2D_decimals(VectorStructR2 const V1, VectorStructR2 const& V2, unsigned int const& decimals);
+	bool compareTwoVectorStruct2D_decimals(VectorStructR2 const V1, VectorStructR2 const V2, unsigned int const decimals);
 	bool compareTwoVectorStruct2D_tolerance(VectorStructR2 const V1, VectorStructR2 const V2, real tolerance);
 
 	// check if all vector elements are true
@@ -133,10 +150,10 @@ namespace Math {
 	bool compareAllVectorElements(std::vector<VectorStructR3> V1, std::vector<VectorStructR3> V2, unsigned int decimals);
 
 	// calculate "d" of an plane using coordinate form and Point P
-	real calc_D_ofPlane(VectorStructR3 const& normalVector, VectorStructR3 const& P);
+	real calc_D_ofPlane(VectorStructR3 const normalVector, VectorStructR3 const P);
 
 	// calc "t" (steps to walk) unsing line and plan (coordinate form)
-	real calc_T_ofPlanAndLine(VectorStructR3  const& originLine, VectorStructR3  const& coordFormPlan, double const& d_coordForm);
+	real calc_T_ofPlanAndLine(VectorStructR3  const originLine, VectorStructR3  const coordFormPlan, double const d_coordForm);
 
 	// find value in vector near zero positiv side
 	VectorElementAndPosition ValueInVectorNearZeroPosSide(std::vector<real> vector);
@@ -163,10 +180,10 @@ namespace Math {
 	std::vector<real> linDistriAlongTwoValues_double(real valueMin, real ValueMax, unsigned int number);
 
 	// linear distribution along two values -> float
-	std::vector<float> linDistriAlongTwoValues_float(float const& valueMin, float const& ValueMax, unsigned int const& number);
+	std::vector<float> linDistriAlongTwoValues_float(float const valueMin, float const ValueMax, unsigned int const number);
 
 	// linear distribution along two values -> int
-	std::vector<int> linDistriAlongTwoValues_int(int const& valueMin, int const& ValueMax, unsigned int const& number);
+	std::vector<int> linDistriAlongTwoValues_int(int const valueMin, int const ValueMax, unsigned int const number);
 
 	// vector with reals between min and max
 	std::vector<real> calcVecRealMinMaxSteps_withoutMinMax(real min, real max, real steps, real withoutMin, real withoutMax);
@@ -181,10 +198,23 @@ namespace Math {
 	VectorStructR2 unitVec2D(VectorStructR2 v);
 
 	// find max delta X,Y,Z in std::vector<VectorStructR3>
-	VectorStructR3 findMaxDelta_X_Y_Z_inStdV_VectorStructR3(std::vector<VectorStructR3> const& stdV_VecStrR3, VectorStructR3 refPoint);
+	VectorStructR3 findMaxDelta_X_Y_Z_inStdV_VectorStructR3(std::vector<VectorStructR3> const stdV_VecStrR3, VectorStructR3 refPoint);
 
 	// add 4 values
 	real add4values_ptr(real* a, real* b, real* c, real* d);
+
+	// calculate the inverse matrix 
+	// we got the code from the internet --> see https://martin-thoma.com/inverting-matrices/
+	std::vector<std::vector<real>> calculateInverse(const std::vector<std::vector<real>>& inpusMatrix);
+
+	
+	// add all values in std::vector
+	real addAllValuesInVector_real(std::vector<real> v);
+	float addAllValuesInVector_float(std::vector<float> v);
+	int addAllValuesInVector_int(std::vector<int> v);
+	unsigned int addAllValuesInVector_unsignedInt(std::vector<unsigned int> v);
+
+
 }
 
 

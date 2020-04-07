@@ -569,7 +569,7 @@ MaterialSellmeier1 ApertureStopElement::getGlassB()
 	// glass B
 	returnApertureStopElement->setGlassB(glassB);
 
-	/*Peter*/ returnApertureStopElement->setAllParameterFix();
+	returnApertureStopElement->setAllParameterFix();
 
 	return returnApertureStopElement;
 }

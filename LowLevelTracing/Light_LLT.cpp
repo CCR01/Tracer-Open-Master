@@ -1,5 +1,27 @@
 #include "Light_LLT.h"
 
+Light_LLT::Light_LLT() {};
+Light_LLT::Light_LLT(/*wavelength*/ double wavelength, /*intensity*/ double intensity,/*polarisation*/ JonesVector_LLT polarisation,/*light type*/ typeLight lightType,/*is alive*/ int isAlive) :
+	mWavelength(wavelength),
+	mIntensity(intensity),
+	mPolarisation(polarisation),
+	mLightType(lightType),
+	mIsAlive(isAlive)
+{}
+Light_LLT::Light_LLT(/*wavelength*/ double wavelength) :
+	mWavelength(wavelength)
+{
+	mIntensity = 1.0;
+	mPolarisation = { 1.0,1.0,1.0,1.0 };
+	mLightType = typeLightRay;
+	mIsAlive = 1;
+}
+
+
+Light_LLT::~Light_LLT() {};
+
+
+
 void Light_LLT::set(Light_LLT light_LLT)
 {
 	mWavelength = light_LLT.getWavelength();

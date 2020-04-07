@@ -1,7 +1,9 @@
 #include "OpticalSystemElement.h"
 #include <iostream>
 
-#include "..\LowLevelTracing/Interaction/RefractedRay_LLT.h"
+//#include "..\LowLevelTracing/Interaction/RefractedRay_LLT.h"
+#include "..\oftenUseNamespace\oftenUseNamespace.h"
+#include "..\SurfaceElements\ApertureStopElement.h"
 
 PositionAndElementStruct::PositionAndElementStruct() {}
 PositionAndElementStruct::~PositionAndElementStruct() {};
@@ -65,6 +67,8 @@ void OpticalSystemElement::setRefractiveIndexAccordingToWavelength(real waveleng
 	{
 		mPosAndElement.at(i).getElementInOptSys_ptr()->calRefIndex_A_and_B_andSet(wavelenght);
 	}
+
+	convertSurfacesToLLT();
 }
 
 
@@ -480,7 +484,8 @@ void OpticalSystemElement::fillInElementAndInteractionAtPos_i(unsigned int pos, 
 	 std::shared_ptr<InteractionRay_LLT> tempInteraction_ptr;
 	 std::shared_ptr<Element_CR> tempElement_ptr{};
 	 std::shared_ptr<Element_CR> saveElement_ptr{};
-	 Element_CR* element{};
+	 real tempDirectionZ_Element;
+	 real tempDirectionZ_LLT;
 
 	 MaterialSellmeier1 glassA;
 	 MaterialSellmeier1 glassB;
@@ -493,7 +498,18 @@ void OpticalSystemElement::fillInElementAndInteractionAtPos_i(unsigned int pos, 
 		 glassA = tempElement_ptr->getGlassA();
 		 glassB = tempElement_ptr->getGlassB();
 
-		 saveElement_ptr = tempElement_ptr->buildElement(tempSurfaceLLT_ptr, glassA, glassB);
+		 tempDirectionZ_Element = tempElement_ptr->getDirectionElementValue_Z();
+		 tempDirectionZ_LLT = tempSurfaceLLT_ptr->getDirection().getZ();
+
+		// if (oftenUse::checkSamePrefixTwoVal(tempDirectionZ_Element, tempDirectionZ_LLT))
+		// {
+		//	 saveElement_ptr = tempElement_ptr->buildElement(tempSurfaceLLT_ptr, glassA, glassB);
+		// }
+		// else // HLT and LLT have difference prefix
+		// {
+		//	 saveElement_ptr = tempElement_ptr->buildElement(tempSurfaceLLT_ptr, glassB, glassA);
+		// }
+
 		 tempInteraction_ptr = optSys_LLT.getPosAndInteraction()[i].getInteractionAtSur_ptr();
 
 		 retunrOptSysEle.fillPosAndElementAndInteraction(i, saveElement_ptr, tempInteraction_ptr);
@@ -684,4 +700,58 @@ void OpticalSystemElement::fillInElementAndInteractionAtPos_i(unsigned int pos, 
 	 mPosAndInteraction_LLT = posAndInteraction_LLT_vec;
 	 mPosAndIntersecSurface_LLT = posAndIntersecSurface_LLT_vec;
 
+ }
+
+ unsigned int OpticalSystemElement::getPosApertureStop()
+ {
+	
+	 unsigned int sizeOfOptSys = mPosAndElement.size();
+	 std::shared_ptr<Element_CR> tempSurface_ptr;
+	 ApertureStopElement apertureStop_ptr;
+
+
+	 for (unsigned int i = 0; i < sizeOfOptSys; i++)
+	 {
+		 tempSurface_ptr = mPosAndElement[i].getElementInOptSys_ptr();
+
+		 if (typeid(*tempSurface_ptr) == typeid(apertureStop_ptr))
+		 {
+			 return i;
+		 }
+
+	 }
+
+	 std::cout << "there is no aperture stop in your optical system!!!" << std::endl;
+	 return oftenUse::getInfInt();
+
+	
+ }
+
+ infosAS OpticalSystemElement::getInfoAS()
+ {
+	 infosAS returnInfosAS;
+
+	 unsigned int posAS = getPosApertureStop();
+	 returnInfosAS.setPosAS(posAS);
+	 
+	 std::shared_ptr<Element_CR> apertureStop_ptr = mPosAndElement[posAS].getElementInOptSys_ptr();
+
+	 real semiHeightAS = apertureStop_ptr->getSemiHeightElementValue();
+	 returnInfosAS.setSemiHeightAS(semiHeightAS);
+	 
+	 VectorStructR3 pointAS;
+	 real pointAS_Z = apertureStop_ptr->getPointElementValue_Z();
+	 pointAS.setX(0.0);
+	 pointAS.setY(0.0);
+	 pointAS.setZ(pointAS_Z);
+	 returnInfosAS.setPointAS(pointAS);
+
+	 VectorStructR3 directionAS;
+	 real diractionAS_Z	 = apertureStop_ptr->getDirectionElementValue_Z();
+	 directionAS.setX(0.0);
+	 directionAS.setY(0.0);
+	 directionAS.setZ(diractionAS_Z);
+	 returnInfosAS.setDirAS(directionAS);
+
+	 return returnInfosAS;
  }

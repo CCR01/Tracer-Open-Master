@@ -15,10 +15,10 @@ std::vector<VectorStructR3> FillApertureStop::calcPointsOnOneArm(VectorStructR3 
 {
 	std::vector<VectorStructR3> returnPointsOnOneArm;
 	//std::vector<VectorStructR3> returnPointsOnOneArm_private;
-	double scaleValue = mSemiHeightAS / mNumberOfRingsAS;
+	double scaleValue = mSemiHeightAS / mRings;
 
 //#pragma omp for nowait
-	for (int i = 1; i <= mNumberOfRingsAS; i++)
+	for (int i = 1; i <= mRings; i++)
 	{
 		VectorStructR3 PointOnArm = mPointAS + i * scaleValue * direction;
 		returnPointsOnOneArm.push_back(PointOnArm);
@@ -37,10 +37,25 @@ FillApertureStop::~FillApertureStop()
 
 }
 
+FillApertureStop::FillApertureStop(OpticalSystem_LLT optSys, unsigned int rings, unsigned int arms) :
+mOptSys_LLT(optSys),
+mRings(rings),
+mArms(arms)
+{
+	infosAS infosAS_fillAS = mOptSys_LLT.getInforAS();
+
+	mSemiHeightAS = infosAS_fillAS.getSemiHeightAS();
+	mPointAS = infosAS_fillAS.getPointAS();
+	mDirectionAS_Unit = Math::unitVector(infosAS_fillAS.getDirAS());
+
+	fillAS_withPoints(mRings, mPointAS, mDirectionAS_Unit, mSemiHeightAS);
+}
+
+
 // get number of rings in aperture stop
 unsigned int FillApertureStop::getNumberOfRingsInApertureStop() const&
 {
-	return mNumberOfRingsAS;
+	return mRings;
 }
 
 // print all points in the entrace pupil
@@ -133,7 +148,7 @@ std::vector<LightRayStruct> FillApertureStop::getVectorWithLightRays() const&
 
 
 // build LightRays (hexapolar)
-std::vector<VectorStructR3>  FillApertureStop::fillAS_withPoints(unsigned int const& rayDensity, VectorStructR3 const& PointApertureStop, VectorStructR3 const& directionApertureStop, real const& SemiHeightEntrancePupil)
+std::vector<VectorStructR3>  FillApertureStop::fillAS_withPoints(unsigned int const& rayDensity, VectorStructR3 const& PointApertureStop, VectorStructR3 const& directionApertureStop, real const& semiHeightAS)
 {
 
 	if (rayDensity < 3)
@@ -183,7 +198,7 @@ std::vector<VectorStructR3>  FillApertureStop::fillAS_withPoints(unsigned int co
 
 
 		// scale facor
-		real scaleValue = SemiHeightEntrancePupil / numberOfRings;
+		real scaleValue = semiHeightAS / numberOfRings;
 		real scaleValueGlobal = scaleValue;
 		// Vector in entrance pupil
 		VectorStructR3 VectorForEntrancePupil = Math::unitVector(Math::DoCrossProduct(BaseVecor1, DirectionEntrancePupilUNIT));

@@ -115,6 +115,8 @@
 
 #include "..\benchmark\Optikkreis\Optikkreis.h"
 
+#include "..\benchmark\Optimizer\DLS\testDLS.h"
+
 int main(int argc, char **argv)
 {
 	QApplication a(argc, argv);
@@ -125,11 +127,21 @@ int main(int argc, char **argv)
 	std::vector<bool> workTheSystem;
 	// *****************************************************************************************************************
 
+	//// Math
+	//BenchmarkMath checkMath;
+	//bool Math = checkMath.checkMethodesMath();
+	//workTheSystem.push_back(Math);
+
+	//// DLS
+	testDLS testDLS;
+	bool checkDLS = testDLS.testDLS_superFct();
+	workTheSystem.push_back(checkDLS);
+
 	//// Optikkreis
 	//Optikkreis optKreis;
 	//bool checkOptKreis = optKreis.systemForOptikkreis();
 	//workTheSystem.push_back(checkOptKreis);
-
+	//
 	//// plot TOM logo
 	//TOM_LOGO tomLogo;
     //bool checkOlotLogoTOM = tomLogo.plotTOM_Logo();
@@ -156,12 +168,12 @@ int main(int argc, char **argv)
 	//bool checkSysIOC2020 = system_IOC2020_Dresden.systemFor_IOC2020_Dresten();
 	//workTheSystem.push_back(checkSysIOC2020);
 	
-	// RayAiming
-	BenchmarkRayAiming checkRayAiming;
-	bool checkRayAiming_inf = checkRayAiming.checkRayAimingSuperFct_inf();
-	workTheSystem.push_back(checkRayAiming_inf);
-	bool checkRayAiming_obj = checkRayAiming.checkRayAimingSuperFct_obj();
-	workTheSystem.push_back(checkRayAiming_obj);
+	//// RayAiming
+	//BenchmarkRayAiming checkRayAiming;
+	//bool checkRayAiming_inf = checkRayAiming.checkRayAimingSuperFct_inf();
+	//workTheSystem.push_back(checkRayAiming_inf);
+	//bool checkRayAiming_obj = checkRayAiming.checkRayAimingSuperFct_obj();
+	//workTheSystem.push_back(checkRayAiming_obj);
 
 	//// lens replace
 	//testLensReplace testLensRep;

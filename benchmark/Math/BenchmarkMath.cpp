@@ -1,6 +1,6 @@
 #include "BechmarkMath.h"
 #include "..\..\LowLevelTracing\Math_LLT.h"
-
+#include "..\.\..\oftenUseNamespace\oftenUseNamespace.h"
 
 
 // check methodes of class FillEntrancePupilWithLightRays
@@ -8,14 +8,14 @@ bool BenchmarkMath::checkMethodesMath()
 {
 	std::vector<bool> checkMath;
 
-	
+
 
 	// *****************************************************************************************************************
 	// *****************************************************************************************************************
-	std::vector<double> testVec1 = {-5.0, 3.0, -10.0, 7.0, 1.0, 0.5, -0.5, -0.1};
+	std::vector<double> testVec1 = { -5.0, 3.0, -10.0, 7.0, 1.0, 0.5, -0.5, -0.1 };
 	VectorElementAndPosition test1 = Math::ValueInVectorNearZeroPosSide(testVec1);
 	VectorElementAndPosition test2 = Math::ValueInVectorNearZeroNegSide(testVec1);
-	bool checkTestNum1 = Math::compareTwoNumbers_decimals(test1.getValue(),0.5,1);
+	bool checkTestNum1 = Math::compareTwoNumbers_decimals(test1.getValue(), 0.5, 1);
 	bool checkTestPos1 = Math::compareTwoNumbers_decimals(test1.getPosInVector(), 5.0, 1);
 	bool checkTestNum2 = Math::compareTwoNumbers_decimals(test2.getValue(), -0.1, 1);
 	bool checkchekTestPos2 = Math::compareTwoNumbers_decimals(test2.getPosInVector(), 7.0, 1);
@@ -92,13 +92,13 @@ bool BenchmarkMath::checkMethodesMath()
 	// *****************************************************************************************************************
 	// check findAbsMax_X_inStdV_VectorStructR3
 	std::vector<VectorStructR3> testStdVec_VecStrR3;
-	testStdVec_VecStrR3.push_back({ -1.0,-6.0,9.0 }); 
-	testStdVec_VecStrR3.push_back({ 1.0,-6.0,9.0 }); 
+	testStdVec_VecStrR3.push_back({ -1.0,-6.0,9.0 });
+	testStdVec_VecStrR3.push_back({ 1.0,-6.0,9.0 });
 	testStdVec_VecStrR3.push_back({ -5.0,6.0,3.0 });
 	testStdVec_VecStrR3.push_back({ -9.0,8.0,9.0 });
 	testStdVec_VecStrR3.push_back({ 0.0,-8.0,10.0 });
 	VectorStructR3 refPoint{ -1.0,1.0,-1.0 };
-	VectorStructR3 absDeltaMax_X_Y_Z = Math::findMaxDelta_X_Y_Z_inStdV_VectorStructR3(testStdVec_VecStrR3,refPoint);
+	VectorStructR3 absDeltaMax_X_Y_Z = Math::findMaxDelta_X_Y_Z_inStdV_VectorStructR3(testStdVec_VecStrR3, refPoint);
 	bool checkFindAbsMax_X_Y_Z = Math::compareTwoVectorStructR3_decimals(absDeltaMax_X_Y_Z, { 8.0,9.0,11.0 }, 5);
 	checkMath.push_back(checkFindAbsMax_X_Y_Z);
 	// *****************************************************************************************************************
@@ -112,7 +112,39 @@ bool BenchmarkMath::checkMethodesMath()
 	checkMath.push_back(checkAdder);
 	// *****************************************************************************************************************
 	// *****************************************************************************************************************
+	//// see example: https://martin-thoma.com/wie-bestimme-ich-das-inverse-einer-matrix/
+	std::vector<real> v0{ 4.0,2.0,4.0,2.0 };
+	std::vector<real> v1{ 3.0,1.0,4.0,1.0 };
+	std::vector<real> v2{ 2.0,7.0,1.0,8.0 };
+	std::vector<real> v3{ 0.0,1.0,1.0,2.0 };
 
+	std::vector<std::vector<real>> matrix;
+	unsigned int sizeVecE0 = v0.size();
+	matrix.resize(4);
+	matrix[0] = v0;
+	matrix[1] = v1;
+	matrix[2] = v2;
+	matrix[3] = v3;
+
+	// Print input
+	oftenUse::print(matrix);
+	// Calculate solution
+	std::vector<std::vector<real>> outMatrix = Math::calculateInverse(matrix);
+	// Print output
+	oftenUse::print(outMatrix); // result see: https://martin-thoma.com/wie-bestimme-ich-das-inverse-einer-matrix/
+
+	bool check0 = Math::compareTwoNumbers_tolerance(outMatrix[0][1], -1.5, 0.001);
+	checkMath.push_back(check0);
+	bool check1 = Math::compareTwoNumbers_tolerance(outMatrix[3][1], -1.75, 0.001);
+	checkMath.push_back(check1);
+	bool check2 = Math::compareTwoNumbers_tolerance(outMatrix[1][2], 0.625, 0.001);
+	checkMath.push_back(check2);
+	bool check3 = Math::compareTwoNumbers_tolerance(outMatrix[2][3], -0.125, 0.001);
+	checkMath.push_back(check3);
+
+	// *****************************************************************************************************************
+	// *****************************************************************************************************************
+	
 	bool output = Math::checkTrueOfVectorElements(checkMath);
 	// *****************************************************************************************************************
 

@@ -6,34 +6,34 @@
 #include "..\LowLevelTracing/Surfaces/ApertureStop_LLT.h"
 
 // get intersection infos
-IntersectInformationStruct IntersectInfosAndPosSurfaceAndTotalSteps::getIntersecInfos() const&
+IntersectInformationStruct IntersectInfosAndPosSurfaceAndTotalSteps::getIntersecInfos() const
 {
 	return intersectInfos;
 }
 // set intersection infos
-void IntersectInfosAndPosSurfaceAndTotalSteps::setIntersectionInfos(IntersectInformationStruct const& setIntersectinfos)
+void IntersectInfosAndPosSurfaceAndTotalSteps::setIntersectionInfos(IntersectInformationStruct const setIntersectinfos)
 {
 	intersectInfos = setIntersectinfos;
 }
 
 // set position
-void IntersectInfosAndPosSurfaceAndTotalSteps::setPosition(unsigned int const& pos)
+void IntersectInfosAndPosSurfaceAndTotalSteps::setPosition(unsigned int const pos)
 {
 	position = pos;
 }
 // get position
-unsigned int IntersectInfosAndPosSurfaceAndTotalSteps::getPosition() const&
+unsigned int IntersectInfosAndPosSurfaceAndTotalSteps::getPosition() const
 {
 	return position;
 }
 
 // set total  steps
-void IntersectInfosAndPosSurfaceAndTotalSteps::setTotalSteps(real const& totSte)
+void IntersectInfosAndPosSurfaceAndTotalSteps::setTotalSteps(real const totSte)
 {
 	totalSteps = totSte;
 }
 // get total steps 
-real IntersectInfosAndPosSurfaceAndTotalSteps::getTotalSteps() const&
+real IntersectInfosAndPosSurfaceAndTotalSteps::getTotalSteps() const
 {
 	return totalSteps;
 }
@@ -119,7 +119,7 @@ SequentialRayTracing::SequentialRayTracing(OpticalSystemElement opticalSysElemen
 
 }
 
-SequentialRayTracing::SequentialRayTracing(OpticalSystemElement /*optical system element*/ opticalSysElement, VectorStructR3 /*start point lightRay*/ startPointLightRay, real /*rings*/ rings, real /*arms*/ arms, real /*refractive index*/ refIndex, Light_LLT light) :
+SequentialRayTracing::SequentialRayTracing(OpticalSystemElement /*optical system element*/ opticalSysElement, VectorStructR3 /*start point lightRay*/ startPointLightRay, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, real /*refractive index*/ refIndex, Light_LLT light) :
 	mOptSysEle(opticalSysElement),
 	mOpticalSystem_LLT(opticalSysElement.getLLTconversion_doConversion())
 {
@@ -133,7 +133,7 @@ SequentialRayTracing::SequentialRayTracing(OpticalSystemElement /*optical system
 	seqRayTracingWithVectorOfLightRays(fillAperStop.getVectorWithLightRays());
 }
 
-SequentialRayTracing::SequentialRayTracing(OpticalSystemElement /*optical system element*/ opticalSysElement, VectorStructR3 /*start point lightRay*/ startPointLightRay, real /*rings*/ rings, real /*arms*/ arms, real /*refractive index*/ refIndex, std::vector<Light_LLT> light_vec) :
+SequentialRayTracing::SequentialRayTracing(OpticalSystemElement /*optical system element*/ opticalSysElement, VectorStructR3 /*start point lightRay*/ startPointLightRay, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, real /*refractive index*/ refIndex, std::vector<Light_LLT> light_vec) :
 	mOptSysEle(opticalSysElement),
 	mLight_LLT_vec(light_vec)
 {
@@ -290,7 +290,7 @@ void SequentialRayTracing::sequentialRayTracing(LightRayStruct LightRaySt)
 }
 
 // do sequential ray tracing with an vector of many LightRay
-void SequentialRayTracing::seqRayTracingWithVectorOfLightRays(std::vector<LightRayStruct> const& LightRayStVec)
+void SequentialRayTracing::seqRayTracingWithVectorOfLightRays(std::vector<LightRayStruct> const LightRayStVec)
 {
 	
 	
@@ -305,7 +305,7 @@ void SequentialRayTracing::seqRayTracingWithVectorOfLightRays(std::vector<LightR
 		
 }
 
-//void SequentialRayTracing::seqRayTracingWithVectorOfLightRays_parallel(std::vector<LightRayStruct> const& LightRayStVec)
+//void SequentialRayTracing::seqRayTracingWithVectorOfLightRays_parallel(std::vector<LightRayStruct> const LightRayStVec)
 //{
 //		std::vector<std::vector<LightRayStruct>> lightRayVec_vec = divVecWithLightRay(LightRayStVec);
 //		
@@ -496,7 +496,7 @@ std::vector<VectorStructR3> SequentialRayTracing::getAllIntersectionPointsSRT()
 }
 
 // get all intersection points at surfaces i and intensity of lightRay;
-std::vector<pointAndIntensity> SequentialRayTracing::getAllInterPointsAndIntensityAtSurface_i(unsigned int const& surfaceNo)
+std::vector<pointAndIntensity> SequentialRayTracing::getAllInterPointsAndIntensityAtSurface_i(unsigned int const surfaceNo)
 {
 	std::vector<IntersectInformationStruct> interInfos;
 	interInfos = getAllInterInfosOfSurf_i(surfaceNo);
@@ -579,7 +579,7 @@ std::vector <IntersectInfosAndPosSurfaceAndTotalSteps>  SequentialRayTracing::fi
 }
 
 // get all intersection points of surface i
-std::vector<IntersectInformationStruct> SequentialRayTracing::getAllInterInfosOfSurf_i(unsigned int const& surfaceNo)
+std::vector<IntersectInformationStruct> SequentialRayTracing::getAllInterInfosOfSurf_i(unsigned int const surfaceNo)
 {
 	std::vector<IntersectInformationStruct> retunInterInfosSurf_i;
 	//#pragma omp parallel for
@@ -597,7 +597,7 @@ std::vector<IntersectInformationStruct> SequentialRayTracing::getAllInterInfosOf
 
 // get all intersection points of surface i not filtered
 // we need that for ray aiming
-std::vector<IntersectInformationStruct> SequentialRayTracing::getAllInterInfosOfSurf_i_notFiltered(unsigned int const& surfaceNo)
+std::vector<IntersectInformationStruct> SequentialRayTracing::getAllInterInfosOfSurf_i_notFiltered(unsigned int const surfaceNo)
 {
 	std::vector<IntersectInformationStruct> retunInterInfosSurf_i_notFiltered;
 	//#pragma omp parallel for
@@ -614,7 +614,7 @@ std::vector<IntersectInformationStruct> SequentialRayTracing::getAllInterInfosOf
 }
 
 // print all intersection points at surface i
-void SequentialRayTracing::printAllInterInfosAtSurface_i(unsigned int const& surfaceNo)
+void SequentialRayTracing::printAllInterInfosAtSurface_i(unsigned int const surfaceNo)
 {
 	std::vector<IntersectInformationStruct> interInfosAtSurfac_i = getAllInterInfosOfSurf_i(surfaceNo);
 
@@ -629,7 +629,7 @@ void SequentialRayTracing::printAllInterInfosAtSurface_i(unsigned int const& sur
 }
 
 // get all intersection points at surface i
-std::vector<VectorStructR3> SequentialRayTracing::getAllInterPointsAtSurf_i(unsigned int const& surfaceNo)
+std::vector<VectorStructR3> SequentialRayTracing::getAllInterPointsAtSurf_i(unsigned int const surfaceNo)
 {
 	std::vector<IntersectInformationStruct> interInfosAtSurfac_i = getAllInterInfosOfSurf_i(surfaceNo);
 	std::vector<VectorStructR3> intersecPoints;
@@ -644,7 +644,7 @@ std::vector<VectorStructR3> SequentialRayTracing::getAllInterPointsAtSurf_i(unsi
 }
 
 // get intersection point i at Surface i not filtered
-VectorStructR3 SequentialRayTracing::getInterPoint_i_atSurface_i_notFiltered(unsigned int const& interPointNo, unsigned int const& surfaceNo)
+VectorStructR3 SequentialRayTracing::getInterPoint_i_atSurface_i_notFiltered(unsigned int const interPointNo, unsigned int const surfaceNo)
 {
 	VectorStructR3 interPoint_i = getAllInterPointsAtSurf_i(surfaceNo).at(interPointNo);
 	return interPoint_i;
@@ -684,10 +684,11 @@ void SequentialRayTracing::clearAllTracedRays()
 	mSaveIntInfos_Pos_totStep_NotFiltered.clear();
 	mSaveInterInfos_PosSur_TotSteps.clear();
 	mSaveLightRayStructsNotFiltered.clear();
+	mStartPointOfLightRays.clear();
 }
 
 // get IntersectInfos, PosSurface and TotalSteps
-std::vector <IntersectInfosAndPosSurfaceAndTotalSteps> SequentialRayTracing::getInterInf_PosSurface_TotalSteps_ofSur_i(unsigned int const& surfaceNo)
+std::vector <IntersectInfosAndPosSurfaceAndTotalSteps> SequentialRayTracing::getInterInf_PosSurface_TotalSteps_ofSur_i(unsigned int const surfaceNo)
 {
 	std::vector<IntersectInfosAndPosSurfaceAndTotalSteps> returnInterInfos_PosSur_TotSteps;
 
@@ -773,9 +774,14 @@ std::vector<VectorStructR3> SequentialRayTracing::getStartPoints()
 }
 
 // set the optical system
-void SequentialRayTracing::setOpticalSystem(OpticalSystem_LLT optSys)
+void SequentialRayTracing::setOpticalSystem(OpticalSystem_LLT optSysLLT)
 {
-	mOpticalSystem_LLT = optSys;
+	mOpticalSystem_LLT = optSysLLT;
+}
+
+void SequentialRayTracing::setOpticalSystem(OpticalSystemElement optSysHLT)
+{
+	mOpticalSystem_LLT = optSysHLT.getLLTconversion_doConversion();
 }
 
 // set trace to surface
@@ -784,12 +790,12 @@ void SequentialRayTracing::setTraceToSurface(unsigned int traceToSurface)
 	mTraceToSurface_i = traceToSurface;
 }
 
-void SequentialRayTracingandColorStruct::setColor(QColor const& color)
+void SequentialRayTracingandColorStruct::setColor(QColor const color)
 {
 	mColor = color;
 }
 
-QColor SequentialRayTracingandColorStruct::getColor() const&
+QColor SequentialRayTracingandColorStruct::getColor() const
 {
 	return mColor;
 }
@@ -799,7 +805,7 @@ void SequentialRayTracingandColorStruct::setSequentialRayTracing(SequentialRayTr
 	mSeqRayTrac = SeqRayTrac;
 }
 
-SequentialRayTracing* SequentialRayTracingandColorStruct::getSequentialRayTracing() const&
+SequentialRayTracing* SequentialRayTracingandColorStruct::getSequentialRayTracing() const
 {
 	return mSeqRayTrac;
 }

@@ -741,6 +741,7 @@ std::shared_ptr<SurfaceIntersectionRay_LLT> SphericalSurface_LLT::clone()
 void SphericalSurface_LLT::setRadius(real radius)
 {
 	mRadius = radius;
+	calcCenterSphereAfterRotation();
 }
 void SphericalSurface_LLT::setPosition(VectorStructR3 position)
 {
