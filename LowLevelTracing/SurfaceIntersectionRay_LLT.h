@@ -41,6 +41,7 @@ public:
 
 		virtual void setRadius(real radius) = 0;
 		virtual void setPosition(VectorStructR3 position) = 0;
+		virtual void setDirection(VectorStructR3 direction) = 0;
 
 		virtual void plot2D(cv::Mat image, unsigned int scale, unsigned int lineType, unsigned int thickness) = 0;
 

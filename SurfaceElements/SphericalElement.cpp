@@ -163,7 +163,7 @@ void SphericalElement::buildSurface_LLT()
 	sphericalSurface_LLT.setPoint(pointR3);
 
 	VectorStructR3 directionR3{ mDirectionParamX.getValue(), mDirectionParamY.getValue(), mDirectionParamZ.getValue() };
-	sphericalSurface_LLT.setDirectionSphere(directionR3);
+	sphericalSurface_LLT.setDirection(directionR3);
 
 	sphericalSurface_LLT.setRefractiveIndexSide_A(mRefractiveiSideA_Param.getValue());
 	sphericalSurface_LLT.setRefractiveIndexSide_B(mRefractiveSideB_Param.getValue());

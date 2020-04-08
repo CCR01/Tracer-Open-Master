@@ -37,11 +37,6 @@ VectorStructR3 ApertureStop_LLT::getDirection()
 	return mDirectionAperture;
 }
 
-//set direction
-void ApertureStop_LLT::setDirection(VectorStructR3 direction)
-{
-	mDirectionAperture = direction;
-}
 
 // get refractive index
 double ApertureStop_LLT::getRefractiveIndex()
@@ -399,4 +394,9 @@ void ApertureStop_LLT::calcApertureStopQwtCoord()
 	ApertureStopDown_Qwt_Ptr = new ApertureStopQwtDown(mSemiHeightAperture, mPointAperture, mDirectionAperture);
 	pointsofApertureStopUp = ApertureStopUp_Qwt_Ptr->getPoints();
 	pointsofApertureStopDown = ApertureStopDown_Qwt_Ptr->getPoints();
+}
+
+void ApertureStop_LLT::setDirection(VectorStructR3 direction)
+{
+	mDirectionAperture = direction;
 }

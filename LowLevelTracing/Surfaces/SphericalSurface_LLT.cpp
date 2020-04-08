@@ -165,12 +165,6 @@ VectorStructR3 SphericalSurface_LLT::getPoint()
 	return mPointSphere;
 }
 
-// set Diretion
-void SphericalSurface_LLT::setDirectionSphere(VectorStructR3 const& Direction)
-{
-	mDirection = Direction;
-}
-
 // get Direction
 VectorStructR3 SphericalSurface_LLT::getDirection()
 {
@@ -765,4 +759,10 @@ void SphericalSurface_LLT::setPointerPlotQwt()
 {
 	SphericalSurface_Qwt_Ptr = new SphericalSurfaceQwt(mRadius, mSemiHeight, mDirection, mPointSphere);
 	pointsofSphericalSurface = SphericalSurface_Qwt_Ptr->points(mRadius, mSemiHeight, mDirection, mPointSphere);
+}
+
+void SphericalSurface_LLT::setDirection(VectorStructR3 direction)
+{
+	mDirection = direction;
+	calcCenterSphereAfterRotation();
 }

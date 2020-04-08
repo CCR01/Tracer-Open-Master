@@ -89,13 +89,6 @@ VectorStructR3 PlanGeometry_LLT::getDirection()
 	return mDirectionPlan;
 }
 
-//set direction
-void PlanGeometry_LLT::setDirection(VectorStructR3 direction)
-{
-	mDirectionPlan = direction;
-}
-
-
 // set refractive index side A
 void PlanGeometry_LLT::setRefractiveIndexSide_A(double const& refractiveIndex)
 {
@@ -345,4 +338,9 @@ void PlanGeometry_LLT::calcSphericalSurfaceQwtCoord()
 {
 	PlanGeometry_Qwt_Ptr = new PlanGeometryQwt(mSemiHeightPlan, mPointPlan, mDirectionPlan);
 	pointsofPlanGeometry = PlanGeometry_Qwt_Ptr->getPoints();
+}
+
+void PlanGeometry_LLT::setDirection(VectorStructR3 direction)
+{
+	mDirectionPlan = direction;
 }

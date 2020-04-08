@@ -136,7 +136,7 @@ void AsphericalElement::buildSurface_LLT()
 	asphericalSurface_LLT.setPoint(pointR3);
 
 	VectorStructR3 directionR3{ mDirectionParamX.getValue(), mDirectionParamY.getValue(), mDirectionParamZ.getValue() };
-	asphericalSurface_LLT.setDirectionAsphere(directionR3);
+	asphericalSurface_LLT.setDirection(directionR3);
 
 	asphericalSurface_LLT.setRefractiveIndexSide_A(mRefractiveSideA_AsphereParam.getValue());
 	asphericalSurface_LLT.setRefractiveIndexSide_B(mRefractiveSideB_AsphereParam.getValue());

@@ -85,11 +85,6 @@ VectorStructR3 ParaxialLens_LLT::getDirection()
 {
 	return mDirectionParaxialLens;
 }
-//set direction unit
-void ParaxialLens_LLT::setDirectionParaxialLens(VectorStructR3 const& direction)
-{
-	mDirectionParaxialLens = direction;
-}
 
 // get direction unit
 VectorStructR3 ParaxialLens_LLT::getDirectionParaxialLensUNIT() const
@@ -416,4 +411,9 @@ ParaxialLensQwtCurve* ParaxialLens_LLT::getPointerPlot()
 QPolygonF* ParaxialLens_LLT::getQPolygonFCurve()
 {
 	return &PointsOfParaxialLens;
+}
+
+void ParaxialLens_LLT::setDirection(VectorStructR3 direction)
+{
+	mDirectionParaxialLens = direction;
 }

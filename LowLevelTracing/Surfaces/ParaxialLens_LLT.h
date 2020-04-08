@@ -87,10 +87,7 @@ public:
 	void setPoint(VectorStructR3 point);
 
 	// get direction
-	VectorStructR3 getDirection() override;
-	// set direction
-	void setDirectionParaxialLens(VectorStructR3 const& direction);
-
+	virtual VectorStructR3 getDirection() override;
 
 	// get direction unit
 	VectorStructR3 getDirectionParaxialLensUNIT() const;
@@ -131,6 +128,7 @@ public:
 	
 	virtual void setRadius(real radius) override;
 	virtual void setPosition(VectorStructR3 position) override;
+	virtual void setDirection(VectorStructR3 direction) override;
 
 	//get pointer of the qwt curve
 	ParaxialLensQwtCurve* getPointerPlot();

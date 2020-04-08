@@ -446,7 +446,7 @@ void BuildSystemsForCombination::buildVectorForPossibleOpticalSystem_LLT()
 						sphericalSurface_LLT.setSemiHeight(tempSemiHeight);
 						sphericalSurface_LLT.setRadius(std::abs(tempRadius)); // just use the abs of the radius
 						sphericalSurface_LLT.setPoint(tempPosition);
-						sphericalSurface_LLT.setDirectionSphere(tempDirection);
+						sphericalSurface_LLT.setDirection(tempDirection);
 						sphericalSurface_LLT.setRefractiveIndexSide_A(tempRefIndex_A);
 						sphericalSurface_LLT.setRefractiveIndexSide_B(tempRefIndex_B);
 						sphericalSurface_LLT.calcCenterSphereAfterRotation();
@@ -457,7 +457,7 @@ void BuildSystemsForCombination::buildVectorForPossibleOpticalSystem_LLT()
 						sphericalSurface_LLT.setSemiHeight(tempSemiHeight);
 						sphericalSurface_LLT.setRadius(std::abs(tempRadius));
 						sphericalSurface_LLT.setPoint(tempPosition);
-						sphericalSurface_LLT.setDirectionSphere(-1 * tempDirection); // set direction by -1
+						sphericalSurface_LLT.setDirection(-1 * tempDirection); // set direction by -1
 						sphericalSurface_LLT.setRefractiveIndexSide_A(tempRefIndex_B); // change the refractive indexes
 						sphericalSurface_LLT.setRefractiveIndexSide_B(tempRefIndex_A);
 						sphericalSurface_LLT.calcCenterSphereAfterRotation();
@@ -573,7 +573,7 @@ void BuildSystemsForCombination::buildVectorForPossibleOpticalSystem_LLT()
 							sphericalSurface_LLT.setSemiHeight(tempSemiHeight);
 							sphericalSurface_LLT.setRadius(std::abs(tempRadius)); // just use the abs of the radius
 							sphericalSurface_LLT.setPoint(tempPosition);
-							sphericalSurface_LLT.setDirectionSphere(tempDirection);
+							sphericalSurface_LLT.setDirection(tempDirection);
 							sphericalSurface_LLT.setRefractiveIndexSide_A(tempRefIndex_A);
 							sphericalSurface_LLT.setRefractiveIndexSide_B(tempRefIndex_B);
 							sphericalSurface_LLT.calcCenterSphereAfterRotation();
@@ -584,7 +584,7 @@ void BuildSystemsForCombination::buildVectorForPossibleOpticalSystem_LLT()
 							sphericalSurface_LLT.setSemiHeight(tempSemiHeight);
 							sphericalSurface_LLT.setRadius(std::abs(tempRadius));
 							sphericalSurface_LLT.setPoint(tempPosition);
-							sphericalSurface_LLT.setDirectionSphere(-1 * tempDirection); // set direction by -1
+							sphericalSurface_LLT.setDirection(-1 * tempDirection); // set direction by -1
 							sphericalSurface_LLT.setRefractiveIndexSide_A(tempRefIndex_B); // change the refractive indexes
 							sphericalSurface_LLT.setRefractiveIndexSide_B(tempRefIndex_A);
 							sphericalSurface_LLT.calcCenterSphereAfterRotation();

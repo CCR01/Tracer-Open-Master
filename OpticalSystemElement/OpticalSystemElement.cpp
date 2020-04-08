@@ -501,14 +501,14 @@ void OpticalSystemElement::fillInElementAndInteractionAtPos_i(unsigned int pos, 
 		 tempDirectionZ_Element = tempElement_ptr->getDirectionElementValue_Z();
 		 tempDirectionZ_LLT = tempSurfaceLLT_ptr->getDirection().getZ();
 
-		// if (oftenUse::checkSamePrefixTwoVal(tempDirectionZ_Element, tempDirectionZ_LLT))
-		// {
-		//	 saveElement_ptr = tempElement_ptr->buildElement(tempSurfaceLLT_ptr, glassA, glassB);
-		// }
-		// else // HLT and LLT have difference prefix
-		// {
-		//	 saveElement_ptr = tempElement_ptr->buildElement(tempSurfaceLLT_ptr, glassB, glassA);
-		// }
+		 if (oftenUse::checkSamePrefixTwoVal(tempDirectionZ_Element, tempDirectionZ_LLT))
+		 {
+			 saveElement_ptr = tempElement_ptr->buildElement(tempSurfaceLLT_ptr, glassA, glassB);
+		 }
+		 else // HLT and LLT have difference prefix
+		 {
+			 saveElement_ptr = tempElement_ptr->buildElement(tempSurfaceLLT_ptr, glassB, glassA);
+		 }
 
 		 tempInteraction_ptr = optSys_LLT.getPosAndInteraction()[i].getInteractionAtSur_ptr();
 

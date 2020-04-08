@@ -81,8 +81,6 @@ public:
 	void setDirectionUnitAsphere(VectorStructR3 const& direction);
 	//get direction asphere
 	VectorStructR3 getDirection() override;
-	//set direction aspere
-	void setDirectionAsphere(VectorStructR3 const& direction);
 	//get refractive index side A
 	real getRefracIndexAsphere_A() const&;
 	//set refractive index side A
@@ -157,6 +155,7 @@ public:
 
 	virtual void setRadius(real radius) override;
 	virtual void setPosition(VectorStructR3 position) override;
+	virtual void setDirection(VectorStructR3 direction) override;
 
 	// make the 2d plot
 	void plot2D(cv::Mat image, unsigned int scale, unsigned int thickness, unsigned int lineType) override;

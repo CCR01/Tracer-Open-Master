@@ -61,9 +61,7 @@ public:
 	void setPoint(VectorStructR3 point);
 
 	// get direction
-	VectorStructR3 getDirection() override;
-	//set direction
-	void setDirection(VectorStructR3 direction);
+	virtual VectorStructR3 getDirection() override;
 
 	// get refractive index
 	double getRefractiveIndex();
@@ -92,6 +90,7 @@ public:
 
 	virtual void setRadius(real radius) override;
 	virtual void setPosition(VectorStructR3 position) override;
+	virtual void setDirection(VectorStructR3 direction) override;
 
 	//get pointer of the Upper qwt curve
 	ApertureStopQwtUp* getPointerPlotUp();

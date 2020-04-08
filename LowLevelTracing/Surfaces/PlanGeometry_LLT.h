@@ -55,9 +55,8 @@ public:
 	void setPoint(VectorStructR3 point);
 
 	// get direction
-	VectorStructR3 getDirection() override;
-	//set direction
-	void setDirection(VectorStructR3 direction);
+	virtual VectorStructR3 getDirection() override;
+
 
 	// set refractive index side A
 	virtual void setRefractiveIndexSide_A(double const& refractiveIndex) override;
@@ -84,6 +83,7 @@ public:
 
 	virtual void setRadius(real radius) override;
 	virtual void setPosition(VectorStructR3 position) override;
+	virtual void setDirection(VectorStructR3 direction) override;
 
 	//get pointer of the qwt curve
 	//PlanGeometryQwt* getPointerPlot();

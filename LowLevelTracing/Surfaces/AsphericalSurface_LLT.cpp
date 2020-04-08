@@ -57,11 +57,6 @@ VectorStructR3 AsphericalSurface_LLT::getDirection()
 	return mDirectionAsphereUnit;
 }
 
-//set direction aspere
-void AsphericalSurface_LLT::setDirectionAsphere(VectorStructR3 const& direction)
-{
-	mDirectionAsphere = direction;
-}
 
 //get refractive index side A
 real AsphericalSurface_LLT::getRefracIndexAsphere_A() const&
@@ -772,4 +767,9 @@ QPolygonF AsphericalSurfaceQwt::points(double radius, double semiHeight, VectorS
 
 	return AsphericalSurfacePoints;
 
+}
+
+void AsphericalSurface_LLT::setDirection(VectorStructR3 direction)
+{
+	mDirectionAsphere = direction;
 }

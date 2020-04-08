@@ -78,17 +78,15 @@ public:
 	//get Radius
 	virtual double getRadius() override;
 	//get Height
-	double getSemiHeight() override;
+	virtual double getSemiHeight() override;
 	//set Height
-	void setSemiHeight(double height);;
+	virtual void setSemiHeight(double height);;
 	// get Point 
-	VectorStructR3 getPoint() override;
+	virtual VectorStructR3 getPoint() override;
 	// set Point
 	void setPoint(VectorStructR3 Point);
 	// get Direction
-	VectorStructR3 getDirection() override;
-	// set Diretion
-	void setDirectionSphere(VectorStructR3 const& Direction);
+	virtual VectorStructR3 getDirection() override;
 	//get Refractiv Index Left
 	double getRefractivIndexSide_A() const&;
 	//set Refractive Index Left
@@ -118,7 +116,7 @@ public:
 
 	virtual void setRadius(real radius) override;
 	virtual void setPosition(VectorStructR3 position) override;
-
+	virtual void setDirection(VectorStructR3 direction) override;
 	//__________
 	// Struct to save the calculated intersection point between ray and spherical surface
 	struct ALL_IntersectionPointsStruct
