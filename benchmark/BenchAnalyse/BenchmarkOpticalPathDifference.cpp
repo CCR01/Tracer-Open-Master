@@ -123,7 +123,7 @@ bool BenchmarkOpticalPathDifference::checkMethodesOPD()
 	std::vector<double> allOPD = { OPDPX_1 , OPDPX_2 ,OPDPX_3 , OPDPX_4 ,OPDPX_5, OPDPX_6 , OPDPX_7, OPDPX_8 , OPDPX_9 , OPDPX_10 };
 	std::vector<double> refAllOPD = { -0.790038, -3.1791536, -7.22486, -13.024775, -20.719335, -30.495816, -42.5938366, -57.3126788, -75.02083805, -96.168399 };
 	//**********************************************************************************************
-	bool checkOPDE1 = Math::compareTwoSTDVecors(allOPD, refAllOPD, 3);
+	bool checkOPDE1 = Math::compareTwoSTDVecors_decimals(allOPD, refAllOPD, 3);
 	//**********************************************************************************************
 	checkOPD.push_back(checkOPDE1);
 	//**********************************************************************************************
@@ -233,8 +233,8 @@ bool BenchmarkOpticalPathDifference::checkMethodesOPD()
 	std::vector<real> refSysOPD3OptA_X = OPD3OptA.getOPD_X_inVec();
 	std::vector<real> refSysOPD3OptA_Y = OPD3OptA.getOPD_Y_inVec();
 
-	bool checkOPD3_OpdA_X = Math::compareTwoSTDVecors(refSysOPD3OptA_X, refVecOPD2OptA, 3);
-	bool checkOPD3_OpdA_Y = Math::compareTwoSTDVecors(refSysOPD3OptA_Y, refVecOPD2OptA, 3);
+	bool checkOPD3_OpdA_X = Math::compareTwoSTDVecors_decimals(refSysOPD3OptA_X, refVecOPD2OptA, 3);
+	bool checkOPD3_OpdA_Y = Math::compareTwoSTDVecors_decimals(refSysOPD3OptA_Y, refVecOPD2OptA, 3);
 
 	checkOPD.push_back(checkOPD3_OpdA_X);
 	checkOPD.push_back(checkOPD3_OpdA_Y);
@@ -257,8 +257,8 @@ bool BenchmarkOpticalPathDifference::checkMethodesOPD()
 	std::vector<real> refVecOPD3_F05_X{ -20.77287044221, -5.128251783727, 0.0, -4.549571108316, -13.46850743476 };
 	std::vector<real> refVecOPD3_F05_Y{ -18.76999535012, -5.069924289691, 0.0, -5.069924289691, -18.76999535012 };
 
-	bool checkOPD3_F05_X = Math::compareTwoSTDVecors(refSysOPD3F05_X, refVecOPD3_F05_X, 3);
-	bool checkOPD3_F05_Y = Math::compareTwoSTDVecors(refSysOPD3F05_Y, refVecOPD3_F05_Y, 3);
+	bool checkOPD3_F05_X = Math::compareTwoSTDVecors_decimals(refSysOPD3F05_X, refVecOPD3_F05_X, 3);
+	bool checkOPD3_F05_Y = Math::compareTwoSTDVecors_decimals(refSysOPD3F05_Y, refVecOPD3_F05_Y, 3);
 
 	checkOPD.push_back(checkOPD3_F05_X);
 	checkOPD.push_back(checkOPD3_F05_Y);

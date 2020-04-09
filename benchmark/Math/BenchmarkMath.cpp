@@ -36,8 +36,8 @@ bool BenchmarkMath::checkMethodesMath()
 	std::vector<real> checkTest5 = { -5.0, -4.0,-3.0,-2.0,-1.0,0.0,1.0,2.0,3.0,4.0, 5.0 };
 	std::vector<real> test6 = Math::linDistriAlongTwoValues_double(3.0, 5.0, 11);
 	std::vector<real> checkTest6 = { 3.0, 3.2,3.4,3.6,3.8,4.0,4.2,4.4,4.6,4.8,5.0 };
-	bool checkcheckTest5 = Math::compareTwoSTDVecors(test5, checkTest5, 2);
-	bool checkcheckTest6 = Math::compareTwoSTDVecors(test6, checkTest6, 2);
+	bool checkcheckTest5 = Math::compareTwoSTDVecors_decimals(test5, checkTest5, 2);
+	bool checkcheckTest6 = Math::compareTwoSTDVecors_decimals(test6, checkTest6, 2);
 	checkMath.push_back(checkcheckTest5);
 	checkMath.push_back(checkcheckTest6);
 	// *****************************************************************************************************************

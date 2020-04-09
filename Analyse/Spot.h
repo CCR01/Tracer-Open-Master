@@ -35,6 +35,10 @@ public:
 	std::vector<VectorStructR3> getAllInterPoints();
 	// get reference point
 	VectorStructR3 getRefPoint();
+	// set referece Pont 
+
+	
+
 
 private:
 

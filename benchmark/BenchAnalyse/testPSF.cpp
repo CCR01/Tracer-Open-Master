@@ -78,7 +78,7 @@ bool TestPSF::checkMethodesPSF()
 		/*fill apertur stop with light ray*/ vecLightRaysE0, /*chief ray*/ chiefLightRay, /*scalling*/ 0);
 	std::vector<real> checkOPD = OPDglobalE0_optAchse_single.getVecWithAllCalcGlobalOPD();
 	std::vector<real> zemaxDataOPD = { -7.461469657163181E-002, -6.048673068919702E-002, -7.461469657163181E-002,-9.317664088656388E-002,-9.317664088656388E-002,-9.774428660115252E-002 };
-	bool checkerOPD = Math::compareTwoSTDVecors(checkOPD, zemaxDataOPD, 8);
+	bool checkerOPD = Math::compareTwoSTDVecors_decimals(checkOPD, zemaxDataOPD, 8);
 	workTheSystem.push_back(checkerOPD);
 	//___ end test opt achse
 

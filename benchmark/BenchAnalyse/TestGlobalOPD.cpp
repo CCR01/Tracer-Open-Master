@@ -108,7 +108,7 @@ bool TestGlobalOPD::checkMethodesGlobalOPD()
 		/*fill apertur stop with light ray*/ lightRay, /*chief ray*/ chiefLightRay, /*scalling*/ 0);
 	std::vector<real> checkOPD = OPDglobalE0_optAchse.getVecWithAllCalcGlobalOPD();
 	std::vector<real> zemaxDataOPD = { -0.071713617204,-0.058155102772, -0.071713617204, -0.089671465399, -0.089671465399,-0.094086891382 };
-	bool checkerOPD = Math::compareTwoSTDVecors(checkOPD, zemaxDataOPD, 8);
+	bool checkerOPD = Math::compareTwoSTDVecors_decimals(checkOPD, zemaxDataOPD, 8);
 	workTheSystem.push_back(checkerOPD);
 	//___ end test opt achse
 
@@ -141,7 +141,7 @@ bool TestGlobalOPD::checkMethodesGlobalOPD()
 		/*fill apertur stop with light ray*/ vecLightRaysE0_Field_posY1, /*chief ray*/ chiefLightRay_Field, /*scalling*/ 0);
 	std::vector<real> checkOPD_Field_ZemaxData = { -0.146699120754,0.4827546459793,0.0, 0.0188381446773 };
 	std::vector<real> checkOPD_Field = OPDglobalE1_Field_singleRays.getVecWithAllCalcGlobalOPD();
-	bool checkOPD_Field_work = Math::compareTwoSTDVecors(checkOPD_Field_ZemaxData, checkOPD_Field, 8);
+	bool checkOPD_Field_work = Math::compareTwoSTDVecors_decimals(checkOPD_Field_ZemaxData, checkOPD_Field, 8);
 	workTheSystem.push_back(checkOPD_Field_work);
 	//__ end check OPD in the field for some rays
 
@@ -177,7 +177,7 @@ bool TestGlobalOPD::checkMethodesGlobalOPD()
 		/*fill apertur stop with light ray*/ vecLightRaysE0_Field_negY1, /*chief ray*/ chiefLightRay_Field_negY1, /*scalling*/ 0);
 	std::vector<real> checkOPD_Field_ZemaxData_negY = {-0.038248433070,0.4827546459849,0.0188381446769, 0.018838144673 };
 	std::vector<real> checkOPD_Field_negY = OPDglobalE1_Field_singleRays_negY1.getVecWithAllCalcGlobalOPD();
-	bool checkOPD_Field_work_negY = Math::compareTwoSTDVecors(checkOPD_Field_ZemaxData_negY, checkOPD_Field_negY, 8);
+	bool checkOPD_Field_work_negY = Math::compareTwoSTDVecors_decimals(checkOPD_Field_ZemaxData_negY, checkOPD_Field_negY, 8);
 	workTheSystem.push_back(checkOPD_Field_work_negY);
 	//__ end check OPD in the field for some rays
 
@@ -210,7 +210,7 @@ bool TestGlobalOPD::checkMethodesGlobalOPD()
 		/*fill apertur stop with light ray*/ vecLightRaysE0_Field_XYpos, /*chief ray*/ chiefLightRay_Field_XYpos, /*scalling*/ 0);
 	std::vector<real> checkOPD_Field_ZemaxData_XYpos = {0.062100829309,0.5767754231156,0.3052008045207,0.0621008239309 };
 	std::vector<real> checkOPD_Field_XYpos = OPDglobalE1_Field_singleRays_XYpos.getVecWithAllCalcGlobalOPD();
-	bool checkOPD_Field_work_XYpos = Math::compareTwoSTDVecors(checkOPD_Field_ZemaxData_XYpos, checkOPD_Field_XYpos, 7);
+	bool checkOPD_Field_work_XYpos = Math::compareTwoSTDVecors_decimals(checkOPD_Field_ZemaxData_XYpos, checkOPD_Field_XYpos, 7);
 	workTheSystem.push_back(checkOPD_Field_work_XYpos);
 	//__ end check OPD in the field for some rays
 
@@ -243,7 +243,7 @@ bool TestGlobalOPD::checkMethodesGlobalOPD()
 		/*fill apertur stop with light ray*/ vecLightRaysE0_Field_XYneg, /*chief ray*/ chiefLightRay_Field_XYneg, /*scalling*/ 0);
 	std::vector<real> checkOPD_Field_ZemaxData_XYneg = {-0.018726908708, -0.108114901143,-0.145494692733, 0.0466498123334 };
 	std::vector<real> checkOPD_Field_XYneg = OPDglobalE1_Field_singleRays_XYneg.getVecWithAllCalcGlobalOPD();
-	bool checkOPD_Field_work_XYneg = Math::compareTwoSTDVecors(checkOPD_Field_ZemaxData_XYneg, checkOPD_Field_XYneg, 8);
+	bool checkOPD_Field_work_XYneg = Math::compareTwoSTDVecors_decimals(checkOPD_Field_ZemaxData_XYneg, checkOPD_Field_XYneg, 8);
 	workTheSystem.push_back(checkOPD_Field_work_XYneg);
 	//__ end check OPD in the field for some rays
 
@@ -312,7 +312,7 @@ bool TestGlobalOPD::checkMethodesGlobalOPD()
 		/*fill apertur stop with light ray*/ lightRayE1_optAchse, /*chief ray*/ chiefLightRayE1_optA, /*scalling*/ 0);
 	std::vector<real> checkOPDE1_optA = OPDglobalE1_optAchse.getVecWithAllCalcGlobalOPD();
 	std::vector<real> zemaxDataOPD_E1_optA = {-0.067509415903,-0.046105687280, -0.067509415903,-0.072794092752,-0.072794092752,-0.077216790741 };
-	bool checkerOPD_E1_optA = Math::compareTwoSTDVecors(checkOPDE1_optA, zemaxDataOPD_E1_optA, 8);
+	bool checkerOPD_E1_optA = Math::compareTwoSTDVecors_decimals(checkOPDE1_optA, zemaxDataOPD_E1_optA, 8);
 	workTheSystem.push_back(checkerOPD_E1_optA);
 	//___ end test opt achse
 
@@ -351,7 +351,7 @@ bool TestGlobalOPD::checkMethodesGlobalOPD()
 	/*fill apertur stop with light ray*/ lightRayE1_Y1, /*chief ray*/ chiefLightRayE1_Y1, /*scalling*/ 0);
 	std::vector<real> checkOPDE1_Y1 = OPDglobalE1_Y1.getVecWithAllCalcGlobalOPD();
 	std::vector<real> zemaxDataOPD_E1_Y1 = { -0.068577489049,-0.035967400776, -0.029568213264,-0.022017747126,-0.029568213264,-0.036648487857 };
-	bool checkerOPD_E1_Y1 = Math::compareTwoSTDVecors(checkOPDE1_Y1, zemaxDataOPD_E1_Y1, 7);
+	bool checkerOPD_E1_Y1 = Math::compareTwoSTDVecors_decimals(checkOPDE1_Y1, zemaxDataOPD_E1_Y1, 7);
 	workTheSystem.push_back(checkerOPD_E1_Y1);
 	//___ end test opt achse
 	
@@ -389,7 +389,7 @@ bool TestGlobalOPD::checkMethodesGlobalOPD()
 		/*fill apertur stop with light ray*/ lightRayE1_negX1, /*chief ray*/ chiefLightRayE1_negX1, /*scalling*/ 0);
 	std::vector<real> checkOPDE1_negX1 = OPDglobalE1_negX1.getVecWithAllCalcGlobalOPD();
 	std::vector<real> zemaxDataOPD_E1_negX1 = { -0.068577489049, -0.036648487857, 0.0982230102171, -0.063571219811, -0.029568213267, -0.063571219811 };
-	bool checkerOPD_E1_negX1 = Math::compareTwoSTDVecors(checkOPDE1_negX1, zemaxDataOPD_E1_negX1, 7);
+	bool checkerOPD_E1_negX1 = Math::compareTwoSTDVecors_decimals(checkOPDE1_negX1, zemaxDataOPD_E1_negX1, 7);
 	workTheSystem.push_back(checkerOPD_E1_negX1);
 
 
@@ -427,7 +427,7 @@ bool TestGlobalOPD::checkMethodesGlobalOPD()
 		/*fill apertur stop with light ray*/ lightRayE1_negX5posY5, /*chief ray*/ chiefLightRayE1_negX5posY5, /*scalling*/ 0);
 	std::vector<real> checkOPDE1_negX5posY5 = OPDglobalE1_negX5posY5.getVecWithAllCalcGlobalOPD();
 	std::vector<real> zemaxDataOPD_E1_negX5posY5 = {-0.073021394003,-0.033426559927, -0.063324279640, -0.079115477159, 4.26228059E-003, 4.26228059E-003 };
-	bool checkerOPD_E1_negX5posY5 = Math::compareTwoSTDVecors(checkOPDE1_negX5posY5, zemaxDataOPD_E1_negX5posY5, 6);
+	bool checkerOPD_E1_negX5posY5 = Math::compareTwoSTDVecors_decimals(checkOPDE1_negX5posY5, zemaxDataOPD_E1_negX5posY5, 6);
 	workTheSystem.push_back(checkerOPD_E1_negX5posY5);
 
 	//__ start check gloabl OPD on opt axis
@@ -467,7 +467,7 @@ bool TestGlobalOPD::checkMethodesGlobalOPD()
 		/*fill apertur stop with light ray*/ lightRayE1_posX5posY5, /*chief ray*/ chiefLightRayE1_posX5posY5, /*scalling*/ 0);
 	std::vector<real> checkOPDE1_posX5posY5 = OPDglobalE1_posX5posY5.getVecWithAllCalcGlobalOPD();
 	std::vector<real> zemaxDataOPD_E1_posX5posY5 = { -0.073021394003,-0.033426559927, -0.063324279640, -0.079115477159, 4.26228059E-003, 4.26228059E-003, -0.079115477159 };
-	bool checkerOPD_E1_posX5posY5 = Math::compareTwoSTDVecors(checkOPDE1_posX5posY5, zemaxDataOPD_E1_posX5posY5, 6);
+	bool checkerOPD_E1_posX5posY5 = Math::compareTwoSTDVecors_decimals(checkOPDE1_posX5posY5, zemaxDataOPD_E1_posX5posY5, 6);
 	workTheSystem.push_back(checkerOPD_E1_posX5posY5);
 
 	//__ start check gloabl OPD on opt axis
@@ -507,7 +507,7 @@ bool TestGlobalOPD::checkMethodesGlobalOPD()
 		/*fill apertur stop with light ray*/ lightRayE1_negX1negY1, /*chief ray*/ chiefLightRayE1_negX1negY1, /*scalling*/ 0);
 	std::vector<real> checkOPDE1_negX1negY1 = OPDglobalE1_negX1negY1.getVecWithAllCalcGlobalOPD();
 	std::vector<real> zemaxDataOPD_E1_negX1negY1 = { -0.030794167181, -0.026544479355,-0.030794167181,  -0.032326281304,-0.034954574372, 0.034954574372, -5.7937563E-003  };
-	bool checkerOPD_E1_negX1negY1 = Math::compareTwoSTDVecors(checkOPDE1_negX1negY1, zemaxDataOPD_E1_negX1negY1, 6);
+	bool checkerOPD_E1_negX1negY1 = Math::compareTwoSTDVecors_decimals(checkOPDE1_negX1negY1, zemaxDataOPD_E1_negX1negY1, 6);
 	workTheSystem.push_back(checkerOPD_E1_negX1negY1);
 
 	//__ start check gloabl OPD on opt axis
@@ -530,7 +530,7 @@ bool TestGlobalOPD::checkMethodesGlobalOPD()
 	OPD OPDglobalE0_optAchse_1(/*exit pupil*/ exitPupilE0_ptr,  /*optical system*/ optSysE0,
 		/*fill apertur stop with light ray*/ lightRay, /*chief ray*/ chiefLightRay, /*scalling*/ 1);
 	std::vector<real> checkOPD_1 = OPDglobalE0_optAchse_1.getVecWithAllCalcGlobalOPD();
-	bool checkerOPD_1 = Math::compareTwoSTDVecors(checkOPD_1, zemaxDataOPD, 8);
+	bool checkerOPD_1 = Math::compareTwoSTDVecors_decimals(checkOPD_1, zemaxDataOPD, 8);
 	workTheSystem.push_back(checkerOPD_1);
 	//___ end test opt achse
 
@@ -545,7 +545,7 @@ bool TestGlobalOPD::checkMethodesGlobalOPD()
 	OPD OPDglobalE1_Field_singleRays_1(/*exit pupil*/ exitPupilE0_ptr,  /*optical system*/ optSysE0,
 		/*fill apertur stop with light ray*/ vecLightRaysE0_Field_posY1, /*chief ray*/ chiefLightRay_Field, /*scalling*/ 1);
 	std::vector<real> checkOPD_Field_1 = OPDglobalE1_Field_singleRays_1.getVecWithAllCalcGlobalOPD();
-	bool check_singleRays_1 = Math::compareTwoSTDVecors(checkOPD_Field_ZemaxData, checkOPD_Field_1, 8);
+	bool check_singleRays_1 = Math::compareTwoSTDVecors_decimals(checkOPD_Field_ZemaxData, checkOPD_Field_1, 8);
 	workTheSystem.push_back(check_singleRays_1);
 	//__ end check OPD in the field for some rays
 
@@ -562,7 +562,7 @@ bool TestGlobalOPD::checkMethodesGlobalOPD()
 	OPD OPDglobalE1_Field_singleRays_negY1_1(/*exit pupil*/ exitPupilE0_ptr,  /*optical system*/ optSysE0,
 		/*fill apertur stop with light ray*/ vecLightRaysE0_Field_negY1, /*chief ray*/ chiefLightRay_Field_negY1, /*scalling*/ 1);
 	std::vector<real> checkOPD_Field_negY_1 = OPDglobalE1_Field_singleRays_negY1_1.getVecWithAllCalcGlobalOPD();
-	bool checkOPD_Field_work_negY_1 = Math::compareTwoSTDVecors(checkOPD_Field_ZemaxData_negY, checkOPD_Field_negY_1, 8);
+	bool checkOPD_Field_work_negY_1 = Math::compareTwoSTDVecors_decimals(checkOPD_Field_ZemaxData_negY, checkOPD_Field_negY_1, 8);
 	workTheSystem.push_back(checkOPD_Field_work_negY_1);
 	//__ end check OPD in the field for some rays
 
@@ -578,7 +578,7 @@ bool TestGlobalOPD::checkMethodesGlobalOPD()
 	OPD OPDglobalE1_Field_singleRays_XYpos_1(/*exit pupil*/ exitPupilE0_ptr,  /*optical system*/ optSysE0,
 		/*fill apertur stop with light ray*/ vecLightRaysE0_Field_XYpos, /*chief ray*/ chiefLightRay_Field_XYpos, /*scalling*/ 1);
 	std::vector<real> checkOPD_Field_XYpos_1 = OPDglobalE1_Field_singleRays_XYpos_1.getVecWithAllCalcGlobalOPD();
-	bool checkOPD_Field_work_XYpos_1 = Math::compareTwoSTDVecors(checkOPD_Field_ZemaxData_XYpos, checkOPD_Field_XYpos_1, 7);
+	bool checkOPD_Field_work_XYpos_1 = Math::compareTwoSTDVecors_decimals(checkOPD_Field_ZemaxData_XYpos, checkOPD_Field_XYpos_1, 7);
 	workTheSystem.push_back(checkOPD_Field_work_XYpos_1);
 	//__ end check OPD in the field for some rays
 
@@ -594,7 +594,7 @@ bool TestGlobalOPD::checkMethodesGlobalOPD()
 	OPD OPDglobalE1_Field_singleRays_XYneg_1(/*exit pupil*/ exitPupilE0_ptr,  /*optical system*/ optSysE0,
 		/*fill apertur stop with light ray*/ vecLightRaysE0_Field_XYneg, /*chief ray*/ chiefLightRay_Field_XYneg, /*scalling*/ 1);
 	std::vector<real> checkOPD_Field_XYneg_1 = OPDglobalE1_Field_singleRays_XYneg_1.getVecWithAllCalcGlobalOPD();
-	bool checkOPD_Field_work_XYneg_1 = Math::compareTwoSTDVecors(checkOPD_Field_ZemaxData_XYneg, checkOPD_Field_XYneg_1, 8);
+	bool checkOPD_Field_work_XYneg_1 = Math::compareTwoSTDVecors_decimals(checkOPD_Field_ZemaxData_XYneg, checkOPD_Field_XYneg_1, 8);
 	workTheSystem.push_back(checkOPD_Field_work_XYneg_1);
 	//__ end check OPD in the field for some rays
 
@@ -619,7 +619,7 @@ bool TestGlobalOPD::checkMethodesGlobalOPD()
 	OPD OPDglobalE1_optAchse_1(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
 		/*fill apertur stop with light ray*/ lightRayE1_optAchse, /*chief ray*/ chiefLightRayE1_optA, /*scalling*/ 1);
 	std::vector<real> checkOPDE1_optA_1 = OPDglobalE1_optAchse_1.getVecWithAllCalcGlobalOPD();
-	bool checkerOPD_E1_optA_1 = Math::compareTwoSTDVecors(checkOPDE1_optA_1, zemaxDataOPD_E1_optA, 8);
+	bool checkerOPD_E1_optA_1 = Math::compareTwoSTDVecors_decimals(checkOPDE1_optA_1, zemaxDataOPD_E1_optA, 8);
 	workTheSystem.push_back(checkerOPD_E1_optA_1);
 	//___ end test opt achse
 
@@ -636,7 +636,7 @@ bool TestGlobalOPD::checkMethodesGlobalOPD()
 	OPD OPDglobalE1_Y1_1(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
 		/*fill apertur stop with light ray*/ lightRayE1_Y1, /*chief ray*/ chiefLightRayE1_Y1, /*scalling*/ 1);
 	std::vector<real> checkOPDE1_Y1_1 = OPDglobalE1_Y1_1.getVecWithAllCalcGlobalOPD();
-	bool checkerOPD_E1_Y1_1 = Math::compareTwoSTDVecors(checkOPDE1_Y1_1, zemaxDataOPD_E1_Y1, 7);
+	bool checkerOPD_E1_Y1_1 = Math::compareTwoSTDVecors_decimals(checkOPDE1_Y1_1, zemaxDataOPD_E1_Y1, 7);
 	workTheSystem.push_back(checkerOPD_E1_Y1_1);
 	//___ end test opt achse
 
@@ -652,7 +652,7 @@ bool TestGlobalOPD::checkMethodesGlobalOPD()
 	OPD OPDglobalE1_negX1_1(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
 		/*fill apertur stop with light ray*/ lightRayE1_negX1, /*chief ray*/ chiefLightRayE1_negX1, /*scalling*/ 1);
 	std::vector<real> checkOPDE1_negX1_1 = OPDglobalE1_negX1_1.getVecWithAllCalcGlobalOPD();
-	bool checkerOPD_E1_negX1_1 = Math::compareTwoSTDVecors(checkOPDE1_negX1_1, zemaxDataOPD_E1_negX1, 7);
+	bool checkerOPD_E1_negX1_1 = Math::compareTwoSTDVecors_decimals(checkOPDE1_negX1_1, zemaxDataOPD_E1_negX1, 7);
 	workTheSystem.push_back(checkerOPD_E1_negX1_1);
 
 	//__ start check gloabl OPD on opt axis
@@ -668,7 +668,7 @@ bool TestGlobalOPD::checkMethodesGlobalOPD()
 	OPD OPDglobalE1_negX5posY5_1(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
 		/*fill apertur stop with light ray*/ lightRayE1_negX5posY5, /*chief ray*/ chiefLightRayE1_negX5posY5, /*scalling*/ 1);
 	std::vector<real> checkOPDE1_negX5posY5_1 = OPDglobalE1_negX5posY5_1.getVecWithAllCalcGlobalOPD();
-	bool checkerOPD_E1_negX5posY5_1 = Math::compareTwoSTDVecors(checkOPDE1_negX5posY5_1, zemaxDataOPD_E1_negX5posY5, 6);
+	bool checkerOPD_E1_negX5posY5_1 = Math::compareTwoSTDVecors_decimals(checkOPDE1_negX5posY5_1, zemaxDataOPD_E1_negX5posY5, 6);
 	workTheSystem.push_back(checkerOPD_E1_negX5posY5_1);
 
 	//__ start check gloabl OPD on opt axis
@@ -683,7 +683,7 @@ bool TestGlobalOPD::checkMethodesGlobalOPD()
 	OPD OPDglobalE1_posX5posY5_1(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
 		/*fill apertur stop with light ray*/ lightRayE1_posX5posY5, /*chief ray*/ chiefLightRayE1_posX5posY5, /*scalling*/ 1);
 	std::vector<real> checkOPDE1_posX5posY5_1 = OPDglobalE1_posX5posY5_1.getVecWithAllCalcGlobalOPD();
-	bool checkerOPD_E1_posX5posY5_1 = Math::compareTwoSTDVecors(checkOPDE1_posX5posY5_1, zemaxDataOPD_E1_posX5posY5, 6);
+	bool checkerOPD_E1_posX5posY5_1 = Math::compareTwoSTDVecors_decimals(checkOPDE1_posX5posY5_1, zemaxDataOPD_E1_posX5posY5, 6);
 	workTheSystem.push_back(checkerOPD_E1_posX5posY5_1);
 
 	//__ start check gloabl OPD on opt axis
@@ -699,7 +699,7 @@ bool TestGlobalOPD::checkMethodesGlobalOPD()
 	OPD OPDglobalE1_negX1negY1_1(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
 		/*fill apertur stop with light ray*/ lightRayE1_negX1negY1, /*chief ray*/ chiefLightRayE1_negX1negY1, /*scalling*/ 1);
 	std::vector<real> checkOPDE1_negX1negY1_1 = OPDglobalE1_negX1negY1_1.getVecWithAllCalcGlobalOPD();
-	bool checkerOPD_E1_negX1negY1_1 = Math::compareTwoSTDVecors(checkOPDE1_negX1negY1_1, zemaxDataOPD_E1_negX1negY1, 6);
+	bool checkerOPD_E1_negX1negY1_1 = Math::compareTwoSTDVecors_decimals(checkOPDE1_negX1negY1_1, zemaxDataOPD_E1_negX1negY1, 6);
 	workTheSystem.push_back(checkerOPD_E1_negX1negY1_1);
 
 	//__ start check gloabl OPD on opt axis

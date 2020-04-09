@@ -597,27 +597,53 @@ std::vector<int> Math::linDistriAlongTwoValues_int(int const valueMin, int const
 }
 
 // compare two std::vecor<real>
-bool Math::compareTwoSTDVecors(std::vector<real> V1, std::vector<real> V2, unsigned decimals)
+bool Math::compareTwoSTDVecors_decimals(std::vector<real> V1, std::vector<real> V2, unsigned int decimals)
 {
-	bool output = true;
-
+	std::vector<bool> bool_vec;
 	//#pragma omp parallel if(V1,V2,decimals)
 	if (V1.size() == V2.size())
 	{
+		bool_vec.resize(V1.size());
 		//#pragma omp for
 		for (int i = 0; i < V1.size(); i++)
 		{
-			output = compareTwoNumbers_decimals(V1.at(i), V2.at(i), decimals);
+			bool_vec[i] = compareTwoNumbers_decimals(V1.at(i), V2.at(i), decimals);
 		}
 	}
 
 	else // vectros has different sizes
 	{
-		output = false;
+		return false;
 		std::cout << "vectros has different sizes" << std::endl;
 	}
 
-	return output;
+
+	return checkTrueOfVectorElements(bool_vec);
+
+}
+
+bool Math::compateTwoSTDVector_tolerance(std::vector<real> V1, std::vector<real> V2, real tolerance)
+{
+	std::vector<bool> bool_vec;
+	//#pragma omp parallel if(V1,V2,decimals)
+	if (V1.size() == V2.size())
+	{
+		bool_vec.resize(V1.size());
+		//#pragma omp for
+		for (int i = 0; i < V1.size(); i++)
+		{
+			bool_vec[i] = compareTwoNumbers_tolerance(V1.at(i), V2.at(i),tolerance );
+		}
+	}
+
+	else // vectros has different sizes
+	{
+		return false;
+		std::cout << "vectros has different sizes" << std::endl;
+	}
+	
+
+	return checkTrueOfVectorElements(bool_vec);
 
 }
 

@@ -11,7 +11,6 @@ class FillApertureStop
 public:
 	FillApertureStop() {};
 	FillApertureStop(OpticalSystem_LLT optSys, unsigned int rings, unsigned int arms);
-	FillApertureStop(infosAS infosAS_fillAS, unsigned int rings, unsigned int arms);
 	// Object height given by the start point of the ray
 	FillApertureStop(/*start point rays*/VectorStructR3 startPointLightRay,/*semi height of aperture stop*/ real semiHeightAB,/*point of aperture stop*/ VectorStructR3 pointAB,/*direction of aperture stop*/ VectorStructR3 directionAB, /*rings*/ unsigned int ringsAB,/*arms*/ unsigned int armsAB,/*refractive index*/ double refractiveIndex,/*light*/ Light_LLT Light) :
 		mStartPointRay(startPointLightRay),

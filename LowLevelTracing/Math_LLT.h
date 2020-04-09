@@ -189,7 +189,8 @@ namespace Math {
 	std::vector<real> calcVecRealMinMaxSteps_withoutMinMax(real min, real max, real steps, real withoutMin, real withoutMax);
 
 	// compare two std::vecor<real>
-	bool compareTwoSTDVecors(std::vector<real> V1, std::vector<real> V2, unsigned decimals);
+	bool compareTwoSTDVecors_decimals(std::vector<real> V1, std::vector<real> V2, unsigned int decimals);
+	bool compateTwoSTDVector_tolerance(std::vector<real> V1, std::vector<real> V2, real tolerance);
 
 	// calculate orthogonal vector in 2D
 	VectorStructR2 calcOrtoVec2D_Unit(VectorStructR2 vector);

@@ -74,15 +74,15 @@ bool BenchExitPupilCalc::checkMethodesExitPupilCalculation()
 	CardinalPoints calcExitPupilE0(optSysE0);
 	std::vector<real> posSurAfterStopE0 = calcExitPupilE0.getPosSurAfterStop();
 	std::vector<real> realPosSurAfterStopE0{ 35,40,45,50 };
-	bool checkPosSurAfterStopE0 = Math::compareTwoSTDVecors(posSurAfterStopE0, realPosSurAfterStopE0, 8);
+	bool checkPosSurAfterStopE0 = Math::compareTwoSTDVecors_decimals(posSurAfterStopE0, realPosSurAfterStopE0, 8);
 	checkExpPupCalc.push_back(checkPosSurAfterStopE0);
 	std::vector<real> focalLengthes = calcExitPupilE0.getFocalLengthAfterStop();
 	std::vector<real> realFocalLengthes{ 30.0,60.0,133.333333333333,25.0 };
-	bool checkFocalLengthes = Math::compareTwoSTDVecors(focalLengthes, realFocalLengthes, 5);
+	bool checkFocalLengthes = Math::compareTwoSTDVecors_decimals(focalLengthes, realFocalLengthes, 5);
 	checkExpPupCalc.push_back(checkFocalLengthes);
 	std::vector<real> refractiveIndexes = calcExitPupilE0.getRefractivIndexesAfterStop();
 	std::vector<real> realRefIndex{ 1.5,1.0,1.6,1.0 };
-	bool checkRefIndex = Math::compareTwoSTDVecors(refractiveIndexes, realRefIndex, 5);
+	bool checkRefIndex = Math::compareTwoSTDVecors_decimals(refractiveIndexes, realRefIndex, 5);
 	checkExpPupCalc.push_back(checkRefIndex);
 	real diameterApertureStop = calcExitPupilE0.getDiameterAperture();
 	real realDimApertStop = 2.0;
