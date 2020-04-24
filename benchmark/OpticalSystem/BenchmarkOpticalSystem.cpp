@@ -51,7 +51,7 @@ bool BenchmarkOpticalSystem::checkMethodesOpticalSystem()
 	SequentialRayTracing SeqTrac1(OptSys1);
 	SeqTrac1.seqRayTracingWithVectorOfLightRays(VecLightRay);
 
-	std::vector<VectorStructR3> allInterPoints1 = SeqTrac1.getAllInterPointsAtSurf_i(2);
+	std::vector<VectorStructR3> allInterPoints1 = SeqTrac1.getAllInterPointsAtSurf_i_notFiltered(2);
 
 	// Surface and interaction to fill on
 	SphericalSurface_LLT S_fillIn(/*radius*/12.776143019852, /*semiHeight*/1.39, /*Apex of the sphere*/{ 0.0,0.0,28.6784256101 },
@@ -62,7 +62,7 @@ bool BenchmarkOpticalSystem::checkMethodesOpticalSystem()
 	SequentialRayTracing SeqTrac2(OptSys1);
 	SeqTrac2.seqRayTracingWithVectorOfLightRays(VecLightRay);
 
-	std::vector<VectorStructR3> allInterPoints2 = SeqTrac2.getAllInterPointsAtSurf_i(3);
+	std::vector<VectorStructR3> allInterPoints2 = SeqTrac2.getAllInterPointsAtSurf_i_notFiltered(3);
 	bool check1 = Math::compareAllVectorElements(allInterPoints1, allInterPoints2, 8);
 	checkOpticalSystem.push_back(check1);
 

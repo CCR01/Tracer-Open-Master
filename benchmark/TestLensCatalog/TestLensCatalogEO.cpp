@@ -270,7 +270,7 @@ bool TestLensCatalogEO::testOneLensTwoSurfaces(LightRayStruct lightRay, OpticalS
 	seqTrace.sequentialRayTracing(lightRay);
 
 	// compate target point with real intersection point
-	VectorStructR3 intersectionPoint = seqTrace.getAllInterPointsAtSurf_i(2).at(0);
+	VectorStructR3 intersectionPoint = seqTrace.getAllInterPointsAtSurf_i_notFiltered(2).at(0);
 	bool returnCheckLens = Math::compareTwoVectorStructR3_decimals(targetVector, intersectionPoint, 3);
 
 	return returnCheckLens;
@@ -292,7 +292,7 @@ bool TestLensCatalogEO::testOneLensThreeSurfaces(LightRayStruct lightRay, Optica
 	seqTrace.sequentialRayTracing(lightRay);
 
 	// compare target point with real intersection point
-	VectorStructR3 intersectionPoint = seqTrace.getAllInterPointsAtSurf_i(3).at(0);
+	VectorStructR3 intersectionPoint = seqTrace.getAllInterPointsAtSurf_i_notFiltered(3).at(0);
 	bool returnCheckAchromat = Math::compareTwoVectorStructR3_decimals(targetVector, intersectionPoint, 3);
 
 	return returnCheckAchromat;

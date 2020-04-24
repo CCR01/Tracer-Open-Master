@@ -205,49 +205,49 @@ bool BenchmarkFillAS::chekMethodesFillAS()
 	FillApertureStop fillWithRay_optAchse(0,0, 2, { 0.0,0.0,50.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.5,light);
 	SequentialRayTracing seqTraceE0_optAchse(optSysE0);
 	seqTraceE0_optAchse.seqRayTracingWithVectorOfLightRays(fillWithRay_optAchse.getVectorWithLightRays());
-	Spot spotE0_optAchese(seqTraceE0_optAchse.getAllInterPointsAtSurf_i(2), seqTraceE0_optAchse.getAllInterPointsAtSurf_i(2).at(0));
+	Spot spotE0_optAchese(seqTraceE0_optAchse.getAllInterPointsAtSurf_i_notFiltered(2), seqTraceE0_optAchse.getAllInterPointsAtSurf_i_notFiltered(2).at(0));
 	bool checkE0_optAchse = Math::compareTwoNumbers_decimals(spotE0_optAchese.getRMS_mm(), 0.228095, 6);
 	checkMethodesFillAperStop.push_back(checkE0_optAchse);
 
 	FillApertureStop fillWithRay_field_Y10(0, 10, 2, { 0.0,0.0,50.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.5, light);
 	SequentialRayTracing seqTraceE0_field_Y10(optSysE0);
 	seqTraceE0_field_Y10.seqRayTracingWithVectorOfLightRays(fillWithRay_field_Y10.getVectorWithLightRays());
-	Spot spotE0_field_Y10(seqTraceE0_field_Y10.getAllInterPointsAtSurf_i(2), seqTraceE0_field_Y10.getAllInterPointsAtSurf_i(2).at(0));
+	Spot spotE0_field_Y10(seqTraceE0_field_Y10.getAllInterPointsAtSurf_i_notFiltered(2), seqTraceE0_field_Y10.getAllInterPointsAtSurf_i_notFiltered(2).at(0));
 	bool checkE0_field_Y10 = Math::compareTwoNumbers_decimals(spotE0_field_Y10.getRMS_mm(), 0.189995, 6);
 	checkMethodesFillAperStop.push_back(checkE0_field_Y10);
 
 	FillApertureStop fillWithRay_field_Yneg20(0, -20, 2, { 0.0,0.0,50.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.5, light);
 	SequentialRayTracing seqTraceE0_field_Yneg20(optSysE0);
 	seqTraceE0_field_Yneg20.seqRayTracingWithVectorOfLightRays(fillWithRay_field_Yneg20.getVectorWithLightRays());
-	Spot spotE0_field_Yneg20(seqTraceE0_field_Yneg20.getAllInterPointsAtSurf_i(2), seqTraceE0_field_Yneg20.getAllInterPointsAtSurf_i(2).at(0));
+	Spot spotE0_field_Yneg20(seqTraceE0_field_Yneg20.getAllInterPointsAtSurf_i_notFiltered(2), seqTraceE0_field_Yneg20.getAllInterPointsAtSurf_i_notFiltered(2).at(0));
 	bool checkE0_field_Yneg20 = Math::compareTwoNumbers_decimals(spotE0_field_Yneg20.getRMS_mm(), 0.093580, 6);
 	checkMethodesFillAperStop.push_back(checkE0_field_Yneg20);
 	
 	FillApertureStop fillWithRay_field_X5(5, 0, 2, { 0.0,0.0,50.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.5, light);
 	SequentialRayTracing seqTraceE0_field_X5(optSysE0);
 	seqTraceE0_field_X5.seqRayTracingWithVectorOfLightRays(fillWithRay_field_X5.getVectorWithLightRays());
-	Spot spotE0_field_X5(seqTraceE0_field_X5.getAllInterPointsAtSurf_i(2), seqTraceE0_field_X5.getAllInterPointsAtSurf_i(2).at(0));
+	Spot spotE0_field_X5(seqTraceE0_field_X5.getAllInterPointsAtSurf_i_notFiltered(2), seqTraceE0_field_X5.getAllInterPointsAtSurf_i_notFiltered(2).at(0));
 	bool checkE0_field_X5 = Math::compareTwoNumbers_decimals(spotE0_field_X5.getRMS_mm(), 0.218570, 6);
 	checkMethodesFillAperStop.push_back(checkE0_field_X5);
 
 	FillApertureStop fillWithRay_field_Xneg15(-15, 0, 2, { 0.0,0.0,50.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.5, light);
 	SequentialRayTracing seqTraceE0_field_Xneg15(optSysE0);
 	seqTraceE0_field_Xneg15.seqRayTracingWithVectorOfLightRays(fillWithRay_field_Xneg15.getVectorWithLightRays());
-	Spot spotE0_field_Xneg15(seqTraceE0_field_Xneg15.getAllInterPointsAtSurf_i(2), seqTraceE0_field_Xneg15.getAllInterPointsAtSurf_i(2).at(0));
+	Spot spotE0_field_Xneg15(seqTraceE0_field_Xneg15.getAllInterPointsAtSurf_i_notFiltered(2), seqTraceE0_field_Xneg15.getAllInterPointsAtSurf_i_notFiltered(2).at(0));
 	bool checkE0_field_Xneg15 = Math::compareTwoNumbers_decimals(spotE0_field_Xneg15.getRMS_mm(), 0.143635, 6);
 	checkMethodesFillAperStop.push_back(checkE0_field_Xneg15);
 
 	FillApertureStop fillWithRay_field_Xneg5_Y5(-5, 5, 2, { 0.0,0.0,50.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.5, light);
 	SequentialRayTracing seqTraceE0_field_Xneg5_Y5(optSysE0);
 	seqTraceE0_field_Xneg5_Y5.seqRayTracingWithVectorOfLightRays(fillWithRay_field_Xneg5_Y5.getVectorWithLightRays());
-	Spot spotE0_field_Xneg5_Y5(seqTraceE0_field_Xneg5_Y5.getAllInterPointsAtSurf_i(2), seqTraceE0_field_Xneg5_Y5.getAllInterPointsAtSurf_i(2).at(0));
+	Spot spotE0_field_Xneg5_Y5(seqTraceE0_field_Xneg5_Y5.getAllInterPointsAtSurf_i_notFiltered(2), seqTraceE0_field_Xneg5_Y5.getAllInterPointsAtSurf_i_notFiltered(2).at(0));
 	bool checkE0_field_Xneg5_Y5 = Math::compareTwoNumbers_decimals(spotE0_field_Xneg5_Y5.getRMS_mm(), 0.209132, 6);
 	checkMethodesFillAperStop.push_back(checkE0_field_Xneg5_Y5);
 
 	FillApertureStop fillWithRay_field_X10_Yneg15(10, -15, 2, { 0.0,0.0,50.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.5, light);
 	SequentialRayTracing seqTraceE0_field_X10_Yneg15(optSysE0);
 	seqTraceE0_field_X10_Yneg15.seqRayTracingWithVectorOfLightRays(fillWithRay_field_X10_Yneg15.getVectorWithLightRays());
-	Spot spotE0_field_XnegX10_Yneg15(seqTraceE0_field_X10_Yneg15.getAllInterPointsAtSurf_i(2), seqTraceE0_field_X10_Yneg15.getAllInterPointsAtSurf_i(2).at(0));
+	Spot spotE0_field_XnegX10_Yneg15(seqTraceE0_field_X10_Yneg15.getAllInterPointsAtSurf_i_notFiltered(2), seqTraceE0_field_X10_Yneg15.getAllInterPointsAtSurf_i_notFiltered(2).at(0));
 	bool checkE0_field_X10_Yneg15 = Math::compareTwoNumbers_decimals(spotE0_field_XnegX10_Yneg15.getRMS_mm(), 0.113528, 6);
 	checkMethodesFillAperStop.push_back(checkE0_field_X10_Yneg15);
 

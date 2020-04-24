@@ -431,7 +431,7 @@ void  SeidelCoefficients::calculate_h_bar()
 		}
 		else // there is an intersection point
 		{
-			temp_h_bar = seqTracChiefRay.getAllInterPointsAtSurf_i(i).at(0).getY();
+			temp_h_bar = seqTracChiefRay.getAllInterPointsAtSurf_i_notFiltered(i).at(0).getY();
 			mh_bar_vec.push_back(temp_h_bar);
 		}
 	}

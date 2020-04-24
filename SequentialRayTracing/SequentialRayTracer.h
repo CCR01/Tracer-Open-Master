@@ -89,7 +89,7 @@ public:
 	void printAllInterInfosAtSurface_i(unsigned int const surfaceNo);
 
 	// get all intersection points at surface i
-	std::vector<VectorStructR3> getAllInterPointsAtSurf_i(unsigned int const surfaceNo);
+	std::vector<VectorStructR3> getAllInterPointsAtSurf_i_notFiltered(unsigned int const surfaceNo);
 
 	// get all intersection points at surfaces i and intensity of lightRay;
 	std::vector<pointAndIntensity> getAllInterPointsAndIntensityAtSurface_i(unsigned int const surfaceNo);
@@ -99,6 +99,9 @@ public:
 
 	// get all intersection points of surface i not filtered
 	std::vector<IntersectInformationStruct> getAllInterInfosOfSurf_i_notFiltered(unsigned int const surfaceNo);
+
+	// get all intersection points of surface i filtered
+	std::vector<VectorStructR3> getAllInterPointsAtSurface_i_filtered(unsigned int const surfaceNo);
 
 	// get semi height of surface i
 	double getSemiHeightOfSurface_i(unsigned int i);

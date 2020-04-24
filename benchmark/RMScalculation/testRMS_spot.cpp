@@ -50,10 +50,10 @@ bool testRMS_Spot::checkRMScalculationSpot()
 	// single ray tracing
 	SequentialRayTracing singleRayTracing(optSysE0);
 	singleRayTracing.sequentialRayTracing(lightRay1);
-	VectorStructR3 interP0 = singleRayTracing.getAllInterPointsAtSurf_i(0).at(0);
-	VectorStructR3 interP1 = singleRayTracing.getAllInterPointsAtSurf_i(1).at(0);
-	VectorStructR3 interP2 = singleRayTracing.getAllInterPointsAtSurf_i(2).at(0);
-	VectorStructR3 interP3 = singleRayTracing.getAllInterPointsAtSurf_i(3).at(0);
+	VectorStructR3 interP0 = singleRayTracing.getAllInterPointsAtSurf_i_notFiltered(0).at(0);
+	VectorStructR3 interP1 = singleRayTracing.getAllInterPointsAtSurf_i_notFiltered(1).at(0);
+	VectorStructR3 interP2 = singleRayTracing.getAllInterPointsAtSurf_i_notFiltered(2).at(0);
+	VectorStructR3 interP3 = singleRayTracing.getAllInterPointsAtSurf_i_notFiltered(3).at(0);
 
 	std::vector<VectorStructR3> checkerSingleRayTrace{ {0.0,1.1008,55.0404},{0.0,1.0454,59.98178},{0.0,1.0037,64.9916 },{0.0,0.3026,95.0} };
 	std::vector<VectorStructR3> compareVector{ interP0, interP1,interP2,interP3 };
@@ -64,11 +64,11 @@ bool testRMS_Spot::checkRMScalculationSpot()
 	// do sequential ray tracing
 	SequentialRayTracing seqtrace(optSysE0);
 	seqtrace.seqRayTracingWithVectorOfLightRays(fillAperStopE0.getVectorWithLightRays());
-	Spot spot(seqtrace.getAllInterPointsAtSurf_i(3), seqtrace.getAllInterPointsAtSurf_i(3).at(0));
+	Spot spot(seqtrace.getAllInterPointsAtSurf_i_notFiltered(3), seqtrace.getAllInterPointsAtSurf_i_notFiltered(3).at(0));
 	real rmsE0 = spot.getRMS_mm();
 
 	// calculate rms value of spot
-	Spot spotE0(/*intersection points*/ seqtrace.getAllInterPointsAndIntensityAtSurface_i(3), /*reference point*/seqtrace.getAllInterPointsAtSurf_i(2).at(0));
+	Spot spotE0(/*intersection points*/ seqtrace.getAllInterPointsAndIntensityAtSurface_i(3), /*reference point*/seqtrace.getAllInterPointsAtSurf_i_notFiltered(2).at(0));
 
 
 	bool returnTestRMS_spot = Math::checkTrueOfVectorElements(checkRMScalcSpot_vec);

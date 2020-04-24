@@ -104,7 +104,7 @@ bool testCalcCombiVector_Seidel::testCalcCombiVec_Seidel_E0()
 	FillApertureStop fillAperE0(/*start point rays*/{ 0.0,0.0,0.0 },/*semi height of aperture stop*/ 1.0,/*point of aperture stop*/{ 0.0,0.0,20.0 },/*direction of aperture stop*/{ 0.0,0.0,1.0 }, /*rings*/6,/*arms*/ 8,/*refractive index*/ 1.0,/*wavelength*/ light);
 	seqTraceE0.seqRayTracingWithVectorOfLightRays(fillAperE0.getVectorWithLightRays());
 
-	Spot spotE0(seqTraceE0.getAllInterPointsAtSurf_i(5), seqTraceE0.getAllInterPointsAtSurf_i(5).at(0));
+	Spot spotE0(seqTraceE0.getAllInterPointsAtSurf_i_notFiltered(5), seqTraceE0.getAllInterPointsAtSurf_i_notFiltered(5).at(0));
 	real rmsSpotE0 = spotE0.getRMS_µm();
 	real excelBest_Zemax_RMS = 462.719;
 	bool checkE0_rmsBest = Math::compareTwoNumbers_decimals(excelBest_Zemax_RMS, rmsSpotE0, 2);

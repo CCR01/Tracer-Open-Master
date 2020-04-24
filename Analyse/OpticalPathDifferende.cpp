@@ -57,10 +57,10 @@ real OPD::calcRefDisForRefSphere()
 
 	SequentialRayTracing seqTrace1(mOptSys);
 	seqTrace1.sequentialRayTracing(mChiefLightRay);
-	mChiefRayAtImage = seqTrace1.getAllInterPointsAtSurf_i(mPosImageSurface).at(0);
+	mChiefRayAtImage = seqTrace1.getAllInterPointsAtSurf_i_notFiltered(mPosImageSurface).at(0);
 	SequentialRayTracing seqTrace2(mOptSysWithExitPupil);
 	seqTrace2.sequentialRayTracing(mChiefLightRay);
-	mChiefRayAtExitPupil = seqTrace2.getAllInterPointsAtSurf_i(mPosExPupilInOptSys).at(0);
+	mChiefRayAtExitPupil = seqTrace2.getAllInterPointsAtSurf_i_notFiltered(mPosExPupilInOptSys).at(0);
 	real refDistanceForRefSphere = Math::distanceTwoVectors(mChiefRayAtImage, mChiefRayAtExitPupil);
 
 	return refDistanceForRefSphere;
@@ -120,12 +120,12 @@ std::vector<cv::Point2d> OPD::calcOPD_X()
 		SequentialRayTracing seqTraceExitPup(mOptSysWithExitPupil);
 		seqTraceExitPup.seqRayTracingWithVectorOfLightRays(mLightRayX);
 
-		for (unsigned int i = 0; i < seqTraceRefSphere.getAllInterPointsAtSurf_i(mPosExPupilInOptSys).size(); i++)
+		for (unsigned int i = 0; i < seqTraceRefSphere.getAllInterPointsAtSurf_i_notFiltered(mPosExPupilInOptSys).size(); i++)
 		{
 			// according to ZEMAX we give the OPD in the wavelenth unitof the chief ray
 			real tempOPD = ((mRefDistance - seqTraceRefSphere.getInterInf_PosSurface_TotalSteps_ofSur_i(mPosExPupilInOptSys).at(i).getTotalSteps()) / mChiefLightRay.getLight_LLT().getWavelength()) * 1000000;
 
-			cv::Point2d tempPoint(mChiefRayAtExitPupil.getX() - seqTraceExitPup.getAllInterPointsAtSurf_i(mPosExPupilInOptSys).at(i).getX(), tempOPD);
+			cv::Point2d tempPoint(mChiefRayAtExitPupil.getX() - seqTraceExitPup.getAllInterPointsAtSurf_i_notFiltered(mPosExPupilInOptSys).at(i).getX(), tempOPD);
 			returnOPD_X.push_back(tempPoint);
 		}
 
@@ -139,7 +139,7 @@ std::vector<cv::Point2d> OPD::calcOPD_X()
 	seqTraceWithExitPupil.seqRayTracingWithVectorOfLightRays(mLightRayX);
 	// save all total steps to image (last) surface
 	std::vector<real> totalStepsToImageSurface = seqTrace.getTotalOptPathLenthToSurface_i(mPosImageSurface);
-	std::vector<VectorStructR3> posInExitPupilForEveryRay = seqTraceWithExitPupil.getAllInterPointsAtSurf_i(mPosExPupilInOptSys);
+	std::vector<VectorStructR3> posInExitPupilForEveryRay = seqTraceWithExitPupil.getAllInterPointsAtSurf_i_notFiltered(mPosExPupilInOptSys);
 	// *** passt
 	OpticalSystem_LLT OptSysOPDX;
 	OptSysOPDX.fillVectorSurfaceAndInteractingData(0, mRefSphere.clone(), Absorb.clone());
@@ -156,7 +156,7 @@ std::vector<cv::Point2d> OPD::calcOPD_X()
 	// build light rays to trace back and save position in exit pupil
 	for (unsigned int i = 0; i < seqTrace.getInterInf_PosSurface_TotalSteps_ofSur_i(mPosImageSurface).size(); i++)
 	{
-		VectorStructR3 tempOrigin = seqTrace.getAllInterPointsAtSurf_i(mPosImageSurface).at(i);
+		VectorStructR3 tempOrigin = seqTrace.getAllInterPointsAtSurf_i_notFiltered(mPosImageSurface).at(i);
 		VectorStructR3 tempDirection = -1 * seqTrace.getAllInterInfosOfSurf_i(mPosImageSurface).at(i).getDirectionRayUnit(); // direction to trace back
 		real tempWavelenth = seqTrace.getAllInterInfosOfSurf_i(mPosImageSurface).at(i).getLight().getWavelength();
 		char tempSurSide = seqTrace.getAllInterInfosOfSurf_i(mPosImageSurface).at(i).getSurfaceSide();
@@ -232,12 +232,12 @@ std::vector<cv::Point2d> OPD::calcOPD_Y()
 		SequentialRayTracing seqTraceExitPup(mOptSysWithExitPupil); // optical system include exit pupil (plan surface)
 		seqTraceExitPup.seqRayTracingWithVectorOfLightRays(mLightRayY);
 
-		for (unsigned int i = 0; i < seqTraceRefSphere.getAllInterPointsAtSurf_i(mPosExPupilInOptSys).size(); i++)
+		for (unsigned int i = 0; i < seqTraceRefSphere.getAllInterPointsAtSurf_i_notFiltered(mPosExPupilInOptSys).size(); i++)
 		{
 			// according to ZEMAX we give the OPD in the wavelenth unit of the chief ray
 			real tempOPD = ((mRefDistance - seqTraceRefSphere.getInterInf_PosSurface_TotalSteps_ofSur_i(mPosExPupilInOptSys).at(i).getTotalSteps()) / mChiefLightRay.getLight_LLT().getWavelength()) * 1000000;
 
-			cv::Point2d tempPoint(mChiefRayAtExitPupil.getY() - seqTraceRefSphere.getAllInterPointsAtSurf_i(mPosExPupilInOptSys).at(i).getY(), tempOPD);
+			cv::Point2d tempPoint(mChiefRayAtExitPupil.getY() - seqTraceRefSphere.getAllInterPointsAtSurf_i_notFiltered(mPosExPupilInOptSys).at(i).getY(), tempOPD);
 			returnOPD_Y.push_back(tempPoint);
 		}
 
@@ -252,7 +252,7 @@ std::vector<cv::Point2d> OPD::calcOPD_Y()
 	seqTraceWithExitPupil.seqRayTracingWithVectorOfLightRays(mLightRayY);
 	// save all total steps to image (last) surface
 	std::vector<real> totalStepsToImageSurface = seqTrace.getTotalOptPathLenthToSurface_i(mPosImageSurface);
-	std::vector<VectorStructR3> posInExitPupilForEveryRay = seqTraceWithExitPupil.getAllInterPointsAtSurf_i(mPosExPupilInOptSys);
+	std::vector<VectorStructR3> posInExitPupilForEveryRay = seqTraceWithExitPupil.getAllInterPointsAtSurf_i_notFiltered(mPosExPupilInOptSys);
 	// *** passt
 	OpticalSystem_LLT OptSysOPDY;
 	OptSysOPDY.fillVectorSurfaceAndInteractingData(0, &mRefSphere, Absorb.clone());
@@ -266,7 +266,7 @@ std::vector<cv::Point2d> OPD::calcOPD_Y()
 	// bild light rays to trace back and save position in exit pupil
 	for (unsigned int i = 0; i < seqTrace.getInterInf_PosSurface_TotalSteps_ofSur_i(mPosImageSurface).size(); i++)
 	{
-		VectorStructR3 tempOrigin = seqTrace.getAllInterPointsAtSurf_i(mPosImageSurface).at(i);
+		VectorStructR3 tempOrigin = seqTrace.getAllInterPointsAtSurf_i_notFiltered(mPosImageSurface).at(i);
 		VectorStructR3 tempDirection = -1 * seqTrace.getAllInterInfosOfSurf_i(mPosImageSurface).at(i).getDirectionRayUnit(); // direction to trace back
 		real tempWavelenth = seqTrace.getAllInterInfosOfSurf_i(mPosImageSurface).at(i).getLight().getWavelength();
 		char tempSurSide = seqTrace.getAllInterInfosOfSurf_i(mPosImageSurface).at(i).getSurfaceSide();
@@ -403,15 +403,15 @@ cv::Mat OPD::calcGlobalOPD()
 
 
 
-		for (unsigned int i = 0; i < seqTraceRefSphere.getAllInterPointsAtSurf_i(mPosExPupilInOptSys).size(); i++)
+		for (unsigned int i = 0; i < seqTraceRefSphere.getAllInterPointsAtSurf_i_notFiltered(mPosExPupilInOptSys).size(); i++)
 		{
 			// get all X values of the intersection points at the exitpupil (ref sphere)
-			real tempXvalue = mChiefRayAtExitPupil.getX() - seqTraceRefSphere.getAllInterPointsAtSurf_i(mPosExPupilInOptSys).at(i).getX();
+			real tempXvalue = mChiefRayAtExitPupil.getX() - seqTraceRefSphere.getAllInterPointsAtSurf_i_notFiltered(mPosExPupilInOptSys).at(i).getX();
 
 			vectorXvalues.push_back(tempXvalue);
 
 			// get all Y values of the intersection points at the exitpupil (ref sphere)
-			real tempYvalue = mChiefRayAtExitPupil.getY() - seqTraceRefSphere.getAllInterPointsAtSurf_i(mPosExPupilInOptSys).at(i).getY();
+			real tempYvalue = mChiefRayAtExitPupil.getY() - seqTraceRefSphere.getAllInterPointsAtSurf_i_notFiltered(mPosExPupilInOptSys).at(i).getY();
 			vectorYvalues.push_back(tempYvalue);
 		}
 
@@ -436,7 +436,7 @@ cv::Mat OPD::calcGlobalOPD()
 				maxABSValueInY_Direction = std::abs(minValueInY_Direction);
 			}
 
-			for (unsigned int i = 0; i < seqTraceRefSphere.getAllInterPointsAtSurf_i(mPosExPupilInOptSys).size(); i++)
+			for (unsigned int i = 0; i < seqTraceRefSphere.getAllInterPointsAtSurf_i_notFiltered(mPosExPupilInOptSys).size(); i++)
 			{
 				// according to ZEMAX we give the OPD in the wavelenth unit of the chief ray
 				real tempOPD = ((mRefDistance - seqTraceRefSphere.getInterInf_PosSurface_TotalSteps_ofSur_i(mPosExPupilInOptSys).at(i).getTotalSteps()) / mChiefLightRay.getLight_LLT().getWavelength()) * 1000000;
@@ -474,7 +474,7 @@ cv::Mat OPD::calcGlobalOPD()
 		{
 			// the case for mScaling = 1 is not testet!!! TODO: test it!!!
 			std::cout << "mScaling = 1 is not testet!!! We have to do this in the future!!!" << std::endl;
-			for (unsigned int i = 0; i < seqTraceRefSphere.getAllInterPointsAtSurf_i(mPosExPupilInOptSys).size(); i++)
+			for (unsigned int i = 0; i < seqTraceRefSphere.getAllInterPointsAtSurf_i_notFiltered(mPosExPupilInOptSys).size(); i++)
 			{
 				// according to ZEMAX we give the OPD in the wavelenth unit of the chief ray
 				real tempOPD = ((mRefDistance - seqTraceRefSphere.getInterInf_PosSurface_TotalSteps_ofSur_i(mPosExPupilInOptSys).at(i).getTotalSteps()) / mChiefLightRay.getLight_LLT().getWavelength()) * 1000000;
@@ -547,7 +547,7 @@ cv::Mat OPD::calcGlobalOPD()
 		seqTraceWithExitPupil.seqRayTracingWithVectorOfLightRays(mLightRayFillAperturStop);
 		// save all total steps to image (last) surface
 		std::vector<real> totalStepsToImageSurface = seqTrace.getTotalOptPathLenthToSurface_i(mPosImageSurface);
-		std::vector<VectorStructR3> posInExitPupilForEveryRay = seqTraceWithExitPupil.getAllInterPointsAtSurf_i(mPosExPupilInOptSys);
+		std::vector<VectorStructR3> posInExitPupilForEveryRay = seqTraceWithExitPupil.getAllInterPointsAtSurf_i_notFiltered(mPosExPupilInOptSys);
 		OpticalSystem_LLT OptSysOPDglobal;
 		Absorb_LLT Absorb;
 		OptSysOPDglobal.fillVectorSurfaceAndInteractingData(0, &mRefSphere, Absorb.clone());
@@ -561,7 +561,7 @@ cv::Mat OPD::calcGlobalOPD()
 		// bild light rays to trace back and save position in exit pupil
 		for (unsigned int i = 0; i < seqTrace.getInterInf_PosSurface_TotalSteps_ofSur_i(mPosImageSurface).size(); i++)
 		{
-			VectorStructR3 tempOrigin = seqTrace.getAllInterPointsAtSurf_i(mPosImageSurface).at(i);
+			VectorStructR3 tempOrigin = seqTrace.getAllInterPointsAtSurf_i_notFiltered(mPosImageSurface).at(i);
 			VectorStructR3 tempDirection = -1 * seqTrace.getAllInterInfosOfSurf_i(mPosImageSurface).at(i).getDirectionRayUnit(); // direction to trace back
 			real tempWavelenth = seqTrace.getAllInterInfosOfSurf_i(mPosImageSurface).at(i).getLight().getWavelength();
 			char tempSurSide = seqTrace.getAllInterInfosOfSurf_i(mPosImageSurface).at(i).getSurfaceSide();
@@ -608,14 +608,14 @@ cv::Mat OPD::calcGlobalOPD()
 
 
 
-		for (unsigned int i = 0; i < seqTraceBack.getAllInterPointsAtSurf_i(0).size(); i++)
+		for (unsigned int i = 0; i < seqTraceBack.getAllInterPointsAtSurf_i_notFiltered(0).size(); i++)
 		{
 			// get all X values of the intersection points at the exitpupil
-			real tempXvalue = mChiefRayAtExitPupil.getX() - seqTraceBack.getAllInterPointsAtSurf_i(0).at(i).getX();
+			real tempXvalue = mChiefRayAtExitPupil.getX() - seqTraceBack.getAllInterPointsAtSurf_i_notFiltered(0).at(i).getX();
 			vectorXvalues.push_back(tempXvalue);
 
 			// get all Y values of the intersection points at the exitpupil
-			real tempYvalue = mChiefRayAtExitPupil.getY() - seqTraceBack.getAllInterPointsAtSurf_i(0).at(i).getY();
+			real tempYvalue = mChiefRayAtExitPupil.getY() - seqTraceBack.getAllInterPointsAtSurf_i_notFiltered(0).at(i).getY();
 			vectorYvalues.push_back(tempYvalue);
 		}
 
@@ -644,7 +644,7 @@ cv::Mat OPD::calcGlobalOPD()
 			}
 
 			// save the OPD in a cv matrix
-			for (unsigned int i = 0; i < seqTraceBack.getAllInterPointsAtSurf_i(0).size(); i++)
+			for (unsigned int i = 0; i < seqTraceBack.getAllInterPointsAtSurf_i_notFiltered(0).size(); i++)
 			{
 				// according to ZEMAX we give the OPD in the wavelenth unit of the chief ray
 				real tempOPD = ((mRefDistance - totalStepsToRefSphere.at(i)) / mChiefLightRay.getLight_LLT().getWavelength()) * 1000000;
@@ -679,7 +679,7 @@ cv::Mat OPD::calcGlobalOPD()
 		{
 			// the case for mScaling = 1 is not testet!!! TODO: test it!!!
 			std::cout << "mScaling = 1 is not testet!!! We have to do this in the future!!!" << std::endl;
-			for (unsigned int i = 0; i < seqTraceBack.getAllInterPointsAtSurf_i(0).size(); i++)
+			for (unsigned int i = 0; i < seqTraceBack.getAllInterPointsAtSurf_i_notFiltered(0).size(); i++)
 			{
 				// according to ZEMAX we give the OPD in the wavelenth unit of the chief ray
 				real tempOPD = ((mRefDistance - totalStepsToRefSphere.at(i)) / mChiefLightRay.getLight_LLT().getWavelength()) * 1000000;

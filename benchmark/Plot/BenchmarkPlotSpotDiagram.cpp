@@ -53,8 +53,8 @@ bool BenchmarkPlotSpotDiagram::checkMethodesPlotSpotDiagram()
 	SequentialRayTracing SeqTrac2(OptSys1);
 	SeqTrac2.seqRayTracingWithVectorOfLightRays(FillEnt2.getVectorWithLightRays());
 
-	std::vector<VectorStructR3> interPoints0 = SeqTrac0.getAllInterPointsAtSurf_i(2);
-	std::vector<VectorStructR3> interPoints2 = SeqTrac2.getAllInterPointsAtSurf_i(2);
+	std::vector<VectorStructR3> interPoints0 = SeqTrac0.getAllInterPointsAtSurf_i_notFiltered(2);
+	std::vector<VectorStructR3> interPoints2 = SeqTrac2.getAllInterPointsAtSurf_i_notFiltered(2);
 
 	Spot SpotDiag0(interPoints0, interPoints0.at(0));
 	real RMS0 = SpotDiag0.getRMS_mm() * 1000;

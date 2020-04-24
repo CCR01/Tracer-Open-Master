@@ -1,4 +1,5 @@
 #include "oftenUseNamespace.h"
+#include <limits>
 
 //#include "..\SequentialRayTracing\SequentialRayTracer.h"
 #include "..\RayAiming\RayAiming.h"
@@ -19,7 +20,7 @@ bool oftenUse::checkRayTracing(VectorStructR3 startPoint, VectorStructR3 directi
 	// ray tracing
 	seqTrace.sequentialRayTracing(lightRay);
 	
-	VectorStructR3 intersecPoint = seqTrace.getAllInterPointsAtSurf_i(surfaceNum)[0];
+	VectorStructR3 intersecPoint = seqTrace.getAllInterPointsAtSurf_i_notFiltered(surfaceNum)[0];
 
 	bool checker = Math::compareTwoVectorStructR3_tolerance(intersecPoint, targetPoint, tolerande);
 
@@ -77,9 +78,12 @@ void oftenUse::print(std::vector<real> V)
 }
 
 // get very height number
-real oftenUse::getInfReal() { return std::numeric_limits<real>::infinity(); };
-float oftenUse::getInfFloat() { return std::numeric_limits<float>::infinity(); };
-int oftenUse::getInfInt() { return std::numeric_limits<int>::infinity(); };
+real oftenUse::getInfReal() 
+{ 
+	return std::numeric_limits<double>::max();
+};
+float oftenUse::getInfFloat() { return 99999999999999999999999999999.0; };
+int oftenUse::getInfInt() { return 9999999999999999999; };
 //unsigned int oftenUse::getInfUnsignedInt() { return unsignedInt_INF; };
 
 // check if two values have the same prefix
@@ -183,10 +187,10 @@ bool oftenUse::checkOptSysELement_Equal_Better_Zemax(OpticalSystemElement optimi
 			tempLightRay_vec = tempRayAiming.rayAimingMany_obj(FillApertureStop.getPointsInAS(), tempFieldPoint, lightVec[0], defaultRefractivIndex);
 
 			tempSeqTrace.setOpticalSystem(optimizedSystemHLT);
-			tempSeqTrace.setTraceToSurface(6);
+			tempSeqTrace.setTraceToSurface(posLastSurface);
 			tempSeqTrace.seqRayTracingWithVectorOfLightRays(tempLightRay_vec);
 
-			tempInterPoints = tempSeqTrace.getAllInterPointsAtSurf_i(posLastSurface);
+			tempInterPoints = tempSeqTrace.getAllInterPointsAtSurf_i_notFiltered(posLastSurface);
 
 			saveAllInterPoints.insert(saveAllInterPoints.end(), tempInterPoints.begin(), tempInterPoints.end());
 		
@@ -309,7 +313,7 @@ bool oftenUse::checkOptSysLLT_Equal_Better_Zemax(OpticalSystem_LLT optSys_LLT, s
 
 		tempSeqTrace.seqRayTracingWithVectorOfLightRays(tempLightRay_vec);
 
-		tempInterPoints = tempSeqTrace.getAllInterPointsAtSurf_i(posLastSurface);
+		tempInterPoints = tempSeqTrace.getAllInterPointsAtSurf_i_notFiltered(posLastSurface);
 
 		// calc rms spot
 		allRMS[i] = tempSpot.calcRMS(tempInterPoints, tempInterPoints[0]) * 1000;

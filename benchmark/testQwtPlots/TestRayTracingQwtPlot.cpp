@@ -116,13 +116,13 @@ bool testRayTracingQwtPlot::testRayTracingQwtPlotE0()
 	SequentialRayTracing seqTrace_E0_optA(optSysE0);
 	FillApertureStop fillAperStop_optA(/*start point rays*/{ 0.0,0.0,0.0 },/*semi height of aperture stop*/ 0.5,/*point of aperture stop*/{ 0.0,0.0,5.0 },/*direction of aperture stop*/{ 0.0,0.0,1.0 }, /*rings*/6,/*arms*/ 8,/*refractive index*/ 1.0, light);
 	seqTrace_E0_optA.seqRayTracingWithVectorOfLightRays(fillAperStop_optA.getVectorWithLightRays());
-	Spot spot_optA(/*intersection points*/ seqTrace_E0_optA.getAllInterPointsAtSurf_i(8), /*reference point*/seqTrace_E0_optA.getAllInterPointsAtSurf_i(8).at(0));
+	Spot spot_optA(/*intersection points*/ seqTrace_E0_optA.getAllInterPointsAtSurf_i_notFiltered(8), /*reference point*/seqTrace_E0_optA.getAllInterPointsAtSurf_i_notFiltered(8).at(0));
 
 	// ray tracing field 1
 	SequentialRayTracing seqTrace_E0_field1(optSysE0);
 	FillApertureStop fillAperStop_field1(/*start point rays*/{ 0.0,1.0,0.0 },/*semi height of aperture stop*/ 0.5,/*point of aperture stop*/{ 0.0,0.0,5.0 },/*direction of aperture stop*/{ 0.0,0.0,1.0 }, /*rings*/6,/*arms*/ 8,/*refractive index*/ 1.0, light);
 	seqTrace_E0_field1.seqRayTracingWithVectorOfLightRays(fillAperStop_field1.getVectorWithLightRays());
-	Spot spot_field1(/*intersection points*/ seqTrace_E0_field1.getAllInterPointsAtSurf_i(8), /*reference point*/seqTrace_E0_field1.getAllInterPointsAtSurf_i(8).at(0));
+	Spot spot_field1(/*intersection points*/ seqTrace_E0_field1.getAllInterPointsAtSurf_i_notFiltered(8), /*reference point*/seqTrace_E0_field1.getAllInterPointsAtSurf_i_notFiltered(8).at(0));
 
 	//to draw the aperturre stop two curves must be added to the table of surfaces to be ploted the upper part through getPointerPlotUp() and the other through getPointerPlotDown()
 	//can be ploted using one curve when finding a method to plot a curve with gaps

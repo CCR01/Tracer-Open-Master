@@ -50,7 +50,7 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 	SequentialRayTracing seqTraceE1(OptSysE1);
 	seqTraceE1.seqRayTracingWithVectorOfLightRays(FillEntPupilRayE1.getVectorWithLightRays());
 
-	Spot SpotValue(seqTraceE1.getAllInterPointsAtSurf_i(4), seqTraceE1.getAllInterPointsAtSurf_i(4).at(0));
+	Spot SpotValue(seqTraceE1.getAllInterPointsAtSurf_i_notFiltered(4), seqTraceE1.getAllInterPointsAtSurf_i_notFiltered(4).at(0));
 
 	double RMS_E1 = SpotValue.getRMS_mm();
 	double GEO_E1 = SpotValue.getGeoRadius();
@@ -98,7 +98,7 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 	seqTrace4.seqRayTracingWithVectorOfLightRays(vecLightRay1);
 
 	// get all intersection points
-	std::vector<VectorStructR3> allInterPoints = seqTrace4.getAllInterPointsAtSurf_i(1);
+	std::vector<VectorStructR3> allInterPoints = seqTrace4.getAllInterPointsAtSurf_i_notFiltered(1);
 
 	// get the reference points from Zemax
 	std::vector<VectorStructR3> refInterPoints = { {0.0,-0.1,20.5},{0.0,0.0,20.5},{0.0,0.1,20.5},{ 0.0,-1.1,20.5 },{ 0.0,-1.0,20.5 },{ 0.0,-0.9,20.5 } };
@@ -120,7 +120,7 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 
 	SequentialRayTracing SeqTraceCR1(OptSysCR1);
 	SeqTraceCR1.seqRayTracingWithVectorOfLightRays(FillApStopCR1.getVectorWithLightRays());
-	Spot SpotDiaCR1(SeqTraceCR1.getAllInterPointsAtSurf_i(1), SeqTraceCR1.getAllInterPointsAtSurf_i(1).at(0));
+	Spot SpotDiaCR1(SeqTraceCR1.getAllInterPointsAtSurf_i_notFiltered(1), SeqTraceCR1.getAllInterPointsAtSurf_i_notFiltered(1).at(0));
 	real rmsCR1 = SpotDiaCR1.getRMS_mm();
 	real RMSCR1_Z = 0.030430;
 	bool checkRMS_CR1 = Math::compareTwoNumbers_decimals(rmsCR1, RMSCR1_Z, 5);
@@ -128,7 +128,7 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 
 	SequentialRayTracing SeqTraceFieldCR1(OptSysCR1);
 	SeqTraceFieldCR1.seqRayTracingWithVectorOfLightRays(FillApStopFieldCR1.getVectorWithLightRays());
-	Spot SpotDiaFiledCR1(SeqTraceFieldCR1.getAllInterPointsAtSurf_i(1), SeqTraceFieldCR1.getAllInterPointsAtSurf_i(1).at(0));
+	Spot SpotDiaFiledCR1(SeqTraceFieldCR1.getAllInterPointsAtSurf_i_notFiltered(1), SeqTraceFieldCR1.getAllInterPointsAtSurf_i_notFiltered(1).at(0));
 	real rmsFild_CR1 = SpotDiaFiledCR1.getRMS_mm();
 	real RMS_Field_CR1_Z = 0.030430;
 	bool checkFieldRMS_CR1 = Math::compareTwoNumbers_decimals(rmsFild_CR1, RMS_Field_CR1_Z, 5);
@@ -155,7 +155,7 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 
 	SequentialRayTracing SeqTraceCR2(OptSysCR2);
 	SeqTraceCR2.seqRayTracingWithVectorOfLightRays(FillApStopCR2.getVectorWithLightRays());
-	Spot SpotDiaCR2(SeqTraceCR2.getAllInterPointsAtSurf_i(1), SeqTraceCR2.getAllInterPointsAtSurf_i(1).at(0));
+	Spot SpotDiaCR2(SeqTraceCR2.getAllInterPointsAtSurf_i_notFiltered(1), SeqTraceCR2.getAllInterPointsAtSurf_i_notFiltered(1).at(0));
 	real rmsCR2 = SpotDiaCR2.getRMS_mm();
 	real RMS_ZemaxCR2 = 0.527453;
 	bool checkRMS_CR2 = Math::compareTwoNumbers_decimals(rmsCR2, RMS_ZemaxCR2, 1);
@@ -163,7 +163,7 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 
 	SequentialRayTracing SeqTraceFieldCR2(OptSysCR2);
 	SeqTraceFieldCR2.seqRayTracingWithVectorOfLightRays(FillApStopFieldCR2.getVectorWithLightRays());
-	Spot SpotDiaFieldCR2(SeqTraceFieldCR2.getAllInterPointsAtSurf_i(1), SeqTraceFieldCR2.getAllInterPointsAtSurf_i(1).at(0));
+	Spot SpotDiaFieldCR2(SeqTraceFieldCR2.getAllInterPointsAtSurf_i_notFiltered(1), SeqTraceFieldCR2.getAllInterPointsAtSurf_i_notFiltered(1).at(0));
 	real rmsFild_CR2 = SpotDiaFieldCR2.getRMS_mm();
 	real RMS_ZemaxFieldCR2 = 0.527453;
 	bool checkFieldRMS_CR2 = Math::compareTwoNumbers_decimals(rmsFild_CR2, RMS_ZemaxFieldCR2, 1);
@@ -185,7 +185,7 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 
 	SequentialRayTracing SeqTraceCR3(OptSysCR3);
 	SeqTraceCR3.seqRayTracingWithVectorOfLightRays(FillApStopCR3.getVectorWithLightRays());
-	Spot SpotDiaCR3(SeqTraceCR3.getAllInterPointsAtSurf_i(1), SeqTraceCR3.getAllInterPointsAtSurf_i(1).at(0));
+	Spot SpotDiaCR3(SeqTraceCR3.getAllInterPointsAtSurf_i_notFiltered(1), SeqTraceCR3.getAllInterPointsAtSurf_i_notFiltered(1).at(0));
 	real rmsCR3 = SpotDiaCR3.getRMS_mm();
 	real RMS_ZemaxCR3 = 0.775965;
 	bool checkRMS_CR3 = Math::compareTwoNumbers_decimals(rmsCR3, RMS_ZemaxCR3, 1);
@@ -205,7 +205,7 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 	CR4.fillVectorSurfaceAndInteractingData(1, &PlanCR4, absorb.clone());
 	SequentialRayTracing traceCR4(CR4);
 	traceCR4.sequentialRayTracing(lightRayCR4);
-	VectorStructR3 interPointCR4 = traceCR4.getAllInterPointsAtSurf_i(1).at(0);
+	VectorStructR3 interPointCR4 = traceCR4.getAllInterPointsAtSurf_i_notFiltered(1).at(0);
 	
 	// *****************************************************************************************************************
 	ParaxialLens_LLT ParaxialLens5(/*semi Height*/ 5.0, /*apex*/{ 1.0,1.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*focallength*/ 5.0, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
@@ -242,7 +242,7 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 	seqTrace5.seqRayTracingWithVectorOfLightRays(vecLightRay5);
 
 	// get all intersection points
-	std::vector<VectorStructR3> allInterPoints5 = seqTrace5.getAllInterPointsAtSurf_i(1);
+	std::vector<VectorStructR3> allInterPoints5 = seqTrace5.getAllInterPointsAtSurf_i_notFiltered(1);
 
 	// get the reference points from Zemax
 	std::vector<VectorStructR3> refInterPoints5 = { { 2.1, 2.0, 20.5 },{ 2.1, 2.1, 20.5 },{ 2.1, 2.2, 20.5 },{ 2.1, 1.0, 20.5 },{ 2.1, 1.1, 20.5 },{ 2.1, 1.2, 20.5 } };
@@ -291,7 +291,7 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 	//VectorStructR3 checkInterPoint2 = seqTrace6.getAllInterPointsAtSurf_i(0).at(0);
 
 	// get all intersection points
-	std::vector<VectorStructR3> allInterPoints6 = seqTrace6.getAllInterPointsAtSurf_i(1);
+	std::vector<VectorStructR3> allInterPoints6 = seqTrace6.getAllInterPointsAtSurf_i_notFiltered(1);
 
 	// get the reference points from Zemax
 	std::vector<VectorStructR3> refInterPoints6 = { { -1.2188959553, 2.8811040447, 20.5 },{ -1.424842446, 1.4248424456, 20.5 },{ -1.5489916552, 0.54697496574, 20.5 },{ -1.4849242405, 1.0, 20.5 },{ -1.6095128272, 0.11902565449, 20.5 },{ -1.6890872965, -0.4436508139, 20.5 } };
@@ -337,7 +337,7 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 	seqTrace7.seqRayTracingWithVectorOfLightRays(vecLightRay7);
 
 	// get all intersection points
-	std::vector<VectorStructR3> allInterPoints7 = seqTrace7.getAllInterPointsAtSurf_i(1);
+	std::vector<VectorStructR3> allInterPoints7 = seqTrace7.getAllInterPointsAtSurf_i_notFiltered(1);
 
 	// get the reference points from Zemax
 	std::vector<VectorStructR3> refInterPoints7 = { { -0.39677777610, 2.0407565173, 16.155449228 },{ -0.56308456008, -0.56308456008, 15.449869300 },{ -0.67526747025, -2.3195160339, 14.973917521 },{ -0.53109216769, -0.062184335382, 15.585601526 },{ -0.6559312875, -2.0114777364, 15.057388683 },{ -0.74344573491, -3.3869731867, 14.684661641 } };
@@ -382,7 +382,7 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 	seqTrace8.seqRayTracingWithVectorOfLightRays(vecLightRay8);
 
 	// get all intersection points
-	std::vector<VectorStructR3> allInterPoints8 = seqTrace8.getAllInterPointsAtSurf_i(1);
+	std::vector<VectorStructR3> allInterPoints8 = seqTrace8.getAllInterPointsAtSurf_i_notFiltered(1);
 
 	// get the reference points from Zemax
 	std::vector<VectorStructR3> refInterPoints8 = { { 0.62155966824, 0.89283436818, 13.787566865 },{ 0.53064249902, -0.53064249902, 14.417329574 },{ -0.40221461162, -2.5415192136, 14.718169126 },{ 0.55722466900, -0.11444933801, 14.060517150 },{ 0.44258280610, -1.9093802764, 14.546901382 },{ 0.27333122941, -4.5593275442, 15.264975008 } };
@@ -428,7 +428,7 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 	seqTrace9.seqRayTracingWithVectorOfLightRays(vecLightRay9);
 
 	// get all intersection points
-	std::vector<VectorStructR3> allInterPoints9 = seqTrace9.getAllInterPointsAtSurf_i(1);
+	std::vector<VectorStructR3> allInterPoints9 = seqTrace9.getAllInterPointsAtSurf_i_notFiltered(1);
 
 	// get the reference points from Zemax
 	std::vector<VectorStructR3> refInterPoints9 = { { 0.0, 8.3, 20.5 },{ 0.0, 0.0, 20.5 },{ 0.0, -8.3, 20.5 },{ 0.0, 3.1, 20.5 },{ 0.0, -5.2, 20.5 },{ 0.0, -13.5, 20.5 } };
@@ -473,7 +473,7 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 	seqTrace10.seqRayTracingWithVectorOfLightRays(vecLightRay10);
 
 	// get all intersection points
-	std::vector<VectorStructR3> allInterPoints10 = seqTrace10.getAllInterPointsAtSurf_i(1);
+	std::vector<VectorStructR3> allInterPoints10 = seqTrace10.getAllInterPointsAtSurf_i_notFiltered(1);
 
 	// get the reference points from Zemax
 	std::vector<VectorStructR3> refInterPoints10 = { { -2.1, 10.4, 20.5 },{ -2.1, 2.1, 20.5 },{ -2.1, -6.2, 20.5 },{ -2.1, 5.2, 20.5 },{ -2.1, -3.1, 20.5 },{ -2.1, -11.4, 20.5 } };
@@ -517,7 +517,7 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 	seqTrace11.seqRayTracingWithVectorOfLightRays(vecLightRay11);
 
 	// get all intersection points
-	std::vector<VectorStructR3> allInterPoints11 = seqTrace11.getAllInterPointsAtSurf_i(1);
+	std::vector<VectorStructR3> allInterPoints11 = seqTrace11.getAllInterPointsAtSurf_i_notFiltered(1);
 
 	// get the reference points from Zemax
 	std::vector<VectorStructR3> refInterPoints11 = { { 2.1, 6.2, 20.5 },{ 2.1, -2.1, 20.5 },{ 2.1, -10.4, 20.5 },{ 2.1, 1.0, 20.5 },{ 2.1, -7.3, 20.5 },{ 2.1, -15.6, 20.5 } };
@@ -562,7 +562,7 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 	seqTrace12.seqRayTracingWithVectorOfLightRays(vecLightRay12);
 
 	// get all intersection points
-	std::vector<VectorStructR3> allInterPoints12 = seqTrace12.getAllInterPointsAtSurf_i(1);
+	std::vector<VectorStructR3> allInterPoints12 = seqTrace12.getAllInterPointsAtSurf_i_notFiltered(1);
 
 	// get the reference points from Zemax
 	//Programm gibt 5 Intersection Points aus, Zemax 6
@@ -607,7 +607,7 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 	seqTrace13.seqRayTracingWithVectorOfLightRays(vecLightRay13);
 
 	// get all intersection points
-	std::vector<VectorStructR3> allInterPoints13 = seqTrace13.getAllInterPointsAtSurf_i(1);
+	std::vector<VectorStructR3> allInterPoints13 = seqTrace13.getAllInterPointsAtSurf_i_notFiltered(1);
 
 	// get the reference points from Zemax
 	// Programm gibt 5 IntersectionPoints raus, Zemax 6
@@ -655,7 +655,7 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 	seqTrace14.seqRayTracingWithVectorOfLightRays(vecLightRay14);
 
 	// get all intersection points
-	std::vector<VectorStructR3> allInterPoints14 = seqTrace14.getAllInterPointsAtSurf_i(1);
+	std::vector<VectorStructR3> allInterPoints14 = seqTrace14.getAllInterPointsAtSurf_i_notFiltered(1);
 
 	// get the reference points from Zemax
 	std::vector<VectorStructR3> refInterPoints14 = { { 0.0, 0.2517299704, 20.5 },{ 0.0, 0.0, 20.5 },{ 0.0, -0.25172997046, 20.5 },{ 0.0, -1.1, 20.5 },{ 0.0, -1.3517299795, 20.5 },{ 0.0, -1.5193939165, 20.5 } };
@@ -701,7 +701,7 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 	seqTrace15.seqRayTracingWithVectorOfLightRays(vecLightRay15);
 
 	// get all intersection points
-	std::vector<VectorStructR3> allInterPoints15 = seqTrace15.getAllInterPointsAtSurf_i(1);
+	std::vector<VectorStructR3> allInterPoints15 = seqTrace15.getAllInterPointsAtSurf_i_notFiltered(1);
 
 	// get the reference points from Zemax
 	std::vector<VectorStructR3> refInterPoints15 = { { 0.0, 0.6, 20.5 },{ 0.0, 0.0, 20.5 },{ 0.0, -0.6, 20.5 },{ 0.0, -0.4, 20.5 },{ 0.0, -1.0, 20.5 },{ 0.0, -1.6, 20.5 } };
@@ -747,7 +747,7 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 	seqTrace16.seqRayTracingWithVectorOfLightRays(vecLightRay16);
 
 	// get all intersection points
-	std::vector<VectorStructR3> allInterPoints16 = seqTrace16.getAllInterPointsAtSurf_i(1);
+	std::vector<VectorStructR3> allInterPoints16 = seqTrace16.getAllInterPointsAtSurf_i_notFiltered(1);
 
 	// get the reference points from Zemax
 	std::vector<VectorStructR3> refInterPoints16 = { { 0.0, 0.72094680477, 20.5 },{ 0.0, 0.0, 20.5 },{ 0.0, -0.72094680477, 20.5 },{ 0.0, -0.4, 20.5 },{ 0.0, -1.1209468048, 20.5 },{ 0.0, -1.7721803210, 20.5 } };
@@ -803,7 +803,7 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 	seqTrace17.seqRayTracingWithVectorOfLightRays(vecLightRay17);
 
 	// get all intersection points
-	std::vector<VectorStructR3> allInterPoints17 = seqTrace17.getAllInterPointsAtSurf_i(1);
+	std::vector<VectorStructR3> allInterPoints17 = seqTrace17.getAllInterPointsAtSurf_i_notFiltered(1);
 
 	// get the reference points from Zemax
 	std::vector<VectorStructR3> refInterPoints17 = { { 0.77361587816, 0.48792108094, 16.717514421 },{ 0.66492454974, -0.6649245497, 16.717514421 },{ 0.51996977377, -2.2024021256, 16.717514421 },{ 0.69150391330, -0.38300782660, 16.717514421 },{ 0.56381927818, -1.7373078968, 16.717514421 },{ 0.39909494089, -3.4844733356, 16.717514421 } };
@@ -858,7 +858,7 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 	seqTrace18.seqRayTracingWithVectorOfLightRays(vecLightRay18);
 
 	// get all intersection points
-	std::vector<VectorStructR3> allInterPoints18 = seqTrace18.getAllInterPointsAtSurf_i(1);
+	std::vector<VectorStructR3> allInterPoints18 = seqTrace18.getAllInterPointsAtSurf_i_notFiltered(1);
 
 	// get the reference points from Zemax
 	std::vector<VectorStructR3> refInterPoints18 = { { 0.0, 7.2211279587, 20.5 },{ 0.0, 0.0, 20.5 },{ 0.0, -7.2211279587, 20.5 },{ 0.0, 3.1, 20.5 },{ 0.0, -4.1211279587, 20.5 },{ 0.0, -11.085957062, 20.5 } };
@@ -904,7 +904,7 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 	seqTrace19.seqRayTracingWithVectorOfLightRays(vecLightRay19);
 
 	// get all intersection points
-	std::vector<VectorStructR3> allInterPoints19 = seqTrace19.getAllInterPointsAtSurf_i(1);
+	std::vector<VectorStructR3> allInterPoints19 = seqTrace19.getAllInterPointsAtSurf_i_notFiltered(1);
 
 	// get the reference points from Zemax
 	std::vector<VectorStructR3> refInterPoints19 = { { 0.0, 6.2, 20.5 },{ 0.0, 0.0, 20.5 },{ 0.0, -6.2, 20.5 },{ 0.0, 2.4, 20.5 },{ 0.0, -3.8, 20.5 },{ 0.0, -10.5, 20.5 } };
@@ -950,7 +950,7 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 	seqTrace20.seqRayTracingWithVectorOfLightRays(vecLightRay20);
 
 	// get all intersection points
-	std::vector<VectorStructR3> allInterPoints20 = seqTrace20.getAllInterPointsAtSurf_i(1);
+	std::vector<VectorStructR3> allInterPoints20 = seqTrace20.getAllInterPointsAtSurf_i_notFiltered(1);
 
 	// get the reference points from Zemax
 	std::vector<VectorStructR3> refInterPoints20 = { { 0.0, 5.3672121303, 20.5 },{ 0.0, 0.0, 20.5 },{ 0.0, -5.3672121303, 20.5 },{ 0.0, 2.4, 20.5 },{ 0.0, -2.9672121303, 20.5 },{ 0.0, -8.1498890850, 20.5 } };
@@ -996,7 +996,7 @@ bool  BenchmarkParaxialLens::checkMethodesParaxialLens_LLT()
 	seqTrace21.seqRayTracingWithVectorOfLightRays(vecLightRay21);
 
 	// get all intersection points
-	std::vector<VectorStructR3> allInterPoints21 = seqTrace21.getAllInterPointsAtSurf_i(1);
+	std::vector<VectorStructR3> allInterPoints21 = seqTrace21.getAllInterPointsAtSurf_i_notFiltered(1);
 
 	// get the reference points from Zemax
 	std::vector<VectorStructR3> refInterPoints21 = { { 0.17999378040, 2.5599017334, 15.928571647 },{ 3.0787914593, -0.30787914593, 15.159928469 },{ 0.44654819857, -3.4174801238, 14.326470936 },{ 0.24955579081, 1.0, 15.510475608 },{ 0.37944749656, -1.9127722988, 14.729773508 },{ 0.51566736715, -4.9674512971, 14.911036557 } };

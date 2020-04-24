@@ -55,19 +55,19 @@ bool BenchExitPupilCalc::checkMethodesExitPupilCalculation()
 	SequentialRayTracing seqTraceOne(optSysE0);
 	seqTraceOne.sequentialRayTracing(LightRay0);
 
-	VectorStructR3 vecImage0 = seqTraceOne.getAllInterPointsAtSurf_i(0).at(0);
-	VectorStructR3 vecImage1 = seqTraceOne.getAllInterPointsAtSurf_i(1).at(0);
-	VectorStructR3 vecImage2 = seqTraceOne.getAllInterPointsAtSurf_i(2).at(0);
-	VectorStructR3 vecImage3 = seqTraceOne.getAllInterPointsAtSurf_i(3).at(0);
-	VectorStructR3 vecImage4 = seqTraceOne.getAllInterPointsAtSurf_i(4).at(0);
-	VectorStructR3 vecImage5 = seqTraceOne.getAllInterPointsAtSurf_i(5).at(0);
+	VectorStructR3 vecImage0 = seqTraceOne.getAllInterPointsAtSurf_i_notFiltered(0).at(0);
+	VectorStructR3 vecImage1 = seqTraceOne.getAllInterPointsAtSurf_i_notFiltered(1).at(0);
+	VectorStructR3 vecImage2 = seqTraceOne.getAllInterPointsAtSurf_i_notFiltered(2).at(0);
+	VectorStructR3 vecImage3 = seqTraceOne.getAllInterPointsAtSurf_i_notFiltered(3).at(0);
+	VectorStructR3 vecImage4 = seqTraceOne.getAllInterPointsAtSurf_i_notFiltered(4).at(0);
+	VectorStructR3 vecImage5 = seqTraceOne.getAllInterPointsAtSurf_i_notFiltered(5).at(0);
 	//*************
 	//do sequential ray tracing
 	SequentialRayTracing seqTrac(optSysE0);
 	seqTrac.seqRayTracingWithVectorOfLightRays(FillEntPupilRayE0.getVectorWithLightRays());
 	//*************
 	// check the optical system
-	Spot spotE0(seqTrac.getAllInterPointsAtSurf_i(5), seqTrac.getAllInterPointsAtSurf_i(5).at(0));
+	Spot spotE0(seqTrac.getAllInterPointsAtSurf_i_notFiltered(5), seqTrac.getAllInterPointsAtSurf_i_notFiltered(5).at(0));
 	real rmsValue = spotE0.getRMS_mm();
 	real geoRadois = spotE0.getGeoRadius();
 	//*************

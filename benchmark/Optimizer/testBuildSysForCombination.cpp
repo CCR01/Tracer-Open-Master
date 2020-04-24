@@ -102,7 +102,7 @@ bool testBuildSysForCombination::checkBuildSysForCom_E0()
 
 	// check opt sys by ray tracing
 	SequentialRayTracing seqTracE0_optA(/*optical system element*/ optSystemElement_E0, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6.0,/*arms*/ 8.0, /*refractive index*/ 1.0, Light_E0);
-	Spot spot_E0_optA(seqTracE0_optA.getAllInterPointsAtSurf_i(5), seqTracE0_optA.getAllInterPointsAtSurf_i(5).at(0));
+	Spot spot_E0_optA(seqTracE0_optA.getAllInterPointsAtSurf_i_notFiltered(5), seqTracE0_optA.getAllInterPointsAtSurf_i_notFiltered(5).at(0));
 	real rms_E0_optA = spot_E0_optA.getRMS_µm();
 	bool checkSysE0_optA = Math::compareTwoNumbers_decimals(rms_E0_optA, 105.347, 2);
 	workBuildSysForCom_E0.push_back(checkSysE0_optA);
@@ -207,7 +207,7 @@ bool testBuildSysForCombination::checkBuildSysForCom_E1()
 
 	// check opt sys by ray tracing
 	SequentialRayTracing seqTracE1_optA(/*optical system element*/ optSystemElement_E1, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6.0,/*arms*/ 8.0, /*refractive index*/ 1.0, Light_E1);
-	Spot spot_E1_optA(seqTracE1_optA.getAllInterPointsAtSurf_i(7), seqTracE1_optA.getAllInterPointsAtSurf_i(7).at(0));
+	Spot spot_E1_optA(seqTracE1_optA.getAllInterPointsAtSurf_i_notFiltered(7), seqTracE1_optA.getAllInterPointsAtSurf_i_notFiltered(7).at(0));
 	real rms_E1_optA = spot_E1_optA.getRMS_µm();
 	bool checkSysE1_optA = Math::compareTwoNumbers_decimals(rms_E1_optA, 704.485, 3);
 	workBuildSysForCom_E1.push_back(checkSysE1_optA);
@@ -308,7 +308,7 @@ bool testBuildSysForCombination::checkBuildSysForCom_E2()
 
 	// check opt sys by ray tracing
 	SequentialRayTracing seqTracE2_optA(/*optical system element*/ optSystemElement_E2, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6.0,/*arms*/ 8.0, /*refractive index*/ 1.0, Light_E2);
-	Spot spot_E2_optA(seqTracE2_optA.getAllInterPointsAtSurf_i(5), seqTracE2_optA.getAllInterPointsAtSurf_i(5).at(0));
+	Spot spot_E2_optA(seqTracE2_optA.getAllInterPointsAtSurf_i_notFiltered(5), seqTracE2_optA.getAllInterPointsAtSurf_i_notFiltered(5).at(0));
 	real rms_E2_optA = spot_E2_optA.getRMS_µm();
 	bool checkSysE2_optA = Math::compareTwoNumbers_decimals(rms_E2_optA, 1558.55, 0);
 	workBuildSysForCom_E2.push_back(checkSysE2_optA);
@@ -417,7 +417,7 @@ bool testBuildSysForCombination::checkBuildSysForCom_E3()
 
 	// check opt sys by ray tracing
 	SequentialRayTracing seqTracE3_optA(/*optical system element*/ optSystemElement_E3, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6.0,/*arms*/ 8.0, /*refractive index*/ 1.0, Light_E3);
-	Spot spot_E3_optA(seqTracE3_optA.getAllInterPointsAtSurf_i(6), seqTracE3_optA.getAllInterPointsAtSurf_i(6).at(0));
+	Spot spot_E3_optA(seqTracE3_optA.getAllInterPointsAtSurf_i_notFiltered(6), seqTracE3_optA.getAllInterPointsAtSurf_i_notFiltered(6).at(0));
 	real rms_E3_optA = spot_E3_optA.getRMS_µm();
 	bool checkSysE3_optA = Math::compareTwoNumbers_decimals(rms_E3_optA, 394.514, 3);
 	workBuildSysForCom_E3.push_back(checkSysE3_optA);
@@ -522,7 +522,7 @@ bool testBuildSysForCombination::checkBuildSysForCom_E4()
 
 	// check opt sys by ray tracing
 	SequentialRayTracing seqTracE4_optA(/*optical system element*/ optSystemElement_E4, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6.0,/*arms*/ 8.0, /*refractive index*/ 1.0, Light_E4);
-	Spot spot_E4_optA(seqTracE4_optA.getAllInterPointsAtSurf_i(7), seqTracE4_optA.getAllInterPointsAtSurf_i(7).at(0));
+	Spot spot_E4_optA(seqTracE4_optA.getAllInterPointsAtSurf_i_notFiltered(7), seqTracE4_optA.getAllInterPointsAtSurf_i_notFiltered(7).at(0));
 	real rms_E4_optA = spot_E4_optA.getRMS_µm();
 	bool checkSysE4_optA = Math::compareTwoNumbers_decimals(rms_E4_optA, 909.391, 3);
 	workBuildSysForCom_E4.push_back(checkSysE4_optA);
@@ -627,7 +627,7 @@ bool testBuildSysForCombination::checkBuildSysForCom_E0_Element()
 
 	// check opt sys by ray tracing
 	SequentialRayTracing seqTracE0_optA(/*optical system element*/ optSystemElement_E0, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6.0,/*arms*/ 8.0, /*refractive index*/ 1.0, Light_E0);
-	Spot spot_E0_optA(seqTracE0_optA.getAllInterPointsAtSurf_i(5), seqTracE0_optA.getAllInterPointsAtSurf_i(5).at(0));
+	Spot spot_E0_optA(seqTracE0_optA.getAllInterPointsAtSurf_i_notFiltered(5), seqTracE0_optA.getAllInterPointsAtSurf_i_notFiltered(5).at(0));
 	real rms_E0_optA = spot_E0_optA.getRMS_µm();
 	bool checkSysE0_optA = Math::compareTwoNumbers_decimals(rms_E0_optA, 105.347, 2);
 	workBuildSysForCom_E0_Element.push_back(checkSysE0_optA);
@@ -737,7 +737,7 @@ bool testBuildSysForCombination::checkBuildSysForCom_E1_Element()
 
 	// check opt sys by ray tracing
 	SequentialRayTracing seqTracE1_optA(/*optical system element*/ optSystemElement_E1, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6.0,/*arms*/ 8.0, /*refractive index*/ 1.0, Light_E1);
-	Spot spot_E1_optA(seqTracE1_optA.getAllInterPointsAtSurf_i(7), seqTracE1_optA.getAllInterPointsAtSurf_i(7).at(0));
+	Spot spot_E1_optA(seqTracE1_optA.getAllInterPointsAtSurf_i_notFiltered(7), seqTracE1_optA.getAllInterPointsAtSurf_i_notFiltered(7).at(0));
 	real rms_E1_optA = spot_E1_optA.getRMS_µm();
 	bool checkSysE1_optA = Math::compareTwoNumbers_decimals(rms_E1_optA, 704.485, 3);
 	workBuildSysForCom_E1_Element.push_back(checkSysE1_optA);
@@ -840,7 +840,7 @@ bool testBuildSysForCombination::checkBuildSysForCom_E2_Element()
 
 	// check opt sys by ray tracing
 	SequentialRayTracing seqTracE2_optA(/*optical system element*/ optSystemElement_E2, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6.0,/*arms*/ 8.0, /*refractive index*/ 1.0, Light_E2);
-	Spot spot_E2_optA(seqTracE2_optA.getAllInterPointsAtSurf_i(5), seqTracE2_optA.getAllInterPointsAtSurf_i(5).at(0));
+	Spot spot_E2_optA(seqTracE2_optA.getAllInterPointsAtSurf_i_notFiltered(5), seqTracE2_optA.getAllInterPointsAtSurf_i_notFiltered(5).at(0));
 	real rms_E2_optA = spot_E2_optA.getRMS_µm();
 	bool checkSysE2_optA = Math::compareTwoNumbers_decimals(rms_E2_optA, 1558.55, 0);
 	workBuildSysForCom_E2_Element.push_back(checkSysE2_optA);
@@ -950,7 +950,7 @@ bool testBuildSysForCombination::checkBuildSysForCom_E3_Element()
 
 	// check opt sys by ray tracing
 	SequentialRayTracing seqTracE3_optA(/*optical system element*/ optSystemElement_E3, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6.0,/*arms*/ 8.0, /*refractive index*/ 1.0, Light_E3);
-	Spot spot_E3_optA(seqTracE3_optA.getAllInterPointsAtSurf_i(6), seqTracE3_optA.getAllInterPointsAtSurf_i(6).at(0));
+	Spot spot_E3_optA(seqTracE3_optA.getAllInterPointsAtSurf_i_notFiltered(6), seqTracE3_optA.getAllInterPointsAtSurf_i_notFiltered(6).at(0));
 	real rms_E3_optA = spot_E3_optA.getRMS_µm();
 	bool checkSysE3_optA = Math::compareTwoNumbers_decimals(rms_E3_optA, 394.514, 3);
 	workBuildSysForCom_E3_Element.push_back(checkSysE3_optA);
@@ -1055,7 +1055,7 @@ bool testBuildSysForCombination::checkBuildSysForCom_E4_Element()
 
 	// check opt sys by ray tracing
 	SequentialRayTracing seqTracE4_optA(/*optical system element*/ optSystemElement_E4, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6.0,/*arms*/ 8.0, /*refractive index*/ 1.0, Light_E4);
-	Spot spot_E4_optA(seqTracE4_optA.getAllInterPointsAtSurf_i(7), seqTracE4_optA.getAllInterPointsAtSurf_i(7).at(0));
+	Spot spot_E4_optA(seqTracE4_optA.getAllInterPointsAtSurf_i_notFiltered(7), seqTracE4_optA.getAllInterPointsAtSurf_i_notFiltered(7).at(0));
 	real rms_E4_optA = spot_E4_optA.getRMS_µm();
 	bool checkSysE4_optA = Math::compareTwoNumbers_decimals(rms_E4_optA, 909.391, 3);
 	workBuildSysForCom_E4_Element.push_back(checkSysE4_optA);

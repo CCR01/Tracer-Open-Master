@@ -79,7 +79,7 @@ bool testLensReplace::testLensReplace_E0()
 	SequentialRayTracing seqTraceE0(OptSysE0);
 	FillApertureStop fillAperE0(/*start point rays*/{ 0.0,0.0,0.0 }, /*semi height of aperture stop*/ 2.0,/*point of aperture stop*/{ 0.0,0.0,20.0 },/*direction of aperture stop*/{ 0.0,0.0,1.0 }, /*rings*/ 6,/*arms*/ 8,/*refractive index*/ 1.0,/*light*/ LightE0);
 	seqTraceE0.seqRayTracingWithVectorOfLightRays(fillAperE0.getVectorWithLightRays());
-	Spot spotE0(seqTraceE0.getAllInterPointsAtSurf_i(3),/*reference point*/ seqTraceE0.getAllInterPointsAtSurf_i(3)[0]);
+	Spot spotE0(seqTraceE0.getAllInterPointsAtSurf_i_notFiltered(3),/*reference point*/ seqTraceE0.getAllInterPointsAtSurf_i_notFiltered(3)[0]);
 	real rmsZemax_E0 = 1476.21;
 	real rmsTOM_E0 = spotE0.getRMS_µm();
 	bool checkerSystem_E0 = Math::compareTwoNumbers_decimals(rmsTOM_E0, rmsZemax_E0, 0);
@@ -160,7 +160,7 @@ bool testLensReplace::testLensReplace_E1()
 	SequentialRayTracing seqTraceE1_single(optSye_LLT_E1);
 	seqTraceE1_single.sequentialRayTracing(lightRayE0);
 	VectorStructR3 interPointZemax{ 0.0,-0.025229984226,105.91112797 };
-	VectorStructR3 interPointTOM = seqTraceE1_single.getAllInterPointsAtSurf_i(13)[0];
+	VectorStructR3 interPointTOM = seqTraceE1_single.getAllInterPointsAtSurf_i_notFiltered(13)[0];
 	bool checkSingRayTrace_E1 = Math::compareTwoVectorStructR3_decimals(interPointZemax, interPointTOM, 3);
 	workLensReplace_E1.push_back(checkSingRayTrace_E1);
 
@@ -168,7 +168,7 @@ bool testLensReplace::testLensReplace_E1()
 	SequentialRayTracing seqTraceE1(optSye_LLT_E1);
 	FillApertureStop fillAperE0(/*start point rays*/{ 0.0,0.0,0.0 }, /*semi height of aperture stop*/ 1.0,/*point of aperture stop*/{ 0.0,0.0,20.0 },/*direction of aperture stop*/{ 0.0,0.0,1.0 }, /*rings*/ 6,/*arms*/ 8,/*refractive index*/ 1.0,/*light*/ LightE1);
 	seqTraceE1.seqRayTracingWithVectorOfLightRays(fillAperE0.getVectorWithLightRays());
-	Spot spotE1(seqTraceE1.getAllInterPointsAtSurf_i(13),/*reference point*/ seqTraceE1.getAllInterPointsAtSurf_i(13)[0]);
+	Spot spotE1(seqTraceE1.getAllInterPointsAtSurf_i_notFiltered(13),/*reference point*/ seqTraceE1.getAllInterPointsAtSurf_i_notFiltered(13)[0]);
 	real rmsZemax_E1 = 16.160;
 	real rmsTOM_E1 = spotE1.getRMS_µm();
 	bool checkerSystem_E1 = Math::compareTwoNumbers_decimals(rmsTOM_E1, rmsZemax_E1, 0);
@@ -256,7 +256,7 @@ bool testLensReplace::testLensReplace_E2()
 	SequentialRayTracing seqTraceE2(optSystemElement_E2);
 	FillApertureStop fillAperE2(/*start point rays*/{ 0.0,0.0,0.0 }, /*semi height of aperture stop*/ 2.0,/*point of aperture stop*/{ 0.0,0.0,20.0 },/*direction of aperture stop*/{ 0.0,0.0,1.0 }, /*rings*/ 6,/*arms*/ 8,/*refractive index*/ 1.0,/*light*/ LightE2);
 	seqTraceE2.seqRayTracingWithVectorOfLightRays(fillAperE2.getVectorWithLightRays());
-	Spot spotE2(seqTraceE2.getAllInterPointsAtSurf_i(4),/*reference point*/ seqTraceE2.getAllInterPointsAtSurf_i(4)[0]);
+	Spot spotE2(seqTraceE2.getAllInterPointsAtSurf_i_notFiltered(4),/*reference point*/ seqTraceE2.getAllInterPointsAtSurf_i_notFiltered(4)[0]);
 	real rmsZemax_E2 = 45.274;
 	real rmsTOM_E2 = spotE2.getRMS_µm();
 	bool checkerSystem_E2 = Math::compareTwoNumbers_decimals(rmsTOM_E2, rmsZemax_E2, 0);
@@ -278,7 +278,7 @@ bool testLensReplace::testLensReplace_E2()
 	SequentialRayTracing seqTraceE2_rotate(optSystemElement_E2_rotate);
 	FillApertureStop fillAperE2_rotate(/*start point rays*/{ 0.0,0.0,0.0 }, /*semi height of aperture stop*/ 2.0,/*point of aperture stop*/{ 0.0,0.0,20.0 },/*direction of aperture stop*/{ 0.0,0.0,1.0 }, /*rings*/ 6,/*arms*/ 8,/*refractive index*/ 1.0,/*light*/ LightE2);
 	seqTraceE2_rotate.seqRayTracingWithVectorOfLightRays(fillAperE2_rotate.getVectorWithLightRays());
-	Spot spotE2_rotate(seqTraceE2_rotate.getAllInterPointsAtSurf_i(4),/*reference point*/ seqTraceE2_rotate.getAllInterPointsAtSurf_i(4)[0]);
+	Spot spotE2_rotate(seqTraceE2_rotate.getAllInterPointsAtSurf_i_notFiltered(4),/*reference point*/ seqTraceE2_rotate.getAllInterPointsAtSurf_i_notFiltered(4)[0]);
 	real rmsZemax_E2_rotate = 48.048;
 	real rmsTOM_E2_rotate = spotE2_rotate.getRMS_µm();
 	bool checkerSystem_E2_rotate = Math::compareTwoNumbers_decimals(rmsTOM_E2_rotate, rmsZemax_E2_rotate, 0);

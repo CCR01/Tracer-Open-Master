@@ -227,7 +227,7 @@ bool BenchmarkSequentialRayTracing::checkMethodesElement()
 	SeqTrac3.seqRayTracingWithVectorOfLightRays(FillEntPupilRay1.getVectorWithLightRays());
 
 	// get all intersection points of surface 2
-	std::vector<VectorStructR3> intersecPoints1 = SeqTrac3.getAllInterPointsAtSurf_i(2);
+	std::vector<VectorStructR3> intersecPoints1 = SeqTrac3.getAllInterPointsAtSurf_i_notFiltered(2);
 
 	// calculate RMS and Geo radius
 	Spot ClassSpot(intersecPoints1, intersecPoints1.at(0)); // The ChiefRay Intersection point is always the first intersection point
@@ -283,7 +283,7 @@ bool BenchmarkSequentialRayTracing::checkMethodesElement()
 	SeqTrac4.seqRayTracingWithVectorOfLightRays(FillEntPupilRayE4.getVectorWithLightRays());
 
 	// get all intersection points of surface 5
-	std::vector<VectorStructR3> intersecPointsE4 = SeqTrac4.getAllInterPointsAtSurf_i(2);
+	std::vector<VectorStructR3> intersecPointsE4 = SeqTrac4.getAllInterPointsAtSurf_i_notFiltered(2);
 
 	// calculate RMS and Geo radius
 	Spot ClassSpotE4(intersecPointsE4, intersecPointsE4.at(0)); // The ChiefRay Intersection point is always the first intersection point
@@ -362,7 +362,7 @@ bool BenchmarkSequentialRayTracing::checkMethodesElement()
 
 
 	// get all intersection points of surface 5
-	std::vector<VectorStructR3> intersecPoints1E5 = SeqTrac5.getAllInterPointsAtSurf_i(5);
+	std::vector<VectorStructR3> intersecPoints1E5 = SeqTrac5.getAllInterPointsAtSurf_i_notFiltered(5);
 
 	// calculate RMS and Geo radius
 	Spot ClassSpotE5(intersecPoints1E5, intersecPoints1E5.at(0)); // The ChiefRay Intersection point is always the first intersection point

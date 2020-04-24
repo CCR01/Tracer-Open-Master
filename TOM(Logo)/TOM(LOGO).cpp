@@ -87,7 +87,7 @@ bool TOM_LOGO::plotTOM_Logo()
 	SequentialRayTracing seqTrace_optA(optSysTOM_LLT);
 	seqTrace_optA.sequentialRayTracing(lightRay_optA);
 	VectorStructR3 rayOptA_Zemax_optA = { 0.0,-110.0,359.42533317 };
-	VectorStructR3 rayOptA_TOM_optA = seqTrace_optA.getAllInterPointsAtSurf_i(19)[0];
+	VectorStructR3 rayOptA_TOM_optA = seqTrace_optA.getAllInterPointsAtSurf_i_notFiltered(19)[0];
 	bool checkRayOptA = Math::compareTwoVectorStructR3_decimals(rayOptA_Zemax_optA, rayOptA_TOM_optA, 3);
 	checkPlotTOM.push_back(checkRayOptA);
 
@@ -97,7 +97,7 @@ bool TOM_LOGO::plotTOM_Logo()
 	SequentialRayTracing seqTrace_field1(optSysTOM_LLT);
 	seqTrace_field1.sequentialRayTracing(lightRay_field1);
 	VectorStructR3 rayOptA_Zemax_field1 = { 0.0,-110.0,371.29649984 };
-	VectorStructR3 rayOptA_TOM_field1 = seqTrace_field1.getAllInterPointsAtSurf_i(19)[0];
+	VectorStructR3 rayOptA_TOM_field1 = seqTrace_field1.getAllInterPointsAtSurf_i_notFiltered(19)[0];
 	bool checkRayField1 = Math::compareTwoVectorStructR3_decimals(rayOptA_Zemax_field1, rayOptA_TOM_field1, 3);
 	checkPlotTOM.push_back(checkRayField1);
 
@@ -107,7 +107,7 @@ bool TOM_LOGO::plotTOM_Logo()
 	SequentialRayTracing seqTrace_field2(optSysTOM_LLT);
 	seqTrace_field2.sequentialRayTracing(lightRay_field2);
 	VectorStructR3 rayOptA_Zemax_field2 = { 0.0,-110.0,347.55416651 };
-	VectorStructR3 rayOptA_TOM_field2 = seqTrace_field2.getAllInterPointsAtSurf_i(19)[0];
+	VectorStructR3 rayOptA_TOM_field2 = seqTrace_field2.getAllInterPointsAtSurf_i_notFiltered(19)[0];
 	bool checkRayfield2 = Math::compareTwoVectorStructR3_decimals(rayOptA_Zemax_field2, rayOptA_TOM_field2, 3);
 	checkPlotTOM.push_back(checkRayfield2);
 	// *** *** //

@@ -106,7 +106,7 @@ bool BenchmarkZemaxTest::checkMethodesZemaxTest()
 	SequentialRayTracing seqTrace_E0_optA(/*optical system element*/ optSystemElement_E0, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, lichtVecE0);
 	
 	// calculate rms value
-	Spot spot_E0_optA(seqTrace_E0_optA.getAllInterPointsAtSurf_i(3), seqTrace_E0_optA.getAllInterPointsAtSurf_i(3).at(0));
+	Spot spot_E0_optA(seqTrace_E0_optA.getAllInterPointsAtSurf_i_notFiltered(3), seqTrace_E0_optA.getAllInterPointsAtSurf_i_notFiltered(3).at(0));
 	real rms_E0_optA = spot_E0_optA.getRMS_µm();
 	std::cout << "Organic RMS optA E0: " << rms_E0_optA << "\n";
 	workTheOptimizer.push_back( std::abs(rms_E0_optA - 558.824) < 0.1);
@@ -140,7 +140,7 @@ bool BenchmarkZemaxTest::checkMethodesZemaxTest()
 	
 	// trace the ray thow the optical system
 	SequentialRayTracing seqTrace_E0_optA_AO(/*optical system element*/ optimizedOptSys_Ele_E0, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, Light_E0);
-	Spot SpotOptA_AO_E0(seqTrace_E0_optA_AO.getAllInterPointsAtSurf_i(3), seqTrace_E0_optA_AO.getAllInterPointsAtSurf_i(3).at(0));
+	Spot SpotOptA_AO_E0(seqTrace_E0_optA_AO.getAllInterPointsAtSurf_i_notFiltered(3), seqTrace_E0_optA_AO.getAllInterPointsAtSurf_i_notFiltered(3).at(0));
 	real sporRMS_OA_E0 = SpotOptA_AO_E0.getRMS_µm();
 	real spotZemaxOA_EO = 32.418;
 	std::cout << "RMS AO optA E0: " << sporRMS_OA_E0 << "\n";
@@ -189,7 +189,7 @@ bool BenchmarkZemaxTest::checkMethodesZemaxTest()
 	SequentialRayTracing seqTrace_E1_optA(/*optical system element*/ optSystemElement_E1, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, lichtVecE1);
 	
 	// calculate rms value
-	Spot spot_E1_optA(seqTrace_E1_optA.getAllInterPointsAtSurf_i(5), seqTrace_E1_optA.getAllInterPointsAtSurf_i(5).at(0));
+	Spot spot_E1_optA(seqTrace_E1_optA.getAllInterPointsAtSurf_i_notFiltered(5), seqTrace_E1_optA.getAllInterPointsAtSurf_i_notFiltered(5).at(0));
 	real rms_E1_optA = spot_E1_optA.getRMS_µm();
 	std::cout << "Organic RMS optA E0: " << rms_E1_optA << "\n";
 	workTheOptimizer.push_back(std::abs(rms_E1_optA - 345.544) < 0.1);
@@ -218,7 +218,7 @@ bool BenchmarkZemaxTest::checkMethodesZemaxTest()
 	
 	// trace the ray thow the optical system
 	SequentialRayTracing seqTrace_E1_optA_AO(/*optical system element*/ optimizedOptSys_Ele_E1, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, Light_E1);
-	Spot SpotOptA_AO_E1(seqTrace_E1_optA_AO.getAllInterPointsAtSurf_i(5), seqTrace_E1_optA_AO.getAllInterPointsAtSurf_i(5).at(0));
+	Spot SpotOptA_AO_E1(seqTrace_E1_optA_AO.getAllInterPointsAtSurf_i_notFiltered(5), seqTrace_E1_optA_AO.getAllInterPointsAtSurf_i_notFiltered(5).at(0));
 	real sporRMS_OA_E1 = SpotOptA_AO_E1.getRMS_µm();
 	real spotZemaxOA_E1 = 30.450;
 	std::cout << "RMS AO optA E1: " << sporRMS_OA_E1 << "\n";
@@ -268,7 +268,7 @@ bool BenchmarkZemaxTest::checkMethodesZemaxTest()
 	
 	
 	// calculate rms value
-	Spot spot_E2_optA(seqTrace_E2_optA.getAllInterPointsAtSurf_i(5), seqTrace_E2_optA.getAllInterPointsAtSurf_i(5).at(0));
+	Spot spot_E2_optA(seqTrace_E2_optA.getAllInterPointsAtSurf_i_notFiltered(5), seqTrace_E2_optA.getAllInterPointsAtSurf_i_notFiltered(5).at(0));
 	real rms_E2_optA = spot_E2_optA.getRMS_µm();
 	std::cout << "Organic RMS optA E2: " << rms_E2_optA << "\n";
 	workTheOptimizer.push_back(std::abs(rms_E2_optA - 356.607) < 0.1);
@@ -297,7 +297,7 @@ bool BenchmarkZemaxTest::checkMethodesZemaxTest()
 	
 	// trace the ray thow the optical system
 	SequentialRayTracing seqTrace_E2_optA_AO(/*optical system element*/ optimizedOptSys_Ele_E2, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, lichtVecE2);
-	Spot SpotOptA_AO_E2(seqTrace_E2_optA_AO.getAllInterPointsAtSurf_i(5), seqTrace_E2_optA_AO.getAllInterPointsAtSurf_i(5).at(0));
+	Spot SpotOptA_AO_E2(seqTrace_E2_optA_AO.getAllInterPointsAtSurf_i_notFiltered(5), seqTrace_E2_optA_AO.getAllInterPointsAtSurf_i_notFiltered(5).at(0));
 	real sporRMS_OA_E2 = SpotOptA_AO_E2.getRMS_µm();
 	real spotZemaxOA_E2 = 18.919;
 	std::cout << "RMS AO optA E2: " << sporRMS_OA_E2 << "\n";
@@ -345,7 +345,7 @@ bool BenchmarkZemaxTest::checkMethodesZemaxTest()
 	
 	
 	// calculate rms value
-	Spot spot_E3_optA(seqTrace_E3_optA.getAllInterPointsAtSurf_i(3), seqTrace_E3_optA.getAllInterPointsAtSurf_i(3).at(0));
+	Spot spot_E3_optA(seqTrace_E3_optA.getAllInterPointsAtSurf_i_notFiltered(3), seqTrace_E3_optA.getAllInterPointsAtSurf_i_notFiltered(3).at(0));
 	real rms_E3_optA = spot_E3_optA.getRMS_µm();
 	std::cout << "Organic RMS optA E0: " << rms_E3_optA << "\n";
 	workTheOptimizer.push_back(std::abs(rms_E3_optA - 123.953) < 0.1);
@@ -378,7 +378,7 @@ bool BenchmarkZemaxTest::checkMethodesZemaxTest()
 	
 	// trace the ray thow the optical system
 	SequentialRayTracing seqTrace_E3_optA_AO(/*optical system element*/ optimizedOptSys_Ele_E3, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, lichtVecE3);
-	Spot SpotOptA_AO_E3(seqTrace_E3_optA_AO.getAllInterPointsAtSurf_i(3), seqTrace_E3_optA_AO.getAllInterPointsAtSurf_i(3).at(0));
+	Spot SpotOptA_AO_E3(seqTrace_E3_optA_AO.getAllInterPointsAtSurf_i_notFiltered(3), seqTrace_E3_optA_AO.getAllInterPointsAtSurf_i_notFiltered(3).at(0));
 	real sporRMS_OA_E3 = SpotOptA_AO_E3.getRMS_µm();
 	real spotZemaxOA_E3 = 180.078;
 	std::cout << "RMS AO optA E3: " << sporRMS_OA_E3 << "\n";
@@ -429,7 +429,7 @@ bool BenchmarkZemaxTest::checkMethodesZemaxTest()
 	SequentialRayTracing seqTrace_E4_optA(/*optical system element*/ optSystemElement_E4, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, lichtVecE4);
 	
 	// calculate rms value
-	Spot spot_E4_optA(seqTrace_E4_optA.getAllInterPointsAtSurf_i(5), seqTrace_E4_optA.getAllInterPointsAtSurf_i(5).at(0));
+	Spot spot_E4_optA(seqTrace_E4_optA.getAllInterPointsAtSurf_i_notFiltered(5), seqTrace_E4_optA.getAllInterPointsAtSurf_i_notFiltered(5).at(0));
 	real rms_E4_optA = spot_E4_optA.getRMS_µm();
 	std::cout << "Organic RMS optA E4: " << rms_E4_optA << "\n";
 	workTheOptimizer.push_back(std::abs(rms_E4_optA - 159.302) < 0.1);
@@ -461,7 +461,7 @@ bool BenchmarkZemaxTest::checkMethodesZemaxTest()
 	
 	// trace the ray thow the optical system
 	SequentialRayTracing seqTrace_E4_optA_AO(/*optical system element*/ optimizedOptSys_Ele_E4, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, lichtVecE4);
-	Spot SpotOptA_AO_E4(seqTrace_E4_optA_AO.getAllInterPointsAtSurf_i(5), seqTrace_E4_optA_AO.getAllInterPointsAtSurf_i(5).at(0));
+	Spot SpotOptA_AO_E4(seqTrace_E4_optA_AO.getAllInterPointsAtSurf_i_notFiltered(5), seqTrace_E4_optA_AO.getAllInterPointsAtSurf_i_notFiltered(5).at(0));
 	real sporRMS_OA_E4 = SpotOptA_AO_E4.getRMS_µm();
 	real spotZemaxOA_E4 = 12.246;
 	std::cout << "RMS AO optA E4: " << sporRMS_OA_E4 << "\n";
@@ -515,7 +515,7 @@ bool BenchmarkZemaxTest::checkMethodesZemaxTest()
 	SequentialRayTracing seqTrace_E5_optA(/*optical system element*/ optSystemElement_E5, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, lichtVecE5);
 	
 	// calculate rms value
-	Spot spot_E5_optA(seqTrace_E5_optA.getAllInterPointsAtSurf_i(5), seqTrace_E5_optA.getAllInterPointsAtSurf_i(5).at(0));
+	Spot spot_E5_optA(seqTrace_E5_optA.getAllInterPointsAtSurf_i_notFiltered(5), seqTrace_E5_optA.getAllInterPointsAtSurf_i_notFiltered(5).at(0));
 	real rms_E5_optA = spot_E5_optA.getRMS_µm();
 	std::cout << "Organic RMS optA E5: " << rms_E5_optA << "\n";
 	workTheOptimizer.push_back(std::abs(rms_E5_optA - 159.302) < 0.1);
@@ -547,7 +547,7 @@ bool BenchmarkZemaxTest::checkMethodesZemaxTest()
 	
 	// trace the ray thow the optical system
 	SequentialRayTracing seqTrace_E5_optA_AO(/*optical system element*/ optimizedOptSys_Ele_E5, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, lichtVecE5);
-	Spot SpotOptA_AO_E5(seqTrace_E5_optA_AO.getAllInterPointsAtSurf_i(5), seqTrace_E5_optA_AO.getAllInterPointsAtSurf_i(5).at(0));
+	Spot SpotOptA_AO_E5(seqTrace_E5_optA_AO.getAllInterPointsAtSurf_i_notFiltered(5), seqTrace_E5_optA_AO.getAllInterPointsAtSurf_i_notFiltered(5).at(0));
 	real sporRMS_OA_E5 = SpotOptA_AO_E5.getRMS_µm();
 	real spotZemaxOA_E5 = 12.567;
 	std::cout << "RMS AO optA E5: " << sporRMS_OA_E5 << "\n";
@@ -601,7 +601,7 @@ bool BenchmarkZemaxTest::checkMethodesZemaxTest()
 	SequentialRayTracing seqTrace_E6_optA(/*optical system element*/ optSystemElement_E6, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, lichtVecE6);
 	
 	// calculate rms value
-	Spot spot_E6_optA(seqTrace_E6_optA.getAllInterPointsAtSurf_i(5), seqTrace_E6_optA.getAllInterPointsAtSurf_i(5).at(0));
+	Spot spot_E6_optA(seqTrace_E6_optA.getAllInterPointsAtSurf_i_notFiltered(5), seqTrace_E6_optA.getAllInterPointsAtSurf_i_notFiltered(5).at(0));
 	real rms_E6_optA = spot_E6_optA.getRMS_µm();
 	std::cout << "Organic RMS optA E6: " << rms_E6_optA << "\n";
 	workTheOptimizer.push_back(std::abs(rms_E6_optA - 58.026) < 1.0);
@@ -633,17 +633,17 @@ bool BenchmarkZemaxTest::checkMethodesZemaxTest()
 	OpticalSystemElement optimizedOptSys_Ele_E6 = optimizedOptSys_E6.getOptSysOptimized_Ele();
 	//	// trace the ray thow the optical system
 	SequentialRayTracing seqTrace_E6_optA_AO(/*optical system element*/ optimizedOptSys_Ele_E6, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, lichtVecE6);
-	Spot SpotOptA_AO_E6_optA(seqTrace_E6_optA_AO.getAllInterPointsAtSurf_i(5), seqTrace_E6_optA_AO.getAllInterPointsAtSurf_i(5).at(0));
+	Spot SpotOptA_AO_E6_optA(seqTrace_E6_optA_AO.getAllInterPointsAtSurf_i_notFiltered(5), seqTrace_E6_optA_AO.getAllInterPointsAtSurf_i_notFiltered(5).at(0));
 	real sporRMS_OA_E6_optA = SpotOptA_AO_E6_optA.getRMS_µm();
 	real spotZemaxOA_E6_optA = 29.713;
 	
 	SequentialRayTracing seqTrace_E6_optA_field05(/*optical system element*/ optimizedOptSys_Ele_E6, /*start point lightRay*/{ 0.0,0.5,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, lichtVecE6);
-	Spot SpotOptA_AO_E6_optA_field05(seqTrace_E6_optA_field05.getAllInterPointsAtSurf_i(5), seqTrace_E6_optA_field05.getAllInterPointsAtSurf_i(5).at(0));
+	Spot SpotOptA_AO_E6_optA_field05(seqTrace_E6_optA_field05.getAllInterPointsAtSurf_i_notFiltered(5), seqTrace_E6_optA_field05.getAllInterPointsAtSurf_i_notFiltered(5).at(0));
 	real sporRMS_OA_E6_optA_field05 = SpotOptA_AO_E6_optA_field05.getRMS_µm();
 	real spotZemaxOA_E6_field05 = 57.980;
 	
 	SequentialRayTracing seqTrace_E6_optA_field1(/*optical system element*/ optimizedOptSys_Ele_E6, /*start point lightRay*/{ 0.0,1.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, lichtVecE6);
-	Spot SpotOptA_AO_E6_optA_field1(seqTrace_E6_optA_field1.getAllInterPointsAtSurf_i(5), seqTrace_E6_optA_field1.getAllInterPointsAtSurf_i(5).at(0));
+	Spot SpotOptA_AO_E6_optA_field1(seqTrace_E6_optA_field1.getAllInterPointsAtSurf_i_notFiltered(5), seqTrace_E6_optA_field1.getAllInterPointsAtSurf_i_notFiltered(5).at(0));
 	real sporRMS_OA_E6_optA_field1 = SpotOptA_AO_E6_optA_field1.getRMS_µm();
 	real spotZemaxOA_E6_field1 = 123.110;
 	
@@ -703,7 +703,7 @@ bool BenchmarkZemaxTest::checkMethodesZemaxTest()
 	SequentialRayTracing seqTrace_E7_optA(/*optical system element*/ optSystemElement_E7, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, lichtVecE7);
 	
 	// calculate rms value
-	Spot spot_E7_optA(seqTrace_E7_optA.getAllInterPointsAtSurf_i(5), seqTrace_E7_optA.getAllInterPointsAtSurf_i(5).at(0));
+	Spot spot_E7_optA(seqTrace_E7_optA.getAllInterPointsAtSurf_i_notFiltered(5), seqTrace_E7_optA.getAllInterPointsAtSurf_i_notFiltered(5).at(0));
 	real rms_E7_optA = spot_E7_optA.getRMS_µm();
 	std::cout << "Organic RMS optA E7: " << rms_E7_optA << "\n";
 	workTheOptimizer.push_back(std::abs(rms_E7_optA - 58.026) < 1.0);
@@ -735,12 +735,12 @@ bool BenchmarkZemaxTest::checkMethodesZemaxTest()
 	
 	//	// trace the ray thow the optical system
 	SequentialRayTracing seqTrace_E7_optA_AO(/*optical system element*/ optimizedOptSys_Ele_E7, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, lichtVecE7);
-	Spot SpotOptA_AO_E7_optA(seqTrace_E7_optA_AO.getAllInterPointsAtSurf_i(5), seqTrace_E7_optA_AO.getAllInterPointsAtSurf_i(5).at(0));
+	Spot SpotOptA_AO_E7_optA(seqTrace_E7_optA_AO.getAllInterPointsAtSurf_i_notFiltered(5), seqTrace_E7_optA_AO.getAllInterPointsAtSurf_i_notFiltered(5).at(0));
 	real sporRMS_OA_E7_optA = SpotOptA_AO_E7_optA.getRMS_µm();
 	real spotZemaxOA_E7_optA = 31.608;
 	
 	SequentialRayTracing seqTrace_E7_optA_fieldNeg05(/*optical system element*/ optimizedOptSys_Ele_E7, /*start point lightRay*/{ 0.0,-0.5,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, lichtVecE7);
-	Spot SpotOptA_AO_E7_optA_fieldNeg05(seqTrace_E7_optA_fieldNeg05.getAllInterPointsAtSurf_i(5), seqTrace_E7_optA_fieldNeg05.getAllInterPointsAtSurf_i(5).at(0));
+	Spot SpotOptA_AO_E7_optA_fieldNeg05(seqTrace_E7_optA_fieldNeg05.getAllInterPointsAtSurf_i_notFiltered(5), seqTrace_E7_optA_fieldNeg05.getAllInterPointsAtSurf_i_notFiltered(5).at(0));
 	real sporRMS_OA_E7_optA_fieldNeg05 = SpotOptA_AO_E7_optA_fieldNeg05.getRMS_µm();
 	real spotZemaxOA_E7_fieldNeg05 = 71.180;
 	
@@ -798,7 +798,7 @@ bool BenchmarkZemaxTest::checkMethodesZemaxTest()
 	SequentialRayTracing seqTrace_E8_optA(/*optical system element*/ optSystemElement_E8, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, lichtVecE8);
 	
 	// calculate rms value
-	Spot spot_E8_optA(seqTrace_E8_optA.getAllInterPointsAtSurf_i(5), seqTrace_E8_optA.getAllInterPointsAtSurf_i(5).at(0));
+	Spot spot_E8_optA(seqTrace_E8_optA.getAllInterPointsAtSurf_i_notFiltered(5), seqTrace_E8_optA.getAllInterPointsAtSurf_i_notFiltered(5).at(0));
 	real rms_E8_optA = spot_E8_optA.getRMS_µm();
 	std::cout << "Organic RMS optA E8: " << rms_E8_optA << "\n";
 	workTheOptimizer.push_back(std::abs(rms_E8_optA - 497.099) < 1.0);
@@ -828,12 +828,12 @@ bool BenchmarkZemaxTest::checkMethodesZemaxTest()
 	
 	//	// trace the ray thow the optical system
 	SequentialRayTracing seqTrace_E8_optA_AO(/*optical system element*/ optimizedOptSys_Ele_E8, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, lichtVecE8);
-	Spot SpotOptA_AO_E8_optA(seqTrace_E8_optA_AO.getAllInterPointsAtSurf_i(5), seqTrace_E8_optA_AO.getAllInterPointsAtSurf_i(5).at(0));
+	Spot SpotOptA_AO_E8_optA(seqTrace_E8_optA_AO.getAllInterPointsAtSurf_i_notFiltered(5), seqTrace_E8_optA_AO.getAllInterPointsAtSurf_i_notFiltered(5).at(0));
 	real sporRMS_OA_E8_optA = SpotOptA_AO_E8_optA.getRMS_µm();
 	real spotZemaxOA_E8_optA = 12.274;
 	
 	SequentialRayTracing seqTrace_E8_field_neg05_AO(/*optical system element*/ optimizedOptSys_Ele_E8, /*start point lightRay*/{ 0.0,-0.5,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, lichtVecE8);
-	Spot Spotfield_neg05_AO_E8_field_neg05(seqTrace_E8_field_neg05_AO.getAllInterPointsAtSurf_i(5), seqTrace_E8_field_neg05_AO.getAllInterPointsAtSurf_i(5).at(0));
+	Spot Spotfield_neg05_AO_E8_field_neg05(seqTrace_E8_field_neg05_AO.getAllInterPointsAtSurf_i_notFiltered(5), seqTrace_E8_field_neg05_AO.getAllInterPointsAtSurf_i_notFiltered(5).at(0));
 	real sporRMS_OA_E8_field_neg05 = Spotfield_neg05_AO_E8_field_neg05.getRMS_µm();
 	real spotZemaxOA_E8_field_neg05 = 28.571;
 	
@@ -902,7 +902,7 @@ bool BenchmarkZemaxTest::checkMethodesZemaxTest()
 	SequentialRayTracing seqTrace_E9_optA(/*optical system element*/ optSystemElement_E9, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, lichtVecE9);
 	
 		// calculate rms value
-	Spot spot_E9_optA(seqTrace_E9_optA.getAllInterPointsAtSurf_i(5), seqTrace_E9_optA.getAllInterPointsAtSurf_i(5).at(0));
+	Spot spot_E9_optA(seqTrace_E9_optA.getAllInterPointsAtSurf_i_notFiltered(5), seqTrace_E9_optA.getAllInterPointsAtSurf_i_notFiltered(5).at(0));
 	real rms_E9_optA = spot_E9_optA.getRMS_µm();
 	std::cout << "Organic RMS optA E9: " << rms_E9_optA << "\n";
 	workTheOptimizer.push_back(std::abs(rms_E9_optA - 497.099) < 1.0);
@@ -931,7 +931,7 @@ bool BenchmarkZemaxTest::checkMethodesZemaxTest()
 	
 	//	// trace the ray thow the optical system
 	SequentialRayTracing seqTrace_E9_optA_AO(/*optical system element*/ optimizedOptSys_Ele_E9, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, lichtVecE9);
-	Spot SpotOptA_AO_E9_optA(seqTrace_E9_optA_AO.getAllInterPointsAtSurf_i(5), seqTrace_E9_optA_AO.getAllInterPointsAtSurf_i(5).at(0));
+	Spot SpotOptA_AO_E9_optA(seqTrace_E9_optA_AO.getAllInterPointsAtSurf_i_notFiltered(5), seqTrace_E9_optA_AO.getAllInterPointsAtSurf_i_notFiltered(5).at(0));
 	real sporRMS_OA_E9_optA = SpotOptA_AO_E9_optA.getRMS_µm();
 	real spotZemaxOA_E9_optA = 9.779;
 	
@@ -1017,7 +1017,7 @@ bool BenchmarkZemaxTest::checkMethodesZemaxTest()
 	SequentialRayTracing seqTrace_E10_optA(/*optical system element*/ optSystemElement_E10, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, lichtVecE10);
 
 	// calculate rms value
-	Spot spot_E10_optA(seqTrace_E10_optA.getAllInterPointsAndIntensityAtSurface_i(7), seqTrace_E10_optA.getAllInterPointsAtSurf_i(7).at(0));
+	Spot spot_E10_optA(seqTrace_E10_optA.getAllInterPointsAndIntensityAtSurface_i(7), seqTrace_E10_optA.getAllInterPointsAtSurf_i_notFiltered(7).at(0));
 
 	real rms_E10_optA = spot_E10_optA.getRMS_µm();
 	std::cout << "Organic RMS optA E10: " << rms_E10_optA << "\n";
@@ -1046,13 +1046,13 @@ bool BenchmarkZemaxTest::checkMethodesZemaxTest()
 
 	//	// trace the ray thow the optical system
 	SequentialRayTracing seqTrace_E10_optA_AO(/*optical system element*/ optimizedOptSys_Ele_E10, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, Light_E10);
-	Spot SpotOptA_AO_E10_optA(seqTrace_E10_optA_AO.getAllInterPointsAtSurf_i(7), seqTrace_E10_optA_AO.getAllInterPointsAtSurf_i(7).at(0));
+	Spot SpotOptA_AO_E10_optA(seqTrace_E10_optA_AO.getAllInterPointsAtSurf_i_notFiltered(7), seqTrace_E10_optA_AO.getAllInterPointsAtSurf_i_notFiltered(7).at(0));
 	real sporRMS_OA_E10_optA = SpotOptA_AO_E10_optA.getRMS_µm();
 	real spotZemaxOA_E10_optA = 22.925;
 
 	//	// trace the ray thow the optical system
 	SequentialRayTracing seqTrace_E10_field05_AO(/*optical system element*/ optimizedOptSys_Ele_E10, /*start point lightRay*/{ 0.0,0.5,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, Light_E10);
-	Spot SpotOptA_AO_E10_field05(seqTrace_E10_field05_AO.getAllInterPointsAtSurf_i(7), seqTrace_E10_field05_AO.getAllInterPointsAtSurf_i(7).at(0));
+	Spot SpotOptA_AO_E10_field05(seqTrace_E10_field05_AO.getAllInterPointsAtSurf_i_notFiltered(7), seqTrace_E10_field05_AO.getAllInterPointsAtSurf_i_notFiltered(7).at(0));
 	real sporRMS_OA_E10_field05 = SpotOptA_AO_E10_field05.getRMS_µm();
 	real spotZemaxOA_E10_field05 = 53.937;
 
@@ -1153,7 +1153,7 @@ bool BenchmarkZemaxTest::checkMethodesZemaxTest()
 	SequentialRayTracing seqTrace_E11_optA(/*optical system element*/ optSystemElement_E11, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, lichtVecE11);
 
 	// calculate rms value
-	Spot spot_E11_optA(seqTrace_E11_optA.getAllInterPointsAndIntensityAtSurface_i(7), seqTrace_E11_optA.getAllInterPointsAtSurf_i(7).at(0));
+	Spot spot_E11_optA(seqTrace_E11_optA.getAllInterPointsAndIntensityAtSurface_i(7), seqTrace_E11_optA.getAllInterPointsAtSurf_i_notFiltered(7).at(0));
 	real rms_E11_optA = spot_E11_optA.getRMS_µm();
 	std::cout << "Organic RMS optA E11: " << rms_E11_optA << "\n";
 	workTheOptimizer.push_back(std::abs(rms_E11_optA - 445.130) < 1.0);
@@ -1182,13 +1182,13 @@ bool BenchmarkZemaxTest::checkMethodesZemaxTest()
 
 	// trace the ray thow the optical system
 	SequentialRayTracing seqTrace_E11_optA_AO(/*optical system element*/ optimizedOptSys_Ele_E11, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, Light_E11);
-	Spot SpotOptA_AO_E11_optA(seqTrace_E11_optA_AO.getAllInterPointsAtSurf_i(7), seqTrace_E11_optA_AO.getAllInterPointsAtSurf_i(7).at(0));
+	Spot SpotOptA_AO_E11_optA(seqTrace_E11_optA_AO.getAllInterPointsAtSurf_i_notFiltered(7), seqTrace_E11_optA_AO.getAllInterPointsAtSurf_i_notFiltered(7).at(0));
 	real sporRMS_OA_E11_optA = SpotOptA_AO_E11_optA.getRMS_µm();
 	real spotZemaxOA_E11_optA = 26.884;
 
 	// trace the ray thow the optical system
 	SequentialRayTracing seqTrace_E11_field05_AO(/*optical system element*/ optimizedOptSys_Ele_E11, /*start point lightRay*/{ 0.0,1.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, Light_E11);
-	Spot SpotOptA_AO_E11_field1(seqTrace_E11_field05_AO.getAllInterPointsAtSurf_i(7), seqTrace_E11_field05_AO.getAllInterPointsAtSurf_i(7).at(0));
+	Spot SpotOptA_AO_E11_field1(seqTrace_E11_field05_AO.getAllInterPointsAtSurf_i_notFiltered(7), seqTrace_E11_field05_AO.getAllInterPointsAtSurf_i_notFiltered(7).at(0));
 	real sporRMS_OA_E11_field1 = SpotOptA_AO_E11_field1.getRMS_µm();
 	real spotZemaxOA_E11_field1 = 89.610;
 
@@ -1259,17 +1259,17 @@ bool BenchmarkZemaxTest::checkMethodesZemaxTest()
 
 	
 	// calculate rms value
-	Spot spot_E12_optA(seqTrace_E12_optA.getAllInterPointsAtSurf_i(7), seqTrace_E12_optA.getAllInterPointsAtSurf_i(7).at(0));
+	Spot spot_E12_optA(seqTrace_E12_optA.getAllInterPointsAtSurf_i_notFiltered(7), seqTrace_E12_optA.getAllInterPointsAtSurf_i_notFiltered(7).at(0));
 	real rms_E12_optA = spot_E12_optA.getRMS_µm();
 	bool checkRMSoptA_E12 = Math::compareTwoNumbers_decimals(rms_E12_optA, 299.028, 3);
 	workTheOptimizer.push_back(checkRMSoptA_E12);
 	std::cout << "Organic RMS optA : " << rms_E12_optA << "\n";
-	Spot spot_E12_field1(seqTrace_E12_field1.getAllInterPointsAtSurf_i(7), seqTrace_E12_field1.getAllInterPointsAtSurf_i(7).at(0));
+	Spot spot_E12_field1(seqTrace_E12_field1.getAllInterPointsAtSurf_i_notFiltered(7), seqTrace_E12_field1.getAllInterPointsAtSurf_i_notFiltered(7).at(0));
 	real rms_E12_field1 = spot_E12_field1.getRMS_µm();
 	bool checkRMSfield1_E12 = Math::compareTwoNumbers_decimals(rms_E12_field1, 294.895, 3);
 	workTheOptimizer.push_back(checkRMSfield1_E12);
 	std::cout << "Organic RMS field1 : " << rms_E12_field1 << "\n";
-	Spot spot_E12_field2(seqTrace_E12_field2.getAllInterPointsAtSurf_i(7), seqTrace_E12_field2.getAllInterPointsAtSurf_i(7).at(0));
+	Spot spot_E12_field2(seqTrace_E12_field2.getAllInterPointsAtSurf_i_notFiltered(7), seqTrace_E12_field2.getAllInterPointsAtSurf_i_notFiltered(7).at(0));
 	real rms_E12_field2 = spot_E12_field2.getRMS_µm();
 	bool checkRMSfield2_E12 = Math::compareTwoNumbers_decimals(rms_E12_field2, 282.642, 3);
 	workTheOptimizer.push_back(checkRMSfield2_E12);
@@ -1311,9 +1311,9 @@ bool BenchmarkZemaxTest::checkMethodesZemaxTest()
 		
 	
 	
-	Spot Spot_optA_AO_E12(seqTrace_optA_AO.getAllInterPointsAtSurf_i(7), seqTrace_optA_AO.getAllInterPointsAtSurf_i(7).at(0));
-	Spot Spot_field1_AO_E12(seqTrace_field1_AO.getAllInterPointsAtSurf_i(7), seqTrace_field1_AO.getAllInterPointsAtSurf_i(7).at(0));
-	Spot Spot_field2_AO_E12(seqTrace_field2_AO.getAllInterPointsAtSurf_i(7), seqTrace_field2_AO.getAllInterPointsAtSurf_i(7).at(0));
+	Spot Spot_optA_AO_E12(seqTrace_optA_AO.getAllInterPointsAtSurf_i_notFiltered(7), seqTrace_optA_AO.getAllInterPointsAtSurf_i_notFiltered(7).at(0));
+	Spot Spot_field1_AO_E12(seqTrace_field1_AO.getAllInterPointsAtSurf_i_notFiltered(7), seqTrace_field1_AO.getAllInterPointsAtSurf_i_notFiltered(7).at(0));
+	Spot Spot_field2_AO_E12(seqTrace_field2_AO.getAllInterPointsAtSurf_i_notFiltered(7), seqTrace_field2_AO.getAllInterPointsAtSurf_i_notFiltered(7).at(0));
 	
 	real spot_optA_E12_AO = Spot_optA_AO_E12.getRMS_µm();
 	real spot_field1_E12_AO = Spot_field1_AO_E12.getRMS_µm();
@@ -1367,15 +1367,15 @@ bool BenchmarkZemaxTest::checkMethodesZemaxTest()
 	SequentialRayTracing seqTrace_E13_field4(/*optical system element*/ optSystemElement_E13, /*start point lightRay*/{ 0.0,4.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, lightVecE13);
 
 	// calculate rms value
-	Spot spot_E13_optA(seqTrace_E13_optA.getAllInterPointsAtSurf_i(4), seqTrace_E13_optA.getAllInterPointsAtSurf_i(4).at(0));
+	Spot spot_E13_optA(seqTrace_E13_optA.getAllInterPointsAtSurf_i_notFiltered(4), seqTrace_E13_optA.getAllInterPointsAtSurf_i_notFiltered(4).at(0));
 	real rms_E13_optA = spot_E13_optA.getRMS_µm();
 	bool checkRMSoptA_E13 = Math::compareTwoNumbers_decimals(rms_E13_optA, 3015.10, 2);
 	workTheOptimizer.push_back(checkRMSoptA_E13);
-	Spot spot_E13_field2(seqTrace_E13_field2.getAllInterPointsAtSurf_i(4), seqTrace_E13_field2.getAllInterPointsAtSurf_i(4).at(0));
+	Spot spot_E13_field2(seqTrace_E13_field2.getAllInterPointsAtSurf_i_notFiltered(4), seqTrace_E13_field2.getAllInterPointsAtSurf_i_notFiltered(4).at(0));
 	real rms_E13_field2 = spot_E13_field2.getRMS_µm();
 	bool checkRMSfield2_E13 = Math::compareTwoNumbers_decimals(rms_E13_field2, 2999.52, 2);
 	workTheOptimizer.push_back(checkRMSfield2_E13);
-	Spot spot_E13_field4(seqTrace_E13_field4.getAllInterPointsAtSurf_i(4), seqTrace_E13_field4.getAllInterPointsAtSurf_i(4).at(0));
+	Spot spot_E13_field4(seqTrace_E13_field4.getAllInterPointsAtSurf_i_notFiltered(4), seqTrace_E13_field4.getAllInterPointsAtSurf_i_notFiltered(4).at(0));
 	real rms_E13_field4 = spot_E13_field4.getRMS_µm();
 	bool checkRMSfield4_E13 = Math::compareTwoNumbers_decimals(rms_E13_field4, 2953.19, 2);
 	workTheOptimizer.push_back(checkRMSfield4_E13);
@@ -1402,21 +1402,21 @@ bool BenchmarkZemaxTest::checkMethodesZemaxTest()
 
 	// trace the ray thow the optimized optical system
 	SequentialRayTracing seqTrace_optA_AO_E13(/*optical system element*/ optimizedOptSys_Ele_E13, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, lightVecE13);
-	Spot Spot_optA_AO_E13(seqTrace_optA_AO_E13.getAllInterPointsAtSurf_i(4), seqTrace_optA_AO_E13.getAllInterPointsAtSurf_i(4).at(0));
+	Spot Spot_optA_AO_E13(seqTrace_optA_AO_E13.getAllInterPointsAtSurf_i_notFiltered(4), seqTrace_optA_AO_E13.getAllInterPointsAtSurf_i_notFiltered(4).at(0));
 	real sporRMS_optA_AO_E13 = Spot_optA_AO_E13.getRMS_µm();
 	std::cout << "GLOW optA E13 rms " << sporRMS_optA_AO_E13 << std::endl;
 	real spotZemaxOA_optA_E13 = 77.953;
 	std::cout << "ZEMAX optA E13 rms: " << spotZemaxOA_optA_E13 << std::endl;
 	
 	SequentialRayTracing seqTrace_field2_AO_E13(/*optical system element*/ optimizedOptSys_Ele_E13, /*start point lightRay*/{ 0.0,2.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, lightVecE13);
-	Spot Spot_field2_AO_E13(seqTrace_field2_AO_E13.getAllInterPointsAtSurf_i(4), seqTrace_field2_AO_E13.getAllInterPointsAtSurf_i(4).at(0));
+	Spot Spot_field2_AO_E13(seqTrace_field2_AO_E13.getAllInterPointsAtSurf_i_notFiltered(4), seqTrace_field2_AO_E13.getAllInterPointsAtSurf_i_notFiltered(4).at(0));
 	real sporRMS_field2_AO_E13 = Spot_field2_AO_E13.getRMS_µm();
 	std::cout << "GLOW field2 E13 rms " << sporRMS_field2_AO_E13 << std::endl;
 	real spotZemaxOA_field2_E13 = 108.084;
 	std::cout << "ZEMAX field2 E13 rms: " << spotZemaxOA_field2_E13 << std::endl;
 
 	SequentialRayTracing seqTrace_field4_AO_E13(/*optical system element*/ optimizedOptSys_Ele_E13, /*start point lightRay*/{ 0.0,4.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, lightVecE13);
-	Spot Spot_field4_AO_E13(seqTrace_field4_AO_E13.getAllInterPointsAtSurf_i(4), seqTrace_field4_AO_E13.getAllInterPointsAtSurf_i(4).at(0));
+	Spot Spot_field4_AO_E13(seqTrace_field4_AO_E13.getAllInterPointsAtSurf_i_notFiltered(4), seqTrace_field4_AO_E13.getAllInterPointsAtSurf_i_notFiltered(4).at(0));
 	real sporRMS_field4_AO_E13 = Spot_field4_AO_E13.getRMS_µm();
 	std::cout << "GLOW field4 E13 rms " << sporRMS_field4_AO_E13 << std::endl;
 	real spotZemaxOA_field4_E13 = 190.617;

@@ -80,7 +80,7 @@ bool BenchmarkImageSimulation::checkMethodesImgSim()
 	Light.setWavelength(550.0);
 	FillApertureStop fillAperStopE0(/*start point rays*/{ 0.0,0.0,0.0 },/*semi height of aperture stop*/ 1.0,/*point of aperture stop*/{ 0.0,0.0,20.0 },/*direction of aperture stop*/{ 0.0,0.0,1.0 }, /*rings*/ 8,/*arms*/ 10,/*refractive index*/ 1.0,/*wavelength*/ Light);
 	seqTraceE0.seqRayTracingWithVectorOfLightRays(fillAperStopE0.getVectorWithLightRays());
-	Spot spotE0(seqTraceE0.getAllInterPointsAtSurf_i(7), seqTraceE0.getAllInterPointsAtSurf_i(7).at(0));
+	Spot spotE0(seqTraceE0.getAllInterPointsAtSurf_i_notFiltered(7), seqTraceE0.getAllInterPointsAtSurf_i_notFiltered(7).at(0));
 	real rms = spotE0.getRMS_mm() * 1000;
 	real geo = spotE0.getGeoRadius() * 1000;
 	//

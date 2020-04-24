@@ -158,7 +158,7 @@ bool testSystemsPeterMA::calcTestSystemPeterMA_E0(testWhatEnum testWhat)
 	// check rms spot radius of initial system 
 	// ***
 	SequentialRayTracing seqTraceE0_checker(optSystemElement_E0, { 0.0,0.0,0.0 }, 6, 8, 1.0, lightVec_E0);
-	Spot spotE0(seqTraceE0_checker.getAllInterPointsAtSurf_i(9), seqTraceE0_checker.getAllInterPointsAtSurf_i(9).at(0));
+	Spot spotE0(seqTraceE0_checker.getAllInterPointsAtSurf_i_notFiltered(9), seqTraceE0_checker.getAllInterPointsAtSurf_i_notFiltered(9).at(0));
 	real rmsSpotE0 = spotE0.getRMS_µm();
 	real excelBest_Zemax_RMS = 209.256;
 	bool checkE0_rmsBest = Math::compareTwoNumbers_decimals(excelBest_Zemax_RMS, rmsSpotE0, 2);
@@ -548,7 +548,7 @@ bool testSystemsPeterMA::calcTestSystemPeterMA_E1(testWhatEnum testWhat)
 
 	// check rms spot radius of initial system 
 	SequentialRayTracing seqTraceE1_checker(optSystemElement_E1, { 0.0,0.0,0.0 }, 6, 8, 1.0, lightVec_E1);
-	Spot spotE1(seqTraceE1_checker.getAllInterPointsAtSurf_i(11), seqTraceE1_checker.getAllInterPointsAtSurf_i(11).at(0));
+	Spot spotE1(seqTraceE1_checker.getAllInterPointsAtSurf_i_notFiltered(11), seqTraceE1_checker.getAllInterPointsAtSurf_i_notFiltered(11).at(0));
 	real rmsSpotE1 = spotE1.getRMS_µm();
 	real excelBest_Zemax_RMS = 68.245;
 	bool checkE1_rmsBest = Math::compareTwoNumbers_decimals(excelBest_Zemax_RMS, rmsSpotE1, 1);
@@ -743,7 +743,7 @@ bool testSystemsPeterMA::calcTestSystemPeterMA_E2(testWhatEnum testWhat)
 
 	// check rms spot radius of initial system 
 	SequentialRayTracing seqTraceE2_checker(optSystemElement_E2, { 0.0,0.0,0.0 }, 6, 8, 1.0, lightVec_E2);
-	Spot spotE2(seqTraceE2_checker.getAllInterPointsAtSurf_i(9), seqTraceE2_checker.getAllInterPointsAtSurf_i(9).at(0));
+	Spot spotE2(seqTraceE2_checker.getAllInterPointsAtSurf_i_notFiltered(9), seqTraceE2_checker.getAllInterPointsAtSurf_i_notFiltered(9).at(0));
 	real rmsSpotE2 = spotE2.getRMS_µm();
 	real excelBest_Zemax_RMS = 131.716;
 	bool checkE2_rmsBest = Math::compareTwoNumbers_decimals(excelBest_Zemax_RMS, rmsSpotE2, 1);
@@ -945,7 +945,7 @@ bool testSystemsPeterMA::calcTestSystemPeterMA_E3(testWhatEnum testWhat)
 
 	// check rms spot radius of initial system 
 	SequentialRayTracing seqTraceE3_checker(optSystemElement_E3, { 0.0,0.0,0.0 }, 6, 8, 1.0, lightVec_E3);
-	Spot spotE3(seqTraceE3_checker.getAllInterPointsAtSurf_i(12), seqTraceE3_checker.getAllInterPointsAtSurf_i(12).at(0));
+	Spot spotE3(seqTraceE3_checker.getAllInterPointsAtSurf_i_notFiltered(12), seqTraceE3_checker.getAllInterPointsAtSurf_i_notFiltered(12).at(0));
 	real rmsSpotE3 = spotE3.getRMS_µm();
 	real excelBest_Zemax_RMS = 316.664;
 	bool checkE3_rmsBest = Math::compareTwoNumbers_decimals(excelBest_Zemax_RMS, rmsSpotE3, 1);
@@ -1139,7 +1139,7 @@ bool testSystemsPeterMA::calcTestSystemPeterMA_E4(testWhatEnum testWhat)
 
 	// check rms spot radius of initial system 
 	SequentialRayTracing seqTraceE4_checker(optSystemElement_E4, { 0.0,0.0,0.0 }, 6, 8, 1.0, lightVec_E4);
-	Spot spotE4(seqTraceE4_checker.getAllInterPointsAtSurf_i(9), seqTraceE4_checker.getAllInterPointsAtSurf_i(9).at(0));
+	Spot spotE4(seqTraceE4_checker.getAllInterPointsAtSurf_i_notFiltered(9), seqTraceE4_checker.getAllInterPointsAtSurf_i_notFiltered(9).at(0));
 	real rmsSpotE4 = spotE4.getRMS_µm();
 	real excelBest_Zemax_RMS = 281.402;
 	bool checkE4_rmsBest = Math::compareTwoNumbers_decimals(excelBest_Zemax_RMS, rmsSpotE4, 1);
@@ -1326,7 +1326,7 @@ bool testSystemsPeterMA::calcTestSystemPeterMA_E5(testWhatEnum testWhat)
 
 	// check rms spot radius of initial system 
 	SequentialRayTracing seqTraceE5_checker(optSystemElement_E5, { 0.0,0.0,0.0 }, 6, 8, 1.0, lightVec_E5);
-	Spot spotE5(seqTraceE5_checker.getAllInterPointsAtSurf_i(6), seqTraceE5_checker.getAllInterPointsAtSurf_i(6).at(0));
+	Spot spotE5(seqTraceE5_checker.getAllInterPointsAtSurf_i_notFiltered(6), seqTraceE5_checker.getAllInterPointsAtSurf_i_notFiltered(6).at(0));
 	real rmsSpotE5 = spotE5.getRMS_µm();
 	real excelBest_Zemax_RMS = 382.642;
 	bool checkE5_rmsBest = Math::compareTwoNumbers_decimals(excelBest_Zemax_RMS, rmsSpotE5, 1);
@@ -1510,7 +1510,7 @@ bool testSystemsPeterMA::calcTestSystemPeterMA_E6(testWhatEnum testWhat)
 
 	// check rms spot radius of initial system 
 	SequentialRayTracing seqTraceE6_checker(optSystemElement_E6, { 0.0,0.0,0.0 }, 6, 8, 1.0, lightVec_E6);
-	Spot spotE6(seqTraceE6_checker.getAllInterPointsAtSurf_i(4), seqTraceE6_checker.getAllInterPointsAtSurf_i(4).at(0));
+	Spot spotE6(seqTraceE6_checker.getAllInterPointsAtSurf_i_notFiltered(4), seqTraceE6_checker.getAllInterPointsAtSurf_i_notFiltered(4).at(0));
 	real rmsSpotE6 = spotE6.getRMS_µm();
 	real excelBest_Zemax_RMS = 1032.04;
 	bool checkE6_rmsBest = Math::compareTwoNumbers_decimals(excelBest_Zemax_RMS, rmsSpotE6, 1);
@@ -1693,7 +1693,7 @@ bool testSystemsPeterMA::calcTestSystemPeterMA_E7(testWhatEnum testWhat)
 
 	// check rms spot radius of initial system 
 	SequentialRayTracing seqTraceE7_checker(optSystemElement_E7, { 0.0,0.0,0.0 }, 6, 8, 1.0, lightVec_E7);
-	Spot spotE7(seqTraceE7_checker.getAllInterPointsAtSurf_i(4), seqTraceE7_checker.getAllInterPointsAtSurf_i(4).at(0));
+	Spot spotE7(seqTraceE7_checker.getAllInterPointsAtSurf_i_notFiltered(4), seqTraceE7_checker.getAllInterPointsAtSurf_i_notFiltered(4).at(0));
 	real rmsSpotE7 = spotE7.getRMS_µm();
 	real excelBest_Zemax_RMS = 1031.21;
 	bool checkE7_rmsBest = Math::compareTwoNumbers_decimals(excelBest_Zemax_RMS, rmsSpotE7, 1);
@@ -1883,7 +1883,7 @@ bool testSystemsPeterMA::calcTestSystemPeterMA_E8(testWhatEnum testWhat)
 
 	// check rms spot radius of initial system 
 	SequentialRayTracing seqTraceE8_checker(optSystemElement_E8, { 0.0,0.0,0.0 }, 6, 8, 1.0, lightVec_E8);
-	Spot spotE8(seqTraceE8_checker.getAllInterPointsAtSurf_i(7), seqTraceE8_checker.getAllInterPointsAtSurf_i(7).at(0));
+	Spot spotE8(seqTraceE8_checker.getAllInterPointsAtSurf_i_notFiltered(7), seqTraceE8_checker.getAllInterPointsAtSurf_i_notFiltered(7).at(0));
 	real rmsSpotE8 = spotE8.getRMS_µm();
 	real excelBest_Zemax_RMS = 341.198;
 	bool checkE8_rmsBest = Math::compareTwoNumbers_decimals(excelBest_Zemax_RMS, rmsSpotE8, 1);
@@ -2074,7 +2074,7 @@ bool testSystemsPeterMA::calcTestSystemPeterMA_E9(testWhatEnum testWhat)
 
 	// check rms spot radius of initial system 
 	SequentialRayTracing seqTraceE9_checker(optSystemElement_E9, { 0.0,0.0,0.0 }, 6, 8, 1.0, lightVec_E9);
-	Spot spotE9(seqTraceE9_checker.getAllInterPointsAtSurf_i(8), seqTraceE9_checker.getAllInterPointsAtSurf_i(8).at(0));
+	Spot spotE9(seqTraceE9_checker.getAllInterPointsAtSurf_i_notFiltered(8), seqTraceE9_checker.getAllInterPointsAtSurf_i_notFiltered(8).at(0));
 	real rmsSpotE9 = spotE9.getRMS_µm();
 	real excelBest_Zemax_RMS = 1272.95;
 	bool checkE9_rmsBest = Math::compareTwoNumbers_decimals(excelBest_Zemax_RMS, rmsSpotE9, 1);
@@ -2107,19 +2107,19 @@ void testSystemsPeterMA::saveSystemData_bestOptSys_paraxial(unsigned int optSysN
 	// optical axis
 	VectorStructR3 optA_E0 = fields[0];
 	SequentialRayTracing seqTraceE0_optAxis(/*optical system element*/ bestOptSysEle,/*start point lightRay*/ optA_E0, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, light_vec);
-	Spot spotE0_optA_bestOptSys(seqTraceE0_optAxis.getAllInterPointsAtSurf_i(posLastSurface), seqTraceE0_optAxis.getAllInterPointsAtSurf_i(posLastSurface)[0]);
+	Spot spotE0_optA_bestOptSys(seqTraceE0_optAxis.getAllInterPointsAtSurf_i_notFiltered(posLastSurface), seqTraceE0_optAxis.getAllInterPointsAtSurf_i_notFiltered(posLastSurface)[0]);
 	real spotOptAxisE0_bestOptSys = spotE0_optA_bestOptSys.getRMS_µm();
 	exportData_bestOptSys_paraxial.push_back(spotOptAxisE0_bestOptSys);
 	// field 1 at y=1
 	VectorStructR3 field1_E0 = fields[1];
 	SequentialRayTracing seqTraceE0_field1_E0(/*optical system element*/ bestOptSysEle,/*start point lightRay*/ field1_E0, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, light_vec);
-	Spot spotE0_field1_bestOptSys(seqTraceE0_field1_E0.getAllInterPointsAtSurf_i(posLastSurface), seqTraceE0_field1_E0.getAllInterPointsAtSurf_i(posLastSurface)[0]);
+	Spot spotE0_field1_bestOptSys(seqTraceE0_field1_E0.getAllInterPointsAtSurf_i_notFiltered(posLastSurface), seqTraceE0_field1_E0.getAllInterPointsAtSurf_i_notFiltered(posLastSurface)[0]);
 	real spotField1E0_bestOptSys = spotE0_field1_bestOptSys.getRMS_µm();
 	exportData_bestOptSys_paraxial.push_back(spotField1E0_bestOptSys);
 	// field 2 at y=2
 	VectorStructR3 field2_E0 = fields[2];
 	SequentialRayTracing seqTraceE0_field2_E0(/*optical system element*/ bestOptSysEle,/*start point lightRay*/ field2_E0, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, light_vec);
-	Spot spotE0_field2_bestOptSys(seqTraceE0_field2_E0.getAllInterPointsAtSurf_i(posLastSurface), seqTraceE0_field2_E0.getAllInterPointsAtSurf_i(posLastSurface)[0]);
+	Spot spotE0_field2_bestOptSys(seqTraceE0_field2_E0.getAllInterPointsAtSurf_i_notFiltered(posLastSurface), seqTraceE0_field2_E0.getAllInterPointsAtSurf_i_notFiltered(posLastSurface)[0]);
 	real spotField2E0_bestOptSys = spotE0_field2_bestOptSys.getRMS_µm();
 	exportData_bestOptSys_paraxial.push_back(spotField2E0_bestOptSys);
 
@@ -2230,19 +2230,19 @@ void testSystemsPeterMA::saveSystemData_bestOptSys_seidel(unsigned int optSysNum
 	// optical axis
 	VectorStructR3 optA_E0 = fields[0];
 	SequentialRayTracing seqTraceE0_optAxis(/*optical system element*/ bestOptSysEle,/*start point lightRay*/ optA_E0, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, light_vec);
-	Spot spotE0_optA_bestOptSys(seqTraceE0_optAxis.getAllInterPointsAtSurf_i(posLastSurface), seqTraceE0_optAxis.getAllInterPointsAtSurf_i(posLastSurface)[0]);
+	Spot spotE0_optA_bestOptSys(seqTraceE0_optAxis.getAllInterPointsAtSurf_i_notFiltered(posLastSurface), seqTraceE0_optAxis.getAllInterPointsAtSurf_i_notFiltered(posLastSurface)[0]);
 	real spotOptAxisE0_bestOptSys = spotE0_optA_bestOptSys.getRMS_µm();
 	exportData_bestOptSys_seidel.push_back(spotOptAxisE0_bestOptSys);
 	// field 1 at y=1
 	VectorStructR3 field1_E0 = fields[1];
 	SequentialRayTracing seqTraceE0_field1_E0(/*optical system element*/ bestOptSysEle,/*start point lightRay*/ field1_E0, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, light_vec);
-	Spot spotE0_field1_bestOptSys(seqTraceE0_field1_E0.getAllInterPointsAtSurf_i(posLastSurface), seqTraceE0_field1_E0.getAllInterPointsAtSurf_i(posLastSurface)[0]);
+	Spot spotE0_field1_bestOptSys(seqTraceE0_field1_E0.getAllInterPointsAtSurf_i_notFiltered(posLastSurface), seqTraceE0_field1_E0.getAllInterPointsAtSurf_i_notFiltered(posLastSurface)[0]);
 	real spotField1E0_bestOptSys = spotE0_field1_bestOptSys.getRMS_µm();
 	exportData_bestOptSys_seidel.push_back(spotField1E0_bestOptSys);
 	// field 2 at y=2
 	VectorStructR3 field2_E0 = fields[2];
 	SequentialRayTracing seqTraceE0_field2_E0(/*optical system element*/ bestOptSysEle,/*start point lightRay*/ field2_E0, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, light_vec);
-	Spot spotE0_field2_bestOptSys(seqTraceE0_field2_E0.getAllInterPointsAtSurf_i(posLastSurface), seqTraceE0_field2_E0.getAllInterPointsAtSurf_i(posLastSurface)[0]);
+	Spot spotE0_field2_bestOptSys(seqTraceE0_field2_E0.getAllInterPointsAtSurf_i_notFiltered(posLastSurface), seqTraceE0_field2_E0.getAllInterPointsAtSurf_i_notFiltered(posLastSurface)[0]);
 	real spotField2E0_bestOptSys = spotE0_field2_bestOptSys.getRMS_µm();
 	exportData_bestOptSys_seidel.push_back(spotField2E0_bestOptSys);
 
@@ -2346,19 +2346,19 @@ void testSystemsPeterMA::saveSystemData_bestOptSys_RayTracing(unsigned int optSy
 	// optical axis
 	VectorStructR3 optA_E0 = fields[0];
 	SequentialRayTracing seqTraceE0_optAxis(/*optical system element*/ bestOptSysEle,/*start point lightRay*/ optA_E0, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, light_vec);
-	Spot spotE0_optA_bestOptSys(seqTraceE0_optAxis.getAllInterPointsAtSurf_i(posLastSurface), seqTraceE0_optAxis.getAllInterPointsAtSurf_i(posLastSurface)[0]);
+	Spot spotE0_optA_bestOptSys(seqTraceE0_optAxis.getAllInterPointsAtSurf_i_notFiltered(posLastSurface), seqTraceE0_optAxis.getAllInterPointsAtSurf_i_notFiltered(posLastSurface)[0]);
 	real spotOptAxisE0_bestOptSys = spotE0_optA_bestOptSys.getRMS_µm();
 	exportData_bestOptSys_rayTracing.push_back(spotOptAxisE0_bestOptSys);
 	// field 1 at y=1
 	VectorStructR3 field1_E0 = fields[1];
 	SequentialRayTracing seqTraceE0_field1_E0(/*optical system element*/ bestOptSysEle,/*start point lightRay*/ field1_E0, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, light_vec);
-	Spot spotE0_field1_bestOptSys(seqTraceE0_field1_E0.getAllInterPointsAtSurf_i(posLastSurface), seqTraceE0_field1_E0.getAllInterPointsAtSurf_i(posLastSurface)[0]);
+	Spot spotE0_field1_bestOptSys(seqTraceE0_field1_E0.getAllInterPointsAtSurf_i_notFiltered(posLastSurface), seqTraceE0_field1_E0.getAllInterPointsAtSurf_i_notFiltered(posLastSurface)[0]);
 	real spotField1E0_bestOptSys = spotE0_field1_bestOptSys.getRMS_µm();
 	exportData_bestOptSys_rayTracing.push_back(spotField1E0_bestOptSys);
 	// field 2 at y=2
 	VectorStructR3 field2_E0 = fields[2];
 	SequentialRayTracing seqTraceE0_field2_E0(/*optical system element*/ bestOptSysEle,/*start point lightRay*/ field2_E0, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, light_vec);
-	Spot spotE0_field2_bestOptSys(seqTraceE0_field2_E0.getAllInterPointsAtSurf_i(posLastSurface), seqTraceE0_field2_E0.getAllInterPointsAtSurf_i(posLastSurface)[0]);
+	Spot spotE0_field2_bestOptSys(seqTraceE0_field2_E0.getAllInterPointsAtSurf_i_notFiltered(posLastSurface), seqTraceE0_field2_E0.getAllInterPointsAtSurf_i_notFiltered(posLastSurface)[0]);
 	real spotField2E0_bestOptSys = spotE0_field2_bestOptSys.getRMS_µm();
 	exportData_bestOptSys_rayTracing.push_back(spotField2E0_bestOptSys);
 

@@ -137,7 +137,7 @@ bool BechmarkComplexOpticalSystem::checkComplexOpticalSystem()
 	FillApertureStop fillAperStopE1_optAchse({ 0.0,0.0,0.0 }, 1, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.5, light);
 	SequentialRayTracing seqTraceE1_OptAchse(optSysE1);
 	seqTraceE1_OptAchse.seqRayTracingWithVectorOfLightRays(fillAperStopE1_optAchse.getVectorWithLightRays());
-	Spot spotE1_optAchese(seqTraceE1_OptAchse.getAllInterPointsAtSurf_i(15), seqTraceE1_OptAchse.getAllInterPointsAtSurf_i(15).at(0));
+	Spot spotE1_optAchese(seqTraceE1_OptAchse.getAllInterPointsAtSurf_i_notFiltered(15), seqTraceE1_OptAchse.getAllInterPointsAtSurf_i_notFiltered(15).at(0));
 	real rmsE1_optAchse = spotE1_optAchese.getRMS_mm() * 1000;
 	real rmsZemaxE1_optAchse = 2.312; // it is for Ray Density 6 -> rings = 6, arms =8
 	real geoE1_optAchse = spotE1_optAchese.getGeoRadius() * 1000;
@@ -151,7 +151,7 @@ bool BechmarkComplexOpticalSystem::checkComplexOpticalSystem()
 	FillApertureStop fillAperStopE1_filed({ 0.0,1.0,0.0 }, 1, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, 6, 8, 1.5, light);
 	SequentialRayTracing seqTraceE1_filed(optSysE1);
 	seqTraceE1_filed.seqRayTracingWithVectorOfLightRays(fillAperStopE1_filed.getVectorWithLightRays());
-	Spot spotE1_field(seqTraceE1_filed.getAllInterPointsAtSurf_i(15), seqTraceE1_filed.getAllInterPointsAtSurf_i(15).at(0));
+	Spot spotE1_field(seqTraceE1_filed.getAllInterPointsAtSurf_i_notFiltered(15), seqTraceE1_filed.getAllInterPointsAtSurf_i_notFiltered(15).at(0));
 	real rmsE1_field = spotE1_field.getRMS_mm() * 1000;
 	real rmsZemaxE1_field = 10.724; // it is for Ray Density 6 -> rings = 6, arms =8
 	real geoE1_field = spotE1_field.getGeoRadius() * 1000;

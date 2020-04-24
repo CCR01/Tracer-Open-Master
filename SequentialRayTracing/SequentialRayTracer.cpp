@@ -553,27 +553,23 @@ std::vector <IntersectInfosAndPosSurfaceAndTotalSteps>  SequentialRayTracing::fi
 	int sizeOfVector = SaveIntInfos_Pos_totStep_NotFiltered.size();
 	//std::vector<IntersectInfosAndPosSurfaceAndTotalSteps> returnFilteredInterPointsAndPos;
 	char isRealIntersectionPoint;
+	bool isNAN;
 	std::vector<IntersectInfosAndPosSurfaceAndTotalSteps> returnFilteredInterPointsAndPos;
+	returnFilteredInterPointsAndPos.reserve(sizeOfVector);
 
-	// privat
-	//std::vector<IntersectInfosAndPosSurfaceAndTotalSteps> returnFilteredInterPointsAndPos_private;
-
-	//#pragma omp for nowait
-	// see: https://stackoverflow.com/questions/24765180/parallelizing-a-for-loop-using-openmp-replacing-push-back
 	for (int i = 0; i < sizeOfVector; i++)
 	{
-		isRealIntersectionPoint = SaveIntInfos_Pos_totStep_NotFiltered.at(i).getIntersecInfos().getSurfaceSide();
+		isRealIntersectionPoint = SaveIntInfos_Pos_totStep_NotFiltered[i].getIntersecInfos().getSurfaceSide();
+		isNAN = std::isnan(SaveIntInfos_Pos_totStep_NotFiltered[i].getIntersecInfos().getIntersectionPoint().getX());
 
-		//#pragma omp parallel if(isRealIntersectionPoint)
-		if (isRealIntersectionPoint != 'N')
+
+		if (isRealIntersectionPoint != 'N' && isNAN == false)
 		{
 			returnFilteredInterPointsAndPos.push_back(SaveIntInfos_Pos_totStep_NotFiltered.at(i));
 		}
 
 	}
-	//#pragma omp critical
-	//returnFilteredInterPointsAndPos.insert(returnFilteredInterPointsAndPos.end(), returnFilteredInterPointsAndPos_private.begin(), returnFilteredInterPointsAndPos_private.end());
-
+	
 
 	return returnFilteredInterPointsAndPos;
 }
@@ -600,13 +596,15 @@ std::vector<IntersectInformationStruct> SequentialRayTracing::getAllInterInfosOf
 std::vector<IntersectInformationStruct> SequentialRayTracing::getAllInterInfosOfSurf_i_notFiltered(unsigned int const surfaceNo)
 {
 	std::vector<IntersectInformationStruct> retunInterInfosSurf_i_notFiltered;
-	//#pragma omp parallel for
-	for (int i = 0; i < mSaveIntInfos_Pos_totStep_NotFiltered.size(); i++)
+	unsigned int sizeVector = mSaveIntInfos_Pos_totStep_NotFiltered.size();
+	retunInterInfosSurf_i_notFiltered.resize(sizeVector);
+
+	for (int i = 0; i < sizeVector; i++)
 	{
 		if (mSaveIntInfos_Pos_totStep_NotFiltered.at(i).getPosition() == surfaceNo)
 		{
 
-			retunInterInfosSurf_i_notFiltered.push_back(mSaveIntInfos_Pos_totStep_NotFiltered.at(i).getIntersecInfos());
+			retunInterInfosSurf_i_notFiltered[i] = mSaveIntInfos_Pos_totStep_NotFiltered[i].getIntersecInfos();
 		}
 	}
 
@@ -629,7 +627,7 @@ void SequentialRayTracing::printAllInterInfosAtSurface_i(unsigned int const surf
 }
 
 // get all intersection points at surface i
-std::vector<VectorStructR3> SequentialRayTracing::getAllInterPointsAtSurf_i(unsigned int const surfaceNo)
+std::vector<VectorStructR3> SequentialRayTracing::getAllInterPointsAtSurf_i_notFiltered(unsigned int const surfaceNo)
 {
 	std::vector<IntersectInformationStruct> interInfosAtSurfac_i = getAllInterInfosOfSurf_i(surfaceNo);
 	std::vector<VectorStructR3> intersecPoints;
@@ -643,10 +641,33 @@ std::vector<VectorStructR3> SequentialRayTracing::getAllInterPointsAtSurf_i(unsi
 
 }
 
+// get all intersection points of surface i filtered
+std::vector<VectorStructR3> SequentialRayTracing::getAllInterPointsAtSurface_i_filtered(unsigned int const surfaceNo)
+{
+	std::vector<VectorStructR3> intersecPoints;
+	unsigned int lenght = mSaveInterInfos_PosSur_TotSteps.size();
+	unsigned int maxSizeVector = mSaveIntInfos_Pos_totStep_NotFiltered.size() / mOpticalSystem_LLT.getPosAndInteractingSurface().size();
+	intersecPoints.reserve(maxSizeVector);
+
+	for (unsigned int i = 0; i < lenght; ++i)
+	{
+		if (mSaveInterInfos_PosSur_TotSteps[i].getPosition() == surfaceNo)
+		{
+			if (mSaveInterInfos_PosSur_TotSteps[i].getIntersecInfos().getSurfaceSide() != N)
+			{ 
+					intersecPoints.push_back(mSaveInterInfos_PosSur_TotSteps[i].getIntersecInfos().getIntersectionPoint());
+			}
+		}
+	}
+
+	return intersecPoints;
+
+}
+
 // get intersection point i at Surface i not filtered
 VectorStructR3 SequentialRayTracing::getInterPoint_i_atSurface_i_notFiltered(unsigned int const interPointNo, unsigned int const surfaceNo)
 {
-	VectorStructR3 interPoint_i = getAllInterPointsAtSurf_i(surfaceNo).at(interPointNo);
+	VectorStructR3 interPoint_i = getAllInterPointsAtSurf_i_notFiltered(surfaceNo).at(interPointNo);
 	return interPoint_i;
 }
 

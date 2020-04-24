@@ -86,15 +86,15 @@ bool testLocalOpti_BM::checkLocalOpti_BM()
 	SequentialRayTracing seqTrace_E0_field4(/*optical system element*/ optSystemElement_E0, /*start point lightRay*/{ 0.0,4.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, lichtVecE0);
 
 	// calculate rms value
-	Spot spot_E0_optA(seqTrace_E0_optA.getAllInterPointsAtSurf_i(4), seqTrace_E0_optA.getAllInterPointsAtSurf_i(4).at(0));
+	Spot spot_E0_optA(seqTrace_E0_optA.getAllInterPointsAtSurf_i_notFiltered(4), seqTrace_E0_optA.getAllInterPointsAtSurf_i_notFiltered(4).at(0));
 	real rms_E0_optA = spot_E0_optA.getRMS_µm();
 	bool checkRMSoptA_E0 = Math::compareTwoNumbers_decimals(rms_E0_optA, 354.553, 2);
 	workLocalOpti_BM.push_back(checkRMSoptA_E0);
-	Spot spot_E0_field2(seqTrace_E0_field2.getAllInterPointsAtSurf_i(4), seqTrace_E0_field2.getAllInterPointsAtSurf_i(4).at(0));
+	Spot spot_E0_field2(seqTrace_E0_field2.getAllInterPointsAtSurf_i_notFiltered(4), seqTrace_E0_field2.getAllInterPointsAtSurf_i_notFiltered(4).at(0));
 	real rms_E0_field2 = spot_E0_field2.getRMS_µm();
 	bool checkRMSfield2_E0 = Math::compareTwoNumbers_decimals(rms_E0_field2, 339.605, 3);
 	workLocalOpti_BM.push_back(checkRMSfield2_E0);
-	Spot spot_E0_field4(seqTrace_E0_field4.getAllInterPointsAtSurf_i(4), seqTrace_E0_field4.getAllInterPointsAtSurf_i(4).at(0));
+	Spot spot_E0_field4(seqTrace_E0_field4.getAllInterPointsAtSurf_i_notFiltered(4), seqTrace_E0_field4.getAllInterPointsAtSurf_i_notFiltered(4).at(0));
 	real rms_E0_field4 = spot_E0_field4.getRMS_µm();
 	bool checkRMSfield4_E0 = Math::compareTwoNumbers_decimals(rms_E0_field4, 302.609, 2);
 	workLocalOpti_BM.push_back(checkRMSfield4_E0);
@@ -129,13 +129,13 @@ bool testLocalOpti_BM::checkLocalOpti_BM()
 	
 	// calculate rms value from the optimized optical system
 	// optA
-	Spot spot_E0_optA_opti(seqTrace_E0_optA_opti.getAllInterPointsAtSurf_i(4), seqTrace_E0_optA_opti.getAllInterPointsAtSurf_i(4).at(0));
+	Spot spot_E0_optA_opti(seqTrace_E0_optA_opti.getAllInterPointsAtSurf_i_notFiltered(4), seqTrace_E0_optA_opti.getAllInterPointsAtSurf_i_notFiltered(4).at(0));
 	real rms_E0_optA_opti = spot_E0_optA_opti.getRMS_µm();
 	// field2
-	Spot spot_E0_field2_opti(seqTrace_E0_field2_opti.getAllInterPointsAtSurf_i(4), seqTrace_E0_field2_opti.getAllInterPointsAtSurf_i(4).at(0));
+	Spot spot_E0_field2_opti(seqTrace_E0_field2_opti.getAllInterPointsAtSurf_i_notFiltered(4), seqTrace_E0_field2_opti.getAllInterPointsAtSurf_i_notFiltered(4).at(0));
 	real rms_E0_field2_opti = spot_E0_field2_opti.getRMS_µm();
 	// field4
-	Spot spot_E0_field4_opti(seqTrace_E0_field4_opti.getAllInterPointsAtSurf_i(4), seqTrace_E0_field4_opti.getAllInterPointsAtSurf_i(4).at(0));
+	Spot spot_E0_field4_opti(seqTrace_E0_field4_opti.getAllInterPointsAtSurf_i_notFiltered(4), seqTrace_E0_field4_opti.getAllInterPointsAtSurf_i_notFiltered(4).at(0));
 	real rms_E0_field4_opti = spot_E0_field4_opti.getRMS_µm();
 	
 	real zemaxRMSsumOpti = 77.957 + 108.083 + 190.609;

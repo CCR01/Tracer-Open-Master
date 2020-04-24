@@ -186,7 +186,7 @@ bool testAchroPerforAndAccur::testAchromatPerformanceAndAccurancy(double startSt
 
 	// check rms spot radius of initial system 
 	SequentialRayTracing seqTraceE0(optSystemElement_E0, { 0.0,0.0,0.0 }, 6, 8, 1.0, lightVec_E0);
-	Spot spotE0(seqTraceE0.getAllInterPointsAtSurf_i(4), seqTraceE0.getAllInterPointsAtSurf_i(4).at(0));
+	Spot spotE0(seqTraceE0.getAllInterPointsAtSurf_i_notFiltered(4), seqTraceE0.getAllInterPointsAtSurf_i_notFiltered(4).at(0));
 	real rmsSpotE0 = spotE0.getRMS_µm();
 	real excelBest_Zemax_RMS = 1031.21;
 	bool checkE0_rmsBest = Math::compareTwoNumbers_decimals(excelBest_Zemax_RMS, rmsSpotE0, 2);

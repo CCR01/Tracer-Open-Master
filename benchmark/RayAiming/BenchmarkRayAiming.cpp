@@ -969,7 +969,7 @@ lightRay_interPoint_onTarget BenchmarkRayAiming::checkRayAimingSingleRay_inf(/*o
 	LightRayStruct testLightRay = RayAiming.rayAiming_inf(rayDirection, targetPoint, Light, 1.0);
 	SequentialRayTracing seqTrace(optSys_LLT);
 	seqTrace.sequentialRayTracing(testLightRay);
-	VectorStructR3 checkerPoint = seqTrace.getAllInterPointsAtSurf_i(RayAiming.getPositionApertureStop(optSys_LLT)).at(0);
+	VectorStructR3 checkerPoint = seqTrace.getAllInterPointsAtSurf_i_notFiltered(RayAiming.getPositionApertureStop(optSys_LLT)).at(0);
 	real disX = RayAiming.calcDistance_X(targetPoint, checkerPoint);
 	real disY = RayAiming.calcDistance_Y(targetPoint, checkerPoint);
 
@@ -1037,7 +1037,7 @@ bool BenchmarkRayAiming::checkRayAimingManyRay_inf(/*opt sys LLT*/ OpticalSystem
 	unsigned int posLastSurface = optSys_LLT.getPosAndInteractingSurface().size() - 1;
 	SequentialRayTracing seqTraceForRMS(optSys_LLT);
 	seqTraceForRMS.seqRayTracingWithVectorOfLightRays(lightRays_vec);
-	Spot Spot(seqTraceForRMS.getAllInterPointsAtSurf_i(posLastSurface), seqTraceForRMS.getAllInterPointsAtSurf_i(posLastSurface)[0]);
+	Spot Spot(seqTraceForRMS.getAllInterPointsAtSurf_i_notFiltered(posLastSurface), seqTraceForRMS.getAllInterPointsAtSurf_i_notFiltered(posLastSurface)[0]);
 	real rmsTOM = Spot.getRMS_µm();
 	bool checkRMS_bool = std::abs(rmsTOM - checkRMS) < tolerance;
 	cheker_vec.push_back(checkRMS_bool);
@@ -1116,7 +1116,7 @@ bool BenchmarkRayAiming::checkRayTracing_inf(OpticalSystem_LLT optSys_LLT, Vecto
 
 	//unsigned int posAperStop = optSys_LLT.getPosApertureStop();
 
-	VectorStructR3 intersecPointAS = seqTrace.getAllInterPointsAtSurf_i(posSurface)[0];
+	VectorStructR3 intersecPointAS = seqTrace.getAllInterPointsAtSurf_i_notFiltered(posSurface)[0];
 
 	bool checkInterPoint = Math::compareTwoVectorStructR3_tolerance(targetPoint, intersecPointAS, tolerance);
 
@@ -1133,7 +1133,7 @@ lightRay_interPoint_onTarget BenchmarkRayAiming::checkRayAimingSingleRay_obj(/*o
 	LightRayStruct testLightRay = RayAiming.rayAiming_obj(rayOrigin, targetPoint, Light, 1.0);
 	SequentialRayTracing seqTrace(optSys_LLT);
 	seqTrace.sequentialRayTracing(testLightRay);
-	VectorStructR3 checkerPoint = seqTrace.getAllInterPointsAtSurf_i(RayAiming.getPositionApertureStop(optSys_LLT)).at(0);
+	VectorStructR3 checkerPoint = seqTrace.getAllInterPointsAtSurf_i_notFiltered(RayAiming.getPositionApertureStop(optSys_LLT)).at(0);
 	real disX = RayAiming.calcDistance_X(targetPoint, checkerPoint);
 	real disY = RayAiming.calcDistance_Y(targetPoint, checkerPoint);
 
@@ -1204,7 +1204,7 @@ bool BenchmarkRayAiming::checkRayAimingManyRay_obj(/*opt sys LLT*/ OpticalSystem
 	unsigned int posLastSurface = optSys_LLT.getPosAndInteractingSurface().size() - 1;
 	SequentialRayTracing seqTraceForRMS(optSys_LLT);
 	seqTraceForRMS.seqRayTracingWithVectorOfLightRays(lightRays_vec);
-	Spot Spot(seqTraceForRMS.getAllInterPointsAtSurf_i(posLastSurface), seqTraceForRMS.getAllInterPointsAtSurf_i(posLastSurface)[0]);
+	Spot Spot(seqTraceForRMS.getAllInterPointsAtSurf_i_notFiltered(posLastSurface), seqTraceForRMS.getAllInterPointsAtSurf_i_notFiltered(posLastSurface)[0]);
 	real rmsTOM = Spot.getRMS_µm();
 	bool checkRMS_bool = std::abs(rmsTOM - checkRMS) < tolerance;
 	cheker_vec.push_back(checkRMS_bool);

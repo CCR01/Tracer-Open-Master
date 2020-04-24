@@ -385,14 +385,14 @@ real EvaluateManyOptSys_RayTracing::doRayTracingOptlSystemAndCalcRMScon(OpticalS
 		SequentialRayTracing seqTrac(/*optical system element*/ optSysEle, /*start point lightRay*/tempField, /*rings*/ mSettingsMeritFct.getRings(), /*arms*/ mSettingsMeritFct.getArms(), /*refractive index TODO: what happen if the ray start in a glass???*/ 1.0, mSettingsMeritFct.getLight(i));
 
 		// check for vignetting
-		if (seqTrac.getAllInterPointsAtSurf_i(lastSurface).size() != seqTrac.getStartPoints().size())
+		if (seqTrac.getAllInterPointsAtSurf_i_notFiltered(lastSurface).size() != seqTrac.getStartPoints().size())
 		{
 			// there must be vignetting
 			return 9999999999999999999999999999999999.0; // very heigh merit value
 		}
 
 		// the first wavelength is the reference point (intersection point chief ray at the image surface)
-		Spot tempSpot(seqTrac.getAllInterPointsAndIntensityAtSurface_i(lastSurface), seqTrac.getAllInterPointsAtSurf_i(lastSurface).at(0));
+		Spot tempSpot(seqTrac.getAllInterPointsAndIntensityAtSurface_i(lastSurface), seqTrac.getAllInterPointsAtSurf_i_notFiltered(lastSurface).at(0));
 		tempRMS = tempSpot.getRMS_µm();
 		weightFieldRMS = tempWeightField * tempRMS;
 		allRMS_weight.push_back(weightFieldRMS);

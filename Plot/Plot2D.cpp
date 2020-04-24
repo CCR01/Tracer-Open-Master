@@ -78,8 +78,8 @@ void Plot2D::plotRays()
 			for (unsigned int j = 0; j <= mOptSys_LLT.getNumberOfSurfaces(); j++)
 			{
 				
-				real tempY = mSeqRayTrac.getAllInterPointsAtSurf_i(atSurface).at(counter).getY();
-				real tempX = mSeqRayTrac.getAllInterPointsAtSurf_i(atSurface).at(counter).getZ();
+				real tempY = mSeqRayTrac.getAllInterPointsAtSurf_i_notFiltered(atSurface).at(counter).getY();
+				real tempX = mSeqRayTrac.getAllInterPointsAtSurf_i_notFiltered(atSurface).at(counter).getZ();
 				
 				int tempYplot = height/2 - tempY * mScale;
 				int tempXplot = boarterLeft + tempX * mScale;

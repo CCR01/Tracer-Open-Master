@@ -1000,7 +1000,7 @@ real OptimizeOpticalSystem::calculateRMSallFieldAndWavelength(OpticalSystemEleme
 	SequentialRayTracing seqTrac(/*optical system element*/ optSysEle, /*start point lightRay*/tempField, /*rings*/ mOP_Config.getRings(), /*arms*/ mOP_Config.getArms(), /*refractive index TODO: what happen if the ray start in a glass???*/ 1.0, mFWL_Config.getLightVec());
 	
 	// the first wavelength is the reference point (intersection point chief ray at the image surface)
-	Spot tempSpot(seqTrac.getAllInterPointsAndIntensityAtSurface_i(lastSurface), seqTrac.getAllInterPointsAtSurf_i(lastSurface).at(0));
+	Spot tempSpot(seqTrac.getAllInterPointsAndIntensityAtSurface_i(lastSurface), seqTrac.getAllInterPointsAtSurf_i_notFiltered(lastSurface).at(0));
 
 	tempRMS = tempSpot.getRMS_µm();
 	weightFieldRMS = tempWeightField * tempRMS;

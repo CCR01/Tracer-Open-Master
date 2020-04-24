@@ -329,7 +329,7 @@ lightRayAndInterPointAperStop RayAiming::traceOneRayUntilInApertureStop_inf(Ligh
 		else if ('A' == surfSide || 'B' == surfSide) // ray comes to the last surface
 		{
 			ray_NOT_AtLastSurface = false;
-			tempLightRayAndInterPointAS.setInterPointAperStop(seqTrace.getAllInterPointsAtSurf_i(mPosApertureStop).back());
+			tempLightRayAndInterPointAS.setInterPointAperStop(seqTrace.getAllInterPointsAtSurf_i_notFiltered(mPosApertureStop).back());
 			tempLightRayAndInterPointAS.setLightRay(lightRay);
 
 			return tempLightRayAndInterPointAS;
@@ -1029,7 +1029,7 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos_inf(lightRay_intP_di
 		
 
 		interInfosAS_vec = seqTrace.getAllInterInfosOfSurf_i_notFiltered(mPosApertureStop);
-		interPointsAS = seqTrace.getAllInterPointsAtSurf_i(mPosApertureStop);
+		interPointsAS = seqTrace.getAllInterPointsAtSurf_i_notFiltered(mPosApertureStop);
 
 		if (interPointsAS.size() == 8)
 		{
@@ -1061,7 +1061,7 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos_inf(lightRay_intP_di
 
 	// new infos 
 	LightRayStruct newBestRay = lightRay_vec[posBestRay];
-	VectorStructR3 newInterPointAS = seqTrace.getAllInterPointsAtSurf_i(mPosApertureStop)[posBestRay];
+	VectorStructR3 newInterPointAS = seqTrace.getAllInterPointsAtSurf_i_notFiltered(mPosApertureStop)[posBestRay];
 	real distance_X = calcDistance_X(newInterPointAS, targetPoint);
 	real distance_Y = calcDistance_Y(newInterPointAS, targetPoint);
 	// ***
@@ -1376,7 +1376,7 @@ lightRayAndInterPointAperStop RayAiming::traceOneRayUntilInApertureStop_obj(Ligh
 		else if ('A' == surfSide || 'B' == surfSide) // ray comes to the last surface
 		{
 			ray_NOT_AtLastSurface = false;
-			tempLightRayAndInterPointAS.setInterPointAperStop(seqTrace.getAllInterPointsAtSurf_i(mPosApertureStop).back());
+			tempLightRayAndInterPointAS.setInterPointAperStop(seqTrace.getAllInterPointsAtSurf_i_notFiltered(mPosApertureStop).back());
 			tempLightRayAndInterPointAS.setLightRay(lightRay);
 
 			return tempLightRayAndInterPointAS;
@@ -1910,7 +1910,7 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos_obj(lightRay_intP_di
 
 
 		interInfosAS_vec = seqTrace.getAllInterInfosOfSurf_i_notFiltered(mPosApertureStop);
-		interPointsAS = seqTrace.getAllInterPointsAtSurf_i(mPosApertureStop);
+		interPointsAS = seqTrace.getAllInterPointsAtSurf_i_notFiltered(mPosApertureStop);
 
 		if (interPointsAS.size() == 8)
 		{
@@ -1942,7 +1942,7 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos_obj(lightRay_intP_di
 
 	// new infos 
 	LightRayStruct newBestRay = lightRay_vec[posBestRay];
-	VectorStructR3 newInterPointAS = seqTrace.getAllInterPointsAtSurf_i(mPosApertureStop)[posBestRay];
+	VectorStructR3 newInterPointAS = seqTrace.getAllInterPointsAtSurf_i_notFiltered(mPosApertureStop)[posBestRay];
 	real distance_X = calcDistance_X(newInterPointAS, initialTargetPoint);
 	real distance_Y = calcDistance_Y(newInterPointAS, initialTargetPoint);
 	// ***

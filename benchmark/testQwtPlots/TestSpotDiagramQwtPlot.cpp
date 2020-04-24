@@ -111,11 +111,11 @@ bool testSpotDiagramQwtPlot::testSpotDiagramQwtPlotE0()
 	seqTraceE0_field.seqRayTracingWithVectorOfLightRays(fillAperStopE0_field.getVectorWithLightRays());
 
 	//define the Spot Diagramms
-	Spot spotE0_optAchese(seqTraceE0_OptAchse.getAllInterPointsAtSurf_i(8), seqTraceE0_OptAchse.getAllInterPointsAtSurf_i(8).at(0));
+	Spot spotE0_optAchese(seqTraceE0_OptAchse.getAllInterPointsAtSurf_i_notFiltered(8), seqTraceE0_OptAchse.getAllInterPointsAtSurf_i_notFiltered(8).at(0));
 	std::vector<Spot> vecSpotE0_optAchese{ spotE0_optAchese };
 	PlotSpotDiagramm PlotSpotE0_optAchse(spotE0_optAchese.getRefPoint(), vecSpotE0_optAchese, 0.09950372, 550);
 
-	Spot spotE1_field(seqTraceE0_field.getAllInterPointsAtSurf_i(8), seqTraceE0_field.getAllInterPointsAtSurf_i(8).at(0));
+	Spot spotE1_field(seqTraceE0_field.getAllInterPointsAtSurf_i_notFiltered(8), seqTraceE0_field.getAllInterPointsAtSurf_i_notFiltered(8).at(0));
 	std::vector<Spot> vecSpotE0_field{ spotE1_field };
 	PlotSpotDiagramm PlotSpotE0_field(spotE1_field.getRefPoint(), vecSpotE0_field, 0.09950372, 550);
 
@@ -266,36 +266,36 @@ bool testSpotDiagramQwtPlot::testSpotDiagramQwtPlotE1()
 
 
 	//define the Spot Diagramms
-	Spot spotE1_optAchese(seqTraceE1_OptAchse.getAllInterPointsAtSurf_i(14), seqTraceE1_OptAchse.getAllInterPointsAtSurf_i(14).at(0));
+	Spot spotE1_optAchese(seqTraceE1_OptAchse.getAllInterPointsAtSurf_i_notFiltered(14), seqTraceE1_OptAchse.getAllInterPointsAtSurf_i_notFiltered(14).at(0));
 	std::vector<Spot> vecSpotE1_optAchese{ spotE1_optAchese };
 	PlotSpotDiagramm PlotSpotE1_optAchse(spotE1_optAchese.getRefPoint(), vecSpotE1_optAchese, 0.09950372, 550);
 
-	Spot spotE1_field(seqTraceE1_field.getAllInterPointsAtSurf_i(14), seqTraceE1_field.getAllInterPointsAtSurf_i(14).at(0));
+	Spot spotE1_field(seqTraceE1_field.getAllInterPointsAtSurf_i_notFiltered(14), seqTraceE1_field.getAllInterPointsAtSurf_i_notFiltered(14).at(0));
 	std::vector<Spot> vecSpotE1_field{ spotE1_field };
 	PlotSpotDiagramm PlotSpotE1_field(spotE1_field.getRefPoint(), vecSpotE1_field, 0.09950372, 550);
 
 
-	Spot spotE1_field2(seqTraceE1_field2.getAllInterPointsAtSurf_i(14), seqTraceE1_field2.getAllInterPointsAtSurf_i(14).at(0));
+	Spot spotE1_field2(seqTraceE1_field2.getAllInterPointsAtSurf_i_notFiltered(14), seqTraceE1_field2.getAllInterPointsAtSurf_i_notFiltered(14).at(0));
 	std::vector<Spot> vecSpotE1_field2{ spotE1_field2 };
 	PlotSpotDiagramm PlotSpotE1_field2(spotE1_field2.getRefPoint(), vecSpotE1_field2, 0.09950372, 550);
 
-	Spot spotE1_field3(seqTraceE1_field3.getAllInterPointsAtSurf_i(14), seqTraceE1_field3.getAllInterPointsAtSurf_i(14).at(0));
+	Spot spotE1_field3(seqTraceE1_field3.getAllInterPointsAtSurf_i_notFiltered(14), seqTraceE1_field3.getAllInterPointsAtSurf_i_notFiltered(14).at(0));
 	std::vector<Spot> vecSpotE1_field3{ spotE1_field3 };
 	PlotSpotDiagramm PlotSpotE1_field3(spotE1_field3.getRefPoint(), vecSpotE1_field3, 0.09950372, 550);
 
-	Spot spotE1_field4(seqTraceE1_field4.getAllInterPointsAtSurf_i(14), seqTraceE1_field4.getAllInterPointsAtSurf_i(14).at(0));
+	Spot spotE1_field4(seqTraceE1_field4.getAllInterPointsAtSurf_i_notFiltered(14), seqTraceE1_field4.getAllInterPointsAtSurf_i_notFiltered(14).at(0));
 	std::vector<Spot> vecSpotE1_field4{ spotE1_field4 };
 	PlotSpotDiagramm PlotSpotE1_field4(spotE1_field4.getRefPoint(), vecSpotE1_field4, 0.09950372, 550);
 
-	Spot spotE1_field5(seqTraceE1_field5.getAllInterPointsAtSurf_i(14), seqTraceE1_field5.getAllInterPointsAtSurf_i(14).at(0));
+	Spot spotE1_field5(seqTraceE1_field5.getAllInterPointsAtSurf_i_notFiltered(14), seqTraceE1_field5.getAllInterPointsAtSurf_i_notFiltered(14).at(0));
 	std::vector<Spot> vecSpotE1_field5{ spotE1_field5 };
 	PlotSpotDiagramm PlotSpotE1_field5(spotE1_field5.getRefPoint(), vecSpotE1_field5, 0.09950372, 550);
 
-	Spot spotE1_field6(seqTraceE1_field6.getAllInterPointsAtSurf_i(14), seqTraceE1_field6.getAllInterPointsAtSurf_i(14).at(0));
+	Spot spotE1_field6(seqTraceE1_field6.getAllInterPointsAtSurf_i_notFiltered(14), seqTraceE1_field6.getAllInterPointsAtSurf_i_notFiltered(14).at(0));
 	std::vector<Spot> vecSpotE1_field6{ spotE1_field6 };
 	PlotSpotDiagramm PlotSpotE1_field6(spotE1_field6.getRefPoint(), vecSpotE1_field6, 0.09950372, 550);
 
-	Spot spotE1_field7(seqTraceE1_field7.getAllInterPointsAtSurf_i(14), seqTraceE1_field7.getAllInterPointsAtSurf_i(14).at(0));
+	Spot spotE1_field7(seqTraceE1_field7.getAllInterPointsAtSurf_i_notFiltered(14), seqTraceE1_field7.getAllInterPointsAtSurf_i_notFiltered(14).at(0));
 	std::vector<Spot> vecSpotE1_field7{ spotE1_field7 };
 	PlotSpotDiagramm PlotSpotE1_field7(spotE1_field7.getRefPoint(), vecSpotE1_field7, 0.09950372, 550);
 
@@ -385,16 +385,16 @@ bool testSpotDiagramQwtPlot::testSpotDiagramQwtPlotE2()
 
 
 	//define the Spot Diagramms
-	Spot spotE1_optAchese(seqTraceE2_OptAchse.getAllInterPointsAtSurf_i(9), seqTraceE2_OptAchse.getAllInterPointsAtSurf_i(9).at(0));
+	Spot spotE1_optAchese(seqTraceE2_OptAchse.getAllInterPointsAtSurf_i_notFiltered(9), seqTraceE2_OptAchse.getAllInterPointsAtSurf_i_notFiltered(9).at(0));
 	std::vector<Spot> vecSpotE1_optAchese{ spotE1_optAchese };
 	PlotSpotDiagramm PlotSpotE2_optAchse(spotE1_optAchese.getRefPoint(), vecSpotE1_optAchese, 0.09950372, 550);
 
-	Spot spotE1_field(seqTraceE2_field.getAllInterPointsAtSurf_i(9), seqTraceE2_field.getAllInterPointsAtSurf_i(9).at(0));
+	Spot spotE1_field(seqTraceE2_field.getAllInterPointsAtSurf_i_notFiltered(9), seqTraceE2_field.getAllInterPointsAtSurf_i_notFiltered(9).at(0));
 	std::vector<Spot> vecSpotE1_field{ spotE1_field };
 	PlotSpotDiagramm PlotSpotE2_field(spotE1_field.getRefPoint(), vecSpotE1_field, 0.09950372, 550);
 
 
-	Spot spotE1_field2(seqTraceE2_field2.getAllInterPointsAtSurf_i(9), seqTraceE2_field2.getAllInterPointsAtSurf_i(9).at(0));
+	Spot spotE1_field2(seqTraceE2_field2.getAllInterPointsAtSurf_i_notFiltered(9), seqTraceE2_field2.getAllInterPointsAtSurf_i_notFiltered(9).at(0));
 	std::vector<Spot> vecSpotE1_field2{ spotE1_field2 };
 	PlotSpotDiagramm PlotSpotE2_field2(spotE1_field2.getRefPoint(), vecSpotE1_field2, 0.09950372, 550);
 
