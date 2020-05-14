@@ -81,16 +81,16 @@ bool testOptimizer_Paper_P1::checkTestOptimizer_paper_p1(double startR1, double 
 	{
 
 		// surfaces P1
-		ApertureStopElement AperStoP1_P1(/* semi height*/3.0, /*point*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAirZemax());
-		SphericalElement Sphere1_P1(/*radius*/ 100.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,35.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAirZemax(), /*refractive index B*/glasses.getBK7_S1());
-		SphericalElement Sphere2_P1(/*radius*/ 50.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,45.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getSF5_S1(), /*refractive index B*/glasses.getBK7_S1());
-		SphericalElement Sphere3_P1(/*radius*/ 30.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,50.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAirZemax(), /*refractive index B*/glasses.getSF5_S1());
-		SphericalElement Sphere4_P1(/*radius*/ 100.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,60.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAirZemax(), /*refractive index B*/glasses.getSF10_S1());
-		SphericalElement Sphere5_P1(/*radius*/ 120.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,70.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getSF10_S1(), /*refractive index B*/glasses.getAirZemax());
-		SphericalElement Sphere6_P1(/*radius*/ 30.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,80.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAirZemax(), /*refractive index B*/glasses.getNSSK8_S1());
+		ApertureStopElement AperStoP1_P1(/* semi height*/3.0, /*point*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAir());
+		SphericalElement Sphere1_P1(/*radius*/ 100.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,35.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBK7_S1());
+		SphericalElement Sphere2_P1(/*radius*/ 50.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,45.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getSF5_S1(), /*refractive index B*/glasses.getNBK7_S1());
+		SphericalElement Sphere3_P1(/*radius*/ 30.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,50.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getSF5_S1());
+		SphericalElement Sphere4_P1(/*radius*/ 100.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,60.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getSF10_S1());
+		SphericalElement Sphere5_P1(/*radius*/ 120.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,70.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getSF10_S1(), /*refractive index B*/glasses.getAir());
+		SphericalElement Sphere6_P1(/*radius*/ 30.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,80.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNSSK8_S1());
 		SphericalElement Sphere7_P1(/*radius*/ 100.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,90.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getSF57_S1(), /*refractive index B*/glasses.getNSSK8_S1());
-		SphericalElement Sphere8_P1(/*radius*/ 60.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,95.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAirZemax(), /*refractive index B*/glasses.getSF57_S1());
-		PlanElement Plan9_P1(/*semi height*/ 99.0, /*point*/{ 0.0,0.0,125.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAirZemax(), /*refractive index B*/ glasses.getAirZemax());
+		SphericalElement Sphere8_P1(/*radius*/ 60.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,95.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getSF57_S1());
+		PlanElement Plan9_P1(/*semi height*/ 99.0, /*point*/{ 0.0,0.0,125.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getAir());
 
 		// set parameter variable
 		Sphere1_P1.setParameterRadius(tempStartR1, tempEndR1, 0.0, typeModifierVariable); // radius of surface Sphere1_P1 is variable

@@ -11,6 +11,8 @@ class LensThreeSurfaces
 		// build an lens with three surfaces (achromat)
 		void buildLensThreeSurfaces
 		(
+			/*lens catalog*/ std::string lensCatalog,
+			/*catalog number*/ unsigned int catalogNumber,
 			/*diameter*/ real  diameter,
 			/*max diameter tolerance*/ real maxDiamterTolerance,
 			/*min diameter tolerance*/ real minDiamterTolerance,
@@ -58,6 +60,11 @@ class LensThreeSurfaces
 		
 
 		// set functions
+
+		// set lens catalog
+		void setLensCatalog(std::string lensCatalog);
+		// set number in catalog
+		void setCatalogNumber(unsigned int catalogNumber);
 		// set diameter
 		void setDiameter(real const& diameter);
 		// set max diameter tolerance
@@ -138,7 +145,8 @@ class LensThreeSurfaces
 		real getSemiHeight();
 
 	private:
-
+		std::string mLensCatalog;
+		unsigned int mCatalogNumber;
 		real mDiameter;
 		real mMaxDiamterTolerance;
 		real mMinDiamterTolerance;

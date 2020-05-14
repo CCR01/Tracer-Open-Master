@@ -8,6 +8,16 @@ LensThreeSurfaces::~LensThreeSurfaces() {};
 
 
 // set functions
+// set lens catalog
+void LensThreeSurfaces::setLensCatalog(std::string lensCatalog)
+{
+	mLensCatalog = lensCatalog;
+}
+// set number in catalog
+void LensThreeSurfaces::setCatalogNumber(unsigned int catalogNumber)
+{
+	mCatalogNumber = catalogNumber;
+}
 // set diameter
 void LensThreeSurfaces::setDiameter(real const& diameter)
 {
@@ -188,6 +198,8 @@ void LensThreeSurfaces::setWavelenghtToTrace(real const& waveToTrace)
 // build an lens with three surfaces (achromat)
 void LensThreeSurfaces::buildLensThreeSurfaces
 (
+	/*lens catalog*/ std::string lensCatalog,
+	/*catalog number*/ unsigned int catalogNumber,
 	/*diameter*/ real  diameter,
 	/*max diameter tolerance*/ real maxDiamterTolerance,
 	/*min diameter tolerance*/ real minDiamterTolerance,
@@ -226,6 +238,11 @@ void LensThreeSurfaces::buildLensThreeSurfaces
 
 )
 {
+	// set lens catalog
+	setLensCatalog(lensCatalog);
+	// set catalog number
+	setCatalogNumber(catalogNumber);
+	// set diameter
 	setDiameter(diameter);
 	// set max diameter tolerance
 	setMaxDiameterTolerance(maxDiamterTolerance);

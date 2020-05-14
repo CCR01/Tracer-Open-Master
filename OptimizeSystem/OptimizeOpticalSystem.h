@@ -145,6 +145,7 @@ private:
 
 	real mImageQuality_Weight;
 
+
 };
 
 struct FieldAndLightStruct {

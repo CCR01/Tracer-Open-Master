@@ -510,6 +510,28 @@ void OpticalSystemElement::fillInElementAndInteractionAtPos_i(unsigned int pos, 
 			 saveElement_ptr = tempElement_ptr->buildElement(tempSurfaceLLT_ptr, glassB, glassA);
 		 }
 
+		 // check if radius is variable
+		 if (tempElement_ptr->getRadiusTypeModifier() == typeModifierVariable)
+		 {
+			real minRad = tempElement_ptr->getParameterRadius().getMinimum();
+			real maxRad = tempElement_ptr->getParameterRadius().getMaximum();
+			real StdDev = tempElement_ptr->getParameterRadius().getStdDev();
+			// typeModifier typeMode = tempElement_ptr->getParameterRadius().getModifier();
+
+			saveElement_ptr->setParameterRadius(minRad, maxRad,StdDev, typeModifierVariable);
+		 }
+
+		 // check if position Z is variable
+		 if (tempElement_ptr->getPointTypeModifier_Z() == typeModifierVariable)
+		 {
+			real minPos = tempElement_ptr->getParameterPositionZ().getMinimum();
+			real maxPos = tempElement_ptr->getParameterPositionZ().getMaximum();
+			real StdDev = tempElement_ptr->getParameterPositionZ().getStdDev();
+			// typeModifier typeMode = tempElement_ptr->getParameterPositionZ().getModifier();
+
+			saveElement_ptr->setParameterPointZ(minPos, maxPos, StdDev, typeModifierVariable);
+		 }
+
 		 tempInteraction_ptr = optSys_LLT.getPosAndInteraction()[i].getInteractionAtSur_ptr();
 
 		 retunrOptSysEle.fillPosAndElementAndInteraction(i, saveElement_ptr, tempInteraction_ptr);

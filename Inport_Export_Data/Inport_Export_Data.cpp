@@ -82,6 +82,7 @@ void inportExportData::exportDataToExcel(std::string locationExcel, std::string 
 	std::ofstream outData;
 		
 
+
 	outData.open(holeFile, std::ios::app);
 	if (outData.is_open())
 	{
@@ -262,4 +263,28 @@ void inportExportData::exportDataToExcel_vector(std::string locationExcel, std::
 
 }
 
+void inportExportData::exportHistogramToExcel(std::string location, std::string nameExcel, std::vector<real> histogram, unsigned int sampling, real minVal, real maxVal)
+{
 
+	int steps = (maxVal - minVal) / sampling;
+
+	int tempMinValue = minVal;
+	int tempMaxValue = minVal + steps;
+
+	std::string minValString = std::to_string(tempMinValue);
+	std::string maxValString = std::to_string(tempMaxValue);
+	std::string name = minValString + " to " + maxValString;
+
+	unsigned int sizeHisto = histogram.size();
+
+	for (unsigned int i = 0; i < sizeHisto; ++i)
+	{
+		inportExportData::exportDataToExcel(location, nameExcel, name, histogram[i]);
+
+		tempMinValue = tempMaxValue;
+		tempMaxValue = tempMaxValue + steps;
+		minValString = std::to_string(tempMinValue);
+		maxValString = std::to_string(tempMaxValue);
+		name = minValString + " to " + maxValString;
+	}
+}

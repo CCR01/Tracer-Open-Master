@@ -232,11 +232,11 @@ bool testLensReplace::testLensReplace_E2()
 
 	std::vector<bool> workLensReplace_E2;
 
-	ApertureStopElement A0_E2(/* semi height*/2.0, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAirZemax());
-	SphericalElement S1_E2(/*radius*/ 25.0, /*semi height*/ 8.0, /*point*/{ 0.0,0.0,25.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAirZemax(), /*refractive index B*/glasses.getSF5_S1());
-	SphericalElement S2_E2(/*radius*/ 30.0, /*semi height*/ 8.0, /*point*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getBK7_S1(), /*refractive index B*/glasses.getSF5_S1());
-	SphericalElement S3_E2(/*radius*/ 20.0, /*semi height*/ 8.0, /*point*/{ 0.0,0.0,32.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAirZemax(), /*refractive index B*/glasses.getBK7_S1());
-	PlanElement P4_E2(/*semi height*/ 99.0, /*point*/{ 0.0,0.0,82.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAirZemax(), /*refractive index B*/ glasses.getAirZemax());
+	ApertureStopElement A0_E2(/* semi height*/2.0, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAir());
+	SphericalElement S1_E2(/*radius*/ 25.0, /*semi height*/ 8.0, /*point*/{ 0.0,0.0,25.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getSF5_S1());
+	SphericalElement S2_E2(/*radius*/ 30.0, /*semi height*/ 8.0, /*point*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getNBK7_S1(), /*refractive index B*/glasses.getSF5_S1());
+	SphericalElement S3_E2(/*radius*/ 20.0, /*semi height*/ 8.0, /*point*/{ 0.0,0.0,32.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBK7_S1());
+	PlanElement P4_E2(/*semi height*/ 99.0, /*point*/{ 0.0,0.0,82.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getAir());
 
 	surfacePtr A0_E2_ptr = A0_E2.clone();
 	surfacePtr S1_E2_ptr = S1_E2.clone();

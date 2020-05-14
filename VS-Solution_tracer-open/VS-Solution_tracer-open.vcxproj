@@ -238,6 +238,8 @@
     <ClCompile Include="..\OptimizeSystem\EvaluateManyOptSystems_ParaxialDistances.cpp" />
     <ClCompile Include="..\OptimizeSystem\EvaluateManyOptSystems_SeidelCoef.cpp" />
     <ClCompile Include="..\OptimizeSystem\EvaluateManyOptSys_RayTracing.cpp" />
+    <ClCompile Include="..\OptimizeSystem\Genetic.cpp" />
+    <ClCompile Include="..\OptimizeSystem\importantOptimizeStructs.cpp" />
     <ClCompile Include="..\OptimizeSystem\OptimizeOpticalSystem.cpp" />
     <ClCompile Include="..\Plot\Plot.cpp" />
     <ClCompile Include="..\Plot\Plot2D.cpp" />
@@ -259,6 +261,8 @@
     <ClCompile Include="..\SurfaceElements\AsphericalElement.cpp" />
     <ClCompile Include="..\SurfaceElements\PlanElement.cpp" />
     <ClCompile Include="..\SurfaceElements\SphericalElement.cpp" />
+    <ClCompile Include="..\tests\DLSmulticheck\DLSmulticheck.cpp" />
+    <ClCompile Include="..\tests\TestGenetic\TestGenetic.cpp" />
     <ClCompile Include="..\TOM(Logo)\TOM(LOGO).cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -359,6 +363,8 @@
     <ClInclude Include="..\OptimizeSystem\EvaluateManyOptSystems_ParaxialDistances.h" />
     <ClInclude Include="..\OptimizeSystem\EvaluateManyOptSystems_RayTracing.h" />
     <ClInclude Include="..\OptimizeSystem\EvaluateManyOptSystems_SeidelCoef.h" />
+    <ClInclude Include="..\OptimizeSystem\Genetic.h" />
+    <ClInclude Include="..\OptimizeSystem\importantOptimizeStructs.h" />
     <ClInclude Include="..\OptimizeSystem\OptimizeOpticalSystem.h" />
     <ClInclude Include="..\Parameter\parameter.h" />
     <ClInclude Include="..\Plot\Plot.h" />
@@ -382,6 +388,8 @@
     <ClInclude Include="..\SurfaceElements\AsphericalElement.h" />
     <ClInclude Include="..\SurfaceElements\PlanElement.h" />
     <ClInclude Include="..\SurfaceElements\SphericalElement.h" />
+    <ClInclude Include="..\tests\DLSmulticheck\DLSmulticheck.h" />
+    <ClInclude Include="..\tests\TestGenetic\TestGenetic.h" />
     <ClInclude Include="..\TOM(Logo)\TOM(Logo).h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

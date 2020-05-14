@@ -117,6 +117,10 @@
 
 #include "..\benchmark\Optimizer\DLS\testDLS.h"
 
+#include "..\tests\DLSmulticheck\DLSmulticheck.h"
+
+#include "..\tests\TestGenetic\TestGenetic.h"
+
 int main(int argc, char **argv)
 {
 	QApplication a(argc, argv);
@@ -132,10 +136,15 @@ int main(int argc, char **argv)
 	//bool Math = checkMath.checkMethodesMath();
 	//workTheSystem.push_back(Math);
 
-	//// DLS
-	testDLS testDLS;
-	bool checkDLS = testDLS.testDLS_superFct();
-	workTheSystem.push_back(checkDLS);
+	////// DLS
+	//testDLS testDLS;
+	//bool checkDLS = testDLS.testDLS_superFct();
+	//workTheSystem.push_back(checkDLS);
+
+	//// DLS multicheck
+	//DLSmulticheck DLCmulcheck;
+	//bool DLSmc = DLCmulcheck.checkSuperFuction();
+	//workTheSystem.push_back(DLSmc);
 
 	//// Optikkreis
 	//Optikkreis optKreis;
@@ -310,6 +319,15 @@ int main(int argc, char **argv)
 	//workTheSystem.push_back(checkLensCataEO_doub_conc_lens);
 	//bool checkLensCataEO_PCV = testLensCataEO.testcatalogEO_PCV();
 	//workTheSystem.push_back(checkLensCataEO_PCV);
+
+	// test genetic
+	TestGenetic testGenetic;
+	//bool checkGenetic = testGenetic.testGeneticSuperFunc();
+	//workTheSystem.push_back(checkGenetic);
+	bool checkGeneticModes = testGenetic.testGenerationModes(-1000.0, 1000.0, 100.0, 50000);
+	workTheSystem.push_back(checkGeneticModes);
+
+
 
 	////Benchmark Glasses
 	//BenchmarkGlasses BenchGlasses;

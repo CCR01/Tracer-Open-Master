@@ -143,14 +143,14 @@ bool IOC2020_Dresden::systemFor_IOC2020_Dresten()
 
 
 	// check replace
-	ApertureStopElement A0_IOC_replace0(/* semi height*/1.0, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAirZemax());
-	SphericalElement S1_IOC_replace0(/*radius*/ 107.03, /*semi height*/ 6.25, /*point*/{ 0.0,0.0,15.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAirZemax(), /*refractive index B*/glasses.getNSF10_S1());
+	ApertureStopElement A0_IOC_replace0(/* semi height*/1.0, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAir());
+	SphericalElement S1_IOC_replace0(/*radius*/ 107.03, /*semi height*/ 6.25, /*point*/{ 0.0,0.0,15.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNSF10_S1());
 	SphericalElement S2_IOC_replace0(/*radius*/ 10.99, /*semi height*/ 6.25, /*point*/{ 0.0,0.0,16.25 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getNSF10_S1(), /*refractive index B*/glasses.getNBAF10_S1());
-	SphericalElement S3_IOC_replace0(/*radius*/ 17.27, /*semi height*/ 6.25, /*point*/{ 0.0,0.0,21.25 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAirZemax(), /*refractive index B*/glasses.getNBAF10_S1());
-	SphericalElement S4_IOC_replace0(/*radius*/ 12.91990912, /*semi height*/ 6.0, /*point*/{ 0.0,0.0,31.25 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAirZemax(), /*refractive index B*/glasses.getNBAF10_S1());
+	SphericalElement S3_IOC_replace0(/*radius*/ 17.27, /*semi height*/ 6.25, /*point*/{ 0.0,0.0,21.25 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBAF10_S1());
+	SphericalElement S4_IOC_replace0(/*radius*/ 12.91990912, /*semi height*/ 6.0, /*point*/{ 0.0,0.0,31.25 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBAF10_S1());
 	SphericalElement S5_IOC_replace0(/*radius*/ 20.0, /*semi height*/ 6.0, /*point*/{ 0.0,0.0,36.25 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getSF10_S1(), /*refractive index B*/glasses.getNBAF10_S1());
-	SphericalElement S6_IOC_replace0(/*radius*/ 25.0, /*semi height*/ 6.0, /*point*/{ 0.0,0.0,38.25 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAirZemax(), /*refractive index B*/glasses.getSF10_S1());
-	PlanElement P7_IOC_replace0(/*semi height*/ 5.0, /*point*/{ 0.0,0.0,51.60988 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAirZemax(), /*refractive index B*/ glasses.getAirZemax());
+	SphericalElement S6_IOC_replace0(/*radius*/ 25.0, /*semi height*/ 6.0, /*point*/{ 0.0,0.0,38.25 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getSF10_S1());
+	PlanElement P7_IOC_replace0(/*semi height*/ 5.0, /*point*/{ 0.0,0.0,51.60988 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getAir());
 
 	std::vector<std::shared_ptr<Element_CR>> surface_ptr_IOC_replace0{ A0_IOC_replace0.clone(),S1_IOC_replace0.clone(),S2_IOC_replace0.clone(),S3_IOC_replace0.clone(),S4_IOC_replace0.clone(), S5_IOC_replace0.clone(),S6_IOC_replace0.clone(), P7_IOC_replace0.clone() };
 	std::vector<std::shared_ptr<InteractionRay_LLT>> interaction_ptr_IOC_replace0{ doNot.clone(),refrac.clone(),refrac.clone() ,refrac.clone() ,refrac.clone() ,refrac.clone() ,refrac.clone(), absorb.clone() };

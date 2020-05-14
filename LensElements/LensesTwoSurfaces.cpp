@@ -11,33 +11,39 @@ LensesTwoSurfaces::~LensesTwoSurfaces() {};
 // build lens with two surfaces
 void LensesTwoSurfaces::buildLensTwoSurfaces_DCX //https://www.edmundoptics.de/f/vis-nir-coated-double-convex-dcx-lenses/13504/
 (
-	/*diameter*/ real const& diameter,
-	/*max tolerance diameter*/ real const& maxDiamterTolerance,
-	/*min tolerance diameter*/ real const& minDiamterTolerance,
-	/*focal length*/ real const& focalLength,
-	/*max surface quality*/ real const& maxSurfaceQuality,
-	/*min surface quality*/ real const& minSurfaceQuality,
-	/*curvature (P-V)*/ real const& curvaturePV,
-	/*tolerance center thickness*/ real const& toleraceCenterThickness,
-	/*radius first surface*/ real const& radiusFirstSurface,
-	/*radius second surface*/ real const& radiusSecondSurface,
-	/*tolerance focal lenght*/ real const& toleranceFocalLenght,
-	/*min wavelength range*/ real const& minWavelength,
-	/*max wavelength range*/ real const& maxWavelength,
-	/*back focal length*/ real const& backFocalLength,
-	/*Coating*/ std::string const& coating,
-	/*material*/ MaterialSellmeier1 const& material,
-	/*power (P-V)*/ real const& powerPV,
-	/*min centering*/ real const& minCenter,
-	/*max centering*/ real const& maxCenter,
-	/*center thickness*/ real const& thickness,
-	/*edge thickness*/ real const& edgeThickness,
-	/*free aperture CA*/ real const& freeAperture,
-	/*design wavelength*/ real const& designWavelength,
-	/*numerical Aperture*/ real const& numericalAperture,
-	/*price*/ real const& price,
-	/*wavelength to trace through optical system*/ real const& wavelenghtToTrace)
+	/*lens catalog*/ std::string lensCatalog,
+	/*catalog number*/ unsigned int catalogNumber,
+	/*diameter*/ real const diameter,
+	/*max tolerance diameter*/ real const maxDiamterTolerance,
+	/*min tolerance diameter*/ real const minDiamterTolerance,
+	/*focal length*/ real const focalLength,
+	/*max surface quality*/ real const maxSurfaceQuality,
+	/*min surface quality*/ real const minSurfaceQuality,
+	/*curvature (P-V)*/ real const curvaturePV,
+	/*tolerance center thickness*/ real const toleraceCenterThickness,
+	/*radius first surface*/ real const radiusFirstSurface,
+	/*radius second surface*/ real const radiusSecondSurface,
+	/*tolerance focal lenght*/ real const toleranceFocalLenght,
+	/*min wavelength range*/ real const minWavelength,
+	/*max wavelength range*/ real const maxWavelength,
+	/*back focal length*/ real const backFocalLength,
+	/*Coating*/ std::string const coating,
+	/*material*/ MaterialSellmeier1 const material,
+	/*power (P-V)*/ real const powerPV,
+	/*min centering*/ real const minCenter,
+	/*max centering*/ real const maxCenter,
+	/*center thickness*/ real const thickness,
+	/*edge thickness*/ real const edgeThickness,
+	/*free aperture CA*/ real const freeAperture,
+	/*design wavelength*/ real const designWavelength,
+	/*numerical Aperture*/ real const numericalAperture,
+	/*price*/ real const price,
+	/*wavelength to trace through optical system*/ real const wavelenghtToTrace)
 {
+	// set lens catalog
+	setLensCatalog(lensCatalog);
+	// set catalog number
+	setCatalogNumber(catalogNumber);
 	// set diameter
 	setDiameter(diameter);
 	// set max diametertolerance
@@ -97,32 +103,39 @@ void LensesTwoSurfaces::buildLensTwoSurfaces_DCX //https://www.edmundoptics.de/f
 };
 
 void LensesTwoSurfaces::buildLensTwoSurfaces_PCX( //https://www.edmundoptics.de/f/vis-nir-coated-plano-convex-pcx-lenses/12278/
-	/*diameter*/ real const& diameter,
-	/*max tolerance diameter*/ real const& maxDiamterTolerance,
-	/*min tolerance diameter*/ real const& minDiamterTolerance,
-	/*back focal length*/ real const& backFocalLength,
-	/*max surface quality*/ real const& maxSurfaceQuality,
-	/*min surface quality*/ real const& minSurfaceQuality,
-	/*curvature (P-V)*/ real const& curvaturePV,
-	/*min centering*/ real const& minCenter,
-	/*max centering*/ real const& maxCenter,
-	/*tolerance center thickness*/ real const& toleraceCenterThickness,
-	/*radius first surface*/ real const& radiusFirstSurface,
-	/*design wavelength*/ real const& designWavelength,
-	/*min wavelength range*/ real const& minWavelength,
-	/*max wavelength range*/ real const& maxWavelength,
-	/*focal length*/ real const& focalLength,
-	/*Coating*/ std::string const& coating,
-	/*material*/ MaterialSellmeier1 const& material,
-	/*power (P-V)*/ real const& powerPV,
-	/*tolerance focal lenght*/ real const& toleranceFocalLenght,
-	/*center thickness*/ real const& thickness,
-	/*edge thickness*/ real const& edgeThickness,
-	/*free aperture CA*/ real const& freeAperture,
-	/*numerical Aperture*/ real const& numericalAperture,
-	/*price*/ real const& price,
-	/*wavelength to trace through optical system*/ real const& wavelenghtToTrace)
+
+	/*lens catalog*/ std::string lensCatalog,
+	/*catalog number*/ unsigned int catalogNumber,
+	/*diameter*/ real const diameter,
+	/*max tolerance diameter*/ real const maxDiamterTolerance,
+	/*min tolerance diameter*/ real const minDiamterTolerance,
+	/*back focal length*/ real const backFocalLength,
+	/*max surface quality*/ real const maxSurfaceQuality,
+	/*min surface quality*/ real const minSurfaceQuality,
+	/*curvature (P-V)*/ real const curvaturePV,
+	/*min centering*/ real const minCenter,
+	/*max centering*/ real const maxCenter,
+	/*tolerance center thickness*/ real const toleraceCenterThickness,
+	/*radius first surface*/ real const radiusFirstSurface,
+	/*design wavelength*/ real const designWavelength,
+	/*min wavelength range*/ real const minWavelength,
+	/*max wavelength range*/ real const maxWavelength,
+	/*focal length*/ real const focalLength,
+	/*Coating*/ std::string const coating,
+	/*material*/ MaterialSellmeier1 const material,
+	/*power (P-V)*/ real const powerPV,
+	/*tolerance focal lenght*/ real const toleranceFocalLenght,
+	/*center thickness*/ real const thickness,
+	/*edge thickness*/ real const edgeThickness,
+	/*free aperture CA*/ real const freeAperture,
+	/*numerical Aperture*/ real const numericalAperture,
+	/*price*/ real const price,
+	/*wavelength to trace through optical system*/ real const wavelenghtToTrace)
 {
+	// set lens catalog
+	setLensCatalog(lensCatalog);
+	// set catalog number
+	setCatalogNumber(catalogNumber);
 	// set diameter
 	setDiameter(diameter);
 	// set max diametertolerance
@@ -182,32 +195,38 @@ void LensesTwoSurfaces::buildLensTwoSurfaces_PCX( //https://www.edmundoptics.de/
 
 void LensesTwoSurfaces::buildLensTwoSurfaces_DCV
 (
-	/*diameter*/ real const& diameter,
-	/*max tolerance diameter*/ real const& maxDiamterTolerance,
-	/*min tolerance diameter*/ real const& minDiamterTolerance,
-	/*back focal length*/ real const& backFocalLength,
-	/*max surface quality*/ real const& maxSurfaceQuality,
-	/*min surface quality*/ real const& minSurfaceQuality,
-	/*curvature (P-V)*/ real const& curvaturePV,
-	/*center thickness*/ real const& thickness,
-	/*Centering (arc minutes)*/ real const& centering,
-	/*edge thickness*/ real const& edgeThickness,
-	/*design wavelength*/ real const& designWavelength,
-	/*numerical Aperture*/ real const& numericalAperture,
-	/*min wavelength range*/ real const& minWavelength,
-	/*max wavelength range*/ real const& maxWavelength,
-	/*focal length*/ real const& focalLength,
-	/*Coating*/ std::string const& coating,
-	/*material*/ MaterialSellmeier1 const& material,
-	/*power (P-V)*/ real const& powerPV,
-	/*free aperture CA*/ real const& freeAperture,
-	/*tolerance center thickness*/ real const& toleraceCenterThickness,
-	/*tolerance focal lenght*/ real const& toleranceFocalLenght,
-	/*radius*/ real const& radius,
-	/*price*/ real const& price,
-	/*wavelength to trace through optical system*/ real const& wavelenghtToTrace
+	/*lens catalog*/ std::string lensCatalog,
+	/*catalog number*/ unsigned int catalogNumber,
+	/*diameter*/ real const diameter,
+	/*max tolerance diameter*/ real const maxDiamterTolerance,
+	/*min tolerance diameter*/ real const minDiamterTolerance,
+	/*back focal length*/ real const backFocalLength,
+	/*max surface quality*/ real const maxSurfaceQuality,
+	/*min surface quality*/ real const minSurfaceQuality,
+	/*curvature (P-V)*/ real const curvaturePV,
+	/*center thickness*/ real const thickness,
+	/*Centering (arc minutes)*/ real const centering,
+	/*edge thickness*/ real const edgeThickness,
+	/*design wavelength*/ real const designWavelength,
+	/*numerical Aperture*/ real const numericalAperture,
+	/*min wavelength range*/ real const minWavelength,
+	/*max wavelength range*/ real const maxWavelength,
+	/*focal length*/ real const focalLength,
+	/*Coating*/ std::string const coating,
+	/*material*/ MaterialSellmeier1 const material,
+	/*power (P-V)*/ real const powerPV,
+	/*free aperture CA*/ real const freeAperture,
+	/*tolerance center thickness*/ real const toleraceCenterThickness,
+	/*tolerance focal lenght*/ real const toleranceFocalLenght,
+	/*radius*/ real const radius,
+	/*price*/ real const price,
+	/*wavelength to trace through optical system*/ real const wavelenghtToTrace
 )
 {
+	// set lens catalog
+	setLensCatalog(lensCatalog);
+	// set catalog number
+	setCatalogNumber(catalogNumber);
 	// set diameter
 	setDiameter(diameter);
 	// set max diametertolerance
@@ -226,8 +245,8 @@ void LensesTwoSurfaces::buildLensTwoSurfaces_DCV
 	setThickness(thickness);
 	// set Centering (arc minutes)
 	setCentering(centering),
-		// set edge thickness
-		setEdgeThickness(edgeThickness);
+	// set edge thickness
+	setEdgeThickness(edgeThickness);
 	// set design wavelength
 	setDesignWavelength(designWavelength);
 	// set numerical aperture
@@ -266,32 +285,38 @@ void LensesTwoSurfaces::buildLensTwoSurfaces_DCV
 
 	void LensesTwoSurfaces::buildLensTwoSurfaces_PCV // https://www.edmundoptics.de/f/vis-nir-coated-plano-concave-pcv-lenses/13512/
 	(
-		/*diameter*/ real const& diameter,
-		/*max tolerance diameter*/ real const& maxDiamterTolerance,
-		/*min tolerance diameter*/ real const& minDiamterTolerance,
-		/*back focal length*/ real const& backFocalLength,
-		/*max surface quality*/ real const& maxSurfaceQuality,
-		/*min surface quality*/ real const& minSurfaceQuality,
-		/*irregularity */ real const& curvaturePV,
-		/*tolerance center thickness*/ real const& toleraceCenterThickness,
-		/*design wavelength*/ real const& designWavelength,
-		/*free aperture CA*/ real const& freeAperture,
-		/*radius*/ real const& radius,
-		/*numerical Aperture*/ real const& numericalAperture,
-		/*min wavelength range*/ real const& minWavelength,
-		/*max wavelength range*/ real const& maxWavelength,
-		/*focal length*/ real const& focalLength,
-		/*Coating*/ std::string const& coating,
-		/*material*/ MaterialSellmeier1 const& material,
-		/*power (P-V)*/ real const& powerPV,
-		/*center thickness*/ real const& thickness,
-		/*tolerance focal lenght*/ real const& toleranceFocalLenght,
-		/*Centering (arc minutes)*/ real const& centering,
-		/*edge thickness*/ real const& edgeThickness,
-		/*price*/ real const& price,
-		/*wavelength to trace through optical system*/ real const& wavelenghtToTrace
+		/*lens catalog*/ std::string lensCatalog,
+		/*catalog number*/ unsigned int catalogNumber,
+		/*diameter*/ real const diameter,
+		/*max tolerance diameter*/ real const maxDiamterTolerance,
+		/*min tolerance diameter*/ real const minDiamterTolerance,
+		/*back focal length*/ real const backFocalLength,
+		/*max surface quality*/ real const maxSurfaceQuality,
+		/*min surface quality*/ real const minSurfaceQuality,
+		/*irregularity */ real const curvaturePV,
+		/*tolerance center thickness*/ real const toleraceCenterThickness,
+		/*design wavelength*/ real const designWavelength,
+		/*free aperture CA*/ real const freeAperture,
+		/*radius*/ real const radius,
+		/*numerical Aperture*/ real const numericalAperture,
+		/*min wavelength range*/ real const minWavelength,
+		/*max wavelength range*/ real const maxWavelength,
+		/*focal length*/ real const focalLength,
+		/*Coating*/ std::string const coating,
+		/*material*/ MaterialSellmeier1 const material,
+		/*power (P-V)*/ real const powerPV,
+		/*center thickness*/ real const thickness,
+		/*tolerance focal lenght*/ real const toleranceFocalLenght,
+		/*Centering (arc minutes)*/ real const centering,
+		/*edge thickness*/ real const edgeThickness,
+		/*price*/ real const price,
+		/*wavelength to trace through optical system*/ real const wavelenghtToTrace
 	)
 	{
+		// set lens catalog
+		setLensCatalog(lensCatalog);
+		// set catalog number
+		setCatalogNumber(catalogNumber);
 		// set diameter
 		setDiameter(diameter);
 		// set max diametertolerance
@@ -504,13 +529,24 @@ void LensesTwoSurfaces::buildOpticalSystemTwoSurfaces()
 
 // set functions
 //---
+	// set lens catalog
+void LensesTwoSurfaces::setLensCatalog(std::string lensCatalog)
+{
+	mLensCatalog = lensCatalog;
+}
+// set number in catalog
+void LensesTwoSurfaces::setCatalogNumber(unsigned int catalogNumber)
+{
+	mCatalogNumber = catalogNumber;
+}
+
 // set diameter
-void LensesTwoSurfaces::setDiameter(real const& diamerter)
+void LensesTwoSurfaces::setDiameter(real const diamerter)
 {
 	mDiameter = diamerter;
 }
 // set min diameter tolerance
-void LensesTwoSurfaces::setMinDiaTolerance(real const& minDiaTolerance)
+void LensesTwoSurfaces::setMinDiaTolerance(real const minDiaTolerance)
 {
 	mMinDiamterTolerance = minDiaTolerance;
 }
@@ -525,122 +561,122 @@ void LensesTwoSurfaces::setRadiusFirstSurface(real radiusFirstSurface)
 	mRadiusFirstSurface = radiusFirstSurface;
 }
 // set radius second surface
-void LensesTwoSurfaces::setRadiusSecondSurface(real const& radiusSecondSurface)
+void LensesTwoSurfaces::setRadiusSecondSurface(real const radiusSecondSurface)
 {
 	mRadiusSecondSurface = radiusSecondSurface;
 }
 // set thickness
-void LensesTwoSurfaces::setThickness(real const& thickness)
+void LensesTwoSurfaces::setThickness(real const thickness)
 {
 	mThickness = thickness;
 }
 // set material
-void LensesTwoSurfaces::setMaterial(MaterialSellmeier1 const& material)
+void LensesTwoSurfaces::setMaterial(MaterialSellmeier1 const material)
 {
 	mMaterial = material;
 }
 // set back focal length
-void LensesTwoSurfaces::setBackFocalLength(real const& backFocalLength)
+void LensesTwoSurfaces::setBackFocalLength(real const backFocalLength)
 {
 	mBackFocalLength = backFocalLength;
 }
 // set coating
-void LensesTwoSurfaces::setCoating(std::string const& coating)
+void LensesTwoSurfaces::setCoating(std::string const coating)
 {
 	mCoating = coating;
 }
 // set power PV
-void LensesTwoSurfaces::setPowerPV(real const& powerPV)
+void LensesTwoSurfaces::setPowerPV(real const powerPV)
 {
 	mPowerPV = powerPV;
 }
 // set curvature PV
-void LensesTwoSurfaces::setCurvaturePV(real const& curvaturePV)
+void LensesTwoSurfaces::setCurvaturePV(real const curvaturePV)
 {
 	mCurvaturePV = curvaturePV;
 }
 // set min center
-void LensesTwoSurfaces::setMinCenter(real const& minCenter)
+void LensesTwoSurfaces::setMinCenter(real const minCenter)
 {
 	mMinCenter = minCenter;
 }
 // set max center
-void LensesTwoSurfaces::setMaxCenter(real const& maxCenter)
+void LensesTwoSurfaces::setMaxCenter(real const maxCenter)
 {
 	mMaxCenter = maxCenter;
 }
 // set tolerance center thickness
-void LensesTwoSurfaces::setToleranceCenterThickness(real const& toleranceCenterThickness)
+void LensesTwoSurfaces::setToleranceCenterThickness(real const toleranceCenterThickness)
 {
 	mToleraceCenterThickness = toleranceCenterThickness;
 }
 // set numerical aperture
-void LensesTwoSurfaces::setNumericalAperture(real const& numericalAperture)
+void LensesTwoSurfaces::setNumericalAperture(real const numericalAperture)
 {
 	mNumericalAperture = numericalAperture;
 }
 // set min wavelength
-void LensesTwoSurfaces::setMinWavelength(real const& minWave)
+void LensesTwoSurfaces::setMinWavelength(real const minWave)
 {
 	mMinWavelength = minWave;
 }
 // set max wavelength
-void LensesTwoSurfaces::setMaxWavelength(real const& maxWave)
+void LensesTwoSurfaces::setMaxWavelength(real const maxWave)
 {
 	mMaxWavelenght = maxWave;
 }
 // set price
-void LensesTwoSurfaces::setPrice(real const& price)
+void LensesTwoSurfaces::setPrice(real const price)
 {
 	mPrice = price;
 }
 // set wavelength to trace
-void LensesTwoSurfaces::setWavelengthToTrace(real const& wavelengthToTrace)
+void LensesTwoSurfaces::setWavelengthToTrace(real const wavelengthToTrace)
 {
 	mWavelengthToTrace = wavelengthToTrace;
 }
 
-void LensesTwoSurfaces::setMaxSurfaceQuality(real const& maxSurQual)
+void LensesTwoSurfaces::setMaxSurfaceQuality(real const maxSurQual)
 {
 	mMaxSurfaceQuality = maxSurQual;
 }
 // set real min surface quality; 
-void LensesTwoSurfaces::setMinSurfaceQuality(real const& minSurQual)
+void LensesTwoSurfaces::setMinSurfaceQuality(real const minSurQual)
 {
 	mMinSurfaceQuality = minSurQual;
 }
 // tolerance focal length
-void LensesTwoSurfaces::setToleranceFocallength(real const& toleranceFocallength)
+void LensesTwoSurfaces::setToleranceFocallength(real const toleranceFocallength)
 {
 	mToleranceFocallength = toleranceFocallength;
 }
 // set edge thickness
-void LensesTwoSurfaces::setEdgeThickness(real const& edgeThickness)
+void LensesTwoSurfaces::setEdgeThickness(real const edgeThickness)
 {
 	mEdgeThickness = edgeThickness;
 }
 // set design wavelength
-void LensesTwoSurfaces::setDesignWavelength(real const& wavelength)
+void LensesTwoSurfaces::setDesignWavelength(real const wavelength)
 {
 	mDesignWavelength = wavelength;
 }
 // set optical system two surfaces
-void LensesTwoSurfaces::setOpticalSystemTwoSurfaces(OpticalSystemElement const& lenseTwoSurfaces)
+void LensesTwoSurfaces::setOpticalSystemTwoSurfaces(OpticalSystemElement const lenseTwoSurfaces)
 {
 	mOptSysTwoSurfaces_HLT = lenseTwoSurfaces;
 }
 // set centering
-void LensesTwoSurfaces::setCentering(real const& centering)
+void LensesTwoSurfaces::setCentering(real const centering)
 {
 	mCentering = centering;
 }
 // set focal length
-void LensesTwoSurfaces::setFocalLength(real const& focalLength)
+void LensesTwoSurfaces::setFocalLength(real const focalLength)
 {
 	mFocalLength = focalLength;
 }
 // set free apertur
-void LensesTwoSurfaces::setFreeAperture(real const& freeAperture)
+void LensesTwoSurfaces::setFreeAperture(real const freeAperture)
 {
 	mFreeAperture = freeAperture;
 }

@@ -116,6 +116,10 @@
     <ClCompile Include="..\oftenUseNamespace\oftenUseNamespace.cpp" />
     <ClCompile Include="..\OptimizeSystem\DampedLeastSquares.cpp" />
     <ClCompile Include="..\benchmark\Optimizer\DLS\testDLS.cpp" />
+    <ClCompile Include="..\tests\DLSmulticheck\DLSmulticheck.cpp" />
+    <ClCompile Include="..\OptimizeSystem\Genetic.cpp" />
+    <ClCompile Include="..\tests\TestGenetic\TestGenetic.cpp" />
+    <ClCompile Include="..\OptimizeSystem\importantOptimizeStructs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Analyse\CardinalPoints.h" />
@@ -239,5 +243,9 @@
     <ClInclude Include="..\oftenUseNamespace\oftenUseNamespace.h" />
     <ClInclude Include="..\OptimizeSystem\DampedLeastSquares.h" />
     <ClInclude Include="..\benchmark\Optimizer\DLS\testDLS.h" />
+    <ClInclude Include="..\tests\DLSmulticheck\DLSmulticheck.h" />
+    <ClInclude Include="..\OptimizeSystem\Genetic.h" />
+    <ClInclude Include="..\tests\TestGenetic\TestGenetic.h" />
+    <ClInclude Include="..\OptimizeSystem\importantOptimizeStructs.h" />
   </ItemGroup>
 </Project>

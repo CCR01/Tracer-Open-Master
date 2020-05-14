@@ -37,19 +37,19 @@ bool BenchOpticalSystemElement::checkMethodesOpticalSystemElement()
 	std::vector<Light_LLT> light_vec{ LightE0_0 , LightE0_1, LightE0_2 };
 
 
-	ApertureStopElement AperStop0_E0(/* semi height*/1.0, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, glasses.getAirZemax());
+	ApertureStopElement AperStop0_E0(/* semi height*/1.0, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, glasses.getAir());
 	surfacePtr apertureStop0_E0_ptr = AperStop0_E0.clone();
 
-	SphericalElement Sphere1_E0(/*radius*/ 10.0, /*semi height*/ 3.0, /*point*/{ 0.0,0.0,15.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAirZemax(), /*refractive index B*/glasses.getBK7_S1());
+	SphericalElement Sphere1_E0(/*radius*/ 10.0, /*semi height*/ 3.0, /*point*/{ 0.0,0.0,15.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBK7_S1());
 	surfacePtr sphere1_E0_ptr = Sphere1_E0.clone();
 		
-	SphericalElement Sphere2_E0(/*radius*/ 10.0, /*semi height*/ 3.0, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getBK7_S1(), /*refractive index B*/glasses.getSF5_S1());
+	SphericalElement Sphere2_E0(/*radius*/ 10.0, /*semi height*/ 3.0, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getNBK7_S1(), /*refractive index B*/glasses.getSF5_S1());
 	surfacePtr sphere2_E0_ptr = Sphere2_E0.clone();
 
-	SphericalElement Sphere3_E0(/*radius*/ 10.0, /*semi height*/ 3.0, /*point*/{ 0.0,0.0,25.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAirZemax(), /*refractive index B*/glasses.getSF5_S1());
+	SphericalElement Sphere3_E0(/*radius*/ 10.0, /*semi height*/ 3.0, /*point*/{ 0.0,0.0,25.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getSF5_S1());
 	surfacePtr sphere3_E0_ptr = Sphere3_E0.clone();
 
-	PlanElement Plan4_E0(/*semi height*/ 3.0, /*point*/{ 0.0,0.0,40.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAirZemax(), /*refractive index B*/ glasses.getAirZemax());
+	PlanElement Plan4_E0(/*semi height*/ 3.0, /*point*/{ 0.0,0.0,40.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getAir());
 	surfacePtr plna4_E0_ptr = Plan4_E0.clone();
 
 	std::vector<surfacePtr> opticalSystemE0_ptr{ apertureStop0_E0_ptr, sphere1_E0_ptr, sphere2_E0_ptr, sphere3_E0_ptr, plna4_E0_ptr};
