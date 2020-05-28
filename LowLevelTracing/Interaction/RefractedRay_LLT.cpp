@@ -6,41 +6,31 @@
 
 
 
-std::vector<LightRayStruct> RefractedRay_LLT::calcInteraction(IntersectInformationStruct intersectInformation)
+std::vector<LightRayStruct> RefractedRay_LLT::calcInteraction(const IntersectInformationStruct& intersectInformation)
 {
 
-	Ray_LLT ray(/*origin*/{ 0.0, 0.0, 0.0 }, /*direction*/{ 0.0, 0.0, 0.0 }, 1.0);
-	Light_LLT light = intersectInformation.getLight();
-	LightRayStruct output;
-	output.setIsAlive(1);
-	output.setLight_LLT(light);
-	std::vector<LightRayStruct> returnRay;
+	mReturnLightRayStruct.setLight_LLT(intersectInformation.getLight());
 
 
 	if (intersectInformation.getSurfaceSide() == 'N') //there is no intersection point
 	{
 		//std::cout << "there is no interaction point! \n";
-		output.setIsAlive(0);
-
+		mReturnLightRayStruct.setLightRayAbsorb();
 	}
 
 	else
 	{
 		// in the struct IntersectInformationStruct are all relevant information to calculate the refracted ray.
 
-		//	if (intersectInformation.getDirectionRayUnit() * intersectInformation.getNormalUnitVector() > 0) // we have to flip the normal vercor
-		//	{
-		//		intersectInformation.setNormalUnitVector(-1 * intersectInformation.getNormalUnitVector());
-		//	}
 
 		if (intersectInformation.getSurfaceSide() == 'A') // ray comes from A side !
 		{
 
 
-			double sqrtTerm = 1 - pow((intersectInformation.getRefractiveIndex_A() / intersectInformation.getRefractiveIndex_B()), 2) * ((Math::DoCrossProduct(intersectInformation.getNormalUnitVector(), intersectInformation.getDirectionRayUnit())) * (Math::DoCrossProduct(intersectInformation.getNormalUnitVector(), intersectInformation.getDirectionRayUnit())));
-			if (sqrtTerm < 0) // there is total reflexion
+			mSqrtTerm = 1 - pow((intersectInformation.getRefractiveIndex_A() / intersectInformation.getRefractiveIndex_B()), 2) * ((Math::DoCrossProduct(intersectInformation.getNormalUnitVector(), intersectInformation.getDirectionRayUnit())) * (Math::DoCrossProduct(intersectInformation.getNormalUnitVector(), intersectInformation.getDirectionRayUnit())));
+			if (mSqrtTerm < 0) // there is total reflexion
 			{
-				std::cout << "there is total reflexion! \n";
+				// std::cout << "there is total reflexion! \n";
 				// TODO: Hier muss dann die reflection function aufgefufen werden
 				// Bzw. beim sequentiellen raytracing der Strahl vernichtet werden!
 
@@ -49,12 +39,12 @@ std::vector<LightRayStruct> RefractedRay_LLT::calcInteraction(IntersectInformati
 
 			else //calculate the direction of the refraction ray
 			{
-				VectorStructR3 directionRefractedRay = (intersectInformation.getRefractiveIndex_A() / intersectInformation.getRefractiveIndex_B()) * (Math::DoCrossProduct(intersectInformation.getNormalUnitVector(), (Math::DoCrossProduct(-1.0 * intersectInformation.getNormalUnitVector(), intersectInformation.getDirectionRayUnit())))) - (intersectInformation.getNormalUnitVector() * std::sqrt(sqrtTerm));
+				mDirectionRefractedRay = (intersectInformation.getRefractiveIndex_A() / intersectInformation.getRefractiveIndex_B()) * (Math::DoCrossProduct(intersectInformation.getNormalUnitVector(), (Math::DoCrossProduct(-1.0 * intersectInformation.getNormalUnitVector(), intersectInformation.getDirectionRayUnit())))) - (intersectInformation.getNormalUnitVector() * std::sqrt(mSqrtTerm));
 
-				output.ray.setOriginRay(intersectInformation.getIntersectionPoint());
-				output.light.setWavelength(intersectInformation.getLight().getWavelength());
-				output.ray.setDirectionRayUnit(directionRefractedRay);
-				output.ray.setCurrentRefractiveIndex(intersectInformation.getRefractiveIndex_B());
+				mReturnLightRayStruct.setRayOrigin(intersectInformation.getIntersectionPoint());
+				mReturnLightRayStruct.setLightWavelength(intersectInformation.getLight().getWavelength());
+				mReturnLightRayStruct.setRayDirectionUni(mDirectionRefractedRay);
+				mReturnLightRayStruct.setCurrentRefractivIndex(intersectInformation.getRefractiveIndex_B());
 			}
 		}
 
@@ -62,10 +52,10 @@ std::vector<LightRayStruct> RefractedRay_LLT::calcInteraction(IntersectInformati
 
 		else // ray must comes from B side !
 		{
-			double sqrtTerm = 1 - pow((intersectInformation.getRefractiveIndex_B() / intersectInformation.getRefractiveIndex_A()), 2) * ((Math::DoCrossProduct(intersectInformation.getNormalUnitVector(), intersectInformation.getDirectionRayUnit())) * (Math::DoCrossProduct(intersectInformation.getNormalUnitVector(), intersectInformation.getDirectionRayUnit())));
-			if (sqrtTerm < 0) // there is total reflexion
+			mSqrtTerm = 1 - pow((intersectInformation.getRefractiveIndex_B() / intersectInformation.getRefractiveIndex_A()), 2) * ((Math::DoCrossProduct(intersectInformation.getNormalUnitVector(), intersectInformation.getDirectionRayUnit())) * (Math::DoCrossProduct(intersectInformation.getNormalUnitVector(), intersectInformation.getDirectionRayUnit())));
+			if (mSqrtTerm < 0) // there is total reflexion
 			{
-				std::cout << "there is total reflexion!";
+				// std::cout << "there is total reflexion!";
 				// TODO: Hier muss dann die reflection function aufgefufen werden
 			}
 
@@ -73,19 +63,19 @@ std::vector<LightRayStruct> RefractedRay_LLT::calcInteraction(IntersectInformati
 			// TODO: überprüfen, warum man das braucht...Raff ich nicht ganz...
 			else if (intersectInformation.getDirectionRayUnit().getZ() == intersectInformation.getNormalUnitVector().getZ())
 			{
-				output.ray.setOriginRay(intersectInformation.getIntersectionPoint());
-				output.light.setWavelength(intersectInformation.getLight().getWavelength());
-				output.ray.setDirectionRayUnit(intersectInformation.getDirectionRayUnit());
-				output.ray.setCurrentRefractiveIndex(intersectInformation.getRefractiveIndex_A());
+				mReturnLightRayStruct.setRayOrigin(intersectInformation.getIntersectionPoint());
+				mReturnLightRayStruct.setLightWavelength(intersectInformation.getLight().getWavelength());
+				mReturnLightRayStruct.setRayDirectionUni(intersectInformation.getDirectionRayUnit());
+				mReturnLightRayStruct.setCurrentRefractivIndex(intersectInformation.getRefractiveIndex_A());
 			}
 
 			else //calculate the direction of the refraction ray
 			{
-				VectorStructR3 directionRefractedRay = (intersectInformation.getRefractiveIndex_B() / intersectInformation.getRefractiveIndex_A()) * (Math::DoCrossProduct(intersectInformation.getNormalUnitVector(), (Math::DoCrossProduct(-1.0 * intersectInformation.getNormalUnitVector(), intersectInformation.getDirectionRayUnit())))) - (intersectInformation.getNormalUnitVector() * sqrt(sqrtTerm));
-				output.ray.setOriginRay(intersectInformation.getIntersectionPoint());
-				output.light.setWavelength(intersectInformation.getLight().getWavelength());
-				output.ray.setDirectionRayUnit(directionRefractedRay);
-				output.ray.setCurrentRefractiveIndex(intersectInformation.getRefractiveIndex_A());
+				mDirectionRefractedRay = (intersectInformation.getRefractiveIndex_B() / intersectInformation.getRefractiveIndex_A()) * (Math::DoCrossProduct(intersectInformation.getNormalUnitVector(), (Math::DoCrossProduct(-1.0 * intersectInformation.getNormalUnitVector(), intersectInformation.getDirectionRayUnit())))) - (intersectInformation.getNormalUnitVector() * sqrt(mSqrtTerm));
+				mReturnLightRayStruct.setRayOrigin(intersectInformation.getIntersectionPoint());
+				mReturnLightRayStruct.setLightWavelength(intersectInformation.getLight().getWavelength());
+				mReturnLightRayStruct.setRayDirectionUni(mDirectionRefractedRay);
+				mReturnLightRayStruct.setCurrentRefractivIndex(intersectInformation.getRefractiveIndex_A());
 			}
 
 		}
@@ -93,10 +83,19 @@ std::vector<LightRayStruct> RefractedRay_LLT::calcInteraction(IntersectInformati
 
 	}
 
-	returnRay.push_back(output);
-	return returnRay;
+	mReturnLightRay_vec[0] = mReturnLightRayStruct;
+	return mReturnLightRay_vec;
 
 }
+
+RefractedRay_LLT::RefractedRay_LLT() { mReturnLightRay_vec.resize(1); };
+RefractedRay_LLT::~RefractedRay_LLT() {};
+
+RefractedRay_LLT::RefractedRay_LLT(IntersectInformationStruct intersectInformation) :
+	mIntersectInformation(intersectInformation)
+{
+	mReturnLightRay_vec.resize(1);
+};
 
 RefractedRay_LLT::RefractedRay_LLT(RefractedRay_LLT &source)
 {
@@ -106,6 +105,7 @@ RefractedRay_LLT::RefractedRay_LLT(RefractedRay_LLT &source)
 	}
 
 	mIntersectInformation = source.mIntersectInformation;
+	mReturnLightRay_vec = source.mReturnLightRay_vec;
 }
 
 RefractedRay_LLT& RefractedRay_LLT::operator=(RefractedRay_LLT& source)
@@ -125,4 +125,9 @@ std::shared_ptr<InteractionRay_LLT> RefractedRay_LLT::clone()
 	std::shared_ptr<InteractionRay_LLT> refractionRay_LLT(new RefractedRay_LLT(*this));
 
 	return refractionRay_LLT;
+}
+
+RaysRangeStruct RefractedRay_LLT::howManyRays() 
+{ 
+	return RaysRangeStruct{ 1,1 }; 
 }

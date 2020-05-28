@@ -58,4 +58,7 @@ namespace oftenUse
 
 	// check number for histogram
 	std::vector<real> makeHistogram(std::vector<real> number, real min, real max, unsigned int sampling);
+
+	// check intersectinformations 
+	bool checkIntersectInfos(const IntersectInformationStruct& intersectInfos, const IntersectInformationStruct& controleIntersectInfos, real tolerance);
 }

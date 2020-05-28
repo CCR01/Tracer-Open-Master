@@ -2,8 +2,9 @@
 #include <limits>
 #include "..\..\Inport_Export_Data\Inport_Export_Data.h"
 
-//#include "..\SequentialRayTracing\SequentialRayTracer.h"
+#include "..\SequentialRayTracing\SequentialRayTracer.h"
 #include "..\RayAiming\RayAiming.h"
+#include "..\FillAptertureStop\FillApertureStop.h"
 //#define unsignedInt_INF (unsigned)!((int)0)
 
 bool oftenUse::checkRayTracing(VectorStructR3 startPoint, VectorStructR3 direction, VectorStructR3 targetPoint, OpticalSystem_LLT optSys_LLT, unsigned int surfaceNum, real tolerande)
@@ -12,12 +13,13 @@ bool oftenUse::checkRayTracing(VectorStructR3 startPoint, VectorStructR3 directi
 	// ray
 	Ray_LLT ray(startPoint, direction, 1.0);
 	// light
-	Light_LLT light;
-	light.setWavelength(550.0);
-	light.setIsAlive(1);
-	light.setIntensity(1.0);
+	Light_LLT mLight;
+	mLight.setWavelength(550.0);
+	mLight.setIntensity(1.0);
+	mLight.setJonesVector({ 1.0,1.0,1.0,1.0 });
+	mLight.setTypeLight(typeLightRay);
 	// light ray
-	LightRayStruct lightRay(light, ray, 1.0);
+	LightRayStruct lightRay(mLight, ray, 1.0);
 	// ray tracing
 	seqTrace.sequentialRayTracing(lightRay);
 	
@@ -89,7 +91,7 @@ void oftenUse::print(OpticalSystemElement opticalSysElement, real wavelength)
 // get very height number
 real oftenUse::getInfReal() 
 { 
-	return std::numeric_limits<double>::max();
+	return 99999999999999999999999999999.0;;
 };
 float oftenUse::getInfFloat() { return 99999999999999999999999999999.0; };
 int oftenUse::getInfInt() { return 9999999999999999999; };
@@ -658,4 +660,30 @@ std::vector<real> oftenUse::makeHistogram(std::vector<real> number_vec, real min
 	}
 
 	return returnVec;
+}
+
+// check intersectinformations 
+bool checkIntersectInfos(const IntersectInformationStruct& intersectInfos, const IntersectInformationStruct& controleIntersectInfos, real tolerance)
+{
+	std::vector<bool> checkIntersectInfos;
+
+	checkIntersectInfos.push_back(Math::compareTwoVectorStructR3_tolerance(intersectInfos.getIntersectionPoint(), controleIntersectInfos.getIntersectionPoint(), tolerance));
+	checkIntersectInfos.push_back(Math::compareTwoVectorStructR3_tolerance(intersectInfos.getNormalUnitVector(), controleIntersectInfos.getNormalUnitVector(), tolerance));
+	checkIntersectInfos.push_back(intersectInfos.getSurfaceSide() == controleIntersectInfos.getSurfaceSide());
+	checkIntersectInfos.push_back(Math::compareTwoNumbers_tolerance(intersectInfos.getStepsToWalk(), controleIntersectInfos.getStepsToWalk(), tolerance));
+	checkIntersectInfos.push_back(Math::compareTwoNumbers_tolerance(intersectInfos.getRefractiveIndex_A(), controleIntersectInfos.getRefractiveIndex_A(), tolerance));
+	checkIntersectInfos.push_back(Math::compareTwoNumbers_tolerance(intersectInfos.getRefractiveIndex_B(), controleIntersectInfos.getRefractiveIndex_B(), tolerance));
+	checkIntersectInfos.push_back(Math::compareTwoVectorStructR3_tolerance(intersectInfos.getDirectionRayUnit(), controleIntersectInfos.getDirectionRayUnit(), tolerance));
+	checkIntersectInfos.push_back(Math::compareTwoNumbers_tolerance(intersectInfos.getLight().getWavelength(), controleIntersectInfos.getLight().getWavelength(), tolerance));
+	checkIntersectInfos.push_back(Math::compareTwoNumbers_tolerance(intersectInfos.getLight().getIntensity(), controleIntersectInfos.getLight().getIntensity(), tolerance));
+
+
+
+	bool checker = Math::checkTrueOfVectorElements(checkIntersectInfos);
+	return checker;
+
+	//JonesVector_LLT mPolarisation{};
+	//typeLight mLightType{};
+	//bool mIsAlive = true;
+	//Light_LLT mLight{};
 }

@@ -244,7 +244,6 @@ void DLS::loadDefaultParameter()
 
 	// build defautl light
 	mDefaultLight.setIntensity(1.0);
-	mDefaultLight.setIsAlive(1);
 	mDefaultLight.setJonesVector({ 1.0,1.0,1.0,1.0 });
 	mDefaultLight.setTypeLight(typeLightRay);
 	mDefaultLight.setWavelength(550.0);
@@ -379,7 +378,7 @@ real DLS::calculateMeritVal_RMS(const VectorStructR3& fieldPoint)
 	std::vector<VectorStructR3> interPoints_vec_lastSurface = seqTrace.getAllInterPointsAtSurface_i_filtered(mPosLastSurface);
 
 
-	real numberInterPoints = interPoints_vec_lastSurface.size() / mNumFieldPoints;
+	real numberInterPoints = interPoints_vec_lastSurface.size() / mNumOptSys;
 
 	// just for debugging
 	std::cout << "number inter points last surface: " << numberInterPoints << std::endl;

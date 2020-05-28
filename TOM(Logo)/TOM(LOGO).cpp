@@ -77,13 +77,13 @@ bool TOM_LOGO::plotTOM_Logo()
 	// check by single ray trace
 	JonesVector_LLT polarisation;
 	typeLight lightType = typeLightRay;
-	Light_LLT light(/*wavelength*/ 550.0, /*intensity*/ 1.0,/*polarisation*/ polarisation,/*light type*/ lightType,/*is alive*/ 1);
+	Light_LLT mLight(/*wavelength*/ 550.0, /*intensity*/ 1.0,/*polarisation*/ polarisation,/*light type*/ lightType,/*is alive*/ 1);
 
 
 	// *** *** // sequential ray tracing
 	// optical axis
 	Ray_LLT ray_optA(/*origin*/{ 0.0,0.0,0.0 },/*direction*/{ 0.0,0.0,1.0 },/*refractive index*/ 1.0);
-	LightRayStruct lightRay_optA(light, ray_optA, 1);
+	LightRayStruct lightRay_optA(mLight, ray_optA, 1);
 	SequentialRayTracing seqTrace_optA(optSysTOM_LLT);
 	seqTrace_optA.sequentialRayTracing(lightRay_optA);
 	VectorStructR3 rayOptA_Zemax_optA = { 0.0,-110.0,359.42533317 };
@@ -93,7 +93,7 @@ bool TOM_LOGO::plotTOM_Logo()
 
 	// field y=0.01
 	Ray_LLT ray_field1(/*origin*/{ 0.0,0.01,0.0 },/*direction*/{ 0.0,-8.01,5.0 },/*refractive index*/ 1.0);
-	LightRayStruct lightRay_field1(light, ray_field1, 1);
+	LightRayStruct lightRay_field1(mLight, ray_field1, 1);
 	SequentialRayTracing seqTrace_field1(optSysTOM_LLT);
 	seqTrace_field1.sequentialRayTracing(lightRay_field1);
 	VectorStructR3 rayOptA_Zemax_field1 = { 0.0,-110.0,371.29649984 };
@@ -103,7 +103,7 @@ bool TOM_LOGO::plotTOM_Logo()
 
 	// field y=-0.01
 	Ray_LLT ray_field2(/*origin*/{ 0.0,-0.01,0.0 },/*direction*/{ 0.0,8.01,5.0 },/*refractive index*/ 1.0);
-	LightRayStruct lightRay_field2(light, ray_field2, 1);
+	LightRayStruct lightRay_field2(mLight, ray_field2, 1);
 	SequentialRayTracing seqTrace_field2(optSysTOM_LLT);
 	seqTrace_field2.sequentialRayTracing(lightRay_field2);
 	VectorStructR3 rayOptA_Zemax_field2 = { 0.0,-110.0,347.55416651 };

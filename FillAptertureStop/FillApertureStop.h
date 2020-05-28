@@ -9,7 +9,8 @@
 class FillApertureStop
 {
 public:
-	FillApertureStop() {};
+	FillApertureStop();
+	FillApertureStop(infosAS infosAS_OptSys, unsigned int rings, unsigned int arms);
 	FillApertureStop(OpticalSystem_LLT optSys, unsigned int rings, unsigned int arms);
 	// Object height given by the start point of the ray
 	FillApertureStop(/*start point rays*/VectorStructR3 startPointLightRay,/*semi height of aperture stop*/ real semiHeightAB,/*point of aperture stop*/ VectorStructR3 pointAB,/*direction of aperture stop*/ VectorStructR3 directionAB, /*rings*/ unsigned int ringsAB,/*arms*/ unsigned int armsAB,/*refractive index*/ double refractiveIndex,/*light*/ Light_LLT Light) :
@@ -44,30 +45,30 @@ public:
 	~FillApertureStop();
 
 	// get number of rings in aperture stop
-	unsigned int getNumberOfRingsInApertureStop() const&;
+	unsigned int getNumberOfRingsInApertureStop();
 
 	// get a vector with many LightRays
-	std::vector<LightRayStruct> getVectorWithLightRays() const&;
+	std::vector<LightRayStruct> getVectorWithLightRays() const;
 
 	// get points on entrance pupil
-	std::vector<VectorStructR3> getPointsInAS();
+	std::vector<VectorStructR3> getPointsInAS() const;
 
 	// calculate points on one arm of the entrance pupil
-	std::vector<VectorStructR3> calcPointsOnOneArm(VectorStructR3 const& direction);
+	std::vector<VectorStructR3> calcPointsOnOneArm(const VectorStructR3&  direction);
 
 	// print all points in the entrace pupil
-	void printAllPointsInAS() const&;
+	void printAllPointsInAS();
 
 	// build many LightRays from an object point
-	std::vector<LightRayStruct> fillASWithLightRayFromObjectPoint(std::vector<VectorStructR3> const& points);
+	std::vector<LightRayStruct> fillASWithLightRayFromObjectPoint(const std::vector<VectorStructR3>& points);
 
 	// build many LightRay from infinity
-	std::vector<LightRayStruct> fillASWithLightRayFromInfinity(std::vector<VectorStructR3> const points);
+	std::vector<LightRayStruct> fillASWithLightRayFromInfinity(const std::vector<VectorStructR3>& points);
 
 	// In the SpotDiagram Zemax use the "Ray Density" to calculate the RMS radius
 	// There are 6 rays in the first ring, 12 in the second 18 ind the third,...
 	// build LightRays to calculate the RMS radius
-	std::vector<VectorStructR3> fillAS_withPoints(unsigned int const& rayDensity, VectorStructR3 const& PointApertureStop, VectorStructR3 const& directionApertureStop, real const& semiHeightAS);
+	std::vector<VectorStructR3> fillAS_withPoints(unsigned int rayDensity, VectorStructR3 PointApertureStop, VectorStructR3 directionApertureStop, real semiHeightAS);
 
 	// Gibt einen Vektor mit ringförmig angeordneten Targetpunkten in der Aperturblende zurück
 	std::vector<VectorStructR3> fillAS_withPointsRing(int nrOfRings, double semiHeightAperture, VectorStructR3 apexApertureStop);
@@ -87,22 +88,23 @@ public:
 
 
 private:
-	VectorStructR3 mStartPointRay;
-	real mAngleX;
-	real mAngleY;
-	real mSemiHeightAS;
-	VectorStructR3 mPointAS;
-	VectorStructR3 mDirectionAS_Unit;
+	VectorStructR3 mStartPointRay{};
+	real mAngleX{};
+	real mAngleY{};
+	real mSemiHeightAS{};
+	VectorStructR3 mPointAS{};
+	VectorStructR3 mDirectionAS_Unit{};
 
-	unsigned int mRings;
+	unsigned int mRings{};
 	unsigned int mRayDensity = mRings;
-	unsigned int mArms;
+	unsigned int mArms{};
 
-	real mRefractiveIndex;
-	Light_LLT mLight;
+	real mRefractiveIndex{};
+	Light_LLT mLight{};
 
-	std::vector<VectorStructR3> mVectorWithManyPointsInAS;
-	std::vector<LightRayStruct> mVectorWithLightRays;
+	std::vector<VectorStructR3> mVectorWithManyPointsInAS{};
+	std::vector<LightRayStruct> mVectorWithLightRays{};
 
-	OpticalSystem_LLT mOptSys_LLT;
+	OpticalSystem_LLT mOptSys_LLT{};
+	infosAS mInfosAS_fillAS{};
 };

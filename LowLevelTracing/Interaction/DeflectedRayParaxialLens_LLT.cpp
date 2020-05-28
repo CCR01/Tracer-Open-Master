@@ -1,13 +1,12 @@
 #include "DeflectedRayParaxialLens_LLT.h"
 #include <vector>
 
-std::vector<LightRayStruct> DeflectedRayParaxialLens_LLT::calcInteraction(IntersectInformationStruct intersectInformation)
+std::vector<LightRayStruct> DeflectedRayParaxialLens_LLT::calcInteraction(const IntersectInformationStruct& intersectInformation)
 {
 
 	LightRayStruct output;
-	output.setIsAlive(1); // LightRay is alive
-	Light_LLT light = intersectInformation.getLight();
-	output.setLight_LLT(light);
+	Light_LLT mLight = intersectInformation.getLight();
+	output.setLight_LLT(mLight);
 	std::vector<LightRayStruct> returnLightRay;
 	real tolerance = 0.000001;
 	bool checkIfSideA_and_B_haveSameRefractiveIndex = std::abs(intersectInformation.getRefractiveIndex_B() - intersectInformation.getRefractiveIndex_A()) > tolerance;
@@ -62,7 +61,7 @@ std::vector<LightRayStruct> DeflectedRayParaxialLens_LLT::calcInteraction(Inters
 				VectorStructR3 intersectionPoint = mAddInfos.getPointofIntersectSurface() + stepsT * dirNodalRayUnit;
 				VectorStructR3 newDirection = intersectionPoint - intersectInformation.getIntersectionPoint();
 				Ray_LLT newRay(intersectInformation.getIntersectionPoint(), newDirection, intersectInformation.getRefractiveIndex_B());
-				output.ray = newRay;
+				output.setRay_LLT(newRay);
 
 			}
 
@@ -101,7 +100,7 @@ std::vector<LightRayStruct> DeflectedRayParaxialLens_LLT::calcInteraction(Inters
 				VectorStructR3 intersectionPoint = mAddInfos.getPointofIntersectSurface() + stepsT * dirNodalRayUnit;
 				VectorStructR3 newDirection = intersectInformation.getIntersectionPoint() - intersectionPoint;
 				Ray_LLT newRay(intersectInformation.getIntersectionPoint(), newDirection, intersectInformation.getRefractiveIndex_B());
-				output.ray = newRay;
+				output.setRay_LLT(newRay);
 
 			}
 
@@ -139,7 +138,7 @@ std::vector<LightRayStruct> DeflectedRayParaxialLens_LLT::calcInteraction(Inters
 				VectorStructR3 intersectionPoint = mAddInfos.getPointofIntersectSurface() + stepsT * dirNodalRayUnit;
 				VectorStructR3 newDirection = intersectionPoint - intersectInformation.getIntersectionPoint();
 				Ray_LLT newRay(intersectInformation.getIntersectionPoint(), newDirection, intersectInformation.getRefractiveIndex_A());
-				output.ray = newRay;
+				output.setRay_LLT(newRay);
 			}
 
 			else if (intersectInformation.getSurfaceSide() == 'B' && mAddInfos.getFocalLengthOfIntersecSurface_Side_A() < 0) // Ray from side B on paraxial lens and focallenght smaller than 0
@@ -176,7 +175,7 @@ std::vector<LightRayStruct> DeflectedRayParaxialLens_LLT::calcInteraction(Inters
 				VectorStructR3 intersectionPoint = mAddInfos.getPointofIntersectSurface() + stepsT * dirNodalRayUnit;
 				VectorStructR3 newDirection = intersectInformation.getIntersectionPoint() - intersectionPoint;
 				Ray_LLT newRay(intersectInformation.getIntersectionPoint(), newDirection, intersectInformation.getRefractiveIndex_A());
-				output.ray = newRay;
+				output.setRay_LLT(newRay);
 			}
 
 		}
@@ -192,6 +191,17 @@ std::vector<LightRayStruct> DeflectedRayParaxialLens_LLT::calcInteraction(Inters
 
 
 }
+
+DeflectedRayParaxialLens_LLT::DeflectedRayParaxialLens_LLT() {};
+DeflectedRayParaxialLens_LLT::~DeflectedRayParaxialLens_LLT() {};
+
+DeflectedRayParaxialLens_LLT::DeflectedRayParaxialLens_LLT(additionalInfosDeflectedRayParaLensStruct addInfos) :
+	mAddInfos(addInfos)
+{}
+
+DeflectedRayParaxialLens_LLT::DeflectedRayParaxialLens_LLT(IntersectInformationStruct intersectInformation, additionalInfosDeflectedRayParaLensStruct addInfos) :
+	mIntersectInformation(intersectInformation)
+{};
 
 DeflectedRayParaxialLens_LLT::DeflectedRayParaxialLens_LLT(DeflectedRayParaxialLens_LLT &source)
 {
@@ -222,4 +232,9 @@ std::shared_ptr<InteractionRay_LLT> DeflectedRayParaxialLens_LLT::clone()
 	std::shared_ptr<InteractionRay_LLT> deflectedRayParaxialLens_LLT(new DeflectedRayParaxialLens_LLT(*this));
 
 	return deflectedRayParaxialLens_LLT;
+}
+
+RaysRangeStruct DeflectedRayParaxialLens_LLT::howManyRays()
+{
+	return RaysRangeStruct{ 1,1 };
 }

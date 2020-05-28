@@ -35,7 +35,7 @@ void pointAndIntensity::setIntesity(real const setIntensity)
 IntersectInformationStruct::IntersectInformationStruct() {};
 IntersectInformationStruct::~IntersectInformationStruct() {};
 IntersectInformationStruct::IntersectInformationStruct(VectorStructR3 intersectionPoint, VectorStructR3 normaleUnitVector, surfaceSide surfaceSideABN,
-	real stepsToWalk, real refractiveIndexA, real refractiveIndexB, VectorStructR3 directionRayUnit, Light_LLT light) :
+	real stepsToWalk, real refractiveIndexA, real refractiveIndexB, VectorStructR3 directionRayUnit, Light_LLT mLight) :
 
 	mIntersectionPoint(intersectionPoint),
 	mNormaleUnitVector(normaleUnitVector),
@@ -44,31 +44,86 @@ IntersectInformationStruct::IntersectInformationStruct(VectorStructR3 intersecti
 	mRefractiveIndexA(refractiveIndexA),
 	mRefractiveIndexB(refractiveIndexB),
 	mDirectionRayUnit(directionRayUnit),
-	mLight(light)
+	mLight(mLight)
 
 {}
 
-// save the matrix
-void  Matrix3x3AndExist::saveMatrix(real const mat[3][3])
+// set no intersection point
+void IntersectInformationStruct::setNoIntersectionPoint()
 {
-	for (int i = 0; i < 3; ++i)
-	{
-		for (int j = 0; j < 3; ++j)
-
-			Matrix[i][j] = mat[i][j];
-	}
+	mIntersectionPoint = { 0.0,0.0,0.0 };
+	mNormaleUnitVector = { 0.0,0.0,0.0 };
+	mSurfaceSideABN = N;
+	mStepsToWalk = 0.0;
+	mRefractiveIndexA = 0.0;
+	mRefractiveIndexB = 0.0;
+	mDirectionRayUnit = { 0.0,0.0,0.0 };
+	mLight.setLightToAbsorb();
 }
 
-// get the matrix from the struct
-void  Matrix3x3AndExist::getMatrix(real mat[3][3])
+// set all
+void IntersectInformationStruct::setAll(VectorStructR3 intersectionPoint, VectorStructR3 normaleUnitVector, surfaceSide surfaceSideABN,
+	real stepsToWalk, real refractiveIndexA, real refractiveIndexB, VectorStructR3 directionRayUnit, Light_LLT mLight)
 {
-	for (int i = 0; i < 3; ++i)
-	{
-		for (int j = 0; j < 3; ++j)
-			mat[i][j] = Matrix[i][j];
-	}
+	setIntersectionPoint(intersectionPoint);
+	setNormalUnitVector(normaleUnitVector);
+	setSurfaceSide(surfaceSideABN);
+	setStepsToWalk(stepsToWalk);
+	setRefractiveIndex_A(refractiveIndexA);
+	setRefractiveIndex_B(refractiveIndexB);
+	setDirectionRayUnit(directionRayUnit);
+	setLight(mLight);
 }
 
+//Matrix3x3AndExist::Matrix3x3AndExist() {};
+//Matrix3x3AndExist::~Matrix3x3AndExist() {};
+
+//// save the matrix
+//void  Matrix3x3AndExist::saveMatrix(real const mat[3][3])
+//{
+//	for (int i = 0; i < 3; ++i)
+//	{
+//		for (int j = 0; j < 3; ++j)
+//
+//			Matrix[i][j] = mat[i][j];
+//	}
+//}
+//
+//// get the matrix from the struct
+//void  Matrix3x3AndExist::getMatrix(real mat[3][3])
+//{
+//	for (int i = 0; i < 3; ++i)
+//	{
+//		for (int j = 0; j < 3; ++j)
+//			mat[i][j] = Matrix[i][j];
+//	}
+//}
+
+//// save the matrix
+//void  Matrix3x3AndExist::saveMatrix(real const mat[3][3])
+//{
+//	for (int i = 0; i < 3; ++i)
+//	{
+//		for (int j = 0; j < 3; ++j)
+//
+//			mMatrix[i][j] = mat[i][j];
+//	}
+//}
+//
+//// get the matrix from the struct
+//real** Matrix3x3AndExist::getMatrix()
+//{
+//	return mMatrix
+//}
+//
+//void Matrix3x3AndExist::setMatrixexist(bool exist)
+//{
+//	mExistMatrix = exist;
+//}
+//bool Matrix3x3AndExist::getMatrixExist()
+//{
+//	return mExistMatrix;
+//}
 
 //____________________________________________________
 
@@ -149,7 +204,7 @@ VectorStructR3 IntersectInformationStruct::getNormalUnitVector() const
 }
 
 // set surface side
-void IntersectInformationStruct::setSurface(surfaceSide const surSid)
+void IntersectInformationStruct::setSurfaceSide(surfaceSide const surSid)
 {
 	mSurfaceSideABN = surSid;
 }
@@ -160,7 +215,7 @@ char IntersectInformationStruct::getSurfaceSide() const
 	// TODO Question: Gibt es hier eine bessere Alternative?!
 	// Was passiert, wenn hier ein neues enum dazukommt -> in Bezug auf die Reihenfolge?
 	// Wir haben uns mal darüber unterhalten das mit strings zu machen ...
-	char returnSurfaceSide;
+	char returnSurfaceSide = 'N';
 	if (mSurfaceSideABN == 0)
 	{
 		returnSurfaceSide = 'A';
@@ -217,7 +272,7 @@ real IntersectInformationStruct::getRefractiveIndex_B() const
 // set direction ray unit
 void IntersectInformationStruct::setDirectionRayUnit(VectorStructR3& const direction)
 {
-	mDirectionRayUnit = Math::unitVector(direction);
+	mDirectionRayUnit = direction;
 }
 
 // get direction ray unit
@@ -274,16 +329,22 @@ VectorStructR3 IntersectInformationStruct::unitVectorForIntersectInfoStruct(Vect
 	return returnUnitVector;
 }
 
+VectorElementAndPosition::VectorElementAndPosition() {};
+VectorElementAndPosition::~VectorElementAndPosition() {};
+VectorElementAndPosition::VectorElementAndPosition(real val, unsigned int pos) :
+	mValue(val),
+	mPosInVector(pos)
+{}
 
 //get value in vector
 double VectorElementAndPosition::getValue() const
 {
-	return value;
+	return mValue;
 }
 //get position in vector
 unsigned int  VectorElementAndPosition::getPosInVector() const
 {
-	return posInVector;
+	return mPosInVector;
 };
 
 

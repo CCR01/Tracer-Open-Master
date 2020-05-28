@@ -11,7 +11,6 @@
 #include "Light_LLT.h"
 #include "Interaction\InteractionRay_LLT.h"
 #include "..\FillAptertureStop\FillApertureStop.h"
-#include "..\benchmark\FillAS\BenchmarkFillAS.h"
 #include "../benchmark/SequentialRayTracer/BenchmarkSequentialRayTracer.h"
 #include "../benchmark//ParaxialLens_LLT/BenchmarkParaxialLens_LLT.h"
 #include "Surfaces\AsphericalSurface_LLT.h"
@@ -28,7 +27,6 @@
 #include "Surfaces\ParaxialLens_LLT.h"
 #include "Interaction\DeflectedRayParaxialLens_LLT.h"
 #include "..\benchmark\RayAiming\BenchmarkRayAiming.h"
-#include "..\benchmark\Math\BechmarkMath.h"
 #include "..\benchmark\Plan\BenchmarkPlanSurface.h"
 #include "..\benchmark\BenchAnalyse\BenchmarkOpticalPathDifference.h"
 #include "..\benchmark\Plan\BenchmarkPlanSurface.h"
@@ -56,8 +54,6 @@
 //#include "..\benchmark\Glasses\BenchGlasses.h"
 
 #include "..\benchmark\TestLensCatalog\TestLensCatalogEO.h"
-
-#include "..\benchmark\AsphericalSurface_LLT\TestAsphericalSurface_LLT.h"
 
 #include "..\benchmark\Optimizer\BenchmarkZemaxTest.h"
 
@@ -117,9 +113,21 @@
 
 #include "..\benchmark\Optimizer\DLS\testDLS.h"
 
-#include "..\tests\DLSmulticheck\DLSmulticheck.h"
 
+
+#include "..\benchmark\benachRayTracing\benchRayTracing.h"
+
+
+// include test systems
 #include "..\tests\TestGenetic\TestGenetic.h"
+
+
+
+// include management tests
+#include "..\tests\ManagementTests\managementTests.h"
+
+// include DLS multiCheck
+#include "..\tests\DLSmulticheck\DLSmulticheck.h"
 
 int main(int argc, char **argv)
 {
@@ -131,10 +139,10 @@ int main(int argc, char **argv)
 	std::vector<bool> workTheSystem;
 	// *****************************************************************************************************************
 
-	//// Math
-	//BenchmarkMath checkMath;
-	//bool Math = checkMath.checkMethodesMath();
-	//workTheSystem.push_back(Math);
+	std::vector<testWhat> testWhatVec = { ALL };
+	ManagementTests managementTest(testWhatVec);
+	workTheSystem.push_back(managementTest.testSuperFct());
+
 
 	////// DLS
 	//testDLS testDLS;
@@ -282,12 +290,6 @@ int main(int argc, char **argv)
 	//workTheSystem.push_back(checkBM);
 	   
 
-
-	//// check aspherical surface LLT
-	//TestAsphericalSurface_LLT testAspSur_LLT;
-	//bool checkAsphericalSurface_LLT = testAspSur_LLT.checkAsphericalSurface_LLT();
-	//workTheSystem.push_back(checkAsphericalSurface_LLT);
-
 	//Optical Path Difference
 	//BenchmarkOpticalPathDifference checkOPD;
 	//bool OPD = checkOPD.checkMethodesOPD();
@@ -320,12 +322,18 @@ int main(int argc, char **argv)
 	//bool checkLensCataEO_PCV = testLensCataEO.testcatalogEO_PCV();
 	//workTheSystem.push_back(checkLensCataEO_PCV);
 
-	// test genetic
-	TestGenetic testGenetic;
+
+	//// test speed ray tracing
+	//benchRayTracing benchRT;
+	//bool checkSpeedRayTraching = benchRT.testSpeedRayTracing();
+	//workTheSystem.push_back(checkSpeedRayTraching);
+
+	//// test genetic
+	//TestGenetic testGenetic;
 	//bool checkGenetic = testGenetic.testGeneticSuperFunc();
 	//workTheSystem.push_back(checkGenetic);
-	bool checkGeneticModes = testGenetic.testGenerationModes(-1000.0, 1000.0, 100.0, 50000);
-	workTheSystem.push_back(checkGeneticModes);
+	//bool checkGeneticModes = testGenetic.testGenerationModes(-1000.0, 1000.0, 100.0, 50000);
+	//workTheSystem.push_back(checkGeneticModes);
 
 
 

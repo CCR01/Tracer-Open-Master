@@ -4,12 +4,11 @@
 
 
 
-std::vector<LightRayStruct> ReflectionRay_LLT::calcInteraction(IntersectInformationStruct intersectInformation) {
+std::vector<LightRayStruct> ReflectionRay_LLT::calcInteraction(const IntersectInformationStruct& intersectInformation) {
 
 	Ray_LLT ray(/*origin*/{ 0.0, 0.0, 0.0 }, /*direction*/{ 0.0, 0.0, 0.0 }, 1.0);
-	Light_LLT light = intersectInformation.getLight();
+	Light_LLT mLight = intersectInformation.getLight();
 	LightRayStruct output;
-	output.setIsAlive(1); // LightRay is alive
 	std::vector<LightRayStruct> returnVecLightRay;
 
 	if (intersectInformation.getSurfaceSide() == 'N') //there is no intersection point
@@ -41,11 +40,13 @@ std::vector<LightRayStruct> ReflectionRay_LLT::calcInteraction(IntersectInformat
 		ray.setDirectionRayUnit(P_Mirrow - intersectInformation.getIntersectionPoint());
 		if (intersectInformation.getSurfaceSide() == 'A') //0--> surface side A
 		{
-			ray.setCurrentRefractiveIndex(intersectInformation.getRefractiveIndex_A());
+			real refIndexSideA = intersectInformation.getRefractiveIndex_A();
+			ray.setCurrentRefractiveIndex(refIndexSideA);
 		}
 		else // ray must come from surface side B
 		{
-			ray.setCurrentRefractiveIndex(intersectInformation.getRefractiveIndex_B());
+			real refIndexSideB = intersectInformation.getRefractiveIndex_B();
+			ray.setCurrentRefractiveIndex(refIndexSideB);
 		}
 
 		output.setRay_LLT(ray);
@@ -53,6 +54,12 @@ std::vector<LightRayStruct> ReflectionRay_LLT::calcInteraction(IntersectInformat
 	returnVecLightRay.push_back(output);
 	return returnVecLightRay;
 }
+
+ReflectionRay_LLT::ReflectionRay_LLT() {};
+ReflectionRay_LLT::~ReflectionRay_LLT() {};
+ReflectionRay_LLT::ReflectionRay_LLT(IntersectInformationStruct intersectInformation) :
+	mIntersectionInformation(intersectInformation)
+{};
 
 ReflectionRay_LLT::ReflectionRay_LLT(ReflectionRay_LLT &source)
 {
@@ -73,6 +80,7 @@ ReflectionRay_LLT& ReflectionRay_LLT::operator=(ReflectionRay_LLT& source)
 
 	mIntersectionInformation = source.mIntersectionInformation;
 
+
 	return *this;
 }
 
@@ -81,4 +89,9 @@ std::shared_ptr<InteractionRay_LLT> ReflectionRay_LLT::clone()
 	std::shared_ptr<InteractionRay_LLT> reflectionRay_LLT(new ReflectionRay_LLT(*this));
 
 	return reflectionRay_LLT;
+}
+
+RaysRangeStruct ReflectionRay_LLT::howManyRays()
+{
+	return RaysRangeStruct{ 1,1 };
 }

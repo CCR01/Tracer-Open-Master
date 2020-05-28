@@ -27,8 +27,8 @@ testOptimizer_Paper_P0::~testOptimizer_Paper_P0() {};
 
 bool testOptimizer_Paper_P0::checkTestOptimizer_paper_P0()
 {
-//
-//	
+
+	
 //	std::string test = "test";
 //	double testDouble = 1.123;
 //	std::string location = "../benchmark/testOptimizer_Paper/";
@@ -209,8 +209,8 @@ bool testOptimizer_Paper_P0::checkTestOptimizer_paper_P0()
 //		inportExportData::exportDataToExcel_vector(location, optiSysP0, "population, numberGenerations, timeLocal, timeGenetic, totalTime, spotOptA, spotField2, spotField4, GLOWsumRMS, radiusS1, radiusS2, radiusS3, GLOW better Zemax", vectorToExportP0_opti);
 //
 //	}
-	
-
+//
+//
 //	unsigned int startRayDensity = 3;
 //	unsigned int endRayDensity = 60;
 //	unsigned int deltaRayDensity = 1;
@@ -220,8 +220,6 @@ bool testOptimizer_Paper_P0::checkTestOptimizer_paper_P0()
 //	for (startRayDensity; startRayDensity <= endRayDensity; startRayDensity = startRayDensity + deltaRayDensity)
 //	{
 //		vectorToExportP0_rayDensity.clear();
-//		//std::cout << "current ray density: " << startRayDensity << std::endl;
-//		// trace the ray thow the optical system
 //		vectorToExportP0_rayDensity.push_back(startRayDensity);
 //		
 //		//optA
@@ -248,7 +246,7 @@ bool testOptimizer_Paper_P0::checkTestOptimizer_paper_P0()
 //		auto timeTotal_Field4_min = timeTotal_Field4.count() / 60.0;
 //
 //
-//		unsigned int totalNumRay = seqTrace_P0_optA.getStartPoints().size();
+//		unsigned int totalNumRay = seqTrace_P0_optA.getStartPoints().size() * 3;
 //		vectorToExportP0_rayDensity.push_back(totalNumRay);
 //		vectorToExportP0_rayDensity.push_back(timeTotal_optA_min);
 //		vectorToExportP0_rayDensity.push_back(timeTotal_Field2_min);

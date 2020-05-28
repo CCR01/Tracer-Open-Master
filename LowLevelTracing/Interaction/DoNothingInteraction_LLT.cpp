@@ -1,39 +1,46 @@
 #include "DoNothingInteraction_LLT.h"
 #include <iostream>
 
-std::vector<LightRayStruct> DoNothingInteraction_LLT::calcInteraction(IntersectInformationStruct intersectInformation)
+std::vector<LightRayStruct> DoNothingInteraction_LLT::calcInteraction(const IntersectInformationStruct& intersectInformation)
 {
-	Ray_LLT ray(/*origin*/{ 0.0, 0.0, 0.0 }, /*direction*/{ 0.0, 0.0, 0.0 }, 1.0);
-	Light_LLT light = intersectInformation.getLight();
-	LightRayStruct output{};
-	output.setIsAlive(1);
-	std::vector<LightRayStruct> returnLightRay;
+		
+	mReturnLightRay.setLight_LLT(intersectInformation.getLight());
 	
 
 	if (intersectInformation.getSurfaceSide() == 'N') //there is no intersection point
 	{
 		std::cout << "there is no interaction point! \n";
-		output.setIsAlive(0);
+		mReturnLightRay_vec[0].setLightRayAbsorb();
 	}
 	else
 	{
-		ray.setOriginRay(intersectInformation.getIntersectionPoint());
-		ray.setDirectionRayUnit(intersectInformation.getDirectionRayUnit());
+		mRay.setOriginRay(intersectInformation.getIntersectionPoint());
+		mRay.setDirectionRayUnit(intersectInformation.getDirectionRayUnit());
 		if (intersectInformation.getSurfaceSide() == 'A') //0--> surface side A
 		{
-			ray.setCurrentRefractiveIndex(intersectInformation.getRefractiveIndex_A());
+			mRefIndexSideA = intersectInformation.getRefractiveIndex_A();
+			mRay.setCurrentRefractiveIndex(mRefIndexSideA);
 		}
 		else // ray must come from surface side B
 		{
-			ray.setCurrentRefractiveIndex(intersectInformation.getRefractiveIndex_B());
+			mRefIndexSideB = intersectInformation.getRefractiveIndex_B();
+			mRay.setCurrentRefractiveIndex(mRefIndexSideB);
 		}
-		output.setRay_LLT(ray);
-		output.setLight_LLT(light);
+		mReturnLightRay.setRay_LLT(mRay);
 	}
 
-	returnLightRay.push_back(output);
-	return returnLightRay;
+	mReturnLightRay_vec[0] = mReturnLightRay;
+	return mReturnLightRay_vec;
 }
+
+DoNothingInteraction_LLT::DoNothingInteraction_LLT() { mReturnLightRay_vec.resize(1); };
+DoNothingInteraction_LLT::~DoNothingInteraction_LLT() {};
+DoNothingInteraction_LLT::DoNothingInteraction_LLT(IntersectInformationStruct intersectInformation) :
+	mIntersectionInformation(intersectInformation)
+{
+	mReturnLightRay_vec.resize(1);
+};
+
 
 DoNothingInteraction_LLT::DoNothingInteraction_LLT(DoNothingInteraction_LLT &source)
 {
@@ -43,6 +50,7 @@ DoNothingInteraction_LLT::DoNothingInteraction_LLT(DoNothingInteraction_LLT &sou
 	}
 
 	mIntersectionInformation = source.mIntersectionInformation;
+	mReturnLightRay_vec = source.mReturnLightRay_vec;
 }
 
 DoNothingInteraction_LLT& DoNothingInteraction_LLT::operator=(DoNothingInteraction_LLT& source)
@@ -53,6 +61,7 @@ DoNothingInteraction_LLT& DoNothingInteraction_LLT::operator=(DoNothingInteracti
 	}
 
 	mIntersectionInformation = source.mIntersectionInformation;
+	mReturnLightRay_vec = source.mReturnLightRay_vec;
 
 	return *this;
 }
@@ -62,4 +71,9 @@ std::shared_ptr<InteractionRay_LLT> DoNothingInteraction_LLT::clone()
 	std::shared_ptr<InteractionRay_LLT> doNothingInteraction_LLT(new DoNothingInteraction_LLT(*this));
 
 	return doNothingInteraction_LLT;
+}
+
+RaysRangeStruct DoNothingInteraction_LLT::howManyRays()
+{
+	return RaysRangeStruct{ 1,1 };
 }

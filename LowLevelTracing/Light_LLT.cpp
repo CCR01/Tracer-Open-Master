@@ -32,12 +32,12 @@ void Light_LLT::set(Light_LLT light_LLT)
 }
 
 // get wavelength
-double Light_LLT::getWavelength() const&
+double Light_LLT::getWavelength() const
 {
 	return mWavelength;
 }
 // set wavelength
-void Light_LLT::setWavelength(double const& wavelength)
+void Light_LLT::setWavelength(const double wavelength)
 {
 	mWavelength = wavelength;
 }
@@ -53,12 +53,12 @@ void Light_LLT::setIntensity(double intensity)
 	mIntensity = intensity;
 }
 // get jones vector
-JonesVector_LLT Light_LLT::getJonesVector()
+JonesVector_LLT Light_LLT::getJonesVector() const
 {
 	return mPolarisation;
 }
 // set jones vector
-void Light_LLT::setJonesVector(JonesVector_LLT jonesVector)
+void Light_LLT::setJonesVector(const JonesVector_LLT& jonesVector)
 {
 	mPolarisation = jonesVector;
 }
@@ -73,12 +73,29 @@ void Light_LLT::setTypeLight(typeLight lightType)
 	mLightType = lightType;
 }
 // is light alive
-int Light_LLT::isAlive()
+bool Light_LLT::isAlive()
 {
 	return mIsAlive;
 }
 // set light alive
-void Light_LLT::setIsAlive(int isAlive)
+void Light_LLT::setIsAlive(bool isAlive)
 {
 	mIsAlive = isAlive;
+}
+// set light to absorb
+void Light_LLT::setLightToAbsorb()
+{
+	mWavelength = 0.0;
+	mIntensity = 0.0;
+	mPolarisation = { 0.0,0.0,0.0,0.0 };
+	mLightType = typeDeath;
+	mIsAlive = false;
+}
+
+void Light_LLT::buildDefaultLight()
+{
+	mWavelength = 550.0;
+	mIntensity = 1.0;
+	mPolarisation = { 0.0,0.0,0.0,0.0 };
+	mLightType = typeLightRay;
 }

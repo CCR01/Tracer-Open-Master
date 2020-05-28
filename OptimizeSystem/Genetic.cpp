@@ -1,7 +1,8 @@
 #include "Genetic.h"
 #include "..\RayAiming\RayAiming.h"
 #include "..\oftenUseNamespace\oftenUseNamespace.h"
-
+#include "..\FillAptertureStop\FillApertureStop.h"
+#include "..\SequentialRayTracing\SequentialRayTracer.h"
 
 
 structToBuildGeneration::structToBuildGeneration() {}
@@ -237,7 +238,6 @@ void Genetic::resizeAllRelevantStdVectorsAndCalcConst()
 
 	// build defautl light
 	mDefaultLight.setIntensity(1.0);
-	mDefaultLight.setIsAlive(1);
 	mDefaultLight.setJonesVector({ 1.0,1.0,1.0,1.0 });
 	mDefaultLight.setTypeLight(typeLightRay);
 	mDefaultLight.setWavelength(550.0);
@@ -320,7 +320,7 @@ real Genetic::calculateMeritVal_RMS(const VectorStructR3& fieldPoint)
 	std::vector<VectorStructR3> interPoints_vec_lastSurface = seqTrace.getAllInterPointsAtSurface_i_filtered(mPosLastSurface);
 
 
-	real numberInterPoints = interPoints_vec_lastSurface.size() / mNumFieldPoints;
+	real numberInterPoints = interPoints_vec_lastSurface.size() / mNumOptSys;
 
 	// just for debugging
 	//std::cout << "number inter points last surface: " << numberInterPoints << std::endl;
@@ -333,7 +333,7 @@ real Genetic::calculateMeritVal_RMS(const VectorStructR3& fieldPoint)
 	else // there is vignetting
 	{
 		returnMerit_RMS = oftenUse::getInfReal();
-		//mDampingNum = mDampingNum * 10.0;
+
 	}
 
 	return returnMerit_RMS;
@@ -378,8 +378,8 @@ void Genetic::generateValuesFor_FIRST_Generations()
 
 				tempValue = checkValueRadius(tempValue, tempMinVal, tempWithoutMin, tempMaxVal, tempWithoutMax);
 
-				//just for debugging
-				std::cout << "radius temp value: " << tempValue << std::endl;
+				// just for debugging
+				// std::cout << "radius temp value: " << tempValue << std::endl;
 
 				tempStructToBuildGeneration.setSurfaceNumber(tempSurfaceNum);
 				tempStructToBuildGeneration.setKindPara(radiusVar);
@@ -478,15 +478,16 @@ real Genetic::checkValueRadius(real val, real min, real withoutMin, real max, re
 void Genetic::buildTheGenerationsAndEvaluate()
 {
 	   	for (unsigned int i = 0; i < mPopulation; ++i)
-	{
+		{
 		
-		buildTheOpticalSystem(i);
+		
 			
 		// just for debugging
 		// mChangedOptSys_LLT_vec[0].printAllOptSysParameter_LLT(mChangedOptSys_LLT_vec[0]);
 
 		if (mEvaluateSystem[i])
 		{
+			buildTheOpticalSystem(i);
 			mAllMeritVal[i] = calcMeritVal();
 		}
 
@@ -507,16 +508,15 @@ void Genetic::doTheGeneticProcess()
 	generateValuesFor_FIRST_Generations();
 	buildTheGenerationsAndEvaluate();
 	bool checker = true;
-	
+	findBestSystemNum();
 	unsigned int iterations = 1;
-	
+	unsigned int selectetSystemNum{};
+
 	while (checker)
 	{
 		// just for debugging
 		std::cout << "generation number: " << iterations << std::endl;
-
-		findBestSystemNum();
-		unsigned int selectetSystemNum;
+				
 		setEvaluateSystemFalse();
 
 		calcFitnessValAndSum();
@@ -530,9 +530,11 @@ void Genetic::doTheGeneticProcess()
 
 		mFirstGenerationVec = mSecondGenerationVec;
 		buildTheGenerationsAndEvaluate();
+		findBestSystemNum();
 
 		++iterations;
 		checker = checkWhileGenetic(iterations);
+		
 	}
 	
 	findBestSystemNum();
@@ -622,11 +624,11 @@ void Genetic::geneticProcess(unsigned int selectetSystemNum, unsigned int number
 {
 
 	bool tempCheckToEvaluate;
-	
+	real randomNum;
 
 	for (unsigned int i = 0; i < mNumVar; ++i)
 	{
-		real randomNum = randomNumberReal(0.0, 1.0);
+		randomNum = randomNumberReal(0.0, 1.0);
 		if (randomNum > 0.5) // parent 1 gives the genes to next generation
 		{
 
@@ -654,10 +656,7 @@ void Genetic::geneticProcess(unsigned int selectetSystemNum, unsigned int number
 // set evaluate system false
 void Genetic::setEvaluateSystemFalse()
 {
-	for (unsigned int i = 0; i < mPopulation; ++i)
-	{
-		mEvaluateSystem[i] = false;
-	}
+	std::fill(mEvaluateSystem.begin(), mEvaluateSystem.begin() , false);
 }
 
 bool Genetic::checkWhileGenetic(unsigned int iteration)

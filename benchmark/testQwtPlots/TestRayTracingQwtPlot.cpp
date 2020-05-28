@@ -58,9 +58,9 @@ bool testRayTracingQwtPlot::testRayTracingQwtPlotE0()
 	// interactions
 	RefractedRay_LLT refrac;
 	Absorb_LLT absorb;
-	Light_LLT light;
+	Light_LLT mLight;
 	DoNothingInteraction_LLT doNothing;
-	light.setWavelength(550.0);
+	mLight.setWavelength(550.0);
 
 	// surfaces
 	ApertureStop_LLT S0E0(/*semiHeight*/ 0.5, /*point*/{ 0.0,0.0,5.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveIndex*/ 1.0);
@@ -98,7 +98,7 @@ bool testRayTracingQwtPlot::testRayTracingQwtPlotE0()
 
 	//single ray tracing
 	Ray_LLT ray(/*origin*/{ 0.0,0.0,0.0 },/*direction*/{ 0.0,0.5,5.0 },/*refractive index*/ 1.0);
-	LightRayStruct lightRay(light, ray, 1);
+	LightRayStruct lightRay(mLight, ray, 1);
 	SequentialRayTracing seqTrace_single(optSysE0);
 	seqTrace_single.sequentialRayTracing(lightRay);
 	IntersectInformationStruct interInfosS0 = seqTrace_single.getAllInterInfosOfSurf_i(0).at(0);
@@ -114,13 +114,13 @@ bool testRayTracingQwtPlot::testRayTracingQwtPlotE0()
 
 	// ray tracing optica axis
 	SequentialRayTracing seqTrace_E0_optA(optSysE0);
-	FillApertureStop fillAperStop_optA(/*start point rays*/{ 0.0,0.0,0.0 },/*semi height of aperture stop*/ 0.5,/*point of aperture stop*/{ 0.0,0.0,5.0 },/*direction of aperture stop*/{ 0.0,0.0,1.0 }, /*rings*/6,/*arms*/ 8,/*refractive index*/ 1.0, light);
+	FillApertureStop fillAperStop_optA(/*start point rays*/{ 0.0,0.0,0.0 },/*semi height of aperture stop*/ 0.5,/*point of aperture stop*/{ 0.0,0.0,5.0 },/*direction of aperture stop*/{ 0.0,0.0,1.0 }, /*rings*/6,/*arms*/ 8,/*refractive index*/ 1.0, mLight);
 	seqTrace_E0_optA.seqRayTracingWithVectorOfLightRays(fillAperStop_optA.getVectorWithLightRays());
 	Spot spot_optA(/*intersection points*/ seqTrace_E0_optA.getAllInterPointsAtSurf_i_notFiltered(8), /*reference point*/seqTrace_E0_optA.getAllInterPointsAtSurf_i_notFiltered(8).at(0));
 
 	// ray tracing field 1
 	SequentialRayTracing seqTrace_E0_field1(optSysE0);
-	FillApertureStop fillAperStop_field1(/*start point rays*/{ 0.0,1.0,0.0 },/*semi height of aperture stop*/ 0.5,/*point of aperture stop*/{ 0.0,0.0,5.0 },/*direction of aperture stop*/{ 0.0,0.0,1.0 }, /*rings*/6,/*arms*/ 8,/*refractive index*/ 1.0, light);
+	FillApertureStop fillAperStop_field1(/*start point rays*/{ 0.0,1.0,0.0 },/*semi height of aperture stop*/ 0.5,/*point of aperture stop*/{ 0.0,0.0,5.0 },/*direction of aperture stop*/{ 0.0,0.0,1.0 }, /*rings*/6,/*arms*/ 8,/*refractive index*/ 1.0, mLight);
 	seqTrace_E0_field1.seqRayTracingWithVectorOfLightRays(fillAperStop_field1.getVectorWithLightRays());
 	Spot spot_field1(/*intersection points*/ seqTrace_E0_field1.getAllInterPointsAtSurf_i_notFiltered(8), /*reference point*/seqTrace_E0_field1.getAllInterPointsAtSurf_i_notFiltered(8).at(0));
 
@@ -201,8 +201,8 @@ bool testRayTracingQwtPlot::testRayTracingQwtPlotE1()
 	optSysE1.fillVectorSurfaceAndInteractingData(13, S14E1.clone(), refrac.clone());
 	optSysE1.fillVectorSurfaceAndInteractingData(14, S15E1.clone(), refrac.clone());
 
-	Light_LLT light;
-	light.setWavelength(550.0);
+	Light_LLT mLight;
+	mLight.setWavelength(550.0);
 
 	//// plot 2d
 
@@ -401,8 +401,8 @@ bool testRayTracingQwtPlot::testRayTracingQwtPlotE3()
 	optSysE3.fillVectorSurfaceAndInteractingData(13, S14E3.clone(), refrac.clone());
 	optSysE3.fillVectorSurfaceAndInteractingData(14, S15E3.clone(), refrac.clone());
 
-	Light_LLT light;
-	light.setWavelength(550.0);
+	Light_LLT mLight;
+	mLight.setWavelength(550.0);
 
 	//// plot 2d
 

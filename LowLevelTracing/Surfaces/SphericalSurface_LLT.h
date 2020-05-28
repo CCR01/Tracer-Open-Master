@@ -3,6 +3,47 @@
 #include <iostream>
 #include "..\..\Plot\Plot2D.h"
 
+
+// Struct to save the calculated intersection point between ray and spherical surface
+struct ALL_IntersectionPointsStruct
+{
+public:
+	ALL_IntersectionPointsStruct();
+	~ALL_IntersectionPointsStruct();
+
+	// first intersection point
+	VectorStructR3 getFirstIntersectionPoint();
+	void setFirstIntersectionPoint(VectorStructR3 firstInterPoint);
+	
+	// second intersection point
+	VectorStructR3 getSecondIntersectionPoint();
+	void setSecondIntersectionPoint(VectorStructR3 secondInterPoint);
+
+	// steps first inter point
+	real getStepsFirstIP();
+	void setStepsFirstIP(real stepsFirstIP);
+
+	// steps second inter pont
+	real getStepsSecondIP();
+	void setStepsSecondIP(real stepsSecondIP);
+
+
+	// is intersection point
+	unsigned int getNumIntersectionPoint();
+	void setNumIntersectionPoint(unsigned int numIntersectionPoint);
+
+	// setAll
+	void setAll(VectorStructR3 firstInterPoint, VectorStructR3 secondInterPoint, real stepFirst, real stepSecond, unsigned int numInterPoints);
+
+private:
+	VectorStructR3 mFirstIntersectionPoint{};
+	VectorStructR3 mSecondIntersectionPoint{};
+	real mStepsT_first{};
+	real mStepsT_second{};
+	unsigned int mNumberIntersectionPoint{};
+};
+//__________
+
 class SphericalSurfaceQwt :
 	public QwtPlotCurve
 {
@@ -25,7 +66,7 @@ private:
 class SphericalSurface_LLT : public SurfaceIntersectionRay_LLT
 {
 public:
-	SphericalSurface_LLT() {};
+	SphericalSurface_LLT();
 	SphericalSurface_LLT(SphericalSurface_LLT &source);
 	SphericalSurface_LLT& operator=(SphericalSurface_LLT& source);
 	virtual ~SphericalSurface_LLT() {};
@@ -38,8 +79,6 @@ public:
 		mDirection(direction),
 		mRefractiveIndexA(refractiveSideA),
 		mRefractiveIndexB(refractiveSideB)
-
-
 	{
 		calcCenterSphereAfterRotation();
 		mFocalLengthSphericalSurfaceSide_A = calcFocallLengthSphericalSurface(getRefractivIndexSide_B(), getRefractivIndexSide_A(), getRadius());
@@ -90,11 +129,11 @@ public:
 	//get Refractiv Index Left
 	double getRefractivIndexSide_A() const&;
 	//set Refractive Index Left
-	virtual void setRefractiveIndexSide_A(double const& refractiveIndexLeft) override;
+	virtual void setRefractiveIndexSide_A(double const refractiveIndexLeft) override;
 	//get Refractiv Index Right
 	double getRefractivIndexSide_B() const&;
 	//set Refractive Index Right
-	virtual void setRefractiveIndexSide_B(double const& refractiveIndexRight) override;
+	virtual void setRefractiveIndexSide_B(double const refractiveIndexRight) override;
 	// calculate focal length spherical surface
 	double calcFocallLengthSphericalSurface(double const& refIndes1, double const& refIndex2, double const& radius);
 	// get the focal length of the surface
@@ -117,34 +156,8 @@ public:
 	virtual void setRadius(real radius) override;
 	virtual void setPosition(VectorStructR3 position) override;
 	virtual void setDirection(VectorStructR3 direction) override;
-	//__________
-	// Struct to save the calculated intersection point between ray and spherical surface
-	struct ALL_IntersectionPointsStruct
-	{
-		VectorStructR3 firstIntersectionPoint;
-		VectorStructR3 secondIntersectionPoint;
-		double stepsT_first;
-		double stepsT_second;
-		int yesNoIntersectionPoint;
 
-		VectorStructR3 getFirstIntersectionPoint();
-		VectorStructR3 getSecondIntersectionPoint();
-		int isIntersectionPoint();
-	};
-	//__________
-	// Struct to save the right intersection point
-	struct CheckedIntersectionPointStruct
-	{
-		VectorStructR3 IntersectionPoint;
-		double stepsToIntersectionPoint;
-		int isIntersectionPoint; //if 0 -> there is no intersectionpoint
-
-		VectorStructR3 getIntersectionPoint();
-		int yesNoIntersectionPoint();
-	};
-	//_________
-
-	IntersectInformationStruct calculateIntersection(LightRayStruct const& lightRay) override;
+	virtual IntersectInformationStruct calculateIntersection(LightRayStruct const lightRay) override;
 
 	//ALTIntersectInformationStruct calculateIntersection(Ray_LLT ray);
 	//IntersectInformationStruct publicIntersectInformation = intersectInformation();
@@ -160,18 +173,38 @@ public:
 	virtual QPolygonF* getQPolygonFCurve();
 
 private:
-	double mRadius;
-	double mSemiHeight;
-	VectorStructR3 mPointSphere;
-	VectorStructR3 mDirection;
-	double mRefractiveIndexA;
-	double mRefractiveIndexB;
-	VectorStructR3 mCenterSphereAfterRotation;
-	real mFocalLengthSphericalSurfaceSide_A;
-	real mFocalLengthSphericalSurfaceSide_B;
+	real mRadius{};
+	real mSemiHeight{};
+	VectorStructR3 mPointSphere{};
+	VectorStructR3 mDirection{};
+	real mRefractiveIndexA{};
+	real mRefractiveIndexB{};
+	VectorStructR3 mCenterSphereAfterRotation{};
+	real mFocalLengthSphericalSurfaceSide_A{};
+	real mFocalLengthSphericalSurfaceSide_B{};
 
-	SphericalSurfaceQwt* SphericalSurface_Qwt_Ptr; 
-	QPolygonF pointsofSphericalSurface; 
+	SphericalSurfaceQwt* SphericalSurface_Qwt_Ptr{};
+	QPolygonF pointsofSphericalSurface{};
 
-	
+	// parameters to calc intersection point
+	Ray_LLT mRay{};
+	Light_LLT mLight{};
+	IntersectInformationStruct ReturnIntersectInformation{};
+	VectorStructR3 mFirstIntersectionPoint{};
+	VectorStructR3 mSecondIntersectionPoint{};
+	ALL_IntersectionPointsStruct mALL_IntersectionPoints{};
+	real mDistancePointFirstIntersectionPoint{};
+	real mDistancePointSecondIntersectionPoint{};
+	real mShortestDistanceDirection_FIRST_IntersectionPoint{};
+	real mShortestDistanceDirection_SECOND_IntersectionPoint{};
+	VectorStructR3 mNormalOnSphereAtIntersectPointUnit{};
+	real mShortestDistance_FIRST_IntersectionPoint{};
+	real mSqrtTermQadraticFormular{};
+	real mStepsT_first_zeroSqrtTerm{};
+	real mC_Term{};
+	real mB_Term{};
+	real mA_Term{};
+	real mStepsT_first{};
+	real mStepsT_second{};
+
 };

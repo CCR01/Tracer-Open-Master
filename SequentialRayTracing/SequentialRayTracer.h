@@ -1,18 +1,20 @@
 #pragma once
-#include "..\LowLevelTracing\OpticalSystem_LLT.h"
+//#include "..\LowLevelTracing\OpticalSystem_LLT.h"
 #include "..\LowLevelTracing\Math_LLT.h"
 #include "..\LowLevelTracing\Ray_LLT.h"
 #include <vector>
 
 #include "..\OpticalSystemElement\OpticalSystemElement.h"
-
+//#include "..\RayAiming\RayAiming.h"
 
 
 struct IntersectInfosAndPosSurfaceAndTotalSteps
 {
-	IntersectInformationStruct intersectInfos;
-	unsigned int position;
-	real totalSteps = 0.0;
+
+public:
+
+	IntersectInfosAndPosSurfaceAndTotalSteps();
+	~IntersectInfosAndPosSurfaceAndTotalSteps();
 
 	// get intersection infos
 	IntersectInformationStruct getIntersecInfos() const;
@@ -28,6 +30,15 @@ struct IntersectInfosAndPosSurfaceAndTotalSteps
 	void setTotalSteps(real const totSte);
 	// get total steps 
 	real getTotalSteps() const;
+
+	// no intersection point
+	void setNoIntersectionPoint();
+
+private:
+	IntersectInformationStruct mIntersectInfos{};
+	unsigned int mPosition{};
+	real mTotalSteps{};
+
 
 };
 
@@ -55,12 +66,12 @@ private:
 
 class SequentialRayTracing {
 public:
-	SequentialRayTracing() {};
+	SequentialRayTracing();
 	SequentialRayTracing(OpticalSystem_LLT opticalSystem);
 	SequentialRayTracing(OpticalSystem_LLT opticalSystem, unsigned int traToSur);
 	SequentialRayTracing(OpticalSystemElement opticalSysElement);
 	SequentialRayTracing(OpticalSystemElement opticalSysElement, LightRayStruct LightRay);
-	SequentialRayTracing(OpticalSystemElement /*optical system element*/ opticalSysElement, VectorStructR3 /*start point lightRay*/ startPointLightRay, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, real /*refractive index*/ refIndex, Light_LLT light);
+	SequentialRayTracing(OpticalSystemElement /*optical system element*/ opticalSysElement, VectorStructR3 /*start point lightRay*/ startPointLightRay, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, real /*refractive index*/ refIndex, Light_LLT mLight);
 	SequentialRayTracing(OpticalSystemElement /*optical system element*/ opticalSysElement, VectorStructR3 /*start point lightRay*/ startPointLightRay, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, real /*refractive index*/ refIndex, std::vector<Light_LLT> light_vec);
 	~SequentialRayTracing();
 
@@ -68,7 +79,7 @@ public:
 	void sequentialRayTracing(LightRayStruct LightRaySt);
 
 	// do sequential ray tracing with an vector of many LightRay
-	void seqRayTracingWithVectorOfLightRays(std::vector<LightRayStruct> const LightRayStVec);
+	void seqRayTracingWithVectorOfLightRays(const std::vector<LightRayStruct>& LightRayStVec);
 
 	// print all IntersectInfos from sequential raytracing
 	void printAllIntersectInfosSRT();
@@ -145,7 +156,8 @@ public:
 
 	void setRefractivIndexOptSys(real wavelength);
 
-
+	void resizeAllRelevantVectorsAndSetConst_Element();
+	void resizeAllRelevantVectorsAndSetConst_LLT();
 
 private:
 
@@ -164,8 +176,16 @@ private:
 	std::vector <std::vector<LightRayStruct>> mSaveLightRayStructsNotFiltered{}; //there are all intersection points also them with surface side N
 
 	std::vector<VectorStructR3> mStartPointOfLightRays{};
+	unsigned int mPositionApertureStop;
 
-	unsigned int mPositionApertureStop{};
+	Ray_LLT mRay{};
+	Light_LLT mLight{};
+	IntersectInfosAndPosSurfaceAndTotalSteps mTempInterInfos_Pos_totStep{};
+	unsigned int mSizeOfVector{};
+	IntersectInfosAndPosSurfaceAndTotalSteps mNoInterPointAndPos{};
+	real mSaveTotalSteps{};
+	std::vector<LightRayStruct> mTempLightRay_vec{};
+
 };
 
 
@@ -174,12 +194,9 @@ private:
 
 struct SequentialRayTracingandColorStruct
 {
-	SequentialRayTracingandColorStruct() {};
-	~SequentialRayTracingandColorStruct() {};
-	SequentialRayTracingandColorStruct(SequentialRayTracing* SeqRayTrac, QColor color) {
-		mSeqRayTrac = SeqRayTrac;
-		mColor = color;
-	};
+	SequentialRayTracingandColorStruct();
+	~SequentialRayTracingandColorStruct();
+	SequentialRayTracingandColorStruct(SequentialRayTracing* SeqRayTrac, QColor color);
 	SequentialRayTracing* mSeqRayTrac;
 	QColor mColor;
 

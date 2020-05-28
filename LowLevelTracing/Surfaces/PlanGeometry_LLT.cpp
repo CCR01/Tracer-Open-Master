@@ -90,25 +90,25 @@ VectorStructR3 PlanGeometry_LLT::getDirection()
 }
 
 // set refractive index side A
-void PlanGeometry_LLT::setRefractiveIndexSide_A(double const& refractiveIndex)
+void PlanGeometry_LLT::setRefractiveIndexSide_A(double const refractiveIndex)
 {
 	mRefractiveIndexA_Plan = refractiveIndex;
 }
 
 
 // set refractive index side B
-void PlanGeometry_LLT::setRefractiveIndexSide_B(double const& refractiveIndex)
+void PlanGeometry_LLT::setRefractiveIndexSide_B(double const refractiveIndex)
 {
 	mRefractiveIndexB_Plan = refractiveIndex;
 }
 
 
 // calculate the intersection information
-IntersectInformationStruct PlanGeometry_LLT::calculateIntersection(LightRayStruct const& lightRay)
+IntersectInformationStruct PlanGeometry_LLT::calculateIntersection(LightRayStruct const lightRay)
 {
 	IntersectInformationStruct returnIntersectInfos;
 	Ray_LLT ray = lightRay.getRay_LLT();
-	Light_LLT light = lightRay.getLight_LLT();
+	Light_LLT mLight = lightRay.getLight_LLT();
 
 
 	// flat in coordinate form: E:Nx * X+ Ny * Y+ Nz * Z= d 
@@ -123,13 +123,13 @@ IntersectInformationStruct PlanGeometry_LLT::calculateIntersection(LightRayStruc
 	if (denominator == 0.0)
 	{
 		// there is no intersection point
-		returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, light }; //'N' there is NO intersection poin
+		returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, mLight }; //'N' there is NO intersection poin
 	}
 	else if (numerator == 0.0)
 	{
 		// ray is in flat!
 		// TODO Question Sergej: Was soll dann gemacht werden?!?!?! hier hat man ja dann unendlich viele Schnittpunkte 	
-		returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, light }; //'N' there is NO intersection poin
+		returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, mLight }; //'N' there is NO intersection poin
 		// -> Das ist ja dann eigentlich falsch?! -> es gibt ja viele Schnittpunkte!
 	}
 
@@ -141,7 +141,7 @@ IntersectInformationStruct PlanGeometry_LLT::calculateIntersection(LightRayStruc
 
 		if (stepsT < 0) // ray would walk in the wrong direction
 		{
-			returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, light }; //'N' there is NO intersection poin
+			returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, mLight }; //'N' there is NO intersection poin
 		}
 
 		else // calculate the intersection point
@@ -188,18 +188,18 @@ IntersectInformationStruct PlanGeometry_LLT::calculateIntersection(LightRayStruc
 			if (distance > mSemiHeightPlan) // check if intersection point is in the plan geometry
 			{
 				// the intersection point is not on the plan geometry
-				returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, light }; //'N' there is NO intersection poin
+				returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, mLight }; //'N' there is NO intersection poin
 			}
 
 			else // the intersection point is in the plan geometry
 			{
 				if (ray.getDirectionRayUnit() * mDirectionPlan > 0) // switch normale on plan geometry and from side A
 				{
-					returnIntersectInfos = { intersectionPoint,-1.0 * mDirectionPlan ,A, stepsT * mRefractiveIndexA_Plan ,mRefractiveIndexA_Plan,mRefractiveIndexB_Plan,ray.getDirectionRayUnit(), light };
+					returnIntersectInfos = { intersectionPoint,-1.0 * mDirectionPlan ,A, stepsT * mRefractiveIndexA_Plan ,mRefractiveIndexA_Plan,mRefractiveIndexB_Plan,ray.getDirectionRayUnit(), mLight };
 				}
 				else // from side B
 				{
-					returnIntersectInfos = { intersectionPoint,mDirectionPlan ,B, stepsT * mRefractiveIndexB_Plan,mRefractiveIndexA_Plan,mRefractiveIndexB_Plan,ray.getDirectionRayUnit(), light };
+					returnIntersectInfos = { intersectionPoint,mDirectionPlan ,B, stepsT * mRefractiveIndexB_Plan,mRefractiveIndexA_Plan,mRefractiveIndexB_Plan,ray.getDirectionRayUnit(), mLight };
 				}
 			}
 
@@ -306,6 +306,20 @@ PlanGeometry_LLT& PlanGeometry_LLT::operator=(PlanGeometry_LLT& source)
 
 	return *this;
 }
+
+PlanGeometry_LLT::PlanGeometry_LLT() {};
+PlanGeometry_LLT::~PlanGeometry_LLT() {};
+PlanGeometry_LLT::PlanGeometry_LLT(/*semi height*/ double semiHeight,/*point*/ VectorStructR3 point,/*direction*/ VectorStructR3 direction,/*refractive index A*/ double refractiveSideA, /*refractive index B*/ double refractiveSideB) :
+	// ToDo Ques Sergej: Was soll passieren, fals mit jemand eine direction von (0,0,0) gibt? Muss ich das überprüfen?
+	// Das Gleiche gilt auch für anderen Oberflächen (z.B. Sphäre, Asphäre,...)
+	mSemiHeightPlan(semiHeight),
+	mPointPlan(point),
+	mDirectionPlan(direction),
+	mRefractiveIndexA_Plan(refractiveSideA),
+	mRefractiveIndexB_Plan(refractiveSideB)
+{
+	calcSphericalSurfaceQwtCoord();
+};
 
 std::shared_ptr<SurfaceIntersectionRay_LLT> PlanGeometry_LLT::clone()
 {

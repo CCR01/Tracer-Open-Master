@@ -1159,8 +1159,7 @@ bool BenchmarkRayAiming::checkRayAimingManyRay_obj(/*opt sys LLT*/ OpticalSystem
 	// get direction aperture stop
 	VectorStructR3 directionApertureStop = optSys_LLT.getPosAndInteractingSurface()[posApertureStop].getSurfaceInterRay_ptr()->getDirection();
 
-	// Ray Aiming from infinity   
-	RayAiming RayAiming(optSys_LLT);
+	// Ray Aiming from obj
 	SequentialRayTracing seqTrace(optSys_LLT);
 	LightRayStruct testLightRay;
 	std::vector<bool> cheker_vec;

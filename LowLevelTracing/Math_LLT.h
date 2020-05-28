@@ -93,19 +93,19 @@ namespace Math {
 	void print(VectorStructR3 VectorPrint);
 
 	// scale a Vector
-	VectorStructR3 scaleVector(double const scaleFactor, VectorStructR3 const Vscale);
+	VectorStructR3 scaleVector(real const scaleFactor, const VectorStructR3&  Vscale);
 
 	// calculate unit vector
-	VectorStructR3 unitVector(VectorStructR3 const V);
+	VectorStructR3 unitVector( const VectorStructR3& V);
 
 	// subtract two vectors
-	VectorStructR3 subVectors(VectorStructR3 V1sub, VectorStructR3 V2sub);
+	VectorStructR3 subVectors(const VectorStructR3& V1sub, const VectorStructR3& V2sub);
 
 	// calculate cross product
-	VectorStructR3 DoCrossProduct(VectorStructR3 CrProVec1, VectorStructR3 CrProVec2);
+	VectorStructR3 DoCrossProduct(const VectorStructR3& CrProVec1, const VectorStructR3& CrProVec);
 
 	// calculate length of vector
-	double lengthOfVector(VectorStructR3 vLength);
+	double lengthOfVector(const VectorStructR3& vLength);
 
 	// calculate distance between two points in R3
 	double distanceTwoVectors(VectorStructR3 const V1, VectorStructR3 const V2);
@@ -115,10 +115,10 @@ namespace Math {
 
 	// calculate rotate matrix around an axis n
 	// source https://en.wikipedia.org/wiki/Rotation_matrix
-	Matrix3x3AndExist calcRotationMatrixAroundVector(VectorStructR3 const direction, double const /*in radiant*/ rotationAngle);
+	std::vector<std::vector<real>> calcRotationMatrixAroundVector(VectorStructR3 const direction, double const /*in radiant*/ rotationAngle);
 
 	// Multiply matrix (3x3) with Vector in R3
-	VectorStructR3 multiplyMatrix3x3VectorR3(double mat[3][3], VectorStructR3 vec);
+	VectorStructR3 multiplyMatrix3x3VectorR3(const std::vector < std::vector<real>> mat, const VectorStructR3& vec);
 
 	// to compare two numbers it is sometimes helpful to round them
 	//source: https://www.c-plusplus.net/forum/39342-full
@@ -141,10 +141,10 @@ namespace Math {
 	bool checkTrueOfVectorElements(std::vector<bool> V);
 
 	// round the numbers of a matrix to compare them
-	Matrix3x3AndExist RoundNumberMatrix(real Matrix[3][3], int decimals);
+	std::vector<std::vector<real>> RoundNumberMatrix(std::vector<std::vector<real>> Matrix, int decimals);
 
 	// compare numbers of a 3x3 matrix
-	bool compareRoundedTwoMatrices3x3(real Matrix1[3][3], real Matrix[3][3], unsigned int decimals);
+	bool compareRoundedTwoMatrices3x3(std::vector<std::vector<real>> Matrix1, std::vector<std::vector<real>> Matrix, unsigned int decimals);
 
 	// compare all vector elements
 	bool compareAllVectorElements(std::vector<VectorStructR3> V1, std::vector<VectorStructR3> V2, unsigned int decimals);

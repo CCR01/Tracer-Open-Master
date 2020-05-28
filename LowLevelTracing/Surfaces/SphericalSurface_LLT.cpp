@@ -178,7 +178,7 @@ double SphericalSurface_LLT::getRefractivIndexSide_A() const&
 }
 
 //set Refractive Index Left
-void SphericalSurface_LLT::setRefractiveIndexSide_A(double const& refractiveIndexLeft)
+void SphericalSurface_LLT::setRefractiveIndexSide_A(double const refractiveIndexLeft)
 {
 	mRefractiveIndexA = refractiveIndexLeft;
 }
@@ -190,7 +190,7 @@ double SphericalSurface_LLT::getRefractivIndexSide_B() const&
 }
 
 //set Refractive Index Right
-void SphericalSurface_LLT::setRefractiveIndexSide_B(double const& refractiveIndexRight)
+void SphericalSurface_LLT::setRefractiveIndexSide_B(double const refractiveIndexRight)
 {
 	mRefractiveIndexB = refractiveIndexRight;
 }
@@ -202,31 +202,61 @@ void SphericalSurface_LLT::calcCenterSphereAfterRotation()
 }
 
 
-
-// Struct to save the calculatet intersection point between ray and spherical surface
-VectorStructR3 SphericalSurface_LLT::ALL_IntersectionPointsStruct::getFirstIntersectionPoint()
+ALL_IntersectionPointsStruct::ALL_IntersectionPointsStruct() {};
+ALL_IntersectionPointsStruct::~ALL_IntersectionPointsStruct() {};
+// first intersection point
+VectorStructR3 ALL_IntersectionPointsStruct::getFirstIntersectionPoint()
 {
-	return firstIntersectionPoint;
+	return mFirstIntersectionPoint;
 }
-VectorStructR3 SphericalSurface_LLT::ALL_IntersectionPointsStruct::getSecondIntersectionPoint()
+void ALL_IntersectionPointsStruct::setFirstIntersectionPoint(VectorStructR3 firstInterPoint)
 {
-	return secondIntersectionPoint;
+	mFirstIntersectionPoint = firstInterPoint;
 }
-int SphericalSurface_LLT::ALL_IntersectionPointsStruct::isIntersectionPoint()
+// second intersection point
+VectorStructR3 ALL_IntersectionPointsStruct::getSecondIntersectionPoint()
 {
-	return yesNoIntersectionPoint;
+	return mSecondIntersectionPoint;
 }
-
-
-VectorStructR3 SphericalSurface_LLT::CheckedIntersectionPointStruct::getIntersectionPoint()
+void ALL_IntersectionPointsStruct::setSecondIntersectionPoint(VectorStructR3 secondInterPoint)
 {
-	return IntersectionPoint;
-};
-
-
-int SphericalSurface_LLT::CheckedIntersectionPointStruct::yesNoIntersectionPoint()
+	mSecondIntersectionPoint = secondInterPoint;
+}
+// steps first inter point
+real ALL_IntersectionPointsStruct::getStepsFirstIP()
 {
-	return isIntersectionPoint;
+	return mStepsT_first;
+}
+void ALL_IntersectionPointsStruct::setStepsFirstIP(real stepsFirstIP)
+{
+	mStepsT_first = stepsFirstIP;
+}
+// steps second inter pont
+real ALL_IntersectionPointsStruct::getStepsSecondIP()
+{
+	return mStepsT_second;
+}
+void ALL_IntersectionPointsStruct::setStepsSecondIP(real stepsSecondIP)
+{
+	mStepsT_second = stepsSecondIP;
+}
+// is intersection point
+unsigned int ALL_IntersectionPointsStruct::getNumIntersectionPoint()
+{
+	return mNumberIntersectionPoint;
+}
+void ALL_IntersectionPointsStruct::setNumIntersectionPoint(unsigned int numIntersectionPoint)
+{
+	mNumberIntersectionPoint = numIntersectionPoint;
+}
+// setAll
+void ALL_IntersectionPointsStruct::setAll(VectorStructR3 firstInterPoint, VectorStructR3 secondInterPoint, real stepFirst, real stepSecond, unsigned int numInterPoints)
+{
+	setFirstIntersectionPoint(firstInterPoint);
+	setSecondIntersectionPoint(secondInterPoint);
+	setStepsFirstIP(stepFirst);
+	setStepsSecondIP(stepSecond);
+	setNumIntersectionPoint(numInterPoints);
 }
 
 // get focal length side A
@@ -247,44 +277,19 @@ real SphericalSurface_LLT::getFocalLength_B()
 
 // calculate the intersection information between ray and sphere
 // the ray is given from the class "SurfaceIntersection"
-IntersectInformationStruct SphericalSurface_LLT::calculateIntersection(LightRayStruct const& lightRay)
+IntersectInformationStruct SphericalSurface_LLT::calculateIntersection(LightRayStruct const lightRay)
 {
-	Ray_LLT ray = lightRay.getRay_LLT();
-	Light_LLT light = lightRay.getLight_LLT();
+	mRay = lightRay.getRay_LLT();
+	mLight = lightRay.getLight_LLT();
+	ReturnIntersectInformation.setNoIntersectionPoint();
 
-	IntersectInformationStruct returnIntersectInformation = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 }, N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 },light }; //'N' there is NO intersection point
-	VectorStructR3 firstIntersectionPoint = { 0.0, 0.0, 0.0 };
-	VectorStructR3 secondIntersectionPoint = { 0.0, 0.0, 0.0 };
+	// terms to calculate intersection point between ray and sphere
+	mC_Term = mRay.getOriginRay() * mRay.getOriginRay() - 2 * (mRay.getOriginRay() * mCenterSphereAfterRotation)
+		+ (mCenterSphereAfterRotation * mCenterSphereAfterRotation)	- (mRadius * mRadius);
 
+	mB_Term = 2 * (mRay.getOriginRay() * mRay.getDirectionRayUnit()) - 2 * (mRay.getDirectionRayUnit() * mCenterSphereAfterRotation);
 
-	ALL_IntersectionPointsStruct ALL_IntersectionPoints = { firstIntersectionPoint, secondIntersectionPoint };
-
-
-	// TODO Question: Wäre es sinnvoll hier einen Fehler zu schmeißen?!
-	/*
-	if (mSphericalSurface.getRadius() > 0 && mRay.getDirectionRayUnit().Z < 0)
-	{
-	std::cout << "It would be better to change the sign of the radius \n";
-	}
-
-	if (mSphericalSurface.getRadius() < 0 && mRay.getDirectionRayUnit().Z > 0)
-	{
-	std::cout << "It would be better to change the sign of the radius \n";
-	}
-	*/
-
-
-	// terms to calculate intersection point between ray an sphere
-	double cTerm = ray.getOriginRay() * ray.getOriginRay()
-		- 2 * (ray.getOriginRay() * mCenterSphereAfterRotation)
-
-		+ (mCenterSphereAfterRotation * mCenterSphereAfterRotation)
-		- (mRadius * mRadius);
-
-	double bTerm = 2 * (ray.getOriginRay() * ray.getDirectionRayUnit())
-		- 2 * (ray.getDirectionRayUnit() * mCenterSphereAfterRotation);
-
-	double aTerm = ray.getDirectionRayUnit() * ray.getDirectionRayUnit();
+	mA_Term = mRay.getDirectionRayUnit() * mRay.getDirectionRayUnit();
 
 
 	// there are diffente possibilities:
@@ -294,66 +299,65 @@ IntersectInformationStruct SphericalSurface_LLT::calculateIntersection(LightRayS
 
 	// first we check if there is no intersection point between ray an spherical surface
 	// so we calculate the term under the sqrt in the Quadratic formula
-	double sqrtTermQadraticFormular = bTerm * bTerm - 4 * aTerm * cTerm;
-	if (sqrtTermQadraticFormular < 0)
-	{
-		//std::cout << "there is no intersection point between the ray an the spherical surface \n";
-		ALL_IntersectionPoints = { firstIntersectionPoint, firstIntersectionPoint,0,0,0 }; // 0 -> no intersectionpPoint
 
+	mSqrtTermQadraticFormular = mB_Term * mB_Term - 4 * mA_Term * mC_Term;
+	if (mSqrtTermQadraticFormular < 0)
+	{
+		return ReturnIntersectInformation;
 	}
 
-	else if (sqrtTermQadraticFormular == 0)
+	else if (mSqrtTermQadraticFormular == 0)
 	{
 		//std::cout << "there is only one intersection point. \n";
 		// next we have to calculate that intersection point
 		// first we have to calculate the steps we have to walk on the ray
-		double stepsT_first_zeroSqrtTerm = -bTerm / (2 * aTerm);
+		mStepsT_first_zeroSqrtTerm = -mB_Term / (2 * mA_Term);
 
-		if (stepsT_first_zeroSqrtTerm < 0) // the ray would walk in the wrong direction
+		if (mStepsT_first_zeroSqrtTerm < 0) // the ray would walk in the wrong direction
 		{
-			ALL_IntersectionPoints = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },0,0,0 };
+			return ReturnIntersectInformation;
 		}
 		else
 		{
 			//calculate intersection Point (there is only ONE intersection point)
-			firstIntersectionPoint = ray.getOriginRay() + (stepsT_first_zeroSqrtTerm * ray.getDirectionRayUnit());
-			ALL_IntersectionPoints = { firstIntersectionPoint, firstIntersectionPoint,stepsT_first_zeroSqrtTerm,stepsT_first_zeroSqrtTerm, 1 }; // 1 -> one intersection points
+			mFirstIntersectionPoint = mRay.getOriginRay() + (mStepsT_first_zeroSqrtTerm * mRay.getDirectionRayUnit());
+			mALL_IntersectionPoints.setAll(mFirstIntersectionPoint, mFirstIntersectionPoint,mStepsT_first_zeroSqrtTerm,mStepsT_first_zeroSqrtTerm, 1); // 1 -> one intersection points
 		}
 	}
 
 	// calculate steps for the first intersection point
 	// stepsT_first is always smaller than stepsT_second!!! 
-	double stepsT_first = (-bTerm /*for FIRST intersection point*/ - std::sqrt(sqrtTermQadraticFormular)) / (2 * aTerm);
+	mStepsT_first = (-mB_Term /*for FIRST intersection point*/ - std::sqrt(mSqrtTermQadraticFormular)) / (2 * mA_Term);
 
 	// calculate steps for the second intersection point
-	double stepsT_second = (-bTerm /*for SECOND intersection point*/ + std::sqrt(sqrtTermQadraticFormular)) / (2 * aTerm);
+	mStepsT_second = (-mB_Term /*for SECOND intersection point*/ + std::sqrt(mSqrtTermQadraticFormular)) / (2 * mA_Term);
 
 	// there must be two inersection points between ray and spherical surface
 
-	if (stepsT_second < 0) // ray would walk in the wrong direction 
+	if (mStepsT_second < 0) // ray would walk in the wrong direction 
 	{
-		ALL_IntersectionPoints = { {0.0,0.0,0.0},{ 0.0,0.0,0.0 },0.0,0.0, 0 };
+		return ReturnIntersectInformation;
 	}
 
 
-	else if (stepsT_first < 0) // stepT_second is not negative -> checked before
+	else if (mStepsT_first < 0) // stepT_second is not negative -> checked before
 	{
-		secondIntersectionPoint = ray.getOriginRay() + stepsT_second * ray.getDirectionRayUnit();
-		ALL_IntersectionPoints = { secondIntersectionPoint , secondIntersectionPoint,stepsT_second,stepsT_second, 1 }; // 1 -> one relevate intersection point
+		mSecondIntersectionPoint = mRay.getOriginRay() + mStepsT_second * mRay.getDirectionRayUnit();
+		mALL_IntersectionPoints.setAll(mSecondIntersectionPoint , mSecondIntersectionPoint,mStepsT_second,mStepsT_second, 1); // 1 -> one relevate intersection point
 	}
 
-	else if (std::abs(stepsT_first - stepsT_second) > 0.00000001 /*TODO select a tolerance*/ && stepsT_first > 0 && stepsT_second > 0) //stepT_first and stepT_second is positive
+	else if (std::abs(mStepsT_first - mStepsT_second) > 0.00000001 /*TODO select a tolerance*/ && mStepsT_first > 0 && mStepsT_second > 0) //stepT_first and stepT_second is positive
 	{														/*we have to be clear that the intersection points are not the same!*/
-		firstIntersectionPoint = ray.getOriginRay() + stepsT_first * ray.getDirectionRayUnit();
-		secondIntersectionPoint = ray.getOriginRay() + stepsT_second * ray.getDirectionRayUnit();
-		ALL_IntersectionPoints = { firstIntersectionPoint, secondIntersectionPoint,stepsT_first,stepsT_second, 2 }; // 2 -> two intersection points
+		mFirstIntersectionPoint = mRay.getOriginRay() + mStepsT_first * mRay.getDirectionRayUnit();
+		mSecondIntersectionPoint = mRay.getOriginRay() + mStepsT_second * mRay.getDirectionRayUnit();
+		mALL_IntersectionPoints.setAll(mFirstIntersectionPoint, mSecondIntersectionPoint,mStepsT_first,mStepsT_second, 2 ); // 2 -> two intersection points
 	}
 
-	else if (std::abs(stepsT_second - stepsT_first) > 0.00000001 /*TODO select a tolerance*/ && stepsT_first >= 0 && stepsT_second > 0)
+	else if (std::abs(mStepsT_second - mStepsT_first) > 0.00000001 /*TODO select a tolerance*/ && mStepsT_first >= 0 && mStepsT_second > 0)
 	{
-		firstIntersectionPoint = ray.getOriginRay() + stepsT_first * ray.getDirectionRayUnit();
-		secondIntersectionPoint = ray.getOriginRay() + stepsT_second * ray.getDirectionRayUnit();
-		ALL_IntersectionPoints = { firstIntersectionPoint, secondIntersectionPoint,stepsT_first,stepsT_second, 2 }; // 2 -> two intersection points
+		mFirstIntersectionPoint = mRay.getOriginRay() + mStepsT_first * mRay.getDirectionRayUnit();
+		mSecondIntersectionPoint = mRay.getOriginRay() + mStepsT_second * mRay.getDirectionRayUnit();
+		mALL_IntersectionPoints.setAll(mFirstIntersectionPoint, mSecondIntersectionPoint,mStepsT_first,mStepsT_second, 2); // 2 -> two intersection points
 	}
 
 	/*
@@ -382,192 +386,193 @@ IntersectInformationStruct SphericalSurface_LLT::calculateIntersection(LightRayS
 
 	// Next we have to check whitch intersection point is the right on!
 
-	if (ALL_IntersectionPoints.yesNoIntersectionPoint == 0)
+
+	// there is only one intersection point
+	if (mALL_IntersectionPoints.getNumIntersectionPoint() == 1) // there is only on intersection point
 	{
-		return{ { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, light }; //'N' there is NO intersection point
+		mShortestDistance_FIRST_IntersectionPoint = Math::lengthOfVector(Math::DoCrossProduct((mDirection), (mALL_IntersectionPoints.getFirstIntersectionPoint() - mPointSphere))) / Math::lengthOfVector(mDirection);
+		if (mShortestDistance_FIRST_IntersectionPoint >= mSemiHeight)
+		{
+			// the intersection point is NOT in the spherical surface
+			return ReturnIntersectInformation; //there is NO intersection point
+		}
+		else // the FIRST intersection point is in the spherical surface
+		{
+			mNormalOnSphereAtIntersectPointUnit = Math::unitVector(mALL_IntersectionPoints.getFirstIntersectionPoint() - mCenterSphereAfterRotation);
+			if (mNormalOnSphereAtIntersectPointUnit*mRay.getDirectionRayUnit() <= 0) // surface side A
+			{
+				ReturnIntersectInformation.setAll(mALL_IntersectionPoints.getFirstIntersectionPoint(),mNormalOnSphereAtIntersectPointUnit,A,std::abs(mStepsT_first*mRay.getCurrentRefractiveIndex()),mRefractiveIndexA,mRefractiveIndexB,mRay.getDirectionRayUnit(), mLight);
+				return ReturnIntersectInformation;
+			}
+
+			else // surface side B 
+			{
+				ReturnIntersectInformation.setAll(mALL_IntersectionPoints.getFirstIntersectionPoint(), /*flip normale*/-1.0 * mNormalOnSphereAtIntersectPointUnit,B,std::abs(mStepsT_second*mRay.getCurrentRefractiveIndex()),mRefractiveIndexA,mRefractiveIndexB,mRay.getDirectionRayUnit(), mLight);
+				return ReturnIntersectInformation;
+			}
+		}
+
 	}
 
-	else // there must be an intersection point 
-	{
+	//distance vertex (sphere) and FIRST intersection point
+	mDistancePointFirstIntersectionPoint = Math::lengthOfVector(mPointSphere - mALL_IntersectionPoints.getFirstIntersectionPoint());
+	//distance point (sphere) and SECOND intersection point
+	mDistancePointSecondIntersectionPoint = Math::lengthOfVector(mPointSphere - mALL_IntersectionPoints.getSecondIntersectionPoint());
+	mShortestDistanceDirection_FIRST_IntersectionPoint = Math::lengthOfVector(Math::DoCrossProduct(mDirection, (mALL_IntersectionPoints.getFirstIntersectionPoint() - mPointSphere))) / Math::lengthOfVector(mDirection);
+	mShortestDistanceDirection_SECOND_IntersectionPoint = Math::lengthOfVector(Math::DoCrossProduct(mDirection, (mALL_IntersectionPoints.getSecondIntersectionPoint() - mPointSphere))) / Math::lengthOfVector(mDirection);
 
-		if (ALL_IntersectionPoints.yesNoIntersectionPoint == 1) // there is only on intersection point
+	if (mALL_IntersectionPoints.getNumIntersectionPoint() == 2) // there are two intersection points
+	{	
+		// check witch intersection point is next to the vertex of the sphere
 
+		if (mShortestDistanceDirection_FIRST_IntersectionPoint > mSemiHeight && mShortestDistanceDirection_SECOND_IntersectionPoint > mSemiHeight)
 		{
-			double shortestDistance_FIRST_IntersectionPoint = Math::lengthOfVector(Math::DoCrossProduct((mDirection), (ALL_IntersectionPoints.firstIntersectionPoint - mPointSphere))) / Math::lengthOfVector(mDirection);
-			if (shortestDistance_FIRST_IntersectionPoint >= mSemiHeight)
+			// the intersection point is NOT in the spherical surface
+			return ReturnIntersectInformation; //'N' there is NO intersection point
+		}
+
+		else if (mStepsT_first > 0 && mStepsT_second > 0 && mDirection * mRay.getDirectionRayUnit() >= 0.0 || /*TODO: this is good enought for sequential ray tracing but NOT for non-seq!!!*/ (mDirection.getX() == 0.0 && mDirection.getZ() == 0.0)) // we have to chose the first intersection point
+		{
+			if (mShortestDistanceDirection_FIRST_IntersectionPoint <= mSemiHeight)
 			{
-				// the intersection point is NOT in the spherical surface
-				return{ { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 }, N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 },light }; //'N' there is NO intersection point
+				mNormalOnSphereAtIntersectPointUnit = Math::unitVector(mALL_IntersectionPoints.getFirstIntersectionPoint() - mCenterSphereAfterRotation);
+				if (mNormalOnSphereAtIntersectPointUnit*mRay.getDirectionRayUnit() <= 0) // surface side A
+				{
+					ReturnIntersectInformation.setAll(mALL_IntersectionPoints.getFirstIntersectionPoint() ,mNormalOnSphereAtIntersectPointUnit,A,std::abs(mStepsT_first*mRay.getCurrentRefractiveIndex()),mRefractiveIndexA,mRefractiveIndexB,mRay.getDirectionRayUnit(), mLight);
+					return ReturnIntersectInformation;
+				}
+				else // surface side B
+				{
+					ReturnIntersectInformation.setAll(mALL_IntersectionPoints.getFirstIntersectionPoint(),/*flip normale*/-1.0 * mNormalOnSphereAtIntersectPointUnit,B,std::abs(mStepsT_first*mRay.getCurrentRefractiveIndex()),mRefractiveIndexA,mRefractiveIndexB,mRay.getDirectionRayUnit(), mLight);
+					return ReturnIntersectInformation;
+				}
+			}
+
+			else if (mShortestDistanceDirection_SECOND_IntersectionPoint <= mSemiHeight)
+			{
+				mNormalOnSphereAtIntersectPointUnit = Math::unitVector(mALL_IntersectionPoints.getFirstIntersectionPoint() - mCenterSphereAfterRotation);
+				if (mNormalOnSphereAtIntersectPointUnit*mRay.getDirectionRayUnit() <= 0) // surface side A
+				{
+					ReturnIntersectInformation.setAll(mALL_IntersectionPoints.getSecondIntersectionPoint(),mNormalOnSphereAtIntersectPointUnit,A,std::abs(mStepsT_first*mRay.getCurrentRefractiveIndex()),mRefractiveIndexA,mRefractiveIndexB,mRay.getDirectionRayUnit(), mLight);
+					return ReturnIntersectInformation;
+				}
+				else // surface side B
+				{
+					ReturnIntersectInformation.setAll(mALL_IntersectionPoints.getSecondIntersectionPoint(),/*flip normale*/-1.0 * mNormalOnSphereAtIntersectPointUnit,B,std::abs(mStepsT_first*mRay.getCurrentRefractiveIndex()),mRefractiveIndexA,mRefractiveIndexB,mRay.getDirectionRayUnit(), mLight);
+					return ReturnIntersectInformation;
+				}
+
+
+			}
+		}
+
+		// we have to check the first intersection point
+		else if (mDistancePointFirstIntersectionPoint < mDistancePointSecondIntersectionPoint && mShortestDistanceDirection_FIRST_IntersectionPoint <= mSemiHeight)
+		{
+			// the FIRST intersection point is in the spherical surface
+
+			mNormalOnSphereAtIntersectPointUnit = Math::unitVector(mALL_IntersectionPoints.getFirstIntersectionPoint() - mCenterSphereAfterRotation);
+			if (mNormalOnSphereAtIntersectPointUnit*mRay.getDirectionRayUnit() <= 0) // surface side A
+			{
+				ReturnIntersectInformation.setAll(mALL_IntersectionPoints.getFirstIntersectionPoint(),mNormalOnSphereAtIntersectPointUnit,A,std::abs(mStepsT_first*mRay.getCurrentRefractiveIndex()),mRefractiveIndexA,mRefractiveIndexB,mRay.getDirectionRayUnit(), mLight);
+				return ReturnIntersectInformation;
+			}
+			else // surface side B
+			{
+				ReturnIntersectInformation.setAll(mALL_IntersectionPoints.getFirstIntersectionPoint(),/*flip normale*/-1.0 * mNormalOnSphereAtIntersectPointUnit,B,std::abs(mStepsT_first*mRay.getCurrentRefractiveIndex()),mRefractiveIndexA,mRefractiveIndexB,mRay.getDirectionRayUnit(), mLight);
+				return ReturnIntersectInformation;
+			}
+
+
+		}
+
+
+		else if (mDistancePointFirstIntersectionPoint > mDistancePointSecondIntersectionPoint && mShortestDistanceDirection_SECOND_IntersectionPoint <= mSemiHeight) // we have to check the second intersection point
+		{
+
+			// the SECOND intersection point is in the spherical surface
+
+			mNormalOnSphereAtIntersectPointUnit = Math::unitVector(mALL_IntersectionPoints.getSecondIntersectionPoint() -mCenterSphereAfterRotation);
+			if (mNormalOnSphereAtIntersectPointUnit*mRay.getDirectionRayUnit() <= 0) // surface side A
+			{
+				ReturnIntersectInformation.setAll(mALL_IntersectionPoints.getSecondIntersectionPoint() ,mNormalOnSphereAtIntersectPointUnit,A,std::abs(mStepsT_second*mRay.getCurrentRefractiveIndex()),mRefractiveIndexA,mRefractiveIndexB,mRay.getDirectionRayUnit(), mLight);
+				return ReturnIntersectInformation;
+			}
+			else // surface side B
+			{
+				ReturnIntersectInformation.setAll(mALL_IntersectionPoints.getSecondIntersectionPoint(),/*here we have to flip the nomal vector*/-1 * mNormalOnSphereAtIntersectPointUnit,B,std::abs(mStepsT_second*mRay.getCurrentRefractiveIndex()),mRefractiveIndexA,mRefractiveIndexB,mRay.getDirectionRayUnit(), mLight);
+				return ReturnIntersectInformation;
+			}
+		}
+
+		else if (mShortestDistanceDirection_SECOND_IntersectionPoint > mSemiHeight)
+		{
+			// the intersection point is NOT in the spherical surface
+			return ReturnIntersectInformation; //'N' there is NO intersection point
+		}
+
+		else if (mShortestDistanceDirection_FIRST_IntersectionPoint > mSemiHeight)
+		{
+			return ReturnIntersectInformation; //'N' there is NO intersection point
+		}
+
+
+	}
+
+	else if (mDistancePointFirstIntersectionPoint == mDistancePointSecondIntersectionPoint)  // next we have to check the steps
+	{
+		if (mALL_IntersectionPoints.getStepsFirstIP() < mALL_IntersectionPoints.getStepsSecondIP())
+		{
+			// shortestDistanceDirection_FIRST_IntersectionPoint = Math::lengthOfVector(Math::DoCrossProduct(mDirection, (ALL_IntersectionPoints.firstIntersectionPoint - mPoint))) / Math::lengthOfVector(mDirection);
+			if (mShortestDistanceDirection_FIRST_IntersectionPoint > mSemiHeight)
+			{
+				//the intersection point is NOT in the spherical surface
+				return ReturnIntersectInformation;
 			}
 			else // the FIRST intersection point is in the spherical surface
 			{
-				VectorStructR3 normalOnSphereAtIntersectPointUnit = Math::unitVector(ALL_IntersectionPoints.firstIntersectionPoint - mCenterSphereAfterRotation);
-				if (normalOnSphereAtIntersectPointUnit*ray.getDirectionRayUnit() <= 0) // surface side A
+
+				mNormalOnSphereAtIntersectPointUnit = Math::unitVector(mALL_IntersectionPoints.getFirstIntersectionPoint() - mCenterSphereAfterRotation);
+				if (mNormalOnSphereAtIntersectPointUnit*mRay.getDirectionRayUnit() <= 0) // surface side A
 				{
-					returnIntersectInformation = { ALL_IntersectionPoints.firstIntersectionPoint,normalOnSphereAtIntersectPointUnit,A,std::abs(stepsT_first*ray.getCurrentRefractiveIndex()),mRefractiveIndexA,mRefractiveIndexB,ray.getDirectionRayUnit(), light };
-				}
-
-				else // surface side B 
-				{
-					returnIntersectInformation = { ALL_IntersectionPoints.firstIntersectionPoint, /*flip normale*/-1.0 * normalOnSphereAtIntersectPointUnit,B,std::abs(stepsT_second*ray.getCurrentRefractiveIndex()),mRefractiveIndexA,mRefractiveIndexB,ray.getDirectionRayUnit(), light };
-				}
-			}
-
-		}
-
-		//distance vertex (sphere) and FIRST intersection point
-		double distancePointFirstIntersectionPoint = Math::lengthOfVector(mPointSphere - ALL_IntersectionPoints.getFirstIntersectionPoint());
-		//distance point (sphere) and SECOND intersection point
-		double distancePointSecondIntersectionPoint = Math::lengthOfVector(mPointSphere - ALL_IntersectionPoints.getSecondIntersectionPoint());
-		double shortestDistanceDirection_FIRST_IntersectionPoint = Math::lengthOfVector(Math::DoCrossProduct(mDirection, (ALL_IntersectionPoints.firstIntersectionPoint - mPointSphere))) / Math::lengthOfVector(mDirection);
-		double shortestDistanceDirection_SECOND_IntersectionPoint = Math::lengthOfVector(Math::DoCrossProduct(mDirection, (ALL_IntersectionPoints.secondIntersectionPoint - mPointSphere))) / Math::lengthOfVector(mDirection);
-
-		if (ALL_IntersectionPoints.yesNoIntersectionPoint == 2) // there are two intersection points
-		{	// check witch intersection point is next to the vertex of the sphere
-
-
-
-
-			if (shortestDistanceDirection_FIRST_IntersectionPoint > mSemiHeight && shortestDistanceDirection_SECOND_IntersectionPoint > mSemiHeight)
-			{
-				// the intersection point is NOT in the spherical surface
-				return{ { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 }, N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, light }; //'N' there is NO intersection point
-			}
-
-			else if (stepsT_first > 0 && stepsT_second > 0 && mDirection * ray.getDirectionRayUnit() >= 0.0 || /*TODO: this is good enought for sequential ray tracing but NOT for non-seq!!!*/ (mDirection.getX() == 0.0 && mDirection.getZ() == 0.0)) // we have to chose the first intersection point
-			{
-				if (shortestDistanceDirection_FIRST_IntersectionPoint <= mSemiHeight)
-				{
-					VectorStructR3 normalOnSphereAtIntersectPointUnit = Math::unitVector(ALL_IntersectionPoints.firstIntersectionPoint - mCenterSphereAfterRotation);
-					if (normalOnSphereAtIntersectPointUnit*ray.getDirectionRayUnit() <= 0) // surface side A
-					{
-						returnIntersectInformation = { ALL_IntersectionPoints.firstIntersectionPoint,normalOnSphereAtIntersectPointUnit,A,std::abs(stepsT_first*ray.getCurrentRefractiveIndex()),mRefractiveIndexA,mRefractiveIndexB,ray.getDirectionRayUnit(), light };
-					}
-					else // surface side B
-					{
-						returnIntersectInformation = { ALL_IntersectionPoints.firstIntersectionPoint,/*flip normale*/-1.0 * normalOnSphereAtIntersectPointUnit,B,std::abs(stepsT_first*ray.getCurrentRefractiveIndex()),mRefractiveIndexA,mRefractiveIndexB,ray.getDirectionRayUnit(), light };
-					}
-				}
-
-				else if (shortestDistanceDirection_SECOND_IntersectionPoint <= mSemiHeight)
-				{
-					VectorStructR3 normalOnSphereAtIntersectPointUnit = Math::unitVector(ALL_IntersectionPoints.firstIntersectionPoint - mCenterSphereAfterRotation);
-					if (normalOnSphereAtIntersectPointUnit*ray.getDirectionRayUnit() <= 0) // surface side A
-					{
-						returnIntersectInformation = { ALL_IntersectionPoints.secondIntersectionPoint,normalOnSphereAtIntersectPointUnit,A,std::abs(stepsT_first*ray.getCurrentRefractiveIndex()),mRefractiveIndexA,mRefractiveIndexB,ray.getDirectionRayUnit(), light };
-					}
-					else // surface side B
-					{
-						returnIntersectInformation = { ALL_IntersectionPoints.secondIntersectionPoint,/*flip normale*/-1.0 * normalOnSphereAtIntersectPointUnit,B,std::abs(stepsT_first*ray.getCurrentRefractiveIndex()),mRefractiveIndexA,mRefractiveIndexB,ray.getDirectionRayUnit(), light };
-					}
-
-
-				}
-			}
-
-			// we have to check the first intersection point
-			else if (distancePointFirstIntersectionPoint < distancePointSecondIntersectionPoint && shortestDistanceDirection_FIRST_IntersectionPoint <= mSemiHeight)
-			{
-				// the FIRST intersection point is in the spherical surface
-
-				VectorStructR3 normalOnSphereAtIntersectPointUnit = Math::unitVector(ALL_IntersectionPoints.firstIntersectionPoint - mCenterSphereAfterRotation);
-				if (normalOnSphereAtIntersectPointUnit*ray.getDirectionRayUnit() <= 0) // surface side A
-				{
-					returnIntersectInformation = { ALL_IntersectionPoints.firstIntersectionPoint,normalOnSphereAtIntersectPointUnit,A,std::abs(stepsT_first*ray.getCurrentRefractiveIndex()),mRefractiveIndexA,mRefractiveIndexB,ray.getDirectionRayUnit(), light };
+					ReturnIntersectInformation.setAll(mALL_IntersectionPoints.getFirstIntersectionPoint(),mNormalOnSphereAtIntersectPointUnit,A,std::abs(mStepsT_first*mRay.getCurrentRefractiveIndex()),mRefractiveIndexA,mRefractiveIndexB,mRay.getDirectionRayUnit(), mLight);
+					return ReturnIntersectInformation;
 				}
 				else // surface side B
 				{
-					returnIntersectInformation = { ALL_IntersectionPoints.firstIntersectionPoint,/*flip normale*/-1.0 * normalOnSphereAtIntersectPointUnit,B,std::abs(stepsT_first*ray.getCurrentRefractiveIndex()),mRefractiveIndexA,mRefractiveIndexB,ray.getDirectionRayUnit(), light };
+					ReturnIntersectInformation.setAll(mALL_IntersectionPoints.getFirstIntersectionPoint(),/*flip normale*/-1.0 * mNormalOnSphereAtIntersectPointUnit,B,std::abs(mStepsT_first*mRay.getCurrentRefractiveIndex()),mRefractiveIndexA,mRefractiveIndexB,mRay.getDirectionRayUnit(), mLight);
+					return ReturnIntersectInformation;
 				}
 
-
 			}
-
-
-			else if (distancePointFirstIntersectionPoint > distancePointSecondIntersectionPoint && shortestDistanceDirection_SECOND_IntersectionPoint <= mSemiHeight) // we have to check the second intersection point
-			{
-
-				// the SECOND intersection point is in the spherical surface
-
-				VectorStructR3 normalOnSphereAtIntersectPointUnit = Math::unitVector(ALL_IntersectionPoints.secondIntersectionPoint - mCenterSphereAfterRotation);
-				if (normalOnSphereAtIntersectPointUnit*ray.getDirectionRayUnit() <= 0) // surface side A
-				{
-					returnIntersectInformation = { ALL_IntersectionPoints.secondIntersectionPoint ,normalOnSphereAtIntersectPointUnit,A,std::abs(stepsT_second*ray.getCurrentRefractiveIndex()),mRefractiveIndexA,mRefractiveIndexB,ray.getDirectionRayUnit(), light };
-				}
-				else // surface side B
-				{
-					returnIntersectInformation = { ALL_IntersectionPoints.secondIntersectionPoint,/*here we have to flip the nomal vector*/-1 * normalOnSphereAtIntersectPointUnit,B,std::abs(stepsT_second*ray.getCurrentRefractiveIndex()),mRefractiveIndexA,mRefractiveIndexB,ray.getDirectionRayUnit(), light };
-				}
-			}
-
-			else if (shortestDistanceDirection_SECOND_IntersectionPoint > mSemiHeight)
-			{
-				// the intersection point is NOT in the spherical surface
-				return{ { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 }, N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, light }; //'N' there is NO intersection point
-			}
-
-			else if (shortestDistanceDirection_FIRST_IntersectionPoint > mSemiHeight)
-			{
-				return{ { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 }, N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, light }; //'N' there is NO intersection point
-			}
-
-
 		}
-
-		else if (distancePointFirstIntersectionPoint = distancePointSecondIntersectionPoint)  // next we have to check the steps
+		else //(IntersectionPoints.stepsT_first > IntersectionPoints.stepsT_second)
 		{
-			if (ALL_IntersectionPoints.stepsT_first < ALL_IntersectionPoints.stepsT_second)
+			//double shortestDistanceDirection_SECOND_IntersectionPoint = Math::lengthOfVector(Math::DoCrossProduct(mDirection, (ALL_IntersectionPoints.secondIntersectionPoint - mPoint))) / Math::lengthOfVector(mDirection);
+			if (mShortestDistanceDirection_SECOND_IntersectionPoint > mSemiHeight)
 			{
-				// shortestDistanceDirection_FIRST_IntersectionPoint = Math::lengthOfVector(Math::DoCrossProduct(mDirection, (ALL_IntersectionPoints.firstIntersectionPoint - mPoint))) / Math::lengthOfVector(mDirection);
-				if (shortestDistanceDirection_FIRST_IntersectionPoint > mSemiHeight)
+				//the intersection point is NOT in the spherical surface
+				return ReturnIntersectInformation; //'N' there is NO intersection point
+			}
+			else // the SECOND intersection point is in the spherical surface
+			{
+				mNormalOnSphereAtIntersectPointUnit = Math::unitVector(mALL_IntersectionPoints.getSecondIntersectionPoint() - mCenterSphereAfterRotation);
+				if (mNormalOnSphereAtIntersectPointUnit*mRay.getDirectionRayUnit() <= 0) // surface side A
 				{
-					//the intersection point is NOT in the spherical surface
-					returnIntersectInformation = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 }, N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, light }; //'N' there is NO intersection point
+					ReturnIntersectInformation.setAll(mALL_IntersectionPoints.getSecondIntersectionPoint(),mNormalOnSphereAtIntersectPointUnit,A,std::abs(mStepsT_second*mRay.getCurrentRefractiveIndex()),mRefractiveIndexA,mRefractiveIndexB,mRay.getDirectionRayUnit(), mLight);
+					return ReturnIntersectInformation;
 				}
-				else // the FIRST intersection point is in the spherical surface
+				else // surface side B
 				{
-
-					VectorStructR3 normalOnSphereAtIntersectPointUnit = Math::unitVector(ALL_IntersectionPoints.firstIntersectionPoint - mCenterSphereAfterRotation);
-					if (normalOnSphereAtIntersectPointUnit*ray.getDirectionRayUnit() <= 0) // surface side A
-					{
-						returnIntersectInformation = { ALL_IntersectionPoints.firstIntersectionPoint,normalOnSphereAtIntersectPointUnit,A,std::abs(stepsT_first*ray.getCurrentRefractiveIndex()),mRefractiveIndexA,mRefractiveIndexB,ray.getDirectionRayUnit(), light };
-					}
-					else // surface side B
-					{
-						returnIntersectInformation = { ALL_IntersectionPoints.firstIntersectionPoint,/*flip normale*/-1.0 * normalOnSphereAtIntersectPointUnit,B,std::abs(stepsT_first*ray.getCurrentRefractiveIndex()),mRefractiveIndexA,mRefractiveIndexB,ray.getDirectionRayUnit(), light };
-					}
-
+					ReturnIntersectInformation.setAll(mALL_IntersectionPoints.getSecondIntersectionPoint(), /*flip normale*/-1.0 * mNormalOnSphereAtIntersectPointUnit,B,std::abs(mStepsT_second*mRay.getCurrentRefractiveIndex()),mRefractiveIndexA,mRefractiveIndexB,mRay.getDirectionRayUnit(),mLight);
+					return ReturnIntersectInformation;
 				}
 			}
-			else //(IntersectionPoints.stepsT_first > IntersectionPoints.stepsT_second)
-			{
-				//double shortestDistanceDirection_SECOND_IntersectionPoint = Math::lengthOfVector(Math::DoCrossProduct(mDirection, (ALL_IntersectionPoints.secondIntersectionPoint - mPoint))) / Math::lengthOfVector(mDirection);
-				if (shortestDistanceDirection_SECOND_IntersectionPoint > mSemiHeight)
-				{
-					//the intersection point is NOT in the spherical surface
-					return{ { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 }, N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, light }; //'N' there is NO intersection point
-				}
-				else // the SECOND intersection point is in the spherical surface
-				{
-					VectorStructR3 normalOnSphereAtIntersectPointUnit = Math::unitVector(ALL_IntersectionPoints.firstIntersectionPoint - mCenterSphereAfterRotation);
-					if (normalOnSphereAtIntersectPointUnit*ray.getDirectionRayUnit() <= 0) // surface side A
-					{
-						returnIntersectInformation = { ALL_IntersectionPoints.secondIntersectionPoint,normalOnSphereAtIntersectPointUnit,A,std::abs(stepsT_second*ray.getCurrentRefractiveIndex()),mRefractiveIndexA,mRefractiveIndexB,ray.getDirectionRayUnit(), light };
-					}
-					else // surface side B
-					{
-						returnIntersectInformation = { ALL_IntersectionPoints.secondIntersectionPoint, /*flip normale*/-1.0 * normalOnSphereAtIntersectPointUnit,B,std::abs(stepsT_second*ray.getCurrentRefractiveIndex()),mRefractiveIndexA,mRefractiveIndexB,ray.getDirectionRayUnit(),light };
-					}
-				}
-			}
-
 		}
-
 
 	}
-
-
-	return returnIntersectInformation;
+	
+	return ReturnIntersectInformation;
 }
 
 // calculate focal length spherical surface
@@ -681,6 +686,8 @@ void SphericalSurface_LLT::plot2D(cv::Mat image, unsigned int scale, unsigned in
 
 
 }
+
+SphericalSurface_LLT::SphericalSurface_LLT() {};
 
 SphericalSurface_LLT::SphericalSurface_LLT(SphericalSurface_LLT &source)
 {

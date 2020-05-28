@@ -1,33 +1,99 @@
 #include "InteractionRay_LLT.h"
 
-// get Ray_LLT
-Ray_LLT LightRayStruct::getRay_LLT() const&
+RaysRangeStruct::RaysRangeStruct() {};
+RaysRangeStruct::RaysRangeStruct(unsigned int const min, unsigned int const max) :
+	mMin(min),
+	mMax(max)
+{};
+RaysRangeStruct::~RaysRangeStruct() {};
+
+// min
+unsigned int RaysRangeStruct::getMin()
 {
-	return ray;
+	return mMin;
 }
-// set Ray_LLT
-void LightRayStruct::setRay_LLT(Ray_LLT const& raySet)
+void RaysRangeStruct::setMin(unsigned int min)
 {
-	ray = raySet;
+	mMin = min;
 }
-//get Light_LLT
-Light_LLT LightRayStruct::getLight_LLT() const&
+// max 
+unsigned int RaysRangeStruct::getMax()
 {
-	return light;
+	return mMax;
 }
-//set Light_LLT
-void LightRayStruct::setLight_LLT(Light_LLT const& lightSet)
+void RaysRangeStruct::setMax(unsigned int max)
 {
-	light = lightSet;
+	mMax = max;
 }
 
-int LightRayStruct::getIsAlive() const&
+LightRayStruct::LightRayStruct() {};
+LightRayStruct::LightRayStruct(/*light*/ Light_LLT iLight, /*ray*/ Ray_LLT iRay, /*is alive*/ unsigned int i_Alive)
 {
-	return isAlive;
+	mLight = iLight;
+	mRay = iRay;
+	mIsAlive = i_Alive;
+}
+LightRayStruct::~LightRayStruct() {};
+
+// get Ray_LLT
+Ray_LLT LightRayStruct::getRay_LLT() const
+{
+	return mRay;
+}
+// set Ray_LLT
+void LightRayStruct::setRay_LLT(Ray_LLT& const raySet)
+{
+	mRay = raySet;
+}
+// ray origin
+void LightRayStruct::setRayOrigin(VectorStructR3 rayOrigin)
+{
+	mRay.setOriginRay(rayOrigin);
+}
+// ray direction unit
+void LightRayStruct::setRayDirectionUni(VectorStructR3 rayDirection)
+{
+	mRay.setDirectionRayUnit(rayDirection);
+}
+// currecnt refractiv index ray
+void LightRayStruct::setCurrentRefractivIndex(real curRefIndex)
+{
+	mRay.setCurrentRefractiveIndex(curRefIndex);
+}
+//get Light_LLT
+Light_LLT LightRayStruct::getLight_LLT() const
+{
+	return mLight;
+}
+//set Light_LLT
+void LightRayStruct::setLight_LLT(Light_LLT& const lightSet)
+{
+	mLight = lightSet;
+}
+// wavelength
+void LightRayStruct::setLightWavelength(real wavelenght)
+{
+	mLight.setWavelength(wavelenght);
+}
+
+bool LightRayStruct::getIsAlive() const
+{
+	return mIsAlive;
 }
 
 // set is LightRay alive
-void LightRayStruct::setIsAlive(int const& alive)
+void LightRayStruct::setIsAlive(const bool& alive)
 {
-	isAlive = alive;
+	mIsAlive = alive;
 }
+
+// set light ray absorb
+void LightRayStruct::setLightRayAbsorb()
+{
+	mRay.setRayAbsorbed();
+	mLight.setLightToAbsorb();
+	mIsAlive = false;
+}
+
+InteractionRay_LLT::InteractionRay_LLT() {};
+InteractionRay_LLT::~InteractionRay_LLT() {};

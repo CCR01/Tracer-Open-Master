@@ -4,7 +4,6 @@
     <ClCompile Include="..\Analyse\CardinalPoints.cpp" />
     <ClCompile Include="..\Analyse\OpticalPathDifferende.cpp" />
     <ClCompile Include="..\Analyse\Spot.cpp" />
-    <ClCompile Include="..\benchmark\AsphericalSurface_LLT\TestAsphericalSurface_LLT.cpp" />
     <ClCompile Include="..\benchmark\BenchAnalyse\BechmarkExipPupilCalculation.cpp" />
     <ClCompile Include="..\benchmark\BenchAnalyse\BenchmarkOpticalPathDifference.cpp" />
     <ClCompile Include="..\benchmark\BenchAnalyse\TestGlobalOPD.cpp" />
@@ -12,9 +11,7 @@
     <ClCompile Include="..\benchmark\ComplexOptSys\BenchmarkComplexOptSys.cpp" />
     <ClCompile Include="..\benchmark\Element\OpticalSystemElement\BenchOpticalSystemElement.cpp" />
     <ClCompile Include="..\benchmark\Element\SphericalElement\BechnSpehricalElemtn.cpp" />
-    <ClCompile Include="..\benchmark\FillAS\BenchmakFillAS.cpp" />
     <ClCompile Include="..\benchmark\Glasses\BenchGlasses.cpp" />
-    <ClCompile Include="..\benchmark\Math\BenchmarkMath.cpp" />
     <ClCompile Include="..\benchmark\OpticalSystem\BenchmarkOpticalSystem.cpp" />
     <ClCompile Include="..\benchmark\ParaxialLens_LLT\BenchmarkParaxialLens_LLT.cpp" />
     <ClCompile Include="..\benchmark\Plan\BenchmarkPlanSurface.cpp" />
@@ -120,12 +117,19 @@
     <ClCompile Include="..\OptimizeSystem\Genetic.cpp" />
     <ClCompile Include="..\tests\TestGenetic\TestGenetic.cpp" />
     <ClCompile Include="..\OptimizeSystem\importantOptimizeStructs.cpp" />
+    <ClCompile Include="..\benchmark\benachRayTracing\benchRayTracing.cpp" />
+    <ClCompile Include="..\LowLevelTracing\SurfaceIntersectionRay_LLT.cpp" />
+    <ClCompile Include="..\tests\testAsphericalSurface_LLT\testAsphericalSurface_LLT.cpp" />
+    <ClCompile Include="..\tests\testFillAS\testFillAS.cpp" />
+    <ClCompile Include="..\tests\testMath\testMath.cpp" />
+    <ClCompile Include="..\tests\ManagementTests\managementTests.cpp" />
+    <ClCompile Include="..\tests\testApertureStop\testApertureStop.cpp" />
+    <ClCompile Include="..\LowLevelTracing\JonesVector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Analyse\CardinalPoints.h" />
     <ClInclude Include="..\Analyse\OpticalPathDifference.h" />
     <ClInclude Include="..\Analyse\Spot.h" />
-    <ClInclude Include="..\benchmark\AsphericalSurface_LLT\TestAsphericalSurface_LLT.h" />
     <ClInclude Include="..\benchmark\BenchAnalyse\BenchmarkExitPupilCalculation.h" />
     <ClInclude Include="..\benchmark\BenchAnalyse\BenchmarkOpticalPathDifference.h" />
     <ClInclude Include="..\benchmark\BenchAnalyse\TestGlobalOPD.h" />
@@ -133,9 +137,7 @@
     <ClInclude Include="..\benchmark\ComplexOptSys\BenchmarkComplexOptSys.h" />
     <ClInclude Include="..\benchmark\Element\OpticalSystemElement\BenchOpticalSystemElement.h" />
     <ClInclude Include="..\benchmark\Element\SphericalElement\BenchSphericalElement.h" />
-    <ClInclude Include="..\benchmark\FillAS\BenchmarkFillAS.h" />
     <ClInclude Include="..\benchmark\Glasses\BenchGlasses.h" />
-    <ClInclude Include="..\benchmark\Math\BechmarkMath.h" />
     <ClInclude Include="..\benchmark\OpticalSystem\BenchmarkOpticalSystem.h" />
     <ClInclude Include="..\benchmark\ParaxialLens_LLT\BenchmarkParaxialLens_LLT.h" />
     <ClInclude Include="..\benchmark\Plan\BenchmarkPlanSurface.h" />
@@ -247,5 +249,11 @@
     <ClInclude Include="..\OptimizeSystem\Genetic.h" />
     <ClInclude Include="..\tests\TestGenetic\TestGenetic.h" />
     <ClInclude Include="..\OptimizeSystem\importantOptimizeStructs.h" />
+    <ClInclude Include="..\benchmark\benachRayTracing\benchRayTracing.h" />
+    <ClInclude Include="..\tests\testAsphericalSurface_LLT\testAsphericalSurface_LLT.h" />
+    <ClInclude Include="..\tests\testFillAS\testFillAS.h" />
+    <ClInclude Include="..\tests\testMath\testMath.h" />
+    <ClInclude Include="..\tests\ManagementTests\managementTests.h" />
+    <ClInclude Include="..\tests\testApertureStop\testApertureStop.h" />
   </ItemGroup>
 </Project>

@@ -2,40 +2,52 @@
 #include "..\LowLevelTracing\Ray_LLT.h"
 #include<omp.h>
 #include <iostream>
-#include "..\FillAptertureStop/FillApertureStop.h"
+//#include "..\FillAptertureStop/FillApertureStop.h"
 #include "..\LowLevelTracing/Surfaces/ApertureStop_LLT.h"
+#include "..\RayAiming\RayAiming.h"
+#include "..\FillAptertureStop\FillApertureStop.h"
+
+IntersectInfosAndPosSurfaceAndTotalSteps::IntersectInfosAndPosSurfaceAndTotalSteps() { setNoIntersectionPoint(); };
+IntersectInfosAndPosSurfaceAndTotalSteps::~IntersectInfosAndPosSurfaceAndTotalSteps() {};
 
 // get intersection infos
 IntersectInformationStruct IntersectInfosAndPosSurfaceAndTotalSteps::getIntersecInfos() const
 {
-	return intersectInfos;
+	return mIntersectInfos;
 }
 // set intersection infos
 void IntersectInfosAndPosSurfaceAndTotalSteps::setIntersectionInfos(IntersectInformationStruct const setIntersectinfos)
 {
-	intersectInfos = setIntersectinfos;
+	mIntersectInfos = setIntersectinfos;
 }
 
 // set position
 void IntersectInfosAndPosSurfaceAndTotalSteps::setPosition(unsigned int const pos)
 {
-	position = pos;
+	mPosition = pos;
 }
 // get position
 unsigned int IntersectInfosAndPosSurfaceAndTotalSteps::getPosition() const
 {
-	return position;
+	return mPosition;
 }
 
 // set total  steps
 void IntersectInfosAndPosSurfaceAndTotalSteps::setTotalSteps(real const totSte)
 {
-	totalSteps = totSte;
+	mTotalSteps = totSte;
 }
 // get total steps 
 real IntersectInfosAndPosSurfaceAndTotalSteps::getTotalSteps() const
 {
-	return totalSteps;
+	return mTotalSteps;
+}
+// no intersection point
+void IntersectInfosAndPosSurfaceAndTotalSteps::setNoIntersectionPoint()
+{
+	mIntersectInfos.setNoIntersectionPoint();
+	mPosition = 9999999999999;
+	mTotalSteps = 0.0;
 }
 
 saveResultsSeqRayTrace_parallel::saveResultsSeqRayTrace_parallel() {};
@@ -83,27 +95,31 @@ SequentialRayTracing::~SequentialRayTracing()
 SequentialRayTracing::SequentialRayTracing(OpticalSystemElement opticalSysElement) :
 	mOpticalSystem_LLT(opticalSysElement.getLLTconversion_doConversion())
 {
-	mTraceToSurface_i = 9999999999;
+	resizeAllRelevantVectorsAndSetConst_Element();
 
 };
+
+SequentialRayTracing::SequentialRayTracing() {};
 
 SequentialRayTracing::SequentialRayTracing(OpticalSystem_LLT opticalSystem) :
 	mOpticalSystem_LLT(opticalSystem)
 {
-	mTraceToSurface_i = 9999999999;
+	resizeAllRelevantVectorsAndSetConst_LLT();
 };
 
 SequentialRayTracing::SequentialRayTracing(OpticalSystem_LLT opticalSystem, unsigned int traToSur) :
 	mOpticalSystem_LLT(opticalSystem),
 	mTraceToSurface_i(traToSur)
-{};
+{
+	mNoInterPointAndPos.setNoIntersectionPoint();
+};
 
 SequentialRayTracing::SequentialRayTracing(OpticalSystemElement opticalSysElement, LightRayStruct LightRay) :
 	mOptSysEle(opticalSysElement),
 	mLightRay(LightRay)
 
 {
-	mTraceToSurface_i = 9999999999;
+	resizeAllRelevantVectorsAndSetConst_Element();
 	int sizeOptSysEle = opticalSysElement.getPosAndElement().size();
 
 
@@ -119,17 +135,18 @@ SequentialRayTracing::SequentialRayTracing(OpticalSystemElement opticalSysElemen
 
 }
 
-SequentialRayTracing::SequentialRayTracing(OpticalSystemElement /*optical system element*/ opticalSysElement, VectorStructR3 /*start point lightRay*/ startPointLightRay, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, real /*refractive index*/ refIndex, Light_LLT light) :
+SequentialRayTracing::SequentialRayTracing(OpticalSystemElement /*optical system element*/ opticalSysElement, VectorStructR3 /*start point lightRay*/ startPointLightRay, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, real /*refractive index*/ refIndex, Light_LLT mLight) :
 	mOptSysEle(opticalSysElement),
 	mOpticalSystem_LLT(opticalSysElement.getLLTconversion_doConversion())
+
 {
-	mLightRay.setLight_LLT(light);
-	mTraceToSurface_i = 9999999999;
+	resizeAllRelevantVectorsAndSetConst_Element();
+	mLightRay.setLight_LLT(mLight);
 	mPositionApertureStop = findPosApertureStop(mOpticalSystem_LLT);
-	setRefractivIndexOptSys(light.getWavelength());
+	setRefractivIndexOptSys(mLight.getWavelength());
 	FillApertureStop fillAperStop(/*start point rays*/ startPointLightRay,/*semi height of aperture stop*/ mOpticalSystem_LLT.getPosAndInteractingSurface().at(mPositionApertureStop).getSurfaceInterRay_ptr()->getSemiHeight(),
 		/*point of aperture stop*/mOpticalSystem_LLT.getPosAndInteractingSurface().at(mPositionApertureStop).getSurfaceInterRay_ptr()->getPoint(),/*direction of aperture stop*/mOpticalSystem_LLT.getPosAndInteractingSurface().at(mPositionApertureStop).getSurfaceInterRay_ptr()->getDirection(),
-		/*rings*/ rings,/*arms*/ arms,/*refractive index*/ refIndex,/*wavelength*/ light);
+		/*rings*/ rings,/*arms*/ arms,/*refractive index*/ refIndex,/*wavelength*/ mLight);
 	seqRayTracingWithVectorOfLightRays(fillAperStop.getVectorWithLightRays());
 }
 
@@ -137,24 +154,33 @@ SequentialRayTracing::SequentialRayTracing(OpticalSystemElement /*optical system
 	mOptSysEle(opticalSysElement),
 	mLight_LLT_vec(light_vec)
 {
-	mTraceToSurface_i = 9999999999;
-	int sizeOptSysEle = opticalSysElement.getPosAndElement().size();
-	mPositionApertureStop = findPosApertureStop(opticalSysElement.getLLTconversion_doConversion());
+	resizeAllRelevantVectorsAndSetConst_Element();
+	infosAS infosAS_OptSys = opticalSysElement.getLLTconversion_doConversion().getInforAS();
+	FillApertureStop fillAperStop;
+	
 
+	//(/*start point rays*/ startPointLightRay,/*semi height of aperture stop*/ mOpticalSystem_LLT.getPosAndInteractingSurface().at(mPositionApertureStop).getSurfaceInterRay_ptr()->getSemiHeight(),
+	//	/*point of aperture stop*/mOpticalSystem_LLT.getPosAndInteractingSurface().at(mPositionApertureStop).getSurfaceInterRay_ptr()->getPoint(),/*direction of aperture stop*/mOpticalSystem_LLT.getPosAndInteractingSurface().at(mPositionApertureStop).getSurfaceInterRay_ptr()->getDirection(),
+	//	/*rings*/ rings,/*arms*/ arms,/*refractive index*/ refIndex,/*wavelength*/ light_vec.at(i));
+	//
+	RayAiming rayAiming;
+	//const std::vector<VectorStructR3>& pointsInAS, const VectorStructR3 startPointRay, Light_LLT mLight, real curRefracIndex
 	for (unsigned int i = 0; i < light_vec.size(); i++)
 	{
 
 		// set the refractive index to the wavelenght
-		for (unsigned int j = 0; j < sizeOptSysEle; j++)
+		for (unsigned int j = 0; j < mTraceToSurface_i; j++)
 		{
 
 			setRefractivIndexOptSys(light_vec.at(i).getWavelength());
 		}
-
+	
 		mOpticalSystem_LLT = mOptSysEle.getLLTconversion_doConversion();
+			
+		//rayAiming.rayAimingMany_obj_complete(mOpticalSystem_LLT,)
 
-		FillApertureStop fillAperStop(/*start point rays*/ startPointLightRay,/*semi height of aperture stop*/ mOpticalSystem_LLT.getPosAndInteractingSurface().at(mPositionApertureStop).getSurfaceInterRay_ptr()->getSemiHeight(),
-			/*point of aperture stop*/mOpticalSystem_LLT.getPosAndInteractingSurface().at(mPositionApertureStop).getSurfaceInterRay_ptr()->getPoint(),/*direction of aperture stop*/mOpticalSystem_LLT.getPosAndInteractingSurface().at(mPositionApertureStop).getSurfaceInterRay_ptr()->getDirection(),
+		FillApertureStop fillAperStop(/*start point rays*/ startPointLightRay,/*semi height of aperture stop*/ mOpticalSystem_LLT.getPosAndInteractingSurface().at(/*mPositionApertureStop*/0).getSurfaceInterRay_ptr()->getSemiHeight(),
+			/*point of aperture stop*/mOpticalSystem_LLT.getPosAndInteractingSurface().at(/*mPositionApertureStop*/0).getSurfaceInterRay_ptr()->getPoint(),/*direction of aperture stop*/mOpticalSystem_LLT.getPosAndInteractingSurface().at(/*mPositionApertureStop*/0).getSurfaceInterRay_ptr()->getDirection(),
 			/*rings*/ rings,/*arms*/ arms,/*refractive index*/ refIndex,/*wavelength*/ light_vec.at(i));
 
 		seqRayTracingWithVectorOfLightRays(fillAperStop.getVectorWithLightRays());
@@ -204,84 +230,40 @@ unsigned int SequentialRayTracing::findPosApertureStop(OpticalSystem_LLT optSys_
 // do sequential ray tracing
 void SequentialRayTracing::sequentialRayTracing(LightRayStruct LightRaySt)
 {
+	mSaveTotalSteps = 0.0,
+	mRay = LightRaySt.getRay_LLT();
+	mLight = LightRaySt.getLight_LLT();
 	
-	Ray_LLT ray = LightRaySt.getRay_LLT();
-	Light_LLT light = LightRaySt.getLight_LLT();
-
-
 	// save the start points of the rays in an std::vector
-	mStartPointOfLightRays.push_back(ray.getOriginRay());
-
-	IntersectInfosAndPosSurfaceAndTotalSteps tempInterInfos_Pos_totStep;
-	unsigned sizeOfVector = mOpticalSystem_LLT.getPosAndInteractingSurface().size();
-
-	// to stop tracing at surface mTraceToSurface_i
-	if (sizeOfVector <= mTraceToSurface_i)
-	{
-		mTraceToSurface_i = sizeOfVector - 1;
-	}
-
-	// _____________________________ 
-	// to filter the intersection points
-	IntersectInformationStruct NoInterPoint;
-	NoInterPoint.setSurface(N);
-	IntersectInfosAndPosSurfaceAndTotalSteps NoInterPointAndPos;
-	NoInterPointAndPos.setIntersectionInfos(NoInterPoint);
-	NoInterPointAndPos.setPosition(99);
-	// _____________________________ 
-	real saveTotalSteps = 0.0;
-
-	// I do not think that it is best when we use #pragma omp here.
-	// bacause with this function we trace just on LightRay from surface to surface
-	// we parallelized the code in the function "seqRayTracingWithVectorOfLightRays" here we
-	// trace an vector of LightRays
+	mStartPointOfLightRays.push_back(mRay.getOriginRay());
+	
 	for (int i = 0; i <= mTraceToSurface_i; i++)
 	{
-		int isRayLightAlive = LightRaySt.getIsAlive();
-		real curWavelength = LightRaySt.getLight_LLT().getWavelength();
-		//std::cout << "_________________________\n";
-		//Ray_LLT rayToD = LightRaySt.getRay_LLT();
-		//VectorStructR3 printDir = rayToD.getDirectionRayUnit();
-		//printDir.print();
-		//std::cout << "_________________________\n";
 
-
-
-		//#pragma omp parallel if(isRayLightAlive,curWavelength)
-		if (isRayLightAlive == 1 && curWavelength != 0.0) // TODO Ques: Hier muss ich mir vielleicht noch ein "sichererer" Abbruchkriterium überlegen
+		if (LightRaySt.getIsAlive() == 1)
 		{
-			//real tempStepsToWalk = tempInterInfos_Pos_totStep.getIntersecInfos().getStepsToWalk();
-			tempInterInfos_Pos_totStep.setIntersectionInfos(mOpticalSystem_LLT.getPosAndInteractingSurface().at(i).getSurfaceInterRay_ptr()->calculateIntersection(LightRaySt));
-			tempInterInfos_Pos_totStep.setPosition(mOpticalSystem_LLT.getPosAndInteractingSurface().at(i).getPosition());
-			saveTotalSteps = saveTotalSteps + tempInterInfos_Pos_totStep.getIntersecInfos().getStepsToWalk();
-			tempInterInfos_Pos_totStep.setTotalSteps(saveTotalSteps);
-			//std::cout << "_________________________\n";
-			//tempIntersectInfos.printIntersectInformation();
-			//std::cout << "_________________________\n";
-			mSaveIntInfos_Pos_totStep_NotFiltered.push_back(tempInterInfos_Pos_totStep);
+			mTempInterInfos_Pos_totStep.setIntersectionInfos(mOpticalSystem_LLT.getPosAndInteractingSurface().at(i).getSurfaceInterRay_ptr()->calculateIntersection(LightRaySt));
+			mTempInterInfos_Pos_totStep.setPosition(mOpticalSystem_LLT.getPosAndInteractingSurface().at(i).getPosition());
+			mSaveTotalSteps = mSaveTotalSteps + mTempInterInfos_Pos_totStep.getIntersecInfos().getStepsToWalk();
+			mTempInterInfos_Pos_totStep.setTotalSteps(mSaveTotalSteps);
 
-			IntersectInformationStruct tempInterInfos = tempInterInfos_Pos_totStep.getIntersecInfos();
-			std::vector<LightRayStruct> tempLightRay = mOpticalSystem_LLT.getPosAndInteraction()[i].getInteractionAtSur_ptr()->calcInteraction(tempInterInfos);
-			// here we need an vector of LightRays bacause then we can return later more than one ray -> so it is possible to
-			// calculate scattered rays
+			mSaveIntInfos_Pos_totStep_NotFiltered.push_back(mTempInterInfos_Pos_totStep);
 
+			mTempLightRay_vec = mOpticalSystem_LLT.getPosAndInteraction()[i].getInteractionAtSur_ptr()->calcInteraction(mTempInterInfos_Pos_totStep.getIntersecInfos());
 
-			mSaveLightRayStructsNotFiltered.push_back(tempLightRay);
-			// TODO: Wenn in dem Vector mehrere LightRays sind, dann müssen diese auch in einer Schleige abgearbeitet werden.
-			ray = tempLightRay.at(0).getRay_LLT();
-			light = tempLightRay.at(0).getLight_LLT();
-			LightRaySt.setLight_LLT(light);
-			LightRaySt.setRay_LLT(ray);
-
-
+			// TODO: Until now, there is no interaction fuction that delivers more than one light ray!
+			// If we implement a function that dilivers more than one ray, we have to take that in account in the loop!!!
+			mLight = mTempLightRay_vec[0].getLight_LLT();
+			mRay = mTempLightRay_vec[0].getRay_LLT();
+		
+			LightRaySt.setLight_LLT(mLight);
+			LightRaySt.setRay_LLT(mRay);
 		}
 
 		else
 		{
-
-			mSaveIntInfos_Pos_totStep_NotFiltered.push_back(NoInterPointAndPos);
-			ray.setDirectionRayUnit({ 0.0,0.0,0.0 });
-			LightRaySt.light.setWavelength(0.0);
+			mSaveIntInfos_Pos_totStep_NotFiltered.push_back(mNoInterPointAndPos);
+			LightRaySt.setIsAlive(false);
 		}
 
 	}
@@ -290,19 +272,70 @@ void SequentialRayTracing::sequentialRayTracing(LightRayStruct LightRaySt)
 }
 
 // do sequential ray tracing with an vector of many LightRay
-void SequentialRayTracing::seqRayTracingWithVectorOfLightRays(std::vector<LightRayStruct> const LightRayStVec)
+void SequentialRayTracing::seqRayTracingWithVectorOfLightRays(const std::vector<LightRayStruct>& LightRayStVec)
 {
-	
-	
-	for (int i = 0; i < LightRayStVec.size(); i++)
+	LightRayStruct tempLightRaySt;
+	unsigned int sizeOptSys = mOpticalSystem_LLT.getPosAndInteractingSurface().size();
+	unsigned int sizeLightRayVec = LightRayStVec.size();
+	unsigned int maxNumberOfIntersectionPoints = sizeOptSys * sizeLightRayVec;
+	unsigned int counter = 0;
+
+	mSaveIntInfos_Pos_totStep_NotFiltered.resize(maxNumberOfIntersectionPoints);
+	mSaveInterInfos_PosSur_TotSteps.reserve(maxNumberOfIntersectionPoints);
+	mStartPointOfLightRays.resize(sizeLightRayVec);
+
+	for (unsigned int i = 0; i < sizeLightRayVec; i++)
 	{
-		int isAlive = LightRayStVec.at(i).getIsAlive();
-		if (isAlive == 1);
+		tempLightRaySt = LightRayStVec[i];
+
+		mSaveTotalSteps = 0.0,
+		mRay = tempLightRaySt.getRay_LLT();
+		mLight = tempLightRaySt.getLight_LLT();
+
+		// save the start points of the rays in a std::vector
+		mStartPointOfLightRays[i] = mRay.getOriginRay();
+
+		for (unsigned int j = 0; j <= mTraceToSurface_i; j++)
 		{
-			sequentialRayTracing(LightRayStVec.at(i));
+			// just for debugging
+			// std::cout << counter << std::endl;
+
+			if (tempLightRaySt.getIsAlive() == true)
+			{
+				mTempInterInfos_Pos_totStep.setIntersectionInfos(mOpticalSystem_LLT.getPosAndInteractingSurface().at(j).getSurfaceInterRay_ptr()->calculateIntersection(tempLightRaySt));
+				mTempInterInfos_Pos_totStep.setPosition(mOpticalSystem_LLT.getPosAndInteractingSurface().at(j).getPosition());
+				mSaveTotalSteps = mSaveTotalSteps + mTempInterInfos_Pos_totStep.getIntersecInfos().getStepsToWalk();
+				mTempInterInfos_Pos_totStep.setTotalSteps(mSaveTotalSteps);
+
+				mSaveIntInfos_Pos_totStep_NotFiltered[counter] = mTempInterInfos_Pos_totStep;
+
+				
+
+				if (mTempInterInfos_Pos_totStep.getIntersecInfos().getSurfaceSide() != N)
+				{
+					mSaveInterInfos_PosSur_TotSteps.push_back(mTempInterInfos_Pos_totStep);
+					mTempLightRay_vec = mOpticalSystem_LLT.getPosAndInteraction()[j].getInteractionAtSur_ptr()->calcInteraction(mTempInterInfos_Pos_totStep.getIntersecInfos());
+				}
+
+				// TODO: Until now, there is no interaction fuction that delivers more than one light ray!
+				// If we implement a function that dilivers more than one ray, we have to take that in account in the loop!!!
+
+				tempLightRaySt.setLight_LLT(mTempLightRay_vec[0].getLight_LLT());
+				tempLightRaySt.setRay_LLT(mTempLightRay_vec[0].getRay_LLT());
+
+
+			}
+
+			else
+			{
+				mSaveIntInfos_Pos_totStep_NotFiltered[counter] = mNoInterPointAndPos;
+				tempLightRaySt.setLightRayAbsorb();
+			}
+
+			++counter;
 		}
 	}
-		
+
 }
 
 //void SequentialRayTracing::seqRayTracingWithVectorOfLightRays_parallel(std::vector<LightRayStruct> const LightRayStVec)
@@ -428,48 +461,48 @@ std::vector<std::vector<LightRayStruct>> SequentialRayTracing::divVecWithLightRa
 
 	// core2
 	std::vector<LightRayStruct>::const_iterator first_core2 = lightRayStVec.begin() + elementsPerVec + counter;
-	std::vector<LightRayStruct>::const_iterator last_core2 = lightRayStVec.begin() + 2 *  elementsPerVec + counter;
+	std::vector<LightRayStruct>::const_iterator last_core2 = lightRayStVec.begin() + 2.0 *  elementsPerVec + counter;
 	std::vector<LightRayStruct> LightRayStVec_core2(first_core2, last_core2);
 	returnVecDivLightRay.push_back(LightRayStVec_core2);
 	counter++;
 
 	// core3
-	std::vector<LightRayStruct>::const_iterator first_core3 = lightRayStVec.begin() + 2 * elementsPerVec + counter;
-	std::vector<LightRayStruct>::const_iterator last_core3 = lightRayStVec.begin() + 3 * elementsPerVec + counter;
+	std::vector<LightRayStruct>::const_iterator first_core3 = lightRayStVec.begin() + 2.0 * elementsPerVec + counter;
+	std::vector<LightRayStruct>::const_iterator last_core3 = lightRayStVec.begin() + 3.0 * elementsPerVec + counter;
 	std::vector<LightRayStruct> LightRayStVec_core3(first_core3, last_core3);
 	returnVecDivLightRay.push_back(LightRayStVec_core3);
 	counter++;
 
 	// core4
-	std::vector<LightRayStruct>::const_iterator first_core4 = lightRayStVec.begin() + 3 * elementsPerVec + counter;
-	std::vector<LightRayStruct>::const_iterator last_core4 = lightRayStVec.begin() + 4 * elementsPerVec + counter;
+	std::vector<LightRayStruct>::const_iterator first_core4 = lightRayStVec.begin() + 3.0 * elementsPerVec + counter;
+	std::vector<LightRayStruct>::const_iterator last_core4 = lightRayStVec.begin() + 4.0 * elementsPerVec + counter;
 	std::vector<LightRayStruct> LightRayStVec_core4(first_core4, last_core4);
 	returnVecDivLightRay.push_back(LightRayStVec_core4);
 	counter++;
 
 	// core5
-	std::vector<LightRayStruct>::const_iterator first_core5 = lightRayStVec.begin() + 4 * elementsPerVec + counter;
-	std::vector<LightRayStruct>::const_iterator last_core5 = lightRayStVec.begin() + 5 * elementsPerVec + counter;
+	std::vector<LightRayStruct>::const_iterator first_core5 = lightRayStVec.begin() + 4.0 * elementsPerVec + counter;
+	std::vector<LightRayStruct>::const_iterator last_core5 = lightRayStVec.begin() + 5.0 * elementsPerVec + counter;
 	std::vector<LightRayStruct> LightRayStVec_core5(first_core5, last_core5);
 	returnVecDivLightRay.push_back(LightRayStVec_core5);
 	counter++;
 
 	// core6
-	std::vector<LightRayStruct>::const_iterator first_core6 = lightRayStVec.begin() + 5 * elementsPerVec + counter;
-	std::vector<LightRayStruct>::const_iterator last_core6 = lightRayStVec.begin() + 6 * elementsPerVec + counter;
+	std::vector<LightRayStruct>::const_iterator first_core6 = lightRayStVec.begin() + 5.0 * elementsPerVec + counter;
+	std::vector<LightRayStruct>::const_iterator last_core6 = lightRayStVec.begin() + 6.0 * elementsPerVec + counter;
 	std::vector<LightRayStruct> LightRayStVec_core6(first_core6, last_core6);
 	returnVecDivLightRay.push_back(LightRayStVec_core6);
 	counter++;
 
 	// core7
-	std::vector<LightRayStruct>::const_iterator first_core7 = lightRayStVec.begin() + 6 * elementsPerVec + counter;
-	std::vector<LightRayStruct>::const_iterator last_core7 = lightRayStVec.begin() + 7 * elementsPerVec + counter;
+	std::vector<LightRayStruct>::const_iterator first_core7 = lightRayStVec.begin() + 6.0 * elementsPerVec + counter;
+	std::vector<LightRayStruct>::const_iterator last_core7 = lightRayStVec.begin() + 7.0 * elementsPerVec + counter;
 	std::vector<LightRayStruct> LightRayStVec_core7(first_core7, last_core7);
 	returnVecDivLightRay.push_back(LightRayStVec_core7);
 	counter++;
 
 	// core8
-	std::vector<LightRayStruct>::const_iterator first_core8 = lightRayStVec.begin() + 7 * elementsPerVec + counter;
+	std::vector<LightRayStruct>::const_iterator first_core8 = lightRayStVec.begin() + 7.0 * elementsPerVec + counter;
 	std::vector<LightRayStruct>::const_iterator last_core8 = lightRayStVec.end();
 	std::vector<LightRayStruct> LightRayStVec_core8(first_core8, last_core8);
 	returnVecDivLightRay.push_back(LightRayStVec_core8);
@@ -502,9 +535,9 @@ std::vector<pointAndIntensity> SequentialRayTracing::getAllInterPointsAndIntensi
 	interInfos = getAllInterInfosOfSurf_i(surfaceNo);
 
 	std::vector<pointAndIntensity> returnPointsAndIntesity;
+	pointAndIntensity tempInterPointsAndIntesity;
 	for (int i = 0; i < interInfos.size(); i++)
-	{
-		pointAndIntensity tempInterPointsAndIntesity;
+	{		
 		tempInterPointsAndIntesity.setPoint(interInfos.at(i).getIntersectionPoint());
 		tempInterPointsAndIntesity.setIntesity(interInfos.at(i).getLight().getIntensity());
 		returnPointsAndIntesity.push_back(tempInterPointsAndIntesity);
@@ -811,6 +844,14 @@ void SequentialRayTracing::setTraceToSurface(unsigned int traceToSurface)
 	mTraceToSurface_i = traceToSurface;
 }
 
+SequentialRayTracingandColorStruct::SequentialRayTracingandColorStruct() {};
+SequentialRayTracingandColorStruct::~SequentialRayTracingandColorStruct() {};
+SequentialRayTracingandColorStruct::SequentialRayTracingandColorStruct(SequentialRayTracing* SeqRayTrac, QColor color) 
+{
+	mSeqRayTrac = SeqRayTrac;
+	mColor = color;
+};
+
 void SequentialRayTracingandColorStruct::setColor(QColor const color)
 {
 	mColor = color;
@@ -843,4 +884,17 @@ void RayTracingSystem::fillVectorRayTracing(SequentialRayTracing* SeqRayTrac, QC
 std::vector<SequentialRayTracingandColorStruct> RayTracingSystem::getVectorRayTracing()
 {
 	return mSeqRayTracAndColorStruct;
+}
+
+void SequentialRayTracing::resizeAllRelevantVectorsAndSetConst_LLT()
+{
+	mTraceToSurface_i = mOpticalSystem_LLT.getPosAndInteractingSurface().size() - 1;
+		;
+	mNoInterPointAndPos.setNoIntersectionPoint();
+}
+
+void SequentialRayTracing::resizeAllRelevantVectorsAndSetConst_Element()
+{
+	mTraceToSurface_i = mOptSysEle.getPosAndElement().size() - 1;
+	mNoInterPointAndPos.setNoIntersectionPoint();
 }

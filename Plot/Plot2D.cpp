@@ -1,5 +1,8 @@
 #include "Plot2D.h"
 
+Plot2D::Plot2D() {};
+Plot2D::~Plot2D() {};
+
 Plot2D::Plot2D(OpticalSystem_LLT OptSys, SequentialRayTracing SeqRayTrac, cv::Mat image, unsigned int scale, unsigned int thickness, unsigned int lineType) :
 	mOptSys_LLT(OptSys),
 	mSeqRayTrac(SeqRayTrac),

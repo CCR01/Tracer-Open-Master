@@ -25,30 +25,33 @@ void BaseTransformation_LLT::swapLine(double mat[3][6], int line1, int line2)
 	}
 }
 
-void BaseTransformation_LLT::FillMatrixRowWise(VectorStructR3 V1, VectorStructR3 V2, VectorStructR3 V3, double mat[3][3])
+std::vector<std::vector<real>> BaseTransformation_LLT::FillMatrixRowWise(const VectorStructR3& V1, const VectorStructR3& V2, const VectorStructR3& V3)
 {
-	mat[0][0] = V1.getX();
-	mat[0][1] = V2.getX();
-	mat[0][2] = V3.getX();
+	std::vector<std::vector<real>> matrix;
+	matrix.resize(3);
+	matrix[0].resize(3);
+	matrix[1].resize(3);
+	matrix[2].resize(3);
 
-	mat[1][0] = V1.getY();
-	mat[1][1] = V2.getY();
-	mat[1][2] = V3.getY();
+	matrix[0][0] = V1.getX();
+	matrix[0][1] = V2.getX();
+	matrix[0][2] = V3.getX();
 
-	mat[2][0] = V1.getZ();
-	mat[2][1] = V2.getZ();
-	mat[2][2] = V3.getZ();
+	matrix[1][0] = V1.getY();
+	matrix[1][1] = V2.getY();
+	matrix[1][2] = V3.getY();
+
+	matrix[2][0] = V1.getZ();
+	matrix[2][1] = V2.getZ();
+	matrix[2][2] = V3.getZ();
+
+	return matrix;
 
 }
 
 
-Matrix3x3AndExist BaseTransformation_LLT::CalcBaseTransformationMatrix(VectorStructR3 direction)
+std::vector<std::vector<real>> BaseTransformation_LLT::CalcBaseTransformationMatrix(const VectorStructR3& direction)
 {
-
-
-	Matrix3x3AndExist returnTransMatrix;
-	returnTransMatrix.ExistMatrix = 0;
-	//returnTransMatrix.Matrix[3][3] = Matrix[3][3];
 
 	// check linearity to build Base Vector1
 	VectorStructR3 BaseVector1;
@@ -63,10 +66,10 @@ Matrix3x3AndExist BaseTransformation_LLT::CalcBaseTransformationMatrix(VectorStr
 
 	VectorStructR3 BaseVector3 = Math::unitVector(direction); //z-direction
 	VectorStructR3 BaseVector2 = -1 * Math::unitVector(Math::DoCrossProduct(BaseVector1, BaseVector3)); //y-direction 
-	real Matrix[3][3];
-	FillMatrixRowWise(BaseVector1, BaseVector2, BaseVector3, Matrix);
+	std::vector<std::vector<real>> returnTransMatrix;
+	
 	// For the algorithm we have to fill the matrix row wise 
-	returnTransMatrix = calcInversMatrix(Matrix);
+	returnTransMatrix = calcInversMatrix(FillMatrixRowWise(BaseVector1, BaseVector2, BaseVector3));
 
 
 	return returnTransMatrix;
@@ -74,27 +77,32 @@ Matrix3x3AndExist BaseTransformation_LLT::CalcBaseTransformationMatrix(VectorStr
 
 
 
-Matrix3x3AndExist  BaseTransformation_LLT::calcInversMatrix(real mat[3][3]) // Quelle: https://www.thecrazyprogrammer.com/2017/02/c-c-program-find-inverse-matrix.html
-																				  // Bsp.: double mat[3][3] = { { 2.0,-1.0,0.0 },{ 1.0,2.0,-2.0 },{ 0.0,-1.0,1.0 } } -> invers matrix: 0.2 0.2 0.0
-																				  //	-0.2 0.3 1.0
-																				  //  0.2 -0.3 0.0
+std::vector<std::vector<real>> BaseTransformation_LLT::calcInversMatrix(const std::vector<std::vector<real>>& matrix) // Quelle: https://www.thecrazyprogrammer.com/2017/02/c-c-program-find-inverse-matrix.html
+																		  // Bsp.: double mat[3][3] = { { 2.0,-1.0,0.0 },{ 1.0,2.0,-2.0 },{ 0.0,-1.0,1.0 } } -> invers matrix: 0.2 0.2 0.0
+																		  //	-0.2 0.3 1.0
+																		  //  0.2 -0.3 0.0
 {
 	int i, j;
 	real determinant = 0.0;
-	real saveMatrix[3][3];
-	Matrix3x3AndExist returnMatrix;
-	returnMatrix.ExistMatrix = 1;
+	std::vector<std::vector<real>> returnMatrix;
+	returnMatrix.resize(3);
+	returnMatrix[0].resize(3);
+	returnMatrix[1].resize(3);
+	returnMatrix[2].resize(3);
+
 	double tolerance = 0.00000000001; // TODO Question: Welche Toleranz ist hier sinnvoll???
 
 									  //finding determinant
 	for (i = 0; i < 3; i++)
-		determinant = determinant + (mat[0][i] * (mat[1][(i + 1) % 3] * mat[2][(i + 2) % 3] - mat[1][(i + 2) % 3] * mat[2][(i + 1) % 3]));
+	{
+		determinant = determinant + (matrix[0][i] * (matrix[1][(i + 1) % 3] * matrix[2][(i + 2) % 3] - matrix[1][(i + 2) % 3] * matrix[2][(i + 1) % 3]));
+	};
 	//std::cout << "______________________________\n";
 	//std::cout <<determinant << std::endl;
 	//std::cout << "______________________________\n";
 	if (abs(determinant) < tolerance)
 	{
-		returnMatrix.ExistMatrix = 0;
+		std::cout << "There's been a mistake. There is no inverse matrix" << std::endl;
 		return returnMatrix;
 	}
 
@@ -117,7 +125,7 @@ Matrix3x3AndExist  BaseTransformation_LLT::calcInversMatrix(real mat[3][3]) // Q
 	for (i = 0; i < 3; i++)
 	{
 		for (j = 0; j < 3; j++)
-			saveMatrix[i][j] = ((mat[(j + 1) % 3][(i + 1) % 3] * mat[(j + 2) % 3][(i + 2) % 3]) - (mat[(j + 1) % 3][(i + 2) % 3] * mat[(j + 2) % 3][(i + 1) % 3])) / determinant;
+			returnMatrix[i][j] = ((matrix[(j + 1) % 3][(i + 1) % 3] * matrix[(j + 2) % 3][(i + 2) % 3]) - (matrix[(j + 1) % 3][(i + 2) % 3] * matrix[(j + 2) % 3][(i + 1) % 3])) / determinant;
 		//std::cout << ((mat[(j + 1) % 3][(i + 1) % 3] * mat[(j + 2) % 3][(i + 2) % 3]) - (mat[(j + 1) % 3][(i + 2) % 3] * mat[(j + 2) % 3][(i + 1) % 3])) / determinant << "\t";
 		//std::cout << "\n";
 	}
@@ -128,14 +136,13 @@ Matrix3x3AndExist  BaseTransformation_LLT::calcInversMatrix(real mat[3][3]) // Q
 	//std::cout << "______________________________\n";
 
 
-	returnMatrix.saveMatrix(saveMatrix);
 	return returnMatrix;
 
 }
 
 
 // calculat shift of point to new base point'
-VectorStructR3 BaseTransformation_LLT::calcPointInNewBase(/*transformation matrix*/ double mat[3][3], /*shift*/ VectorStructR3 PointOldBase, VectorStructR3 NewBaseInGlobalCoord)
+VectorStructR3 BaseTransformation_LLT::calcPointInNewBase(/*transformation matrix*/ std::vector<std::vector<real>> mat, /*shift*/ VectorStructR3 PointOldBase, VectorStructR3 NewBaseInGlobalCoord)
 {
 	VectorStructR3 VecPointOldBasNewBaseGlobalCoord = PointOldBase - NewBaseInGlobalCoord;
 
@@ -146,7 +153,7 @@ VectorStructR3 BaseTransformation_LLT::calcPointInNewBase(/*transformation matri
 
 
 
-Ray_LLT BaseTransformation_LLT::transformRayInNewBase(Ray_LLT ray, real transMatrix[3][3], VectorStructR3 shiftVec)
+Ray_LLT BaseTransformation_LLT::transformRayInNewBase(Ray_LLT ray, std::vector<std::vector<real>> transMatrix, VectorStructR3 shiftVec)
 {
 	Ray_LLT returnRay_LLT_trans;
 	VectorStructR3 transPointRay = BaseTransformation_LLT::calcPointInNewBase(transMatrix, ray.getOriginRay(), shiftVec);

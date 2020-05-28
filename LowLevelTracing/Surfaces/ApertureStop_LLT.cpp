@@ -45,13 +45,13 @@ double ApertureStop_LLT::getRefractiveIndex()
 }
 
 // set refractive indes
-void ApertureStop_LLT::setRefractiveIndexSide_A(real const& refractiveIndex)
+void ApertureStop_LLT::setRefractiveIndexSide_A(real const refractiveIndex)
 {
 	mRrefractiveIndex = refractiveIndex;
 }
 
 // set refractive indes
-void ApertureStop_LLT::setRefractiveIndexSide_B(real const& refractiveIndex)
+void ApertureStop_LLT::setRefractiveIndexSide_B(real const refractiveIndex)
 {
 	mRrefractiveIndex = refractiveIndex;
 }
@@ -80,7 +80,17 @@ real ApertureStop_LLT::getRefractiveIndex_B()
 	return mRrefractiveIndex;
 }
 
-IntersectInformationStruct ApertureStop_LLT::calculateIntersection(LightRayStruct const& lightRay)
+ApertureStop_LLT::ApertureStop_LLT(double semiHeight, VectorStructR3 point, VectorStructR3 direction, double refractiveIndex) :
+	mSemiHeightAperture(semiHeight),
+	mPointAperture(point),
+	mDirectionAperture(direction),
+	mRrefractiveIndex(refractiveIndex)
+{
+	calcApertureStopQwtCoord();
+
+}
+
+IntersectInformationStruct ApertureStop_LLT::calculateIntersection(LightRayStruct const lightRay)
 {
 	// ***
 	// ATTENTION: we set that tolerance not so height because of ray aiming
@@ -89,8 +99,8 @@ IntersectInformationStruct ApertureStop_LLT::calculateIntersection(LightRayStruc
 	// ***
 	
 	Ray_LLT ray = lightRay.getRay_LLT();
-	Light_LLT light = lightRay.getLight_LLT();
-	IntersectInformationStruct returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, light };
+	Light_LLT mLight = lightRay.getLight_LLT();
+	IntersectInformationStruct returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, mLight };
 
 	// flat in coordinate form: E:Nx * X+ Ny * Y+ Nz * Z= d 
 	double d = mDirectionAperture * mPointAperture;
@@ -133,18 +143,18 @@ IntersectInformationStruct ApertureStop_LLT::calculateIntersection(LightRayStruc
 
 			if (ray.getDirectionRayUnit() * mDirectionAperture >= 0) // switch normale on plan geometry and from side A
 			{
-				returnIntersectInfos = { intersectionPoint,-1.0 * mDirectionAperture ,A, stepsT,mRrefractiveIndex,mRrefractiveIndex,ray.getDirectionRayUnit(), light };
+				returnIntersectInfos = { intersectionPoint,-1.0 * mDirectionAperture ,A, stepsT,mRrefractiveIndex,mRrefractiveIndex,ray.getDirectionRayUnit(), mLight };
 			}
 
 			else if (ray.getDirectionRayUnit() * mDirectionAperture <= 0)// from side B
 			{
-				returnIntersectInfos = { intersectionPoint,mDirectionAperture ,B, stepsT,mRrefractiveIndex,mRrefractiveIndex,ray.getDirectionRayUnit(), light };
+				returnIntersectInfos = { intersectionPoint,mDirectionAperture ,B, stepsT,mRrefractiveIndex,mRrefractiveIndex,ray.getDirectionRayUnit(), mLight };
 			}
 
 			
 			if ((distance - mSemiHeightAperture) > tolerance) // ray get absorbed by the aperture stop
 			{
-				returnIntersectInfos.setSurface(N);
+				returnIntersectInfos.setSurfaceSide(N);
 			}
 		}
 

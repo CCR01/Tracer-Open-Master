@@ -3,10 +3,35 @@
 #include "..\BaseTransformation_LLT.h"
 #include "..\Light_LLT.h"
 
-double isDerivationAsphere::getDerivation() const&
+double isDerivationAsphere::getDerivation() const
 {
 	return derivation;
 }
+
+AsphericalSurface_LLT::~AsphericalSurface_LLT() {};
+
+AsphericalSurface_LLT::AsphericalSurface_LLT(/*radius*/ double radius, /*semi height*/ double semiHeight,/*point*/ VectorStructR3  point, /*direction*/ VectorStructR3  direction,/*refractive index A*/ double refractiveSideA,/*refractive index B*/ double refractiveSideB,/*conic*/ double  conic,
+	/*second order term*/ double  A1, /*fourth order term*/ double  A2, /*sixth order term*/ double  A3, /*eighth order term*/ double  A4,/*tenth order term*/ double  A5,/*twelfth oder term*/ double  A6,
+	/*fourteenth order term*/ double  A7,/*sixteenth order tem*/ double  A8) :
+	mRadiusAsphere(radius),
+	mSemiHeightAsphere(std::abs(semiHeight)),
+	mPointAsphere(point),
+	mDirectionAsphereUnit(Math::unitVector(direction)),
+	mDirectionAsphere(direction),
+	mRefractiveSideA_Asphere(refractiveSideA),
+	mRefractiveSideB_Asphere(refractiveSideB),
+	mConic(conic),
+	m_A1(A1),
+	m_A2(A2),
+	m_A3(A3),
+	m_A4(A4),
+	m_A5(A5),
+	m_A6(A6),
+	m_A7(A7),
+	m_A8(A8)
+{
+	setPrefixAsphere(mDirectionAsphere); // we need that to switch the prefix of the height order terms
+};
 
 //get radius asphere
 real AsphericalSurface_LLT::getRadius()
@@ -15,7 +40,7 @@ real AsphericalSurface_LLT::getRadius()
 }
 
 //set radius asphere
-void AsphericalSurface_LLT::setRadiusAsphere(real const& radius)
+void AsphericalSurface_LLT::setRadiusAsphere(real const radius)
 {
 	mRadiusAsphere = radius;
 }
@@ -46,7 +71,7 @@ void AsphericalSurface_LLT::setPoint(VectorStructR3 point)
 
 
 // set direction asphere unit
-void AsphericalSurface_LLT::setDirectionUnitAsphere(VectorStructR3 const& direction)
+void AsphericalSurface_LLT::setDirectionUnitAsphere(VectorStructR3 direction)
 {
 	mDirectionAsphereUnit = Math::unitVector(direction);
 }
@@ -59,140 +84,140 @@ VectorStructR3 AsphericalSurface_LLT::getDirection()
 
 
 //get refractive index side A
-real AsphericalSurface_LLT::getRefracIndexAsphere_A() const&
+real AsphericalSurface_LLT::getRefracIndexAsphere_A() const
 {
 	return mRefractiveSideA_Asphere;
 }
 
 //set refractive index side A
-void AsphericalSurface_LLT::setRefractiveIndexSide_A(real const& refractiveIndex)
+void AsphericalSurface_LLT::setRefractiveIndexSide_A(real const refractiveIndex)
 {
 	mRefractiveSideA_Asphere = refractiveIndex;
 }
 
 //get refractive index side B
-real AsphericalSurface_LLT::getRefracIndexAsphere_B() const&
+real AsphericalSurface_LLT::getRefracIndexAsphere_B() const
 {
 	return mRefractiveSideB_Asphere;
 }
 
 //set refractive index side B
-void AsphericalSurface_LLT::setRefractiveIndexSide_B(real const& refractiveIndex)
+void AsphericalSurface_LLT::setRefractiveIndexSide_B(real const refractiveIndex)
 {
 	mRefractiveSideB_Asphere = refractiveIndex;
 }
 
 //get conic
-real AsphericalSurface_LLT::getConic() const&
+real AsphericalSurface_LLT::getConic() const
 {
 	return mConic;
 }
 
 //set conic
-void AsphericalSurface_LLT::setConic(real const& conic)
+void AsphericalSurface_LLT::setConic(real const conic)
 {
 	mConic = conic;
 }
 
 //get A1
-real AsphericalSurface_LLT::getA1() const&
+real AsphericalSurface_LLT::getA1() const
 {
 	return m_A1;
 }
 
 //set A1
-void AsphericalSurface_LLT::setA1(real const& A1)
+void AsphericalSurface_LLT::setA1(real const A1)
 {
 	m_A1 = A1;
 }
 
 //get A2
-real AsphericalSurface_LLT::getA2() const&
+real AsphericalSurface_LLT::getA2() const
 {
 	return m_A2;
 }
 
 //set A2
-void AsphericalSurface_LLT::setA2(real const& A2)
+void AsphericalSurface_LLT::setA2(real const A2)
 {
 	m_A2 = A2;
 }
 
 //get A3
-real AsphericalSurface_LLT::getA3() const&
+real AsphericalSurface_LLT::getA3() const
 {
 	return m_A3;
 }
 
 //set A3
-void AsphericalSurface_LLT::setA3(real const& A3)
+void AsphericalSurface_LLT::setA3(real const A3)
 {
 	m_A3 = A3;
 }
 
 //get A4
-real AsphericalSurface_LLT::getA4() const&
+real AsphericalSurface_LLT::getA4() const
 {
 	return m_A4;
 }
 
 //set A4
-void AsphericalSurface_LLT::setA4(real const& A4)
+void AsphericalSurface_LLT::setA4(real const A4)
 {
 	m_A4 = A4;
 }
 
 //get A5
-real AsphericalSurface_LLT::getA5() const&
+real AsphericalSurface_LLT::getA5() const
 {
 	return m_A5;
 }
 
 //set A5
-void AsphericalSurface_LLT::setA5(real const& A5)
+void AsphericalSurface_LLT::setA5(real const A5)
 {
 	m_A5 = A5;
 }
 
 //get A6
-real AsphericalSurface_LLT::getA6() const&
+real AsphericalSurface_LLT::getA6() const
 {
 	return m_A6;
 }
 
 //set A6
-void AsphericalSurface_LLT::setA6(real const& A6)
+void AsphericalSurface_LLT::setA6(real const A6)
 {
 	m_A6 = A6;
 }
 
 //get A7
-real AsphericalSurface_LLT::getA7() const&
+real AsphericalSurface_LLT::getA7() const
 {
 	return m_A7;
 }
 
 //set A7
-void AsphericalSurface_LLT::setA7(real const& A7)
+void AsphericalSurface_LLT::setA7(real const A7)
 {
 	m_A7 = A7;
 }
 
 //get A8
-real AsphericalSurface_LLT::getA8() const&
+real AsphericalSurface_LLT::getA8() const
 {
 	return m_A8;
 }
 
 //set A8
-void AsphericalSurface_LLT::setA8(real const& A8)
+void AsphericalSurface_LLT::setA8(real const A8)
 {
 	m_A8 = A8;
 }
 
 //calculate z of an aspherical surface in point Q projected on the aspherical surface
 
-is_Z_ValueAsphere AsphericalSurface_LLT::calc_Z_ValueAsphere(double const& x, double const& y)
+is_Z_ValueAsphere AsphericalSurface_LLT::calc_Z_ValueAsphere(double const x, double const y)
 {
 	is_Z_ValueAsphere returnIs_Z_ValueAsphere;
 	double PointToZ_Achse = pow(x, 2) + pow(y, 2);
@@ -223,7 +248,7 @@ mPrefix * m_A8 * /*r^16*/pow(PointToZ_Achse, 8)
 }
 
 // Projection of a point in z direction
-VectorStructR3 AsphericalSurface_LLT::Q_projection(double const& x, double const& y, double const& z)
+VectorStructR3 AsphericalSurface_LLT::Q_projection(double const x, double const y, double const z)
 {
 	return{ x,y,z };
 }
@@ -231,7 +256,7 @@ VectorStructR3 AsphericalSurface_LLT::Q_projection(double const& x, double const
 
 
 // Calculate rise of asphere in x-direction
-isDerivationAsphere AsphericalSurface_LLT::rise_X_AsphericalSurface(double const& x, double const& y)
+isDerivationAsphere AsphericalSurface_LLT::rise_X_AsphericalSurface(double const x, double const y)
 {
 	isDerivationAsphere returnRiseX;
 	double PointToZ_Achse = pow(x, 2) + pow(y, 2);
@@ -256,7 +281,7 @@ isDerivationAsphere AsphericalSurface_LLT::rise_X_AsphericalSurface(double const
 	}
 }
 
-isDerivationAsphere AsphericalSurface_LLT::rise_Y_AsphericalSurface(double const&  x, double const& y)
+isDerivationAsphere AsphericalSurface_LLT::rise_Y_AsphericalSurface(double const  x, double const y)
 {
 	isDerivationAsphere returnRiseY;
 	double PointToZ_Achse = pow(x, 2) + pow(y, 2);
@@ -280,12 +305,12 @@ isDerivationAsphere AsphericalSurface_LLT::rise_Y_AsphericalSurface(double const
 	}
 }
 
-IntersectInformationStruct AsphericalSurface_LLT::calculateIntersection(LightRayStruct const& lightRay)
+IntersectInformationStruct AsphericalSurface_LLT::calculateIntersection(LightRayStruct const lightRay)
 {
 
 	IntersectInformationStruct returnIntersectInfos;
 	Ray_LLT ray = lightRay.getRay_LLT();
-	Light_LLT light = lightRay.getLight_LLT();
+	Light_LLT mLight = lightRay.getLight_LLT();
 
 
 	double tolerance = 0.001; // TODO Question: Welche Toleranz ist hier sinnvoll???
@@ -296,13 +321,13 @@ IntersectInformationStruct AsphericalSurface_LLT::calculateIntersection(LightRay
 	double steps_T_RayToTangentialPlaneLocalCoordiSystem;
 	is_Z_ValueAsphere zValueAsphere;
 	VectorStructR3 P1_IntersectionPointRayTangenteLOCALCoordiSystem;
-	Matrix3x3AndExist TransformationMatrix = BaseTransformation_LLT::CalcBaseTransformationMatrix(mDirectionAsphereUnit);
-	VectorStructR3 transDirectionRay = Math::multiplyMatrix3x3VectorR3(TransformationMatrix.Matrix, ray.getDirectionRayUnit());
+	std::vector<std::vector<real>> TransformationMatrix = BaseTransformation_LLT::CalcBaseTransformationMatrix(mDirectionAsphereUnit);
+	VectorStructR3 transDirectionRay = Math::multiplyMatrix3x3VectorR3(TransformationMatrix, ray.getDirectionRayUnit());
 
 	// in com
-	Ray_LLT transRay = BaseTransformation_LLT::transformRayInNewBase(ray, TransformationMatrix.Matrix, mPointAsphere);
+	Ray_LLT transRay = BaseTransformation_LLT::transformRayInNewBase(ray, TransformationMatrix, mPointAsphere);
 	VectorStructR3 transAspherePoint = { 0.0,0.0,0.0 };
-	VectorStructR3 transAsphereDirecUnit = Math::multiplyMatrix3x3VectorR3(TransformationMatrix.Matrix, mDirectionAsphereUnit);
+	VectorStructR3 transAsphereDirecUnit = Math::multiplyMatrix3x3VectorR3(TransformationMatrix, mDirectionAsphereUnit);
 
 	isDerivationAsphere riseXLocalCoodiSystem;
 	isDerivationAsphere riseYLocalCoordiSystem;
@@ -326,7 +351,7 @@ IntersectInformationStruct AsphericalSurface_LLT::calculateIntersection(LightRay
 
 	if (abs(denominator) < tolerance)
 	{
-		returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 },light }; //'N' there is NO intersection poin
+		returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 },mLight }; //'N' there is NO intersection poin
 	}
 	else
 	{
@@ -335,7 +360,7 @@ IntersectInformationStruct AsphericalSurface_LLT::calculateIntersection(LightRay
 		{
 			// ray is in flat!
 				// TODO Question: Was soll dann gemacht werden?!?!?! hier hat man ja dann unendlich viele Schnittpunkte 	
-			returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, light }; //'N' there is NO intersection poin
+			returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, mLight }; //'N' there is NO intersection poin
 																											// -> Das ist ja dann eigentlich falsch?! -> es gibt ja viele Schnittpunkte!
 		}
 
@@ -345,7 +370,7 @@ IntersectInformationStruct AsphericalSurface_LLT::calculateIntersection(LightRay
 			double stepsT = nominator / denominator;
 			if (stepsT < 0) //ray would walk in the wrong direction
 			{
-				returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, light }; //'N' there is NO intersection poin
+				returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, mLight }; //'N' there is NO intersection poin
 			}
 			else
 			{
@@ -368,7 +393,7 @@ IntersectInformationStruct AsphericalSurface_LLT::calculateIntersection(LightRay
 					if (zValueAsphere.yesNo == 0) //there is no intersection point
 					{
 						distanceQP = limit - 1.0; /*check Value! to go out of "while"*/
-						returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, light }; //'N' there is NO intersection poin
+						returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, mLight }; //'N' there is NO intersection poin
 					}
 					else { // there must be an intersection point
 					// 2. Approximate solution Q1 on the surface as a z-projection
@@ -380,7 +405,7 @@ IntersectInformationStruct AsphericalSurface_LLT::calculateIntersection(LightRay
 						if (riseXLocalCoodiSystem.yesNo == 0)
 						{
 							distanceQP = limit - 1.0;
-							returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, light }; //'N' there is NO intersection poin
+							returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, mLight }; //'N' there is NO intersection poin
 						}
 						else
 						{
@@ -389,7 +414,7 @@ IntersectInformationStruct AsphericalSurface_LLT::calculateIntersection(LightRay
 							if (riseYLocalCoordiSystem.yesNo == 0)
 							{
 								distanceQP = limit - 1.0;
-								returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, light }; //'N' there is NO intersection poin
+								returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, mLight }; //'N' there is NO intersection poin
 							}
 							else
 							{
@@ -430,8 +455,8 @@ IntersectInformationStruct AsphericalSurface_LLT::calculateIntersection(LightRay
 
 
 				// calculate the intersection point in the global coorindat system
-				Matrix3x3AndExist backTransMatrix = BaseTransformation_LLT::calcInversMatrix(TransformationMatrix.Matrix);
-				VectorStructR3 IntersectionPointRayAsphereGlobalCoordiSystem = Math::multiplyMatrix3x3VectorR3(backTransMatrix.Matrix, P1_IntersectionPointRayTangenteLOCALCoordiSystem) + mPointAsphere;
+				std::vector<std::vector<real>> backTransMatrix = BaseTransformation_LLT::calcInversMatrix(TransformationMatrix);
+				VectorStructR3 IntersectionPointRayAsphereGlobalCoordiSystem = Math::multiplyMatrix3x3VectorR3(backTransMatrix, P1_IntersectionPointRayTangenteLOCALCoordiSystem) + mPointAsphere;
 
 				returnIntersectInfos.setIntersectionPoint(IntersectionPointRayAsphereGlobalCoordiSystem);
 
@@ -439,7 +464,7 @@ IntersectInformationStruct AsphericalSurface_LLT::calculateIntersection(LightRay
 				double shortestDistanceDirection_IntersectionPoint = Math::lengthOfVector(Math::DoCrossProduct(mDirectionAsphereUnit, (IntersectionPointRayAsphereGlobalCoordiSystem - mPointAsphere))) / Math::lengthOfVector(mDirectionAsphereUnit);
 				if (mSemiHeightAsphere <= shortestDistanceDirection_IntersectionPoint)
 				{
-					returnIntersectInfos.setSurface(N);
+					returnIntersectInfos.setSurfaceSide(N);
 				}
 
 				else { // intersection point is in aspherical surface
@@ -448,18 +473,18 @@ IntersectInformationStruct AsphericalSurface_LLT::calculateIntersection(LightRay
 					returnIntersectInfos.setRefractiveIndex_B(mRefractiveSideB_Asphere);
 					returnIntersectInfos.setStepsToWalk(Math::distanceTwoVectors(ray.getOriginRay(), IntersectionPointRayAsphereGlobalCoordiSystem));
 					returnIntersectInfos.setDirectionRayUnit(ray.getDirectionRayUnit());
-					returnIntersectInfos.setLight(light);
+					returnIntersectInfos.setLight(mLight);
 
 					if (ray.getCurrentRefractiveIndex() == mRefractiveSideA_Asphere) //ray comes from side A
 					{
-						returnIntersectInfos.setSurface(A);
-						returnIntersectInfos.setNormalUnitVector(Math::multiplyMatrix3x3VectorR3(backTransMatrix.Matrix, Math::unitVector({ riseXLocalCoodiSystem.getDerivation(),riseYLocalCoordiSystem.getDerivation(),-1 })));
+						returnIntersectInfos.setSurfaceSide(A);
+						returnIntersectInfos.setNormalUnitVector(Math::multiplyMatrix3x3VectorR3(backTransMatrix, Math::unitVector({ riseXLocalCoodiSystem.getDerivation(),riseYLocalCoordiSystem.getDerivation(),-1 })));
 
 					}
 					else // ray must come from side B
 					{
-						returnIntersectInfos.setSurface(B);
-						returnIntersectInfos.setNormalUnitVector(-1 * Math::multiplyMatrix3x3VectorR3(backTransMatrix.Matrix, Math::unitVector({ riseXLocalCoodiSystem.getDerivation(),riseYLocalCoordiSystem.getDerivation(),-1 })));
+						returnIntersectInfos.setSurfaceSide(B);
+						returnIntersectInfos.setNormalUnitVector(-1 * Math::multiplyMatrix3x3VectorR3(backTransMatrix, Math::unitVector({ riseXLocalCoodiSystem.getDerivation(),riseYLocalCoordiSystem.getDerivation(),-1 })));
 
 					}
 
@@ -528,6 +553,8 @@ void AsphericalSurface_LLT::plot2D(cv::Mat image, unsigned int scale, unsigned i
 {
 	// TODO: make the 2D Plot
 }
+
+AsphericalSurface_LLT::AsphericalSurface_LLT() {};
 
 AsphericalSurface_LLT::AsphericalSurface_LLT(AsphericalSurface_LLT &source)
 {

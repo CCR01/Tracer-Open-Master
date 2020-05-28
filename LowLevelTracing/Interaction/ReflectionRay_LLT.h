@@ -3,26 +3,19 @@
 
 class ReflectionRay_LLT : public InteractionRay_LLT {
 public:
-	ReflectionRay_LLT() {};
+	ReflectionRay_LLT();
+	virtual ~ReflectionRay_LLT() override;
 	ReflectionRay_LLT(ReflectionRay_LLT &source);
 	ReflectionRay_LLT& operator=(ReflectionRay_LLT& source);
-	virtual std::shared_ptr<InteractionRay_LLT> clone() override;
-	virtual ~ReflectionRay_LLT() {};
-	ReflectionRay_LLT(IntersectInformationStruct intersectInformation) :
-		mIntersectionInformation(intersectInformation)
-	{};
-	
+	virtual std::shared_ptr<InteractionRay_LLT> clone() override;	
+	ReflectionRay_LLT(IntersectInformationStruct intersectInformation);
 
-	// TODO Ques Sergej: Warum geht das nicht in der .cpp????
-	RaysRangeStruct howManyRays()
-	{
-		return RaysRangeStruct{ 1,1 };
-	}
+	virtual RaysRangeStruct howManyRays() override;
 
-	std::vector<LightRayStruct> calcInteraction(IntersectInformationStruct intersectInformation);
+	virtual std::vector<LightRayStruct> calcInteraction(const IntersectInformationStruct& intersectInformation) override;
 
 private:
-	IntersectInformationStruct mIntersectionInformation;
-
+	IntersectInformationStruct mIntersectionInformation{};
+	
 
 };

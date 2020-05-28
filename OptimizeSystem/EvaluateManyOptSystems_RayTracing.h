@@ -72,7 +72,7 @@ struct settingsMeritFct_RayTracing
 
 	// light
 	Light_LLT getLight(unsigned int number);
-	void setLight(unsigned int number, Light_LLT light);
+	void setLight(unsigned int number, Light_LLT mLight);
 
 	// filed
 	unsigned int getWeightField(unsigned int number);

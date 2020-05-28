@@ -21,32 +21,32 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3383AFAF-54AE-44B1-989C-5D6965EA73A3}</ProjectGuid>
     <RootNamespace>VSSolution_traceropen</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -150,7 +150,7 @@
     <ClCompile Include="..\Analyse\RayFan.cpp" />
     <ClCompile Include="..\Analyse\SeidelCoefficients.cpp" />
     <ClCompile Include="..\Analyse\Spot.cpp" />
-    <ClCompile Include="..\benchmark\AsphericalSurface_LLT\TestAsphericalSurface_LLT.cpp" />
+    <ClCompile Include="..\benchmark\benachRayTracing\benchRayTracing.cpp" />
     <ClCompile Include="..\benchmark\BenchAnalyse\BechmarkExipPupilCalculation.cpp" />
     <ClCompile Include="..\benchmark\BenchAnalyse\BenchmarkImageSimulation.cpp" />
     <ClCompile Include="..\benchmark\BenchAnalyse\BenchmarkOpticalPathDifference.cpp" />
@@ -159,10 +159,8 @@
     <ClCompile Include="..\benchmark\ComplexOptSys\BenchmarkComplexOptSys.cpp" />
     <ClCompile Include="..\benchmark\Element\OpticalSystemElement\BenchOpticalSystemElement.cpp" />
     <ClCompile Include="..\benchmark\Element\SphericalElement\BechnSpehricalElemtn.cpp" />
-    <ClCompile Include="..\benchmark\FillAS\BenchmakFillAS.cpp" />
     <ClCompile Include="..\benchmark\Glasses\BenchGlasses.cpp" />
     <ClCompile Include="..\benchmark\IOC2020_Dresten\IOC2020_Dresden.cpp" />
-    <ClCompile Include="..\benchmark\Math\BenchmarkMath.cpp" />
     <ClCompile Include="..\benchmark\nonLinearityRMS_SpotRadius\nonLinearityRMS_SpotRadiuscpp.cpp" />
     <ClCompile Include="..\benchmark\OpticalSystem\BenchmarkOpticalSystem.cpp" />
     <ClCompile Include="..\benchmark\Optikkreis\Optikkreis.cpp" />
@@ -224,7 +222,9 @@
     <ClCompile Include="..\LowLevelTracing\Interaction\InteractionRay_LLT.cpp" />
     <ClCompile Include="..\LowLevelTracing\Interaction\ReflectionRay_LLT.cpp" />
     <ClCompile Include="..\LowLevelTracing\Interaction\RefractedRay_LLT.cpp" />
+    <ClCompile Include="..\LowLevelTracing\JonesVector.cpp" />
     <ClCompile Include="..\LowLevelTracing\OpticalSystem_LLT.cpp" />
+    <ClCompile Include="..\LowLevelTracing\SurfaceIntersectionRay_LLT.cpp" />
     <ClCompile Include="..\LowLevelTracing\Surfaces\ApertureStop_LLT.cpp" />
     <ClCompile Include="..\LowLevelTracing\Surfaces\AsphericalSurface_LLT.cpp" />
     <ClCompile Include="..\LowLevelTracing\Surfaces\ParaxialLens_LLT.cpp" />
@@ -262,7 +262,12 @@
     <ClCompile Include="..\SurfaceElements\PlanElement.cpp" />
     <ClCompile Include="..\SurfaceElements\SphericalElement.cpp" />
     <ClCompile Include="..\tests\DLSmulticheck\DLSmulticheck.cpp" />
+    <ClCompile Include="..\tests\ManagementTests\managementTests.cpp" />
+    <ClCompile Include="..\tests\testApertureStop\testApertureStop.cpp" />
+    <ClCompile Include="..\tests\testAsphericalSurface_LLT\testAsphericalSurface_LLT.cpp" />
+    <ClCompile Include="..\tests\testFillAS\testFillAS.cpp" />
     <ClCompile Include="..\tests\TestGenetic\TestGenetic.cpp" />
+    <ClCompile Include="..\tests\testMath\testMath.cpp" />
     <ClCompile Include="..\TOM(Logo)\TOM(LOGO).cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -272,7 +277,7 @@
     <ClInclude Include="..\Analyse\Seidel Coefficients.h" />
     <ClInclude Include="..\Analyse\Spot.h" />
     <ClInclude Include="..\basicdefinition\basicdefinitions.h" />
-    <ClInclude Include="..\benchmark\AsphericalSurface_LLT\TestAsphericalSurface_LLT.h" />
+    <ClInclude Include="..\benchmark\benachRayTracing\benchRayTracing.h" />
     <ClInclude Include="..\benchmark\BenchAnalyse\BenchmarkExitPupilCalculation.h" />
     <ClInclude Include="..\benchmark\BenchAnalyse\BenchmarkImageSimulation.h" />
     <ClInclude Include="..\benchmark\BenchAnalyse\BenchmarkOpticalPathDifference.h" />
@@ -281,10 +286,8 @@
     <ClInclude Include="..\benchmark\ComplexOptSys\BenchmarkComplexOptSys.h" />
     <ClInclude Include="..\benchmark\Element\OpticalSystemElement\BenchOpticalSystemElement.h" />
     <ClInclude Include="..\benchmark\Element\SphericalElement\BenchSphericalElement.h" />
-    <ClInclude Include="..\benchmark\FillAS\BenchmarkFillAS.h" />
     <ClInclude Include="..\benchmark\Glasses\BenchGlasses.h" />
     <ClInclude Include="..\benchmark\IOC2020_Dresten\IOC2020_Dresden.h" />
-    <ClInclude Include="..\benchmark\Math\BechmarkMath.h" />
     <ClInclude Include="..\benchmark\nonLinearityRMS_SpotRadius\nonLinearityRMS_SpotRadius.h" />
     <ClInclude Include="..\benchmark\OpticalSystem\BenchmarkOpticalSystem.h" />
     <ClInclude Include="..\benchmark\Optikkreis\Optikkreis.h" />
@@ -389,7 +392,12 @@
     <ClInclude Include="..\SurfaceElements\PlanElement.h" />
     <ClInclude Include="..\SurfaceElements\SphericalElement.h" />
     <ClInclude Include="..\tests\DLSmulticheck\DLSmulticheck.h" />
+    <ClInclude Include="..\tests\ManagementTests\managementTests.h" />
+    <ClInclude Include="..\tests\testApertureStop\testApertureStop.h" />
+    <ClInclude Include="..\tests\testAsphericalSurface_LLT\testAsphericalSurface_LLT.h" />
+    <ClInclude Include="..\tests\testFillAS\testFillAS.h" />
     <ClInclude Include="..\tests\TestGenetic\TestGenetic.h" />
+    <ClInclude Include="..\tests\testMath\testMath.h" />
     <ClInclude Include="..\TOM(Logo)\TOM(Logo).h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

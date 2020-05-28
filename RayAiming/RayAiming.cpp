@@ -2,10 +2,11 @@
 #include <iostream>
 #include <cmath>
 #include <typeinfo>   // operator typeid
-#include "..\LowLevelTracing\Math_LLT.h"
-#include "..\SequentialRayTracing\SequentialRayTracer.h"
+//#include "..\LowLevelTracing\Math_LLT.h"
+//#include "..\SequentialRayTracing\SequentialRayTracer.h"
 #include <iomanip> 
 #include "..\oftenUseNamespace\oftenUseNamespace.h"
+#include "..\LowLevelTracing\Surfaces\ApertureStop_LLT.h"
 
 lightRay_intP_dis_negPos_factor::lightRay_intP_dis_negPos_factor() {};
 lightRay_intP_dis_negPos_factor::~lightRay_intP_dis_negPos_factor() {};
@@ -252,13 +253,20 @@ void defaultRayAimingStruct::loadDefaultParameter()
 	mIncreaserFactorTimes = 10.0;
 }
 
-
+RayAiming::RayAiming() {};
+RayAiming::~RayAiming() {};
 
 RayAiming::RayAiming(OpticalSystem_LLT opticalSystem) :
 	mOpticalSystem_LLT(opticalSystem)
 {
 	loadImportantInfosForRayAiming();
 };
+
+// set optical system LLT
+void RayAiming::setOpticalSystem_LLT(const OpticalSystem_LLT& optSys_LLT)
+{
+	mOpticalSystem_LLT = optSys_LLT;
+}
 
 // load important infomation for ray aiming
 void RayAiming::loadImportantInfosForRayAiming()
@@ -431,7 +439,7 @@ unsigned RayAiming::getPositionApertureStop(OpticalSystem_LLT optSys)
 //_______________________________________________
 
 // Ray Aiming for a ray starting at infinity
-LightRayStruct RayAiming::rayAiming_inf(VectorStructR3 rayDirection, VectorStructR3 targetPoint, Light_LLT light, real curRefracIndex)
+LightRayStruct RayAiming::rayAiming_inf(VectorStructR3 rayDirection, VectorStructR3 targetPoint, Light_LLT mLight, real curRefracIndex)
 {
 
 	LightRayStruct lightRayi;
@@ -451,8 +459,7 @@ LightRayStruct RayAiming::rayAiming_inf(VectorStructR3 rayDirection, VectorStruc
 		Ray_LLT startRayInfinity(startPoint, rayDirection, curRefracIndex);
 
 		lightRayi.setRay_LLT(startRayInfinity);
-		lightRayi.setLight_LLT(light);
-		lightRayi.setIsAlive(1);
+		lightRayi.setLight_LLT(mLight);
 
 
 	}
@@ -491,11 +498,11 @@ LightRayStruct RayAiming::rayAiming_inf(VectorStructR3 rayDirection, VectorStruc
 		Ray_LLT startRay3(startPointRay3, rayDirection, curRefracIndex);
 		Ray_LLT startRay4(startPointRay4, rayDirection, curRefracIndex);
 
-		LightRayStruct lightRayStart0(light, startRay0, 1.0);
-		LightRayStruct lightRayStart1(light, startRay1, 1.0);
-		LightRayStruct lightRayStart2(light, startRay2, 1.0);
-		LightRayStruct lightRayStart3(light, startRay3, 1.0);
-		LightRayStruct lightRayStart4(light, startRay4, 1.0);
+		LightRayStruct lightRayStart0(mLight, startRay0, 1.0);
+		LightRayStruct lightRayStart1(mLight, startRay1, 1.0);
+		LightRayStruct lightRayStart2(mLight, startRay2, 1.0);
+		LightRayStruct lightRayStart3(mLight, startRay3, 1.0);
+		LightRayStruct lightRayStart4(mLight, startRay4, 1.0);
 
 
 		// trace all rays until all of them comes to the last surface
@@ -911,7 +918,7 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos_inf(lightRay_intP_di
 	{
 		VectorStructR3 rayDirectionUnit = initialLightRay.getRay_LLT().getDirectionRayUnit();
 		real currentRefIndex = initialLightRay.getRay_LLT().getCurrentRefractiveIndex();
-		Light_LLT light = initialLightRay.getLight_LLT();
+		Light_LLT mLight = initialLightRay.getLight_LLT();
 
 		real X_origin = initialLightRay.getRay_LLT().getOriginRay().getX();
 		real Y_origin = initialLightRay.getRay_LLT().getOriginRay().getY();
@@ -930,7 +937,7 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos_inf(lightRay_intP_di
 			// ray0
 			Ray_LLT ray0(origin0, rayDirectionUnit, currentRefIndex);
 			//light ray 0
-			LightRayStruct lightRay0(light, ray0, 1);
+			LightRayStruct lightRay0(mLight, ray0, 1);
 			lightRay_vec[putLightAtPos] = lightRay0;
 			++putLightAtPos;
 		}
@@ -942,7 +949,7 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos_inf(lightRay_intP_di
 			// ray1
 			Ray_LLT ray1(origin1, rayDirectionUnit, currentRefIndex);
 			//light ray 1
-			LightRayStruct lightRay1(light, ray1, 1);
+			LightRayStruct lightRay1(mLight, ray1, 1);
 			lightRay_vec[putLightAtPos] = lightRay1;
 			++putLightAtPos;
 		}
@@ -954,7 +961,7 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos_inf(lightRay_intP_di
 			// ray2
 			Ray_LLT ray2(origin2, rayDirectionUnit, currentRefIndex);
 			//light ray 2
-			LightRayStruct lightRay2(light, ray2, 1);
+			LightRayStruct lightRay2(mLight, ray2, 1);
 			lightRay_vec[putLightAtPos] = lightRay2;
 			++putLightAtPos;
 		}
@@ -967,7 +974,7 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos_inf(lightRay_intP_di
 			// ray3
 			Ray_LLT ray3(origin3, rayDirectionUnit, currentRefIndex);
 			//light ray 3
-			LightRayStruct lightRay3(light, ray3, 1);
+			LightRayStruct lightRay3(mLight, ray3, 1);
 			lightRay_vec[putLightAtPos] = lightRay3;
 			++putLightAtPos;
 		}
@@ -979,7 +986,7 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos_inf(lightRay_intP_di
 			// ray4
 			Ray_LLT ray4(origin4, rayDirectionUnit, currentRefIndex);
 			//light ray 4
-			LightRayStruct lightRay4(light, ray4, 1);
+			LightRayStruct lightRay4(mLight, ray4, 1);
 			lightRay_vec[putLightAtPos] = lightRay4;
 			++putLightAtPos;
 		}
@@ -991,7 +998,7 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos_inf(lightRay_intP_di
 			// ray5
 			Ray_LLT ray5(origin5, rayDirectionUnit, currentRefIndex);
 			//light ray 5
-			LightRayStruct lightRay5(light, ray5, 1);
+			LightRayStruct lightRay5(mLight, ray5, 1);
 			lightRay_vec[putLightAtPos] = lightRay5;
 			++putLightAtPos;
 
@@ -1004,7 +1011,7 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos_inf(lightRay_intP_di
 			// ray6
 			Ray_LLT ray6(origin6, rayDirectionUnit, currentRefIndex);
 			//light ray 6
-			LightRayStruct lightRay6(light, ray6, 1);
+			LightRayStruct lightRay6(mLight, ray6, 1);
 			lightRay_vec[putLightAtPos] = lightRay6;
 			++putLightAtPos;
 		}
@@ -1016,7 +1023,7 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos_inf(lightRay_intP_di
 			// ray7
 			Ray_LLT ray7(origin7, rayDirectionUnit, currentRefIndex);
 			//light ray 7
-			LightRayStruct lightRay7(light, ray7, 1);
+			LightRayStruct lightRay7(mLight, ray7, 1);
 			lightRay_vec[putLightAtPos] = lightRay7;
 			++putLightAtPos;
 		}
@@ -1187,7 +1194,7 @@ void RayAiming::printInterP_Target_distance_X_Y(lightRay_intP_dis_negPos_factor 
 	std::cout << "distance Y: " << distanceY << std::endl;
 }
 
-LightRayStruct RayAiming::rayAiming_obj(VectorStructR3 rayOrigin, VectorStructR3 targetPoint, Light_LLT light, real curRefracIndex)
+LightRayStruct RayAiming::rayAiming_obj(VectorStructR3 rayOrigin, VectorStructR3 targetPoint, Light_LLT mLight, real curRefracIndex)
 {
 	LightRayStruct lightRayi;
 
@@ -1198,8 +1205,7 @@ LightRayStruct RayAiming::rayAiming_obj(VectorStructR3 rayOrigin, VectorStructR3
 		Ray_LLT startRayObj(rayOrigin, rayDirection, curRefracIndex);
 
 		lightRayi.setRay_LLT(startRayObj);
-		lightRayi.setLight_LLT(light);
-		lightRayi.setIsAlive(1);
+		lightRayi.setLight_LLT(mLight);
 
 	}
 
@@ -1227,11 +1233,11 @@ LightRayStruct RayAiming::rayAiming_obj(VectorStructR3 rayOrigin, VectorStructR3
 		Ray_LLT startRay3(rayOrigin, rayDirection3, curRefracIndex);
 		Ray_LLT startRay4(rayOrigin, rayDirection4, curRefracIndex);
 
-		LightRayStruct lightRayStart0(light, startRay0, 1.0);
-		LightRayStruct lightRayStart1(light, startRay1, 1.0);
-		LightRayStruct lightRayStart2(light, startRay2, 1.0);
-		LightRayStruct lightRayStart3(light, startRay3, 1.0);
-		LightRayStruct lightRayStart4(light, startRay4, 1.0);
+		LightRayStruct lightRayStart0(mLight, startRay0, 1.0);
+		LightRayStruct lightRayStart1(mLight, startRay1, 1.0);
+		LightRayStruct lightRayStart2(mLight, startRay2, 1.0);
+		LightRayStruct lightRayStart3(mLight, startRay3, 1.0);
+		LightRayStruct lightRayStart4(mLight, startRay4, 1.0);
 
 
 		// trace all rays until all of them comes to the last surface
@@ -1327,7 +1333,7 @@ lightRayAndInterPointAperStop RayAiming::getBestLightRayAndInterPoint_obj(LightR
 }
 
 // trace one ray until it comes to the last surface;
-lightRayAndInterPointAperStop RayAiming::traceOneRayUntilInApertureStop_obj(LightRayStruct lightRay, VectorStructR3 vectorToCalcDir, unsigned int maxLoop)
+lightRayAndInterPointAperStop RayAiming::traceOneRayUntilInApertureStop_obj(LightRayStruct lightRay, const VectorStructR3& vectorToCalcDir, unsigned int maxLoop)
 {
 	lightRayAndInterPointAperStop tempLightRayAndInterPointAS{};
 
@@ -1397,7 +1403,7 @@ lightRayAndInterPointAperStop RayAiming::traceOneRayUntilInApertureStop_obj(Ligh
 	return tempLightRayAndInterPointAS;
 }
 
-lightRay_intP_dis_negPos_factor RayAiming::traceNegOrPosSide_andReduce_X_obj(lightRay_intP_dis_negPos_factor initialInfos)
+lightRay_intP_dis_negPos_factor RayAiming::traceNegOrPosSide_andReduce_X_obj(lightRay_intP_dis_negPos_factor& initialInfos)
 {
 	lightRay_intP_dis_negPos_factor returnLightRay_intP_dis_negPos_fac;
 	real initialFactorY = initialInfos.getFactorY();
@@ -1520,7 +1526,7 @@ lightRay_intP_dis_negPos_factor RayAiming::traceNegOrPosSide_andReduce_X_obj(lig
 	return returnLightRay_intP_dis_negPos_fac;
 }
 
-lightRay_intP_dis_negPos_factor RayAiming::traceNegOrPosSide_andReduce_Y_obj(lightRay_intP_dis_negPos_factor initialInfos)
+lightRay_intP_dis_negPos_factor RayAiming::traceNegOrPosSide_andReduce_Y_obj(lightRay_intP_dis_negPos_factor& initialInfos)
 {
 	lightRay_intP_dis_negPos_factor returnLightRay_intP_dis_negPos_fac;
 	real initalFactorX = initialInfos.getFactorX();
@@ -1645,7 +1651,7 @@ lightRay_intP_dis_negPos_factor RayAiming::traceNegOrPosSide_andReduce_Y_obj(lig
 }
 
 
-lightRay_intP_dis_negPos_factor RayAiming::reduceDistancesIn_X_AND_Y_obj(lightRay_intP_dis_negPos_factor initialInfos)
+lightRay_intP_dis_negPos_factor RayAiming::reduceDistancesIn_X_AND_Y_obj(lightRay_intP_dis_negPos_factor& initialInfos)
 {
 	real disYtoTarget = initialInfos.getDistanceInterToTarget_Y();
 	real disXtoTarget = initialInfos.getDistanceInterToTarget_X();
@@ -1726,7 +1732,7 @@ lightRay_intP_dis_negPos_factor RayAiming::reduceDistancesIn_X_AND_Y_obj(lightRa
 }
 
 // robust ray aiming
-lightRay_intP_dis_negPos_factor RayAiming::robustRayAiming_obj(lightRay_intP_dis_negPos_factor initialInfos)
+lightRay_intP_dis_negPos_factor RayAiming::robustRayAiming_obj(lightRay_intP_dis_negPos_factor& initialInfos)
 {
 	real disYtoTarget = initialInfos.getDistanceInterToTarget_Y();
 	real disXtoTarget = initialInfos.getDistanceInterToTarget_X();
@@ -1763,7 +1769,7 @@ lightRay_intP_dis_negPos_factor RayAiming::robustRayAiming_obj(lightRay_intP_dis
 }
 
 // calculate new origin variance in percent
-lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos_obj(lightRay_intP_dis_negPos_factor initialInfos)
+lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos_obj(lightRay_intP_dis_negPos_factor& initialInfos)
 {
 	lightRay_intP_dis_negPos_factor returnInfos = initialInfos;
 	returnInfos.setInterations(0);
@@ -1792,7 +1798,7 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos_obj(lightRay_intP_di
 		VectorStructR3 rayOrigin = initialLightRay.getRay_LLT().getOriginRay();
 		
 		real currentRefIndex = initialLightRay.getRay_LLT().getCurrentRefractiveIndex();
-		Light_LLT light = initialLightRay.getLight_LLT();
+		Light_LLT mLight = initialLightRay.getLight_LLT();
 
 		real direction_X = initialLightRay.getRay_LLT().getDirectionRayUnit().getX();
 		real direction_Y = initialLightRay.getRay_LLT().getDirectionRayUnit().getY();
@@ -1811,7 +1817,7 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos_obj(lightRay_intP_di
 			// ray0
 			Ray_LLT ray0(rayOrigin, direction0, currentRefIndex);
 			//light ray 0
-			LightRayStruct lightRay0(light, ray0, 1);
+			LightRayStruct lightRay0(mLight, ray0, 1);
 			lightRay_vec[putLightAtPos] = lightRay0;
 			++putLightAtPos;
 		}
@@ -1823,7 +1829,7 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos_obj(lightRay_intP_di
 			// ray1
 			Ray_LLT ray1(rayOrigin, direction1, currentRefIndex);
 			//light ray 1
-			LightRayStruct lightRay1(light, ray1, 1);
+			LightRayStruct lightRay1(mLight, ray1, 1);
 			lightRay_vec[putLightAtPos] = lightRay1;
 			++putLightAtPos;
 		}
@@ -1835,7 +1841,7 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos_obj(lightRay_intP_di
 			// ray2
 			Ray_LLT ray2(rayOrigin, direction2, currentRefIndex);
 			//light ray 2
-			LightRayStruct lightRay2(light, ray2, 1);
+			LightRayStruct lightRay2(mLight, ray2, 1);
 			lightRay_vec[putLightAtPos] = lightRay2;
 			++putLightAtPos;
 		}
@@ -1848,7 +1854,7 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos_obj(lightRay_intP_di
 			// ray3
 			Ray_LLT ray3(rayOrigin, direction3, currentRefIndex);
 			//light ray 3
-			LightRayStruct lightRay3(light, ray3, 1);
+			LightRayStruct lightRay3(mLight, ray3, 1);
 			lightRay_vec[putLightAtPos] = lightRay3;
 			++putLightAtPos;
 		}
@@ -1860,7 +1866,7 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos_obj(lightRay_intP_di
 			// ray4
 			Ray_LLT ray4(rayOrigin, direction4, currentRefIndex);
 			//light ray 4
-			LightRayStruct lightRay4(light, ray4, 1);
+			LightRayStruct lightRay4(mLight, ray4, 1);
 			lightRay_vec[putLightAtPos] = lightRay4;
 			++putLightAtPos;
 		}
@@ -1872,7 +1878,7 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos_obj(lightRay_intP_di
 			// ray5
 			Ray_LLT ray5(rayOrigin, direction5, currentRefIndex);
 			//light ray 5
-			LightRayStruct lightRay5(light, ray5, 1);
+			LightRayStruct lightRay5(mLight, ray5, 1);
 			lightRay_vec[putLightAtPos] = lightRay5;
 			++putLightAtPos;
 
@@ -1885,7 +1891,7 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos_obj(lightRay_intP_di
 			// ray6
 			Ray_LLT ray6(rayOrigin, direction6, currentRefIndex);
 			//light ray 6
-			LightRayStruct lightRay6(light, ray6, 1);
+			LightRayStruct lightRay6(mLight, ray6, 1);
 			lightRay_vec[putLightAtPos] = lightRay6;
 			++putLightAtPos;
 		}
@@ -1897,7 +1903,7 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos_obj(lightRay_intP_di
 			// ray7
 			Ray_LLT ray7(rayOrigin, direction7, currentRefIndex);
 			//light ray 7
-			LightRayStruct lightRay7(light, ray7, 1);
+			LightRayStruct lightRay7(mLight, ray7, 1);
 			lightRay_vec[putLightAtPos] = lightRay7;
 			++putLightAtPos;
 		}
@@ -1969,7 +1975,7 @@ VectorStructR3 RayAiming::shiftFirstSurface(real radius, real semiHeight, Vector
 }
 
 // ray aiming many obj
-std::vector<LightRayStruct> RayAiming::rayAimingMany_obj(std::vector<VectorStructR3> pointsInAS, VectorStructR3 startPointRay, Light_LLT light, real curRefracIndex)
+std::vector<LightRayStruct> RayAiming::rayAimingMany_obj(const std::vector<VectorStructR3>& pointsInAS, const VectorStructR3& startPointRay, const Light_LLT& mLight, real curRefracIndex)
 {
 	std::vector<LightRayStruct> returnLightRay_vec;
 	unsigned int numRay = pointsInAS.size();
@@ -1981,7 +1987,7 @@ std::vector<LightRayStruct> RayAiming::rayAimingMany_obj(std::vector<VectorStruc
 	for (unsigned int i = 0; i < numRay; ++i)
 	{
 		tempTargetPoint = pointsInAS[i];
-		aimedTempLightRay = rayAiming_obj(startPointRay, tempTargetPoint, light, curRefracIndex);
+		aimedTempLightRay = rayAiming_obj(startPointRay, tempTargetPoint, mLight, curRefracIndex);
 		returnLightRay_vec[i] = aimedTempLightRay;
 
 	}
@@ -1989,8 +1995,9 @@ std::vector<LightRayStruct> RayAiming::rayAimingMany_obj(std::vector<VectorStruc
 	return returnLightRay_vec;
 }
 
-// set opt sys LLT
-void RayAiming::setOpticalSystem_LLT(OpticalSystem_LLT optSys_LLT)
+std::vector<LightRayStruct> RayAiming::rayAimingMany_obj_complete(const OpticalSystem_LLT& optSys_LLT, const std::vector<VectorStructR3>& pointsInAS, const VectorStructR3 startPointRay, Light_LLT mLight, real curRefracIndex)
 {
 	mOpticalSystem_LLT = optSys_LLT;
+	loadImportantInfosForRayAiming();
+	return rayAimingMany_obj(pointsInAS, startPointRay, mLight, curRefracIndex);
 }

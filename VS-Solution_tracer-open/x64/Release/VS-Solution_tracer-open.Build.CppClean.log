@@ -28,6 +28,7 @@ c:\tracer-open-master\vs-solution_tracer-open\x64\release\benchmarkespot.obj
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\benchmarksphericallens_llt.obj
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\benchmarksequentialraytracer.obj
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\testrms_spot.obj
+c:\tracer-open-master\vs-solution_tracer-open\x64\release\benchmarkrayaiming.obj
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\benchplot2d.obj
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\benchmarkplotspotdiagram.obj
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\benchmarkplotopd.obj
@@ -78,13 +79,13 @@ c:\tracer-open-master\vs-solution_tracer-open\x64\release\images.obj
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\imageprocessing.obj
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\glasses.obj
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\materialsellmeier1.obj
-c:\tracer-open-master\vs-solution_tracer-open\x64\release\plotrayfan.obj
-c:\tracer-open-master\vs-solution_tracer-open\x64\release\plotqwt.obj
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\plotparameterqwt.obj
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\plotopd.obj
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\plot2d.obj
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\plot.obj
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\optimizeopticalsystem.obj
+c:\tracer-open-master\vs-solution_tracer-open\x64\release\importantoptimizestructs.obj
+c:\tracer-open-master\vs-solution_tracer-open\x64\release\genetic.obj
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\evaluatemanyoptsys_raytracing.obj
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\evaluatemanyoptsystems_seidelcoef.obj
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\evaluatemanyoptsystems_paraxialdistances.obj
@@ -99,6 +100,7 @@ c:\tracer-open-master\vs-solution_tracer-open\x64\release\paraxiallens_llt.obj
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\asphericalsurface_llt.obj
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\aperturestop_llt.obj
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\tom(logo).obj
+c:\tracer-open-master\vs-solution_tracer-open\x64\release\testgenetic.obj
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\dlsmulticheck.obj
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\sphericalelement.obj
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\planelement.obj
@@ -114,10 +116,10 @@ c:\tracer-open-master\vs-solution_tracer-open\x64\release\importantstructures.ob
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\psffunction.obj
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\qwtploitems.obj
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\plotspotdiagram.obj
-c:\tracer-open-master\vs-solution_tracer-open\x64\release\benchmarkrayaiming.obj
-c:\tracer-open-master\vs-solution_tracer-open\x64\release\genetic.obj
-c:\tracer-open-master\vs-solution_tracer-open\x64\release\testgenetic.obj
-c:\tracer-open-master\vs-solution_tracer-open\x64\release\importantoptimizestructs.obj
+c:\tracer-open-master\vs-solution_tracer-open\x64\release\plotrayfan.obj
+c:\tracer-open-master\vs-solution_tracer-open\x64\release\plotqwt.obj
+c:\tracer-open-master\vs-solution_tracer-open\x64\release\vc142.pdb
+c:\tracer-open-master\vs-solution_tracer-open\x64\release\benchraytracing.obj
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\vs-solution_tracer-open.exe
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\vs-solution_tracer-open.pdb
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\vs-solution_tracer-open.lib
@@ -128,6 +130,7 @@ c:\tracer-open-master\vs-solution_tracer-open\x64\release\vs-solut.3383afaf.tlog
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\vs-solut.3383afaf.tlog\cl.read.1.tlog
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\vs-solut.3383afaf.tlog\cl.write.1.tlog
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\vs-solut.3383afaf.tlog\link.command.1.tlog
+c:\tracer-open-master\vs-solution_tracer-open\x64\release\vs-solut.3383afaf.tlog\link.delete.1.tlog
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\vs-solut.3383afaf.tlog\link.read.1.tlog
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\vs-solut.3383afaf.tlog\link.write.1.tlog
 c:\tracer-open-master\vs-solution_tracer-open\x64\release\vs-solut.3383afaf.tlog\vs-solution_tracer-open.write.1u.tlog

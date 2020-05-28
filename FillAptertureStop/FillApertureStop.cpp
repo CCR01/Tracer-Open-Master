@@ -8,7 +8,6 @@
 #include <vector>
 #include <string>
 
-#include "..\RayAiming\RayAiming.h"
 
 // calculate points on one arm of the entrance pupil
 std::vector<VectorStructR3> FillApertureStop::calcPointsOnOneArm(VectorStructR3 const& direction)
@@ -29,12 +28,16 @@ std::vector<VectorStructR3> FillApertureStop::calcPointsOnOneArm(VectorStructR3 
 	return returnPointsOnOneArm;
 
 }
+FillApertureStop::FillApertureStop() {};
+FillApertureStop::~FillApertureStop() {}
 
-FillApertureStop::~FillApertureStop()
+FillApertureStop::FillApertureStop(infosAS infosAS_OptSys, unsigned int rings, unsigned int arms)
 {
-	std::vector<VectorStructR3>().swap(mVectorWithManyPointsInAS);
-	std::vector<LightRayStruct>().swap(mVectorWithLightRays);
+	mSemiHeightAS = infosAS_OptSys.getSemiHeightAS();
+	mPointAS = infosAS_OptSys.getPointAS();
+	mDirectionAS_Unit = Math::unitVector(infosAS_OptSys.getDirAS());
 
+	mVectorWithManyPointsInAS = fillAS_withPoints(rings, mPointAS, mDirectionAS_Unit, mSemiHeightAS);
 }
 
 FillApertureStop::FillApertureStop(OpticalSystem_LLT optSys, unsigned int rings, unsigned int arms) :
@@ -42,24 +45,24 @@ mOptSys_LLT(optSys),
 mRings(rings),
 mArms(arms)
 {
-	infosAS infosAS_fillAS = mOptSys_LLT.getInforAS();
+	mInfosAS_fillAS = mOptSys_LLT.getInforAS();
 
-	mSemiHeightAS = infosAS_fillAS.getSemiHeightAS();
-	mPointAS = infosAS_fillAS.getPointAS();
-	mDirectionAS_Unit = Math::unitVector(infosAS_fillAS.getDirAS());
+	mSemiHeightAS = mInfosAS_fillAS.getSemiHeightAS();
+	mPointAS = mInfosAS_fillAS.getPointAS();
+	mDirectionAS_Unit = Math::unitVector(mInfosAS_fillAS.getDirAS());
 
 	fillAS_withPoints(mRings, mPointAS, mDirectionAS_Unit, mSemiHeightAS);
 }
 
 
 // get number of rings in aperture stop
-unsigned int FillApertureStop::getNumberOfRingsInApertureStop() const&
+unsigned int FillApertureStop::getNumberOfRingsInApertureStop()
 {
 	return mRings;
 }
 
 // print all points in the entrace pupil
-void FillApertureStop::printAllPointsInAS() const&
+void FillApertureStop::printAllPointsInAS()
 {
 	unsigned int sizeOfVector = mVectorWithManyPointsInAS.size();
 	for (int i = 0; i < sizeOfVector; i++)
@@ -84,15 +87,14 @@ std::vector<LightRayStruct> FillApertureStop::fillASWithLightRayFromObjectPoint(
 	for (int i = 0; i < points.size(); i++)
 	{
 		LightRayStruct LightRay;
-		Light_LLT light;
-		LightRay.setIsAlive(1);
-		LightRay.ray.setOriginRay(mStartPointRay);
-		LightRay.ray.setDirectionRayUnit(points.at(i) - mStartPointRay);
-		LightRay.ray.setCurrentRefractiveIndex(mRefractiveIndex);
+		Light_LLT mLight;
+		LightRay.setRayOrigin(mStartPointRay);
+		LightRay.setRayDirectionUni(points.at(i) - mStartPointRay);
+		LightRay.setCurrentRefractivIndex(mRefractiveIndex);
 		//ghtRay.ray.setWavelenghtRay(mWavelength);
-		light.setWavelength(mLight.getWavelength());
-		light.setIntensity(mLight.getIntensity());
-		LightRay.setLight_LLT(light);
+		mLight.setWavelength(mLight.getWavelength());
+		mLight.setIntensity(mLight.getIntensity());
+		LightRay.setLight_LLT(mLight);
 		// TODO: set the light things too
 
 		returnVectorOfLightRays.push_back(LightRay);
@@ -106,7 +108,7 @@ std::vector<LightRayStruct> FillApertureStop::fillASWithLightRayFromObjectPoint(
 }
 
 // build many LightRay from infinity
-std::vector<LightRayStruct> FillApertureStop::fillASWithLightRayFromInfinity(std::vector<VectorStructR3> const points)
+std::vector<LightRayStruct> FillApertureStop::fillASWithLightRayFromInfinity(const std::vector<VectorStructR3>& points)
 {
 	std::vector<LightRayStruct> returnVectorOfLightRays;
 	//std::vector<LightRayStruct> returnVectorOfLightRays_private;
@@ -115,15 +117,14 @@ std::vector<LightRayStruct> FillApertureStop::fillASWithLightRayFromInfinity(std
 	for (int i = 0; i < points.size(); i++)
 	{
 		LightRayStruct LightRay;
-		Light_LLT light;
-		LightRay.setIsAlive(1);
+		Light_LLT mLight;
 		// calculate temp point
 		VectorStructR3 tempPoint = { points.at(i).getX() - tan(mAngleX * PI / 180.0) * 1000, points.at(i).getY() - tan(mAngleY*PI / 180.0) * 1000, points.at(i).getZ() - 1000 };
-		LightRay.ray.setOriginRay(tempPoint);
-		LightRay.ray.setDirectionRayUnit(points.at(i) - tempPoint);
-		LightRay.ray.setCurrentRefractiveIndex(mRefractiveIndex);;
-		light.setWavelength(550.0);
-		LightRay.setLight_LLT(light);
+		LightRay.setRayOrigin(tempPoint);
+		LightRay.setRayDirectionUni(points.at(i) - tempPoint);
+		LightRay.setCurrentRefractivIndex(mRefractiveIndex);;
+		mLight.setWavelength(550.0);
+		LightRay.setLight_LLT(mLight);
 		// TODO: set the light things too!!!
 
 		returnVectorOfLightRays.push_back(LightRay);
@@ -135,20 +136,20 @@ std::vector<LightRayStruct> FillApertureStop::fillASWithLightRayFromInfinity(std
 }
 
 // get points in entrance pupil
-std::vector<VectorStructR3> FillApertureStop::getPointsInAS()
+std::vector<VectorStructR3> FillApertureStop::getPointsInAS() const
 {
 	return mVectorWithManyPointsInAS;
 }
 
 // get a vector with many LightRays
-std::vector<LightRayStruct> FillApertureStop::getVectorWithLightRays() const&
+std::vector<LightRayStruct> FillApertureStop::getVectorWithLightRays() const
 {
 	return mVectorWithLightRays;
 }
 
 
 // build LightRays (hexapolar)
-std::vector<VectorStructR3>  FillApertureStop::fillAS_withPoints(unsigned int const& rayDensity, VectorStructR3 const& PointApertureStop, VectorStructR3 const& directionApertureStop, real const& semiHeightAS)
+std::vector<VectorStructR3>  FillApertureStop::fillAS_withPoints(unsigned int rayDensity, VectorStructR3 PointApertureStop, VectorStructR3 directionApertureStop, real semiHeightAS)
 {
 
 	if (rayDensity < 3)
@@ -189,43 +190,47 @@ std::vector<VectorStructR3>  FillApertureStop::fillAS_withPoints(unsigned int co
 
 		// TODO Question: What is the max. ray density -> adapt the rayDensityArray!
 		unsigned int rayDensityArray[60] = { 6,12,18,24,30,36,42,48,54,60,66,72,78,84,90,96,102,108,114,120,126,132,138,144,150,156,162,168,174,180,186,192,198,204,210,216,222,228,234,240,246,252,258,264,270,276,282,288,294,300,306,312,318,324,330,336,342,348,354,360 };
+		unsigned int numberOfRay[60] = { 7,19,37,61,91,127,169,217,271,331,397,469,547,631,721,817,919,1027,1141,1261,1387,1519,1657,1801,1951,2107,2269,2437,2611,2791,2977,3169,3367,3571,3781,3997,4219,4447,4681,4921,5167,5419,5677,5941,62116487,6769,7057,7351,7651,7957,8269,8587,8911,9241,9577,9919,10267,10621,10981 };
 
 		// number of rings
 		unsigned int numberOfRings = rayDensity;
-
-
 		
-
 
 		// scale facor
 		real scaleValue = semiHeightAS / numberOfRings;
 		real scaleValueGlobal = scaleValue;
 		// Vector in entrance pupil
-		VectorStructR3 VectorForEntrancePupil = Math::unitVector(Math::DoCrossProduct(BaseVecor1, DirectionEntrancePupilUNIT));
+		VectorStructR3 VectorToFillAS = Math::unitVector(Math::DoCrossProduct(BaseVecor1, DirectionEntrancePupilUNIT));
 
 		// postion in rayDensityArray => number of arms
 		unsigned int posInRayDenArray = 0;
 
 		// the first point is allways the position of the aperture stop 
-		mVectorWithManyPointsInAS.push_back(PointApertureStop);
+		mVectorWithManyPointsInAS.resize(numberOfRay[numberOfRings - 1]);
+		mVectorWithManyPointsInAS[0] = mPointAS;
+		unsigned int counter = 1;
 
+		VectorStructR3 tempPoint( 0.0,0.0,0.0);
+		real tempRotationAngleRadian;
+		std::vector<std::vector<real>> tempRotationMatrixAndExist;
+		real matrix[3][3];
 
-		for (int j = 0; j < numberOfRings; j++)
+		for (unsigned int j = 0; j < numberOfRings; j++)
 		{
 			// rotarion angle starts with 2Pi / 6 because there are 6 arms
-			real rotationAngleRadian = 2 * PI / rayDensityArray[posInRayDenArray];
-			Matrix3x3AndExist rotationMatrixAndExist = Math::calcRotationMatrixAroundVector(DirectionEntrancePupilUNIT, rotationAngleRadian);
+			tempRotationAngleRadian = 2 * PI / rayDensityArray[posInRayDenArray];
+			// TODO: --> calcRotationMatrixAroundVector with std::vecors
+			tempRotationMatrixAndExist = Math::calcRotationMatrixAroundVector(DirectionEntrancePupilUNIT, tempRotationAngleRadian);
 
 
-			for (int i = 0; i < rayDensityArray[posInRayDenArray]; i++)
+			for (unsigned int i = 0; i < rayDensityArray[posInRayDenArray]; i++)
 			{
-				VectorStructR3 Point = PointApertureStop + scaleValue * VectorForEntrancePupil;
-				mVectorWithManyPointsInAS.push_back(Point);
-				VectorForEntrancePupil = Math::multiplyMatrix3x3VectorR3(rotationMatrixAndExist.Matrix, VectorForEntrancePupil);
+				tempPoint = PointApertureStop + scaleValue * VectorToFillAS;
+				mVectorWithManyPointsInAS[counter] = tempPoint;
+				// TODO: --> multiplyMatrix3x3VectorR3 with std::vectors
+				VectorToFillAS = Math::multiplyMatrix3x3VectorR3(tempRotationMatrixAndExist, VectorToFillAS);
+				++counter;
 			}
-
-
-
 
 			posInRayDenArray = posInRayDenArray + 1;
 			scaleValue = scaleValue + scaleValueGlobal;
@@ -431,7 +436,7 @@ LightRayStruct FillApertureStop::changeIntensityByDegree(LightRayStruct lightRay
 	LightRayStruct returnLightRay;
 	LightRayStruct lightRayStruct0;
 	returnLightRay.setRay_LLT(lightRay.getRay_LLT());
-	Light_LLT light = lightRay.getLight_LLT();
+	Light_LLT mLight = lightRay.getLight_LLT();
 	VectorStructR3 rayVector = lightRay.getRay_LLT().getDirectionRayUnit();
 	double minDegree = 0.0;
 	double maxDegree = 0.0;
@@ -467,8 +472,8 @@ LightRayStruct FillApertureStop::changeIntensityByDegree(LightRayStruct lightRay
 	std::cout << "newIntensity: " << newIntensity << '\n';
 	std::cout << '\n';
 
-	light.setIntensity(newIntensity);
-	returnLightRay.setLight_LLT(light);
+	mLight.setIntensity(newIntensity);
+	returnLightRay.setLight_LLT(mLight);
 	return returnLightRay;
 }
 

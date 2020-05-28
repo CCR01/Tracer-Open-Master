@@ -28,47 +28,26 @@ struct is_Z_ValueAsphere
 struct isDerivationAsphere
 {
 	double derivation;
-	double getDerivation() const&;
+	double getDerivation() const;
 	int yesNo;
 };
 
 
 class AsphericalSurface_LLT : public SurfaceIntersectionRay_LLT {
 public:
-	AsphericalSurface_LLT() {};
+	AsphericalSurface_LLT();
 	AsphericalSurface_LLT& operator=(AsphericalSurface_LLT& source);
 	AsphericalSurface_LLT(AsphericalSurface_LLT &source);
 	std::shared_ptr<SurfaceIntersectionRay_LLT> clone() override;
-	virtual ~AsphericalSurface_LLT() {};
+	virtual ~AsphericalSurface_LLT() override;
 	AsphericalSurface_LLT(/*radius*/ double radius, /*semi height*/ double semiHeight,/*point*/ VectorStructR3  point, /*direction*/ VectorStructR3  direction,/*refractive index A*/ double refractiveSideA,/*refractive index B*/ double refractiveSideB,/*conic*/ double  conic,
 		/*second order term*/ double  A1, /*fourth order term*/ double  A2, /*sixth order term*/ double  A3, /*eighth order term*/ double  A4,/*tenth order term*/ double  A5,/*twelfth oder term*/ double  A6,
-		/*fourteenth order term*/ double  A7,/*sixteenth order tem*/ double  A8) :
-		mRadiusAsphere(radius),
-		mSemiHeightAsphere(std::abs(semiHeight)),
-		mPointAsphere(point),
-		mDirectionAsphereUnit(Math::unitVector(direction)),
-		mDirectionAsphere(direction),
-		mRefractiveSideA_Asphere(refractiveSideA),
-		mRefractiveSideB_Asphere(refractiveSideB),
-		mConic(conic),
-		m_A1(A1),
-		m_A2(A2),
-		m_A3(A3),
-		m_A4(A4),
-		m_A5(A5),
-		m_A6(A6),
-		m_A7(A7),
-		m_A8(A8)
-	{
-		setPrefixAsphere(mDirectionAsphere); // we need that to switch the prefix of the height order terms
-	};
-
-
+		/*fourteenth order term*/ double  A7,/*sixteenth order tem*/ double  A8);
 
 	//get radius asphere
 	virtual real getRadius() override;
 	//set radius asphere
-	void setRadiusAsphere(real const& radius);
+	void setRadiusAsphere(real const radius);
 	// get semi height asphere
 	real getSemiHeight() override;
 	//set semi height asphere
@@ -78,53 +57,53 @@ public:
 	// set point asphere
 	void setPoint(VectorStructR3 point);
 	// set direction asphere unit
-	void setDirectionUnitAsphere(VectorStructR3 const& direction);
+	void setDirectionUnitAsphere(VectorStructR3 direction);
 	//get direction asphere
 	VectorStructR3 getDirection() override;
 	//get refractive index side A
-	real getRefracIndexAsphere_A() const&;
+	real getRefracIndexAsphere_A() const;
 	//set refractive index side A
-	virtual void setRefractiveIndexSide_A(real const& refractiveIndex) override;
+	virtual void setRefractiveIndexSide_A(real const refractiveIndex) override;
 	//get refractive index side B
-	real getRefracIndexAsphere_B() const&;
+	real getRefracIndexAsphere_B() const;
 	//set refractive index side B
-	virtual void setRefractiveIndexSide_B(real const& refractiveIndex) override;
+	virtual void setRefractiveIndexSide_B(real const refractiveIndex) override;
 	//get conic
-	real getConic() const&;
+	real getConic() const;
 	//set conic
-	void setConic(real const& conic);
+	void setConic(real const conic);
 	//get A1
-	real getA1() const&;
+	real getA1() const;
 	//set A1
-	void setA1(real const& A1);
+	void setA1(real const A1);
 	//get A2
-	real getA2() const&;
+	real getA2() const;
 	//set A2
-	void setA2(real const& A2);
+	void setA2(real const A2);
 	//get A3
-	real getA3() const&;
+	real getA3() const;
 	//set A3
-	void setA3(real const& A3);
+	void setA3(real const A3);
 	//get A4
-	real getA4() const&;
+	real getA4() const;
 	//set A4
-	void setA4(real const& A4);
+	void setA4(real const A4);
 	//get A5
-	real getA5() const&;
+	real getA5() const;
 	//set A5
-	void setA5(real const& A5);
+	void setA5(real const A5);
 	//get A6
-	real getA6() const&;
+	real getA6() const;
 	//set A6
-	void setA6(real const& A6);
+	void setA6(real const A6);
 	//get A7
-	real getA7() const&;
+	real getA7() const;
 	//set A7
-	void setA7(real const& A7);
+	void setA7(real const A7);
 	//get A8
-	real getA8() const&;
+	real getA8() const;
 	//set A8
-	void setA8(real const& A8);
+	void setA8(real const A8);
 
 	//set and get the prefix of the aspherical lens.
 	void setPrefixAsphere(VectorStructR3 V);
@@ -132,15 +111,15 @@ public:
 
 	/* We have to calculate the intersection point of a ray with an aspherical surface in a numerical-iterative way*/
 	/* You can find our approuch in "Handbook of Optical System, Volume 1 -> 5.3.7 */
-	IntersectInformationStruct calculateIntersection(LightRayStruct const& lightRay) override;
+	virtual IntersectInformationStruct calculateIntersection(LightRayStruct const lightRay) override;
 	//calculate z of an aspherical surface in point Q projected on the aspherical surface
-	is_Z_ValueAsphere calc_Z_ValueAsphere(double const& x, double const& y);
+	is_Z_ValueAsphere calc_Z_ValueAsphere(double const x, double const y);
 	// Projection of a point in z direction
-	VectorStructR3 Q_projection(double const& x, double const& y, double const& z);
+	VectorStructR3 Q_projection(double const x, double const y, double const z);
 	// Calculate rise of asphere in x-direction
-	isDerivationAsphere rise_X_AsphericalSurface(double const& x, double const& y);
+	isDerivationAsphere rise_X_AsphericalSurface(double const x, double const y);
 	// Calculate rise of asphere in Y-direction
-	isDerivationAsphere rise_Y_AsphericalSurface(double const& x, double const& y);
+	isDerivationAsphere rise_Y_AsphericalSurface(double const x, double const y);
 	// calculate the focal lenght of the aspherical
 	double calcFolcalLengthAsphericalSurface();
 

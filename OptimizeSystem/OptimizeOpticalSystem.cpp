@@ -438,15 +438,15 @@ void OptimizeOpticalSystem::set_Field(VectorStructR3 field, real weight)
 	mFWL_Config.setFieldAndWeight(field, weight);
 }
 
-void OptimizeOpticalSystem::add_Light(Light_LLT light)
+void OptimizeOpticalSystem::add_Light(Light_LLT mLight)
 {
-	mFWL_Config.addLight(light);
+	mFWL_Config.addLight(mLight);
 }
 
 
-void OptimizeOpticalSystem::set_Light(Light_LLT light)
+void OptimizeOpticalSystem::set_Light(Light_LLT mLight)
 {
-	mFWL_Config.setLight_LLT(light);
+	mFWL_Config.setLight_LLT(mLight);
 }
 
 void OptimizeOpticalSystem::add_TargetEFL(real EFL_target, real EFL_weight) 

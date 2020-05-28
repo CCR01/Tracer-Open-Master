@@ -61,8 +61,8 @@ bool testSpotDiagramQwtPlot::testSpotDiagramQwtPlotE0()
 	// interactions
 	RefractedRay_LLT refrac;
 	Absorb_LLT absorb;
-	Light_LLT light;
-	light.setWavelength(550.0);
+	Light_LLT mLight;
+	mLight.setWavelength(550.0);
 
 	// surfaces
 	ApertureStop_LLT S0E0(/*semiHeight*/ 0.5, /*point*/{ 0.0,0.0,5.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveIndex*/ 1.0);
@@ -101,12 +101,12 @@ bool testSpotDiagramQwtPlot::testSpotDiagramQwtPlotE0()
 
 
 	// fill aperture stop
-	FillApertureStop fillAperStopE0_optAchse({ 0.0,0.0,0.0 }, 1, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, light);
+	FillApertureStop fillAperStopE0_optAchse({ 0.0,0.0,0.0 }, 1, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, mLight);
 	SequentialRayTracing seqTraceE0_OptAchse(optSysE0);
 	seqTraceE0_OptAchse.seqRayTracingWithVectorOfLightRays(fillAperStopE0_optAchse.getVectorWithLightRays());
 
 	// fill aperture stop
-	FillApertureStop fillAperStopE0_field({ 0.0,0.1,0.0 }, 1, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, light);
+	FillApertureStop fillAperStopE0_field({ 0.0,0.1,0.0 }, 1, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, mLight);
 	SequentialRayTracing seqTraceE0_field(optSysE0);
 	seqTraceE0_field.seqRayTracingWithVectorOfLightRays(fillAperStopE0_field.getVectorWithLightRays());
 
@@ -198,51 +198,51 @@ bool testSpotDiagramQwtPlot::testSpotDiagramQwtPlotE1()
 	optSysE1.fillVectorSurfaceAndInteractingData(13, S14E1.clone(), refrac.clone());
 	optSysE1.fillVectorSurfaceAndInteractingData(14, S15E1.clone(), refrac.clone());
 
-	Light_LLT light;
-	light.setWavelength(550.0);
+	Light_LLT mLight;
+	mLight.setWavelength(550.0);
 
 	// fill aperture stops:
    //-optische achse
 	FillApertureStop fillAperStopE1_optAchse(/*the start point of the ray*/{ 0.0,0.0,0.0 },/*the semi-height of the apertur*/ 1, /*the position of the apertur */{ 0.0,0.0,10.0 },
-		/*the direction of the apertur */{ 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, light);
+		/*the direction of the apertur */{ 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, mLight);
 	SequentialRayTracing seqTraceE1_OptAchse(optSysE1);
 	// do sequential ray tracing with vector of many LightRay
 	seqTraceE1_OptAchse.seqRayTracingWithVectorOfLightRays(fillAperStopE1_optAchse.getVectorWithLightRays());
 
 	//-field: Ray start at { 0.0,0.1,0.0 }
-	FillApertureStop fillAperStopE1_field({ 0.0,0.1,0.0 }, 1, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, light);
+	FillApertureStop fillAperStopE1_field({ 0.0,0.1,0.0 }, 1, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, mLight);
 	SequentialRayTracing seqTraceE1_field(optSysE1);
 	seqTraceE1_field.seqRayTracingWithVectorOfLightRays(fillAperStopE1_field.getVectorWithLightRays());
 
 	//-field: Ray start at { 0.0,0.2,0.0 }
-	FillApertureStop fillAperStopE1_field2({ 0.0,0.2,0.0 }, 1, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, light);
+	FillApertureStop fillAperStopE1_field2({ 0.0,0.2,0.0 }, 1, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, mLight);
 	SequentialRayTracing seqTraceE1_field2(optSysE1);
 	seqTraceE1_field2.seqRayTracingWithVectorOfLightRays(fillAperStopE1_field2.getVectorWithLightRays());
 
 	//-field: Ray start at { 0.0,0.3,0.0 }
-	FillApertureStop fillAperStopE1_field3({ 0.0,0.3,0.0 }, 1, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, light);
+	FillApertureStop fillAperStopE1_field3({ 0.0,0.3,0.0 }, 1, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, mLight);
 	SequentialRayTracing seqTraceE1_field3(optSysE1);
 	seqTraceE1_field3.seqRayTracingWithVectorOfLightRays(fillAperStopE1_field3.getVectorWithLightRays());
 
 	//-field: Ray start at { 0.0,0.4,0.0 }
-	FillApertureStop fillAperStopE1_field4({ 0.0,0.4,0.0 }, 1, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, light);
+	FillApertureStop fillAperStopE1_field4({ 0.0,0.4,0.0 }, 1, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, mLight);
 	SequentialRayTracing seqTraceE1_field4(optSysE1);
 	seqTraceE1_field4.seqRayTracingWithVectorOfLightRays(fillAperStopE1_field4.getVectorWithLightRays());
 
 	//-field: Ray start at { 0.0,0.5,0.0 }
-	FillApertureStop fillAperStopE1_field5({ 0.0,0.5,0.0 }, 1, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, light);
+	FillApertureStop fillAperStopE1_field5({ 0.0,0.5,0.0 }, 1, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, mLight);
 	SequentialRayTracing seqTraceE1_field5(optSysE1);
 	seqTraceE1_field5.seqRayTracingWithVectorOfLightRays(fillAperStopE1_field5.getVectorWithLightRays());
 
 	//-field: Ray start at { 0.0,0.6,0.0 }
-	FillApertureStop fillAperStopE1_field6({ 0.0,0.7,0.0 }, 1, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, light);
+	FillApertureStop fillAperStopE1_field6({ 0.0,0.7,0.0 }, 1, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, mLight);
 	SequentialRayTracing seqTraceE1_field6(optSysE1);
 	seqTraceE1_field6.seqRayTracingWithVectorOfLightRays(fillAperStopE1_field6.getVectorWithLightRays());
 
 
 
 	//-field: Ray start at { 0.0,0.8,0.0 }
-	FillApertureStop fillAperStopE1_field7({ 0.0,0.8,0.0 }, 1, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, light);
+	FillApertureStop fillAperStopE1_field7({ 0.0,0.8,0.0 }, 1, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, mLight);
 	SequentialRayTracing seqTraceE1_field7(optSysE1);
 	seqTraceE1_field7.seqRayTracingWithVectorOfLightRays(fillAperStopE1_field7.getVectorWithLightRays());
 
@@ -325,8 +325,8 @@ bool testSpotDiagramQwtPlot::testSpotDiagramQwtPlotE1()
 
 bool testSpotDiagramQwtPlot::testSpotDiagramQwtPlotE2()
 {
-	Light_LLT light;
-	light.setWavelength(550.0);
+	Light_LLT mLight;
+	mLight.setWavelength(550.0);
 
 	//all the surfaces
 	SphericalSurface_LLT S1E2(/*radius*/28.73360379131933, /*semiHeight*/4.0, /*Apex of the sphere*/{ 0.0, 0.0, 15.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.5, /*refIndexSideB*/1.0);
@@ -369,17 +369,17 @@ bool testSpotDiagramQwtPlot::testSpotDiagramQwtPlotE2()
 	optSysE2.fillVectorToPlot2DQwt(9, S10E2.getPointerPlot());
 
 	// fill aperture stop
-	FillApertureStop fillAperStopE2_optAchse({ 0.0,0.0,0.0 }, 1, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, light);
+	FillApertureStop fillAperStopE2_optAchse({ 0.0,0.0,0.0 }, 1, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, mLight);
 	SequentialRayTracing seqTraceE2_OptAchse(optSysE2);
 	seqTraceE2_OptAchse.seqRayTracingWithVectorOfLightRays(fillAperStopE2_optAchse.getVectorWithLightRays());
 
 	// fill aperture stop
-	FillApertureStop fillAperStopE2_field({ 0.0,0.1,0.0 }, 1, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, light);
+	FillApertureStop fillAperStopE2_field({ 0.0,0.1,0.0 }, 1, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, mLight);
 	SequentialRayTracing seqTraceE2_field(optSysE2);
 	seqTraceE2_field.seqRayTracingWithVectorOfLightRays(fillAperStopE2_field.getVectorWithLightRays());
 
 	// fill aperture stop
-	FillApertureStop fillAperStopE2_field2({ 0.0,0.5,0.0 }, 1, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, light);
+	FillApertureStop fillAperStopE2_field2({ 0.0,0.5,0.0 }, 1, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, mLight);
 	SequentialRayTracing seqTraceE2_field2(optSysE2);
 	seqTraceE2_field2.seqRayTracingWithVectorOfLightRays(fillAperStopE2_field2.getVectorWithLightRays());
 

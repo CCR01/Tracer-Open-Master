@@ -35,23 +35,16 @@ class ApertureStop_LLT : public SurfaceIntersectionRay_LLT
 {
 public:
 	ApertureStop_LLT();
+	virtual ~ApertureStop_LLT() override;
 	ApertureStop_LLT(ApertureStop_LLT &source);
 	ApertureStop_LLT& operator=(ApertureStop_LLT& source);
-	std::shared_ptr<SurfaceIntersectionRay_LLT> clone() override;
-	virtual ~ApertureStop_LLT();
-	ApertureStop_LLT(double semiHeight, VectorStructR3 point, VectorStructR3 direction, double refractiveIndex) :
-		mSemiHeightAperture(semiHeight),
-		mPointAperture(point),
-		mDirectionAperture(direction),
-		mRrefractiveIndex(refractiveIndex)
-	{
-		calcApertureStopQwtCoord();
-		
-	}
+	virtual std::shared_ptr<SurfaceIntersectionRay_LLT> clone() override;
+	
+	ApertureStop_LLT(double semiHeight, VectorStructR3 point, VectorStructR3 direction, double refractiveIndex);
 	
 	void calcApertureStopQwtCoord();
 	// get semt height
-	double getSemiHeight() override;
+	virtual double getSemiHeight() override;
 	//set semi height
 	void setSemiHeight(double semiHeight);
 
@@ -66,11 +59,11 @@ public:
 	// get refractive index
 	double getRefractiveIndex();
 	// set refractive indes
-	virtual void setRefractiveIndexSide_A(real const& refractiveIndex) override;
-	virtual void setRefractiveIndexSide_B(real const& refractiveIndex) override;
+	virtual void setRefractiveIndexSide_A(real const refractiveIndex) override;
+	virtual void setRefractiveIndexSide_B(real const refractiveIndex) override;
 
 	// calculate the intersection information
-	IntersectInformationStruct calculateIntersection(LightRayStruct const& lightRay) override;
+	virtual IntersectInformationStruct calculateIntersection(LightRayStruct const lightRay) override;
 
 	// get focal length side A
 	virtual real getFocalLength_A() override;

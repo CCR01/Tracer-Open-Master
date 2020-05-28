@@ -3,26 +3,27 @@
 
 class DoNothingInteraction_LLT : public InteractionRay_LLT {
 public:
-	DoNothingInteraction_LLT() {};
+	DoNothingInteraction_LLT();
+	virtual ~DoNothingInteraction_LLT() override;
 	DoNothingInteraction_LLT& operator=(DoNothingInteraction_LLT& source);
 	DoNothingInteraction_LLT(DoNothingInteraction_LLT &source);
 	virtual std::shared_ptr<InteractionRay_LLT> clone() override;
-	virtual ~DoNothingInteraction_LLT() {};
-	DoNothingInteraction_LLT(IntersectInformationStruct intersectInformation) :
-		mIntersectionInformation(intersectInformation)
-	{};
+	DoNothingInteraction_LLT(IntersectInformationStruct intersectInformation);
 	
+	virtual RaysRangeStruct howManyRays() override;
 
-	// TODO Ques Sergej: Warum geht das nicht in der .cpp????
-	RaysRangeStruct howManyRays()
-	{
-		return RaysRangeStruct{ 1,1 };
-	}
-
-	std::vector<LightRayStruct> calcInteraction(IntersectInformationStruct intersectInformation);
+	virtual std::vector<LightRayStruct> calcInteraction(const IntersectInformationStruct& intersectInformation) override;
 
 private:
 
-	IntersectInformationStruct mIntersectionInformation;
+	IntersectInformationStruct mIntersectionInformation{};
+
+	// infos to calc interaction
+	LightRayStruct mReturnLightRay{};
+	std::vector<LightRayStruct> mReturnLightRay_vec{};
+	Ray_LLT mRay{};
+	real mRefIndexSideA{};
+	real mRefIndexSideB{};
+
 
 };

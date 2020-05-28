@@ -2,12 +2,15 @@
 #include "../LowLevelTracing/Math_LLT.h"
 #include <iostream>
 
+Spot::Spot() {};
+Spot::~Spot() {};
+
 Spot::Spot(/*intersection points*/ std::vector<VectorStructR3> intersectionPoints,/*reference point*/ VectorStructR3 referencePosition) :
 	mIntersectionPoints(intersectionPoints),
 	mReferencePosition(referencePosition)
 {
-	mRMSradius = calcRMS(intersectionPoints, referencePosition);
-	mGEOradius = calcGeoRadius(mDistancesVector);
+	mRMSradius = calcRMS(mIntersectionPoints, mReferencePosition);
+	mGEOradius = calcGeoRadius(mIntersectionPoints, mReferencePosition);
 };
 
 Spot::Spot(std::vector<pointAndIntensity> /*intersection point and intensity*/ interPointAndIntensity, /*reference point*/ VectorStructR3 referencePosition) :
@@ -24,12 +27,11 @@ real Spot::calcRMSconsiderIntensity(std::vector<pointAndIntensity> /*intersectio
 
 	real sumDistance = 0;
 	real sumIntensity = 0;
+	unsigned int size = interPointAndIntensity.size();
 
-
-	for (unsigned int i = 0; i < interPointAndIntensity.size(); ++i)
+	for (unsigned int i = 0; i < size; ++i)
 	{
 		sumDistance = sumDistance + /*consider intensity*/ interPointAndIntensity.at(i).getIntensity() * std::pow(Math::distanceTwoVectors(referencePosition, interPointAndIntensity.at(i).getPoint()),2);
-		
 		sumIntensity = sumIntensity + interPointAndIntensity.at(i).getIntensity();
 
 	}
@@ -41,16 +43,15 @@ real Spot::calcRMSconsiderIntensity(std::vector<pointAndIntensity> /*intersectio
 // calc RMS value at surface i
 real Spot::calcRMS(std::vector<VectorStructR3> intersectionPoints, VectorStructR3 referencePosition)
 {
-	real numerator = 0;
-	real denominator = intersectionPoints.size();
-	real distance;
+	real numerator = 0.0;
+	unsigned int denominator = intersectionPoints.size();
+	real distance{};
 
-	real pow2distance;
+	real pow2distance{};
 
-	for (unsigned int i = 0; i < intersectionPoints.size(); ++i)
+	for (unsigned int i = 0; i < denominator; ++i)
 	{
 		distance = Math::distanceTwoVectors(referencePosition, intersectionPoints.at(i));
-		mDistancesVector.push_back(distance); // we save all distance to get later the geometrical radius -> max of all distances
 
 		pow2distance = std::pow(distance, 2);
 		numerator = numerator + pow2distance;
@@ -74,19 +75,22 @@ real Spot::getRMS_µm()
 
 
 // calculate geometrical radius
-real Spot::calcGeoRadius(std::vector <real> distancesVector)
+real Spot::calcGeoRadius(std::vector<VectorStructR3> intersectionPoints, VectorStructR3 referencePosition)
 {
+	real distance{};
+	real returnMaxDistance = 0.0;
+	unsigned int size = intersectionPoints.size();
 
-	real returnMaxDistance = 0;
-	for (unsigned int i = 0; i < distancesVector.size(); i++)
+	for (unsigned int i = 0; i < size; i++)
 	{
-		if (returnMaxDistance < distancesVector.at(i))
+		distance = Math::distanceTwoVectors(referencePosition, intersectionPoints[i]);
+	
+		if (returnMaxDistance < distance)
 		{
-			returnMaxDistance = distancesVector.at(i);
+			returnMaxDistance = distance;
 		}
 	}
 
-	//mGEOradius = returnMaxDistance;
 	return returnMaxDistance;
 }
 
@@ -111,19 +115,24 @@ VectorStructR3 Spot::getRefPoint()
 // calculate RMS of Spot depending on ray's intensity
 real Spot::calcRMS_byIntensity(std::vector<VectorStructR3> intersectionPoints, VectorStructR3 referencePosition, std::vector<Light_LLT> lightVector)
 {
-	real numerator = 0;
-	real denominator = 0;
-	real distance;
+	real numerator = 0.0;
+	real denominator = 0.0;
+	real distance{};
 
-	real pow2distance;
+	real pow2distance{};
+	real tempIntensity{};
 
-	for (unsigned int i = 0; i < intersectionPoints.size(); ++i)
+	unsigned int size = intersectionPoints.size();
+
+	for (unsigned int i = 0; i < size; ++i)
 	{
-		distance = Math::distanceTwoVectors(referencePosition, intersectionPoints.at(i));
-		mDistancesVector.push_back(distance); // we save all distance to get later the geometrical radius -> max of all distances
-		denominator = denominator + lightVector.at(i).getIntensity();
 
-		pow2distance = std::pow(distance, 2) * lightVector.at(i).getIntensity();
+		distance = Math::distanceTwoVectors(referencePosition, intersectionPoints.at(i));
+		tempIntensity = lightVector.at(i).getIntensity();
+
+		denominator = denominator + tempIntensity;
+
+		pow2distance = std::pow(distance, 2) * tempIntensity;
 		numerator = numerator + pow2distance;
 	}
 

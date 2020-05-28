@@ -5,11 +5,10 @@
 
 class Spot {
 public:
-	Spot() {};
+	Spot();
 	Spot(/*intersection points*/ std::vector<VectorStructR3> intersectionPoints,/*reference point*/ VectorStructR3 referencePosition);
 	Spot(std::vector<pointAndIntensity> /*intersection point and intensity*/ interPointAndIntensity, /*reference point*/ VectorStructR3 referencePosition);
-
-	~Spot() {};
+	~Spot();
 
 	// calculate rms value of spot considerable intensity of every ray
 	real calcRMSconsiderIntensity(std::vector<pointAndIntensity> /*intersection point and intensity*/ interPointAndIntensity, /*reference point*/ VectorStructR3 referencePosition);
@@ -27,7 +26,7 @@ public:
 	real calcRMS_byIntensity(std::vector<VectorStructR3> intersectionPoints, VectorStructR3 referencePosition, std::vector<Light_LLT> lightVector);
 
 	// calculate geometrical radius
-	real calcGeoRadius(std::vector <real> distancesVector);
+	real calcGeoRadius(std::vector<VectorStructR3> intersectionPoints, VectorStructR3 referencePosition);
 	// get geometrical radius
 	real getGeoRadius();
 
@@ -42,11 +41,10 @@ public:
 
 private:
 
-	std::vector<VectorStructR3> mIntersectionPoints;
-	VectorStructR3 mReferencePosition;
-	real mRMSradius;
-	std::vector <real> mDistancesVector;
-	real mGEOradius;
+	std::vector<VectorStructR3> mIntersectionPoints{};
+	VectorStructR3 mReferencePosition{};
+	real mRMSradius{};
+	real mGEOradius{};
 
-	std::vector<pointAndIntensity> mInterPointAndIntensity;
+	std::vector<pointAndIntensity> mInterPointAndIntensity{};
 };

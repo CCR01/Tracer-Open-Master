@@ -56,23 +56,12 @@ struct additionalInfosDeflectedRayParaLensStruct
 class ParaxialLens_LLT : public SurfaceIntersectionRay_LLT
 {
 public:
-	ParaxialLens_LLT() {};
+	ParaxialLens_LLT();
 	ParaxialLens_LLT(ParaxialLens_LLT &source);
 	ParaxialLens_LLT& operator=(ParaxialLens_LLT& source);
 	std::shared_ptr<SurfaceIntersectionRay_LLT> clone() override;
-	virtual ~ParaxialLens_LLT() {};
-	ParaxialLens_LLT(double semiHeight, VectorStructR3 point, VectorStructR3 direction, double focallength, double refractiveSideA, double refractiveSideB) :
-		mSemiHeightParaxialLens(std::abs(semiHeight)),
-		mPointParaxialLens(point),
-		mDirectionParaxialLens(direction),
-		mDirectionParaxialLensUnit(Math::unitVector(direction)),
-		mFocallenghtParaxialLensSide_A(focallength * refractiveSideA),
-		mFocallenghtParaxialLensSide_B(focallength * refractiveSideB),
-		mRefractiveIndexA_ParaxialLens(refractiveSideA),
-		mRefractiveIndexB_ParaxialLens(refractiveSideB)		
-	{
-		setInfosForDeflection(); // save the information that are important to deflect a ray at this paraxial lens
-	};
+	virtual ~ParaxialLens_LLT() override;
+	ParaxialLens_LLT(double semiHeight, VectorStructR3 point, VectorStructR3 direction, double focallength, double refractiveSideA, double refractiveSideB);
 
 	
 
@@ -92,7 +81,7 @@ public:
 	// get direction unit
 	VectorStructR3 getDirectionParaxialLensUNIT() const;
 	//set direction unit
-	void setDirectionParaxialLensUNIT(VectorStructR3 const& direction);
+	void setDirectionParaxialLensUNIT(VectorStructR3 const direction);
 
 	// get focal length 
 	double getFocalLengthParaxialLens() const&;
@@ -100,17 +89,17 @@ public:
 	void setFocalLengthParaxialLens(double const& focalLenght);
 
 	// set refractive index side A
-	virtual void setRefractiveIndexSide_A(real const& refractiveIndex) override;
+	virtual void setRefractiveIndexSide_A(real const refractiveIndex) override;
 
 	// set refractive index side B
-	virtual void setRefractiveIndexSide_B(real const& refractiveIndex) override;
+	virtual void setRefractiveIndexSide_B(real const refractiveIndex) override;
 
 	// set infos for deflection
 	void setInfosForDeflection();
 	// get infos for deflection
 	additionalInfosDeflectedRayParaLensStruct getInfosForDefelction() const&;
 	//calculate intersection
-	IntersectInformationStruct calculateIntersection(LightRayStruct const& lightRay) override;
+	virtual IntersectInformationStruct calculateIntersection(LightRayStruct const lightRay) override;
 
 	// make the 2d plot
 	void plot2D(cv::Mat image, unsigned int scale, unsigned int thickness, unsigned int lineType) override;

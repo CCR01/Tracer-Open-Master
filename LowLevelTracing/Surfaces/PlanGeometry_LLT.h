@@ -26,22 +26,12 @@ private:
 class PlanGeometry_LLT : public SurfaceIntersectionRay_LLT
 {
 public:
-	PlanGeometry_LLT() {};
+	PlanGeometry_LLT();
 	PlanGeometry_LLT(PlanGeometry_LLT &source);
 	PlanGeometry_LLT& operator=(PlanGeometry_LLT& source);
 	std::shared_ptr<SurfaceIntersectionRay_LLT> clone() override;
-	virtual ~PlanGeometry_LLT() {};
-	PlanGeometry_LLT(/*semi height*/ double semiHeight,/*point*/ VectorStructR3 point,/*direction*/ VectorStructR3 direction,/*refractive index A*/ double refractiveSideA, /*refractive index B*/ double refractiveSideB) :
-		// ToDo Ques Sergej: Was soll passieren, fals mit jemand eine direction von (0,0,0) gibt? Muss ich das überprüfen?
-		// Das Gleiche gilt auch für anderen Oberflächen (z.B. Sphäre, Asphäre,...)
-		mSemiHeightPlan(semiHeight),
-		mPointPlan(point),
-		mDirectionPlan(direction),
-		mRefractiveIndexA_Plan(refractiveSideA),
-		mRefractiveIndexB_Plan(refractiveSideB)
-	{
-		calcSphericalSurfaceQwtCoord();
-	};
+	virtual ~PlanGeometry_LLT() override;
+	PlanGeometry_LLT(/*semi height*/ double semiHeight,/*point*/ VectorStructR3 point,/*direction*/ VectorStructR3 direction,/*refractive index A*/ double refractiveSideA, /*refractive index B*/ double refractiveSideB);
 
 
 	// get semt height
@@ -59,13 +49,13 @@ public:
 
 
 	// set refractive index side A
-	virtual void setRefractiveIndexSide_A(double const& refractiveIndex) override;
+	virtual void setRefractiveIndexSide_A(double const refractiveIndex) override;
 
 	// set refractive index side B
-	virtual void setRefractiveIndexSide_B(double const& refractiveIndex) override;
+	virtual void setRefractiveIndexSide_B(double const refractiveIndex) override;
 
 	// calculate the intersection information
-	IntersectInformationStruct calculateIntersection(LightRayStruct const& lightray) override;
+	virtual IntersectInformationStruct calculateIntersection(LightRayStruct const lightray) override;
 
 	// make the 2d plot
 	void plot2D(cv::Mat image, unsigned int scale, unsigned int thickness, unsigned int lineType) override;

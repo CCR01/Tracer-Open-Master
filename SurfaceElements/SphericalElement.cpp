@@ -3,6 +3,7 @@
 
 SphericalElement::SphericalElement() {};
 
+
 SphericalElement::SphericalElement(real radius, real  semiHeight, VectorStructR3 point, VectorStructR3 direction, real refractiveSideA, real refractiveSideB)
 {
 	mRadiusParam.set(radius);
@@ -321,6 +322,9 @@ std::shared_ptr<Element_CR> SphericalElement::generate_ptr()
 {
 	//std::shared_ptr<SphericalElement>  (new int);
 	std::shared_ptr<Element_CR> modSphereElement(new SphericalElement);
+
+
+	
 
 	modSphereElement->setSemiHeightElementValue(mSemiHeightElePara.getValue());
 	modSphereElement->setRadiusElementValue(mRadiusParam.getValue());

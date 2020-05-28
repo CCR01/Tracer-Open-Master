@@ -104,9 +104,9 @@ void Math::printSystemMatrix2x2(std::vector<std::vector<real>> m)
 
 
 // scale a Vector
-VectorStructR3 Math::scaleVector(double const scaleFactor, VectorStructR3 const Vscale)
+VectorStructR3 Math::scaleVector(real const scaleFactor, const VectorStructR3&  Vscale)
 {
-	VectorStructR3 ReturnVectorScale;
+	VectorStructR3 ReturnVectorScale{};
 	ReturnVectorScale.setX(scaleFactor * Vscale.getX());
 	ReturnVectorScale.setY(scaleFactor * Vscale.getY());
 	ReturnVectorScale.setZ(scaleFactor * Vscale.getZ());
@@ -115,17 +115,17 @@ VectorStructR3 Math::scaleVector(double const scaleFactor, VectorStructR3 const 
 }
 
 // calculate unit vector
-VectorStructR3 Math::unitVector(VectorStructR3 const V)
+VectorStructR3 Math::unitVector(const VectorStructR3& V)
 {
-	double lenghtOfVector = 1 / (std::sqrt(V.getX()*V.getX() + V.getY()*V.getY() + V.getZ()*V.getZ()));
-	return scaleVector(lenghtOfVector, V);
+	real OneByLenghtOfVector = 1 / (std::sqrt(V.getX() * V.getX() + V.getY() * V.getY() + V.getZ() * V.getZ()));
+	return scaleVector(OneByLenghtOfVector, V);
 }
 
 
 // subtract two vectors
-VectorStructR3 Math::subVectors(VectorStructR3 V1sub, VectorStructR3 V2sub)
+VectorStructR3 Math::subVectors(const VectorStructR3& V1sub, const VectorStructR3& V2sub)
 {
-	VectorStructR3 VectorReturnSub;
+	VectorStructR3 VectorReturnSub{};
 	VectorReturnSub.setX(V1sub.getX() - V2sub.getX());
 	VectorReturnSub.setY(V1sub.getY() - V2sub.getY());
 	VectorReturnSub.setZ(V1sub.getZ() - V2sub.getZ());
@@ -134,11 +134,10 @@ VectorStructR3 Math::subVectors(VectorStructR3 V1sub, VectorStructR3 V2sub)
 }
 
 //calculate cross product
-VectorStructR3 Math::DoCrossProduct(VectorStructR3 CrProVec1, VectorStructR3 CrProVec2)
+VectorStructR3 Math::DoCrossProduct(const VectorStructR3&  CrProVec1, const VectorStructR3& CrProVec2)
 {
-	VectorStructR3 ReturnCrossProductVector;
 
-	VectorStructR3 helpVector1;
+	VectorStructR3 helpVector1{};
 	helpVector1.setX(CrProVec1.getY() * CrProVec2.getZ());
 	helpVector1.setY(CrProVec1.getZ() * CrProVec2.getX());
 	helpVector1.setZ(CrProVec1.getX() * CrProVec2.getY());
@@ -148,7 +147,7 @@ VectorStructR3 Math::DoCrossProduct(VectorStructR3 CrProVec1, VectorStructR3 CrP
 	helpVector2.setY(CrProVec1.getX() * CrProVec2.getZ());
 	helpVector2.setZ(CrProVec1.getY() * CrProVec2.getX());
 
-	return ReturnCrossProductVector = subVectors(helpVector1, helpVector2);
+	return subVectors(helpVector1, helpVector2);
 }
 
 // Check if two vectors are linearly dependent
@@ -172,19 +171,19 @@ bool Math::checkLinearlyDependent(VectorStructR3 const V1, VectorStructR3 const 
 }
 
 // multiply matrix3x3 with vector in R3
-VectorStructR3 Math::multiplyMatrix3x3VectorR3(double mat[3][3], VectorStructR3 vec)
+VectorStructR3 Math::multiplyMatrix3x3VectorR3(const std::vector<std::vector<real>> mat, const VectorStructR3& vec)
 {
 	VectorStructR3 returnVector;
-	returnVector.setX(mat[0][0] * vec.getX() + mat[0][1] * vec.getY() + mat[0][2] * vec.getZ());
-	returnVector.setY(mat[1][0] * vec.getX() + mat[1][1] * vec.getY() + mat[1][2] * vec.getZ());
-	returnVector.setZ(mat[2][0] * vec.getX() + mat[2][1] * vec.getY() + mat[2][2] * vec.getZ());
+	returnVector.setX(mat[0][0] * vec.getX() + mat[1][0] * vec.getY() + mat[2][0] * vec.getZ());
+	returnVector.setY(mat[0][1] * vec.getX() + mat[1][1] * vec.getY() + mat[2][1] * vec.getZ());
+	returnVector.setZ(mat[0][2] * vec.getX() + mat[1][2] * vec.getY() + mat[2][2] * vec.getZ());
 	return returnVector;
 
 }
 
 
 //calculate length of vector
-double Math::lengthOfVector(VectorStructR3 vLength)
+double Math::lengthOfVector(const VectorStructR3& vLength)
 {
 	return sqrt(vLength.getX()*vLength.getX() + vLength.getY()*vLength.getY() + vLength.getZ()*vLength.getZ());
 }
@@ -198,26 +197,33 @@ double Math::distanceTwoVectors(VectorStructR3 const V1, VectorStructR3 const V2
 
 // calculate rotate matrix around an axis n
 // source https://en.wikipedia.org/wiki/Rotation_matrix
-Matrix3x3AndExist Math::calcRotationMatrixAroundVector(VectorStructR3 const direction, double const /*in radiant*/ rotationAngle)
+std::vector<std::vector<real>> Math::calcRotationMatrixAroundVector(VectorStructR3 const direction, double const /*in radiant*/ rotationAngle)
 {
 
 
-	Matrix3x3AndExist returnMatrixAndExist;
-	returnMatrixAndExist.ExistMatrix = 1;
-	real const & cosRotationAngle = cos(rotationAngle);
-	real const & sinRotationAngle = sin(rotationAngle);
-	real const & oneMinusCosRotationAngle = 1 - cosRotationAngle;
-	returnMatrixAndExist.Matrix[0][0] = cosRotationAngle + pow(direction.getX(), 2)* oneMinusCosRotationAngle;
-	returnMatrixAndExist.Matrix[1][0] = direction.getX() * direction.getY() * oneMinusCosRotationAngle - direction.getZ() * sinRotationAngle;
-	returnMatrixAndExist.Matrix[2][0] = direction.getX() * direction.getZ() * oneMinusCosRotationAngle + direction.getY() * sinRotationAngle;
-	returnMatrixAndExist.Matrix[0][1] = direction.getY() * direction.getX() * oneMinusCosRotationAngle + direction.getZ() * sinRotationAngle;
-	returnMatrixAndExist.Matrix[1][1] = cosRotationAngle + pow(direction.getY(), 2)* oneMinusCosRotationAngle;
-	returnMatrixAndExist.Matrix[2][1] = direction.getY() * direction.getZ() * oneMinusCosRotationAngle - direction.getX() * sinRotationAngle;
-	returnMatrixAndExist.Matrix[0][2] = direction.getZ() * direction.getX() * oneMinusCosRotationAngle - direction.getY() * sinRotationAngle;
-	returnMatrixAndExist.Matrix[1][2] = direction.getZ() * direction.getY() * oneMinusCosRotationAngle + direction.getX() * sinRotationAngle;
-	returnMatrixAndExist.Matrix[2][2] = cosRotationAngle + pow(direction.getZ(), 2)* oneMinusCosRotationAngle;
+	std::vector<std::vector<real>> returnMatrix;
+	returnMatrix.resize(3);
+	returnMatrix[0].resize(3);
+	returnMatrix[1].resize(3);
+	returnMatrix[2].resize(3);
 
-	return  returnMatrixAndExist;
+	real const cosRotationAngle = cos(rotationAngle);
+	real const sinRotationAngle = sin(rotationAngle);
+	real const oneMinusCosRotationAngle = 1 - cosRotationAngle;
+
+	returnMatrix[0][0] = cosRotationAngle + pow(direction.getX(), 2) * oneMinusCosRotationAngle;
+	returnMatrix[1][0] = direction.getX() * direction.getY() * oneMinusCosRotationAngle - direction.getZ() * sinRotationAngle;
+	returnMatrix[2][0] = direction.getX() * direction.getZ() * oneMinusCosRotationAngle + direction.getY() * sinRotationAngle;
+
+	returnMatrix[0][1] = direction.getY() * direction.getX() * oneMinusCosRotationAngle + direction.getZ() * sinRotationAngle;
+	returnMatrix[1][1] = cosRotationAngle + pow(direction.getY(), 2) * oneMinusCosRotationAngle;
+	returnMatrix[2][1] = direction.getY() * direction.getZ() * oneMinusCosRotationAngle - direction.getX() * sinRotationAngle;
+	
+	returnMatrix[0][2] = direction.getZ() * direction.getX() * oneMinusCosRotationAngle - direction.getY() * sinRotationAngle;
+	returnMatrix[1][2] = direction.getZ() * direction.getY() * oneMinusCosRotationAngle + direction.getX() * sinRotationAngle;
+	returnMatrix[2][2] = cosRotationAngle + pow(direction.getZ(), 2)* oneMinusCosRotationAngle;
+
+	return  returnMatrix;
 }
 
 
@@ -227,13 +233,13 @@ double Math::roundNumber(double Zahl, unsigned int decimals)
 {
 	if (decimals <= 17)
 	{
-		double v[] = { 1, 10, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9, 1e10, 1e11, 1e12, 1e13, 1e14, 1e15, 1e16 };
+		std::vector<real> v = { 1, 10, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9, 1e10, 1e11, 1e12, 1e13, 1e14, 1e15, 1e16 };
 		return floor(Zahl * v[decimals] + 0.5) / v[decimals];
 	}
 	else
 	{
 		std::cout << "ERROR: the decimals have to be smaller than 18 to round the numer";
-		return 0;
+		return 0.0;
 	}
 }
 
@@ -267,10 +273,13 @@ bool Math::compareTwoNumbers_tolerance(real num1, real num2, real tolerance)
 
 
 // Round the numbers of a matrix
-Matrix3x3AndExist Math::RoundNumberMatrix(real Matrix[3][3], int decimal)
+std::vector<std::vector<real>> Math::RoundNumberMatrix(std::vector<std::vector<real>> Matrix, int decimal)
 {
-	Matrix3x3AndExist retunMatrixAndExist;
-	retunMatrixAndExist.ExistMatrix = 1;
+	std::vector<std::vector<real>> returnMatrix;
+	returnMatrix.resize(3);
+	returnMatrix[0].resize(3);
+	returnMatrix[1].resize(3);
+	returnMatrix[2].resize(3);
 
 	//#pragma omp parallel for
 	for (int i = 0; i < 3; i++)
@@ -279,7 +288,7 @@ Matrix3x3AndExist Math::RoundNumberMatrix(real Matrix[3][3], int decimal)
 			Matrix[i][j] = roundNumber(Matrix[i][j], decimal);
 	}
 
-	return retunMatrixAndExist;
+	return returnMatrix;
 }
 
 // compare two vectors struct R3
@@ -342,7 +351,7 @@ bool Math::checkTrueOfVectorElements(std::vector<bool> V)
 }
 
 // compare numbers of a 3x3 matrix
-bool Math::compareRoundedTwoMatrices3x3(real Matrix1[3][3], real Matrix2[3][3], unsigned int decimals)
+bool Math::compareRoundedTwoMatrices3x3(std::vector<std::vector<real>> Matrix1, std::vector<std::vector<real>> Matrix2, unsigned int decimals)
 {
 
 	bool check[3][3];
@@ -420,11 +429,11 @@ VectorElementAndPosition Math::ValueInVectorNearZeroPosSide(std::vector<double> 
 {
 
 	double save = maxValueOfVactor(vector);
-	unsigned int saveInteration;
+	unsigned int saveInteration{};
 
 
 	//#pragma omp parallel for
-	for (int iteration = 0; iteration < vector.size(); iteration++)
+	for (unsigned int iteration = 0; iteration < vector.size(); iteration++)
 	{
 		if (vector.at(iteration) > 0.0)
 		{
@@ -442,7 +451,7 @@ VectorElementAndPosition Math::ValueInVectorNearZeroPosSide(std::vector<double> 
 		};
 	}
 
-	VectorElementAndPosition output{ save, saveInteration };
+	VectorElementAndPosition output( save, saveInteration );
 
 	return output;
 
@@ -477,7 +486,7 @@ bool Math::checkValuesHeigherThan(real value, std::vector<real> vec)
 VectorElementAndPosition Math::ValueInVectorNearZeroNegSide(std::vector<double> vector)
 {
 	double save = minValueOfVector(vector);
-	unsigned int saveInteration;
+	unsigned int saveInteration{};
 
 	//#pragma omp parallel for
 	for (int iteration = 0; iteration < vector.size(); iteration++)
@@ -497,7 +506,7 @@ VectorElementAndPosition Math::ValueInVectorNearZeroNegSide(std::vector<double> 
 		};
 	}
 
-	VectorElementAndPosition output{ save, saveInteration };
+	VectorElementAndPosition output( save, saveInteration );
 	return output;
 }
 
@@ -733,9 +742,9 @@ std::vector<std::vector<real>> Math::calculateInverse(const std::vector<std::vec
 	unsigned int sizeInputCol = inpusMatrix[0].size();
 	oftenUse::resizeAllRowsMatrix(workMatrix, 2 * sizeInputCol);
 
-	for (int i = 0; i < sizeInputCol; i++) 
+	for (unsigned int i = 0; i < sizeInputCol; i++) 
 	{
-		workMatrix[i][sizeInputCol + i] = 1;
+		workMatrix[i][sizeInputCol + i] = 1.0;
 	}
 
 	for (int i = 0; i < sizeInputCol; i++) {
@@ -818,7 +827,7 @@ real Math::add4values_ptr(real* a, real* b, real* c, real* d)
 // add all values in std::vector
 real Math::addAllValuesInVector_real(std::vector<real> v)
 {
-	real sum_of_elems;
+	real sum_of_elems{};
 	for (real& n : v) 	sum_of_elems += n;
 
 	return sum_of_elems;
@@ -826,14 +835,14 @@ real Math::addAllValuesInVector_real(std::vector<real> v)
 
 float Math::addAllValuesInVector_float(std::vector<float> v)
 {
-	float sum_of_elems;
+	float sum_of_elems{};
 	for (float& n : v) 	sum_of_elems += n;
 
 	return sum_of_elems;
 }
 int Math::addAllValuesInVector_int(std::vector<int> v)
 {
-	int sum_of_elems;
+	int sum_of_elems{};
 	for (int& n : v) 	sum_of_elems += n;
 
 	return sum_of_elems;

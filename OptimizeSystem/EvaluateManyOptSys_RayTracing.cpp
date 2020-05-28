@@ -37,9 +37,9 @@ Light_LLT settingsMeritFct_RayTracing::getLight(unsigned int number)
 {
 	return mLightVec[number];
 }
-void settingsMeritFct_RayTracing::setLight(unsigned int number, Light_LLT light)
+void settingsMeritFct_RayTracing::setLight(unsigned int number, Light_LLT mLight)
 {
-	mLightVec[number] = light;
+	mLightVec[number] = mLight;
 }
 
 real settingsMeritFct_RayTracing::getWeightEFL() const

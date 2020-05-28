@@ -63,8 +63,8 @@ bool testOPDQwtPlot::testOPDQwtPlotE0()
 	// interactions
 	RefractedRay_LLT refrac;
 	Absorb_LLT absorb;
-	Light_LLT light;
-	light.setWavelength(550.0);
+	Light_LLT mLight;
+	mLight.setWavelength(550.0);
 
 
 	// surfaces
@@ -104,9 +104,9 @@ bool testOPDQwtPlot::testOPDQwtPlotE0()
 
 	// Plot OPD opt achse
 	Ray_LLT chiefRayE0_optAchse({ 0.0,0.0,0.0 }, { 0.0,0.0,0.5 }, 1.0);
-	LightRayStruct chiefLightRayE0_optAchse(light, chiefRayE0_optAchse, 1);
+	LightRayStruct chiefLightRayE0_optAchse(mLight, chiefRayE0_optAchse, 1);
 	Ray_LLT chiefRayE0_field({ 0.0,0.5,0.0 }, { 0.0,0.5,10.0 }, 1.0);
-	LightRayStruct chiefLightRayE0_field(light, chiefRayE0_field, 1);
+	LightRayStruct chiefLightRayE0_field(mLight, chiefRayE0_field, 1);
 	PlanGeometry_LLT exitPupilE0(/*semiHeight*/20.0, /*point*/{ 0.0,0.0,2.5696182 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
 	std::vector<LightRayStruct> lightRayAlong_X_E0_optAchse2 = SequentialRayTracing::lightRayAlongX({ 0.0, 0.0, 0.0 }, 100, 10.0, -1.0, 1.0, 550, 1.0);
 	std::vector<LightRayStruct> lightRayAlong_Y_E0_optAchse2 = SequentialRayTracing::lightRayAlongY({ 0.0, 0.0, 0.0 }, 100, 10.0, -1.0, 1.0, 550, 1.0);
@@ -184,14 +184,14 @@ bool testOPDQwtPlot::testOPDQwtPlotE1()
 	optSysE1.fillVectorSurfaceAndInteractingData(13, S14E1.clone(), refrac.clone());
 	optSysE1.fillVectorSurfaceAndInteractingData(14, S15E1.clone(), refrac.clone());
 
-	Light_LLT light;
-	light.setWavelength(550.0);
+	Light_LLT mLight;
+	mLight.setWavelength(550.0);
 
 	// Plot OPD field start { 0.0, 1.0, 0.0 }
 	Ray_LLT chiefRayE1_optAchse({ 0.0,0.0,0.0 }, { 0.0,0.0,1.0 }, 1.0);
-	LightRayStruct chiefLightRayE1_optAchse(light, chiefRayE1_optAchse, 1);
+	LightRayStruct chiefLightRayE1_optAchse(mLight, chiefRayE1_optAchse, 1);
 	Ray_LLT chiefRayE1_field({ 0.0,1.0,0.0 }, { 0.0,-1.0,10.0 }, 1.0);
-	LightRayStruct chiefLightRayE1_field(light, chiefRayE1_field, 1);
+	LightRayStruct chiefLightRayE1_field(mLight, chiefRayE1_field, 1);
 	PlanGeometry_LLT exitPupilE1(/*semiHeight*/20.0, /*point*/{ 0.0,0.0,201.5696182 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
 	std::vector<LightRayStruct> lightRayAlong_X_E1_field2 = SequentialRayTracing::lightRayAlongX({ 0.0, 1.0, 0.0 }, 80, 10.0, -1.0, 1.0, 550, 1.0);
 	std::vector<LightRayStruct> lightRayAlong_Y_E1_field2 = SequentialRayTracing::lightRayAlongY({ 0.0, 1.0, 0.0 }, 80, 10.0, -1.0, 1.0, 550, 1.0);
@@ -215,8 +215,8 @@ bool testOPDQwtPlot::testOPDQwtPlotE2()
 {
 
 
-	Light_LLT light;
-	light.setWavelength(550.0);
+	Light_LLT mLight;
+	mLight.setWavelength(550.0);
 
 	//all the surfaces
 	SphericalSurface_LLT S1E2(/*radius*/28.73360379131933, /*semiHeight*/4.0, /*Apex of the sphere*/{ 0.0, 0.0, 15.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.5, /*refIndexSideB*/1.0);
@@ -249,9 +249,9 @@ bool testOPDQwtPlot::testOPDQwtPlotE2()
 
 	// Plot OPD opt achse
 	Ray_LLT chiefRayE2_optAchse({ 0.0,0.0,0.0 }, { 0.0,0.0,0.5 }, 1.0);
-	LightRayStruct chiefLightRayE2_optAchse(light, chiefRayE2_optAchse, 1);
+	LightRayStruct chiefLightRayE2_optAchse(mLight, chiefRayE2_optAchse, 1);
 	Ray_LLT chiefRayE2_field({ 0.0,0.5,0.0 }, { 0.0,0.5,10.0 }, 1.0);
-	LightRayStruct chiefLightRayE2_field(light, chiefRayE2_field, 1);
+	LightRayStruct chiefLightRayE2_field(mLight, chiefRayE2_field, 1);
 	PlanGeometry_LLT exitPupilE2(/*semiHeight*/20.0, /*point*/{ 0.0,0.0,2.5696182 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
 	std::vector<LightRayStruct> lightRayAlong_X_E2_optAchse2 = SequentialRayTracing::lightRayAlongX({ 0.0, 0.0, 0.0 }, 100, 10.0, -1.0, 1.0, 550, 1.0);
 	std::vector<LightRayStruct> lightRayAlong_Y_E2_optAchse2 = SequentialRayTracing::lightRayAlongY({ 0.0, 0.0, 0.0 }, 100, 10.0, -1.0, 1.0, 550, 1.0);

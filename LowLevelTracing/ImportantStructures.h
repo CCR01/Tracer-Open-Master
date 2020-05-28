@@ -5,23 +5,41 @@
 
 
 
-struct Matrix3x3AndExist
-{
-	real Matrix[3][3];
 
-	//TODOQuestio: Warum tut sowas nicht und ich muss die Funktion saveMatrix bzw. getMatrix verwenden???
-	//real check[3][3] = Matrix[3][3];
+//struct Matrix3x3AndExist
+//{
+//	real Matrix[3][3];
+//
+//	//TODOQuestio: Warum tut sowas nicht und ich muss die Funktion saveMatrix bzw. getMatrix verwenden???
+//	//real check[3][3] = Matrix[3][3];
+//
+//	int ExistMatrix;
+//
+//	// save the matrix in the struct
+//	// hier könnte auch die Funktion "std::memcpy" verwendet werden!
+//	void saveMatrix(real const mat[3][3]);
+//
+//	// get the matrix from the struct
+//	void getMatrix(real mat[3][3]);
+//
+//};
 
-	int ExistMatrix;
-
-	// save the matrix in the struct
-	// hier könnte auch die Funktion "std::memcpy" verwendet werden!
-	void saveMatrix(real const mat[3][3]);
-
-	// get the matrix from the struct
-	void getMatrix(real mat[3][3]);
-
-};
+//struct Matrix3x3AndExist
+//{
+//public:
+//	Matrix3x3AndExist();
+//	~Matrix3x3AndExist();
+//
+//	void saveMatrix(real const mat[3][3]);
+//	real*** getMatrix();
+//
+//	void setMatrixexist(bool exist);
+//	bool getMatrixExist();
+//
+//private:
+//	static real mMatrix[3][3];
+//	bool mExistMatrix{};
+//};
 
 
 struct VectorStructR3
@@ -47,9 +65,9 @@ public:
 	double getZ() const;
 
 private:
-	real mX;
-	real mY;
-	real mZ;
+	real mX{};
+	real mY{};
+	real mZ{};
 
 };
 
@@ -59,6 +77,7 @@ enum surfaceSide { A, B, N };
 
 struct IntersectInformationStruct
 {
+public:
 	IntersectInformationStruct();
 	~IntersectInformationStruct();
 	IntersectInformationStruct(VectorStructR3 mIntersectionPoint, VectorStructR3 mNormaleUnitVector, surfaceSide mSurfaceSideABN,
@@ -74,7 +93,7 @@ struct IntersectInformationStruct
 	// get normal unit vector
 	VectorStructR3 getNormalUnitVector() const;
 	// set surface side
-	void setSurface(surfaceSide const surSid);
+	void setSurfaceSide(surfaceSide const surSid);
 	// get surface side
 	char getSurfaceSide() const;
 	// set steps to walk
@@ -103,18 +122,24 @@ struct IntersectInformationStruct
 	// print intersect information
 	void printIntersectInformation() const;
 
-
 	// calculate unit vector
 	VectorStructR3 unitVectorForIntersectInfoStruct(VectorStructR3& const V);
 
-public:
-	VectorStructR3 mIntersectionPoint;
-	VectorStructR3 mNormaleUnitVector;
-	surfaceSide mSurfaceSideABN; // A or B -> if N -> there is NO intersection point!
-	real mStepsToWalk;
-	real mRefractiveIndexA;
-	real mRefractiveIndexB;
-	VectorStructR3 mDirectionRayUnit;
+	// set no intersection point
+	void setNoIntersectionPoint();
+
+	// set all
+	void setAll(VectorStructR3 intersectionPoint, VectorStructR3 normaleUnitVector, surfaceSide surfaceSideABN,
+		real stepsToWalk, real refractiveIndexA, real refractiveIndexB, VectorStructR3 directionRayUnit, Light_LLT mLight);
+
+private:
+	VectorStructR3 mIntersectionPoint{};
+	VectorStructR3 mNormaleUnitVector{};
+	surfaceSide mSurfaceSideABN{}; // A or B -> if N -> there is NO intersection point!
+	real mStepsToWalk{};
+	real mRefractiveIndexA{};
+	real mRefractiveIndexB{};
+	VectorStructR3 mDirectionRayUnit{};
 	Light_LLT mLight;
 
 	// TODO: write functions gethitPoint, sethitPoint,...
@@ -138,21 +163,28 @@ struct pointAndIntensity
 	void setIntesity(real const setIntensity);
 
 private:
-	VectorStructR3 mPoint;
-	real mIntensity;
+	VectorStructR3 mPoint{};
+	real mIntensity{};
 
 };
 
 // We use this struct primary for ray aiming
 struct VectorElementAndPosition
 {
-	double value;
-	unsigned int posInVector;
+public:
+	VectorElementAndPosition();
+	VectorElementAndPosition(real val, unsigned int pos);
+	~VectorElementAndPosition();
 
 	//get value in vector
 	double getValue() const;
 	//get position in vector
 	unsigned int getPosInVector() const;
+
+private:
+
+	double mValue{};
+	unsigned int mPosInVector{};
 
 };
 
@@ -173,8 +205,8 @@ public:
 	double getY() const;
 
 private:
-	real mX;
-	real mY;
+	real mX{};
+	real mY{};
 };
 
 
@@ -195,8 +227,8 @@ public:
 	void setVal_2(real val2);
 
 private:
-	real mVal_1;
-	real mVal_2;
+	real mVal_1{};
+	real mVal_2{};
 
 
 };

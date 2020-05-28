@@ -610,12 +610,11 @@ LightRayStruct EvaluateManyOptSystems_SeidelCoef::findMarginalRay_obj(OpticalSys
 
 	Ray_LLT marginalRay(/*origin*/ startPointMarginalRay,/*direction*/directionMarginaRay,/*refractive index*/ 1.0);
 
-	Light_LLT light;
-	light.setWavelength(mWavelenght_vec[0]);
-	light.setIntensity(1.0);
-	light.setIsAlive(1);
+	Light_LLT mLight;
+	mLight.setWavelength(mWavelenght_vec[0]);
+	mLight.setIntensity(1.0);
 
-	LightRayStruct tempMarginalRay(light, marginalRay, 1.0);
+	LightRayStruct tempMarginalRay(mLight, marginalRay, 1.0);
 
 	return tempMarginalRay;
 
@@ -642,12 +641,11 @@ LightRayStruct EvaluateManyOptSystems_SeidelCoef::findChiefRay_obj(OpticalSystem
 
 	Ray_LLT chiefRay(/*origin*/ startPointChiefRay,/*direction*/directionChiefRay,/*refractive index*/ 1.0);
 
-	Light_LLT light;
-	light.setWavelength(mWavelenght_vec[0]);
-	light.setIntensity(1.0);
-	light.setIsAlive(1);
+	Light_LLT mLight;
+	mLight.setWavelength(mWavelenght_vec[0]);
+	mLight.setIntensity(1.0);
 
-	LightRayStruct tempChiefRay(light, chiefRay, 1.0);
+	LightRayStruct tempChiefRay(mLight, chiefRay, 1.0);
 
 	return tempChiefRay;
 }

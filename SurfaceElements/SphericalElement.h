@@ -17,15 +17,13 @@ public:
 	SphericalElement& operator=(SphericalElement& source);
 	SphericalElement(real /*radius*/ radius, real /*semi height*/  semiHeight, VectorStructR3 /*point*/ point, VectorStructR3 /*direction*/ direction, real /*refractive index A*/ refractiveSideA, real /*refractive index B*/refractiveSideB);
 	SphericalElement(real /*radius*/ radius, real /*semi height*/  semiHeight, VectorStructR3 /*point*/ point, VectorStructR3 /*direction*/ direction, MaterialSellmeier1 /*glass A*/ glassA, MaterialSellmeier1 /*glass B*/glassB);
-	virtual ~SphericalElement();
+	virtual ~SphericalElement() override;
 	std::shared_ptr<Element_CR> clone() override;
 	// make all parameter of the sphere fix
 	virtual void setAllParameterFix() override;
 
 	// get a random value between two values
 	real fRand_real(real min, real max);
-
-
 
 	// get pointer to surface LLT for ray tracing
 	virtual std::shared_ptr<SurfaceIntersectionRay_LLT> getSurfaceForLLT_ptr() override;

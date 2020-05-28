@@ -7,28 +7,20 @@
 class DeflectedRayParaxialLens_LLT : public InteractionRay_LLT {
 
 public:
-	DeflectedRayParaxialLens_LLT() {};
+	DeflectedRayParaxialLens_LLT();
+	virtual ~DeflectedRayParaxialLens_LLT() override;
 	DeflectedRayParaxialLens_LLT& operator=(DeflectedRayParaxialLens_LLT& source);
-	DeflectedRayParaxialLens_LLT(DeflectedRayParaxialLens_LLT &source);
-	virtual ~DeflectedRayParaxialLens_LLT() {};
+	DeflectedRayParaxialLens_LLT(DeflectedRayParaxialLens_LLT &source);	
 	virtual std::shared_ptr<InteractionRay_LLT> clone() override;
-	DeflectedRayParaxialLens_LLT(additionalInfosDeflectedRayParaLensStruct addInfos) :
-		mAddInfos(addInfos)
-	{}
-	DeflectedRayParaxialLens_LLT(IntersectInformationStruct intersectInformation, additionalInfosDeflectedRayParaLensStruct addInfos) :
-		mIntersectInformation(intersectInformation)
-	{};
+	DeflectedRayParaxialLens_LLT(additionalInfosDeflectedRayParaLensStruct addInfos);
+	DeflectedRayParaxialLens_LLT(IntersectInformationStruct intersectInformation, additionalInfosDeflectedRayParaLensStruct addInfos);
 
 
-	RaysRangeStruct howManyRays() override
-		//TODO: in cpp
-	{
-		return RaysRangeStruct{ 1,1 };
-	}
+	virtual RaysRangeStruct howManyRays() override;
 
-	std::vector<LightRayStruct> calcInteraction(IntersectInformationStruct intersectInformation);
+	virtual std::vector<LightRayStruct> calcInteraction(const IntersectInformationStruct& intersectInformation) override;
 
 private:
-	IntersectInformationStruct mIntersectInformation;
-	additionalInfosDeflectedRayParaLensStruct mAddInfos;
+	IntersectInformationStruct mIntersectInformation{};
+	additionalInfosDeflectedRayParaLensStruct mAddInfos{};
 };

@@ -15,22 +15,22 @@
 	   void swapLine(double mat[3][6], int line1, int line2);
 	
 	   // Fill 3x3 matrix with vectors
-	   void FillMatrixRowWise(VectorStructR3 V1, VectorStructR3 V2, VectorStructR3 V3, double mat[3][3]);
+	   std::vector<std::vector<real>> FillMatrixRowWise(const VectorStructR3& V1, const VectorStructR3& V2, const VectorStructR3& V3);
 	
 	   // Calculate the transformation Matrix
-	   Matrix3x3AndExist CalcBaseTransformationMatrix(VectorStructR3 direction);
+	   std::vector<std::vector<real>> CalcBaseTransformationMatrix(const VectorStructR3& direction);
 	
 	   // Calculate the invers matrix for back transformation
-	   Matrix3x3AndExist calcInversMatrix(real mat[3][3]);
+	   std::vector<std::vector<real>> calcInversMatrix(const std::vector<std::vector<real>>& matrix);
 	
 	
 	
 	   // transform a Ray in an new Base
 	   // in com
-	   Ray_LLT transformRayInNewBase(Ray_LLT ray, real transMatrix[3][3], VectorStructR3 shiftVec);
+	   Ray_LLT transformRayInNewBase(Ray_LLT ray, std::vector<std::vector<real>> transMatrix, VectorStructR3 shiftVec);
 	
 	   // calculat shift of point to new base point
-	   VectorStructR3  calcPointInNewBase(/*transformation matrix*/ double transMatrix[3][3], /*shift*/ VectorStructR3 shiftVec, VectorStructR3 point);
+	   VectorStructR3  calcPointInNewBase(/*transformation matrix*/ std::vector<std::vector<real>> transMatrix, /*shift*/ VectorStructR3 shiftVec, VectorStructR3 point);
   }
 
 

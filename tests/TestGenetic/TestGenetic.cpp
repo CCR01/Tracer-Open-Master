@@ -81,18 +81,18 @@ bool TestGenetic::testGeneticSuperFunc()
 	//// E0
 	//bool checkE0 = testE0();
 	//testSuperFct_vec.push_back(checkE0);
-
+	//
 	//// E1
 	//bool checkE1 = testE1();
 	//testSuperFct_vec.push_back(checkE1);
-
+	//
 	//// E2
 	//bool chekeE2 = testE2();
 	//testSuperFct_vec.push_back(chekeE2);
 
-	//// E3
-	//bool checkE3 = testE3();
-	//testSuperFct_vec.push_back(checkE3);
+	// E3
+	bool checkE3 = testE3();
+	testSuperFct_vec.push_back(checkE3);
 
 
 	bool checker = Math::checkTrueOfVectorElements(testSuperFct_vec);
@@ -111,8 +111,8 @@ bool TestGenetic::testE0()
 	PlanElement Plan3_E0(/*semi height*/ 200.0, /*point*/{ 0.0,0.0,30.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glass1, /*refractive index B*/ glass1);
 
 	// set the radius variable
-	Sphere1_E0.setParameterRadius(0.0, 1000.0, 0.0, typeModifierVariable);
-	Sphere2_E0.setParameterRadius(-1000.0, 0.0, 0, typeModifierVariable);
+	Sphere1_E0.setParameterRadius(-500.0, 500.0, 0.0, typeModifierVariable);
+	Sphere2_E0.setParameterRadius(-500.0, 500.0, 0.0, typeModifierVariable);
 
 	surfacePtr AperStop0_E0_ptr = AperStop0_E0.clone();
 	surfacePtr Sphere1_E0_ptr = Sphere1_E0.clone();
@@ -131,14 +131,15 @@ bool TestGenetic::testE0()
 	test_vec.push_back(test_E0);
 
 	// genetic
-	Genetic genetic(/*optSysEle*/ optSystemElement_E0, /*fields*/ fields_vec_optA,/*wavelengths*/ wavelenth_vec_550, /*rings*/ defaultRings_6,/*arms*/ defaultArms_8,/*populatuion*/ 1000);
+	Genetic genetic(/*optSysEle*/ optSystemElement_E0, /*fields*/ fields_vec_optA,/*wavelengths*/ wavelenth_vec_550, /*rings*/ defaultRings_6,/*arms*/ defaultArms_8,/*populatuion*/5000);
+	genetic.setChooseValueMode(cleverSamplingMode);
 	genetic.doTheGeneticProcess();
 
 	OpticalSystemElement optimizedOpticalSystem = genetic.getOptimizedOpticalSystemElement();
 	oftenUse::print(optimizedOpticalSystem, wavelenth_vec_550[0]);
 
 	std::vector<real> bestValues{ 5.57118,-7.40529 };
-	test_vec.push_back(oftenUse::checkDeltaVariables(optimizedOpticalSystem, bestValues, 30.0));
+	test_vec.push_back(oftenUse::checkDeltaVariables(optimizedOpticalSystem, bestValues, 50.0));
 
 	bool checker = Math::checkTrueOfVectorElements(test_vec);
 	return checker;
@@ -159,8 +160,8 @@ bool TestGenetic::testE1()
 	PlanElement Plan5_E1(/*semi height*/ 3.0, /*point*/{ 0.0,0.0,40.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glass1, /*refractive index B*/ glass1);
 
 	// set the radius variable
-	Sphere1_E1.setParameterRadius(-100.0, 100.0, 0.0, typeModifierVariable);
-	Sphere2_E1.setParameterRadius(-100.0, 100.0, 0, typeModifierVariable);
+	Sphere1_E1.setParameterRadius(-500.0, 500.0, 0.0, typeModifierVariable);
+	Sphere2_E1.setParameterRadius(-500.0, 500.0, 0, typeModifierVariable);
 
 	surfacePtr AperStop0_E1_ptr = AperStop0_E1.clone();
 	surfacePtr Sphere1_E1_ptr = Sphere1_E1.clone();
@@ -181,14 +182,14 @@ bool TestGenetic::testE1()
 	test_vec.push_back(test_E1);
 
 	// genetic
-	Genetic genetic(/*optSysEle*/ optSystemElement_E1, /*fields*/ fields_vec_optA,/*wavelengths*/ wavelenth_vec_550, /*rings*/ defaultRings_6,/*arms*/ defaultArms_8,/*populatuion*/ 1000);
+	Genetic genetic(/*optSysEle*/ optSystemElement_E1, /*fields*/ fields_vec_optA,/*wavelengths*/ wavelenth_vec_550, /*rings*/ defaultRings_6,/*arms*/ defaultArms_8,/*populatuion*/ 5000);
 	genetic.doTheGeneticProcess();
 
 	OpticalSystemElement optimizedOpticalSystem = genetic.getOptimizedOpticalSystemElement();
 	oftenUse::print(optimizedOpticalSystem, wavelenth_vec_550[0]);
 
 	std::vector<real> bestValues{ 7.9865,-8.4249 };
-	test_vec.push_back(oftenUse::checkDeltaVariables(optimizedOpticalSystem, bestValues, 100.0));
+	test_vec.push_back(oftenUse::checkDeltaVariables(optimizedOpticalSystem, bestValues, 50.0));
 
 	bool checker = Math::checkTrueOfVectorElements(test_vec);
 	return checker;
@@ -212,8 +213,8 @@ bool TestGenetic::testE2()
 	PlanElement Plan5_E2(/*semi height*/ 3.0, /*point*/{ 0.0,0.0,40.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glass1, /*refractive index B*/ glass1);
 
 	// set the radius variable
-	Sphere1_E2.setParameterRadius(-100.0, 100.0, 0.0, typeModifierVariable);
-	Sphere2_E2.setParameterRadius(-100.0, 100.0, 0.0, typeModifierVariable);
+	Sphere1_E2.setParameterRadius(-500.0, 500.0, 0.0, typeModifierVariable);
+	Sphere2_E2.setParameterRadius(-500.0, 500.0, 0.0, typeModifierVariable);
 	Sphere3_E2.setParameterPointZ(2.0, 100.0, 0.0, typeModifierVariable);
 
 	surfacePtr AperStop0_E2_ptr = AperStop0_E2.clone();
@@ -235,7 +236,7 @@ bool TestGenetic::testE2()
 	test_vec.push_back(test_E2);
 
 	// genetic
-	Genetic genetic(/*optSysEle*/ optSystemElement_E2, /*fields*/ fields_vec_optA,/*wavelengths*/ wavelenth_vec_550, /*rings*/ defaultRings_6,/*arms*/ defaultArms_8,/*populatuion*/ 1000);
+	Genetic genetic(/*optSysEle*/ optSystemElement_E2, /*fields*/ fields_vec_optA,/*wavelengths*/ wavelenth_vec_550, /*rings*/ defaultRings_6,/*arms*/ defaultArms_8,/*populatuion*/ 5000);
 	genetic.doTheGeneticProcess();
 
 	OpticalSystemElement optimizedOpticalSystem = genetic.getOptimizedOpticalSystemElement();
@@ -265,9 +266,9 @@ bool TestGenetic::testE3()
 	SphericalElement Sphere8_E3(/*radius*/ 30.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,70.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNSSK8_S1());
 	PlanElement Plan9_E3(/*semi height*/ 7.0, /*point*/{ 0.0,0.0,80.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getAir());
 
-	Sphere3_E3.setParameterRadius(-1000.0, 1000.0, 0.0, typeModifierVariable);
-	Sphere5_E3.setParameterRadius(-1000.0, 1000.0, 0.0, typeModifierVariable);
-	Sphere7_E3.setParameterRadius(-1000.0, 1000.0, 0.0, typeModifierVariable);
+	Sphere3_E3.setParameterRadius(-500.0, 500.0, 0.0, typeModifierVariable);
+	Sphere5_E3.setParameterRadius(-500.0, 500.0, 0.0, typeModifierVariable);
+	Sphere7_E3.setParameterRadius(-500.0, 500.0, 0.0, typeModifierVariable);
 
 	surfacePtr Aper0_E3_ptr = AperStop0_E3.clone();
 	surfacePtr Sphere1_E3_ptr = Sphere1_E3.clone();
@@ -292,14 +293,11 @@ bool TestGenetic::testE3()
 	test_vec.push_back(checkStartSys);
 
 	// genetic
-	Genetic genetic(/*optSysEle*/ optSysEle_E3, /*fields*/ fields_vec_optA,/*wavelengths*/ mWavelength_vec, /*rings*/ defaultRings_6,/*arms*/ defaultArms_8,/*populatuion*/ 500);
+	Genetic genetic(/*optSysEle*/ optSysEle_E3, /*fields*/ mFields_vec012,/*wavelengths*/ mWavelength_vec, /*rings*/ defaultRings_6,/*arms*/ defaultArms_8,/*populatuion*/ 5000);
 	genetic.doTheGeneticProcess();
 
 	OpticalSystemElement optimizedOpticalSystem = genetic.getOptimizedOpticalSystemElement();
 	oftenUse::print(optimizedOpticalSystem, mWavelength_vec[0]);
-
-	std::vector<real> bestValues{ -20.607,253.027,-44.784 };
-	test_vec.push_back(oftenUse::checkDeltaVariables(optimizedOpticalSystem, bestValues, 100.0));
 
 	bool checker = Math::checkTrueOfVectorElements(test_vec);
 	return checker;
@@ -338,7 +336,7 @@ bool TestGenetic::testGenerationModes(real min, real max, real sampling, unsigne
 	
 
 	// export time
-	std::string location = "../tests/TestGenetic/cleverSamplingMode/";
+	std::string location = "../tests/TestGenetic/samplingModes/";
 	inportExportData::saveDoubleInTXT(location, "times", "random: ", timeRandom.count());
 	inportExportData::saveDoubleInTXT(location, "times", "clever: ", timeClever.count());
 	inportExportData::saveDoubleInTXT(location, "times", "normal distribution: ", timeND.count());
@@ -381,10 +379,10 @@ bool TestGenetic::testRandomMode(real min, real max, real sampling, unsigned int
 	std::vector<real> histogram = oftenUse::makeHistogram(number_vec, min, max, sampling);
 
 	// export vector to csv data
-	std::string location = "../tests/TestGenetic/cleverSamplingMode/";
+	std::string location = "../tests/TestGenetic/samplingModes/";
 	std::string nameExcel = "randomMode";
 
-	std::string holeFile = "../tests/TestGenetic/cleverSamplingMode/randomMode.csv";
+	std::string holeFile = "../tests/TestGenetic/samplingModes/randomMode.csv";
 	std::ofstream ofs;
 	ofs.open(holeFile, std::ofstream::out | std::ofstream::trunc);
 	ofs.close();
@@ -428,10 +426,10 @@ bool TestGenetic::testClerverSampleMode(real min, real max, real sampling, unsig
 	std::vector<real> histogram = oftenUse::makeHistogram(number_vec, min, max, sampling);
 		
 	// export vector to csv data
-	std::string location = "../tests/TestGenetic/cleverSamplingMode/";
+	std::string location = "../tests/TestGenetic/samplingModes/";
 	std::string nameExcel = "cleverSamplingMode";
 
-	std::string holeFile = "../tests/TestGenetic/cleverSamplingMode/cleverSamplingMode.csv";
+	std::string holeFile = "../tests/TestGenetic/samplingModes/cleverSamplingMode.csv";
 	std::ofstream ofs;
 	ofs.open(holeFile, std::ofstream::out | std::ofstream::trunc);
 	ofs.close();
@@ -447,7 +445,7 @@ bool TestGenetic::testNormalDistributionMode(real min, real max, real sampling, 
 	Genetic genetic;
 	genetic.setChooseValueMode(normalDistributionMode);
 	genetic.setMeanToCalcND(0.0);
-	genetic.setStddevToCalcND(500.0);
+	genetic.setStddevToCalcND(450);
 	bool checker = true;
 	unsigned int iteration = 0;
 	real tempNumber;
@@ -476,10 +474,10 @@ bool TestGenetic::testNormalDistributionMode(real min, real max, real sampling, 
 	std::vector<real> histogram = oftenUse::makeHistogram(number_vec, min, max, sampling);
 
 	// export vector to csv data
-	std::string location = "../tests/TestGenetic/cleverSamplingMode/";
+	std::string location = "../tests/TestGenetic/samplingModes/";
 	std::string nameExcel = "normalDistributionMode";
 
-	std::string holeFile = "../tests/TestGenetic/cleverSamplingMode/normalDistributionMode.csv";
+	std::string holeFile = "../tests/TestGenetic/samplingModes/normalDistributionMode.csv";
 	std::ofstream ofs;
 	ofs.open(holeFile, std::ofstream::out | std::ofstream::trunc);
 	ofs.close();
@@ -523,10 +521,10 @@ bool TestGenetic::testNormalDistributionDeefaultMode(real min, real max, real sa
 	std::vector<real> histogram = oftenUse::makeHistogram(number_vec, min, max, sampling);
 
 	// export vector to csv data
-	std::string location = "../tests/TestGenetic/cleverSamplingMode/";
+	std::string location = "../tests/TestGenetic/samplingModes/";
 	std::string nameExcel = "normalDistributionDefaulMode";
 
-	std::string holeFile = "../tests/TestGenetic/cleverSamplingMode/normalDistributionDefaulMode.csv";
+	std::string holeFile = "../tests/TestGenetic/samplingModes/normalDistributionDefaulMode.csv";
 	std::ofstream ofs;
 	ofs.open(holeFile, std::ofstream::out | std::ofstream::trunc);
 	ofs.close();

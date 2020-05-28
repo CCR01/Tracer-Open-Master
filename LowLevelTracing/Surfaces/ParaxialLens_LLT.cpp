@@ -92,7 +92,7 @@ VectorStructR3 ParaxialLens_LLT::getDirectionParaxialLensUNIT() const
 	return mDirectionParaxialLensUnit;
 }
 //set direction unit
-void ParaxialLens_LLT::setDirectionParaxialLensUNIT(VectorStructR3 const& direction)
+void ParaxialLens_LLT::setDirectionParaxialLensUNIT(VectorStructR3 const direction)
 {
 	mDirectionParaxialLensUnit = Math::unitVector(direction);
 }
@@ -111,21 +111,21 @@ void ParaxialLens_LLT::setFocalLengthParaxialLens(double const& focalLenght)
 
 
 // set refractive index side A
-void ParaxialLens_LLT::setRefractiveIndexSide_A(real const& refractiveIndex)
+void ParaxialLens_LLT::setRefractiveIndexSide_A(real const refractiveIndex)
 {
 	mRefractiveIndexA_ParaxialLens = refractiveIndex;
 }
 
 // set refractive index side B
-void ParaxialLens_LLT::setRefractiveIndexSide_B(real const& refractiveIndex)
+void ParaxialLens_LLT::setRefractiveIndexSide_B(real const refractiveIndex)
 {
 	mRefractiveIndexB_ParaxialLens = refractiveIndex;
 }
 
-IntersectInformationStruct ParaxialLens_LLT::calculateIntersection(LightRayStruct const& lightRay)
+IntersectInformationStruct ParaxialLens_LLT::calculateIntersection(LightRayStruct const lightRay)
 {
 	Ray_LLT ray = lightRay.getRay_LLT();
-	Light_LLT light = lightRay.getLight_LLT();
+	Light_LLT mLight = lightRay.getLight_LLT();
 
 	// Paraxial lens -> plan geometry
 	PlanGeometry_LLT ParaxialLensPlanGeometry(mSemiHeightParaxialLens, mPointParaxialLens, mDirectionParaxialLensUnit, mRefractiveIndexA_ParaxialLens, mRefractiveIndexB_ParaxialLens);
@@ -252,6 +252,22 @@ double ParaxialLens_LLT::getRadius()
 {
 	return 99999999999999999999999.0;
 }
+
+ParaxialLens_LLT::ParaxialLens_LLT() {};
+ParaxialLens_LLT::~ParaxialLens_LLT() {};
+
+ParaxialLens_LLT::ParaxialLens_LLT(double semiHeight, VectorStructR3 point, VectorStructR3 direction, double focallength, double refractiveSideA, double refractiveSideB) :
+	mSemiHeightParaxialLens(std::abs(semiHeight)),
+	mPointParaxialLens(point),
+	mDirectionParaxialLens(direction),
+	mDirectionParaxialLensUnit(Math::unitVector(direction)),
+	mFocallenghtParaxialLensSide_A(focallength* refractiveSideA),
+	mFocallenghtParaxialLensSide_B(focallength* refractiveSideB),
+	mRefractiveIndexA_ParaxialLens(refractiveSideA),
+	mRefractiveIndexB_ParaxialLens(refractiveSideB)
+{
+	setInfosForDeflection(); // save the information that are important to deflect a ray at this paraxial lens
+};
 
 ParaxialLens_LLT::ParaxialLens_LLT(ParaxialLens_LLT &source)
 {

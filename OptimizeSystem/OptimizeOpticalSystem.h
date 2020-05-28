@@ -196,10 +196,10 @@ public:
 
 	FieldAndLightStruct getFWL_S();
 
-	void add_Light(Light_LLT light);
+	void add_Light(Light_LLT mLight);
 	void add_FieldAndWeight(VectorStructR3 fv, real weight);
 
-	void set_Light(Light_LLT light);
+	void set_Light(Light_LLT mLight);
 	void set_Field(VectorStructR3 field, real weight);
 
 	//void add_RMSWeight(real RMS_weight);
