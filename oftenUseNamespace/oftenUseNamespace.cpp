@@ -1,4 +1,5 @@
 #include "oftenUseNamespace.h"
+#include <iomanip>
 #include <limits>
 #include "..\..\Inport_Export_Data\Inport_Export_Data.h"
 
@@ -17,7 +18,7 @@ bool oftenUse::checkRayTracing(VectorStructR3 startPoint, VectorStructR3 directi
 	mLight.setWavelength(550.0);
 	mLight.setIntensity(1.0);
 	mLight.setJonesVector({ 1.0,1.0,1.0,1.0 });
-	mLight.setTypeLight(typeLightRay);
+	mLight.setTypeLight(typeLight::typeLightRay);
 	// light ray
 	LightRayStruct lightRay(mLight, ray, 1.0);
 	// ray tracing
@@ -82,9 +83,76 @@ void oftenUse::print(std::vector<real> V)
 
 void oftenUse::print(OpticalSystemElement opticalSysElement, real wavelength)
 {
+
+	unsigned int size = opticalSysElement.getPosAndElement().size();
 	opticalSysElement.setRefractiveIndexAccordingToWavelength(wavelength);
-	OpticalSystem_LLT optSysLLTtoPrint = opticalSysElement.getLLTconversion_doConversion();
-	optSysLLTtoPrint.printAllOptSysParameter_LLT(optSysLLTtoPrint);
+	std::shared_ptr<SurfaceIntersectionRay_LLT> tempSurface_ptr;
+	std::shared_ptr<SurfaceIntersectionRay_LLT> tempSurface_ptr_next;
+
+	std::string tempTypeMode_Radius;
+	std::string tempTypeMode_Thickness;
+
+	real tempRadius{};
+	real tempPoint_Z{};
+	real tempPoint_Z_next{};
+	real tempDirection_Z{};
+	real semiHeight{};
+	real tempPointZ = 0;
+	std::string nameGlasRightSide{};
+	real thickness = 0;
+	real tempRefIndexRightSide{};
+
+	for (unsigned int i = 0; i < size; i++)
+	{
+		tempSurface_ptr = opticalSysElement.getPosAndIntersection_LLT()[i].getSurfaceInterRay_ptr();
+
+		// get radius
+		tempRadius = tempSurface_ptr->getRadius();
+		tempTypeMode_Radius = oftenUse::convertTypeModeToString(opticalSysElement.getPosAndElement()[i].getElementInOptSys_ptr()->getRadiusTypeModifier());
+		tempDirection_Z = tempSurface_ptr->getDirection().getZ();
+		// glass by name
+		if (tempDirection_Z > 0)
+		{
+			nameGlasRightSide = opticalSysElement.getPosAndElement()[i].getElementInOptSys_ptr()->getGlassB().getNameGlas();
+			tempRefIndexRightSide = tempSurface_ptr->getRefractiveIndex_B();
+		}
+		
+		else if (tempDirection_Z < 0)
+		{
+			tempRadius = -1 * tempRadius;
+			nameGlasRightSide = opticalSysElement.getPosAndElement()[i].getElementInOptSys_ptr()->getGlassA().getNameGlas();
+			tempRefIndexRightSide = tempSurface_ptr->getRefractiveIndex_A();
+		}
+
+		// get tempPoint
+		tempTypeMode_Thickness = oftenUse::convertTypeModeToString(opticalSysElement.getPosAndElement()[i].getElementInOptSys_ptr()->getPointTypeModifier_Z());
+		if (i < size - 1)
+		{
+			tempSurface_ptr_next = opticalSysElement.getPosAndIntersection_LLT()[i + 1].getSurfaceInterRay_ptr();
+			tempPoint_Z = tempSurface_ptr->getPoint().getZ();
+			tempPoint_Z_next = tempSurface_ptr_next->getPoint().getZ();
+		}
+
+		else
+		{
+			tempPoint_Z = 99.0;
+			tempPoint_Z_next = 99.0;
+		}
+
+		thickness = tempPoint_Z_next - tempPoint_Z;
+
+		
+
+		// get semiHeight
+		semiHeight = tempSurface_ptr->getSemiHeight();
+		
+		std::cout << "" << std::endl;
+		std::cout << std::fixed;
+		std::cout << std::setprecision(3);
+		std::cout << "surface: " << i << '\t' << "radius: " << tempRadius << " " << tempTypeMode_Radius << '\t' << "thickness: " << thickness << " " << tempTypeMode_Thickness << '\t' << "glass: " << nameGlasRightSide << '\t' << "refIndex: " << tempRefIndexRightSide << "semi height: " << '\t' << semiHeight << std::endl;
+
+	}
+
 
 }
 
@@ -100,7 +168,7 @@ int oftenUse::getInfInt() { return 9999999999999999999; };
 // check if two values have the same prefix
 bool oftenUse::checkSamePrefixTwoVal(real v1, real v2)
 {
-	if (v1 > 0 & v2 < 0 || v1 < 0 & v2>0)
+	if (v1 > 0.0 & v2 < 0.0 || v1 < 0 & v2>0)
 	{
 		return false;
 	}
@@ -113,10 +181,9 @@ Light_LLT oftenUse::buildDefaultLight(real wavelength)
 {
 	real defaultIntensity = 1.0;
 	JonesVector_LLT defaultPolarisation(1.0, 1.0, 1.0, 1.0);
-	typeLight defaultLightType = typeLightRay;
-	int defaultIsAlive = 1;
+	typeLight defaultLightType = typeLight::typeLightRay;
 
-	Light_LLT defaultLight(/*wavelength*/ wavelength, /*intensity*/ defaultIntensity,/*polarisation*/defaultPolarisation,/*light type*/ defaultLightType,/*is alive*/ defaultIsAlive);
+	Light_LLT defaultLight(/*wavelength*/ wavelength, /*intensity*/ defaultIntensity,/*polarisation*/defaultPolarisation,/*light type*/ defaultLightType);
 
 	return defaultLight;
 }
@@ -244,6 +311,9 @@ bool oftenUse::checkOptSysELement_Equal_Better_Zemax(OpticalSystemElement optimi
 	{
 		real sumRMS_TOM = Math::sumAllVectorValues(allRMS);
 		real sumRMS_Z = Math::sumAllVectorValues(rmsValZemax);
+
+		std::cout << "sum rms tom: " << sumRMS_TOM << std::endl;
+		std::cout << "sum rms Zemax: " << sumRMS_Z << std::endl;
 
 		check_Equal_Better_Zemax = (sumRMS_TOM - sumRMS_Z) < tolerance;
 	}
@@ -663,7 +733,7 @@ std::vector<real> oftenUse::makeHistogram(std::vector<real> number_vec, real min
 }
 
 // check intersectinformations 
-bool checkIntersectInfos(const IntersectInformationStruct& intersectInfos, const IntersectInformationStruct& controleIntersectInfos, real tolerance)
+bool oftenUse::checkIntersectInfos(const IntersectInformationStruct& intersectInfos, const IntersectInformationStruct& controleIntersectInfos, real tolerance)
 {
 	std::vector<bool> checkIntersectInfos;
 
@@ -676,14 +746,83 @@ bool checkIntersectInfos(const IntersectInformationStruct& intersectInfos, const
 	checkIntersectInfos.push_back(Math::compareTwoVectorStructR3_tolerance(intersectInfos.getDirectionRayUnit(), controleIntersectInfos.getDirectionRayUnit(), tolerance));
 	checkIntersectInfos.push_back(Math::compareTwoNumbers_tolerance(intersectInfos.getLight().getWavelength(), controleIntersectInfos.getLight().getWavelength(), tolerance));
 	checkIntersectInfos.push_back(Math::compareTwoNumbers_tolerance(intersectInfos.getLight().getIntensity(), controleIntersectInfos.getLight().getIntensity(), tolerance));
-
-
+	checkIntersectInfos.push_back(Math::compareTwoNumbers_tolerance(intersectInfos.getLight().getJonesVector().getIa(), controleIntersectInfos.getLight().getJonesVector().getIa(), tolerance));
+	checkIntersectInfos.push_back(Math::compareTwoNumbers_tolerance(intersectInfos.getLight().getJonesVector().getIb(), controleIntersectInfos.getLight().getJonesVector().getIb(), tolerance));
+	checkIntersectInfos.push_back(Math::compareTwoNumbers_tolerance(intersectInfos.getLight().getJonesVector().getRa(), controleIntersectInfos.getLight().getJonesVector().getRa(), tolerance));
+	checkIntersectInfos.push_back(Math::compareTwoNumbers_tolerance(intersectInfos.getLight().getJonesVector().getRb(), controleIntersectInfos.getLight().getJonesVector().getRb(), tolerance));
+	checkIntersectInfos.push_back(intersectInfos.getLight().getTypeLight() == controleIntersectInfos.getLight().getTypeLight());
 
 	bool checker = Math::checkTrueOfVectorElements(checkIntersectInfos);
 	return checker;
 
-	//JonesVector_LLT mPolarisation{};
-	//typeLight mLightType{};
-	//bool mIsAlive = true;
-	//Light_LLT mLight{};
+}
+
+// check if all values in a vevtor are less than a specific value
+bool oftenUse::checkValInVacLessThan(std::vector<real> vec, real minVal)
+{
+	unsigned int sizeVec = vec.size();
+
+	for (unsigned int i = 0; i < sizeVec; ++i)
+	{
+		if (vec[i] < minVal)
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
+// check if average of values in vecor are less than specific value
+bool oftenUse::checkAverageOfVecValLessThan(std::vector<real> vec, real minVal)
+{
+	unsigned int n = vec.size();
+	real average{};
+	if (n != 0)
+	{
+		average = std::accumulate(vec.begin(), vec.end(), 0.0) / n;
+	}
+
+	return average < minVal;
+
+}
+// convert type mode variable to string
+std::string oftenUse::convertTypeModeToString(typeModifier typeMode)
+{
+	switch (typeMode)
+	{
+	case typeModifierFixed:
+		return "F";
+		break;
+	case typeModifierVariable:
+		return "V";
+		break;
+	case typeModifierPickup:
+		return "P";
+		break;
+	default:
+		break;
+	}
+}
+
+real oftenUse::sum(std::vector<real> vec)
+{
+	return std::accumulate(vec.begin(), vec.end(), 0.0);
+}
+
+bool oftenUse::checkDLS_resultRMS(DLS dls, real tolerance)
+{
+	OpticalSystemElement optimizedOptSysHLT = dls.getOptimizedSystem_HLT();
+	std::vector<VectorStructR3> field_vec = dls.getField_vec();
+	std::vector<real> wave_vec = dls.getWavelength_vev();
+	real bestMeritValueDLS = dls.getBestMeritValue();
+	unsigned int rings = dls.getRings();
+	unsigned int arms = dls.getArms();
+
+	std::vector<real> allRMS_vec = getRMSoptSysHLT(optimizedOptSysHLT, field_vec, wave_vec, rings, arms);
+	real sumRMSoptimizedSystem = sum(allRMS_vec);
+
+	bool returnCheck = std::abs(bestMeritValueDLS - sumRMSoptimizedSystem) < tolerance;
+
+	return returnCheck;
 }

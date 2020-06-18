@@ -129,6 +129,45 @@ real defaultParaDLS::getFactorGettingWorst()
 	return mFactorGettingWorst;
 }
 
+// without min radius
+void defaultParaDLS::setToleranceWithoutMin(real toleranceWithoutMin)
+{
+	mToleranceWithout_MIN_radius = toleranceWithoutMin;
+}
+
+real defaultParaDLS::getToleranceWithoutMin()
+{
+	return mToleranceWithout_MIN_radius;
+}
+
+// without max radius
+void defaultParaDLS::setToleranceWithoutMax(real toleranceWithoutMax)
+{
+	mToleranceWithout_MAX_radius = toleranceWithoutMax;
+}
+
+real defaultParaDLS::getToleranceWithoutMax()
+{
+	return mToleranceWithout_MAX_radius;
+}
+// min damping number before switch factors
+void defaultParaDLS::set_Min_DamNumBefSwitchFactors(real minBeforeSwitchFactors)
+{
+	m_Min_DampingNumberBeforSwitchFactors = minBeforeSwitchFactors;
+}
+real defaultParaDLS::get_Min_DamNumBefSwitchFactors()
+{
+	return m_Min_DampingNumberBeforSwitchFactors;
+}
+// max damping number before switch factors
+void defaultParaDLS::set_Max_DamNumBefSwitchFactors(real maxBeforeSwitchFactors)
+{
+	m_Max_DampingNumberBeforeSwitchFactors = maxBeforeSwitchFactors;
+}
+real defaultParaDLS::get_Max_DamNumBefSwitchFactors()
+{
+	return m_Max_DampingNumberBeforeSwitchFactors;
+}
 
 DLS::DLS() {};
 DLS::DLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms) :
@@ -140,13 +179,57 @@ mRings(rings),
 mArms(arms)
 {
 	loadDefaultParameter();
+	loadAdditionalDefaultParameter();
 	buildOptSys_LLT_wave_vec();	
+	mParameterVar.loadSystemParameter(mOpticalSystemEle_initial);
+	mChangedOptSys_LLT_vec = deepCopyOptSysLLT_vec(mOptSys_LLT_vec);
+	mBestOptSys_LLT_vec = deepCopyOptSysLLT_vec(mOptSys_LLT_vec);
+	resizeAllRelevantStdVectorsAndCalcConst();
+	loadWithoutMinMaxDefault();
+	loadThicknessParameter();
+	loadBestFactorBetterFactorWorstCombinations();
+}
+DLS::DLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, defaultParaDLS defaultParameterDLS) :
+	mOpticalSystemEle_initial(optSysEle.getDeepCopyOptSysEle()),
+	mOpticaSystemEle_change(optSysEle.getDeepCopyOptSysEle()),
+	mFields_vec(fields),
+	mWavelenght_vec(wavelengths),
+	mRings(rings),
+	mArms(arms),
+	mDefaultParamDLS(defaultParameterDLS)
+{
+	loadAdditionalDefaultParameter();
+	buildOptSys_LLT_wave_vec();
+	mParameterVar.loadSystemParameter(mOpticalSystemEle_initial);
+	mChangedOptSys_LLT_vec = deepCopyOptSysLLT_vec(mOptSys_LLT_vec);
+	mBestOptSys_LLT_vec = deepCopyOptSysLLT_vec(mOptSys_LLT_vec);
+	resizeAllRelevantStdVectorsAndCalcConst();
+	loadWithoutMinMaxDefault();
+	loadThicknessParameter();
+	loadBestFactorBetterFactorWorstCombinations();
+}
+DLS::~DLS() {};
+
+void DLS::buildAndLoad(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, defaultParaDLS defaultParameterDLS)
+{
+	mOpticalSystemEle_initial = optSysEle.getDeepCopyOptSysEle();
+	mOpticaSystemEle_change = optSysEle.getDeepCopyOptSysEle();
+	mFields_vec = fields;
+	mWavelenght_vec = wavelengths;
+	mRings = rings;
+	mArms = arms;
+	mDefaultParamDLS = defaultParameterDLS;
+
+	loadAdditionalDefaultParameter();
+	buildOptSys_LLT_wave_vec();
 	mParameterVar.loadSystemParameter(mOpticalSystemEle_initial);
 	resizeAllRelevantStdVectorsAndCalcConst();
 	mChangedOptSys_LLT_vec = deepCopyOptSysLLT_vec(mOptSys_LLT_vec);
+	mBestOptSys_LLT_vec = deepCopyOptSysLLT_vec(mOptSys_LLT_vec);
+	loadWithoutMinMaxDefault();
 	loadThicknessParameter();
+	loadBestFactorBetterFactorWorstCombinations();
 }
-DLS::~DLS() {};
 
 void DLS::resizeAllRelevantStdVectorsAndCalcConst()
 {
@@ -180,11 +263,9 @@ void DLS::resizeAllRelevantStdVectorsAndCalcConst()
 	mA_T_times_F.resize(mRows_A_T_A);
 	mReturnVector_invMatrix_times_A_T_F.resize(mRows_A_T_A);
 
-	
+	mWithoutMinMax.resize(mNumVar);
 
-	// 
-	mAllMeritVal.push_back(oftenUse::getInfReal());
-	mBestMeritVal = mAllMeritVal[0];
+
 
 
 	mThickness_vec.resize(mPosLastSurface);
@@ -198,6 +279,13 @@ void DLS::resizeAllRelevantStdVectorsAndCalcConst()
 
 	mGlobalStop = true;
 	mInBoundery = true;
+
+	mCounterChangeFactorBetterWorst = 0;
+
+	// 
+	calculateAberrationFct();
+	mAllMeritVal.push_back(oftenUse::sum(mAberrationFct_F0));
+	mBestMeritVal = mAllMeritVal[0];
 }
 
 std::vector<OpticalSystem_LLT> DLS::deepCopyOptSysLLT_vec(std::vector<OpticalSystem_LLT> optSys_LLT_vec)
@@ -232,6 +320,18 @@ void DLS::loadDefaultParameter()
 	mDefaultParamDLS.setFactorGettingBetter(0.4);
 	mDefaultParamDLS.setFactorGettingWorst(1.9);
 
+	mDefaultParamDLS.setToleranceWithoutMin(-0.5);
+	mDefaultParamDLS.setToleranceWithoutMax(0.5);
+
+	mDefaultParamDLS.set_Min_DamNumBefSwitchFactors(0.00001);
+	mDefaultParamDLS.set_Max_DamNumBefSwitchFactors(9999.0);
+
+
+}
+
+
+void DLS::loadAdditionalDefaultParameter()
+{
 	// weight field default
 	mNumFieldPoints = mFields_vec.size();
 	mWeightFields_vec.resize(mNumFieldPoints); // --
@@ -245,10 +345,8 @@ void DLS::loadDefaultParameter()
 	// build defautl light
 	mDefaultLight.setIntensity(1.0);
 	mDefaultLight.setJonesVector({ 1.0,1.0,1.0,1.0 });
-	mDefaultLight.setTypeLight(typeLightRay);
+	mDefaultLight.setTypeLight(typeLight::typeLightRay);
 	mDefaultLight.setWavelength(550.0);
-
-
 }
 
 void DLS::buildOptSys_LLT_wave_vec()
@@ -381,7 +479,7 @@ real DLS::calculateMeritVal_RMS(const VectorStructR3& fieldPoint)
 	real numberInterPoints = interPoints_vec_lastSurface.size() / mNumOptSys;
 
 	// just for debugging
-	std::cout << "number inter points last surface: " << numberInterPoints << std::endl;
+	// std::cout << "number inter points last surface: " << numberInterPoints << std::endl;
 
 	if (std::abs(numberExpecteInterPoints - numberInterPoints) <= 0.0001)
 	{
@@ -486,7 +584,7 @@ void DLS::calcJacobiMatrixDeviation_Aij()
 			mDeviationAberrationFct = calculateDeviation(tempVal, newVal, tempSurfaceNum, tempKindPara);
 
 			// just for debugging
-			std::cout << "deviation surface: " << tempSurfaceNum << " " << mDeviationAberrationFct[0] + mDeviationAberrationFct[1] + mDeviationAberrationFct[2] << std::endl;
+			// std::cout << "deviation surface: " << tempSurfaceNum << " " << mDeviationAberrationFct[0] + mDeviationAberrationFct[1] + mDeviationAberrationFct[2] << std::endl;
 			
 		}
 
@@ -517,22 +615,34 @@ void DLS::fillJacobiMatrix(std::vector<real> vector, unsigned int row)
 	}
 }
 
-real DLS::checkBounderiesAndReturnNewVal(real val, unsigned int posDeltaValt, real minVal, real maxVal, unsigned int tempSurfaceNum, kindParaOptSys kindPara)
+real DLS::checkBounderiesAndReturnNewVal(real val, unsigned int posDeltaValt, real minVal, real maxVal, real withoutMin, real withoutMax, unsigned int tempSurfaceNum, kindParaOptSys kindPara)
 {
 	bool tempBorderViolations;
 	real tempDeltaVal = mTempDeltaNewSysPara[posDeltaValt];
 	real newVal = val + tempDeltaVal;
 
+	if (newVal < 0.0 || (newVal > withoutMin && newVal < withoutMax))
+	{
+		
+		mInBoundery = false;
+		mTempDeltaNewSysPara[posDeltaValt] = 0.0;
+		// just for debugging
+		// std::cout << "value is not allowed" << std::endl;
+		return val;
+	}
+
 	real checkValNeg = newVal - 0.001;
 	real checkVapPos = newVal + 0.0001;
 	bool checkerNeg = checkValNeg < minVal;
-	std::cout << checkerNeg << std::endl;
 	bool checkerPos = checkVapPos > maxVal;
-	std::cout << checkerPos << std::endl;
+	// just for debugging
+	// std::cout << "check if there is boarder violoation from NEGATIV side" << checkerNeg << std::endl;
+	// std::cout << "check if there is boarder violoation from POSITIV side" << checkerPos << std::endl;
 	if (checkerNeg)
 	{ 
 		mInBoundery = false;
-		std::cout << "boundery check is false" << std::endl;	
+		// just for debugging
+		// std::cout << "boundery check is false" << std::endl;	
 
 		real newDeltaVal = (minVal - newVal) + tempDeltaVal;
 		mTempDeltaNewSysPara[posDeltaValt] = newDeltaVal;
@@ -565,7 +675,8 @@ real DLS::checkBounderiesAndReturnNewVal(real val, unsigned int posDeltaValt, re
 	else if (checkVapPos > maxVal)
 	{ 
 		mInBoundery = false;
-		std::cout << "boundery check is false" << std::endl;  
+		// just for debugging
+		//std::cout << "boundery check is false" << std::endl;  
 
 		real newDeltaVal = (maxVal - newVal) + tempDeltaVal;
 		mTempDeltaNewSysPara[posDeltaValt] = newDeltaVal;
@@ -695,6 +806,8 @@ void DLS::setNewSystemParameter()
 	real newVal;
 	real tempMinVal;
 	real tempMaxVal;
+	real tempWithout_min;
+	real tempWithout_max;
 
 	kindParaOptSys tempKindParameter;
 	unsigned int tempSurfaceNum;
@@ -712,13 +825,14 @@ void DLS::setNewSystemParameter()
 			tempMaxVal = mParameterVar.getAllMaxVar()[i];
 
 			tempVal = mChangedOptSys_LLT_vec[0].getPosAndInteractingSurface()[tempSurfaceNum].getSurfaceInterRay_ptr()->getRadius();
-			
+			tempWithout_min = mWithoutMinMax[i].getWithoutMin();
+			tempWithout_max = mWithoutMinMax[i].getWithoutMax();
 
-			newVal = checkBounderiesAndReturnNewVal(tempVal, i, tempMinVal, tempMaxVal, tempSurfaceNum, tempKindParameter);
+			newVal = checkBounderiesAndReturnNewVal(tempVal, i, tempMinVal, tempMaxVal, tempWithout_min, tempWithout_max, tempSurfaceNum, tempKindParameter);
 
 			// just for debugging
-			std::cout << "set radius of surface " << tempSurfaceNum << " to " << newVal << std::endl;
-			std::cout << std::endl;
+			// std::cout << "set radius of surface " << tempSurfaceNum << " to " << newVal << std::endl;
+			// std::cout << std::endl;
 
 			changeRadiusSurfaceTo(tempSurfaceNum, newVal);
 
@@ -732,14 +846,17 @@ void DLS::setNewSystemParameter()
 
 
 			tempVal = mThickness_vec[tempSurfaceNum];
+			tempWithout_min = mWithoutMinMax[i].getWithoutMin();
+			tempWithout_max = mWithoutMinMax[i].getWithoutMax();
+
 			
-			newVal = checkBounderiesAndReturnNewVal(tempVal, i, tempMinVal, tempMaxVal, tempSurfaceNum, tempKindParameter);
+			newVal = checkBounderiesAndReturnNewVal(tempVal, i, tempMinVal, tempMaxVal, tempWithout_min, tempWithout_max, tempSurfaceNum, tempKindParameter);
 
 			
 
 			// just for debugging
-			std::cout << "set thickness of surface " << tempSurfaceNum << " to " << newVal << std::endl;
-			std::cout << std::endl;
+			// std::cout << "set thickness of surface " << tempSurfaceNum << " to " << newVal << std::endl;
+			// std::cout << std::endl;
 
 			changeThickness_Z_SurfaceTo(tempSurfaceNum, newVal);
 			mThickness_vec[tempSurfaceNum] = newVal;
@@ -759,14 +876,19 @@ void DLS::saveCurMeritAndBestMeritValue()
 			mTempMeritVal += n;
 
 	// just for debugging --> print temp merit val
-	std::cout << "temp merit value: " << mTempMeritVal << std::endl;
+	// std::cout << "temp merit value: " << mTempMeritVal << std::endl;
 
 	mAllMeritVal.push_back(mTempMeritVal);
 
 	if (mTempMeritVal < mBestMeritVal)
 	{
 		mBestMeritVal = mTempMeritVal;
+		mBestOptSys_LLT_vec = deepCopyOptSysLLT_vec(mChangedOptSys_LLT_vec);
+
 	}
+
+	// just for debugging --> print best merit value
+	// std::cout << "best merit value: " << mBestMeritVal << std::endl;
 }
 
 bool DLS::checkMeritBetter()
@@ -795,36 +917,42 @@ void DLS::optimizeSystem_DLS_multiplicativ_Damping()
 	mIterationCounter = 0;
 
 	unsigned int maxIterations = mDefaultParamDLS.getMaxIterations();
-	bool systemGettingbetter = true;
+	bool checkSystem = true;
 	real improveMeritStop = mDefaultParamDLS.getImprovMeritStopDiff();
 
 
 	calculateAberrationFct();
 	// just for debugging -> print aberration fct
-	std::cout << "aberration fct:" << std::endl;
-	oftenUse::print(mAberrationFct_F0);
+	// std::cout << "aberration fct:" << std::endl;
+	// oftenUse::print(mAberrationFct_F0);
 
 	saveCurMeritAndBestMeritValue();
+
+	//bool checkSwichMin{};
+	//bool checkSwichMax{};
+
+	real minBeforSwitch = mDefaultParamDLS.get_Min_DamNumBefSwitchFactors();
+	real maxBeforeSwitch = mDefaultParamDLS.get_Max_DamNumBefSwitchFactors();
 
 	while (maxIterations >= mIterationCounter && mGlobalStop)
 	{
 			
-		if (systemGettingbetter)
+		if (checkSystem)
 		{
 			calcJacobiMatrixDeviation_Aij();
 			// just for debugging -> print jacobi matrix
-			std::cout << "jacobi matrix:" << std::endl;
-			oftenUse::print(mJacobi_Aij);
+			// std::cout << "jacobi matrix:" << std::endl;
+			// oftenUse::print(mJacobi_Aij);
 
 			calcJacobi_times_Aberration();
 			// just for debugging -> print A_T * F0
-			std::cout << "A_T * F0:" << std::endl;
-			oftenUse::print(mA_T_times_F);
+			// std::cout << "A_T * F0:" << std::endl;
+			// oftenUse::print(mA_T_times_F);
 
 			calc_A_T_times_A();
 			// just for debugging -> print A_T * A
-			std::cout << "A_T * A:" << std::endl;
-			oftenUse::print(m_A_T_A);
+			// std::cout << "A_T * A:" << std::endl;
+			// oftenUse::print(m_A_T_A);
 
 		}
 
@@ -832,18 +960,18 @@ void DLS::optimizeSystem_DLS_multiplicativ_Damping()
 		
 		temp_scalar_times_A_T_times_A = mDampingNum * m_A_T_A;
 		// just for debugging -> print p * A_T * A
-		std::cout << "p * A_T * A:" << std::endl;
-		oftenUse::print(temp_scalar_times_A_T_times_A);
+		// std::cout << "p * A_T * A:" << std::endl;
+		// oftenUse::print(temp_scalar_times_A_T_times_A);
 
 		tempInvertedMatrix = Math::calculateInverse(temp_scalar_times_A_T_times_A);
 		// just for debugging -> print inverted matrix
-		std::cout << "inverted matrix" << std::endl;
-		oftenUse::print(tempInvertedMatrix);
+		// std::cout << "inverted matrix" << std::endl;
+		// oftenUse::print(tempInvertedMatrix);
 
 		mTempDeltaNewSysPara = calc_invMatrix_times_A_T_F(tempInvertedMatrix, mA_T_times_F);
 		// just for debugging -> print delta new system parameter
-		std::cout << "delta system parameter" << std::endl;
-		oftenUse::print(mTempDeltaNewSysPara);
+		// std::cout << "delta system parameter" << std::endl;
+		// oftenUse::print(mTempDeltaNewSysPara);
 		
 
 		checkDeltaParameter(mTempDeltaNewSysPara);
@@ -853,13 +981,20 @@ void DLS::optimizeSystem_DLS_multiplicativ_Damping()
 		calculateAberrationFct();
 				
 		// just for debugging -> print aberration fct
-		std::cout << "aberration fct:" << std::endl;
-		oftenUse::print(mAberrationFct_F0);
+		// std::cout << "aberration fct:" << std::endl;
+		// oftenUse::print(mAberrationFct_F0);
 
 		// save merit values
 
 
 		saveCurMeritAndBestMeritValue();
+
+		//// just for debugging
+		//int stop = 0;
+		//if (std::abs(mBestMeritVal - 185.12987) < 0.01)
+		//{
+		//	stop = 1;
+		//}
 
 		if(mTempMeritVal > mBestMeritVal) // we have to reverse the change
 		{ 
@@ -875,10 +1010,10 @@ void DLS::optimizeSystem_DLS_multiplicativ_Damping()
 			//bool affe = worstCounter > maxWorst;
 			//std::cout << "worst counter > max worst" << affe << std::endl;
 
-			systemGettingbetter = false;
+			checkSystem = false;
 			
 			// just for debugging
-			std::cout << "worst counter: " << mWorstCounter << std::endl;
+			// std::cout << "worst counter: " << mWorstCounter << std::endl;
 
 			if (mWorstCounter > maxWorst)
 			{
@@ -887,19 +1022,61 @@ void DLS::optimizeSystem_DLS_multiplicativ_Damping()
 
 		}
 
-		else // the system was getting better
+		else  // the system was getting better
 		{
-			systemGettingbetter = true;
+			checkSystem = true;
 			mDampingNum = mDefaultParamDLS.getFactorGettingBetter() * mDampingNum;
 			mIterationCounter++;
 			mIterationCounter = checkImprovementMeritVal(mIterationCounter, improveMeritStop);
-
 			// just for debugging
-			std::cout << "interation counter: " << mIterationCounter << std::endl;
+			// std::cout << "interation counter: " << mIterationCounter << std::endl;
+		}
+
+		// just for debugging
+		// checkSwichMin = mDampingNum < mDefaultParamDLS.get_Min_DamNumBefSwitchFactors();
+		// std::cout << "check swich min: " << checkSwichMin << std::endl;
+		if(mDampingNum < minBeforSwitch)
+		{			
+			if(mCounterChangeFactorBetterWorst < mSizeFacrotBetterWorstVec)
+			{
+				mDampingNum = 1 + std::pow(mDefaultParamDLS.getDampingFactor(), 2);
+				mDefaultParamDLS.setFactorGettingBetter(factorBetter_vec[mCounterChangeFactorBetterWorst]);
+				mDefaultParamDLS.setFactorGettingWorst(factorWorst_vec[mCounterChangeFactorBetterWorst]);
+				mChangedOptSys_LLT_vec = deepCopyOptSysLLT_vec(mBestOptSys_LLT_vec);
+				++mCounterChangeFactorBetterWorst;
+				checkSystem = true;
+			}
+
+			else
+			{
+				mIterationCounter = maxIterations + 1;
+			}
+		}
+
+		// just for debugging
+		// checkSwichMax = mDampingNum > mDefaultParamDLS.get_Max_DamNumBefSwitchFactors();
+		// std::cout << "check swich max: " << checkSwichMax << std::endl;
+		if (mDampingNum > maxBeforeSwitch)
+		{
+			if (mCounterChangeFactorBetterWorst < mSizeFacrotBetterWorstVec)
+			{
+				mDampingNum = 1 + std::pow(mDefaultParamDLS.getDampingFactor(), 2);
+				mDefaultParamDLS.setFactorGettingBetter(factorBetter_vec[mCounterChangeFactorBetterWorst]);
+				mDefaultParamDLS.setFactorGettingWorst(factorWorst_vec[mCounterChangeFactorBetterWorst]);
+				mChangedOptSys_LLT_vec = deepCopyOptSysLLT_vec(mBestOptSys_LLT_vec);
+				++mCounterChangeFactorBetterWorst;
+				checkSystem = true;
+			}
+
+			else
+			{
+				mIterationCounter = maxIterations + 1;
+			}
 		}
 		
+		
 		// just for debugging
-		printCurVariables();
+		// printCurVariables();
 
 
 		
@@ -931,8 +1108,9 @@ void DLS::printCurVariables()
 
 		else if (tempKindParameter == thickness_Var)
 		{
-			tempVal = mChangedOptSys_LLT_vec[0].getPosAndInteractingSurface()[tempSurfaceNum].getSurfaceInterRay_ptr()->getPoint().getZ();
-			std::cout << "position Z of surface " << tempSurfaceNum << " is " << tempVal << std::endl;
+			//tempVal = mChangedOptSys_LLT_vec[0].getPosAndInteractingSurface()[tempSurfaceNum].getSurfaceInterRay_ptr()->getPoint().getZ();
+			tempVal = mThickness_vec[tempSurfaceNum];
+			std::cout << "thickness Z of surface " << tempSurfaceNum << " is " << tempVal << std::endl;
 			std::cout << std::endl;
 		}
 
@@ -944,7 +1122,7 @@ void DLS::printCurVariables()
 
 OpticalSystemElement DLS::getOptimizedSystem_HLT()
 {
-	return mOpticalSystemEle_initial.convertOptSys_LLT_T0_OptSys_HLT(mOpticalSystemEle_initial, mChangedOptSys_LLT_vec[0]);
+	return mOpticalSystemEle_initial.convertOptSys_LLT_T0_OptSys_HLT(mOpticalSystemEle_initial, mBestOptSys_LLT_vec[0]);
 }
 
 // *** default parameters *** ///
@@ -1066,6 +1244,24 @@ real DLS::getFactorGettingWorst()
 	return mDefaultParamDLS.getFactorGettingWorst();
 }
 
+// min damping number before switch factors
+void DLS::set_Min_DamNumBefSwitchFactors(real minBeforeSwitchFactors)
+{
+	mDefaultParamDLS.set_Min_DamNumBefSwitchFactors(minBeforeSwitchFactors);
+}
+real DLS::get_Min_DamNumBefSwitchFactors()
+{
+	return mDefaultParamDLS.get_Min_DamNumBefSwitchFactors();
+}
+// max damping number before switch factors
+void DLS::set_Max_DamNumBefSwitchFactors(real maxBeforeSwitchFactors)
+{
+	mDefaultParamDLS.set_Max_DamNumBefSwitchFactors(maxBeforeSwitchFactors);
+}
+real DLS::get_Max_DamNumBefSwitchFactors()
+{
+	return mDefaultParamDLS.get_Max_DamNumBefSwitchFactors();
+}
 // *** *** ///
 
 unsigned int DLS::checkImprovementMeritVal(unsigned int iterCounter, const real& impMeritStop)
@@ -1189,8 +1385,8 @@ void DLS::NOT_WORKING_optimizeSystem_DLS_additive_Damping()
 	//real scaleSysPara = 1.0;
 	calculateAberrationFct();
 	// just for debugging -> print aberration fct
-	std::cout << "aberration fct:" << std::endl;
-	oftenUse::print(mAberrationFct_F0);
+	// std::cout << "aberration fct:" << std::endl;
+	// oftenUse::print(mAberrationFct_F0);
 	saveCurMeritAndBestMeritValue();
 
 	bool calcIndivDampFactor = true;
@@ -1245,8 +1441,8 @@ void DLS::NOT_WORKING_optimizeSystem_DLS_additive_Damping()
 
 		
 		// just for debugging -> print delta new system parameter
-		std::cout << "delta system parameter" << std::endl;
-		oftenUse::print(mTempDeltaNewSysPara);
+		// std::cout << "delta system parameter" << std::endl;
+		// oftenUse::print(mTempDeltaNewSysPara);
 
 		setNewSystemParameter();
 		//save_tempDeltaNewSysPara = tempDeltaNewSysPara;
@@ -1254,8 +1450,8 @@ void DLS::NOT_WORKING_optimizeSystem_DLS_additive_Damping()
 		calculateAberrationFct();
 
 		// just for debugging -> print aberration fct
-		std::cout << "aberration fct:" << std::endl;
-		oftenUse::print(mAberrationFct_F0);
+		// std::cout << "aberration fct:" << std::endl;
+		// oftenUse::print(mAberrationFct_F0);
 
 		// save merit values
 
@@ -1293,15 +1489,15 @@ void DLS::NOT_WORKING_optimizeSystem_DLS_additive_Damping()
 		{
 			systemGettingbetter = true;
 			iterationCounter++;
-			iterationCounter = checkImprovementMeritVal(iterationCounter, improveMeritStop);
+			//iterationCounter = checkImprovementMeritVal(iterationCounter, improveMeritStop);
 			calcIndivDampFactor = true;
 			//scaleSysPara = scaleSysPara * 2.0;
 			mIndividualDampingFactor = mIndividualDampingFactor * 0.5;
 			
 			// just for debugging -> print interation counter 
-			std::cout << " ----- " << iterationCounter << std::endl;
-			std::cout << "iteration: " << iterationCounter << std::endl;
-			std::cout << " ----- " << iterationCounter << std::endl;
+			// std::cout << " ----- " << iterationCounter << std::endl;
+			// std::cout << "iteration: " << iterationCounter << std::endl;
+			// std::cout << " ----- " << iterationCounter << std::endl;
 	
 
 		}
@@ -1405,6 +1601,8 @@ void DLS::checkDeltaParameter(std::vector<real>& deltaSysPara_vec)
 		{
 			mGlobalStop = false; // here we stop the iterration in damping
 		}
+
+	
 			
 	}
 }
@@ -1430,3 +1628,102 @@ OpticalSystemElement DLS::getInitialOpticalSystemHLT()
 	return mOpticalSystemEle_initial;
 }
 
+real DLS::getBestMeritValue()
+{
+	return mBestMeritVal;
+}
+
+// load without min and Max default
+void DLS::loadWithoutMinMaxDefault()
+{
+	real tempSemiHeight;
+	unsigned int tempSurfaceNum;
+
+	real tempWithoutMIN;
+	real tempWithoutMAX;
+
+	typeModifier tempTypeModi_Radius;
+	typeModifier tempTypeModi_Thickness;
+	unsigned int counterVar = 0;
+
+	for (unsigned int i = 0; i < mSizeOptSys; ++i)
+	{
+
+		tempSemiHeight = mChangedOptSys_LLT_vec[0].getPosAndInteractingSurface()[i].getSurfaceInterRay_ptr()->getSemiHeight();
+		tempTypeModi_Radius = mOpticalSystemEle_initial.getPosAndElement()[i].getElementInOptSys_ptr()->getRadiusTypeModifier();
+		tempTypeModi_Thickness = mOpticalSystemEle_initial.getPosAndElement()[i].getElementInOptSys_ptr()->getPointTypeModifier_Z();
+
+		if (tempTypeModi_Radius == typeModifierVariable)
+		{
+			tempWithoutMIN = -tempSemiHeight - mDefaultParamDLS.getToleranceWithoutMin();
+			if (tempWithoutMIN > 0.0)
+			{
+				tempWithoutMIN = 0.0;
+			}
+			mWithoutMinMax[counterVar].setWithoutMin(tempWithoutMIN);
+
+			tempWithoutMAX = tempSemiHeight - mDefaultParamDLS.getToleranceWithoutMax();
+			if (tempWithoutMAX < 0.0)
+			{
+				tempWithoutMAX = 0.0;
+			}
+			mWithoutMinMax[counterVar].setWithoutMax(tempWithoutMAX);
+
+			++counterVar;
+		}
+
+		if (tempTypeModi_Thickness == typeModifierVariable)
+		{
+			mWithoutMinMax[counterVar].setWithoutMin(0.0);
+			mWithoutMinMax[counterVar].setWithoutMax(0.0);
+			++counterVar;
+		}
+
+
+
+	}
+}
+
+void DLS::loadBestFactorBetterFactorWorstCombinations()
+{
+	factorBetter_vec.push_back(mDefaultParamDLS.getFactorGettingBetter());
+	factorWorst_vec.push_back(mDefaultParamDLS.getFactorGettingWorst());
+
+	factorBetter_vec.push_back(0.2);
+	factorWorst_vec.push_back(1.9);
+
+	factorBetter_vec.push_back(0.4);
+	factorWorst_vec.push_back(2.1);
+
+	factorBetter_vec.push_back(0.4);
+	factorWorst_vec.push_back(1.9);
+
+	factorBetter_vec.push_back(0.8);
+	factorWorst_vec.push_back(2.0);
+
+	factorBetter_vec.push_back(0.8);
+	factorWorst_vec.push_back(2.3);
+	
+	factorBetter_vec.push_back(0.2);
+	factorWorst_vec.push_back(2.0);
+
+	factorBetter_vec.push_back(0.6);
+	factorWorst_vec.push_back(2.0);
+
+	factorBetter_vec.push_back(0.4);
+	factorWorst_vec.push_back(2.3);
+	
+	factorBetter_vec.push_back(0.5);
+	factorWorst_vec.push_back(1.9);
+
+	factorBetter_vec.push_back(0.5);
+	factorWorst_vec.push_back(2.1);
+
+	factorBetter_vec.push_back(0.3);
+	factorWorst_vec.push_back(2.1);
+
+	factorBetter_vec.push_back(0.4);
+	factorWorst_vec.push_back(1.8);
+
+	mSizeFacrotBetterWorstVec = factorWorst_vec.size();
+}

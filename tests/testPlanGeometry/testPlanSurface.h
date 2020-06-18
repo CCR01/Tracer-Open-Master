@@ -1,9 +1,9 @@
 #pragma once
 
-class BenchmarkePlanSurface {
+class testPlanSurface {
 public:
-	BenchmarkePlanSurface() {};
-	~BenchmarkePlanSurface() {};
+	testPlanSurface() {};
+	~testPlanSurface() {};
 
 	// check methodes of class Spot
 	bool checkMethodesPlanSurface();

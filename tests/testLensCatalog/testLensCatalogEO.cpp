@@ -1,4 +1,4 @@
-#include "TestLensCatalogEO.h"
+#include "testLensCatalogEO.h"
 #include "..\..\LowLevelTracing\Interaction\Absorb_LLT.h"
 #include "..\..\LowLevelTracing\Surfaces\PlanGeometry_LLT.h"
 #include "..\..\SequentialRayTracing\SequentialRayTracer.h"

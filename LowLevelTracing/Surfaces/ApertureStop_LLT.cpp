@@ -11,7 +11,7 @@ double ApertureStop_LLT::getSemiHeight()
 //get radius
 real ApertureStop_LLT::getRadius()
 {
-	return 999999999999999999999999999.0;
+	return 999.0;
 }
 
 //set semi height
@@ -86,21 +86,17 @@ ApertureStop_LLT::ApertureStop_LLT(double semiHeight, VectorStructR3 point, Vect
 	mDirectionAperture(direction),
 	mRrefractiveIndex(refractiveIndex)
 {
+	mLightAbsorb.setLightToAbsorb();
 	calcApertureStopQwtCoord();
 
 }
 
 IntersectInformationStruct ApertureStop_LLT::calculateIntersection(LightRayStruct const lightRay)
 {
-	// ***
-	// ATTENTION: we set that tolerance not so height because of ray aiming
-	// the tolerance for ray aiming must be lower than the tolerance for the aperture stop
-	real tolerance = 1.0;
-	// ***
-	
 	Ray_LLT ray = lightRay.getRay_LLT();
 	Light_LLT mLight = lightRay.getLight_LLT();
-	IntersectInformationStruct returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, mLight };
+	IntersectInformationStruct returnIntersectInfos;
+	returnIntersectInfos.setNoIntersectionPoint();
 
 	// flat in coordinate form: E:Nx * X+ Ny * Y+ Nz * Z= d 
 	double d = mDirectionAperture * mPointAperture;
@@ -110,13 +106,13 @@ IntersectInformationStruct ApertureStop_LLT::calculateIntersection(LightRayStruc
 	if (denominator == 0.0)
 	{
 		// there is no intersection point
-		return returnIntersectInfos; //'N' there is NO intersection poin
+		return returnIntersectInfos; //N there is NO intersection poin
 	}
 	else if (numerator == 0.0)
 	{
 		// ray is in flat!
 		// TODO Question Sergej: Was soll dann gemacht werden?!?!?! hier hat man ja dann unendlich viele Schnittpunkte 	
-		return returnIntersectInfos; //'N' there is NO intersection poin
+		return returnIntersectInfos; //N there is NO intersection poin
 		// -> Das ist ja dann eigentlich falsch?! -> es gibt ja viele Schnittpunkte!
 	}
 
@@ -128,7 +124,7 @@ IntersectInformationStruct ApertureStop_LLT::calculateIntersection(LightRayStruc
 
 		if (stepsT < 0) // ray would walk in the wrong direction
 		{
-			return returnIntersectInfos; //'N' there is NO intersection poin
+			return returnIntersectInfos; //N there is NO intersection poin
 		}
 
 		else // calculate the intersection point
@@ -152,9 +148,11 @@ IntersectInformationStruct ApertureStop_LLT::calculateIntersection(LightRayStruc
 			}
 
 			
-			if ((distance - mSemiHeightAperture) > tolerance) // ray get absorbed by the aperture stop
+			if ((distance - mSemiHeightAperture) > mToleranceAS) // ray get absorbed by the aperture stop
 			{
 				returnIntersectInfos.setSurfaceSide(N);
+				returnIntersectInfos.setLight(mLightAbsorb);
+
 			}
 		}
 
@@ -170,7 +168,7 @@ void ApertureStop_LLT::plot2D(cv::Mat image, unsigned int scale, unsigned int th
 
 }
 
-ApertureStop_LLT::ApertureStop_LLT() {};
+ApertureStop_LLT::ApertureStop_LLT() { mLightAbsorb.setLightToAbsorb(); };
 ApertureStop_LLT::~ApertureStop_LLT() {};
 
 ApertureStop_LLT::ApertureStop_LLT(ApertureStop_LLT &source)
@@ -184,9 +182,9 @@ ApertureStop_LLT::ApertureStop_LLT(ApertureStop_LLT &source)
 	mPointAperture = source.mPointAperture;
 	mDirectionAperture = source.mDirectionAperture;
 	mRrefractiveIndex = source.mRrefractiveIndex;
+	mLightAbsorb = source.mLightAbsorb;
+	mToleranceAS = source.mToleranceAS;
 
-	// TODO: Also copy the spherical informaltion to plot!
-	// SphericalSurfaceQwt* SphericalSurface_Qwt_Ptr = new SphericalSurfaceQwt(mRadius, mSemiHeight, mDirection, mPointSphere);
 }
 
 ApertureStop_LLT& ApertureStop_LLT::operator=(ApertureStop_LLT& source)
@@ -200,6 +198,8 @@ ApertureStop_LLT& ApertureStop_LLT::operator=(ApertureStop_LLT& source)
 	mPointAperture = source.mPointAperture;
 	mDirectionAperture = source.mDirectionAperture;
 	mRrefractiveIndex = source.mRrefractiveIndex;
+	mLightAbsorb = source.mLightAbsorb;
+	mToleranceAS = source.mToleranceAS;
 
 	return *this;
 }
@@ -409,4 +409,9 @@ void ApertureStop_LLT::calcApertureStopQwtCoord()
 void ApertureStop_LLT::setDirection(VectorStructR3 direction)
 {
 	mDirectionAperture = direction;
+}
+
+void ApertureStop_LLT::setTolerance(real tolerance)
+{
+	mToleranceAS = tolerance;
 }

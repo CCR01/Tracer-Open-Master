@@ -29,6 +29,9 @@ public:
 	// E3
 	bool testE3();
 
+	// E4
+	bool testE4();
+
 	// test geneartion modes
 	bool testGenerationModes(real min, real max, real sampling, unsigned int maxInteration);
 	// random generation mode

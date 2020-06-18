@@ -23,7 +23,7 @@ bool testAsphericalSurface_LLT::checkAsphericalSurface_LLT()
 {
 	std::vector<bool> testAspSur_LLT;
 	Light_LLT Light;
-	Light.setWavelength(550.0);
+	Light.buildDefaultLight();
 	// interactions
 	RefractedRay_LLT refrac;
 	Absorb_LLT absorb;
@@ -86,7 +86,7 @@ bool testAsphericalSurface_LLT::checkAsphericalSurface_LLT()
 	//single ray tracing
 	Ray_LLT rayE1(/*origin*/{ 0.0,0.5,0.0 },/*direction*/{ 0.0,0.0,1.0 },/*refractive index*/ 1.0);
 	Light.setWavelength(550.0);
-	LightRayStruct lightRay(Light, rayE1, 1);
+	LightRayStruct lightRay(Light, rayE1, true);
 	SequentialRayTracing seqTraceE1_optA_single(optSysE1);
 	seqTraceE1_optA_single.sequentialRayTracing(lightRay);
 	VectorStructR3 imagePoint = seqTraceE1_optA_single.getAllInterPointsAtSurf_i_notFiltered(2).at(0);

@@ -425,7 +425,7 @@ void  SeidelCoefficients::calculate_h_bar()
 	for (unsigned int i = 0; i < lenghtOptSys - 1; i++)
 	{
 		tempSurfaceSide = seqTracChiefRay.getAllInterInfosOfSurf_i_notFiltered(i)[0].getSurfaceSide();
-		if (tempSurfaceSide == 'N') // there is no intersection point
+		if (tempSurfaceSide == N) // there is no intersection point
 		{
 			temp_h_bar = 99999999.0; // TODO: Check if that is a good option
 		}

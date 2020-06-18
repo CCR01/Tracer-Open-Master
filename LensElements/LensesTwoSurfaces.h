@@ -218,37 +218,37 @@ public:
 	real getSemiHeight();
 
 private:
-	std::string mLensCatalog;
-	unsigned int mCatalogNumber;
-	real mDiameter;
-	real mMaxDiamterTolerance;
-	real mMinDiamterTolerance;
-	real mBackFocalLength;
-	real mMaxSurfaceQuality;
-	real mMinSurfaceQuality;
-	real mCurvaturePV;
-	real mToleraceCenterThickness;
-	real mRadiusFirstSurface;
-	real mRadiusSecondSurface;
-	real mToleranceFocallength;
-	real mMinWavelength;
-	real mMaxWavelenght;
-	std::string mCoating;
-	MaterialSellmeier1 mMaterial;
-	real mPowerPV;
-	real mMinCenter;
-	real mMaxCenter;
-	real mThickness;
-	real mEdgeThickness;
-	real mDesignWavelength;
-	real mNumericalAperture;
-	real mPrice;
-	real mWavelengthToTrace;
-	real mCentering;
-	real mFocalLength;
-	real mFreeAperture;
+	std::string mLensCatalog{};
+	unsigned int mCatalogNumber{};
+	real mDiameter{};
+	real mMaxDiamterTolerance{};
+	real mMinDiamterTolerance{};
+	real mBackFocalLength{};
+	real mMaxSurfaceQuality{};
+	real mMinSurfaceQuality{};
+	real mCurvaturePV{};
+	real mToleraceCenterThickness{};
+	real mRadiusFirstSurface{};
+	real mRadiusSecondSurface{};
+	real mToleranceFocallength{};
+	real mMinWavelength{};
+	real mMaxWavelenght{};
+	std::string mCoating{};
+	MaterialSellmeier1 mMaterial{};
+	real mPowerPV{};
+	real mMinCenter{};
+	real mMaxCenter{};
+	real mThickness{};
+	real mEdgeThickness{};
+	real mDesignWavelength{};
+	real mNumericalAperture{};
+	real mPrice{};
+	real mWavelengthToTrace{};
+	real mCentering{};
+	real mFocalLength{};
+	real mFreeAperture{};
 
-	OpticalSystemElement mOptSysTwoSurfaces_HLT;
+	OpticalSystemElement mOptSysTwoSurfaces_HLT{};
 
 };
 

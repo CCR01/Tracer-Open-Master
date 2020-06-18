@@ -12,11 +12,9 @@
 #include "Interaction\InteractionRay_LLT.h"
 #include "..\FillAptertureStop\FillApertureStop.h"
 #include "../benchmark/SequentialRayTracer/BenchmarkSequentialRayTracer.h"
-#include "../benchmark//ParaxialLens_LLT/BenchmarkParaxialLens_LLT.h"
 #include "Surfaces\AsphericalSurface_LLT.h"
 #include "BaseTransformation_LLT.h"
 #include "Surfaces\PlanGeometry_LLT.h"
-#include "../benchmark/SphericalSurface/BenchmarkSphericalLens.h"
 #include "Interaction\ReflectionRay_LLT.h"
 #include "Surfaces\ApertureStop_LLT.h"
 #include "Interaction\DoNothingInteraction_LLT.h"
@@ -27,10 +25,7 @@
 #include "Surfaces\ParaxialLens_LLT.h"
 #include "Interaction\DeflectedRayParaxialLens_LLT.h"
 #include "..\benchmark\RayAiming\BenchmarkRayAiming.h"
-#include "..\benchmark\Plan\BenchmarkPlanSurface.h"
 #include "..\benchmark\BenchAnalyse\BenchmarkOpticalPathDifference.h"
-#include "..\benchmark\Plan\BenchmarkPlanSurface.h"
-#include "..\benchmark\OpticalSystem\BenchmarkOpticalSystem.h"
 #include "..\benchmark\Plot\BenchPlotSpotDiagram.h"
 #include "..\benchmark\Plot\BenchPlotOPD.h"
 #include "..\benchmark\Plot\BenchPlot2D.h"
@@ -43,17 +38,12 @@
 #include "..\benchmark\ComplexOptSys\BenchmarkComplexOptSys.h"
 #include "..\benchmark\Element\SphericalElement\BenchSphericalElement.h"
 
-#include "..\benchmark\Glasses\BenchGlasses.h"
-
 #include "..\benchmark\BenchAnalyse\TestGlobalOPD.h"
-
-#include "..\benchmark\BenchAnalyse\testPSF.h"
 
 #include "..\benchmark\ZemaxExamples\Objectives\Cooke40DegreeField.h"
 
 //#include "..\benchmark\Glasses\BenchGlasses.h"
 
-#include "..\benchmark\TestLensCatalog\TestLensCatalogEO.h"
 
 #include "..\benchmark\Optimizer\BenchmarkZemaxTest.h"
 
@@ -121,13 +111,22 @@
 // include test systems
 #include "..\tests\TestGenetic\TestGenetic.h"
 
-
-
 // include management tests
 #include "..\tests\ManagementTests\managementTests.h"
 
+// include management benchmark
+#include "..\benchmark\managementBenchmark\managementBenchmark.h"
+
 // include DLS multiCheck
 #include "..\tests\DLSmulticheck\DLSmulticheck.h"
+
+#include "..\tests\testLensCatalog\testLensCatalogEO.h"
+
+#include "..\benchmark\benchGeneticAndDLS\benchGeneticAndDLS.h"
+
+#include "..\tests\testOptimizeSystemSuperFct_GeneticAndDLS\testOptimizeSystemSuperFct_GeneticAndDLS.h"
+
+#include "..\tests\testDLS_multiThreads_12\testDLS_multiThreads_12.h"
 
 int main(int argc, char **argv)
 {
@@ -139,19 +138,38 @@ int main(int argc, char **argv)
 	std::vector<bool> workTheSystem;
 	// *****************************************************************************************************************
 
-	std::vector<testWhat> testWhatVec = { ALL };
-	ManagementTests managementTest(testWhatVec);
-	workTheSystem.push_back(managementTest.testSuperFct());
+	//std::vector<testWhat> testWhatVec = { testWhat::tALL };
+	//ManagementTests managementTest(testWhatVec);
+	//workTheSystem.push_back(managementTest.testSuperFct());
 
+	//std::vector<benchWhat> benchWhatVec = { benchWhat::bALL };
+	//managementBenchmark managementBench(benchWhatVec);
+	//workTheSystem.push_back(managementBench.benchSuperFct());
+
+	testOptimizeSystemSuperFct_GeneticAndDLS testOptimizerSuperFct;
+	bool checkOptimizerSuperFct_GeneticAndDLS = testOptimizerSuperFct.testOptimizeSystemSysSupFct_GeneticDLS();
+	workTheSystem.push_back(checkOptimizerSuperFct_GeneticAndDLS);
+
+	//// test genetic
+	//TestGenetic testGenetic;
+	//bool checkGenetic = testGenetic.testGeneticSuperFunc();
+	//workTheSystem.push_back(checkGenetic);
+	//bool checkGeneticModes = testGenetic.testGenerationModes(-1000.0, 1000.0, 100.0, 50000);
+	//workTheSystem.push_back(checkGeneticModes);
 
 	////// DLS
 	//testDLS testDLS;
 	//bool checkDLS = testDLS.testDLS_superFct();
 	//workTheSystem.push_back(checkDLS);
 
+	//// DLS multi threads 12
+	//testDLS_multiThreads_12 testDLS_multi_12;
+	//bool checkDLS_multi_12 = testDLS_multi_12.testSuperFunction();
+	//workTheSystem.push_back(checkDLS_multi_12);
+
 	//// DLS multicheck
-	//DLSmulticheck DLCmulcheck;
-	//bool DLSmc = DLCmulcheck.checkSuperFuction();
+	//DLSmulticheck DLSmulcheck;
+	//bool DLSmc = DLSmulcheck.checkSuperFuction();
 	//workTheSystem.push_back(DLSmc);
 
 	//// Optikkreis
@@ -307,33 +325,9 @@ int main(int argc, char **argv)
 	//bool checkOptSysElement = BenchOptSys.checkMethodesOpticalSystemElement();
 	//workTheSystem.push_back(checkOptSysElement);
 
-	//// test lens calalog from edmund optics
-	//TestLensCatalogEO testLensCataEO;
-	//bool checkLensCataEO_TwoSurfaces_1 = testLensCataEO.testCatalogEO_TwoSurfaces_1();
-	//workTheSystem.push_back(checkLensCataEO_TwoSurfaces_1);
-	//bool checkLensCataEO_TwoSurfaces_2 = testLensCataEO.testCatalogEO_TwoSurfaces_2();
-	//workTheSystem.push_back(checkLensCataEO_TwoSurfaces_2);
-	//bool checkLensCataEO_TwoSurfaces_3 = testLensCataEO.testCatalogEO_TwoSurfaces_3();
-	//workTheSystem.push_back(checkLensCataEO_TwoSurfaces_3);
-	//bool checkLensCataEO_ThreeSurfaces = testLensCataEO.testCatalogEO_ThreeSurfaces();
-	//workTheSystem.push_back(checkLensCataEO_ThreeSurfaces);
-	//bool checkLensCataEO_doub_conc_lens = testLensCataEO.testCatalogEO_DCV();
-	//workTheSystem.push_back(checkLensCataEO_doub_conc_lens);
-	//bool checkLensCataEO_PCV = testLensCataEO.testcatalogEO_PCV();
-	//workTheSystem.push_back(checkLensCataEO_PCV);
 
 
-	//// test speed ray tracing
-	//benchRayTracing benchRT;
-	//bool checkSpeedRayTraching = benchRT.testSpeedRayTracing();
-	//workTheSystem.push_back(checkSpeedRayTraching);
 
-	//// test genetic
-	//TestGenetic testGenetic;
-	//bool checkGenetic = testGenetic.testGeneticSuperFunc();
-	//workTheSystem.push_back(checkGenetic);
-	//bool checkGeneticModes = testGenetic.testGenerationModes(-1000.0, 1000.0, 100.0, 50000);
-	//workTheSystem.push_back(checkGeneticModes);
 
 
 
@@ -640,10 +634,7 @@ int main(int argc, char **argv)
 //bool RayAiming = checkRayAiming.checkMethodesRayAiming();
 //workTheSystem.push_back(RayAiming);
 //
-//// Benchmark glasses 
-//BenchmarkGlasses BenchGlasses;
-//bool checkGlasses = BenchGlasses.checkGlasses();
-//workTheSystem.push_back(checkGlasses);
+
 //
 //BenchSphericalElement BenchSpherElemen;
 //bool checkSpherElement = BenchSpherElemen.checkMethodesSphericalElement();

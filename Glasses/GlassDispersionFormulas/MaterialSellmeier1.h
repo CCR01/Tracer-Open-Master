@@ -34,6 +34,7 @@ public:
 	void setRealGlass(bool realGlass);
 	void setRefractiveIndex(double refractiveIndex);
 
+	std::string getNameGlas();
 
 	/*
 	//Fraunhofer lines
@@ -52,35 +53,35 @@ public:
 	*/
 
 private:
-	std::string mCatalog;
-	std::string mName;
+	std::string mCatalog{};
+	std::string mName{};
 
-	double mK1;
-	double mK2;
-	double mK3;
-	double mL1;
-	double mL2;
-	double mL3;
+	double mK1{};
+	double mK2{};
+	double mK3{};
+	double mL1{};
+	double mL2{};
+	double mL3{};
 
-	double mTh1;
-	double mTh2;
-	double mTh3;
-	double mTh4;
-	double mTh5;
-	double mTh6;
-	double mWl0;
-	double mWl1;
-	double mClimate;
-	double mAcid;
-	double mAlkali;
-	double mStain;
+	double mTh1{};
+	double mTh2{};
+	double mTh3{};
+	double mTh4{};
+	double mTh5{};
+	double mTh6{};
+	double mWl0{};
+	double mWl1{};
+	double mClimate{};
+	double mAcid{};
+	double mAlkali{};
+	double mStain{};
 
 	// Abbe number (old definition)
-	double mVd;
+	double mVd{};
 
 	// Abbe number (new definition)
-	double mVe;
+	double mVe{};
 
-	bool mRealGlass;
-	double mRefractiveIndes;
+	bool mRealGlass{};
+	double mRefractiveIndes{};
 };

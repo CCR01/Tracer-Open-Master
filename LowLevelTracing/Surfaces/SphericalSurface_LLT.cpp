@@ -428,7 +428,7 @@ IntersectInformationStruct SphericalSurface_LLT::calculateIntersection(LightRayS
 		if (mShortestDistanceDirection_FIRST_IntersectionPoint > mSemiHeight && mShortestDistanceDirection_SECOND_IntersectionPoint > mSemiHeight)
 		{
 			// the intersection point is NOT in the spherical surface
-			return ReturnIntersectInformation; //'N' there is NO intersection point
+			return ReturnIntersectInformation; //N there is NO intersection point
 		}
 
 		else if (mStepsT_first > 0 && mStepsT_second > 0 && mDirection * mRay.getDirectionRayUnit() >= 0.0 || /*TODO: this is good enought for sequential ray tracing but NOT for non-seq!!!*/ (mDirection.getX() == 0.0 && mDirection.getZ() == 0.0)) // we have to chose the first intersection point
@@ -508,12 +508,12 @@ IntersectInformationStruct SphericalSurface_LLT::calculateIntersection(LightRayS
 		else if (mShortestDistanceDirection_SECOND_IntersectionPoint > mSemiHeight)
 		{
 			// the intersection point is NOT in the spherical surface
-			return ReturnIntersectInformation; //'N' there is NO intersection point
+			return ReturnIntersectInformation; //N there is NO intersection point
 		}
 
 		else if (mShortestDistanceDirection_FIRST_IntersectionPoint > mSemiHeight)
 		{
-			return ReturnIntersectInformation; //'N' there is NO intersection point
+			return ReturnIntersectInformation; //N there is NO intersection point
 		}
 
 
@@ -552,7 +552,7 @@ IntersectInformationStruct SphericalSurface_LLT::calculateIntersection(LightRayS
 			if (mShortestDistanceDirection_SECOND_IntersectionPoint > mSemiHeight)
 			{
 				//the intersection point is NOT in the spherical surface
-				return ReturnIntersectInformation; //'N' there is NO intersection point
+				return ReturnIntersectInformation; //N there is NO intersection point
 			}
 			else // the SECOND intersection point is in the spherical surface
 			{

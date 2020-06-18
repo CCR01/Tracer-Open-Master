@@ -301,8 +301,8 @@ real MeritConfiguration::getImageQuality_weight()
 void FieldAndLightStruct::DEFAULT_SETTINGS() {
 
 	JonesVector_LLT tempJones(0.0, 0.0, 0.0, 0.0);
-	typeLight tempType = typeLightRay;
-	Light_LLT tempLight_LLT(550.0, 1.0, tempJones, tempType, 1);
+	typeLight tempType = typeLight::typeLightRay;
+	Light_LLT tempLight_LLT(550.0, 1.0, tempJones, tempType);
 
 	mLight_LLT_vec.push_back(tempLight_LLT);
 

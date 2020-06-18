@@ -123,13 +123,13 @@ IntersectInformationStruct PlanGeometry_LLT::calculateIntersection(LightRayStruc
 	if (denominator == 0.0)
 	{
 		// there is no intersection point
-		returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, mLight }; //'N' there is NO intersection poin
+		returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, mLight }; //N there is NO intersection poin
 	}
 	else if (numerator == 0.0)
 	{
 		// ray is in flat!
 		// TODO Question Sergej: Was soll dann gemacht werden?!?!?! hier hat man ja dann unendlich viele Schnittpunkte 	
-		returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, mLight }; //'N' there is NO intersection poin
+		returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, mLight }; //N there is NO intersection poin
 		// -> Das ist ja dann eigentlich falsch?! -> es gibt ja viele Schnittpunkte!
 	}
 
@@ -141,7 +141,7 @@ IntersectInformationStruct PlanGeometry_LLT::calculateIntersection(LightRayStruc
 
 		if (stepsT < 0) // ray would walk in the wrong direction
 		{
-			returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, mLight }; //'N' there is NO intersection poin
+			returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, mLight }; //N there is NO intersection poin
 		}
 
 		else // calculate the intersection point
@@ -188,7 +188,7 @@ IntersectInformationStruct PlanGeometry_LLT::calculateIntersection(LightRayStruc
 			if (distance > mSemiHeightPlan) // check if intersection point is in the plan geometry
 			{
 				// the intersection point is not on the plan geometry
-				returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, mLight }; //'N' there is NO intersection poin
+				returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, mLight }; //N there is NO intersection poin
 			}
 
 			else // the intersection point is in the plan geometry
@@ -245,7 +245,7 @@ void PlanGeometry_LLT::plot2D(cv::Mat image, unsigned int scale, unsigned int th
 //get Radius
 double PlanGeometry_LLT::getRadius()
 {
-	return 99999999999999999999999.0;
+	return 999.0;
 }
 
 // get focal length side A

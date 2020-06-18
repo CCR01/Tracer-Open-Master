@@ -309,6 +309,7 @@ IntersectInformationStruct AsphericalSurface_LLT::calculateIntersection(LightRay
 {
 
 	IntersectInformationStruct returnIntersectInfos;
+	returnIntersectInfos.setNoIntersectionPoint();
 	Ray_LLT ray = lightRay.getRay_LLT();
 	Light_LLT mLight = lightRay.getLight_LLT();
 
@@ -351,7 +352,7 @@ IntersectInformationStruct AsphericalSurface_LLT::calculateIntersection(LightRay
 
 	if (abs(denominator) < tolerance)
 	{
-		returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 },mLight }; //'N' there is NO intersection poin
+		returnIntersectInfos.setNoIntersectionPoint();
 	}
 	else
 	{
@@ -360,7 +361,7 @@ IntersectInformationStruct AsphericalSurface_LLT::calculateIntersection(LightRay
 		{
 			// ray is in flat!
 				// TODO Question: Was soll dann gemacht werden?!?!?! hier hat man ja dann unendlich viele Schnittpunkte 	
-			returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, mLight }; //'N' there is NO intersection poin
+			returnIntersectInfos.setNoIntersectionPoint(); //N there is NO intersection poin
 																											// -> Das ist ja dann eigentlich falsch?! -> es gibt ja viele Schnittpunkte!
 		}
 
@@ -370,7 +371,7 @@ IntersectInformationStruct AsphericalSurface_LLT::calculateIntersection(LightRay
 			double stepsT = nominator / denominator;
 			if (stepsT < 0) //ray would walk in the wrong direction
 			{
-				returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, mLight }; //'N' there is NO intersection poin
+				returnIntersectInfos.setNoIntersectionPoint(); //N there is NO intersection poin
 			}
 			else
 			{
@@ -393,7 +394,7 @@ IntersectInformationStruct AsphericalSurface_LLT::calculateIntersection(LightRay
 					if (zValueAsphere.yesNo == 0) //there is no intersection point
 					{
 						distanceQP = limit - 1.0; /*check Value! to go out of "while"*/
-						returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, mLight }; //'N' there is NO intersection poin
+						returnIntersectInfos.setNoIntersectionPoint(); //N there is NO intersection poin
 					}
 					else { // there must be an intersection point
 					// 2. Approximate solution Q1 on the surface as a z-projection
@@ -405,7 +406,7 @@ IntersectInformationStruct AsphericalSurface_LLT::calculateIntersection(LightRay
 						if (riseXLocalCoodiSystem.yesNo == 0)
 						{
 							distanceQP = limit - 1.0;
-							returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, mLight }; //'N' there is NO intersection poin
+							returnIntersectInfos.setNoIntersectionPoint(); //N there is NO intersection poin
 						}
 						else
 						{
@@ -414,7 +415,7 @@ IntersectInformationStruct AsphericalSurface_LLT::calculateIntersection(LightRay
 							if (riseYLocalCoordiSystem.yesNo == 0)
 							{
 								distanceQP = limit - 1.0;
-								returnIntersectInfos = { { 0.0,0.0,0.0 },{ 0.0,0.0,0.0 },N, 0.0,0.0,0.0,{ 0.0,0.0,0.0 }, mLight }; //'N' there is NO intersection poin
+								returnIntersectInfos.setNoIntersectionPoint(); //N there is NO intersection poin
 							}
 							else
 							{

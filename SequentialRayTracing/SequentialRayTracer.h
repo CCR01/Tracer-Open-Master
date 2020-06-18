@@ -72,7 +72,7 @@ public:
 	SequentialRayTracing(OpticalSystemElement opticalSysElement);
 	SequentialRayTracing(OpticalSystemElement opticalSysElement, LightRayStruct LightRay);
 	SequentialRayTracing(OpticalSystemElement /*optical system element*/ opticalSysElement, VectorStructR3 /*start point lightRay*/ startPointLightRay, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, real /*refractive index*/ refIndex, Light_LLT mLight);
-	SequentialRayTracing(OpticalSystemElement /*optical system element*/ opticalSysElement, VectorStructR3 /*start point lightRay*/ startPointLightRay, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, real /*refractive index*/ refIndex, std::vector<Light_LLT> light_vec);
+	SequentialRayTracing(const OpticalSystemElement& /*optical system element*/ opticalSysElement,const VectorStructR3& /*start point lightRay*/ startPointLightRay, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, real /*refractive index*/ refIndex, const std::vector<Light_LLT>& light_vec);
 	~SequentialRayTracing();
 
 	// do sequential ray tracing
@@ -175,11 +175,18 @@ private:
 	std::vector <IntersectInfosAndPosSurfaceAndTotalSteps> mSaveInterInfos_PosSur_TotSteps{};
 	std::vector <std::vector<LightRayStruct>> mSaveLightRayStructsNotFiltered{}; //there are all intersection points also them with surface side N
 
-	std::vector<VectorStructR3> mStartPointOfLightRays{};
+	std::vector<VectorStructR3> mStartsPointOfLightRays_vec{};
 	unsigned int mPositionApertureStop;
 
 	Ray_LLT mRay{};
 	Light_LLT mLight{};
+	bool mIsAlive{};
+
+	unsigned int mRings;
+	unsigned int mArms;
+	VectorStructR3 mStartPointLightRay;
+	real mRefIndexStartPont;
+
 	IntersectInfosAndPosSurfaceAndTotalSteps mTempInterInfos_Pos_totStep{};
 	unsigned int mSizeOfVector{};
 	IntersectInfosAndPosSurfaceAndTotalSteps mNoInterPointAndPos{};

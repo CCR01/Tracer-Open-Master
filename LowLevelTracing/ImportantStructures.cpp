@@ -75,56 +75,6 @@ void IntersectInformationStruct::setAll(VectorStructR3 intersectionPoint, Vector
 	setLight(mLight);
 }
 
-//Matrix3x3AndExist::Matrix3x3AndExist() {};
-//Matrix3x3AndExist::~Matrix3x3AndExist() {};
-
-//// save the matrix
-//void  Matrix3x3AndExist::saveMatrix(real const mat[3][3])
-//{
-//	for (int i = 0; i < 3; ++i)
-//	{
-//		for (int j = 0; j < 3; ++j)
-//
-//			Matrix[i][j] = mat[i][j];
-//	}
-//}
-//
-//// get the matrix from the struct
-//void  Matrix3x3AndExist::getMatrix(real mat[3][3])
-//{
-//	for (int i = 0; i < 3; ++i)
-//	{
-//		for (int j = 0; j < 3; ++j)
-//			mat[i][j] = Matrix[i][j];
-//	}
-//}
-
-//// save the matrix
-//void  Matrix3x3AndExist::saveMatrix(real const mat[3][3])
-//{
-//	for (int i = 0; i < 3; ++i)
-//	{
-//		for (int j = 0; j < 3; ++j)
-//
-//			mMatrix[i][j] = mat[i][j];
-//	}
-//}
-//
-//// get the matrix from the struct
-//real** Matrix3x3AndExist::getMatrix()
-//{
-//	return mMatrix
-//}
-//
-//void Matrix3x3AndExist::setMatrixexist(bool exist)
-//{
-//	mExistMatrix = exist;
-//}
-//bool Matrix3x3AndExist::getMatrixExist()
-//{
-//	return mExistMatrix;
-//}
-
 //____________________________________________________
 
 VectorStructR3::VectorStructR3() {};
@@ -210,26 +160,26 @@ void IntersectInformationStruct::setSurfaceSide(surfaceSide const surSid)
 }
 
 // get surface side
-char IntersectInformationStruct::getSurfaceSide() const
+surfaceSide IntersectInformationStruct::getSurfaceSide() const
 {
-	// TODO Question: Gibt es hier eine bessere Alternative?!
-	// Was passiert, wenn hier ein neues enum dazukommt -> in Bezug auf die Reihenfolge?
-	// Wir haben uns mal darüber unterhalten das mit strings zu machen ...
-	char returnSurfaceSide = 'N';
-	if (mSurfaceSideABN == 0)
-	{
-		returnSurfaceSide = 'A';
-	}
-	else if (mSurfaceSideABN == 1)
-	{
-		returnSurfaceSide = 'B';
-	}
-	else if (mSurfaceSideABN == 2)
-	{
-		returnSurfaceSide = 'N';
-	}
+//	// TODO Question: Gibt es hier eine bessere Alternative?!
+//	// Was passiert, wenn hier ein neues enum dazukommt -> in Bezug auf die Reihenfolge?
+//	// Wir haben uns mal darüber unterhalten das mit strings zu machen ...
+//	char returnSurfaceSide = N;
+//	if (mSurfaceSideABN == 0)
+//	{
+//		returnSurfaceSide = A;
+//	}
+//	else if (mSurfaceSideABN == 1)
+//	{
+//		returnSurfaceSide = B;
+//	}
+//	else if (mSurfaceSideABN == 2)
+//	{
+//		returnSurfaceSide = N;
+//	}
 
-	return returnSurfaceSide;
+	return mSurfaceSideABN;
 }
 
 // set steps to walk

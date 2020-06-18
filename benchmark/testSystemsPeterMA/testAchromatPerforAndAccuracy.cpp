@@ -74,15 +74,14 @@ bool testAchroPerforAndAccur::testAchromatPerformanceAndAccurancy(double startSt
 	std::vector<Light_LLT> lightVec_E0;
 	real intensity_d = 1.0;
 	JonesVector_LLT polarisation_d(1.0, 1.0, 1.0, 1.0);
-	typeLight lightType_d = typeLightRay;
-	int isAlive_d = 1;
+	typeLight lightType_d = typeLight::typeLightRay;
 
 	real wavelengths587 = 587.5618;
-	Light_LLT light0(wavelengths587, intensity_d, polarisation_d, lightType_d, isAlive_d);
+	Light_LLT light0(wavelengths587, intensity_d, polarisation_d, lightType_d);
 	real wavelengths486 = 486.1327;
-	Light_LLT light1(wavelengths486, intensity_d, polarisation_d, lightType_d, isAlive_d);
+	Light_LLT light1(wavelengths486, intensity_d, polarisation_d, lightType_d);
 	real wavelengths656 = 656.2725;
-	Light_LLT light2(wavelengths656, intensity_d, polarisation_d, lightType_d, isAlive_d);
+	Light_LLT light2(wavelengths656, intensity_d, polarisation_d, lightType_d);
 
 	lightVec_E0.push_back(light0);
 	lightVec_E0.push_back(light1);

@@ -26,8 +26,22 @@ void RaysRangeStruct::setMax(unsigned int max)
 	mMax = max;
 }
 
-LightRayStruct::LightRayStruct() {};
-LightRayStruct::LightRayStruct(/*light*/ Light_LLT iLight, /*ray*/ Ray_LLT iRay, /*is alive*/ unsigned int i_Alive)
+LightRayStruct::LightRayStruct() { setIsAlive(true);  };
+LightRayStruct::LightRayStruct(VectorStructR3 origin, VectorStructR3 direction, real refractivIndex)
+{
+	mRay.setOriginRay(origin);
+	mRay.setDirectionRayUnit(direction);
+	mRay.setCurrentRefractiveIndex(refractivIndex);
+
+	mLight.buildDefaultLight();
+}
+LightRayStruct::LightRayStruct(/*light*/ Light_LLT iLight, /*ray*/ Ray_LLT iRay)
+{
+	mLight = iLight;
+	mRay = iRay;
+	mIsAlive = true;
+}
+LightRayStruct::LightRayStruct(/*light*/ Light_LLT iLight, /*ray*/ Ray_LLT iRay, /*is alive*/ bool i_Alive)
 {
 	mLight = iLight;
 	mRay = iRay;

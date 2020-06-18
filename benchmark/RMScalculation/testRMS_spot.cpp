@@ -22,11 +22,11 @@ bool testRMS_Spot::checkRMScalculationSpot()
 	// first example
 	JonesVector_LLT jones{ 1.0,1.0,1.0,1.0 };
 	//dummy light
-	Light_LLT light{ 550.0, 1.0,jones,typeLightRay,1 };
+	Light_LLT light{ 550.0, 1.0,jones,typeLight::typeLightRay};
 
 	// Startwert (0.0, 0.0, 0.0)
 	Ray_LLT Ray1(/*origin*/{ 0.0, 0.0, 0.0 }, /*direction*/{ 0.0, 1.0, 50.0 }, 1.0);
-	LightRayStruct lightRay1{ light,Ray1,1 };
+	LightRayStruct lightRay1{ light,Ray1, true };
 
 
 	SphericalSurface_LLT S0E0(/*radius*/15.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 55.0 },

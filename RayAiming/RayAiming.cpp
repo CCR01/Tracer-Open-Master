@@ -312,9 +312,9 @@ lightRayAndInterPointAperStop RayAiming::traceOneRayUntilInApertureStop_inf(Ligh
 	// check if light ray comes to last surface
 	while (ray_NOT_AtLastSurface)
 	{
-		char surfSide = seqTrace.getAllInterInfosOfSurf_i_notFiltered(mPosApertureStop)[loopCounter].getSurfaceSide();
+		surfaceSide surfSide = seqTrace.getAllInterInfosOfSurf_i_notFiltered(mPosApertureStop)[loopCounter].getSurfaceSide();
 
-		if ('N' == surfSide)
+		if (N == surfSide)
 		{
 			// build new ray to trace
 			rayOriginX = lightRay.getRay_LLT().getOriginRay().getX();
@@ -334,7 +334,7 @@ lightRayAndInterPointAperStop RayAiming::traceOneRayUntilInApertureStop_inf(Ligh
 			seqTrace.sequentialRayTracing(lightRay);
 		}
 
-		else if ('A' == surfSide || 'B' == surfSide) // ray comes to the last surface
+		else if (A == surfSide || B == surfSide) // ray comes to the last surface
 		{
 			ray_NOT_AtLastSurface = false;
 			tempLightRayAndInterPointAS.setInterPointAperStop(seqTrace.getAllInterPointsAtSurf_i_notFiltered(mPosApertureStop).back());
@@ -650,7 +650,7 @@ lightRay_intP_dis_negPos_factor RayAiming::traceNegOrPosSide_andReduce_X_inf(lig
 	real disNegTrace_X = calcDistance_X(interPointAS_neg.getIntersectionPoint(), targetPoint);
 	real disNegTrace_Y = calcDistance_Y(interPointAS_neg.getIntersectionPoint(), targetPoint);
 
-	if (disPosTrace_X <= disNegTrace_X && interPointAS_pos.getSurfaceSide() != 'N')
+	if (disPosTrace_X <= disNegTrace_X && interPointAS_pos.getSurfaceSide() != N)
 	{
 		if (disPosTrace_X <= initialDistanceX)
 		{
@@ -675,7 +675,7 @@ lightRay_intP_dis_negPos_factor RayAiming::traceNegOrPosSide_andReduce_X_inf(lig
 
 	}
 
-	else if (disNegTrace_X < disPosTrace_X && interPointAS_neg.getSurfaceSide() != 'N')
+	else if (disNegTrace_X < disPosTrace_X && interPointAS_neg.getSurfaceSide() != N)
 	{
 
 		if (disNegTrace_X < initialDistanceX)
@@ -772,7 +772,7 @@ lightRay_intP_dis_negPos_factor RayAiming::traceNegOrPosSide_andReduce_Y_inf(lig
 	std::cout << "reduce Y disNegTrace Y: " << disNegTrace_Y << std::endl;
 
 
-	if (disPosTrace_Y <= disNegTrace_Y && interPointAS_pos.getSurfaceSide() != 'N')
+	if (disPosTrace_Y <= disNegTrace_Y && interPointAS_pos.getSurfaceSide() != N)
 	{
 		if (disPosTrace_Y <= initialDistanceY)
 		{
@@ -797,7 +797,7 @@ lightRay_intP_dis_negPos_factor RayAiming::traceNegOrPosSide_andReduce_Y_inf(lig
 
 	}
 
-	else if (disNegTrace_Y < disPosTrace_Y && interPointAS_neg.getSurfaceSide() != 'N')
+	else if (disNegTrace_Y < disPosTrace_Y && interPointAS_neg.getSurfaceSide() != N)
 	{
 
 		if (disNegTrace_Y < initialDistanceY)
@@ -1051,7 +1051,7 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos_inf(lightRay_intP_di
 			// check which ray we have to trace with less variance in percent
 			for (unsigned int i = 0; i < sizeRayToTace; ++i)
 			{
-				if (interInfosAS_vec[i].getSurfaceSide() == 'N') // we have to trace that ray again
+				if (interInfosAS_vec[i].getSurfaceSide() == N) // we have to trace that ray again
 				{
 					rayNumToTrace.push_back(i);
 				}
@@ -1360,9 +1360,9 @@ lightRayAndInterPointAperStop RayAiming::traceOneRayUntilInApertureStop_obj(Ligh
 	// check if light ray comes to last surface
 	while (ray_NOT_AtLastSurface)
 	{
-		char surfSide = seqTrace.getAllInterInfosOfSurf_i_notFiltered(mPosApertureStop)[loopCounter].getSurfaceSide();
+		surfaceSide surfSide = seqTrace.getAllInterInfosOfSurf_i_notFiltered(mPosApertureStop)[loopCounter].getSurfaceSide();
 
-		if ('N' == surfSide) 
+		if (N == surfSide) 
 		{
 			// build new ray to trace
 			tempVecToCalcDir = tempVecToCalcDir * 0.5;
@@ -1379,7 +1379,7 @@ lightRayAndInterPointAperStop RayAiming::traceOneRayUntilInApertureStop_obj(Ligh
 			
 		}
 
-		else if ('A' == surfSide || 'B' == surfSide) // ray comes to the last surface
+		else if (A == surfSide || B == surfSide) // ray comes to the last surface
 		{
 			ray_NOT_AtLastSurface = false;
 			tempLightRayAndInterPointAS.setInterPointAperStop(seqTrace.getAllInterPointsAtSurf_i_notFiltered(mPosApertureStop).back());
@@ -1466,7 +1466,7 @@ lightRay_intP_dis_negPos_factor RayAiming::traceNegOrPosSide_andReduce_X_obj(lig
 	real disNegTrace_X = calcDistance_X(interPointAS_neg.getIntersectionPoint(), targetPoint);
 	real disNegTrace_Y = calcDistance_Y(interPointAS_neg.getIntersectionPoint(), targetPoint);
 
-	if (disPosTrace_X <= disNegTrace_X && interPointAS_pos.getSurfaceSide() != 'N')
+	if (disPosTrace_X <= disNegTrace_X && interPointAS_pos.getSurfaceSide() != N)
 	{
 		if (disPosTrace_X <= initialDistanceX)
 		{
@@ -1491,7 +1491,7 @@ lightRay_intP_dis_negPos_factor RayAiming::traceNegOrPosSide_andReduce_X_obj(lig
 
 	}
 
-	else if (disNegTrace_X < disPosTrace_X && interPointAS_neg.getSurfaceSide() != 'N')
+	else if (disNegTrace_X < disPosTrace_X && interPointAS_neg.getSurfaceSide() != N)
 	{
 
 		if (disNegTrace_X < initialDistanceX)
@@ -1589,7 +1589,7 @@ lightRay_intP_dis_negPos_factor RayAiming::traceNegOrPosSide_andReduce_Y_obj(lig
 	std::cout << "reduce Y direction - distance: " << disNegTrace_Y << std::endl;
 
 
-	if (disPosTrace_Y <= disNegTrace_Y && interPointAS_pos.getSurfaceSide() != 'N')
+	if (disPosTrace_Y <= disNegTrace_Y && interPointAS_pos.getSurfaceSide() != N)
 	{
 		if (disPosTrace_Y <= initialDistanceY)
 		{
@@ -1614,7 +1614,7 @@ lightRay_intP_dis_negPos_factor RayAiming::traceNegOrPosSide_andReduce_Y_obj(lig
 
 	}
 
-	else if (disNegTrace_Y < disPosTrace_Y && interPointAS_neg.getSurfaceSide() != 'N')
+	else if (disNegTrace_Y < disPosTrace_Y && interPointAS_neg.getSurfaceSide() != N)
 	{
 
 		if (disNegTrace_Y < initialDistanceY)
@@ -1931,7 +1931,7 @@ lightRay_intP_dis_negPos_factor RayAiming::calcNewBestInfos_obj(lightRay_intP_di
 			// check which ray we have to trace with less variance in percent
 			for (unsigned int i = 0; i < sizeRayToTace; ++i)
 			{
-				if (interInfosAS_vec[i].getSurfaceSide() == 'N') // we have to trace that ray again
+				if (interInfosAS_vec[i].getSurfaceSide() == N) // we have to trace that ray again
 				{
 					rayNumToTrace.push_back(i);
 				}

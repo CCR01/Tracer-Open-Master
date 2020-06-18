@@ -78,21 +78,25 @@ bool TestGenetic::testGeneticSuperFunc()
 {
 	std::vector<bool> testSuperFct_vec;
 
-	//// E0
-	//bool checkE0 = testE0();
-	//testSuperFct_vec.push_back(checkE0);
-	//
-	//// E1
-	//bool checkE1 = testE1();
-	//testSuperFct_vec.push_back(checkE1);
-	//
-	//// E2
-	//bool chekeE2 = testE2();
-	//testSuperFct_vec.push_back(chekeE2);
-
+	// E0
+	bool checkE0 = testE0();
+	testSuperFct_vec.push_back(checkE0);
+	
+	// E1
+	bool checkE1 = testE1();
+	testSuperFct_vec.push_back(checkE1);
+	
+	// E2
+	bool chekeE2 = testE2();
+	testSuperFct_vec.push_back(chekeE2);
+	
 	// E3
 	bool checkE3 = testE3();
 	testSuperFct_vec.push_back(checkE3);
+
+	// E4
+	bool checkE4 = testE4();
+	testSuperFct_vec.push_back(checkE4);
 
 
 	bool checker = Math::checkTrueOfVectorElements(testSuperFct_vec);
@@ -243,7 +247,7 @@ bool TestGenetic::testE2()
 	oftenUse::print(optimizedOpticalSystem, wavelenth_vec_550[0]);
 
 	std::vector<real> bestValues{ 8.82760,-8.64891,12.2568 };
-	test_vec.push_back(oftenUse::checkDeltaVariables(optimizedOpticalSystem, bestValues, 100.0));
+	test_vec.push_back(oftenUse::checkDeltaVariables(optimizedOpticalSystem, bestValues, 200.0));
 
 	bool checker = Math::checkTrueOfVectorElements(test_vec);
 	return checker;
@@ -298,6 +302,57 @@ bool TestGenetic::testE3()
 
 	OpticalSystemElement optimizedOpticalSystem = genetic.getOptimizedOpticalSystemElement();
 	oftenUse::print(optimizedOpticalSystem, mWavelength_vec[0]);
+
+	bool checker = Math::checkTrueOfVectorElements(test_vec);
+	return checker;
+}
+
+// E4
+bool TestGenetic::testE4()
+{	
+	std::vector<bool> test_vec;
+
+	// surfaces E4
+	ApertureStopElement AperStop0_E4(/* semi height*/1.0, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAir());
+	SphericalElement Sphere1_E4(/*radius*/ 80.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,25.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getBAFN10_S1());
+	SphericalElement Sphere2_E4(/*radius*/ 70.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,35.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getBAFN10_S1());
+	SphericalElement Sphere3_E4(/*radius*/ 40.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,45.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getSF6_S1());
+	SphericalElement Sphere4_E4(/*radius*/ 35.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,50.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getNBK7_S1(), /*refractive index B*/glasses.getSF6_S1());
+	SphericalElement Sphere5_E4(/*radius*/ 20.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,55.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBK7_S1());
+	PlanElement Plan6_E4(/*semi height*/ 10.0, /*point*/{ 0.0,0.0,75.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getAir());
+
+	Sphere1_E4.setParameterPointZ(0.01, 20.0, 0.0, typeModifierVariable);
+	Sphere2_E4.setParameterRadius(-1000.0, 1000.0, 0.0, typeModifierVariable);
+	Sphere4_E4.setParameterRadius(-1000.0, 1000.0, 0.0, typeModifierVariable);
+
+	surfacePtr Aper0_E4_ptr = AperStop0_E4.clone();
+	surfacePtr Sphere1_E4_ptr = Sphere1_E4.clone();
+	surfacePtr Sphere2_E4_ptr = Sphere2_E4.clone();
+	surfacePtr Sphere3_E4_ptr = Sphere3_E4.clone();
+	surfacePtr Sphere4_E4_ptr = Sphere4_E4.clone();
+	surfacePtr Sphere5_E4_ptr = Sphere5_E4.clone();
+	surfacePtr Plan6_E4_ptr = Plan6_E4.clone();
+
+	std::vector<surfacePtr> opticalSystemE4_ptr{ Aper0_E4_ptr, Sphere1_E4_ptr, Sphere2_E4_ptr , Sphere3_E4_ptr, Sphere4_E4_ptr, Sphere5_E4_ptr,  Plan6_E4_ptr };
+	std::vector<interaction_ptr> interactionsE4_ptr{ doNothing.clone(), refrac.clone(),refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(),absorb.clone() };
+
+	//	build optical system
+	OpticalSystemElement optSystemElement_E4(opticalSystemE4_ptr, interactionsE4_ptr);
+
+	// check the start system
+	std::vector<real> rmsStartSystem_Z{ 221.602,215.043,196.523 };
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E4, mFields_vec012, mWavelength_vec, rmsStartSystem_Z, mTolerance, comEqual);
+	test_vec.push_back(checkStartSys);
+
+	// genetic
+	Genetic genetic(/*optSysEle*/ optSystemElement_E4, /*fields*/ mFields_vec012,/*wavelengths*/ mWavelength_vec, /*rings*/ defaultRings_6,/*arms*/ defaultArms_8,/*populatuion*/ 5000);
+	genetic.doTheGeneticProcess();
+
+	std::vector<real> bestValues{ 9.21487,-14.09026,9.2527 };
+	test_vec.push_back(oftenUse::checkDeltaVariables(genetic.getOptimizedOpticalSystemElement(), bestValues, 300.0));
+
+	// print the optimized system
+	oftenUse::print(genetic.getOptimizedOpticalSystemElement(), mWavelength_vec[0]);
 
 	bool checker = Math::checkTrueOfVectorElements(test_vec);
 	return checker;

@@ -159,16 +159,16 @@ std::vector<cv::Point2d> OPD::calcOPD_X()
 		VectorStructR3 tempOrigin = seqTrace.getAllInterPointsAtSurf_i_notFiltered(mPosImageSurface).at(i);
 		VectorStructR3 tempDirection = -1 * seqTrace.getAllInterInfosOfSurf_i(mPosImageSurface).at(i).getDirectionRayUnit(); // direction to trace back
 		real tempWavelenth = seqTrace.getAllInterInfosOfSurf_i(mPosImageSurface).at(i).getLight().getWavelength();
-		char tempSurSide = seqTrace.getAllInterInfosOfSurf_i(mPosImageSurface).at(i).getSurfaceSide();
+		surfaceSide tempSurSide = seqTrace.getAllInterInfosOfSurf_i(mPosImageSurface).at(i).getSurfaceSide();
 		real tempCurRefIndex;
 
 		// check from witch side the ray interact with the exit pupil
-		if (tempSurSide == 'A')
+		if (tempSurSide == A)
 		{
 			tempCurRefIndex = seqTrace.getAllInterInfosOfSurf_i(mPosImageSurface).at(i).getRefractiveIndex_A();
 		}
 
-		else if (tempSurSide == 'B')
+		else if (tempSurSide == B)
 		{
 			tempCurRefIndex = seqTrace.getAllInterInfosOfSurf_i(mPosImageSurface).at(i).getRefractiveIndex_B();
 		}
@@ -269,16 +269,16 @@ std::vector<cv::Point2d> OPD::calcOPD_Y()
 		VectorStructR3 tempOrigin = seqTrace.getAllInterPointsAtSurf_i_notFiltered(mPosImageSurface).at(i);
 		VectorStructR3 tempDirection = -1 * seqTrace.getAllInterInfosOfSurf_i(mPosImageSurface).at(i).getDirectionRayUnit(); // direction to trace back
 		real tempWavelenth = seqTrace.getAllInterInfosOfSurf_i(mPosImageSurface).at(i).getLight().getWavelength();
-		char tempSurSide = seqTrace.getAllInterInfosOfSurf_i(mPosImageSurface).at(i).getSurfaceSide();
+		surfaceSide tempSurSide = seqTrace.getAllInterInfosOfSurf_i(mPosImageSurface).at(i).getSurfaceSide();
 		real tempCurRefIndex;
 
 		// check from witch side the ray interact with the exit pupil
-		if (tempSurSide == 'A')
+		if (tempSurSide == A)
 		{
 			tempCurRefIndex = seqTrace.getAllInterInfosOfSurf_i(mPosImageSurface).at(i).getRefractiveIndex_A();
 		}
 
-		else if (tempSurSide == 'B')
+		else if (tempSurSide == B)
 		{
 			tempCurRefIndex = seqTrace.getAllInterInfosOfSurf_i(mPosImageSurface).at(i).getRefractiveIndex_B();
 		}
@@ -564,16 +564,16 @@ cv::Mat OPD::calcGlobalOPD()
 			VectorStructR3 tempOrigin = seqTrace.getAllInterPointsAtSurf_i_notFiltered(mPosImageSurface).at(i);
 			VectorStructR3 tempDirection = -1 * seqTrace.getAllInterInfosOfSurf_i(mPosImageSurface).at(i).getDirectionRayUnit(); // direction to trace back
 			real tempWavelenth = seqTrace.getAllInterInfosOfSurf_i(mPosImageSurface).at(i).getLight().getWavelength();
-			char tempSurSide = seqTrace.getAllInterInfosOfSurf_i(mPosImageSurface).at(i).getSurfaceSide();
+			surfaceSide tempSurSide = seqTrace.getAllInterInfosOfSurf_i(mPosImageSurface).at(i).getSurfaceSide();
 			real tempCurRefIndex;
 
 			// check from witch side the ray interact with the exit pupil
-			if (tempSurSide == 'A')
+			if (tempSurSide == A)
 			{
 				tempCurRefIndex = seqTrace.getAllInterInfosOfSurf_i(mPosImageSurface).at(i).getRefractiveIndex_A();
 			}
 
-			else if (tempSurSide == 'B')
+			else if (tempSurSide == B)
 			{
 				tempCurRefIndex = seqTrace.getAllInterInfosOfSurf_i(mPosImageSurface).at(i).getRefractiveIndex_B();
 			}
@@ -5656,10 +5656,11 @@ cv::Mat OPD::calcHuygenPSF()
 	double ratio = (double)(mGlobalOPD.cols - 1) / (double)(N - 1);
 	cv::Mat mGlobalOPD_high = cv::Mat::zeros(N, N, CV_64F);
 
-	for (int i = 0; i < N; i++) {
+	for (int i = 0; i < N; i++) 
+	{
 		for (int j = 0; j < N; j++) {
-			int fx = floor((double)(i)*ratio);
-			int fy = floor((double)(j)*ratio);
+			int fx = std::floor((double)(i)*ratio);
+			int fy = std::floor((double)(j)*ratio);
 			int cx = ceil((double)(i)*ratio);
 			int cy = ceil((double)(j)*ratio);
 			double actualX = double(i)*ratio;

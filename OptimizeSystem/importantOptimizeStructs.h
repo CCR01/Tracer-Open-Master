@@ -41,5 +41,23 @@ private:
 	std::vector<real> mMaxValVar_vec;
 };
 
+struct withOutMinMax
+{
+public:
 
+	withOutMinMax();
+	~withOutMinMax();
+
+	// without min
+	real getWithoutMin();
+	void setWithoutMin(real withoutMin);
+
+	// without max
+	real getWithoutMax();
+	void setWithoutMax(real withoutMax);
+
+private:
+	real mWithoutMin;
+	real mWithoutMax;
+};
 

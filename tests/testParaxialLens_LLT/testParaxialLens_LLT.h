@@ -1,10 +1,10 @@
 #pragma once
 
-class BenchmarkParaxialLens
+class testParaxialLens
 {
 public:
-	BenchmarkParaxialLens() {};
-	~BenchmarkParaxialLens() {};
+	testParaxialLens();
+	~testParaxialLens();
 
 	// check methodes of class ParaxialLens_LLT
 	bool checkMethodesParaxialLens_LLT();

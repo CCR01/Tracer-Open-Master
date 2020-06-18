@@ -76,8 +76,8 @@ bool TOM_LOGO::plotTOM_Logo()
 
 	// check by single ray trace
 	JonesVector_LLT polarisation;
-	typeLight lightType = typeLightRay;
-	Light_LLT mLight(/*wavelength*/ 550.0, /*intensity*/ 1.0,/*polarisation*/ polarisation,/*light type*/ lightType,/*is alive*/ 1);
+	typeLight lightType = typeLight::typeLightRay;
+	Light_LLT mLight(/*wavelength*/ 550.0, /*intensity*/ 1.0,/*polarisation*/ polarisation,/*light type*/ lightType);
 
 
 	// *** *** // sequential ray tracing

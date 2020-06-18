@@ -76,7 +76,7 @@ public:
 	//get Radius
 	virtual double getRadius() override; // the aperture stop do not has a radius. We give hier 999999999.0
 	
-
+	void setTolerance(real tolerance);
 
 //	// make the 2d plot
 	void plot2D(cv::Mat image, unsigned int scale, unsigned int thickness, unsigned int lineType) override;
@@ -96,12 +96,14 @@ public:
 
 
 private:
-	double mSemiHeightAperture;
-	VectorStructR3 mPointAperture;
-	VectorStructR3 mDirectionAperture;
-	double mRrefractiveIndex;
+	double mSemiHeightAperture{};
+	VectorStructR3 mPointAperture{};
+	VectorStructR3 mDirectionAperture{};
+	double mRrefractiveIndex{};
 	ApertureStopQwtUp* ApertureStopUp_Qwt_Ptr{};
 	ApertureStopQwtDown* ApertureStopDown_Qwt_Ptr{};
 	QPolygonF pointsofApertureStopUp{};
 	QPolygonF pointsofApertureStopDown{};
+	Light_LLT mLightAbsorb;
+	real mToleranceAS = 1.0;
 };

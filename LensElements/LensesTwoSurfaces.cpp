@@ -429,7 +429,7 @@ void LensesTwoSurfaces::buildOpticalSystemTwoSurfaces_OneSurfacePlan()
 
 	mOptSysTwoSurfaces_HLT.fillPosAndElementAndInteraction(0, firstSurface_ptr, refrac_ptr);
 	mOptSysTwoSurfaces_HLT.fillPosAndElementAndInteraction(1, secondSurface_ptr, refrac_ptr);
-	mOptSysTwoSurfaces_HLT.convertHLTtoLLT();
+	mOptSysTwoSurfaces_HLT.convertHLTSurfacesToLLTSurfaces();
 }
 
 
@@ -520,7 +520,7 @@ void LensesTwoSurfaces::buildOpticalSystemTwoSurfaces()
 
 	mOptSysTwoSurfaces_HLT.fillPosAndElementAndInteraction(0, firstSurface_ptr, refrac_ptr);
 	mOptSysTwoSurfaces_HLT.fillPosAndElementAndInteraction(1, secondSurface_ptr, refrac_ptr);
-	mOptSysTwoSurfaces_HLT.convertHLTtoLLT();
+	mOptSysTwoSurfaces_HLT.convertHLTSurfacesToLLTSurfaces();
 
 }
 

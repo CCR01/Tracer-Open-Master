@@ -12,10 +12,11 @@ std::vector<LightRayStruct> RefractedRay_LLT::calcInteraction(const IntersectInf
 	mReturnLightRayStruct.setLight_LLT(intersectInformation.getLight());
 
 
-	if (intersectInformation.getSurfaceSide() == 'N') //there is no intersection point
+	if (intersectInformation.getSurfaceSide() == N) //there is no intersection point
 	{
 		//std::cout << "there is no interaction point! \n";
 		mReturnLightRayStruct.setLightRayAbsorb();
+		mReturnLightRayStruct.setIsAlive(false);
 	}
 
 	else
@@ -23,7 +24,7 @@ std::vector<LightRayStruct> RefractedRay_LLT::calcInteraction(const IntersectInf
 		// in the struct IntersectInformationStruct are all relevant information to calculate the refracted ray.
 
 
-		if (intersectInformation.getSurfaceSide() == 'A') // ray comes from A side !
+		if (intersectInformation.getSurfaceSide() == A) // ray comes from A side !
 		{
 
 
@@ -57,6 +58,9 @@ std::vector<LightRayStruct> RefractedRay_LLT::calcInteraction(const IntersectInf
 			{
 				// std::cout << "there is total reflexion!";
 				// TODO: Hier muss dann die reflection function aufgefufen werden
+				mReturnLightRayStruct.setIsAlive(false);
+				mReturnLightRay_vec[0] = mReturnLightRayStruct;
+				return mReturnLightRay_vec;
 			}
 
 

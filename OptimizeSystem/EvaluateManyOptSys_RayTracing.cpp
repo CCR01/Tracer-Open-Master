@@ -252,8 +252,8 @@ void EvaluateManyOptSys_RayTracing::loadDefaultSettings()
 		mSettingsMeritFct.setWeightWavelength(i, 1);
 
 		JonesVector_LLT tempJones(0.0, 0.0, 0.0, 0.0);
-		typeLight tempType = typeLightRay;
-		Light_LLT tempLight_LLT(mWavelenght_vec[i], 1.0, tempJones, tempType, 1);
+		typeLight tempType = typeLight::typeLightRay;
+		Light_LLT tempLight_LLT(mWavelenght_vec[i], 1.0, tempJones, tempType);
 
 		mSettingsMeritFct.setLight(i,tempLight_LLT);
 

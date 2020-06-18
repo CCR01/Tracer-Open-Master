@@ -116,4 +116,28 @@ void parameterVar::loadSystemParameter(OpticalSystemElement optSysEle)
 
 }
 
+withOutMinMax::withOutMinMax() {};
+withOutMinMax::~withOutMinMax() {};
+
+
+// without min
+real withOutMinMax::getWithoutMin()
+{
+	return mWithoutMin;
+}
+
+void withOutMinMax::setWithoutMin(real withoutMin)
+{
+	mWithoutMin = withoutMin;
+};
+
+// without max
+real withOutMinMax::getWithoutMax()
+{
+	return mWithoutMax;
+}
+void withOutMinMax::setWithoutMax(real withoutMax)
+{
+	mWithoutMax = withoutMax;
+}
 

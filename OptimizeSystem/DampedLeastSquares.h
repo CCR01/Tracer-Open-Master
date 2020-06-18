@@ -49,23 +49,40 @@ public:
 	// factor getting worst
 	void setFactorGettingWorst(real factorGetWorst);
 	real getFactorGettingWorst();
+	// tolerance without min radius
+	void setToleranceWithoutMin(real toleranceWithoutMin);
+	real getToleranceWithoutMin();
+	// without max radius
+	void setToleranceWithoutMax(real toleranceWithoutMax);
+	real getToleranceWithoutMax();
+	// min damping number before switch factors
+	void set_Min_DamNumBefSwitchFactors(real minBeforeSwitchFactors);
+	real get_Min_DamNumBefSwitchFactors();
+		// max damping number before switch factors
+	void set_Max_DamNumBefSwitchFactors(real maxBeforeSwitchFactors);
+	real get_Max_DamNumBefSwitchFactors();
 
 private:
-	real mDampingFactor;
-	real mChangeRadiusFactorDeviation;
-	real mChangePositionFactorDeviation;
-	real mStartRefractivIndex;
-	unsigned int mMaxWorstCounter;
-	real mImprovementMeritStopDiff;
-	unsigned int mMaxIterations;
-	real mFlipRadius;
-	real mMinThickness_Z_Default;
-	real mMaxThickness_Z_Default;
-	unsigned int mMaxBorderViolations;
-	real mMaxDeltaPara;
-	real mMinDeltaPara;
-	real mFactorGettingBetter;
-	real mFactorGettingWorst;
+	real mDampingFactor{};
+	real mChangeRadiusFactorDeviation{};
+	real mChangePositionFactorDeviation{};
+	real mStartRefractivIndex{};
+	unsigned int mMaxWorstCounter{};
+	real mImprovementMeritStopDiff{};
+	unsigned int mMaxIterations{};
+	real mFlipRadius{};
+	real mMinThickness_Z_Default{};
+	real mMaxThickness_Z_Default{};
+	unsigned int mMaxBorderViolations{};
+	real mMaxDeltaPara{};
+	real mMinDeltaPara{};
+	real mFactorGettingBetter{};
+	real mFactorGettingWorst{}; 
+	real mToleranceWithout_MIN_radius{};
+	real mToleranceWithout_MAX_radius{};
+	real m_Min_DampingNumberBeforSwitchFactors{};
+	real m_Max_DampingNumberBeforeSwitchFactors{};
+	
 };
 
 
@@ -79,11 +96,14 @@ public:
 
 	DLS();
 	DLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms);
+	DLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, defaultParaDLS defaultParameterDLS);
 	~DLS();
 
+	void buildAndLoad(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, defaultParaDLS defaultParameterDLS);
 	std::vector<OpticalSystem_LLT> deepCopyOptSysLLT_vec(std::vector<OpticalSystem_LLT> optSys_LLT_vec);
 
 	void loadDefaultParameter();
+	void loadAdditionalDefaultParameter();
 	void buildOptSys_LLT_wave_vec();
 	void calcJacobiMatrixDeviation_Aij();
 	void changeRadiusSurfaceTo(unsigned int surfaceNo, real newRadius);
@@ -98,7 +118,7 @@ public:
 	std::vector<real> calculateDeviation(real oldVal, real newVal, unsigned surfaceNum, kindParaOptSys tempKindPara);
 
 
-	real checkBounderiesAndReturnNewVal(real val, unsigned int posDeltaVal, real minVal, real maxVal, unsigned int tempSurfaceNum, kindParaOptSys kindPar);
+	real checkBounderiesAndReturnNewVal(real val, unsigned int posDeltaVal, real minVal, real maxVal, real withoutMin, real withoutMax, unsigned int tempSurfaceNum, kindParaOptSys kindPar);
 
 	real calculateMeritVal_RMS(const VectorStructR3& fieldPoint);
 	void calculateAberrationFct();
@@ -163,6 +183,12 @@ public:
 	// factor getting worst
 	void setFactorGettingWorst(real factorGetWorst);
 	real getFactorGettingWorst();
+	// min damping number before switch factors
+	void set_Min_DamNumBefSwitchFactors(real minBeforeSwitchFactors);
+	real get_Min_DamNumBefSwitchFactors();
+	// max damping number before switch factors
+	void set_Max_DamNumBefSwitchFactors(real maxBeforeSwitchFactors);
+	real get_Max_DamNumBefSwitchFactors();
 	// *** *** ///
 
 	unsigned int checkImprovementMeritVal(unsigned int iterCounter, const real& impMeritStop);
@@ -189,11 +215,21 @@ public:
 	unsigned int getArms();
 	OpticalSystemElement getInitialOpticalSystemHLT();
 
+	real getBestMeritValue();
+
+	// load without min and Max default
+	void loadWithoutMinMaxDefault();
+
+	void loadBestFactorBetterFactorWorstCombinations();
+
+	void fixRadiusSurface_i(unsigned int surfaceNo);
+	void fixThicknessSurface_i(unsigned int surfaceNo);
 
 private:
 
 	std::vector<OpticalSystem_LLT> mOptSys_LLT_vec{};
 	std::vector<OpticalSystem_LLT> mChangedOptSys_LLT_vec{};
+	std::vector<OpticalSystem_LLT> mBestOptSys_LLT_vec{};
 	OpticalSystemElement mOpticalSystemEle_initial{};
 	OpticalSystemElement mOpticaSystemEle_change{};
 	std::vector<VectorStructR3> mFields_vec{};
@@ -229,36 +265,39 @@ private:
 	real mBeforeMeritVal{};
 	real mBestMeritVal{};
 
-	real mDampingNum;
+	real mDampingNum{};
 
-	unsigned int mSizeOptSys;
+	unsigned int mSizeOptSys{};
 
-	std::vector<real> mThickness_vec;
+	std::vector<real> mThickness_vec{};
 
-	std::vector<unsigned int> mBorderViolCounter_Radius;
-	std::vector<unsigned int> mBorderViolCounter_Thickness;
+	std::vector<unsigned int> mBorderViolCounter_Radius{};
+	std::vector<unsigned int> mBorderViolCounter_Thickness{};
 
-	void fixRadiusSurface_i(unsigned int surfaceNo);
-	void fixThicknessSurface_i(unsigned int surfaceNo);
 
 	//std::vector<posAndOrientation> mPosAndOrientationRadius_save;
 	//unsigned int mPosVarRadiusInVec;
 
-	std::vector<real> mA_T_times_F;
-	std::vector<std::vector<real>> m_A_T_A;
-	std::vector<std::vector<real>> mA_T_times_A_PlusIndivDampFac;
-	real mF_T_times_F;
-	real mF_T_times_A_times_A_T_times_F;
-	real mIndividualDampingFactor;
+	std::vector<real> mA_T_times_F{};
+	std::vector<std::vector<real>> m_A_T_A{};
+	std::vector<std::vector<real>> mA_T_times_A_PlusIndivDampFac{};
+	real mF_T_times_F{};
+	real mF_T_times_A_times_A_T_times_F{};
+	real mIndividualDampingFactor{};
 
+	std::vector<withOutMinMax> mWithoutMinMax{};
 
-
-	bool mGlobalStop;
+	bool mGlobalStop{};
 	std::vector<real> mTempDeltaNewSysPara{};
-
+	
 	unsigned int mWorstCounter = 0;
 	unsigned int mIterationCounter = 0;
 
-	bool mInBoundery;
+	bool mInBoundery{};
+
+	std::vector<real> factorBetter_vec{};
+	std::vector<real> factorWorst_vec{};
+	unsigned int mSizeFacrotBetterWorstVec{};
+	unsigned int mCounterChangeFactorBetterWorst{};
 
 };

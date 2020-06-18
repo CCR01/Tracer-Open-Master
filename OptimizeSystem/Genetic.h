@@ -92,32 +92,17 @@ private:
 	
 };
 
-struct withOutMinMax
-{
-public:
 
-	withOutMinMax();
-	~withOutMinMax();
-	
-	// without min
-	real getWithoutMin_Radius();
-	void setWithoutMin_Radius(real withoutMin);
-
-	// without max
-	real getWithoutMax_Radius();
-	void setWithoutMax_Radius(real withoutMax);
-
-private:
-	real mWithOutMin_Radius;
-	real mWithOutMax_Radius;
-};
 
 class Genetic
 {
 public:
 	Genetic();
 	Genetic(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, unsigned int /*populatuion*/ population);
+	Genetic(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, unsigned int /*populatuion*/ population, /*default parameter*/ defaultParaGenetic defaultParameterGenetic);
 	~Genetic();
+
+	void buildAndLoad(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, unsigned int /*populatuion*/ population, /*default parameter*/ defaultParaGenetic defaultParameterGenetic);
 
 	void buildOptSys_LLT_wave_vec();
 	real calcMeritVal();
@@ -147,7 +132,7 @@ public:
 	void generateValuesFor_FIRST_Generations();
 
 	// load without min and Max default
-	void loadWithoutMinMaxDefault_Radius();
+	void loadWithoutMinMaxDefault();
 
 	// check if radisu is valide
 	real checkValueRadius(real val, real min, real withoutMin, real max, real withoutMax);
@@ -196,6 +181,8 @@ public:
 
 	void loadThicknessParameter();
 
+	real getMeritValBestSystem();
+
 	// ***
 	// mean to calc normal distribution
 	real getMeanToCalcND();
@@ -230,12 +217,12 @@ public:
 	// ***
 
 private:
-	OpticalSystemElement mOpticalSystemEle_initial;
-	std::vector<VectorStructR3> mFields_vec;
-	std::vector<real> mWavelength_vec;
-	unsigned int mRings;
-	unsigned int mArms;
-	unsigned int mPopulation;
+	OpticalSystemElement mOpticalSystemEle_initial{};
+	std::vector<VectorStructR3> mFields_vec{};
+	std::vector<real> mWavelength_vec{};
+	unsigned int mRings{};
+	unsigned int mArms{};
+	unsigned int mPopulation{};
 
 	//std::vector<OpticalSystem_LLT> mOptSys_LLT_vec{};
 	std::vector<OpticalSystem_LLT> mChangedOptSys_LLT_vec{};
@@ -243,40 +230,43 @@ private:
 
 	parameterVar mParameterVar{};
 
-	unsigned int mSizeOptSys;
+	unsigned int mSizeOptSys{};
 	unsigned int mPosLastSurface{};
 	std::vector<unsigned int> mWeightWavelenght_vec{};
 	std::vector<real> mWeightFields_vec{};
-	unsigned int mNumFieldPoints;
+	unsigned int mNumFieldPoints{};
 	Light_LLT mDefaultLight{};
 	unsigned int mNumVar{};
 	
 	defaultParaGenetic mDefaultParaGenetic{};
 
-	std::vector<bool> mEvaluateSystem;
-	std::vector<real> mAllMeritVal;
-	std::vector<real> mAllFitnessVal;
-	std::vector<real> mSaveAllBestMeritValues;
-	real mMeritVal_bestSystem;
-	real mSumAllFitnessVal;
-	std::vector<std::vector<structToBuildGeneration>> mFirstGenerationVec;
-	std::vector<std::vector<structToBuildGeneration>> mSecondGenerationVec;
+	std::vector<bool> mEvaluateSystem{};
+	std::vector<real> mAllMeritVal{};
+	std::vector<real> mAllFitnessVal{};
+	std::vector<real> mSaveAllBestMeritValues{};
+	real mMeritVal_bestSystem{};
+	real mSumAllFitnessVal{};
+	std::vector<std::vector<structToBuildGeneration>> mFirstGenerationVec{};
+	std::vector<std::vector<structToBuildGeneration>> mSecondGenerationVec{};
 
-	std::vector<withOutMinMax> mWithoutMinMax_Radius;
+	std::vector<withOutMinMax> mWithoutMinMax{};
 	unsigned int mNumBestOptSysInGeneration{};
 
-	std::vector<structToBuildGeneration> mTempStructToBuildGeneration_vec;
+	std::vector<structToBuildGeneration> mTempStructToBuildGeneration_vec{};
 	
-	OpticalSystemElement mOptimizedOpticalSytemElement;
+	OpticalSystemElement mOptimizedOpticalSytemElement{};
 
-	std::vector<bool> mCheckToEvaluateVec;
+	std::vector<bool> mCheckToEvaluateVec{};
 
-	std::vector<real> mThickness_vec;
+	std::vector<real> mThickness_vec{};
 
 	VectorStructR3 mNewPosition{};
 
-	normalDistributionStruct mNormalDistribution;
-	std::normal_distribution<real> mDistribution;
-	std::default_random_engine mGenerator;
+	normalDistributionStruct mNormalDistribution{};
+	std::normal_distribution<real> mDistribution{};
+	std::default_random_engine mGenerator{};
+
+	real mTempValueParent_1{};
+	real mTempValueParent_2{};
 };
 

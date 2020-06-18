@@ -118,3 +118,8 @@ void MaterialSellmeier1::setRefractiveIndex(double refractiveIndex)
 {
 	mRefractiveIndes = refractiveIndex;
 }
+
+std::string MaterialSellmeier1::getNameGlas()
+{
+	return mName;
+}

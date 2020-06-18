@@ -335,7 +335,7 @@ OpticalSystemElement OpticalSystemElement::reverseOptSysEle(OpticalSystemElement
 	//std::vector<std::shared_ptr<InteractionRay_LLT>> interaction_vec;
 	//interaction_vec.resize(sizeOptSys);
 
-	for (int i = 0; i < sizeOptSys; ++i)
+	for (unsigned int i = 0; i < sizeOptSys; ++i)
 	{
 
 		directions_Z[i] = OptSys.getPosAndElement()[i].getElementInOptSys_ptr()->getDirectionElementValue_Z();

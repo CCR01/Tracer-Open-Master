@@ -1,9 +1,7 @@
 #include "EdmundOpticsLensCatalog.h"
 
-EdmundOpticsLensCatalog::EdmundOpticsLensCatalog()
-{
-	mGlasses.loadGlassCatalog_Schott();
-};
+
+EdmundOpticsLensCatalog::EdmundOpticsLensCatalog() { mGlasses.loadGlassCatalog_Schott(); };
 
 EdmundOpticsLensCatalog::~EdmundOpticsLensCatalog() {};
 

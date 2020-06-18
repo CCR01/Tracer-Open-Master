@@ -6,41 +6,6 @@
 
 
 
-//struct Matrix3x3AndExist
-//{
-//	real Matrix[3][3];
-//
-//	//TODOQuestio: Warum tut sowas nicht und ich muss die Funktion saveMatrix bzw. getMatrix verwenden???
-//	//real check[3][3] = Matrix[3][3];
-//
-//	int ExistMatrix;
-//
-//	// save the matrix in the struct
-//	// hier könnte auch die Funktion "std::memcpy" verwendet werden!
-//	void saveMatrix(real const mat[3][3]);
-//
-//	// get the matrix from the struct
-//	void getMatrix(real mat[3][3]);
-//
-//};
-
-//struct Matrix3x3AndExist
-//{
-//public:
-//	Matrix3x3AndExist();
-//	~Matrix3x3AndExist();
-//
-//	void saveMatrix(real const mat[3][3]);
-//	real*** getMatrix();
-//
-//	void setMatrixexist(bool exist);
-//	bool getMatrixExist();
-//
-//private:
-//	static real mMatrix[3][3];
-//	bool mExistMatrix{};
-//};
-
 
 struct VectorStructR3
 {
@@ -95,7 +60,7 @@ public:
 	// set surface side
 	void setSurfaceSide(surfaceSide const surSid);
 	// get surface side
-	char getSurfaceSide() const;
+	surfaceSide getSurfaceSide() const;
 	// set steps to walk
 	void setStepsToWalk(real const steps);
 	// get steps to walk

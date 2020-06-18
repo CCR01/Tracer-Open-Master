@@ -9,7 +9,9 @@ struct LightRayStruct
 {
 public:
 	LightRayStruct();
-	LightRayStruct(/*light*/ Light_LLT iLight, /*ray*/ Ray_LLT iRay, /*is alive*/ unsigned int i_Alive);
+	LightRayStruct(VectorStructR3 origin, VectorStructR3 direction, real refractivIndex);
+	LightRayStruct(/*light*/ Light_LLT iLight, /*ray*/ Ray_LLT iRay);
+	LightRayStruct(/*light*/ Light_LLT iLight, /*ray*/ Ray_LLT iRay, /*is alive*/ bool i_Alive);
 	~LightRayStruct();
 
 	// get Ray_LLT
@@ -40,7 +42,7 @@ public:
 private:
 	Ray_LLT mRay{};
 	Light_LLT mLight{};
-	bool mIsAlive = true;
+	bool mIsAlive{};
 
 };
 

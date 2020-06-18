@@ -7,16 +7,17 @@ std::vector<LightRayStruct> DoNothingInteraction_LLT::calcInteraction(const Inte
 	mReturnLightRay.setLight_LLT(intersectInformation.getLight());
 	
 
-	if (intersectInformation.getSurfaceSide() == 'N') //there is no intersection point
+	if (intersectInformation.getSurfaceSide() == N) //there is no intersection point
 	{
 		std::cout << "there is no interaction point! \n";
-		mReturnLightRay_vec[0].setLightRayAbsorb();
+		mReturnLightRay.setLightRayAbsorb();
+		mReturnLightRay.setIsAlive(false);
 	}
 	else
 	{
 		mRay.setOriginRay(intersectInformation.getIntersectionPoint());
 		mRay.setDirectionRayUnit(intersectInformation.getDirectionRayUnit());
-		if (intersectInformation.getSurfaceSide() == 'A') //0--> surface side A
+		if (intersectInformation.getSurfaceSide() == A) //0--> surface side A
 		{
 			mRefIndexSideA = intersectInformation.getRefractiveIndex_A();
 			mRay.setCurrentRefractiveIndex(mRefIndexSideA);

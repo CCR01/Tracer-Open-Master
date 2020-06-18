@@ -11,7 +11,7 @@ std::vector<LightRayStruct> ReflectionRay_LLT::calcInteraction(const IntersectIn
 	LightRayStruct output;
 	std::vector<LightRayStruct> returnVecLightRay;
 
-	if (intersectInformation.getSurfaceSide() == 'N') //there is no intersection point
+	if (intersectInformation.getSurfaceSide() == N) //there is no intersection point
 	{
 		std::cout << "there is no interaction point! \n";
 	}
@@ -38,7 +38,7 @@ std::vector<LightRayStruct> ReflectionRay_LLT::calcInteraction(const IntersectIn
 	
 		ray.setOriginRay(intersectInformation.getIntersectionPoint());
 		ray.setDirectionRayUnit(P_Mirrow - intersectInformation.getIntersectionPoint());
-		if (intersectInformation.getSurfaceSide() == 'A') //0--> surface side A
+		if (intersectInformation.getSurfaceSide() == A) //0--> surface side A
 		{
 			real refIndexSideA = intersectInformation.getRefractiveIndex_A();
 			ray.setCurrentRefractiveIndex(refIndexSideA);

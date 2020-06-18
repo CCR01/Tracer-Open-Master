@@ -11,18 +11,12 @@
     <ClCompile Include="..\benchmark\ComplexOptSys\BenchmarkComplexOptSys.cpp" />
     <ClCompile Include="..\benchmark\Element\OpticalSystemElement\BenchOpticalSystemElement.cpp" />
     <ClCompile Include="..\benchmark\Element\SphericalElement\BechnSpehricalElemtn.cpp" />
-    <ClCompile Include="..\benchmark\Glasses\BenchGlasses.cpp" />
-    <ClCompile Include="..\benchmark\OpticalSystem\BenchmarkOpticalSystem.cpp" />
-    <ClCompile Include="..\benchmark\ParaxialLens_LLT\BenchmarkParaxialLens_LLT.cpp" />
-    <ClCompile Include="..\benchmark\Plan\BenchmarkPlanSurface.cpp" />
     <ClCompile Include="..\benchmark\Plot\BenchmarkPlotOPD.cpp" />
     <ClCompile Include="..\benchmark\Plot\BenchmarkPlotSpotDiagram.cpp" />
     <ClCompile Include="..\benchmark\Plot\BenchPlot2D.cpp" />
     <ClCompile Include="..\benchmark\RayAiming\BenchmarkRayAiming.cpp" />
     <ClCompile Include="..\benchmark\SequentialRayTracer\BenchmarkSequentialRayTracer.cpp" />
-    <ClCompile Include="..\benchmark\SphericalSurface\BenchmarkSphericalLens_LLT.cpp" />
     <ClCompile Include="..\benchmark\Spot\BenchmarkeSpot.cpp" />
-    <ClCompile Include="..\benchmark\TestLensCatalog\TestLensCatalogEO.cpp" />
     <ClCompile Include="..\benchmark\ZemaxExamples\Objectives\Cooke40DegreeField.cpp" />
     <ClCompile Include="..\benchmark\ZemaxExamples\Objectives\DoubleGauss5DegreeField.cpp" />
     <ClCompile Include="..\Glasses\GlassDispersionFormulas\MaterialSellmeier1.cpp" />
@@ -125,6 +119,17 @@
     <ClCompile Include="..\tests\ManagementTests\managementTests.cpp" />
     <ClCompile Include="..\tests\testApertureStop\testApertureStop.cpp" />
     <ClCompile Include="..\LowLevelTracing\JonesVector.cpp" />
+    <ClCompile Include="..\tests\testLensCatalog\testLensCatalogEO.cpp" />
+    <ClCompile Include="..\tests\testSphericalSurface\testSphericalSurface_LLT.cpp" />
+    <ClCompile Include="..\benchmark\benchGeneticAndDLS\benchGeneticAndDLS.cpp" />
+    <ClCompile Include="..\tests\testGlasses\testGlasses.cpp" />
+    <ClCompile Include="..\tests\testParaxialLens_LLT\testParaxialLens_LLT.cpp" />
+    <ClCompile Include="..\tests\testPlanGeometry\testPlanSurface.cpp" />
+    <ClCompile Include="..\benchmark\managementBenchmark\managementBenchmark.cpp" />
+    <ClCompile Include="..\OptimizeSystem\OptimizeSystemSuperFct_GeneticAndDLS.cpp" />
+    <ClCompile Include="..\tests\testOptimizeSystemSuperFct_GeneticAndDLS\testOptimizeSystemSuperFct_GeneticAndDLS.cpp" />
+    <ClCompile Include="..\OptimizeSystem\multiThreads\DLS_multiThreads12.cpp" />
+    <ClCompile Include="..\tests\testDLS_multiThreads_12\testDLS_multiThreads_12.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Analyse\CardinalPoints.h" />
@@ -137,18 +142,12 @@
     <ClInclude Include="..\benchmark\ComplexOptSys\BenchmarkComplexOptSys.h" />
     <ClInclude Include="..\benchmark\Element\OpticalSystemElement\BenchOpticalSystemElement.h" />
     <ClInclude Include="..\benchmark\Element\SphericalElement\BenchSphericalElement.h" />
-    <ClInclude Include="..\benchmark\Glasses\BenchGlasses.h" />
-    <ClInclude Include="..\benchmark\OpticalSystem\BenchmarkOpticalSystem.h" />
-    <ClInclude Include="..\benchmark\ParaxialLens_LLT\BenchmarkParaxialLens_LLT.h" />
-    <ClInclude Include="..\benchmark\Plan\BenchmarkPlanSurface.h" />
     <ClInclude Include="..\benchmark\Plot\BenchPlot2D.h" />
     <ClInclude Include="..\benchmark\Plot\BenchPlotOPD.h" />
     <ClInclude Include="..\benchmark\Plot\BenchPlotSpotDiagram.h" />
     <ClInclude Include="..\benchmark\RayAiming\BenchmarkRayAiming.h" />
     <ClInclude Include="..\benchmark\SequentialRayTracer\BenchmarkSequentialRayTracer.h" />
-    <ClInclude Include="..\benchmark\SphericalSurface\BenchmarkSphericalLens.h" />
     <ClInclude Include="..\benchmark\Spot\BenchmarkSpot.h" />
-    <ClInclude Include="..\benchmark\TestLensCatalog\TestLensCatalogEO.h" />
     <ClInclude Include="..\benchmark\ZemaxExamples\Objectives\Cooke40DegreeField.h" />
     <ClInclude Include="..\benchmark\ZemaxExamples\Objectives\DoubleGauss5DegreeField.h" />
     <ClInclude Include="..\Glasses\GlassDispersionFormulas\MaterialSellmeier1.h" />
@@ -255,5 +254,16 @@
     <ClInclude Include="..\tests\testMath\testMath.h" />
     <ClInclude Include="..\tests\ManagementTests\managementTests.h" />
     <ClInclude Include="..\tests\testApertureStop\testApertureStop.h" />
+    <ClInclude Include="..\tests\testLensCatalog\testLensCatalogEO.h" />
+    <ClInclude Include="..\tests\testSphericalSurface\testSphericalSurface_LLT.h" />
+    <ClInclude Include="..\benchmark\benchGeneticAndDLS\benchGeneticAndDLS.h" />
+    <ClInclude Include="..\tests\testGlasses\testGlasses.h" />
+    <ClInclude Include="..\tests\testParaxialLens_LLT\testParaxialLens_LLT.h" />
+    <ClInclude Include="..\tests\testPlanGeometry\testPlanSurface.h" />
+    <ClInclude Include="..\benchmark\managementBenchmark\managementBenchmark.h" />
+    <ClInclude Include="..\OptimizeSystem\OptimizeSystemSuperFct_GeneticAndDLS.h" />
+    <ClInclude Include="..\tests\testOptimizeSystemSuperFct_GeneticAndDLS\testOptimizeSystemSuperFct_GeneticAndDLS.h" />
+    <ClInclude Include="..\OptimizeSystem\multiThreads\DLS_mulitThreads12.h" />
+    <ClInclude Include="..\tests\testDLS_multiThreads_12\testDLS_multiThreads_12.h" />
   </ItemGroup>
 </Project>

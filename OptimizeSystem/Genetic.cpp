@@ -47,30 +47,7 @@ void structToBuildGeneration::copy(structToBuildGeneration strctToBuildGene)
 }
 
 
-withOutMinMax::withOutMinMax() {};
-withOutMinMax::~withOutMinMax() {};
 
-
-// without min
-real withOutMinMax::getWithoutMin_Radius()
-{
-	return mWithOutMin_Radius;
-}
-
-void withOutMinMax::setWithoutMin_Radius(real withoutMin)
-{
-	mWithOutMin_Radius = withoutMin;
-};
-
-// without max
-real withOutMinMax::getWithoutMax_Radius()
-{
-	return mWithOutMax_Radius;
-}
-void withOutMinMax::setWithoutMax_Radius(real withoutMax)
-{
-	mWithOutMax_Radius = withoutMax;
-}
 
 
 defaultParaGenetic::defaultParaGenetic() {}
@@ -167,7 +144,8 @@ void normalDistributionStruct::setStddevToCalcND( real stddev)
 }
 
 
-Genetic::Genetic() : mDistribution(0.0, 300.0)
+Genetic::Genetic() : 
+	mDistribution(0.0, 300.0)
 {
 	
 };
@@ -184,10 +162,44 @@ Genetic::Genetic(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<Vecto
 	buildOptSys_LLT_wave_vec();
 	mParameterVar.loadSystemParameter(mOpticalSystemEle_initial);
 	resizeAllRelevantStdVectorsAndCalcConst();
-	loadWithoutMinMaxDefault_Radius();
+	loadWithoutMinMaxDefault();
 	loadThicknessParameter();
 
 }
+Genetic::Genetic(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, unsigned int /*populatuion*/ population, /*default parameter*/ defaultParaGenetic defaultParameterGenetic) :
+	mOpticalSystemEle_initial(optSysEle),
+	mFields_vec(fields),
+	mWavelength_vec(wavelengths),
+	mRings(rings),
+	mArms(arms),
+	mPopulation(population),
+	mDistribution(0.0, 300.0),
+	mDefaultParaGenetic(defaultParameterGenetic)
+{
+	buildOptSys_LLT_wave_vec();
+	mParameterVar.loadSystemParameter(mOpticalSystemEle_initial);
+	resizeAllRelevantStdVectorsAndCalcConst();
+	loadWithoutMinMaxDefault();
+	loadThicknessParameter();
+}
+
+void Genetic::buildAndLoad(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, unsigned int /*populatuion*/ population, /*default parameter*/ defaultParaGenetic defaultParameterGenetic)
+{
+	mOpticalSystemEle_initial = optSysEle;
+	mFields_vec = fields;
+	mWavelength_vec = wavelengths;
+	mRings = rings;
+	mArms = arms;
+	mPopulation = population;
+	mDefaultParaGenetic = defaultParameterGenetic;
+
+	buildOptSys_LLT_wave_vec();
+	mParameterVar.loadSystemParameter(mOpticalSystemEle_initial);
+	resizeAllRelevantStdVectorsAndCalcConst();
+	loadWithoutMinMaxDefault();
+	loadThicknessParameter();
+}
+
 Genetic::~Genetic() {};
 
 void Genetic::loadDefaultPra()
@@ -239,7 +251,7 @@ void Genetic::resizeAllRelevantStdVectorsAndCalcConst()
 	// build defautl light
 	mDefaultLight.setIntensity(1.0);
 	mDefaultLight.setJonesVector({ 1.0,1.0,1.0,1.0 });
-	mDefaultLight.setTypeLight(typeLightRay);
+	mDefaultLight.setTypeLight(typeLight::typeLightRay);
 	mDefaultLight.setWavelength(550.0);
 
 	// vector with merit values
@@ -252,7 +264,7 @@ void Genetic::resizeAllRelevantStdVectorsAndCalcConst()
 	mSecondGenerationVec.resize(mPopulation);
 	resizeVecToBuildGenerations();
 	
-	mWithoutMinMax_Radius.resize(mNumVar);
+	mWithoutMinMax.resize(mNumVar);
 
 	mEvaluateSystem.resize(mPopulation);
 
@@ -270,7 +282,7 @@ void Genetic::resizeAllRelevantStdVectorsAndCalcConst()
 	mNewPosition.setZ(0.0);
 
 	mNormalDistribution.setMeanToCalcND(0.0);
-	mNormalDistribution.setStddevToCalcND(3.0);
+	mNormalDistribution.setStddevToCalcND(300.0);
 
 
 }
@@ -367,8 +379,8 @@ void Genetic::generateValuesFor_FIRST_Generations()
 			tempMinVal = mParameterVar.getAllMinVar()[j];
 			tempMaxVal = mParameterVar.getAllMaxVar()[j];
 			tempKindPara = mParameterVar.getAllParaWithVar()[j];
-			tempWithoutMin = mWithoutMinMax_Radius[j].getWithoutMin_Radius();
-			tempWithoutMax = mWithoutMinMax_Radius[j].getWithoutMax_Radius();
+			tempWithoutMin = mWithoutMinMax[j].getWithoutMin();
+			tempWithoutMax = mWithoutMinMax[j].getWithoutMax();
 
 			if (tempKindPara == radiusVar)
 			{
@@ -393,7 +405,7 @@ void Genetic::generateValuesFor_FIRST_Generations()
 			{
 
 				tempValue = randomNumberReal(tempMinVal, tempMaxVal);
-
+				tempValue = checkValueRadius(tempValue, tempMinVal, tempWithoutMin, tempMaxVal, tempWithoutMax);
 				// just for debugging
 				// std::cout << "thickness temp value: " << tempValue << std::endl;
 
@@ -412,7 +424,7 @@ void Genetic::generateValuesFor_FIRST_Generations()
 }
 
 // load without min and Max default
-void Genetic::loadWithoutMinMaxDefault_Radius()
+void Genetic::loadWithoutMinMaxDefault()
 {
 	real tempSemiHeight;
 	unsigned int tempSurfaceNum;
@@ -420,31 +432,40 @@ void Genetic::loadWithoutMinMaxDefault_Radius()
 	real tempWithoutMIN;
 	real tempWithoutMAX;
 
-	typeModifier tempTypeModi;
+	typeModifier tempTypeModi_Radius;
+	typeModifier tempTypeModi_Thickness;
 	unsigned int counterVar = 0;
 
 	for (unsigned int i = 0; i < mSizeOptSys; ++i)
 	{
 		
 		tempSemiHeight = mChangedOptSys_LLT_vec[0].getPosAndInteractingSurface()[i].getSurfaceInterRay_ptr()->getSemiHeight();
-		tempTypeModi = mOpticalSystemEle_initial.getPosAndElement()[i].getElementInOptSys_ptr()->getRadiusTypeModifier();
+		tempTypeModi_Radius = mOpticalSystemEle_initial.getPosAndElement()[i].getElementInOptSys_ptr()->getRadiusTypeModifier();
+		tempTypeModi_Thickness = mOpticalSystemEle_initial.getPosAndElement()[i].getElementInOptSys_ptr()->getPointTypeModifier_Z();
 
-		if(tempTypeModi == typeModifierVariable)
+		if(tempTypeModi_Radius == typeModifierVariable)
 		{ 
 			tempWithoutMIN = -tempSemiHeight - mDefaultParaGenetic.getToleranceWithoutMIN_Radius();
 			if (tempWithoutMIN > 0.0)
 			{
 				tempWithoutMIN = 0.0;
 			}
-			mWithoutMinMax_Radius[counterVar].setWithoutMin_Radius(tempWithoutMIN);
+			mWithoutMinMax[counterVar].setWithoutMin(tempWithoutMIN);
 			
 			tempWithoutMAX = tempSemiHeight - mDefaultParaGenetic.getToleranceWithoutMAX_Radius();
 			if (tempWithoutMAX < 0.0)
 			{
 				tempWithoutMAX = 0.0;
 			}
-			mWithoutMinMax_Radius[counterVar].setWithoutMax_Radius(tempWithoutMAX);
+			mWithoutMinMax[counterVar].setWithoutMax(tempWithoutMAX);
 
+			++counterVar;
+		}
+
+		if (tempTypeModi_Thickness == typeModifierVariable)
+		{
+			mWithoutMinMax[counterVar].setWithoutMin(0.0);
+			mWithoutMinMax[counterVar].setWithoutMax(0.0);
 			++counterVar;
 		}
 
@@ -603,20 +624,23 @@ void Genetic::findBestSystemNum()
 // select system in generation
 unsigned int Genetic::selectSystemInGeneration()
 {
-
-
 	real randomNum = randomNumberReal(0.0, mSumAllFitnessVal);
-	int tempNumber = -1;
 	real checkVal = randomNum;
+	int systemNum = 0.0;
 
-	while (checkVal>=0.0)
+
+	for(systemNum; systemNum<mPopulation;++systemNum)
 	{
-		++tempNumber;
-		checkVal = checkVal - mAllFitnessVal[tempNumber];
-		
-	}
+		checkVal = checkVal - mAllFitnessVal[systemNum];
 
-	return tempNumber;
+		if (checkVal < 0.0)
+		{
+			return systemNum;
+		}
+	} 
+
+
+	return systemNum - 1;
 }
 
 // genetic process
@@ -691,11 +715,18 @@ void Genetic::calcFitnessValAndSum()
 // check if system has to be evaluated
 bool Genetic::checkEvaluateSystem(unsigned int systemNumber, unsigned int variableNum)
 {
+	//just for debugging
+	//std::cout << "system number: " << systemNumber << std::endl;
+	//std::cout << "variable number: " << variableNum << std::endl;
 
-	real tempValueParent_1 = mFirstGenerationVec[systemNumber][variableNum].getValue();
-	real tempValueParent_2 = mFirstGenerationVec[mNumBestOptSysInGeneration][variableNum].getValue();
+	mTempValueParent_1 = mFirstGenerationVec[systemNumber][variableNum].getValue();
+	mTempValueParent_2 = mFirstGenerationVec[mNumBestOptSysInGeneration][variableNum].getValue();
+		
+	//just for debugging
+	//std::cout << "temp value parent 1: " << mTempValueParent_1 << std::endl;
+	//std::cout << "temp value parent 2: " << mTempValueParent_2 << std::endl;
 
-	if (std::abs(tempValueParent_1 - tempValueParent_2) < mDefaultParaGenetic.getToleranceForEvaluatiion())
+	if (std::abs(mTempValueParent_1 - mTempValueParent_2) < mDefaultParaGenetic.getToleranceForEvaluatiion())
 	{
 		return false;
 	}
@@ -951,6 +982,11 @@ real Genetic::normalDistribution(real mean, real stddev, real min, real max)
 
 
 	return returnVal;
+}
+
+real Genetic::getMeritValBestSystem()
+{
+	return mMeritVal_bestSystem;
 }
 
 // ***

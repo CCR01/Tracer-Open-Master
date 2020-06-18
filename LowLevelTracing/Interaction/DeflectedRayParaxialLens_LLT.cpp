@@ -17,7 +17,7 @@ std::vector<LightRayStruct> DeflectedRayParaxialLens_LLT::calcInteraction(const 
 	}
 	else {
 
-		if (intersectInformation.getSurfaceSide() == 'N') //there is no intersection point!
+		if (intersectInformation.getSurfaceSide() == N) //there is no intersection point!
 		{
 			// TODO Question: Was soll hier gemacht werden? 
 			returnLightRay = returnLightRay;
@@ -26,7 +26,7 @@ std::vector<LightRayStruct> DeflectedRayParaxialLens_LLT::calcInteraction(const 
 		else //There must be an intersection point
 		{
 
-			if (intersectInformation.getSurfaceSide() == 'A' && mAddInfos.getFocalLengthOfIntersecSurface_Side_B() > 0) // Ray from side A on paraxial lens and focallenght bigger than 0
+			if (intersectInformation.getSurfaceSide() == A && mAddInfos.getFocalLengthOfIntersecSurface_Side_B() > 0) // Ray from side A on paraxial lens and focallenght bigger than 0
 			{
 				// direction of nodal ray;
 				VectorStructR3 dirNodalRayUnit = intersectInformation.getDirectionRayUnit();
@@ -65,7 +65,7 @@ std::vector<LightRayStruct> DeflectedRayParaxialLens_LLT::calcInteraction(const 
 
 			}
 
-			else if (intersectInformation.getSurfaceSide() == 'A' && mAddInfos.getFocalLengthOfIntersecSurface_Side_B() < 0) // Ray from side A on paraxial lens and focallenght smaller than 0
+			else if (intersectInformation.getSurfaceSide() == A && mAddInfos.getFocalLengthOfIntersecSurface_Side_B() < 0) // Ray from side A on paraxial lens and focallenght smaller than 0
 			{
 				// direction of nodal ray;
 				VectorStructR3 dirNodalRayUnit = intersectInformation.getDirectionRayUnit();
@@ -104,7 +104,7 @@ std::vector<LightRayStruct> DeflectedRayParaxialLens_LLT::calcInteraction(const 
 
 			}
 
-			else if (intersectInformation.getSurfaceSide() == 'B' && mAddInfos.getFocalLengthOfIntersecSurface_Side_A() > 0) // Ray from side B on paraxial lens and focallenght bigger than 0
+			else if (intersectInformation.getSurfaceSide() == B && mAddInfos.getFocalLengthOfIntersecSurface_Side_A() > 0) // Ray from side B on paraxial lens and focallenght bigger than 0
 			{
 				// direction of nodal ray;
 				VectorStructR3 dirNodalRayUnit = intersectInformation.getDirectionRayUnit();
@@ -141,7 +141,7 @@ std::vector<LightRayStruct> DeflectedRayParaxialLens_LLT::calcInteraction(const 
 				output.setRay_LLT(newRay);
 			}
 
-			else if (intersectInformation.getSurfaceSide() == 'B' && mAddInfos.getFocalLengthOfIntersecSurface_Side_A() < 0) // Ray from side B on paraxial lens and focallenght smaller than 0
+			else if (intersectInformation.getSurfaceSide() == B && mAddInfos.getFocalLengthOfIntersecSurface_Side_A() < 0) // Ray from side B on paraxial lens and focallenght smaller than 0
 			{
 				// direction of nodal ray;
 				VectorStructR3 dirNodalRayUnit = intersectInformation.getDirectionRayUnit();

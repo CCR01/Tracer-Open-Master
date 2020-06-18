@@ -81,21 +81,17 @@ void FillApertureStop::printAllPointsInAS()
 std::vector<LightRayStruct> FillApertureStop::fillASWithLightRayFromObjectPoint(std::vector<VectorStructR3> const& points)
 {
 	std::vector<LightRayStruct> returnVectorOfLightRays;
-	//std::vector<LightRayStruct> returnVectorOfLightRays_private;
+	LightRayStruct LightRay;
 
 //#pragma omp for nowait
 	for (int i = 0; i < points.size(); i++)
 	{
-		LightRayStruct LightRay;
-		Light_LLT mLight;
+		
 		LightRay.setRayOrigin(mStartPointRay);
 		LightRay.setRayDirectionUni(points.at(i) - mStartPointRay);
 		LightRay.setCurrentRefractivIndex(mRefractiveIndex);
-		//ghtRay.ray.setWavelenghtRay(mWavelength);
-		mLight.setWavelength(mLight.getWavelength());
-		mLight.setIntensity(mLight.getIntensity());
 		LightRay.setLight_LLT(mLight);
-		// TODO: set the light things too
+		LightRay.setIsAlive(true);
 
 		returnVectorOfLightRays.push_back(LightRay);
 
@@ -190,7 +186,7 @@ std::vector<VectorStructR3>  FillApertureStop::fillAS_withPoints(unsigned int ra
 
 		// TODO Question: What is the max. ray density -> adapt the rayDensityArray!
 		unsigned int rayDensityArray[60] = { 6,12,18,24,30,36,42,48,54,60,66,72,78,84,90,96,102,108,114,120,126,132,138,144,150,156,162,168,174,180,186,192,198,204,210,216,222,228,234,240,246,252,258,264,270,276,282,288,294,300,306,312,318,324,330,336,342,348,354,360 };
-		unsigned int numberOfRay[60] = { 7,19,37,61,91,127,169,217,271,331,397,469,547,631,721,817,919,1027,1141,1261,1387,1519,1657,1801,1951,2107,2269,2437,2611,2791,2977,3169,3367,3571,3781,3997,4219,4447,4681,4921,5167,5419,5677,5941,62116487,6769,7057,7351,7651,7957,8269,8587,8911,9241,9577,9919,10267,10621,10981 };
+		unsigned int numberOfRay[60] = { 7,19,37,61,91,127,169,217,271,331,397,469,547,631,721,817,919,1027,1141,1261,1387,1519,1657,1801,1951,2107,2269,2437,2611,2791,2977,3169,3367,3571,3781,3997,4219,4447,4681,4921,5167,5419,5677,5941,6211,6487,6769,7057,7351,7651,7957,8269,8587,8911,9241,9577,9919,10267,10621,10981 };
 
 		// number of rings
 		unsigned int numberOfRings = rayDensity;

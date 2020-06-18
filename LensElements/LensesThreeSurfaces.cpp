@@ -19,177 +19,177 @@ void LensThreeSurfaces::setCatalogNumber(unsigned int catalogNumber)
 	mCatalogNumber = catalogNumber;
 }
 // set diameter
-void LensThreeSurfaces::setDiameter(real const& diameter)
+void LensThreeSurfaces::setDiameter(real const diameter)
 {
 	mDiameter = diameter;
 }
 // set max diameter tolerance
-void LensThreeSurfaces::setMaxDiameterTolerance(real const& maxDiaTolerance)
+void LensThreeSurfaces::setMaxDiameterTolerance(real const maxDiaTolerance)
 {
 	mMaxDiamterTolerance = maxDiaTolerance;
 }
 // set min diameter tolerance
-void LensThreeSurfaces::setMinDiameterTolerance(real const& minDiaTolerance)
+void LensThreeSurfaces::setMinDiameterTolerance(real const minDiaTolerance)
 {
 	mMinDiamterTolerance = minDiaTolerance;
 }
 // set focal lenght
-void LensThreeSurfaces::setFocalLength(real const& focalLength)
+void LensThreeSurfaces::setFocalLength(real const focalLength)
 {
 	mFocalLength = focalLength;
 }
 // set tolerance focal length
-void LensThreeSurfaces::setToleranceFocalLength(real const& toleranceFocalLength)
+void LensThreeSurfaces::setToleranceFocalLength(real const toleranceFocalLength)
 {
 	mToleranceFocallength = toleranceFocalLength;
 }
 // set back focal lenght
-void LensThreeSurfaces::setBackFocalLength(real const& backFocalLength)
+void LensThreeSurfaces::setBackFocalLength(real const backFocalLength)
 {
 	mBackFocalLength = backFocalLength;
 }
 // set design wavelength
-void LensThreeSurfaces::setDesignWavelength(real const& designWavelenght)
+void LensThreeSurfaces::setDesignWavelength(real const designWavelenght)
 {
 	mDesignWavelength = designWavelenght;
 }
 // set free aperture
-void LensThreeSurfaces::setFreeAperture(real const& freeAperture)
+void LensThreeSurfaces::setFreeAperture(real const freeAperture)
 {
 	mFreeApertureCA = freeAperture;
 }
 // set min centering
-void LensThreeSurfaces::setMinCentering(real const& minCentering)
+void LensThreeSurfaces::setMinCentering(real const minCentering)
 {
 	mMinCentering = minCentering;
 }
 // set max centering
-void LensThreeSurfaces::setMaxCentering(real const& maxCentering)
+void LensThreeSurfaces::setMaxCentering(real const maxCentering)
 {
 	mMaxCentering = mMaxCentering;
 }
 // set first thickness
-void LensThreeSurfaces::setFirstThickness(real const& firstThickness)
+void LensThreeSurfaces::setFirstThickness(real const firstThickness)
 {
 	mFirstThicknessCT1 = firstThickness;
 }
 // set second thickness
-void LensThreeSurfaces::setSecondThickness(real const& secondThickness)
+void LensThreeSurfaces::setSecondThickness(real const secondThickness)
 {
 	mSecondThicknessCT2 = secondThickness;
 }
 // set tolerance center Thickness
-void LensThreeSurfaces::setToleranceCenterThickness(real const& toleranceCenterThickness)
+void LensThreeSurfaces::setToleranceCenterThickness(real const toleranceCenterThickness)
 {
 	mToleraceCenterThickness = toleranceCenterThickness;
 }
 // set radius first surface
-void LensThreeSurfaces::setRadisuFirstSurface(real const& radiusFirstSurface)
+void LensThreeSurfaces::setRadisuFirstSurface(real const radiusFirstSurface)
 {
 	mRadiusFirstSurface = radiusFirstSurface;
 }
 // set radius second surface
-void LensThreeSurfaces::setRadisuSecondSurface(real const& radiusSecondSurface)
+void LensThreeSurfaces::setRadisuSecondSurface(real const radiusSecondSurface)
 {
 	mRadiusSecondSurface = radiusSecondSurface;
 }
 // set radius third surface
-void LensThreeSurfaces::setRadisuthirdSurface(real const& radiusThirdSurface)
+void LensThreeSurfaces::setRadisuthirdSurface(real const radiusThirdSurface)
 {
 	mRadiusThirdSurface = radiusThirdSurface;
 }
 // set edge thickness 
-void LensThreeSurfaces::setEdgeThickness(real const& edgeThickness)
+void LensThreeSurfaces::setEdgeThickness(real const edgeThickness)
 {
 	mEdgeThickness = edgeThickness;
 }
 // set material first
-void LensThreeSurfaces::setMaterialFirst(MaterialSellmeier1 const& materialFirst)
+void LensThreeSurfaces::setMaterialFirst(MaterialSellmeier1 const materialFirst)
 {
 	mMaterialFirst = materialFirst;
 }
 // set material second
-void LensThreeSurfaces::setMaterialSecond(MaterialSellmeier1 const& materialSecond)
+void LensThreeSurfaces::setMaterialSecond(MaterialSellmeier1 const materialSecond)
 {
 	mMaterialSecond = materialSecond;
 }
 // set max surface quality
-void LensThreeSurfaces::setMaxSurfaceQuality(real const& maxSurfaceQuality)
+void LensThreeSurfaces::setMaxSurfaceQuality(real const maxSurfaceQuality)
 {
 	mMaxSurfaceQuality = maxSurfaceQuality;
 }
 // set min surface quality
-void LensThreeSurfaces::setMinSurfaceQuality(real const& minSurfaceQuality)
+void LensThreeSurfaces::setMinSurfaceQuality(real const minSurfaceQuality)
 {
 	mMinSurfaceQuality = minSurfaceQuality;
 }
 // set stop
-void LensThreeSurfaces::setStop(real const& stop)
+void LensThreeSurfaces::setStop(real const stop)
 {
 	mStop = stop;
 }
 // set numerical aperture
-void LensThreeSurfaces::setNumericalAperture(real const& numericalAperture)
+void LensThreeSurfaces::setNumericalAperture(real const numericalAperture)
 {
 	mNumericalAperture = numericalAperture;
 }
 // set coating
-void LensThreeSurfaces::setCoating(std::string const& coating)
+void LensThreeSurfaces::setCoating(std::string const coating)
 {
 	mCoating = coating;
 }
 //set coating specification
-void LensThreeSurfaces::setCoatingSpecification(real const& coatingSpecification)
+void LensThreeSurfaces::setCoatingSpecification(real const coatingSpecification)
 {
 	mCoatingtionSpecification = coatingSpecification;
 }
 // set power wavelength
-void LensThreeSurfaces::setPowerWavelength(real const& powerWave)
+void LensThreeSurfaces::setPowerWavelength(real const powerWave)
 {
 	mPowerWavelength = powerWave;
 }
 // set power PV
-void LensThreeSurfaces::setPowerPV(real const& powerPV)
+void LensThreeSurfaces::setPowerPV(real const powerPV)
 {
 	mPowerPV = powerPV;
 }
 // set curvature wavelength
-void LensThreeSurfaces::setCurvatureWave(real const& curvatureWave)
+void LensThreeSurfaces::setCurvatureWave(real const curvatureWave)
 {
 	mCurvatureWavelength = curvatureWave;
 }
 // set curvature PV
-void LensThreeSurfaces::setCurvaturePV(real const& curvaturePV)
+void LensThreeSurfaces::setCurvaturePV(real const curvaturePV)
 {
 	mCurvaturePV = curvaturePV;
 }
 // set bevel
-void LensThreeSurfaces::setBevel(std::string const& bevel)
+void LensThreeSurfaces::setBevel(std::string const bevel)
 {
 	mBevel = bevel;
 }
 // set type
-void LensThreeSurfaces::setType(std::string const& type)
+void LensThreeSurfaces::setType(std::string const type)
 {
 	mType = type;
 }
 // set minimal wavelength
-void LensThreeSurfaces::setMinimalWavelength(real const& minWave)
+void LensThreeSurfaces::setMinimalWavelength(real const minWave)
 {
 	mMinWavelength = minWave;
 }
 // set maximum wavelength
-void LensThreeSurfaces::setMaximumWavelength(real const& maxWave)
+void LensThreeSurfaces::setMaximumWavelength(real const maxWave)
 {
 	mMaxWavelenght = maxWave;
 }
 // set price
-void LensThreeSurfaces::setPrice(real const& price)
+void LensThreeSurfaces::setPrice(real const price)
 {
 	mPrice = price;
 }
 // set wavelengthToTrace
-void LensThreeSurfaces::setWavelenghtToTrace(real const& waveToTrace)
+void LensThreeSurfaces::setWavelenghtToTrace(real const waveToTrace)
 {
 	mWavelengthToTrace = waveToTrace;
 }
@@ -433,7 +433,7 @@ void LensThreeSurfaces::buildOpticalSystemThreeSurfaces()
 	mOptSysThreeSurfaces_HLT.fillPosAndElementAndInteraction(0, firstSurface_ptr, refrac_ptr);
 	mOptSysThreeSurfaces_HLT.fillPosAndElementAndInteraction(1, secondSurface_ptr, refrac_ptr);
 	mOptSysThreeSurfaces_HLT.fillPosAndElementAndInteraction(2, thirdSurface_ptr, refrac_ptr);
-	mOptSysThreeSurfaces_HLT.convertHLTtoLLT();
+	mOptSysThreeSurfaces_HLT.convertHLTSurfacesToLLTSurfaces();
 
 }
 

@@ -666,10 +666,11 @@ ContrastAndGammaStruct ImproveImageQuality::improveImageQuality_contrastAndGamma
 	ContrastAndGammaStruct Core_7_Result;
 	ContrastAndGammaStruct Core_8_Result;
 
-	#pragma omp parallel
-	#pragma omp sections
+
+	#pragma omp parallel sections
 		{
-	#pragma omp section
+	
+
 			Core_1_Result = improveImageQuality_contrastAndGamma(sharpImage, simulatedImage, minAlpha, maxAlpha, alphaSteps, minBeta, maxBeta, stepsBeta, minGamma_1, maxGamma_s_1, stepPerCore_s);
 	#pragma omp section
 			Core_2_Result = improveImageQuality_contrastAndGamma(sharpImage, simulatedImage, minAlpha, maxAlpha, alphaSteps, minBeta, maxBeta, stepsBeta, minGamma_2, maxGamma_s_2, stepPerCore_s);

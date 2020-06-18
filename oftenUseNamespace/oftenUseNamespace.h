@@ -61,4 +61,17 @@ namespace oftenUse
 
 	// check intersectinformations 
 	bool checkIntersectInfos(const IntersectInformationStruct& intersectInfos, const IntersectInformationStruct& controleIntersectInfos, real tolerance);
+
+	// check if all values in a vevtor are less than a specific value
+	bool checkValInVacLessThan(std::vector<real> vec, real minVal);
+
+	// check if average of values in vecor are less than specific value
+	bool checkAverageOfVecValLessThan(std::vector<real> vec, real minVal);
+
+	// convert type mode variable to string
+	std::string convertTypeModeToString(typeModifier typeMode);
+	
+	real sum(std::vector<real> vec);
+
+	bool checkDLS_resultRMS(DLS dls, real tolerance);
 }

@@ -1,20 +1,18 @@
 #include "Light_LLT.h"
 
 Light_LLT::Light_LLT() {};
-Light_LLT::Light_LLT(/*wavelength*/ double wavelength, /*intensity*/ double intensity,/*polarisation*/ JonesVector_LLT polarisation,/*light type*/ typeLight lightType,/*is alive*/ int isAlive) :
+Light_LLT::Light_LLT(/*wavelength*/ double wavelength, /*intensity*/ double intensity,/*polarisation*/ JonesVector_LLT polarisation,/*light type*/ typeLight lightType) :
 	mWavelength(wavelength),
 	mIntensity(intensity),
 	mPolarisation(polarisation),
-	mLightType(lightType),
-	mIsAlive(isAlive)
+	mLightType(lightType)
 {}
 Light_LLT::Light_LLT(/*wavelength*/ double wavelength) :
 	mWavelength(wavelength)
 {
 	mIntensity = 1.0;
 	mPolarisation = { 1.0,1.0,1.0,1.0 };
-	mLightType = typeLightRay;
-	mIsAlive = 1;
+	mLightType = typeLight::typeLightRay;
 }
 
 
@@ -28,7 +26,6 @@ void Light_LLT::set(Light_LLT light_LLT)
 	mIntensity = light_LLT.getIntensity();
 	mPolarisation = light_LLT.getJonesVector();
 	mLightType = light_LLT.getTypeLight();
-	mIsAlive = light_LLT.isAlive();
 }
 
 // get wavelength
@@ -72,24 +69,14 @@ void Light_LLT::setTypeLight(typeLight lightType)
 {
 	mLightType = lightType;
 }
-// is light alive
-bool Light_LLT::isAlive()
-{
-	return mIsAlive;
-}
-// set light alive
-void Light_LLT::setIsAlive(bool isAlive)
-{
-	mIsAlive = isAlive;
-}
+
 // set light to absorb
 void Light_LLT::setLightToAbsorb()
 {
 	mWavelength = 0.0;
 	mIntensity = 0.0;
 	mPolarisation = { 0.0,0.0,0.0,0.0 };
-	mLightType = typeDeath;
-	mIsAlive = false;
+	mLightType = typeLight::typeDeath;
 }
 
 void Light_LLT::buildDefaultLight()
@@ -97,5 +84,5 @@ void Light_LLT::buildDefaultLight()
 	mWavelength = 550.0;
 	mIntensity = 1.0;
 	mPolarisation = { 0.0,0.0,0.0,0.0 };
-	mLightType = typeLightRay;
+	mLightType = typeLight::typeLightRay;
 }
