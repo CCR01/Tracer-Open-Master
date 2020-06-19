@@ -67,6 +67,8 @@ void testOptimizeSystemSuperFct_GeneticAndDLS::loadImportantStuff()
 	mDefaultParamDLS.setMinDeltaParameter(0.00000001);
 	mDefaultParamDLS.setFactorGettingBetter(0.4);
 	mDefaultParamDLS.setFactorGettingWorst(1.9);
+	mDefaultParamDLS.setToleranceWithoutMin(0.0);
+	mDefaultParamDLS.setToleranceWithoutMax(0.0);
 	mDefaultParamDLS.set_Min_DamNumBefSwitchFactors(0.00001);
 	mDefaultParamDLS.set_Max_DamNumBefSwitchFactors(9999.0);
 
@@ -118,13 +120,13 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::testOptimizeSystemSysSupFct_Genet
 	//bool checkE8 = checkE8_optSysSupFct_GeneticAndDLS();
 	//workTheOptimizerSuperFct.push_back(checkE8);
 	
-	// E9
-	bool checkE9 = checkE9_optSysSupFct_GeneticAndDLS();
-	workTheOptimizerSuperFct.push_back(checkE9);
+	//// E9
+	//bool checkE9 = checkE9_optSysSupFct_GeneticAndDLS();
+	//workTheOptimizerSuperFct.push_back(checkE9);
 	//
-	//// E10
-	//bool checkE10 = checkE10_optSysSupFct_GeneticAndDLS();
-	//workTheOptimizerSuperFct.push_back(checkE10);
+	// E10
+	bool checkE10 = checkE10_optSysSupFct_GeneticAndDLS();
+	workTheOptimizerSuperFct.push_back(checkE10);
 
 
 	bool returnChecker = Math::checkTrueOfVectorElements(workTheOptimizerSuperFct);
@@ -753,6 +755,9 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE9_optSysSupFct_GeneticAndDL
 //E10
 bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE10_optSysSupFct_GeneticAndDLS()
 {
+	mDefaultParamDLS.setToleranceWithoutMax(0.0);
+	mDefaultParamDLS.setToleranceWithoutMin(0.0);
+
 	//***
 	unsigned int systemNum = 10;
 	std::cout << "check optimize system genetic and DLS system number: " << systemNum << std::endl;
@@ -789,13 +794,13 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE10_optSysSupFct_GeneticAndD
 	check_vec.push_back(checkStartSys);
 	
 	// optimization
-	OptimizeSystemSuperFct_GeneticAndDLS GeneticAndDLS(/*optSysEle*/ optSystemElement_E1,/*fields*/ mFields_vec012, /*wavelength*/ mWavelength_vec, /*rings*/ 6, /*arms*/ 8, /*populatuion*/ mPopulation, /*default Genetic*/ mDefaultParaGenetic, /*default DLS*/ mDefaultParamDLS);
+	OptimizeSystemSuperFct_GeneticAndDLS GeneticAndDLS(/*optSysEle*/ optSystemElement_E10,/*fields*/ mFields_vec012, /*wavelength*/ mWavelength_vec, /*rings*/ 6, /*arms*/ 8, /*populatuion*/ mPopulation, /*default Genetic*/ mDefaultParaGenetic, /*default DLS*/ mDefaultParamDLS);
 	GeneticAndDLS.optimizeSuperFct_GeneticAndDLS_12Cores();
 	
 	// print the optical system
 	oftenUse::print(GeneticAndDLS.getOptimizedOpticalSystem(), mWavelength_vec[0]);
 	
-	std::vector<real> rmsOpti_Z{ 20.872,28.502,50.817 }; // sum 100.191
+	std::vector<real> rmsOpti_Z{ 23.485,27.538,45.055 }; // sum 96.078
 	bool checkOptimizedSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(GeneticAndDLS.getOptimizedOpticalSystem(), mFields_vec012, mWavelength_vec, rmsOpti_Z, mTolerance, comBetter);
 	check_vec.push_back(checkOptimizedSys);
 

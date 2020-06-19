@@ -1,33 +1,32 @@
 #include "CardinalPoints.h"
 #include <typeinfo>
-#include "..\LowLevelTracing\Surfaces\ApertureStop_LLT.h"
 #include <iostream>
 
 
 
-// get the position of all surfaces after the stop
-std::vector<real> CardinalPoints::getPosSurAfterStop() const&
-{
-	return mPosSurfaceAfterStop;
-}
-// get the focal length of all surfaces after the stop
-std::vector<real> CardinalPoints::getFocalLengthAfterStop() const&
-{
-	return mFocalLengthAfterStop;
-}
+//// get the position of all surfaces after the stop
+//std::vector<real> CardinalPoints::getPosSurAfterStop() const
+//{
+//	return mPosSurfaceAfterStop;
+//}
+//// get the focal length of all surfaces after the stop
+//std::vector<real> CardinalPoints::getFocalLengthAfterStop() const
+//{
+//	return mFocalLengthAfterStop;
+//}
 
 // get the radius of all surfaces after the stop
-std::vector<real> CardinalPoints::getRadiusAfterStop() const&
+std::vector<real> CardinalPoints::getRadiusAfterStop() const
 {
 	return mRadiusAfterStop;
 }
 // get all refractive indexes
-std::vector<real> CardinalPoints::getRefractivIndexesAfterStop() const&
+std::vector<real> CardinalPoints::getRefractivIndexesAfterStop() const
 {
 	return mRefractivIndexesAfterStop;
 }
 // get aperture size
-real CardinalPoints::getDiameterAperture() const&
+real CardinalPoints::getDiameterAperture() const
 {
 	return mDiameterOfApertureStop;
 }
@@ -71,322 +70,127 @@ real CardinalPoints::getAntiPP()
 	return mAntiPP;
 }
 
-void CardinalPoints::checkForApertureStopInOptSys()
+void CardinalPoints::loadAndResizeParameters()
 {
-	bool isThereAnApertureStop = false;
-	unsigned int sizeOfOptSys = mOpticalSystem_LLT.getNumberOfSurfaces();
-	std::vector<PosAndIntsectionSurfaceStruct> posAndInteraSurfaceVector = mOpticalSystem_LLT.getPosAndInteractingSurface();
-	ApertureStop_LLT apertureStop_ptr;
+	mSizeOfOpt = mOpticalSystem_LLT.getPosAndInteractingSurface().size();
+	mPosAndInteraSurfaceVector = mOpticalSystem_LLT.getPosAndInteractingSurface();
+	mPositionApertureStop = mOpticalSystem_LLT.getInforAS().getPosAS();
+	mSizeOfOptSysMinOne = mSizeOfOpt - 1;
+	mSizeOfOptSysMinTwo = mSizeOfOpt - 2;
+	mSizeAfterStop = mSizeOfOptSysMinTwo - mPositionApertureStop;
 
-	for (unsigned int i = 0; i < sizeOfOptSys; i++)
-	{
-		if (typeid(*posAndInteraSurfaceVector.at(i).getSurfaceInterRay_ptr()) == typeid(apertureStop_ptr))
-		{
-			isThereAnApertureStop = true;
-		}
-
-	}
-
-	if (isThereAnApertureStop == false) std::cout << "There is no aperture in your optical system!!!" << std::endl;
-
+	//// resize
+	mSepSurfaceAfterStop.resize(mSizeAfterStop);
+	mRadiusAfterStop.resize(mSizeAfterStop);
+	mRefractivIndexesAfterStop.resize(mSizeAfterStop);
+	mSystemMatrixAfterStop.resize(4);
+	mALLSepSurfaceStop.resize(mSizeAfterStop);
+	mAllRadius.resize(mSizeOfOptSysMinTwo);
+	AllmRefractivIndexes.resize(mSizeOfOptSysMinTwo);
+	AllmSepSurface.resize(mSizeOfOptSysMinTwo);
+	mAllSystemMatrix.resize(4);
 }
 
-
-// calculate the position of all surfaces after the stop
-std::vector<real> CardinalPoints::calcPosSurAfterStop()
+void CardinalPoints::calcSystemMatrix()
 {
-	unsigned int sizeOfOptSys = mOpticalSystem_LLT.getNumberOfSurfaces();
-	std::vector<PosAndIntsectionSurfaceStruct> posAndInteraSurfaceVector = mOpticalSystem_LLT.getPosAndInteractingSurface();
-	ApertureStop_LLT apertureStop_ptr;
-	std::vector<real> PosSurfaceAfterAperStop;
+	// ALL
+	/**/calcAllRadius();
+	/**/calcAllSepSur();
+	/**/calcAllRefractivIndexes();
+	/**/calcSepSurAndImPlane();
+	/**/calcSepObjandSurface();
 
-	for (unsigned int i = 0; i < sizeOfOptSys; i++)
-	{
-		if (typeid(*posAndInteraSurfaceVector.at(i).getSurfaceInterRay_ptr()) == typeid(apertureStop_ptr))
-		{
-			for (unsigned int j = i + 1; j < sizeOfOptSys; j++)
-			{
-				real tempZ_Pos = mOpticalSystem_LLT.getPosAndInteractingSurface().at(j).getSurfaceInterRay_ptr()->getPoint().getZ();
-				PosSurfaceAfterAperStop.push_back(tempZ_Pos);
-			}
-		}
+	// after stop
+	/**/calcSepSurAndStop();
+	/**/calcSepSurAfterStop();
+	/**/calcRadiusAfterStop();
+	/**/calcRefractivIndexesAfterStop();
 
-	}
+	/**/calcDiameterAperture();
 
-	return PosSurfaceAfterAperStop;
-
+	calcSystemMatrixAfterStop();
+	calcAllSystemMatrix();
 }
+
 
 
 
 
 // calculate the separation of all surfaces after the stop
-std::vector<real> CardinalPoints::calcSepSurAfterStop()
+void CardinalPoints::calcSepSurAfterStop()
 {
-	unsigned int sizeOfOptSys = mOpticalSystem_LLT.getNumberOfSurfaces();
-	std::vector<PosAndIntsectionSurfaceStruct> posAndInteraSurfaceVector = mOpticalSystem_LLT.getPosAndInteractingSurface();
-	ApertureStop_LLT apertureStop_ptr;
-	std::vector<real> mSepSurfaceAfterStop;
-
-	for (unsigned int i = 0; i < sizeOfOptSys; i++)
+	unsigned int posInVec = 0;
+	for (unsigned int j = mPositionApertureStop + 1; j < mSizeOfOptSysMinOne; j++)
 	{
-		if (typeid(*posAndInteraSurfaceVector.at(i).getSurfaceInterRay_ptr()) == typeid(apertureStop_ptr))
-		{
-
-			for (unsigned int j = i + 1; j < sizeOfOptSys; j++)
-			{
-				real tempZ_Pos = mOpticalSystem_LLT.getPosAndInteractingSurface().at(j).getSurfaceInterRay_ptr()->getPoint().getZ() - mOpticalSystem_LLT.getPosAndInteractingSurface().at(j - 1).getSurfaceInterRay_ptr()->getPoint().getZ();
-				mSepSurfaceAfterStop.push_back(tempZ_Pos);
-
-			}
-		}
-
+		mSepSurfaceAfterStop[posInVec] = mPosAndInteraSurfaceVector[j].getSurfaceInterRay_ptr()->getPoint().getZ() - mPosAndInteraSurfaceVector[j-1].getSurfaceInterRay_ptr()->getPoint().getZ();
+		++posInVec;
 	}
-
-	return mSepSurfaceAfterStop;
 
 }
 
 // calculate the separation of 1st surface and the stop
-real CardinalPoints::calcSepSurAndStop()
+void CardinalPoints::calcSepSurAndStop()
 {
-	unsigned int sizeOfOptSys = mOpticalSystem_LLT.getNumberOfSurfaces();
-	std::vector<PosAndIntsectionSurfaceStruct> posAndInteraSurfaceVector = mOpticalSystem_LLT.getPosAndInteractingSurface();
-	ApertureStop_LLT apertureStop_ptr;
-
-	real mSepSurfaceAndStop;
-	unsigned int checker;
-
-	for (unsigned int i = 0; i < sizeOfOptSys; i++)
-	{
-		if (typeid(*posAndInteraSurfaceVector.at(i).getSurfaceInterRay_ptr()) == typeid(apertureStop_ptr))
-		{
-
-			real temp_pos = mOpticalSystem_LLT.getPosAndInteractingSurface().at(i + 1).getSurfaceInterRay_ptr()->getPoint().getZ() - mOpticalSystem_LLT.getPosAndInteractingSurface().at(i).getSurfaceInterRay_ptr()->getPoint().getZ();
-			mSepSurfaceAndStop = temp_pos;
-		}
-
-
-	}
-
-	/*/ TODO: find a better solution
-	std::cout << "there is no aperture stop in your optical system" << std::endl;
-	unsigned int errorInput;
-	std::cin >> errorInput;
-	*/
-
-	return mSepSurfaceAndStop;
+	mSepSurfaceAndStop = mOpticalSystem_LLT.getPosAndInteractingSurface().at(mPositionApertureStop + 1).getSurfaceInterRay_ptr()->getPoint().getZ() - mOpticalSystem_LLT.getPosAndInteractingSurface().at(mPositionApertureStop).getSurfaceInterRay_ptr()->getPoint().getZ();
 
 }
 
 
 //calculate distance between object plane and first surface(first lens)
-real CardinalPoints::calcSepObjandSurface()
+void CardinalPoints::calcSepObjandSurface()
 {
-	unsigned int sizeOfOptSys = mOpticalSystem_LLT.getNumberOfSurfaces();
-	std::vector<PosAndIntsectionSurfaceStruct> posAndInteraSurfaceVector = mOpticalSystem_LLT.getPosAndInteractingSurface();
-	ApertureStop_LLT apertureStop_ptr;
-
-	real mSepObjandSurface;
-	unsigned int checker;
-
-	for (unsigned int i = 0; i < sizeOfOptSys; i++)
-	{
-		if (typeid(*posAndInteraSurfaceVector.at(i).getSurfaceInterRay_ptr()) == typeid(apertureStop_ptr))
-		{
-
-			real temp_pos = mOpticalSystem_LLT.getPosAndInteractingSurface().at(1).getSurfaceInterRay_ptr()->getPoint().getZ();
-			mSepObjandSurface = temp_pos;
-		}
-
-
-	}
-
-
-	return mSepObjandSurface;
+	mSepObjandSurface = mOpticalSystem_LLT.getPosAndInteractingSurface().at(1).getSurfaceInterRay_ptr()->getPoint().getZ();
 }
 
 // calculate the separation oflast surface and image plane
-real CardinalPoints::calcSepSurAndImPlane()
+void CardinalPoints::calcSepSurAndImPlane()
 {
-	unsigned int sizeOfOptSys = mOpticalSystem_LLT.getNumberOfSurfaces();
-	std::vector<PosAndIntsectionSurfaceStruct> posAndInteraSurfaceVector = mOpticalSystem_LLT.getPosAndInteractingSurface();
-	ApertureStop_LLT apertureStop_ptr;
-	real mSepSurAndImPlane;
-
-	for (unsigned int i = 0; i < sizeOfOptSys; i++)
-	{
-		if (typeid(*posAndInteraSurfaceVector.at(i).getSurfaceInterRay_ptr()) == typeid(apertureStop_ptr))
-		{
-
-			real tempZ_Pos = mOpticalSystem_LLT.getPosAndInteractingSurface().at(sizeOfOptSys).getSurfaceInterRay_ptr()->getPoint().getZ() - mOpticalSystem_LLT.getPosAndInteractingSurface().at(sizeOfOptSys - 1).getSurfaceInterRay_ptr()->getPoint().getZ();
-			mSepSurAndImPlane = tempZ_Pos;
-
-		}
-
-	}
-
-	return mSepSurAndImPlane;
-
-}
-
-// calculate the focal length of all surfaces after the stop
-std::vector<real> CardinalPoints::calcFocalLengthAfterStop()
-{
-	unsigned int sizeOfOptSys = mOpticalSystem_LLT.getNumberOfSurfaces();
-	std::vector<PosAndIntsectionSurfaceStruct> posAndInteraSurfaceVector = mOpticalSystem_LLT.getPosAndInteractingSurface();
-	ApertureStop_LLT apertureStop_ptr;
-	std::vector<real> focalLengthes;
-
-	for (unsigned int i = 0; i < sizeOfOptSys; i++)
-	{
-		if (typeid(*posAndInteraSurfaceVector.at(i).getSurfaceInterRay_ptr()) == typeid(apertureStop_ptr))
-		{
-			for (unsigned int j = i + 1; j < sizeOfOptSys; j++)
-			{
-				real tempFocalLength = mOpticalSystem_LLT.getPosAndInteractingSurface().at(j).getSurfaceInterRay_ptr()->getFocalLength_B();
-				focalLengthes.push_back(tempFocalLength);
-			}
-		}
-
-	}
-
-	return focalLengthes;
-
+	mSepSurAndImPlane = mOpticalSystem_LLT.getPosAndInteractingSurface().at(mSizeOfOptSysMinOne).getSurfaceInterRay_ptr()->getPoint().getZ() - mOpticalSystem_LLT.getPosAndInteractingSurface().at(mSizeOfOptSysMinOne - 1).getSurfaceInterRay_ptr()->getPoint().getZ();
 }
 
 
 // calculate the radius of all surfaces after the stop
-std::vector<real> CardinalPoints::calcRadiusAfterStop()
+void CardinalPoints::calcRadiusAfterStop()
 {
-	unsigned int sizeOfOptSys = mOpticalSystem_LLT.getNumberOfSurfaces();
-	std::vector<PosAndIntsectionSurfaceStruct> posAndInteraSurfaceVector = mOpticalSystem_LLT.getPosAndInteractingSurface();
-	ApertureStop_LLT apertureStop_ptr;
-	std::vector<real> Radius;
+	unsigned int posInVec = 0;
 
-	for (unsigned int i = 0; i < sizeOfOptSys; i++)
+	for (unsigned int j = mPositionApertureStop; j < mSizeOfOptSysMinOne -1; j++)
 	{
-		if (typeid(*posAndInteraSurfaceVector.at(i).getSurfaceInterRay_ptr()) == typeid(apertureStop_ptr))
-		{
-
-			for (unsigned int j = i + 1; j < sizeOfOptSys; j++)
-			{
-				real tempRadius = mOpticalSystem_LLT.getPosAndInteractingSurface().at(j).getSurfaceInterRay_ptr()->getRadius();
-				real tempDirectionZ = mOpticalSystem_LLT.getPosAndInteractingSurface().at(j).getSurfaceInterRay_ptr()->getDirection().getZ();
-				int sign = 1;
-				if (tempDirectionZ < 0)
-				{
-					sign = -1;
-				}
-
-				Radius.push_back(sign * tempRadius);
-			}
-		}
-
+		mRadiusAfterStop[posInVec] = mAllRadius[j];
+		++posInVec;
 	}
-
-	return Radius;
-
 }
 
 
 
 
 // calculate the refractive index after all surfaces after the stop
-std::vector<real> CardinalPoints::calcRefractivIndexesAfterStop()
+void CardinalPoints::calcRefractivIndexesAfterStop()
 {
-	unsigned int sizeOfOptSys = mOpticalSystem_LLT.getNumberOfSurfaces();
-	std::vector<PosAndIntsectionSurfaceStruct> posAndInteraSurfaceVector = mOpticalSystem_LLT.getPosAndInteractingSurface();
-	ApertureStop_LLT apertureStop_ptr;
-	std::vector<real> refracticeIndex;
-
-	for (unsigned int i = 0; i < sizeOfOptSys; i++)
-	{
-		if (typeid(*posAndInteraSurfaceVector.at(i).getSurfaceInterRay_ptr()) == typeid(apertureStop_ptr))
-		{
-
-			for (unsigned int j = i + 1; j < sizeOfOptSys; j++)
-			{
-				real tempDirectionZ = mOpticalSystem_LLT.getPosAndInteractingSurface().at(j).getSurfaceInterRay_ptr()->getDirection().getZ();
-
-
-				if (tempDirectionZ > 0)
-				{
-					real tempRefIndex = mOpticalSystem_LLT.getPosAndInteractingSurface().at(j).getSurfaceInterRay_ptr()->getRefractiveIndex_B();
-					refracticeIndex.push_back(tempRefIndex);
-				}
-				else if (tempDirectionZ < 0)
-				{
-					real tempRefIndex = mOpticalSystem_LLT.getPosAndInteractingSurface().at(j).getSurfaceInterRay_ptr()->getRefractiveIndex_A();
-					refracticeIndex.push_back(tempRefIndex);
-				}
-				else
-				{
-					std::cout << "there is an mistake in the direction!!! the Z value is 0!!!" << std::endl;
-
-				}
-			}
-
-		}
-
+	unsigned int posInVec = 0;
+	for (unsigned int j = mPositionApertureStop; j < mSizeOfOptSysMinOne - 1; j++)
+	{	
+		mRefractivIndexesAfterStop[posInVec] = AllmRefractivIndexes[j];
+		++posInVec;
 	}
-
-	return refracticeIndex;
-
 }
 
 // calculate aperture size
-real CardinalPoints::calcDiameterAperture()
+void CardinalPoints::calcDiameterAperture()
 {
-	unsigned int sizeOfOptSys = mOpticalSystem_LLT.getNumberOfSurfaces();
-	std::vector<PosAndIntsectionSurfaceStruct> posAndInteraSurfaceVector = mOpticalSystem_LLT.getPosAndInteractingSurface();
-	ApertureStop_LLT apertureStop_ptr;
-	real dimameterOfAperture = -99999.0;
-
-	for (unsigned int i = 0; i < sizeOfOptSys; i++)
-	{
-		if (typeid(*posAndInteraSurfaceVector.at(i).getSurfaceInterRay_ptr()) == typeid(apertureStop_ptr))
-		{
-			return dimameterOfAperture = 2 * mOpticalSystem_LLT.getPosAndInteractingSurface().at(i).getSurfaceInterRay_ptr()->getSemiHeight();
-		}
-
-	}
-
-	if (dimameterOfAperture == -99999.0)
-	{
-		std::cout << "You have to define an aperture stop!!!" << std::endl;
-	}
-
-	return dimameterOfAperture;
-
+	mDiameterOfApertureStop = 2.0 * mPosAndInteraSurfaceVector[mPositionApertureStop].getSurfaceInterRay_ptr()->getSemiHeight();
 }
 
-std::vector<real> CardinalPoints::calcSystemMatrix()
+void CardinalPoints::calcSystemMatrixAfterStop()
 {
 
 	using namespace std;
 
 
 	/*******************************************input values***********************************/
-	unsigned int sizeOfOptSys = mOpticalSystem_LLT.getNumberOfSurfaces();
-	ApertureStop_LLT apertureStop_ptr;
-	int PosAperturStop = 0;
-	std::vector<PosAndIntsectionSurfaceStruct> posAndInteraSurfaceVector = mOpticalSystem_LLT.getPosAndInteractingSurface();
-	int s = sizeOfOptSys - 1;
-	for (unsigned int i = 1; i < s; i++)
-	{
-		if (typeid(*posAndInteraSurfaceVector.at(i).getSurfaceInterRay_ptr()) == typeid(apertureStop_ptr))
-		{
-			s = sizeOfOptSys - i - 1;
-		}
-	}
-
-	std::vector<double> R_ip = mRadiusAfterStop;
-	std::vector<double> n_ip = mRefractivIndexesAfterStop;
-	std::vector<double> d_ip = mSepSurfaceAfterStop;
-	double image_plane = mSepSurAndImPlane;
-	double aperture_size = mDiameterOfApertureStop;
-	double sto = mSepSurfaceAndStop;
+	unsigned int PosAperturStop = 0;
+	unsigned int s = mSizeOfOptSysMinOne - mPositionApertureStop - 1;
+		
 	/*****************************************************************************/
 	std::vector<double> R_i(s);
 	std::vector<double> R(2 * s - 2);
@@ -399,7 +203,7 @@ std::vector<real> CardinalPoints::calcSystemMatrix()
 	for (int i = 0; i < s; i++)
 	{
 
-		R_i[i] = R_ip[s - i - 1];
+		R_i[i] = mRadiusAfterStop[s - i - 1];
 
 	}
 
@@ -426,7 +230,7 @@ std::vector<real> CardinalPoints::calcSystemMatrix()
 	for (int i = 0; i < s - 1; i++)
 	{
 
-		d_i[i] = d_ip[s - i - 1];
+		d_i[i] = mSepSurfaceAfterStop[s - i - 1];
 
 	}
 
@@ -450,7 +254,7 @@ std::vector<real> CardinalPoints::calcSystemMatrix()
 	for (int i = 0; i < s; i++)
 	{
 
-		n_i[i] = n_ip[s - i - 1];
+		n_i[i] = mRefractivIndexesAfterStop[s - i - 1];
 
 	}
 
@@ -478,45 +282,28 @@ std::vector<real> CardinalPoints::calcSystemMatrix()
 	/*****************************************initiate 3D matrix******************************************************/
 
 	vector < vector < vector<double> > > t;
-	for (int i = 0; i < 2; i++)
-	{
-
-		vector < vector < double > > w;
-		t.push_back(w);
-		for (int j = 0; j < 2; j++)
-		{
-			vector <double> v;
-			t[i].push_back(v);
-			for (int k = 0; k < 2 * s - 2; k++)
-			{
-				t[i][j].push_back(0);
-			}
-		}
-	}
-
+	t.resize(2);
+	t[0].resize(2);
+	t[1].resize(2);
+	t[0][0].resize(2 * s - 2);
+	t[0][1].resize(2 * s - 2);
+	t[1][0].resize(2 * s - 2);
+	t[1][1].resize(2 * s - 2);
 
 	vector < vector < vector<double> > > r;
-	for (int i = 0; i < 2; i++)
-	{
-
-		vector < vector < double > > xi;
-		r.push_back(xi);
-		for (int j = 0; j < 2; j++)
-		{
-			vector <double> zi;
-			r[i].push_back(zi);
-			for (int k = 0; k < 2 * s - 1; k++)
-			{
-				r[i][j].push_back(0);
-			}
-		}
-	}
+	r.resize(2);
+	r[0].resize(2);
+	r[1].resize(2);
+	r[0][0].resize(2 * s - 1);
+	r[0][1].resize(2 * s - 1);
+	r[1][0].resize(2 * s - 1);
+	r[1][1].resize(2 * s - 1);
 
 
 
 	/*******************************spherical surface************************************************/
 
-	double mult[2][2];
+	
 
 	for (int k = 0; k < 2 * s - 2; k++)
 	{
@@ -572,7 +359,7 @@ std::vector<real> CardinalPoints::calcSystemMatrix()
 
 	/**********************************************************************************************/
 
-
+	double mult[2][2];
 	for (int z = 0; z < 2 * s - 2; z++)
 	{
 		mult[0][0] = 0;
@@ -629,40 +416,25 @@ std::vector<real> CardinalPoints::calcSystemMatrix()
 
 
 	vector < vector < double > > matrix2D;
+	matrix2D.resize(2);
+	matrix2D[0].resize(2);
+	matrix2D[1].resize(2);
+
 	for (int i = 0; i < 2; i++)
 	{
-		vector <double> zii;
-		matrix2D.push_back(zii);
+		//vector <double> zii;
+		//matrix2D[i] = zii;
 		for (int j = 0; j < 2; j++)
 		{
-			matrix2D[i].push_back(mult[1 - j][1 - i]);
+			matrix2D[i][j] = mult[1 - j][1 - i];
 		}
 	}
 
+	mSystemMatrixAfterStop[0] = matrix2D[0][0];
+	mSystemMatrixAfterStop[1] = matrix2D[0][1];
+	mSystemMatrixAfterStop[2] = matrix2D[1][0];
+	mSystemMatrixAfterStop[3] = matrix2D[1][1];
 
-	std::vector<double> matrixABCD;
-	matrixABCD.push_back(matrix2D[0][0]);
-	matrixABCD.push_back(matrix2D[0][1]);
-	matrixABCD.push_back(matrix2D[1][0]);
-	matrixABCD.push_back(matrix2D[1][1]);
-
-
-	/*	cout << " System Matrix of surfaces after the apertur stop: " << endl << endl;
-		for (int i = 0; i < 4; i++)
-		{
-			cout << " " << matrixABCD[i];
-			if (i == 1)
-			{
-				cout << " " << endl;
-
-			}
-			else
-				cout << "  ";
-		}
-
-		cout << " " << endl;*/
-
-	return matrixABCD;
 
 }
 
@@ -719,13 +491,7 @@ real CardinalPoints::calcPrincPlanOptSys()
 
 	double h1 = (1 - b) / a;
 
-
-	ApertureStop_LLT apertureStop_ptr;
-
-	std::vector<PosAndIntsectionSurfaceStruct> posAndInteraSurfaceVector = mOpticalSystem_LLT.getPosAndInteractingSurface();
-
-
-	if (typeid(*posAndInteraSurfaceVector.at(0).getSurfaceInterRay_ptr()) == typeid(apertureStop_ptr))
+	if (typeid(*mPosAndInteraSurfaceVector.at(0).getSurfaceInterRay_ptr()) == typeid(mApertureStop))
 	{
 		h1 = (1 - b) / a
 			+ mOpticalSystem_LLT.getPosAndInteractingSurface().at(1).getSurfaceInterRay_ptr()->getPoint().getZ()
@@ -777,7 +543,7 @@ real CardinalPoints::calcExitPupilPost()
 {
 	using namespace std;
 	/*******************************************input values***********************************/
-	std::vector<double> matrixABCD = mSystemMatrix;
+	std::vector<double> matrixABCD = mSystemMatrixAfterStop;
 
 	double image_plane = mSepSurAndImPlane;
 	double aperture_size = mDiameterOfApertureStop;
@@ -812,7 +578,7 @@ real CardinalPoints::calcDiameterExitPupil()
 {
 	using namespace std;
 	/*******************************************input values***********************************/
-	std::vector<double> matrixABCD = mSystemMatrix;
+	std::vector<double> matrixABCD = mSystemMatrixAfterStop;
 
 	double image_plane = mSepSurAndImPlane;
 	double aperture_size = mDiameterOfApertureStop;
@@ -876,63 +642,60 @@ real CardinalPoints::calcPosEXXPglobalCoordi()
 }
 
 
-std::vector<real> CardinalPoints::calcAllRadius()
+void CardinalPoints::calcAllRadius()
 {
+	real tempRadius;
+	real tempDirectionZ;
+	int sign;
+	unsigned int posInVec = 0;
 
-	unsigned int sizeOfOptSys = mOpticalSystem_LLT.getNumberOfSurfaces();
-	std::vector<PosAndIntsectionSurfaceStruct> posAndInteraSurfaceVector = mOpticalSystem_LLT.getPosAndInteractingSurface();
-	ApertureStop_LLT apertureStop_ptr;
-	std::vector<real> Radius;
-
-	for (unsigned int i = 0; i < sizeOfOptSys; i++)
+	for (unsigned int i = 0; i < mSizeOfOptSysMinOne; i++)
 	{
-		if (typeid(*posAndInteraSurfaceVector.at(i).getSurfaceInterRay_ptr()) != typeid(apertureStop_ptr))
+		if (typeid(*mPosAndInteraSurfaceVector.at(i).getSurfaceInterRay_ptr()) != typeid(mApertureStop))
 		{
-			real tempRadius = mOpticalSystem_LLT.getPosAndInteractingSurface().at(i).getSurfaceInterRay_ptr()->getRadius();
-			real tempDirectionZ = mOpticalSystem_LLT.getPosAndInteractingSurface().at(i).getSurfaceInterRay_ptr()->getDirection().getZ();
-			int sign = 1;
+			tempRadius = mOpticalSystem_LLT.getPosAndInteractingSurface().at(i).getSurfaceInterRay_ptr()->getRadius();
+			tempDirectionZ = mOpticalSystem_LLT.getPosAndInteractingSurface().at(i).getSurfaceInterRay_ptr()->getDirection().getZ();
+
+			sign = 1;
 			if (tempDirectionZ < 0)
 			{
 				sign = -1;
 			}
-
-			Radius.push_back(sign * tempRadius);
-
+			mAllRadius[posInVec] = sign * tempRadius;
+			++posInVec;
 		}
 
-	}
 
-	return Radius;
+	}
 
 }
 
 
-std::vector<real> CardinalPoints::calcAllRefractivIndexes()
+void CardinalPoints::calcAllRefractivIndexes()
 {
-	unsigned int sizeOfOptSys = mOpticalSystem_LLT.getNumberOfSurfaces();
-	std::vector<PosAndIntsectionSurfaceStruct> posAndInteraSurfaceVector = mOpticalSystem_LLT.getPosAndInteractingSurface();
-	ApertureStop_LLT apertureStop_ptr;
-	std::vector<real> refractiveIndex;
+	real tempRefIndex;
+	real tempDirectionZ;
+	unsigned int posInVec = 0;
 
-	for (unsigned int i = 0; i < sizeOfOptSys; i++)
+	for (unsigned int i = 0; i < mSizeOfOptSysMinOne; i++)
 	{
-		if (typeid(*posAndInteraSurfaceVector.at(i).getSurfaceInterRay_ptr()) != typeid(apertureStop_ptr))
+		if (typeid(*mPosAndInteraSurfaceVector.at(i).getSurfaceInterRay_ptr()) != typeid(mApertureStop))
 		{
 
 
-			real tempDirectionZ = mOpticalSystem_LLT.getPosAndInteractingSurface().at(i).getSurfaceInterRay_ptr()->getDirection().getZ();
+			tempDirectionZ = mPosAndInteraSurfaceVector[i].getSurfaceInterRay_ptr()->getDirection().getZ();
 
 
 			if (tempDirectionZ > 0)
 			{
-				real tempRefIndex = mOpticalSystem_LLT.getPosAndInteractingSurface().at(i).getSurfaceInterRay_ptr()->getRefractiveIndex_B();
-				refractiveIndex.push_back(tempRefIndex);
+				tempRefIndex = mPosAndInteraSurfaceVector[i].getSurfaceInterRay_ptr()->getRefractiveIndex_B();
+				AllmRefractivIndexes[posInVec] = tempRefIndex;
 
 			}
 			else if (tempDirectionZ < 0)
 			{
-				real tempRefIndex = mOpticalSystem_LLT.getPosAndInteractingSurface().at(i).getSurfaceInterRay_ptr()->getRefractiveIndex_A();
-				refractiveIndex.push_back(tempRefIndex);
+				tempRefIndex = mPosAndInteraSurfaceVector[i].getSurfaceInterRay_ptr()->getRefractiveIndex_A();
+				AllmRefractivIndexes[posInVec] = tempRefIndex;
 
 			}
 			else
@@ -941,49 +704,46 @@ std::vector<real> CardinalPoints::calcAllRefractivIndexes()
 
 			}
 
+			++posInVec;
 
 		}
 
 	}
 
-	return refractiveIndex;
 
 }
 
-std::vector<real> CardinalPoints::calcAllSepSur()
+void CardinalPoints::calcAllSepSur()
 {
-	unsigned int sizeOfOptSys = mOpticalSystem_LLT.getNumberOfSurfaces();
-	std::vector<PosAndIntsectionSurfaceStruct> posAndInteraSurfaceVector = mOpticalSystem_LLT.getPosAndInteractingSurface();
-	ApertureStop_LLT apertureStop_ptr;
-	std::vector<real> mSepSurfaceAfterStop;
+	real tempZ_Pos;
+	unsigned int posInVec = 0;
 
-	for (unsigned int i = 0; i < sizeOfOptSys; i++)
+	for (unsigned int i = 0; i < mSizeOfOptSysMinOne; i++)
 	{
-		if (typeid(*posAndInteraSurfaceVector.at(i).getSurfaceInterRay_ptr()) != typeid(apertureStop_ptr))
+		if (typeid(*mPosAndInteraSurfaceVector.at(i).getSurfaceInterRay_ptr()) != typeid(mApertureStop))
 		{
-			if (typeid(*posAndInteraSurfaceVector.at(i + 1).getSurfaceInterRay_ptr()) != typeid(apertureStop_ptr))
+			if (typeid(*mPosAndInteraSurfaceVector.at(i + 1).getSurfaceInterRay_ptr()) != typeid(mApertureStop))
 			{
-				real tempZ_Pos = mOpticalSystem_LLT.getPosAndInteractingSurface().at(i + 1).getSurfaceInterRay_ptr()->getPoint().getZ() - mOpticalSystem_LLT.getPosAndInteractingSurface().at(i).getSurfaceInterRay_ptr()->getPoint().getZ();
-				mSepSurfaceAfterStop.push_back(tempZ_Pos);
+				tempZ_Pos = mOpticalSystem_LLT.getPosAndInteractingSurface().at(i + 1).getSurfaceInterRay_ptr()->getPoint().getZ() - mOpticalSystem_LLT.getPosAndInteractingSurface().at(i).getSurfaceInterRay_ptr()->getPoint().getZ();
+				AllmSepSurface[posInVec] = tempZ_Pos;
 
 			}
 			else
 			{
-				real tempZ_Pos = mOpticalSystem_LLT.getPosAndInteractingSurface().at(i + 2).getSurfaceInterRay_ptr()->getPoint().getZ() - mOpticalSystem_LLT.getPosAndInteractingSurface().at(i).getSurfaceInterRay_ptr()->getPoint().getZ();
-				mSepSurfaceAfterStop.push_back(tempZ_Pos);
+				tempZ_Pos = mOpticalSystem_LLT.getPosAndInteractingSurface().at(i + 2).getSurfaceInterRay_ptr()->getPoint().getZ() - mOpticalSystem_LLT.getPosAndInteractingSurface().at(i).getSurfaceInterRay_ptr()->getPoint().getZ();
+				AllmSepSurface[posInVec] = tempZ_Pos;
 
 			}
+			++posInVec;
 		}
 
 	}
-
-	return mSepSurfaceAfterStop;
 
 }
 
 
 
-std::vector<real> CardinalPoints::calcAllSystemMatrix()
+void CardinalPoints::calcAllSystemMatrix()
 {
 
 	using namespace std;
@@ -991,9 +751,9 @@ std::vector<real> CardinalPoints::calcAllSystemMatrix()
 	/*******************************************input values***********************************/
 	unsigned int sizeOfOptSys = mOpticalSystem_LLT.getNumberOfSurfaces();
 	int s = sizeOfOptSys - 1;
-	std::vector<double> R_ip = mAllRadius;
-	std::vector<double> n_ip = AllmRefractivIndexes;
-	std::vector<double> d_ip = AllmSepSurface;
+	//std::vector<double> R_ip = mAllRadius;
+	//std::vector<double> n_ip = AllmRefractivIndexes;
+	//std::vector<double> d_ip = AllmSepSurface;
 
 	/*****************************************************************************/
 	std::vector<double> R_i(s);
@@ -1008,7 +768,7 @@ std::vector<real> CardinalPoints::calcAllSystemMatrix()
 	for (int i = 0; i < s; i++)
 	{
 
-		R_i[i] = R_ip[s - i - 1];
+		R_i[i] = mAllRadius[s - i - 1];
 
 	}
 
@@ -1035,7 +795,7 @@ std::vector<real> CardinalPoints::calcAllSystemMatrix()
 	for (int i = 0; i < s - 1; i++)
 	{
 
-		d_i[i] = d_ip[s - i - 2];
+		d_i[i] = AllmSepSurface[s - i - 2];
 
 
 	}
@@ -1057,7 +817,7 @@ std::vector<real> CardinalPoints::calcAllSystemMatrix()
 	for (int i = 0; i < s; i++)
 	{
 
-		n_i[i] = n_ip[s - i - 1];
+		n_i[i] = AllmRefractivIndexes[s - i - 1];
 
 
 	}
@@ -1085,45 +845,26 @@ std::vector<real> CardinalPoints::calcAllSystemMatrix()
 	/*****************************************initiate 3D matrix******************************************************/
 
 	vector < vector < vector<double> > > t;
-	for (int i = 0; i < 2; i++)
-	{
-
-		vector < vector < double > > w;
-		t.push_back(w);
-		for (int j = 0; j < 2; j++)
-		{
-			vector <double> v;
-			t[i].push_back(v);
-			for (int k = 0; k < 2 * s - 2; k++)
-			{
-				t[i][j].push_back(0);
-			}
-		}
-	}
-
+	t.resize(2);
+	t[0].resize(2);
+	t[1].resize(2);
+	t[0][0].resize(2 * s - 2);
+	t[0][1].resize(2 * s - 2);
+	t[1][0].resize(2 * s - 2);
+	t[1][1].resize(2 * s - 2);
 
 	vector < vector < vector<double> > > r;
-	for (int i = 0; i < 2; i++)
-	{
-
-		vector < vector < double > > xi;
-		r.push_back(xi);
-		for (int j = 0; j < 2; j++)
-		{
-			vector <double> zi;
-			r[i].push_back(zi);
-			for (int k = 0; k < 2 * s - 1; k++)
-			{
-				r[i][j].push_back(0);
-			}
-		}
-	}
+	r.resize(2);
+	r[0].resize(2);
+	r[1].resize(2);
+	r[0][0].resize(2 * s - 1);
+	r[0][1].resize(2 * s - 1);
+	r[1][0].resize(2 * s - 1);
+	r[1][1].resize(2 * s - 1);
 
 
 
 	/*******************************spherical surface************************************************/
-
-	double mult[2][2];
 
 	for (int k = 0; k < 2 * s - 2; k++)
 	{
@@ -1177,6 +918,7 @@ std::vector<real> CardinalPoints::calcAllSystemMatrix()
 	/**********************************************************************************************/
 	//cout << endl << endl;
 
+	double mult[2][2];
 	for (int z = 0; z < 2 * s - 2; z++)
 	{
 		mult[0][0] = 0;
@@ -1242,29 +984,13 @@ std::vector<real> CardinalPoints::calcAllSystemMatrix()
 	}
 
 
-	std::vector<double> matrixABCD;
-	matrixABCD.push_back(matrix2D[0][0]);
-	matrixABCD.push_back(matrix2D[0][1]);
-	matrixABCD.push_back(matrix2D[1][0]);
-	matrixABCD.push_back(matrix2D[1][1]);
+	
+	mAllSystemMatrix[0] = matrix2D[0][0];
+	mAllSystemMatrix[1] = matrix2D[0][1];
+	mAllSystemMatrix[2] = matrix2D[1][0];
+	mAllSystemMatrix[3] = matrix2D[1][1];
 
 
-	/*	cout <<endl << "System Matrix of all the surfaces: " << endl << endl;
-		for (int i = 0; i < 4; i++)
-		{
-			cout << " " << matrixABCD[i];
-			if (i == 1)
-			{
-				cout << " " << endl;
-
-			}
-			else
-				cout << "  ";
-		}
-
-		cout << " " << endl;*/
-
-	return matrixABCD;
 
 }
 

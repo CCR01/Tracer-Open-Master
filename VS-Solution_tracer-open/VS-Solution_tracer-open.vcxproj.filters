@@ -68,7 +68,6 @@
     <ClCompile Include="..\benchmark\testCalculateParaxialDistances\testCalculateParaxialDistances.cpp" />
     <ClCompile Include="..\OptimizeSystem\BuildSystemsForCombination.cpp" />
     <ClCompile Include="..\OptimizeSystem\calculateParaxialDistances.cpp" />
-    <ClCompile Include="..\benchmark\testCardinalPoints\testCardinalPoints.cpp" />
     <ClCompile Include="..\benchmark\testQwtPlots\testOPDQwtPlot.cpp" />
     <ClCompile Include="..\benchmark\testQwtPlots\TestRayTracingQwtPlot.cpp" />
     <ClCompile Include="..\benchmark\testQwtPlots\TestSpotDiagramQwtPlot.cpp" />
@@ -130,6 +129,7 @@
     <ClCompile Include="..\tests\testOptimizeSystemSuperFct_GeneticAndDLS\testOptimizeSystemSuperFct_GeneticAndDLS.cpp" />
     <ClCompile Include="..\OptimizeSystem\multiThreads\DLS_multiThreads12.cpp" />
     <ClCompile Include="..\tests\testDLS_multiThreads_12\testDLS_multiThreads_12.cpp" />
+    <ClCompile Include="..\tests\testCardinalPoints\testCardinalPoints.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Analyse\CardinalPoints.h" />
@@ -201,7 +201,6 @@
     <ClInclude Include="..\benchmark\testCalculateParaxialDistances\testCalculateParaxialDistances.h" />
     <ClInclude Include="..\OptimizeSystem\BuildSystemsForCombination.h" />
     <ClInclude Include="..\OptimizeSystem\calculateParaxialDistances.h" />
-    <ClInclude Include="..\benchmark\testCardinalPoints\testCardinalPoints.h" />
     <ClInclude Include="..\benchmark\testQwtPlots\testOPDQwtPlot.h" />
     <ClInclude Include="..\benchmark\testQwtPlots\TestRayTracingQwtPlot.h" />
     <ClInclude Include="..\benchmark\testQwtPlots\TestSpotDiagramQwtPlot.h" />
@@ -265,5 +264,6 @@
     <ClInclude Include="..\tests\testOptimizeSystemSuperFct_GeneticAndDLS\testOptimizeSystemSuperFct_GeneticAndDLS.h" />
     <ClInclude Include="..\OptimizeSystem\multiThreads\DLS_mulitThreads12.h" />
     <ClInclude Include="..\tests\testDLS_multiThreads_12\testDLS_multiThreads_12.h" />
+    <ClInclude Include="..\tests\testCardinalPoints\testCardinalPoints.h" />
   </ItemGroup>
 </Project>

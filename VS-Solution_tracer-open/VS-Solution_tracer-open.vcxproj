@@ -178,7 +178,6 @@
     <ClCompile Include="..\benchmark\testCalcCombinationVector\testCalcCombinationVector_Paraxial.cpp" />
     <ClCompile Include="..\benchmark\testCalcCombinationVector\testCalcCombinationVector_Seidel.cpp" />
     <ClCompile Include="..\benchmark\testCalculateParaxialDistances\testCalculateParaxialDistances.cpp" />
-    <ClCompile Include="..\benchmark\testCardinalPoints\testCardinalPoints.cpp" />
     <ClCompile Include="..\benchmark\testCompareTwoImages\testCompareTwoImagesAndImprove.cpp" />
     <ClCompile Include="..\benchmark\testEvaluateManyOptSys_RayTracing\testEvaluateManyOptSys_RayTracing.cpp" />
     <ClCompile Include="..\benchmark\testImageProcessing\TestImageProcessing.cpp" />
@@ -263,6 +262,7 @@
     <ClCompile Include="..\tests\ManagementTests\managementTests.cpp" />
     <ClCompile Include="..\tests\testApertureStop\testApertureStop.cpp" />
     <ClCompile Include="..\tests\testAsphericalSurface_LLT\testAsphericalSurface_LLT.cpp" />
+    <ClCompile Include="..\tests\testCardinalPoints\testCardinalPoints.cpp" />
     <ClCompile Include="..\tests\testDLS_multiThreads_12\testDLS_multiThreads_12.cpp" />
     <ClCompile Include="..\tests\testFillAS\testFillAS.cpp" />
     <ClCompile Include="..\tests\TestGenetic\TestGenetic.cpp" />
@@ -310,7 +310,6 @@
     <ClInclude Include="..\benchmark\testCalcCombinationVector\testCalcCombinationVector_Paraxial.h" />
     <ClInclude Include="..\benchmark\testCalcCombinationVector\testCalcCombinationVector_Seidel.h" />
     <ClInclude Include="..\benchmark\testCalculateParaxialDistances\testCalculateParaxialDistances.h" />
-    <ClInclude Include="..\benchmark\testCardinalPoints\testCardinalPoints.h" />
     <ClInclude Include="..\benchmark\testCompareTwoImages\testCompareTwoImagesAndImprove.h" />
     <ClInclude Include="..\benchmark\testEvaluateManyOptSys_RayTracing\testEvaluateManyOptSys_RayTracing.h" />
     <ClInclude Include="..\benchmark\testImageProcessing\TestImageProcessing.h" />
@@ -398,6 +397,7 @@
     <ClInclude Include="..\tests\ManagementTests\managementTests.h" />
     <ClInclude Include="..\tests\testApertureStop\testApertureStop.h" />
     <ClInclude Include="..\tests\testAsphericalSurface_LLT\testAsphericalSurface_LLT.h" />
+    <ClInclude Include="..\tests\testCardinalPoints\testCardinalPoints.h" />
     <ClInclude Include="..\tests\testDLS_multiThreads_12\testDLS_multiThreads_12.h" />
     <ClInclude Include="..\tests\testFillAS\testFillAS.h" />
     <ClInclude Include="..\tests\TestGenetic\TestGenetic.h" />

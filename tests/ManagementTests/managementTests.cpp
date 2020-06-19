@@ -9,6 +9,7 @@
 #include "..\testGlasses\testGlasses.h"
 #include "..\testParaxialLens_LLT\testParaxialLens_LLT.h"
 #include "..\testPlanGeometry\testPlanSurface.h"
+#include "..\testCardinalPoints\testCardinalPoints.h"
 
 ManagementTests::ManagementTests() {};
 ManagementTests::ManagementTests(std::vector<testWhat> testWhat_vec) :
@@ -114,6 +115,12 @@ bool ManagementTests::testSuperFct()
 		workTheSystem_test.push_back(checkPlanSurface);
 	}
 
+	if (testWhatInTestWhatVec(testWhat::tCardinalPoints) || testAll)
+	{
+		testCardinalPoints testCarPoints;
+		bool checkCardinalPoints = testCarPoints.superFuncTestCalcCardinalPoints();
+		workTheSystem_test.push_back(checkCardinalPoints);
+	}
 
 
 	return Math::checkTrueOfVectorElements(workTheSystem_test);

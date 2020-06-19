@@ -73,8 +73,6 @@
 
 #include "..\benchmark\Optimizer\testBuildSysForCombination.h"
 
-#include "..\benchmark\testCardinalPoints\testCardinalPoints.h"
-
 #include "..\benchmark\testQwtPlots\TestRayTracingQwtPlot.h"
 
 #include "..\benchmark\testQwtPlots\TestSpotDiagramQwtPlot.h"
@@ -142,13 +140,17 @@ int main(int argc, char **argv)
 	//ManagementTests managementTest(testWhatVec);
 	//workTheSystem.push_back(managementTest.testSuperFct());
 
+	std::vector<testWhat> testWhatVec_cardinalPoints = { testWhat::tCardinalPoints };
+	ManagementTests managementTest(testWhatVec_cardinalPoints);
+	workTheSystem.push_back(managementTest.testSuperFct());
+
 	//std::vector<benchWhat> benchWhatVec = { benchWhat::bALL };
 	//managementBenchmark managementBench(benchWhatVec);
 	//workTheSystem.push_back(managementBench.benchSuperFct());
 
-	testOptimizeSystemSuperFct_GeneticAndDLS testOptimizerSuperFct;
-	bool checkOptimizerSuperFct_GeneticAndDLS = testOptimizerSuperFct.testOptimizeSystemSysSupFct_GeneticDLS();
-	workTheSystem.push_back(checkOptimizerSuperFct_GeneticAndDLS);
+	//testOptimizeSystemSuperFct_GeneticAndDLS testOptimizerSuperFct;
+	//bool checkOptimizerSuperFct_GeneticAndDLS = testOptimizerSuperFct.testOptimizeSystemSysSupFct_GeneticDLS();
+	//workTheSystem.push_back(checkOptimizerSuperFct_GeneticAndDLS);
 
 	//// test genetic
 	//TestGenetic testGenetic;
