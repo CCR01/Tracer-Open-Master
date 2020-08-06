@@ -24,7 +24,6 @@
 #include "../Analyse/Spot.h"
 #include "Surfaces\ParaxialLens_LLT.h"
 #include "Interaction\DeflectedRayParaxialLens_LLT.h"
-#include "..\benchmark\RayAiming\BenchmarkRayAiming.h"
 #include "..\benchmark\BenchAnalyse\BenchmarkOpticalPathDifference.h"
 #include "..\benchmark\Plot\BenchPlotSpotDiagram.h"
 #include "..\benchmark\Plot\BenchPlotOPD.h"
@@ -99,7 +98,7 @@
 
 #include "..\benchmark\Optikkreis\Optikkreis.h"
 
-#include "..\benchmark\Optimizer\DLS\testDLS.h"
+#include "..\tests\testDLS\testDLS.h"
 
 
 
@@ -136,13 +135,13 @@ int main(int argc, char **argv)
 	std::vector<bool> workTheSystem;
 	// *****************************************************************************************************************
 
-	//std::vector<testWhat> testWhatVec = { testWhat::tALL };
-	//ManagementTests managementTest(testWhatVec);
-	//workTheSystem.push_back(managementTest.testSuperFct());
-
-	std::vector<testWhat> testWhatVec_cardinalPoints = { testWhat::tCardinalPoints };
-	ManagementTests managementTest(testWhatVec_cardinalPoints);
+	std::vector<testWhat> testWhatVec = { testWhat::tDLS_optiRMS};
+	ManagementTests managementTest(testWhatVec);
 	workTheSystem.push_back(managementTest.testSuperFct());
+
+	//std::vector<testWhat> testWhatVec_cardinalPoints = { testWhat::tCardinalPoints };
+	//ManagementTests managementTest(testWhatVec_cardinalPoints);
+	//workTheSystem.push_back(managementTest.testSuperFct());
 
 	//std::vector<benchWhat> benchWhatVec = { benchWhat::bALL };
 	//managementBenchmark managementBench(benchWhatVec);
@@ -152,17 +151,8 @@ int main(int argc, char **argv)
 	//bool checkOptimizerSuperFct_GeneticAndDLS = testOptimizerSuperFct.testOptimizeSystemSysSupFct_GeneticDLS();
 	//workTheSystem.push_back(checkOptimizerSuperFct_GeneticAndDLS);
 
-	//// test genetic
-	//TestGenetic testGenetic;
-	//bool checkGenetic = testGenetic.testGeneticSuperFunc();
-	//workTheSystem.push_back(checkGenetic);
-	//bool checkGeneticModes = testGenetic.testGenerationModes(-1000.0, 1000.0, 100.0, 50000);
-	//workTheSystem.push_back(checkGeneticModes);
 
-	////// DLS
-	//testDLS testDLS;
-	//bool checkDLS = testDLS.testDLS_superFct();
-	//workTheSystem.push_back(checkDLS);
+
 
 	//// DLS multi threads 12
 	//testDLS_multiThreads_12 testDLS_multi_12;
@@ -205,12 +195,7 @@ int main(int argc, char **argv)
 	//bool checkSysIOC2020 = system_IOC2020_Dresden.systemFor_IOC2020_Dresten();
 	//workTheSystem.push_back(checkSysIOC2020);
 	
-	//// RayAiming
-	//BenchmarkRayAiming checkRayAiming;
-	//bool checkRayAiming_inf = checkRayAiming.checkRayAimingSuperFct_inf();
-	//workTheSystem.push_back(checkRayAiming_inf);
-	//bool checkRayAiming_obj = checkRayAiming.checkRayAimingSuperFct_obj();
-	//workTheSystem.push_back(checkRayAiming_obj);
+
 
 	//// lens replace
 	//testLensReplace testLensRep;

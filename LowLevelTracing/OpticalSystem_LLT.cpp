@@ -124,6 +124,17 @@ std::shared_ptr<SurfaceIntersectionRay_LLT> PosAndIntsectionSurfaceStruct::getSu
 	return mInteractinSurface;
 }
 
+PosAndIntsectionSurfaceStruct PosAndIntsectionSurfaceStruct::clone()
+{
+	std::shared_ptr<SurfaceIntersectionRay_LLT> newSurface_ptr = mInteractinSurface->clone();
+	int newPos = mPosition;
+
+	PosAndIntsectionSurfaceStruct newPosAndSurface(newPos, newSurface_ptr);
+
+	return newPosAndSurface;
+
+}
+
 PosAndInteractionStruct::PosAndInteractionStruct() {};
 PosAndInteractionStruct::PosAndInteractionStruct(int pos, std::shared_ptr<InteractionRay_LLT> intact) :
 mPosition(pos),

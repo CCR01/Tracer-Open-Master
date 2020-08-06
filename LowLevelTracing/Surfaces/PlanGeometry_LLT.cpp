@@ -248,17 +248,31 @@ double PlanGeometry_LLT::getRadius()
 	return 999.0;
 }
 
-// get focal length side A
-real PlanGeometry_LLT::getFocalLength_A()
+// calc focal length
+void PlanGeometry_LLT::calcFocalLength()
 {
-	std::cout << "the plane surface has an focal length of -inf (-999999999999999999)" << std::endl;
-	return -999999999999999999;
+	if (mDirectionPlan.getZ() > 0)
+	{
+		mFocalLength = -999999999999.0;
+		mFocalLength_dash =  999999999999.0;
+	}
+
+	else
+	{
+		mFocalLength =  999999999999.0;
+		mFocalLength_dash = -999999999999.0;
+	}
+}
+
+// get focal length side A
+real PlanGeometry_LLT::getFocalLength()
+{
+	return mFocalLength;
 }
 // get focal length side B
-real PlanGeometry_LLT::getFocalLength_B()
+real PlanGeometry_LLT::getFocalLength_dash()
 {
-	std::cout << "the plane surface has an focal length of inf (999999999999999999)" << std::endl;
-	return 999999999999999999;
+	return mFocalLength_dash;
 }
 
 // get refractive index side A

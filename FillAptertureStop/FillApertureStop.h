@@ -44,6 +44,9 @@ public:
 
 	~FillApertureStop();
 
+	// fill AS with points
+	void fillASWithPoints(infosAS infosAS_OptSys, unsigned int rings, unsigned int arms);
+
 	// get number of rings in aperture stop
 	unsigned int getNumberOfRingsInApertureStop();
 

@@ -38,9 +38,8 @@ VectorStructR3 Math::convertAngleInDirection(real angleDegreesX, real angleDegre
 	//// *** *** //
 
 	VectorStructR3 returnVec3(0.0,0.0,1.0);
-	returnVec3.setY((tan(angleDegreesY * PI / 180)));
-	returnVec3.setX((tan(angleDegreesX * PI / 180)));
-
+	returnVec3.setX((tan(angleDegreesX * PI / 180.0)));
+	returnVec3.setY((tan(angleDegreesY * PI / 180.0)));
 	   	 
 
 	return returnVec3;

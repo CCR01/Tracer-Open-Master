@@ -168,6 +168,20 @@ real defaultParaDLS::get_Max_DamNumBefSwitchFactors()
 {
 	return m_Max_DampingNumberBeforeSwitchFactors;
 }
+// calculate rms using ray tracing
+void defaultParaDLS::turn_ON_calcRMSusingRayTracing()
+{
+	mCalcRMSaccordingToRayTracing = true;
+}
+void defaultParaDLS::turn_OFF_caclRMSusingRayTracing()
+{
+	mCalcRMSaccordingToRayTracing = false;
+}
+bool defaultParaDLS::getCalcRMSusingRayTracing()
+{
+	return mCalcRMSaccordingToRayTracing;
+}
+
 
 DLS::DLS() {};
 DLS::DLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms) :
@@ -178,6 +192,7 @@ mWavelenght_vec(wavelengths),
 mRings(rings),
 mArms(arms)
 {
+	mInf_Obj = objectPoint_inf_obj::obj;
 	loadDefaultParameter();
 	loadAdditionalDefaultParameter();
 	buildOptSys_LLT_wave_vec();	
@@ -198,6 +213,7 @@ DLS::DLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR
 	mArms(arms),
 	mDefaultParamDLS(defaultParameterDLS)
 {
+	mInf_Obj = objectPoint_inf_obj::obj;
 	loadAdditionalDefaultParameter();
 	buildOptSys_LLT_wave_vec();
 	mParameterVar.loadSystemParameter(mOpticalSystemEle_initial);
@@ -220,6 +236,7 @@ void DLS::buildAndLoad(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector
 	mArms = arms;
 	mDefaultParamDLS = defaultParameterDLS;
 
+	mInf_Obj = objectPoint_inf_obj::obj;
 	loadAdditionalDefaultParameter();
 	buildOptSys_LLT_wave_vec();
 	mParameterVar.loadSystemParameter(mOpticalSystemEle_initial);
@@ -326,7 +343,7 @@ void DLS::loadDefaultParameter()
 	mDefaultParamDLS.set_Min_DamNumBefSwitchFactors(0.00001);
 	mDefaultParamDLS.set_Max_DamNumBefSwitchFactors(9999.0);
 
-
+	mDefaultParamDLS.turn_ON_calcRMSusingRayTracing();
 }
 
 
@@ -442,15 +459,16 @@ void DLS::changePosition_Z_SurfaceTo(unsigned int surfaceNo, real newPositionZ)
 
 }
 
-real DLS::calculateMeritVal_RMS(const VectorStructR3& fieldPoint)
+real DLS::calculateMeritVal_RMS_obj(const VectorStructR3& fieldPoint)
 {
-	real returnMerit_RMS{};
+	real returnMerit_RMS = 0.0;
 	FillApertureStop fillAperStop(mChangedOptSys_LLT_vec[0], mRings, mArms);
 	unsigned int tempWeightWavelengh;
-	
+
 	// ray aiming
 	RayAiming rayAiming(mChangedOptSys_LLT_vec[0]);
-	rayAiming.loadImportantInfosForRayAiming();
+	//rayAiming.loadImportantInfosForRayAiming();
+	rayAiming.turn_ON_GlobalStopIfToManyRaysAreNotAimed();
 
 	std::vector<LightRayStruct> tempAimedLightRays{};
 	SequentialRayTracing seqTrace;
@@ -461,39 +479,133 @@ real DLS::calculateMeritVal_RMS(const VectorStructR3& fieldPoint)
 
 	for (unsigned int i = 0; i < mNumOptSys; ++i)
 	{
+		rayAiming.setOpticalSystem_LLT(mChangedOptSys_LLT_vec[i]);
 		tempWeightWavelengh = mWeightWavelenght_vec[i];
 		tempAimedLightRays = rayAiming.rayAimingMany_obj(fillAperStop.getPointsInAS(), fieldPoint, mDefaultLight, mDefaultParamDLS.getStartRefractivIndex());
-		
-		// trace ray
-		seqTrace.setOpticalSystem(mChangedOptSys_LLT_vec[i]);
-		seqTrace.seqRayTracingWithVectorOfLightRays(tempAimedLightRays);
+		if (rayAiming.getGlobalStop())
+		{
+			i = mNumOptSys + i;
+		}
+		else
+		{
+			// trace ray
+			seqTrace.setOpticalSystem(mChangedOptSys_LLT_vec[i]);
+			seqTrace.seqRayTracingWithVectorOfLightRays(tempAimedLightRays);
+			
+		}
 
-		rayAiming.setOpticalSystem_LLT(mChangedOptSys_LLT_vec[i]);
+
 	}
-	
-	// check for vignetting
-	real numberExpecteInterPoints = fillAperStop.getPointsInAS().size();
-	std::vector<VectorStructR3> interPoints_vec_lastSurface = seqTrace.getAllInterPointsAtSurface_i_filtered(mPosLastSurface);
 
+	real numberInterPoints;
+	real numberExpecteInterPoints;
 
-	real numberInterPoints = interPoints_vec_lastSurface.size() / mNumOptSys;
-
-	// just for debugging
-	// std::cout << "number inter points last surface: " << numberInterPoints << std::endl;
-
-	if (std::abs(numberExpecteInterPoints - numberInterPoints) <= 0.0001)
-	{
-		Spot spot(interPoints_vec_lastSurface, interPoints_vec_lastSurface[0]);
-		returnMerit_RMS = spot.getRMS_µm();
-	}
-	else // there is vignetting
+	if (rayAiming.getGlobalStop())
 	{
 		returnMerit_RMS = oftenUse::getInfReal();
-		//mDampingNum = mDampingNum * 10.0;
 	}
 
+	else
+	{
+		// check for vignetting
+		numberExpecteInterPoints = fillAperStop.getPointsInAS().size();
+		numberInterPoints = seqTrace.getAllInterPointsAtSurface_i_filtered(mPosLastSurface).size() / mNumOptSys;
+
+		if (std::abs(numberExpecteInterPoints - numberInterPoints) <= 0.0001)
+		{
+			std::vector<VectorStructR3> interPointsLastSurface = seqTrace.getAllInterPointsAtSurface_i_filtered(mPosLastSurface);
+
+			Spot spot(interPointsLastSurface, interPointsLastSurface[0]);
+			returnMerit_RMS = spot.getRMS_µm();
+		}
+
+		else // there is vignetting
+		{
+			returnMerit_RMS = oftenUse::getInfReal();
+
+		}
+
+	}
+
+	// just for debugging
+	//std::cout << "number inter points last surface: " << numberInterPoints << std::endl;
 
 	return returnMerit_RMS;
+}
+
+real DLS::calculateMeritVal_RMS_inf(real angleX, real angleY)
+{
+	real returnMerit_RMS{};
+	FillApertureStop fillAperStop(mChangedOptSys_LLT_vec[0], mRings, mArms);
+	unsigned int tempWeightWavelengh;
+
+	// ray aiming
+	RayAiming rayAiming(mChangedOptSys_LLT_vec[0]);
+	rayAiming.loadImportantInfosForRayAiming();
+	rayAiming.turn_ON_GlobalStopIfToManyRaysAreNotAimed();
+
+	std::vector<LightRayStruct> tempAimedLightRays{};
+	SequentialRayTracing seqTrace;
+	seqTrace.setTraceToSurface(mPosLastSurface);
+
+	std::vector<VectorStructR3> tempInterPoints;
+	std::vector<VectorStructR3> allInterPoints;
+
+	for (unsigned int i = 0; i < mNumOptSys; ++i)
+	{
+		rayAiming.setOpticalSystem_LLT(mChangedOptSys_LLT_vec[i]);
+		tempWeightWavelengh = mWeightWavelenght_vec[i];
+		tempAimedLightRays = rayAiming.rayAimingMany_inf(fillAperStop.getPointsInAS(), angleX, angleY, mDefaultLight, mDefaultParamDLS.getStartRefractivIndex());
+		if (rayAiming.getGlobalStop())
+		{
+			i = mNumOptSys + i;
+		}
+		else
+		{
+			// trace ray
+			seqTrace.setOpticalSystem(mChangedOptSys_LLT_vec[i]);
+			seqTrace.seqRayTracingWithVectorOfLightRays(tempAimedLightRays);
+			
+		}
+
+
+	}
+
+	real numberInterPoints;
+	real numberExpecteInterPoints;
+
+	if (rayAiming.getGlobalStop())
+	{
+		returnMerit_RMS = oftenUse::getInfReal();
+	}
+
+	else
+	{
+		// check for vignetting
+		numberExpecteInterPoints = fillAperStop.getPointsInAS().size();
+		numberInterPoints = seqTrace.getAllInterPointsAtSurface_i_filtered(mPosLastSurface).size() / mNumOptSys;
+
+		if (std::abs(numberExpecteInterPoints - numberInterPoints) <= 0.0001)
+		{
+			std::vector<VectorStructR3> interPointsLastSurface = seqTrace.getAllInterPointsAtSurface_i_filtered(mPosLastSurface);
+
+			Spot spot(interPointsLastSurface, interPointsLastSurface[0]);
+			returnMerit_RMS = spot.getRMS_µm();
+		}
+
+		else // there is vignetting
+		{
+			returnMerit_RMS = oftenUse::getInfReal();
+
+		}
+
+	}
+
+	// just for debugging
+	//std::cout << "number inter points last surface: " << numberInterPoints << std::endl;
+
+	return returnMerit_RMS;
+
 }
 
 void DLS::calculateAberrationFct()
@@ -501,19 +613,29 @@ void DLS::calculateAberrationFct()
 		
 	VectorStructR3 tempFieldPoint{};
 	real tempWeightFieldPoint{};
-	real tempMeritField{};
+	real tempMeritField = 0.0;
 
-	for (unsigned int i = 0; i < mNumFieldPoints; ++i)
+	if (mInf_Obj == objectPoint_inf_obj::obj && mDefaultParamDLS.getCalcRMSusingRayTracing())
 	{
-		tempFieldPoint = mFields_vec[i];
-		tempWeightFieldPoint = mWeightFields_vec[i];
-		tempMeritField = calculateMeritVal_RMS(tempFieldPoint);
-		mAberrationFct_F0[i] = tempWeightFieldPoint * tempMeritField;
+		for (unsigned int i = 0; i < mNumFieldPoints; ++i)
+		{
+			tempFieldPoint = mFields_vec[i];
+			tempWeightFieldPoint = mWeightFields_vec[i];
+			tempMeritField = calculateMeritVal_RMS_obj(tempFieldPoint);
+			mAberrationFct_F0[i] = tempWeightFieldPoint * tempMeritField;
+		}
 	}
+
+	//else if (mInf_Obj == objectPoint_inf_obj::inf && mDefaultParamDLS.getCalcRMSusingRayTracing())
+	//{
+	//	make calc rms inf
+	//}
+ 
+
 
 }
 
-std::vector<real> DLS::calculateDeviation(real oldVal, real newVal, unsigned surfaceNum, kindParaOptSys tempKindPara)
+std::vector<real> DLS::calculateDeviation_rmsRayTrace(real oldVal, real newVal, unsigned surfaceNum, kindParaOptSys tempKindPara)
 {
 	real tempNewMeritValue{};
 	real tempDiviation;
@@ -527,7 +649,7 @@ std::vector<real> DLS::calculateDeviation(real oldVal, real newVal, unsigned sur
 		changeRadiusSurfaceTo(surfaceNum, newVal);
 		for(unsigned int i=0; i< mNumFieldPoints;++i)
 		{ 
-			tempNewMeritValue = calculateMeritVal_RMS(mFields_vec[i]);
+			tempNewMeritValue = calculateMeritVal_RMS_obj(mFields_vec[i]);
 			
 			tempDiviation = (tempNewMeritValue - mAberrationFct_F0[i]) / mDefaultParamDLS.getFactorRadiusDeviation();
 				
@@ -544,7 +666,7 @@ std::vector<real> DLS::calculateDeviation(real oldVal, real newVal, unsigned sur
 		mThickness_vec[surfaceNum] = newVal;
 		for (unsigned int i = 0; i < mNumFieldPoints; ++i)
 		{
-		tempNewMeritValue = calculateMeritVal_RMS(mFields_vec[i]);
+		tempNewMeritValue = calculateMeritVal_RMS_obj(mFields_vec[i]);
 		tempDiviation = (tempNewMeritValue - mAberrationFct_F0[i]) / mDefaultParamDLS.getFactorPositionDeviation();
 		mReturnDeviation_vec[i] = tempDiviation;
 		}
@@ -569,36 +691,37 @@ void DLS::calcJacobiMatrixDeviation_Aij()
 	unsigned int tempSurfaceNum{};
 	kindParaOptSys tempKindPara{};
 
-
-	for (unsigned int i = 0; i < mNumVar; ++i)
-	{
-		tempSurfaceNum = surfaceNumWithVar[i];
-		tempKindPara = mParameterVar.getAllParaWithVar()[i];
-
-
-		if (tempKindPara == radiusVar)
+	if (mDefaultParamDLS.getCalcRMSusingRayTracing())
+	{ 
+		for (unsigned int i = 0; i < mNumVar; ++i)
 		{
-			tempVal = mChangedOptSys_LLT_vec[0].getPosAndInteractingSurface()[tempSurfaceNum].getSurfaceInterRay_ptr()->getRadius();
-			newVal = tempVal + mDefaultParamDLS.getFactorRadiusDeviation();
+			tempSurfaceNum = surfaceNumWithVar[i];
+			tempKindPara = mParameterVar.getAllParaWithVar()[i];
 
-			mDeviationAberrationFct = calculateDeviation(tempVal, newVal, tempSurfaceNum, tempKindPara);
 
-			// just for debugging
-			// std::cout << "deviation surface: " << tempSurfaceNum << " " << mDeviationAberrationFct[0] + mDeviationAberrationFct[1] + mDeviationAberrationFct[2] << std::endl;
-			
+			if (tempKindPara == radiusVar)
+			{
+				tempVal = mChangedOptSys_LLT_vec[0].getPosAndInteractingSurface()[tempSurfaceNum].getSurfaceInterRay_ptr()->getRadius();
+				newVal = tempVal + mDefaultParamDLS.getFactorRadiusDeviation();
+
+				mDeviationAberrationFct = calculateDeviation_rmsRayTrace(tempVal, newVal, tempSurfaceNum, tempKindPara);
+
+				// just for debugging
+				// std::cout << "deviation surface: " << tempSurfaceNum << " " << mDeviationAberrationFct[0] + mDeviationAberrationFct[1] + mDeviationAberrationFct[2] << std::endl;
+
+			}
+
+			else if (tempKindPara == thickness_Var)
+			{
+				tempVal = mThickness_vec[tempSurfaceNum];
+				newVal = tempVal + mDefaultParamDLS.getFactorPositionDeviation();
+
+				mDeviationAberrationFct = calculateDeviation_rmsRayTrace(tempVal, newVal, tempSurfaceNum, tempKindPara);
+			}
+
+
+			fillJacobiMatrix(mDeviationAberrationFct, i);
 		}
-
-		else if (tempKindPara == thickness_Var)
-		{
-			tempVal = mThickness_vec[tempSurfaceNum];
-			newVal = tempVal + mDefaultParamDLS.getFactorPositionDeviation();
-
-			mDeviationAberrationFct = calculateDeviation(tempVal, newVal, tempSurfaceNum, tempKindPara);
-		}
-
-			
-		fillJacobiMatrix(mDeviationAberrationFct, i);
-	
 	}
 
 	// just for debugging
@@ -830,9 +953,9 @@ void DLS::setNewSystemParameter()
 
 			newVal = checkBounderiesAndReturnNewVal(tempVal, i, tempMinVal, tempMaxVal, tempWithout_min, tempWithout_max, tempSurfaceNum, tempKindParameter);
 
-			// just for debugging
-			// std::cout << "set radius of surface " << tempSurfaceNum << " to " << newVal << std::endl;
-			// std::cout << std::endl;
+			//just for debugging
+			std::cout << "set radius of surface " << tempSurfaceNum << " to " << newVal << std::endl;
+			std::cout << std::endl;
 
 			changeRadiusSurfaceTo(tempSurfaceNum, newVal);
 
@@ -888,7 +1011,7 @@ void DLS::saveCurMeritAndBestMeritValue()
 	}
 
 	// just for debugging --> print best merit value
-	// std::cout << "best merit value: " << mBestMeritVal << std::endl;
+	std::cout << "best merit value: " << mBestMeritVal << std::endl;
 }
 
 bool DLS::checkMeritBetter()
@@ -1261,6 +1384,18 @@ void DLS::set_Max_DamNumBefSwitchFactors(real maxBeforeSwitchFactors)
 real DLS::get_Max_DamNumBefSwitchFactors()
 {
 	return mDefaultParamDLS.get_Max_DamNumBefSwitchFactors();
+}
+void DLS::turn_ON_calcRMSusingRayTracing()
+{
+	mDefaultParamDLS.turn_ON_calcRMSusingRayTracing();
+}
+void DLS::turn_OFF_caclRMSusingRayTracing()
+{
+	mDefaultParamDLS.turn_OFF_caclRMSusingRayTracing();
+}
+bool DLS::getCalcRMSusingRayTracing()
+{
+	return mDefaultParamDLS.getCalcRMSusingRayTracing();
 }
 // *** *** ///
 

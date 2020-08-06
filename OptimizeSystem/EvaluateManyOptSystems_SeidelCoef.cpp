@@ -348,7 +348,7 @@ void EvaluateManyOptSystems_SeidelCoef::calcAllSeidelCoefficients(std::vector<Op
 		// TODO: we just need the EFFL to calculate the seidel coeffizients 
 		// -> write a function that just calc the EFFL and not all cardinal points --> TOD CR: DO that later!
 		// ***calc EFL
-		CardinalPoints tempCardinal(tempOptSys_Ele.getOptSys_LLT_buildSystem());
+		CardinalPoints tempCardinal(tempOptSys_Ele.getOptSys_LLT_buildSystem(), objectPoint_inf_obj::obj);
 		tempEFFL = tempCardinal.getEFL();
 
 		// *** calc marginal ray
@@ -417,7 +417,7 @@ real EvaluateManyOptSystems_SeidelCoef::calcMeritValue(SeidelCoefficients seidel
 	}
 	else
 	{
-		conPP = calcContributionMerit(mSettingMeritFunction.getWeightPP(), mSettingMeritFunction.getPP(), cardinaPoints.getPrincipaPlan(), comparisonValue);
+		conPP = calcContributionMerit(mSettingMeritFunction.getWeightPP(), mSettingMeritFunction.getPP(), cardinaPoints.getPP_obj(), comparisonValue);
 	}
 
 	// AntiPP
@@ -427,7 +427,7 @@ real EvaluateManyOptSystems_SeidelCoef::calcMeritValue(SeidelCoefficients seidel
 	}
 	else
 	{
-		conAntiPP = calcContributionMerit(mSettingMeritFunction.getWeightAntiPP(), mSettingMeritFunction.getAntiPP(), cardinaPoints.getAntiPP(), comparisonValue);
+		conAntiPP = calcContributionMerit(mSettingMeritFunction.getWeightAntiPP(), mSettingMeritFunction.getAntiPP(), cardinaPoints.getPP_ima(), comparisonValue);
 	}
 
 	// EXPP_accordingToLastSurface
@@ -437,7 +437,7 @@ real EvaluateManyOptSystems_SeidelCoef::calcMeritValue(SeidelCoefficients seidel
 	}
 	else
 	{
-		conEXPP_accordingToLastSurface = calcContributionMerit(mSettingMeritFunction.getWeightEXPP_accordingToLastSurface(), mSettingMeritFunction.getEXPP_accordingToLastSurface(), cardinaPoints.getExitPupilPosition_lastSurface(), comparisonValue);
+		conEXPP_accordingToLastSurface = calcContributionMerit(mSettingMeritFunction.getWeightEXPP_accordingToLastSurface(), mSettingMeritFunction.getEXPP_accordingToLastSurface(), cardinaPoints.getEXPP_lastSurface(), comparisonValue);
 	}
 
 	// EXPP_inGlobalCoordinatSystem
@@ -447,7 +447,7 @@ real EvaluateManyOptSystems_SeidelCoef::calcMeritValue(SeidelCoefficients seidel
 	}
 	else
 	{
-		conEXPP_inGlobalCoordinatSystem = calcContributionMerit(mSettingMeritFunction.getWeightEXPP_global(), mSettingMeritFunction.getEXPP_global(), cardinaPoints.getExitPupilPosition_globalCoori(), comparisonValue);
+		conEXPP_inGlobalCoordinatSystem = calcContributionMerit(mSettingMeritFunction.getWeightEXPP_global(), mSettingMeritFunction.getEXPP_global(), cardinaPoints.getEXPP_globalCoori(), comparisonValue);
 	}
 
 	// EXPD
@@ -457,7 +457,7 @@ real EvaluateManyOptSystems_SeidelCoef::calcMeritValue(SeidelCoefficients seidel
 	}
 	else
 	{
-		conEXPD = calcContributionMerit(mSettingMeritFunction.getWeightEXPD(), mSettingMeritFunction.getEXPD(), cardinaPoints.getExitPupilDiameter(), comparisonValue);
+		conEXPD = calcContributionMerit(mSettingMeritFunction.getWeightEXPD(), mSettingMeritFunction.getEXPD(), cardinaPoints.getEXPD(), comparisonValue);
 	}
 
 	// conMag

@@ -26,11 +26,11 @@ private:
 
 };
 
-class BenchmarkRayAiming
+class testRayAiming
 {
 public:
-	BenchmarkRayAiming() {};
-	~BenchmarkRayAiming() {};
+	testRayAiming() {};
+	~testRayAiming() {};
 
 	// check ray aiming --> obj
 	bool checkRayAimingSuperFct_obj();
@@ -39,6 +39,7 @@ public:
 	bool checkRayAimingE2_obj();
 	bool checkRayAimingE3_obj();
 	bool checkRayAimingE4_obj();
+	bool checkRayAimingE5_obj();
 
 	// check ray aiming --> inf
 	bool checkRayAimingSuperFct_inf();
@@ -47,7 +48,7 @@ public:
 	bool checkRayAimingE2_inf();
 	bool checkRayAimingE3_inf();
 	bool checkRayAimingE4_inf();
-
+	bool checkRayAimingE5_inf();
 
 	// ***obj*** //
 	lightRay_interPoint_onTarget checkRayAimingSingleRay_obj(/*opt sys LLT*/ OpticalSystem_LLT& const optSys_LLT, /*ray origin*/ VectorStructR3& const rayOrigin, /*target point*/ VectorStructR3& const  targetPoint, /*light*/ Light_LLT& const Light, /*accurency*/ real accurency);

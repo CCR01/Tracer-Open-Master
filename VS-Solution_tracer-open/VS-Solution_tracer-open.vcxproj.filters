@@ -14,7 +14,6 @@
     <ClCompile Include="..\benchmark\Plot\BenchmarkPlotOPD.cpp" />
     <ClCompile Include="..\benchmark\Plot\BenchmarkPlotSpotDiagram.cpp" />
     <ClCompile Include="..\benchmark\Plot\BenchPlot2D.cpp" />
-    <ClCompile Include="..\benchmark\RayAiming\BenchmarkRayAiming.cpp" />
     <ClCompile Include="..\benchmark\SequentialRayTracer\BenchmarkSequentialRayTracer.cpp" />
     <ClCompile Include="..\benchmark\Spot\BenchmarkeSpot.cpp" />
     <ClCompile Include="..\benchmark\ZemaxExamples\Objectives\Cooke40DegreeField.cpp" />
@@ -105,7 +104,6 @@
     <ClCompile Include="..\benchmark\Optikkreis\Optikkreis.cpp" />
     <ClCompile Include="..\oftenUseNamespace\oftenUseNamespace.cpp" />
     <ClCompile Include="..\OptimizeSystem\DampedLeastSquares.cpp" />
-    <ClCompile Include="..\benchmark\Optimizer\DLS\testDLS.cpp" />
     <ClCompile Include="..\tests\DLSmulticheck\DLSmulticheck.cpp" />
     <ClCompile Include="..\OptimizeSystem\Genetic.cpp" />
     <ClCompile Include="..\tests\TestGenetic\TestGenetic.cpp" />
@@ -130,6 +128,10 @@
     <ClCompile Include="..\OptimizeSystem\multiThreads\DLS_multiThreads12.cpp" />
     <ClCompile Include="..\tests\testDLS_multiThreads_12\testDLS_multiThreads_12.cpp" />
     <ClCompile Include="..\tests\testCardinalPoints\testCardinalPoints.cpp" />
+    <ClCompile Include="..\tests\testRayAiming\testRayAiming.cpp" />
+    <ClCompile Include="..\RayAiming\RayAimingSuperFct.cpp" />
+    <ClCompile Include="..\tests\testRayAimingSuperFct\testRayAiming_multiThreads_12.cpp" />
+    <ClCompile Include="..\tests\testDLS\testDLS.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Analyse\CardinalPoints.h" />
@@ -145,7 +147,6 @@
     <ClInclude Include="..\benchmark\Plot\BenchPlot2D.h" />
     <ClInclude Include="..\benchmark\Plot\BenchPlotOPD.h" />
     <ClInclude Include="..\benchmark\Plot\BenchPlotSpotDiagram.h" />
-    <ClInclude Include="..\benchmark\RayAiming\BenchmarkRayAiming.h" />
     <ClInclude Include="..\benchmark\SequentialRayTracer\BenchmarkSequentialRayTracer.h" />
     <ClInclude Include="..\benchmark\Spot\BenchmarkSpot.h" />
     <ClInclude Include="..\benchmark\ZemaxExamples\Objectives\Cooke40DegreeField.h" />
@@ -242,7 +243,6 @@
     <ClInclude Include="..\benchmark\Optikkreis\Optikkreis.h" />
     <ClInclude Include="..\oftenUseNamespace\oftenUseNamespace.h" />
     <ClInclude Include="..\OptimizeSystem\DampedLeastSquares.h" />
-    <ClInclude Include="..\benchmark\Optimizer\DLS\testDLS.h" />
     <ClInclude Include="..\tests\DLSmulticheck\DLSmulticheck.h" />
     <ClInclude Include="..\OptimizeSystem\Genetic.h" />
     <ClInclude Include="..\tests\TestGenetic\TestGenetic.h" />
@@ -265,5 +265,9 @@
     <ClInclude Include="..\OptimizeSystem\multiThreads\DLS_mulitThreads12.h" />
     <ClInclude Include="..\tests\testDLS_multiThreads_12\testDLS_multiThreads_12.h" />
     <ClInclude Include="..\tests\testCardinalPoints\testCardinalPoints.h" />
+    <ClInclude Include="..\tests\testRayAiming\testRayAiming.h" />
+    <ClInclude Include="..\RayAiming\RayAimingSuperFct.h" />
+    <ClInclude Include="..\tests\testRayAimingSuperFct\testRayAiming_multiThreads_12.h" />
+    <ClInclude Include="..\tests\testDLS\testDLS.h" />
   </ItemGroup>
 </Project>

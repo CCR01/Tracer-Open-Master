@@ -133,6 +133,7 @@ struct PosAndIntsectionSurfaceStruct
 {
 	PosAndIntsectionSurfaceStruct();
 	PosAndIntsectionSurfaceStruct(unsigned int const pos, std::shared_ptr<SurfaceIntersectionRay_LLT> interactinSur);
+	PosAndIntsectionSurfaceStruct clone();
 	~PosAndIntsectionSurfaceStruct();
 	
 	// set position
@@ -144,6 +145,8 @@ struct PosAndIntsectionSurfaceStruct
 	void setInteractionSurface_prt(std::shared_ptr<SurfaceIntersectionRay_LLT> setSurInterRay_LLT_ptr);
 	// get interaction surface
 	std::shared_ptr<SurfaceIntersectionRay_LLT> getSurfaceInterRay_ptr() const;
+
+	
 
 public:
 	int mPosition;

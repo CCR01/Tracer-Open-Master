@@ -118,6 +118,19 @@ void defaultParaGenetic::setChooseValueMode(chooseValueForGenerationMode chooseM
 {
 	mChooseValueMode = chooseMode;
 }
+// check rms by ray tracing
+bool defaultParaGenetic::getCheckRMS_rayTracing()
+{
+	return mCheckRMS_rayTrac;
+}
+void defaultParaGenetic::set_ON_CheckRMS_rayTracing()
+{
+	mCheckRMS_rayTrac = true;
+}
+void defaultParaGenetic::set_OFF_CheckRMS_rayTracing()
+{
+	mCheckRMS_rayTrac = false;
+}
 
 
 
@@ -158,6 +171,7 @@ Genetic::Genetic(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<Vecto
 	mPopulation(population),
 	mDistribution(0.0, 300.0)
 {
+	mInf_Obj = objectPoint_inf_obj::obj;
 	loadDefaultPra();
 	buildOptSys_LLT_wave_vec();
 	mParameterVar.loadSystemParameter(mOpticalSystemEle_initial);
@@ -166,6 +180,27 @@ Genetic::Genetic(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<Vecto
 	loadThicknessParameter();
 
 }
+
+Genetic::Genetic(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, unsigned int /*populatuion*/ population, targetCardinalPointsStruct targetCardinalPoints) :
+	mOpticalSystemEle_initial(optSysEle),
+	mFields_vec(fields),
+	mWavelength_vec(wavelengths),
+	mRings(rings),
+	mArms(arms),
+	mPopulation(population),
+	mDistribution(0.0, 300.0),
+	mTargetCardinalPoints(targetCardinalPoints)
+{
+	mInf_Obj = objectPoint_inf_obj::obj;
+	loadDefaultPra();
+	buildOptSys_LLT_wave_vec();
+	mParameterVar.loadSystemParameter(mOpticalSystemEle_initial);
+	resizeAllRelevantStdVectorsAndCalcConst();
+	loadWithoutMinMaxDefault();
+	loadThicknessParameter();
+	
+}
+
 Genetic::Genetic(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, unsigned int /*populatuion*/ population, /*default parameter*/ defaultParaGenetic defaultParameterGenetic) :
 	mOpticalSystemEle_initial(optSysEle),
 	mFields_vec(fields),
@@ -176,12 +211,34 @@ Genetic::Genetic(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<Vecto
 	mDistribution(0.0, 300.0),
 	mDefaultParaGenetic(defaultParameterGenetic)
 {
+	mInf_Obj = objectPoint_inf_obj::obj;
+	buildOptSys_LLT_wave_vec();
+	mParameterVar.loadSystemParameter(mOpticalSystemEle_initial);
+	resizeAllRelevantStdVectorsAndCalcConst();
+	loadWithoutMinMaxDefault();
+	loadThicknessParameter();
+	
+}
+
+Genetic::Genetic(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<real> /*angleX*/ angleX, std::vector<real> /*angleY*/ angleY, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, unsigned int /*populatuion*/ population) :
+	mOpticalSystemEle_initial(optSysEle),
+	mAngleX(angleX),
+	mAngleY(angleY),
+	mWavelength_vec(wavelengths),
+	mRings(rings),
+	mArms(arms),
+	mPopulation(population),
+	mDistribution(0.0, 300.0)
+{
+	mInf_Obj = objectPoint_inf_obj::inf;
+	loadDefaultPra();
 	buildOptSys_LLT_wave_vec();
 	mParameterVar.loadSystemParameter(mOpticalSystemEle_initial);
 	resizeAllRelevantStdVectorsAndCalcConst();
 	loadWithoutMinMaxDefault();
 	loadThicknessParameter();
 }
+
 
 void Genetic::buildAndLoad(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, unsigned int /*populatuion*/ population, /*default parameter*/ defaultParaGenetic defaultParameterGenetic)
 {
@@ -192,6 +249,7 @@ void Genetic::buildAndLoad(OpticalSystemElement /*optSysEle*/ optSysEle, std::ve
 	mArms = arms;
 	mPopulation = population;
 	mDefaultParaGenetic = defaultParameterGenetic;
+	mInf_Obj = objectPoint_inf_obj::obj;
 
 	buildOptSys_LLT_wave_vec();
 	mParameterVar.loadSystemParameter(mOpticalSystemEle_initial);
@@ -211,6 +269,7 @@ void Genetic::loadDefaultPra()
 	mDefaultParaGenetic.setDeltaMeritValueStop(0.1);
 	mDefaultParaGenetic.setToleranceForEvaluation(0.001);
 	mDefaultParaGenetic.setChooseValueMode(cleverSamplingMode);
+	mDefaultParaGenetic.set_ON_CheckRMS_rayTracing();
 }
 
 
@@ -244,9 +303,19 @@ void Genetic::resizeAllRelevantStdVectorsAndCalcConst()
 	std::fill(mWeightWavelenght_vec.begin(), mWeightWavelenght_vec.end(), 1);
 
 	// weight field default
-	mNumFieldPoints = mFields_vec.size();
-	mWeightFields_vec.resize(mNumFieldPoints); // --
-	std::fill(mWeightFields_vec.begin(), mWeightFields_vec.end(), 1);
+	if (mInf_Obj == objectPoint_inf_obj::obj)
+	{
+		mNumFieldPoints = mFields_vec.size();
+		mWeightFields_vec.resize(mNumFieldPoints); // --
+		std::fill(mWeightFields_vec.begin(), mWeightFields_vec.end(), 1);
+	}
+
+	else
+	{
+		mNumFieldPoints = mAngleY.size();
+		mWeightFields_vec.resize(mNumFieldPoints); // --
+		std::fill(mWeightFields_vec.begin(), mWeightFields_vec.end(), 1);
+	}
 
 	// build defautl light
 	mDefaultLight.setIntensity(1.0);
@@ -284,6 +353,8 @@ void Genetic::resizeAllRelevantStdVectorsAndCalcConst()
 	mNormalDistribution.setMeanToCalcND(0.0);
 	mNormalDistribution.setStddevToCalcND(300.0);
 
+	sizeAngleXandY();
+
 
 }
 
@@ -298,7 +369,7 @@ void Genetic::resizeVecToBuildGenerations()
 }
 
 
-real Genetic::calculateMeritVal_RMS(const VectorStructR3& fieldPoint)
+real Genetic::calculateMeritVal_RMS_obj(const VectorStructR3& fieldPoint)
 {
 	real returnMerit_RMS{};
 	FillApertureStop fillAperStop(mChangedOptSys_LLT_vec[0], mRings, mArms);
@@ -307,6 +378,7 @@ real Genetic::calculateMeritVal_RMS(const VectorStructR3& fieldPoint)
 	// ray aiming
 	RayAiming rayAiming(mChangedOptSys_LLT_vec[0]);
 	rayAiming.loadImportantInfosForRayAiming();
+	rayAiming.turn_ON_GlobalStopIfToManyRaysAreNotAimed();
 
 	std::vector<LightRayStruct> tempAimedLightRays{};
 	SequentialRayTracing seqTrace;
@@ -317,36 +389,130 @@ real Genetic::calculateMeritVal_RMS(const VectorStructR3& fieldPoint)
 
 	for (unsigned int i = 0; i < mNumOptSys; ++i)
 	{
+		rayAiming.setOpticalSystem_LLT(mChangedOptSys_LLT_vec[i]);
 		tempWeightWavelengh = mWeightWavelenght_vec[i];
 		tempAimedLightRays = rayAiming.rayAimingMany_obj(fillAperStop.getPointsInAS(), fieldPoint, mDefaultLight, mDefaultParaGenetic.getStartRefIndex());
+		if (rayAiming.getGlobalStop())
+		{
+			i = mNumOptSys + i;
+		}
+		else
+		{
+			// trace ray
+			seqTrace.setOpticalSystem(mChangedOptSys_LLT_vec[i]);
+			seqTrace.seqRayTracingWithVectorOfLightRays(tempAimedLightRays);
+			
+		}
 
-		// trace ray
-		seqTrace.setOpticalSystem(mChangedOptSys_LLT_vec[i]);
-		seqTrace.seqRayTracingWithVectorOfLightRays(tempAimedLightRays);
 
-		rayAiming.setOpticalSystem_LLT(mChangedOptSys_LLT_vec[i]);
 	}
 
-	// check for vignetting
-	real numberExpecteInterPoints = fillAperStop.getPointsInAS().size();
-	std::vector<VectorStructR3> interPoints_vec_lastSurface = seqTrace.getAllInterPointsAtSurface_i_filtered(mPosLastSurface);
+	real numberInterPoints;
+	real numberExpecteInterPoints;
 
+	if (rayAiming.getGlobalStop())
+	{
+		returnMerit_RMS = oftenUse::getInfReal();
+	}
 
-	real numberInterPoints = interPoints_vec_lastSurface.size() / mNumOptSys;
+	else
+	{
+		// check for vignetting
+		numberExpecteInterPoints = fillAperStop.getPointsInAS().size();
+		numberInterPoints = seqTrace.getAllInterPointsAtSurface_i_filtered(mPosLastSurface).size() / mNumOptSys;
+
+		if (std::abs(numberExpecteInterPoints - numberInterPoints) <= 0.0001)
+		{
+			std::vector<VectorStructR3> interPointsLastSurface = seqTrace.getAllInterPointsAtSurface_i_filtered(mPosLastSurface);
+
+			Spot spot(interPointsLastSurface, interPointsLastSurface[0]);
+			returnMerit_RMS = spot.getRMS_µm();
+		}
+
+		else // there is vignetting
+		{
+			returnMerit_RMS = oftenUse::getInfReal();
+
+		}
+
+	}
 
 	// just for debugging
 	//std::cout << "number inter points last surface: " << numberInterPoints << std::endl;
 
-	if (std::abs(numberExpecteInterPoints - numberInterPoints) <= 0.0001)
+	return returnMerit_RMS;
+}
+
+real Genetic::calculateMeritVal_RMS_inf(real angleX, real angleY)
+{
+	real returnMerit_RMS{};
+	FillApertureStop fillAperStop(mChangedOptSys_LLT_vec[0], mRings, mArms);
+	unsigned int tempWeightWavelengh;
+
+	// ray aiming
+	RayAiming rayAiming(mChangedOptSys_LLT_vec[0]);
+	rayAiming.loadImportantInfosForRayAiming();
+	rayAiming.turn_ON_GlobalStopIfToManyRaysAreNotAimed();
+
+	std::vector<LightRayStruct> tempAimedLightRays{};
+	SequentialRayTracing seqTrace;
+	seqTrace.setTraceToSurface(mPosLastSurface);
+
+	std::vector<VectorStructR3> tempInterPoints;
+	std::vector<VectorStructR3> allInterPoints;
+
+	for (unsigned int i = 0; i < mNumOptSys; ++i)
 	{
-		Spot spot(interPoints_vec_lastSurface, interPoints_vec_lastSurface[0]);
-		returnMerit_RMS = spot.getRMS_µm();
+		rayAiming.setOpticalSystem_LLT(mChangedOptSys_LLT_vec[i]);
+		tempWeightWavelengh = mWeightWavelenght_vec[i];
+		tempAimedLightRays = rayAiming.rayAimingMany_inf(fillAperStop.getPointsInAS(), angleX, angleY, mDefaultLight, mDefaultParaGenetic.getStartRefIndex());
+		if (rayAiming.getGlobalStop())
+		{
+			i = mNumOptSys + i;
+		}
+		else
+		{
+			// trace ray
+			seqTrace.setOpticalSystem(mChangedOptSys_LLT_vec[i]);
+			seqTrace.seqRayTracingWithVectorOfLightRays(tempAimedLightRays);
+			
+		}
+		
+		
 	}
-	else // there is vignetting
+
+	real numberInterPoints;
+	real numberExpecteInterPoints;
+
+	if (rayAiming.getGlobalStop())
 	{
 		returnMerit_RMS = oftenUse::getInfReal();
+	}
+	
+	else
+	{
+		// check for vignetting
+		numberExpecteInterPoints = fillAperStop.getPointsInAS().size();
+		numberInterPoints = seqTrace.getAllInterPointsAtSurface_i_filtered(mPosLastSurface).size() / mNumOptSys;
+
+		if (std::abs(numberExpecteInterPoints - numberInterPoints) <= 0.0001)
+		{
+			std::vector<VectorStructR3> interPointsLastSurface = seqTrace.getAllInterPointsAtSurface_i_filtered(mPosLastSurface);
+
+			Spot spot(interPointsLastSurface, interPointsLastSurface[0]);
+			returnMerit_RMS = spot.getRMS_µm();
+		}
+
+		else // there is vignetting
+		{
+			returnMerit_RMS = oftenUse::getInfReal();
+
+		}
 
 	}
+
+	// just for debugging
+	//std::cout << "number inter points last surface: " << numberInterPoints << std::endl;
 
 	return returnMerit_RMS;
 }
@@ -598,11 +764,33 @@ real Genetic::calcMeritVal()
 	real tempRMS = 0.0;
 	real sumMerit = 0.0;
 
-	for (unsigned int i = 0; i < mNumFieldPoints; ++i)
+	if (mDefaultParaGenetic.getCheckRMS_rayTracing() == true)
 	{
-		tempRMS = mWeightFields_vec[i] * calculateMeritVal_RMS(mFields_vec[i]);
-		sumMerit = tempRMS + sumMerit;
+		if (mInf_Obj == objectPoint_inf_obj::obj) // rays from object point
+		{
+			for (unsigned int i = 0; i < mNumFieldPoints; ++i)
+			{
+				tempRMS = mWeightFields_vec[i] * calculateMeritVal_RMS_obj(mFields_vec[i]);
+				sumMerit = tempRMS + sumMerit;
+			}
+		}
+
+		else // rays from inf
+		{
+			for (unsigned int i = 0; i < mNumAngleX_Y; ++i)
+			{
+				tempRMS = mWeightFields_vec[i] * calculateMeritVal_RMS_inf(mAngleX[i], mAngleY[i]);
+				sumMerit = tempRMS + sumMerit;
+			}
+		}
+
 	}
+
+	if (mTargetCardinalPoints.getIsOneTargetCardinalPoint())
+	{
+		sumMerit = sumMerit + mTargetCardinalPoints.calculateMeritVal_targetCardianlPoints(mChangedOptSys_LLT_vec[0], mInf_Obj);
+	}
+
 
 	return sumMerit;
 	
@@ -989,6 +1177,38 @@ real Genetic::getMeritValBestSystem()
 	return mMeritVal_bestSystem;
 }
 
+void Genetic::setTargetCardinalPoints(const targetCardinalPointsStruct& targetCarPoints)
+{
+	mTargetCardinalPoints = targetCarPoints;
+}
+
+unsigned int Genetic::sizeAngleXandY()
+{
+	unsigned int sizeAngleX = mAngleX.size();
+	unsigned int sizeAngleY = mAngleY.size();
+
+	if (sizeAngleX == sizeAngleY)
+	{
+		mNumAngleX_Y = sizeAngleX;
+	}
+
+	else // sizeAngleX != sizeAngleY
+	{
+		std::cout << "size anlge in X does not macht with the size in Y direction" << std::endl;
+
+		if (sizeAngleX < sizeAngleY)
+		{
+			mNumAngleX_Y = sizeAngleX;
+		}
+		else
+		{
+			mNumAngleX_Y = sizeAngleY;
+		}
+	}
+
+	return mNumAngleX_Y;
+}
+
 // ***
 // mean to calc normal distribution
 real Genetic::getMeanToCalcND()
@@ -1073,5 +1293,17 @@ chooseValueForGenerationMode Genetic::getChooseValueMode()
 void Genetic::setChooseValueMode(chooseValueForGenerationMode chooseMode)
 {
 	mDefaultParaGenetic.setChooseValueMode(chooseMode);
+}
+bool Genetic::getCheckRMS_rayTracing()
+{
+	return mDefaultParaGenetic.getCheckRMS_rayTracing();
+}
+void Genetic::set_ON_CheckRMS_rayTracing()
+{
+	mDefaultParaGenetic.set_ON_CheckRMS_rayTracing();
+}
+void Genetic::set_OFF_CheckRMS_rayTracing()
+{
+	mDefaultParaGenetic.set_OFF_CheckRMS_rayTracing();
 }
 // ***

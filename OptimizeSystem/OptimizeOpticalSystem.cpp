@@ -509,10 +509,10 @@ void OptimizeOpticalSystem::calculateCardinalPoints(OpticalSystemElement system)
 	}
 
 	OpticalSystem_LLT systemLLT(system.getPosAndIntersection_LLT(), system.getPosAndInteraction_LLT());
-	CardinalPoints systemCPs(systemLLT);
+	CardinalPoints systemCPs(systemLLT, objectPoint_inf_obj::obj);
 	mEFL_LOCAL = systemCPs.calcEFL();
-	mEXPP_LOCAL = systemCPs.calcExitPupilPost();
-	mEXPD_LOCAL = systemCPs.calcDiameterExitPupil();
+	mEXPP_LOCAL = systemCPs.calcEXPP_lastSurface();
+	mEXPD_LOCAL = systemCPs.calcEXPD();
 }
 
 

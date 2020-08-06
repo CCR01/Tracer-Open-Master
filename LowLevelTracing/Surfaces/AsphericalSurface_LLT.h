@@ -120,13 +120,13 @@ public:
 	isDerivationAsphere rise_X_AsphericalSurface(double const x, double const y);
 	// Calculate rise of asphere in Y-direction
 	isDerivationAsphere rise_Y_AsphericalSurface(double const x, double const y);
-	// calculate the focal lenght of the aspherical
-	double calcFolcalLengthAsphericalSurface();
 
 	// get focal length side A
-	virtual real getFocalLength_A() override;
+	virtual real getFocalLength() override;
 	// get focal length side B
-	virtual real getFocalLength_B() override;
+	virtual real getFocalLength_dash() override;
+	// calc focal length
+	virtual void calcFocalLength() override;
 	// get refractive index side A
 	virtual real getRefractiveIndex_A() override;
 	// get refractive index side B
@@ -162,6 +162,9 @@ private:
 	double m_A6;
 	double m_A7;
 	double m_A8;
+
+	double mFocalLength;
+	double mFocalLength_dash;
 
 	int mPrefix;
 	AsphericalSurfaceQwt* AsphericalSurfaceQwt_Ptr = new AsphericalSurfaceQwt(mRadiusAsphere, mSemiHeightAsphere, mPointAsphere,

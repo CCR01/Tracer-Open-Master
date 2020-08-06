@@ -86,9 +86,9 @@ bool BenchmarkImageSimulation::checkMethodesImgSim()
 	//
 	
 	// calculate the position of the exit Pupil
-	CardinalPoints cardinalPointsE0(OptSysE0);
-	real exxP_E0 = cardinalPointsE0.getExitPupilPosition_globalCoori();
-	real exxD_E0 = cardinalPointsE0.getExitPupilDiameter() * 1.2;
+	CardinalPoints cardinalPointsE0(OptSysE0, objectPoint_inf_obj::obj);
+	real exxP_E0 = cardinalPointsE0.getEXPP_globalCoori();
+	real exxD_E0 = cardinalPointsE0.getEXPD() * 1.2;
 	
 	// rings and arms
 	// TODO increase the rings and arms -> rings 22 , arms 25

@@ -165,13 +165,11 @@
     <ClCompile Include="..\benchmark\nonLinearityRMS_SpotRadius\nonLinearityRMS_SpotRadiuscpp.cpp" />
     <ClCompile Include="..\benchmark\Optikkreis\Optikkreis.cpp" />
     <ClCompile Include="..\benchmark\Optimizer\BenchmarkZemaxTest.cpp" />
-    <ClCompile Include="..\benchmark\Optimizer\DLS\testDLS.cpp" />
     <ClCompile Include="..\benchmark\Optimizer\localOptimizer\testLocalOptimizer_BM.cpp" />
     <ClCompile Include="..\benchmark\Optimizer\testBuildSysForCombination.cpp" />
     <ClCompile Include="..\benchmark\Plot\BenchmarkPlotOPD.cpp" />
     <ClCompile Include="..\benchmark\Plot\BenchmarkPlotSpotDiagram.cpp" />
     <ClCompile Include="..\benchmark\Plot\BenchPlot2D.cpp" />
-    <ClCompile Include="..\benchmark\RayAiming\BenchmarkRayAiming.cpp" />
     <ClCompile Include="..\benchmark\RMScalculation\testRMS_spot.cpp" />
     <ClCompile Include="..\benchmark\SequentialRayTracer\BenchmarkSequentialRayTracer.cpp" />
     <ClCompile Include="..\benchmark\Spot\BenchmarkeSpot.cpp" />
@@ -253,6 +251,7 @@
     <ClCompile Include="..\LowLevelTracing\Ray_LLT.cpp" />
     <ClCompile Include="..\LowLevelTracing\Math_LLT.cpp" />
     <ClCompile Include="..\RayAiming\RayAiming.cpp" />
+    <ClCompile Include="..\RayAiming\RayAimingSuperFct.cpp" />
     <ClCompile Include="..\SequentialRayTracing\SequentialRayTracer.cpp" />
     <ClCompile Include="..\SurfaceElements\ApertureStopElement.cpp" />
     <ClCompile Include="..\SurfaceElements\AsphericalElement.cpp" />
@@ -263,6 +262,7 @@
     <ClCompile Include="..\tests\testApertureStop\testApertureStop.cpp" />
     <ClCompile Include="..\tests\testAsphericalSurface_LLT\testAsphericalSurface_LLT.cpp" />
     <ClCompile Include="..\tests\testCardinalPoints\testCardinalPoints.cpp" />
+    <ClCompile Include="..\tests\testDLS\testDLS.cpp" />
     <ClCompile Include="..\tests\testDLS_multiThreads_12\testDLS_multiThreads_12.cpp" />
     <ClCompile Include="..\tests\testFillAS\testFillAS.cpp" />
     <ClCompile Include="..\tests\TestGenetic\TestGenetic.cpp" />
@@ -272,6 +272,8 @@
     <ClCompile Include="..\tests\testOptimizeSystemSuperFct_GeneticAndDLS\testOptimizeSystemSuperFct_GeneticAndDLS.cpp" />
     <ClCompile Include="..\tests\testParaxialLens_LLT\testParaxialLens_LLT.cpp" />
     <ClCompile Include="..\tests\testPlanGeometry\testPlanSurface.cpp" />
+    <ClCompile Include="..\tests\testRayAimingSuperFct\testRayAiming_multiThreads_12.cpp" />
+    <ClCompile Include="..\tests\testRayAiming\testRayAiming.cpp" />
     <ClCompile Include="..\tests\testSphericalSurface\testSphericalSurface_LLT.cpp" />
     <ClCompile Include="..\TOM(Logo)\TOM(LOGO).cpp" />
   </ItemGroup>
@@ -297,13 +299,11 @@
     <ClInclude Include="..\benchmark\nonLinearityRMS_SpotRadius\nonLinearityRMS_SpotRadius.h" />
     <ClInclude Include="..\benchmark\Optikkreis\Optikkreis.h" />
     <ClInclude Include="..\benchmark\Optimizer\BenchmarkZemaxTest.h" />
-    <ClInclude Include="..\benchmark\Optimizer\DLS\testDLS.h" />
     <ClInclude Include="..\benchmark\Optimizer\localOptimizer\testLocalOptimizer_BM.h" />
     <ClInclude Include="..\benchmark\Optimizer\testBuildSysForCombination.h" />
     <ClInclude Include="..\benchmark\Plot\BenchPlot2D.h" />
     <ClInclude Include="..\benchmark\Plot\BenchPlotOPD.h" />
     <ClInclude Include="..\benchmark\Plot\BenchPlotSpotDiagram.h" />
-    <ClInclude Include="..\benchmark\RayAiming\BenchmarkRayAiming.h" />
     <ClInclude Include="..\benchmark\RMScalculation\testRMS_Spot.h" />
     <ClInclude Include="..\benchmark\SequentialRayTracer\BenchmarkSequentialRayTracer.h" />
     <ClInclude Include="..\benchmark\Spot\BenchmarkSpot.h" />
@@ -388,6 +388,7 @@
     <ClInclude Include="..\LowLevelTracing\Ray_LLT.h" />
     <ClInclude Include="..\LowLevelTracing\Math_LLT.h" />
     <ClInclude Include="..\RayAiming\RayAiming.h" />
+    <ClInclude Include="..\RayAiming\RayAimingSuperFct.h" />
     <ClInclude Include="..\SequentialRayTracing\SequentialRayTracer.h" />
     <ClInclude Include="..\SurfaceElements\ApertureStopElement.h" />
     <ClInclude Include="..\SurfaceElements\AsphericalElement.h" />
@@ -398,6 +399,7 @@
     <ClInclude Include="..\tests\testApertureStop\testApertureStop.h" />
     <ClInclude Include="..\tests\testAsphericalSurface_LLT\testAsphericalSurface_LLT.h" />
     <ClInclude Include="..\tests\testCardinalPoints\testCardinalPoints.h" />
+    <ClInclude Include="..\tests\testDLS\testDLS.h" />
     <ClInclude Include="..\tests\testDLS_multiThreads_12\testDLS_multiThreads_12.h" />
     <ClInclude Include="..\tests\testFillAS\testFillAS.h" />
     <ClInclude Include="..\tests\TestGenetic\TestGenetic.h" />
@@ -407,6 +409,8 @@
     <ClInclude Include="..\tests\testOptimizeSystemSuperFct_GeneticAndDLS\testOptimizeSystemSuperFct_GeneticAndDLS.h" />
     <ClInclude Include="..\tests\testParaxialLens_LLT\testParaxialLens_LLT.h" />
     <ClInclude Include="..\tests\testPlanGeometry\testPlanSurface.h" />
+    <ClInclude Include="..\tests\testRayAimingSuperFct\testRayAiming_multiThreads_12.h" />
+    <ClInclude Include="..\tests\testRayAiming\testRayAiming.h" />
     <ClInclude Include="..\tests\testSphericalSurface\testSphericalSurface_LLT.h" />
     <ClInclude Include="..\TOM(Logo)\TOM(Logo).h" />
   </ItemGroup>

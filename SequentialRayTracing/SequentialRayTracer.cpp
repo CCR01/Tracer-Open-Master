@@ -238,8 +238,8 @@ void SequentialRayTracing::sequentialRayTracing(LightRayStruct LightRaySt)
 	for (int i = 0; i <= mTraceToSurface_i; i++)
 	{
 
-		if (LightRaySt.getIsAlive() == true)
-		{
+		//if (LightRaySt.getIsAlive() == true)
+		//{
 			mTempInterInfos_Pos_totStep.setIntersectionInfos(mOpticalSystem_LLT.getPosAndInteractingSurface().at(i).getSurfaceInterRay_ptr()->calculateIntersection(LightRaySt));
 			mTempInterInfos_Pos_totStep.setPosition(mOpticalSystem_LLT.getPosAndInteractingSurface().at(i).getPosition());
 			mSaveTotalSteps = mSaveTotalSteps + mTempInterInfos_Pos_totStep.getIntersecInfos().getStepsToWalk();
@@ -258,13 +258,13 @@ void SequentialRayTracing::sequentialRayTracing(LightRayStruct LightRaySt)
 			LightRaySt.setLight_LLT(mLight);
 			LightRaySt.setRay_LLT(mRay);
 			LightRaySt.setIsAlive(mIsAlive);
-		}
+		
 
-		else
-		{
-			mSaveIntInfos_Pos_totStep_NotFiltered.push_back(mNoInterPointAndPos);
-			LightRaySt.setIsAlive(false);
-		}
+		//else
+		//{
+		//	mSaveIntInfos_Pos_totStep_NotFiltered.push_back(mNoInterPointAndPos);
+		//	LightRaySt.setIsAlive(false);
+		//}
 
 	}
 
@@ -585,8 +585,9 @@ std::vector <IntersectInfosAndPosSurfaceAndTotalSteps>  SequentialRayTracing::fi
 
 	int sizeOfVector = SaveIntInfos_Pos_totStep_NotFiltered.size();
 	//std::vector<IntersectInfosAndPosSurfaceAndTotalSteps> returnFilteredInterPointsAndPos;
-	char isRealIntersectionPoint;
+	surfaceSide isRealIntersectionPoint;
 	bool isNAN;
+	typeLight typeLight;
 	std::vector<IntersectInfosAndPosSurfaceAndTotalSteps> returnFilteredInterPointsAndPos;
 	returnFilteredInterPointsAndPos.reserve(sizeOfVector);
 
@@ -594,9 +595,9 @@ std::vector <IntersectInfosAndPosSurfaceAndTotalSteps>  SequentialRayTracing::fi
 	{
 		isRealIntersectionPoint = SaveIntInfos_Pos_totStep_NotFiltered[i].getIntersecInfos().getSurfaceSide();
 		isNAN = std::isnan(SaveIntInfos_Pos_totStep_NotFiltered[i].getIntersecInfos().getIntersectionPoint().getX());
+		typeLight = SaveIntInfos_Pos_totStep_NotFiltered[i].getIntersecInfos().getLight().getTypeLight();
 
-
-		if (isRealIntersectionPoint != N && isNAN == false)
+		if (isRealIntersectionPoint != N && isNAN == false && typeLight != typeLight::typeDeath)
 		{
 			returnFilteredInterPointsAndPos.push_back(SaveIntInfos_Pos_totStep_NotFiltered.at(i));
 		}
@@ -668,10 +669,12 @@ void SequentialRayTracing::printAllInterInfosAtSurface_i(unsigned int const surf
 	}
 }
 
+
+
 // get all intersection points at surface i
 std::vector<VectorStructR3> SequentialRayTracing::getAllInterPointsAtSurf_i_notFiltered(unsigned int const surfaceNo)
 {
-	std::vector<IntersectInformationStruct> interInfosAtSurfac_i = getAllInterInfosOfSurf_i(surfaceNo);
+	std::vector<IntersectInformationStruct> interInfosAtSurfac_i = getAllInterInfosOfSurf_i_notFiltered(surfaceNo);
 	std::vector<VectorStructR3> intersecPoints;
 	//#pragma omp parallel for
 	for (int i = 0; i < interInfosAtSurfac_i.size(); i++)
@@ -695,7 +698,7 @@ std::vector<VectorStructR3> SequentialRayTracing::getAllInterPointsAtSurface_i_f
 	{
 		if (mSaveInterInfos_PosSur_TotSteps[i].getPosition() == surfaceNo)
 		{
-			if (mSaveInterInfos_PosSur_TotSteps[i].getIntersecInfos().getSurfaceSide() != N)
+			if (mSaveInterInfos_PosSur_TotSteps[i].getIntersecInfos().getSurfaceSide() != N && (std::isnan(mSaveInterInfos_PosSur_TotSteps[i].getIntersecInfos().getIntersectionPoint().getX()) == false ) && (std::isnan(mSaveInterInfos_PosSur_TotSteps[i].getIntersecInfos().getIntersectionPoint().getY()) == false) && (std::isnan(mSaveInterInfos_PosSur_TotSteps[i].getIntersecInfos().getIntersectionPoint().getZ()) == false))
 			{ 
 					intersecPoints.push_back(mSaveInterInfos_PosSur_TotSteps[i].getIntersecInfos().getIntersectionPoint());
 			}

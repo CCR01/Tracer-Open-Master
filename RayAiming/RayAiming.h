@@ -8,7 +8,7 @@ public:
 
 	// tolerance
 	real getTolerance_XandY();
-	void setTolerance_XandY(real& tolerance);
+	void setTolerance_XandY(real tolerance);
 
 	// start point factor
 	real getStartPointFactor();
@@ -20,7 +20,7 @@ public:
 
 	// max interations ray aiming
 	unsigned getMaxInterationRayAiming();
-	void setMaxIterattionsRayAiming(unsigned int maxInterationsRayAiming);
+	void setMaxIterationsRayAiming(unsigned int maxInterationsRayAiming);
 
 	// factor inf
 	real getFactor_inf();
@@ -33,7 +33,7 @@ public:
 	// turn on robust ray aiming
 	void turn_On_RobustRayAiming();
 	void turn_Off_RobustRayAiming();
-	bool getRobustRayAiming();
+	bool getON_OFF_RobustRayAiming();
 
 	// variance percent robust ray aiming
 	void setVariancePercentRRA(real percent);
@@ -41,13 +41,39 @@ public:
 
 	// stay counter
 	unsigned int getMaxStayCounter();
-	void setMayStayCounter(unsigned int maxStayCounter);
+	void setMaxStayCounter(unsigned int maxStayCounter);
 
 	// increaser factor times
 	real getIncreaserFactorTimes();
 	void setIncreaserFactorTimes(real increaserFactorTimes);
 
+	// tolerance for a real light ray
+	real getToleranceForRealLightRay();
+	void setTolerancceForRealLightRay(real toleranceRealLightRay);
+
+	// factor start heigh inf
+	real getFactorStartHeight_inf();
+	void setFactorStartHeight_inf(real factorStartHeight_inf);
+
+	// factor start heigh obj
+	real getFactorStartHeight_obj();
+	void setFactorStartHeight_obj(real factorStartHeight_obj);
+
+	// max interation robust ray aiming
+	unsigned int getMaxIterationRobustRayAiming();
+	void setMaxInterationRobustRayAiming(unsigned int maxInterationRRA);
+
+	// global stop if one ray is not aimed
+	void turn_ON_GlobalStopIfToManyRaysAreNotAimed();
+	void turn_OFF_GlobalStopIfToManyRaysAreNotAimed();
+	bool getGlobalStopIfToManyRaysAreNotAimed();
+
+	// load all default parameters
 	void loadDefaultParameter();
+
+	// max rays that not be aimable
+	void setMaxRaysThatNotBeAimable(unsigned maxRayNotAimeable);
+	unsigned int getMaxRayThatNotBeAimable();
 
 private:
 	real mTolerance_XandY{};
@@ -60,6 +86,12 @@ private:
 	real mVariancePercentRobustRA{};
 	unsigned int mMaxStayCounter{};
 	real mIncreaserFactorTimes{};
+	real mFactorStartHeight_obj{};
+	real mFactorStartHeight_inf{};
+	unsigned int mMaxInterationRobustRayAiming{};
+	bool mGlobalStopIfOneRayIsNotAimed{};
+	unsigned int mMaxRayThatNotBeAimable{};
+	real mTolerance_XandYforARealLightRay{};
 };
 
 struct  lightRayAndInterPointAperStop
@@ -74,18 +106,23 @@ public:
 	VectorStructR3 getInterPointAperStop() const;
 	void setInterPointAperStop(const VectorStructR3& interPointAperStop);
 
+	//is there an valide intersectiom point 
+	bool getIsValidInterPointInAS() const;
+	void setIsValidInterPointInAS(bool isValidInterPoint);
+
 private:
 	LightRayStruct mLightRayStr{};
 	VectorStructR3 mInterPointAperStop{};
+	bool mIsValidInterPoint{};
 };
 
-enum betterSide { posSide, negSide, stay };
-enum reduceWhat {reduce_X, reduce_Y, neutral};
+enum class betterSide { posSide, negSide, stay };
+enum class reduceWhat {reduce_X, reduce_Y, neutral};
 
 struct lightRay_intP_dis_negPos_factor
 {
 	lightRay_intP_dis_negPos_factor();
-	lightRay_intP_dis_negPos_factor(LightRayStruct lightRay, VectorStructR3 interPoint, real distanceX, real distanceY, betterSide negOrPos, real factorX, real factorY, VectorStructR3 targerPoint, real interations);
+	lightRay_intP_dis_negPos_factor(LightRayStruct lightRay, VectorStructR3 interPoint, real distanceX, real distanceY, betterSide negOrPos, real factorX, real factorY, VectorStructR3 targerPoint, real interations, real variancePercentRRA);
 	~lightRay_intP_dis_negPos_factor();
 
 	// light ray
@@ -124,6 +161,10 @@ struct lightRay_intP_dis_negPos_factor
 	unsigned int getInterations();
 	void setInterations(unsigned int interations);
 
+	// variance in percent for robust ray aiming
+	real getVariangeInPercent();
+	void setVariangeInPercent(real varianceInPercent);
+
 private:
 	LightRayStruct mLightRay{};
 	VectorStructR3 mInterPointAS{};
@@ -135,6 +176,8 @@ private:
 
 	VectorStructR3 mTargetPoint{};
 	unsigned int mInterations{};
+
+	real mVarinaceInPercent{};
 };
 
 class RayAiming {
@@ -151,22 +194,23 @@ public: RayAiming();
 		// find aperture stop
 		unsigned int getPositionApertureStop(OpticalSystem_LLT optSys);
 		// calc all distances
-		std::vector<real> calcAllDistances(const std::vector<lightRayAndInterPointAperStop>& vecLightRaysAndInterPoints, const VectorStructR3& targetPoint);
+		std::vector<real> calcAllDistances(const std::vector<lightRayAndInterPointAperStop> vecLightRaysAndInterPoints, const VectorStructR3& targetPoint);
 		// calc distance X
 		real calcDistance_X(VectorStructR3 point, VectorStructR3 targetPoint);
 		// calc distance Y
 		real calcDistance_Y(VectorStructR3 point, VectorStructR3 targetPoint);
-		// get default parametes
-		defaultRayAimingStruct getDefaultParameters();
-		void setToleranceX_Y(real tolerance);
-		void turn_ON_RobustRayAiming();
-		void turn_OFF_RobustRayAiming();
 		// get positon ray with lowest distance
 		unsigned int getPosRayLowestDistance(std::vector<VectorStructR3> allInterPoints, VectorStructR3 targetPoint);
 		// print
 		void printInterP_Target_distance_X_Y(lightRay_intP_dis_negPos_factor infosToReduce);
 		// shift start point ray from infinity
 		VectorStructR3 RayAiming::shiftFirstSurface(real radius, real semiHeight, VectorStructR3 apexOfSphere);
+		// check the light ray
+		LightRayStruct checkLightRay(const LightRayStruct& lightRayToCheck, const VectorStructR3& intersecPoint, const VectorStructR3& targetPoint);
+		// global stop
+		bool getGlobalStop();
+		void setGlobalStop(bool globalStop);
+		bool checkIfThereIsAtLeastOneValidInterPoint(const std::vector<lightRayAndInterPointAperStop> vecLightRaysAndInterPoints);
 		// *** *** //
 
 
@@ -174,7 +218,7 @@ public: RayAiming();
 		// Ray Aiming for a ray starting at an object point
 		LightRayStruct rayAiming_obj(VectorStructR3 rayOrigin, VectorStructR3 targetPoint, Light_LLT mLight, real curRefracIndex);
 		// trace all rays until all of them comes to the last surface
-		lightRayAndInterPointAperStop getBestLightRayAndInterPoint_obj(LightRayStruct lightRay0, LightRayStruct lightRay1, LightRayStruct lightRay2, LightRayStruct lightRay3, LightRayStruct lightRay4, VectorStructR3 targetPoint, VectorStructR3 vectorToCalc1, VectorStructR3 vectorRoCalc2);
+		lightRayAndInterPointAperStop getBestLightRayAndInterPoint_obj(LightRayStruct lightRay0, LightRayStruct lightRay1, LightRayStruct lightRay2, LightRayStruct lightRay3, LightRayStruct lightRay4, LightRayStruct lightRay5, LightRayStruct lightRay6, LightRayStruct lightRay7, LightRayStruct lightRay8, VectorStructR3 targetPoint, VectorStructR3 vectorToCalc1, VectorStructR3 vectorRoCalc2, VectorStructR3 vectorRoCalc3, VectorStructR3 vectorRoCalc4);
 		// trace one ray until it comes to the last surface;
 		lightRayAndInterPointAperStop traceOneRayUntilInApertureStop_obj(LightRayStruct lightRay, const VectorStructR3& vectorToCalcDir, unsigned int maxLoop);
 		// check if we have to trace to neg of pos side
@@ -186,7 +230,7 @@ public: RayAiming();
 		lightRay_intP_dis_negPos_factor robustRayAiming_obj(lightRay_intP_dis_negPos_factor& initialInfos);
 		// calculate new origin variance in percent
 		lightRay_intP_dis_negPos_factor calcNewBestInfos_obj(lightRay_intP_dis_negPos_factor& initialInfos);
-		// ray aiming many obj
+		// ray aiming many obj many
 		std::vector<LightRayStruct> rayAimingMany_obj(const std::vector<VectorStructR3>& pointsInAS,const VectorStructR3& startPointRay, const Light_LLT& mLight, real curRefracIndex);
 		std::vector<LightRayStruct> rayAimingMany_obj_complete(const OpticalSystem_LLT& optSys_LLT, const std::vector<VectorStructR3>& pointsInAS, const VectorStructR3 startPointRay, Light_LLT mLight, real curRefracIndex);
 		// *** *** //
@@ -209,9 +253,85 @@ public: RayAiming();
 		lightRay_intP_dis_negPos_factor robustRayAiming_inf(lightRay_intP_dis_negPos_factor initialInfos);
 		// calculate new origin variance in percent
 		lightRay_intP_dis_negPos_factor calcNewBestInfos_inf(lightRay_intP_dis_negPos_factor initialInfos);
+		// ray aiming many obj many
+		std::vector<LightRayStruct> rayAimingMany_inf(const std::vector<VectorStructR3>& pointsInAS, real angleX, real angleY, const Light_LLT& mLight, real curRefracIndex);
+		std::vector<LightRayStruct> rayAimingMany_inf_complete(const OpticalSystem_LLT& optSys_LLT, const std::vector<VectorStructR3>& pointsInAS, real angleX, real angleY,  const Light_LLT& mLight, real curRefracIndex);
 		// *** *** //
 	
+		// ** set and get defaul  parameter ** //
+		// get default parameters
+		defaultRayAimingStruct getDefaultParameters();
+		// set default parameters
+		void setDefaultParameters(defaultRayAimingStruct defaultParRayAiming);
 
+		// tolerance
+		real getTolerance_XandY();
+		void setTolerance_XandY(real tolerance);
+
+		// start point factor
+		real getStartPointFactor();
+		void setStartPointFactor(real startPointFactor);
+
+		// max loops trace to last surface;
+		unsigned int getMaxLoopsTraceToLastSurface();
+		void setMaxLoopsTraceToLastSurface(unsigned int maxLoopLastSurf);
+
+		// max interations ray aiming
+		unsigned getMaxInterationRayAiming();
+		void setMaxIterationsRayAiming(unsigned int maxInterationsRayAiming);
+
+		// factor inf
+		real getFactor_inf();
+		void setFactor_inf(real factor_inf);
+
+		// factor obj
+		real getFactor_obj();
+		void setFactor_obj(real factor_obj);
+
+		// turn on robust ray aiming
+		void turn_On_RobustRayAiming();
+		void turn_Off_RobustRayAiming();
+		bool getON_OFF_RobustRayAiming();
+
+		// variance percent robust ray aiming
+		void setVariancePercentRRA(real percent);
+		real getVariancePercentRRA();
+
+		// stay counter
+		unsigned int getMaxStayCounter();
+		void setMaxStayCounter(unsigned int maxStayCounter);
+
+		// increaser factor times
+		real getIncreaserFactorTimes();
+		void setIncreaserFactorTimes(real increaserFactorTimes);
+
+		// tolerance for a real light ray
+		real getToleranceForRealLightRay();
+		void setTolerancceForRealLightRay(real toleranceRealLightRay);
+
+		// factor start heigh inf
+		real getFactorStartHeight_inf();
+		void setFactorStartHeight_inf(real factorStartHeight_inf);
+		// factor start heigh obj
+		real getFactorStartHeight_obj();
+		void setFactorStartHeight_obj(real factorStartHeight_obj);
+
+		// max interation robust ray aiming
+		unsigned int getMaxIterationRobustRayAiming();
+		void setMaxInterationRobustRayAiming(unsigned int maxInterationRRA);
+
+		// global stop if one ray is not aimed
+		void turn_ON_GlobalStopIfToManyRaysAreNotAimed();
+		void turn_OFF_GlobalStopIfToManyRaysAreNotAimed();
+		bool getGlobalStopIfToManyRaysAreNotAimed();
+
+		// load all default parameters
+		void loadDefaultParameter();
+
+		// max rays that not be aimable
+		void setMaxRaysThatNotBeAimable(unsigned maxRayNotAimeable);
+		unsigned int getMaxRayThatNotBeAimable();
+		// ** ** //
 
 private:
 
@@ -226,6 +346,9 @@ private:
 	VectorStructR3 mDirectionFirstSurface{};
 
 	VectorStructR3 negLensHelper{};
+
+	bool mGlobalSTOP{};
+	unsigned int mCounter_RaysThatNotBeAimed{};
 
 
 };

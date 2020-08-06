@@ -54,6 +54,15 @@ mArms(arms)
 	fillAS_withPoints(mRings, mPointAS, mDirectionAS_Unit, mSemiHeightAS);
 }
 
+// fill AS with points
+void FillApertureStop::fillASWithPoints(infosAS infosAS_OptSys, unsigned int rings, unsigned int arms)
+{
+	mSemiHeightAS = infosAS_OptSys.getSemiHeightAS();
+	mPointAS = infosAS_OptSys.getPointAS();
+	mDirectionAS_Unit = Math::unitVector(infosAS_OptSys.getDirAS());
+
+	fillAS_withPoints(mRings, mPointAS, mDirectionAS_Unit, mSemiHeightAS);
+}
 
 // get number of rings in aperture stop
 unsigned int FillApertureStop::getNumberOfRingsInApertureStop()
@@ -203,7 +212,7 @@ std::vector<VectorStructR3>  FillApertureStop::fillAS_withPoints(unsigned int ra
 
 		// the first point is allways the position of the aperture stop 
 		mVectorWithManyPointsInAS.resize(numberOfRay[numberOfRings - 1]);
-		mVectorWithManyPointsInAS[0] = mPointAS;
+		mVectorWithManyPointsInAS[0] = PointApertureStop;
 		unsigned int counter = 1;
 
 		VectorStructR3 tempPoint( 0.0,0.0,0.0);

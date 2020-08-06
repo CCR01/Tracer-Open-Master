@@ -5,11 +5,11 @@
 #include "..\OpticalSystemElement\OpticalSystemElement.h"
 #include "..\OptimizeSystem\DampedLeastSquares.h"
 
-enum compareTOM_Zemax{comEqual, comBetter};
+enum class compareTOM_Zemax{comEqual, comBetter};
 
 namespace oftenUse
 {
-	bool checkRayTracing(/*start point ray*/ VectorStructR3 startPoint,/*direction ray*/ VectorStructR3 direction,/*target point*/ VectorStructR3 targetPoint,/*optical system LLT*/ OpticalSystem_LLT optSys_LLT,/*surface num*/ unsigned int surfaceNum,/*tolerance*/ real tolerande);
+	bool checkRayTracing(/*start point ray*/ VectorStructR3 startPoint,/*direction ray*/ VectorStructR3 direction,/*target point*/ VectorStructR3 targetPoint,/*optical system LLT*/ OpticalSystem_LLT optSys_LLT,/*surface num*/ unsigned int surfaceNum,/*tolerance*/ real tolerance);
 	bool checkIfUnsIntIsInVector(/*search for unsingt int*/ unsigned int target, /*vector with unsigned int*/ std::vector<unsigned int> vectorUnsInt);
 
 	void resizeAllRowsMatrix(std::vector<std::vector<real>>& matrix, unsigned int rows);
@@ -37,6 +37,9 @@ namespace oftenUse
 	// check optical system HLT better / eauel than zemax
 	bool checkOptSysELement_Equal_Better_Zemax(OpticalSystemElement optimizedSystemHLT, std::vector<VectorStructR3> fieldPoints, std::vector<real> wavelength_vec, std::vector<real> rmsValZemax, real tolerance, compareTOM_Zemax compare);
 	
+	// check optical system HLT better / eauel than zemax
+	bool checkOptSysELement_Equal_Better_Zemax(OpticalSystemElement optimizedSystemHLT, std::vector<real> anglesX_vec, std::vector<real> anglesY_vec, std::vector<real> wavelength_vec, std::vector<real> rmsValZemax, real tolerance, compareTOM_Zemax compare);
+
 	// get rms valus of optical system HLT
 	std::vector<real> getRMSoptSysHLT(OpticalSystemElement optimizedSystemHLT, std::vector<VectorStructR3> fieldPoints, std::vector<real> wavelength_vec, unsigned int rings, unsigned int arms);
 
@@ -74,4 +77,6 @@ namespace oftenUse
 	real sum(std::vector<real> vec);
 
 	bool checkDLS_resultRMS(DLS dls, real tolerance);
+
+	bool optimizedTargetBetterThanStartCardinalPoint(/*start value*/ real startValue, /*optimized value*/ real optVal, /*target val*/ real targetVal);
 }

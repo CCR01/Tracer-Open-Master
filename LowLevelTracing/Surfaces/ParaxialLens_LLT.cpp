@@ -2,52 +2,52 @@
 #include "PlanGeometry_LLT.h"
 
 // get focal lenght of intersected surface side A
-real additionalInfosDeflectedRayParaLensStruct::getFocalLengthOfIntersecSurface_Side_A() const&
+real additionalInfosDeflectedRayParaLensStruct::getFocalLengthOfIntersecSurface_Side_A() const
 {
 	return focalLengthOfIntersecSurface_Side_A;
 }
 
 // set focal lenght of intersected surface side A
-void additionalInfosDeflectedRayParaLensStruct::setfocalLengthOfIntersecSurface_Side_A(real const& focalLengthSide_A)
+void additionalInfosDeflectedRayParaLensStruct::setfocalLengthOfIntersecSurface_Side_A(real const focalLengthSide_A)
 {
 	focalLengthOfIntersecSurface_Side_A = focalLengthSide_A;
 }
 
 // get focal lenght of intersected surface side B
-real additionalInfosDeflectedRayParaLensStruct::getFocalLengthOfIntersecSurface_Side_B() const&
+real additionalInfosDeflectedRayParaLensStruct::getFocalLengthOfIntersecSurface_Side_B() const
 {
 	return focalLengthOfIntersecSurface_Side_B;
 }
 
 // set focal lenght of intersected surface side B
-void additionalInfosDeflectedRayParaLensStruct::setfocalLengthOfIntersecSurface_Side_B(real const& focalLengthSide_B)
+void additionalInfosDeflectedRayParaLensStruct::setfocalLengthOfIntersecSurface_Side_B(real const focalLengthSide_B)
 {
 	focalLengthOfIntersecSurface_Side_B = focalLengthSide_B;
 }
 
 // get direction of intersected surface;
-VectorStructR3 additionalInfosDeflectedRayParaLensStruct::getDirectionOfIntersecSurfaceUNIT() const&
+VectorStructR3 additionalInfosDeflectedRayParaLensStruct::getDirectionOfIntersecSurfaceUNIT() const
 {
 	return directionOfIntersecSurfaceUNIT;
 }
 // set direction of intersected surface;
-void additionalInfosDeflectedRayParaLensStruct::setDirectionOfIntersecSurfaceUNIT(VectorStructR3 const& directionIntersecSurface)
+void additionalInfosDeflectedRayParaLensStruct::setDirectionOfIntersecSurfaceUNIT(VectorStructR3 const directionIntersecSurface)
 {
 	directionOfIntersecSurfaceUNIT = unitVectorForAddInfosParaLens(directionIntersecSurface);
 }
 // get point of intersected surface
-VectorStructR3 additionalInfosDeflectedRayParaLensStruct::getPointofIntersectSurface() const&
+VectorStructR3 additionalInfosDeflectedRayParaLensStruct::getPointofIntersectSurface() const
 {
 	return pointOfIntersectSurface;
 }
 // set point of intersected surface
-void additionalInfosDeflectedRayParaLensStruct::setPointofIntersectSurface(VectorStructR3 const& pointIntersecSurface)
+void additionalInfosDeflectedRayParaLensStruct::setPointofIntersectSurface(VectorStructR3 const pointIntersecSurface)
 {
 	pointOfIntersectSurface = pointIntersecSurface;
 }
 
 // calculate unit vector
-VectorStructR3 additionalInfosDeflectedRayParaLensStruct::unitVectorForAddInfosParaLens(VectorStructR3 const& V)
+VectorStructR3 additionalInfosDeflectedRayParaLensStruct::unitVectorForAddInfosParaLens(VectorStructR3 const V)
 {
 	VectorStructR3 returnUnitVector;
 	double lenghtOfVector = 1 / (std::sqrt(V.getX()*V.getX() + V.getY()*V.getY() + V.getZ()*V.getZ()));
@@ -98,14 +98,14 @@ void ParaxialLens_LLT::setDirectionParaxialLensUNIT(VectorStructR3 const directi
 }
 
 // get focal length side A
-double ParaxialLens_LLT::getFocalLengthParaxialLens() const&
+double ParaxialLens_LLT::getFocalLengthParaxialLens() const
 {
-	return mFocallenghtParaxialLensSide_A;
+	return mFocallenght;
 }
 // set focal lenght side A
-void ParaxialLens_LLT::setFocalLengthParaxialLens(double const& focalLenght)
+void ParaxialLens_LLT::setFocalLengthParaxialLens(double const focalLenght)
 {
-	mFocallenghtParaxialLensSide_A = focalLenght;
+	mFocallenght = focalLenght;
 }
 
 
@@ -138,13 +138,13 @@ IntersectInformationStruct ParaxialLens_LLT::calculateIntersection(LightRayStruc
 // set infos for deflection
 void ParaxialLens_LLT::setInfosForDeflection() 
 {
-	mInfosForDefelction.setfocalLengthOfIntersecSurface_Side_A(mFocallenghtParaxialLensSide_A);
-	mInfosForDefelction.setfocalLengthOfIntersecSurface_Side_B(mFocallenghtParaxialLensSide_B);
+	mInfosForDefelction.setfocalLengthOfIntersecSurface_Side_A(mFocallenght);
+	mInfosForDefelction.setfocalLengthOfIntersecSurface_Side_B(mFocallenght_dash);
 	mInfosForDefelction.setDirectionOfIntersecSurfaceUNIT(mDirectionParaxialLensUnit);
 	mInfosForDefelction.setPointofIntersectSurface(mPointParaxialLens);
 }
 // get infos for deflection
-additionalInfosDeflectedRayParaLensStruct ParaxialLens_LLT::getInfosForDefelction() const&
+additionalInfosDeflectedRayParaLensStruct ParaxialLens_LLT::getInfosForDefelction() const
 {
 	return mInfosForDefelction;
 }
@@ -180,7 +180,7 @@ void ParaxialLens_LLT::plot2D(cv::Mat image, unsigned int scale, unsigned int th
 
 	int prefix;
 	// if there is an negative focal length the prefix has to be negative
-	if (mFocallenghtParaxialLensSide_B < 0)
+	if (mFocallenght_dash < 0)
 	{
 		prefix = 1;
 	}
@@ -225,16 +225,32 @@ void ParaxialLens_LLT::plot2D(cv::Mat image, unsigned int scale, unsigned int th
 }
 
 // get focal length side A
-real ParaxialLens_LLT::getFocalLength_A()
+real ParaxialLens_LLT::getFocalLength()
 {
-	return mFocallenghtParaxialLensSide_A;
+	return mFocallenght;
 }
 // get focal length side B
-real ParaxialLens_LLT::getFocalLength_B()
+real ParaxialLens_LLT::getFocalLength_dash()
 {
-	return mFocallenghtParaxialLensSide_B;
+	return mFocallenght_dash;
 }
 
+// calc focal length
+void ParaxialLens_LLT::calcFocalLength()
+{
+	if (mDirectionParaxialLens.getZ() > 0)
+	{
+		mFocallenght = -1.0 * mFocallenght * mRefractiveIndexA_ParaxialLens;
+		mFocallenght_dash = mFocallenght_dash * mRefractiveIndexB_ParaxialLens;
+	}
+	else
+	{
+		mFocallenght = mFocallenght * mRefractiveIndexA_ParaxialLens;
+		mFocallenght_dash = -1.0 * mFocallenght_dash * mRefractiveIndexB_ParaxialLens;
+
+	}
+
+}
 
 // get refractive index side A
 real ParaxialLens_LLT::getRefractiveIndex_A()
@@ -261,12 +277,12 @@ ParaxialLens_LLT::ParaxialLens_LLT(double semiHeight, VectorStructR3 point, Vect
 	mPointParaxialLens(point),
 	mDirectionParaxialLens(direction),
 	mDirectionParaxialLensUnit(Math::unitVector(direction)),
-	mFocallenghtParaxialLensSide_A(focallength* refractiveSideA),
-	mFocallenghtParaxialLensSide_B(focallength* refractiveSideB),
 	mRefractiveIndexA_ParaxialLens(refractiveSideA),
 	mRefractiveIndexB_ParaxialLens(refractiveSideB)
 {
+	calcFocalLength();
 	setInfosForDeflection(); // save the information that are important to deflect a ray at this paraxial lens
+
 };
 
 ParaxialLens_LLT::ParaxialLens_LLT(ParaxialLens_LLT &source)
@@ -280,8 +296,8 @@ ParaxialLens_LLT::ParaxialLens_LLT(ParaxialLens_LLT &source)
 	mPointParaxialLens = source.mPointParaxialLens;
 	mDirectionParaxialLens = source.mDirectionParaxialLens;
 	mDirectionParaxialLensUnit = source.mDirectionParaxialLensUnit;
-	mFocallenghtParaxialLensSide_A = source.mFocallenghtParaxialLensSide_A;
-	mFocallenghtParaxialLensSide_B = source.mFocallenghtParaxialLensSide_B;
+	mFocallenght = source.mFocallenght;
+	mFocallenght_dash = source.mFocallenght_dash;
 	mRefractiveIndexA_ParaxialLens = source.mRefractiveIndexA_ParaxialLens;
 	mRefractiveIndexB_ParaxialLens = source.mRefractiveIndexB_ParaxialLens;
 	mInfosForDefelction = source.mInfosForDefelction;
@@ -301,8 +317,8 @@ ParaxialLens_LLT& ParaxialLens_LLT::operator=(ParaxialLens_LLT& source)
 	mPointParaxialLens = source.mPointParaxialLens;
 	mDirectionParaxialLens = source.mDirectionParaxialLens;
 	mDirectionParaxialLensUnit = source.mDirectionParaxialLensUnit;
-	mFocallenghtParaxialLensSide_A = source.mFocallenghtParaxialLensSide_A;
-	mFocallenghtParaxialLensSide_B = source.mFocallenghtParaxialLensSide_B;
+	mFocallenght = source.mFocallenght;
+	mFocallenght_dash = source.mFocallenght_dash;
 	mRefractiveIndexA_ParaxialLens = source.mRefractiveIndexA_ParaxialLens;
 	mRefractiveIndexB_ParaxialLens = source.mRefractiveIndexB_ParaxialLens;
 	mInfosForDefelction = source.mInfosForDefelction;

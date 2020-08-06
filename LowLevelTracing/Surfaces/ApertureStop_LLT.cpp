@@ -57,16 +57,22 @@ void ApertureStop_LLT::setRefractiveIndexSide_B(real const refractiveIndex)
 }
 
 // get focal length side A
-real ApertureStop_LLT::getFocalLength_A()
+real ApertureStop_LLT::getFocalLength()
 {
 	std::cout << "the aperture stop has no focal length! -> there must be a mistake!" << std::endl;
 	return 999;
 }
 // get focal length side B
-real ApertureStop_LLT::getFocalLength_B()
+real ApertureStop_LLT::getFocalLength_dash()
 {
 	std::cout << "the aperture stop has no focal length! -> there must be a mistake!" << std::endl;
 	return 999;
+}
+
+// calc focal length
+void ApertureStop_LLT::calcFocalLength()
+{
+	std::cout << "the aperture stop has no focal length! -> there must be a mistake!" << std::endl;
 }
 
 // get refractive index side A

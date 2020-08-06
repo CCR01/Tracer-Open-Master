@@ -2,34 +2,64 @@
 #include <typeinfo>
 #include <iostream>
 
+#include "..\RayAiming\RayAiming.h"
+#include "..\OptimizeSystem\calculateParaxialDistances.h"
+#include "..\oftenUseNamespace\oftenUseNamespace.h"
 
+CardinalPoints::CardinalPoints() { loadAndResizeParameters(); };
+CardinalPoints::CardinalPoints(OpticalSystem_LLT OptSys, objectPoint_inf_obj objPoint_inf_obj) :
+	mOpticalSystem_LLT(OptSys),
+	mObjectPoint_inf_obj(objPoint_inf_obj)
+{
+	loadAndResizeParameters();
+	calcSystemMatrix();
 
-//// get the position of all surfaces after the stop
-//std::vector<real> CardinalPoints::getPosSurAfterStop() const
-//{
-//	return mPosSurfaceAfterStop;
-//}
-//// get the focal length of all surfaces after the stop
-//std::vector<real> CardinalPoints::getFocalLengthAfterStop() const
-//{
-//	return mFocalLengthAfterStop;
-//}
+	mEFL = calcEFL();
+	mPP_obj = calcPP_obj();
+	mPP_ima = calcPP_ima();
+	mEXPP_lastSurface = calcEXPP_lastSurface();
+	mEXPP_inGlobalCoordi = calcEXPP_globalCoordi();
+	mEXPD = calcEXPD();
+	mMag = calcMagnification();
+	mNA_objSpac = calcNA_objSpac();
+	mENPP_firstSurface = calcENPP_firstSurface();
+	mENPP_inGlobalCoodi = calcENPP_globalCoordi();
+	mENPD = calcENPD();
+	mF_number_imaSpace = calcFnumberImaSpace();
+	mNA_imaSpace = calcNA_imaSpace();
+	mWFNO = calcWFNO();
+};
 
-// get the radius of all surfaces after the stop
-std::vector<real> CardinalPoints::getRadiusAfterStop() const
+CardinalPoints::CardinalPoints(OpticalSystemElement optSysEle, real primWavelenght, objectPoint_inf_obj objPoint_inf_obj) :
+	mOpticalSystem_Ele(optSysEle),
+	mPrimWavelength(primWavelenght),
+	mObjectPoint_inf_obj(objPoint_inf_obj)
 {
-	return mRadiusAfterStop;
+
+	mOpticalSystem_Ele.setRefractiveIndexAccordingToWavelength(primWavelenght);
+	mOpticalSystem_LLT = mOpticalSystem_Ele.getLLTconversion_doConversion();
+
+	loadAndResizeParameters();
+	calcSystemMatrix();
+
+	mEFL = calcEFL();
+	mPP_obj = calcPP_obj();
+	mPP_ima = calcPP_ima();
+	mEXPP_lastSurface = calcEXPP_lastSurface();
+	mEXPP_inGlobalCoordi = calcEXPP_globalCoordi();
+	mEXPD = calcEXPD();
+	mMag = calcMagnification();
+	mNA_objSpac = calcNA_objSpac();
+	mENPP_firstSurface = calcENPP_firstSurface();
+	mENPP_inGlobalCoodi = calcENPP_globalCoordi();
+	mENPD = calcENPD();
+	mF_number_imaSpace = calcFnumberImaSpace();
+	mNA_imaSpace = calcNA_imaSpace();
+	mWFNO = calcWFNO();
 }
-// get all refractive indexes
-std::vector<real> CardinalPoints::getRefractivIndexesAfterStop() const
-{
-	return mRefractivIndexesAfterStop;
-}
-// get aperture size
-real CardinalPoints::getDiameterAperture() const
-{
-	return mDiameterOfApertureStop;
-}
+
+CardinalPoints::~CardinalPoints() {};
+
 
 // get the EFL
 real CardinalPoints::getEFL()
@@ -37,24 +67,24 @@ real CardinalPoints::getEFL()
 	return mEFL;
 }
 // get position principal plain
-real CardinalPoints::getPrincipaPlan()
+real CardinalPoints::getPP_obj()
 {
-	return mPP;
+	return mPP_obj;
 }
 // get ecit pupil position
-real CardinalPoints::getExitPupilPosition_lastSurface()
+real CardinalPoints::getEXPP_lastSurface()
 {
-	return mEXPP_accordingToLastSurface;
+	return mEXPP_lastSurface;
 }
 
 // get ecit pupil position
-real CardinalPoints::getExitPupilPosition_globalCoori()
+real CardinalPoints::getEXPP_globalCoori()
 {
-	return mEXPP_inGlobalCoordinatSystem;
+	return mEXPP_inGlobalCoordi;
 }
 
 // get EcitPupilDiameter
-real CardinalPoints::getExitPupilDiameter()
+real CardinalPoints::getEXPD()
 {
 	return mEXPD;
 }
@@ -65,9 +95,40 @@ real CardinalPoints::getMagnification()
 }
 
 // get anti principelplane
-real CardinalPoints::getAntiPP()
+real CardinalPoints::getPP_ima()
 {
-	return mAntiPP;
+	return mPP_ima;
+}
+
+// entrace pupil position first surface
+real CardinalPoints::getENPP_firstSurface()
+{
+	return mENPP_firstSurface;
+}
+// entrance pupil position global coordi
+real CardinalPoints::getENPP_globalCoodi()
+{
+	return mENPP_inGlobalCoodi;
+}
+// entrance pupil diameter
+real CardinalPoints::getENPD()
+{
+	return mENPD;
+}
+// get f number
+real CardinalPoints::getF_num_imaSpace()
+{
+	return mF_number_imaSpace;
+}
+// NA image space
+real CardinalPoints::getNA_imaSpace()
+{
+	return mNA_imaSpace;
+}
+// working f number
+real CardinalPoints::getWorkingFnumber()
+{
+	return mWFNO;
 }
 
 void CardinalPoints::loadAndResizeParameters()
@@ -80,35 +141,29 @@ void CardinalPoints::loadAndResizeParameters()
 	mSizeAfterStop = mSizeOfOptSysMinTwo - mPositionApertureStop;
 
 	//// resize
-	mSepSurfaceAfterStop.resize(mSizeAfterStop);
-	mRadiusAfterStop.resize(mSizeAfterStop);
-	mRefractivIndexesAfterStop.resize(mSizeAfterStop);
-	mSystemMatrixAfterStop.resize(4);
-	mALLSepSurfaceStop.resize(mSizeAfterStop);
 	mAllRadius.resize(mSizeOfOptSysMinTwo);
-	AllmRefractivIndexes.resize(mSizeOfOptSysMinTwo);
-	AllmSepSurface.resize(mSizeOfOptSysMinTwo);
+	mAllRefractivIndexes.resize(mSizeOfOptSysMinTwo);
+	mAllRefractivIndexes_dash.resize(mSizeOfOptSysMinTwo);
+	mAllThickness_vec.resize(mSizeOfOptSysMinTwo);
 	mAllSystemMatrix.resize(4);
+
+	// NA 
+	mStartPointRayToCalcNA_obj = { 0.0,0.0,0.0 };
 }
 
 void CardinalPoints::calcSystemMatrix()
 {
+
 	// ALL
 	/**/calcAllRadius();
 	/**/calcAllSepSur();
 	/**/calcAllRefractivIndexes();
 	/**/calcSepSurAndImPlane();
-	/**/calcSepObjandSurface();
+	//calcSepObjandSurface();
 
-	// after stop
-	/**/calcSepSurAndStop();
-	/**/calcSepSurAfterStop();
-	/**/calcRadiusAfterStop();
-	/**/calcRefractivIndexesAfterStop();
 
 	/**/calcDiameterAperture();
 
-	calcSystemMatrixAfterStop();
 	calcAllSystemMatrix();
 }
 
@@ -116,31 +171,7 @@ void CardinalPoints::calcSystemMatrix()
 
 
 
-// calculate the separation of all surfaces after the stop
-void CardinalPoints::calcSepSurAfterStop()
-{
-	unsigned int posInVec = 0;
-	for (unsigned int j = mPositionApertureStop + 1; j < mSizeOfOptSysMinOne; j++)
-	{
-		mSepSurfaceAfterStop[posInVec] = mPosAndInteraSurfaceVector[j].getSurfaceInterRay_ptr()->getPoint().getZ() - mPosAndInteraSurfaceVector[j-1].getSurfaceInterRay_ptr()->getPoint().getZ();
-		++posInVec;
-	}
 
-}
-
-// calculate the separation of 1st surface and the stop
-void CardinalPoints::calcSepSurAndStop()
-{
-	mSepSurfaceAndStop = mOpticalSystem_LLT.getPosAndInteractingSurface().at(mPositionApertureStop + 1).getSurfaceInterRay_ptr()->getPoint().getZ() - mOpticalSystem_LLT.getPosAndInteractingSurface().at(mPositionApertureStop).getSurfaceInterRay_ptr()->getPoint().getZ();
-
-}
-
-
-//calculate distance between object plane and first surface(first lens)
-void CardinalPoints::calcSepObjandSurface()
-{
-	mSepObjandSurface = mOpticalSystem_LLT.getPosAndInteractingSurface().at(1).getSurfaceInterRay_ptr()->getPoint().getZ();
-}
 
 // calculate the separation oflast surface and image plane
 void CardinalPoints::calcSepSurAndImPlane()
@@ -149,31 +180,6 @@ void CardinalPoints::calcSepSurAndImPlane()
 }
 
 
-// calculate the radius of all surfaces after the stop
-void CardinalPoints::calcRadiusAfterStop()
-{
-	unsigned int posInVec = 0;
-
-	for (unsigned int j = mPositionApertureStop; j < mSizeOfOptSysMinOne -1; j++)
-	{
-		mRadiusAfterStop[posInVec] = mAllRadius[j];
-		++posInVec;
-	}
-}
-
-
-
-
-// calculate the refractive index after all surfaces after the stop
-void CardinalPoints::calcRefractivIndexesAfterStop()
-{
-	unsigned int posInVec = 0;
-	for (unsigned int j = mPositionApertureStop; j < mSizeOfOptSysMinOne - 1; j++)
-	{	
-		mRefractivIndexesAfterStop[posInVec] = AllmRefractivIndexes[j];
-		++posInVec;
-	}
-}
 
 // calculate aperture size
 void CardinalPoints::calcDiameterAperture()
@@ -181,466 +187,244 @@ void CardinalPoints::calcDiameterAperture()
 	mDiameterOfApertureStop = 2.0 * mPosAndInteraSurfaceVector[mPositionApertureStop].getSurfaceInterRay_ptr()->getSemiHeight();
 }
 
-void CardinalPoints::calcSystemMatrixAfterStop()
-{
-
-	using namespace std;
-
-
-	/*******************************************input values***********************************/
-	unsigned int PosAperturStop = 0;
-	unsigned int s = mSizeOfOptSysMinOne - mPositionApertureStop - 1;
-		
-	/*****************************************************************************/
-	std::vector<double> R_i(s);
-	std::vector<double> R(2 * s - 2);
-	std::vector<double> n_i(s);
-	std::vector<double> n(2 * s - 1);
-	std::vector<double> d_i(s);
-	std::vector<double> dis(2 * s - 2);
-
-	/****************************************/
-	for (int i = 0; i < s; i++)
-	{
-
-		R_i[i] = mRadiusAfterStop[s - i - 1];
-
-	}
-
-	for (int i = 0; i < 2 * s - 2; i++)
-	{
-		if (i == 0)
-		{
-			R[i] = R_i[i];
-		}
-		else if (i > 0 && i % 2 == 0)
-		{
-			R[i] = 0;
-		}
-		else
-		{
-			R[i] = R_i[(i + 1) / 2];
-		}
-
-	}
-
-	/****************************************/
-
-
-	for (int i = 0; i < s - 1; i++)
-	{
-
-		d_i[i] = mSepSurfaceAfterStop[s - i - 1];
-
-	}
-
-	for (int i = 0; i < 2 * s - 2; i++)
-	{
-
-		if (i % 2 == 0)
-		{
-			dis[i] = d_i[(i + 1) / 2];
-
-		}
-		else
-		{
-			dis[i] = 0;
-		}
-
-	}
-	/****************************************/
-
-
-	for (int i = 0; i < s; i++)
-	{
-
-		n_i[i] = mRefractivIndexesAfterStop[s - i - 1];
-
-	}
-
-
-	for (int i = 0; i < 2 * s - 1; i++)
-	{
-		if (i == 0)
-		{
-			n[i] = n_i[i];
-		}
-		else if (i == 2 * s - 2)
-		{
-			n[i] = n_i[0];
-		}
-		else if (i > 0 && i % 2 == 0)
-		{
-			n[i] = n_i[(i + 2) / 2];
-		}
-		else
-		{
-			n[i] = n_i[(i + 1) / 2];
-		}
-
-	}
-	/*****************************************initiate 3D matrix******************************************************/
-
-	vector < vector < vector<double> > > t;
-	t.resize(2);
-	t[0].resize(2);
-	t[1].resize(2);
-	t[0][0].resize(2 * s - 2);
-	t[0][1].resize(2 * s - 2);
-	t[1][0].resize(2 * s - 2);
-	t[1][1].resize(2 * s - 2);
-
-	vector < vector < vector<double> > > r;
-	r.resize(2);
-	r[0].resize(2);
-	r[1].resize(2);
-	r[0][0].resize(2 * s - 1);
-	r[0][1].resize(2 * s - 1);
-	r[1][0].resize(2 * s - 1);
-	r[1][1].resize(2 * s - 1);
-
-
-
-	/*******************************spherical surface************************************************/
-
-	
-
-	for (int k = 0; k < 2 * s - 2; k++)
-	{
-
-		if (k == 0)
-		{
-			r[0][0][k] = 1;
-			r[0][1][k] = -(n[k] - n[k + 1]) / R[k];
-			r[1][0][k] = 0;
-			r[1][1][k] = 1;
-
-
-
-			t[0][0][k] = 1;
-			t[0][1][k] = 0;
-			t[1][0][k] = dis[k] / n[k + 1];
-			t[1][1][k] = 1;
-
-
-		}
-
-
-		else if (k > 0 && k % 2 == 0)
-		{
-			r[0][0][k] = 0;
-			r[0][1][k] = 0;
-			r[1][0][k] = 0;
-			r[1][1][k] = 0;
-
-			t[0][0][k] = 1;
-			t[0][1][k] = 0;
-			t[1][0][k] = dis[k] / n[k + 1];
-			t[1][1][k] = 1;
-
-
-		}
-		else
-		{
-
-			r[0][0][k] = 1;
-			r[0][1][k] = -(n[k] - n[k + 1]) / R[k];
-			r[1][0][k] = 0;
-			r[1][1][k] = 1;
-
-
-			t[0][0][k] = 0;
-			t[0][1][k] = 0;
-			t[1][0][k] = 0;
-			t[1][1][k] = 0;
-		}
-
-	}
-
-	/**********************************************************************************************/
-
-	double mult[2][2];
-	for (int z = 0; z < 2 * s - 2; z++)
-	{
-		mult[0][0] = 0;
-		mult[0][1] = 0;
-		mult[1][0] = 0;
-		mult[1][1] = 0;
-
-		for (int i = 0; i < 2; i++)
-		{
-			for (int j = 0; j < 2; j++)
-			{
-				for (int k = 0; k < 2; k++)
-				{
-
-					if (z % 2 == 0)
-					{
-						mult[i][j] += t[i][k][z] * r[k][j][z];
-
-
-					}
-					else
-					{
-						mult[i][j] += r[i][k][z] * t[k][j][z];
-
-					}
-				}
-			}
-		}
-		if (z % 2 == 0)
-		{
-			for (int p = 0; p < 2; p++)
-			{
-				for (int q = 0; q < 2; q++)
-				{
-					t[p][q][z + 1] = mult[p][q];
-				}
-			}
-		}
-
-		else
-		{
-			for (int p = 0; p < 2; p++)
-			{
-				for (int q = 0; q < 2; q++)
-				{
-					r[p][q][z + 1] = mult[p][q];
-				}
-			}
-		}
-
-
-	}
-	/****************************************************************************************/
-
-
-	vector < vector < double > > matrix2D;
-	matrix2D.resize(2);
-	matrix2D[0].resize(2);
-	matrix2D[1].resize(2);
-
-	for (int i = 0; i < 2; i++)
-	{
-		//vector <double> zii;
-		//matrix2D[i] = zii;
-		for (int j = 0; j < 2; j++)
-		{
-			matrix2D[i][j] = mult[1 - j][1 - i];
-		}
-	}
-
-	mSystemMatrixAfterStop[0] = matrix2D[0][0];
-	mSystemMatrixAfterStop[1] = matrix2D[0][1];
-	mSystemMatrixAfterStop[2] = matrix2D[1][0];
-	mSystemMatrixAfterStop[3] = matrix2D[1][1];
-
-
-}
-
 
 // calculate the EFL ot the optical system
 real CardinalPoints::calcEFL()
 {
 
-	using namespace std;
-
-
-	std::vector<double> matrixABCD = mAllSystemMatrix;
-	double a, b, c, d;
-
-	b = matrixABCD[0];
-	a = -matrixABCD[1];
-	d = -matrixABCD[2];
-	c = matrixABCD[3];
-
-
-
-
-	double efl = 1 / a;
-	//cout << endl << "EFL = " << efl << endl;
-
-
-
-
-	return efl;
+	return -1.0 / (mSystemMatrix_vec[2]);
 
 }
 
-
-
 // calculat the global principal plan of the optical system
-real CardinalPoints::calcPrincPlanOptSys()
+real CardinalPoints::calcPP_obj()
 {
-	using namespace std;
-	/*******************************************input values***********************************/
-	std::vector<double> matrixABCD = mAllSystemMatrix;
-	double efl = mEFL;
-	double image_plane = mSepSurAndImPlane;
-	double aperture_size = mDiameterOfApertureStop;
-	double sto = mSepSurfaceAndStop;
+	real PP_obj = (mSystemMatrix_vec[3] - 1) / (mSystemMatrix_vec[2]);
 
-	/*****************************************************************************/
-
-	double a, b, c, d;
-
-	b = matrixABCD[0];
-	a = -matrixABCD[1];
-	d = -matrixABCD[2];
-	c = matrixABCD[3];
-
-	double h1 = (1 - b) / a;
-
-	if (typeid(*mPosAndInteraSurfaceVector.at(0).getSurfaceInterRay_ptr()) == typeid(mApertureStop))
+	if (mPositionApertureStop == 0)
 	{
-		h1 = (1 - b) / a
-			+ mOpticalSystem_LLT.getPosAndInteractingSurface().at(1).getSurfaceInterRay_ptr()->getPoint().getZ()
-			- mOpticalSystem_LLT.getPosAndInteractingSurface().at(0).getSurfaceInterRay_ptr()->getPoint().getZ();
+		real thicknessAperStopSecondSurface = mPosAndInteraSurfaceVector[1].getSurfaceInterRay_ptr()->getPoint().getZ() - mPosAndInteraSurfaceVector[0].getSurfaceInterRay_ptr()->getPoint().getZ();
+		PP_obj = PP_obj + thicknessAperStopSecondSurface;
 	}
 
-	//cout << "principal plane = " << h1 << endl;
-
-
-
-
-
-	return h1;
+	return PP_obj;
 }
 
 // calculat the global anti principal plan of the optical syste
-real CardinalPoints::calcAntiPrincPlanOptSys()
+real CardinalPoints::calcPP_ima()
 {
-	using namespace std;
-	/*******************************************input values***********************************/
-	std::vector<double> matrixABCD = mAllSystemMatrix;
-	double efl = mEFL;
-	double image_plane = mSepSurAndImPlane;
-	double aperture_size = mDiameterOfApertureStop;
-	double sto = mSepSurfaceAndStop;
-
-	/*****************************************************************************/
-
-	double a, b, c, d;
-
-	b = matrixABCD[0];
-	a = -matrixABCD[1];
-	d = -matrixABCD[2];
-	c = matrixABCD[3];
-
-
-	double h2 = (c - 1) / a - image_plane;
-
-	//cout << "anti-principal plane = " << h2 << endl;
-
-
-
-
-	return h2;
+	return -(mSystemMatrix_vec[0] - 1) / mSystemMatrix_vec[2];
 }
 
 //calculate the exit Pupul position
-real CardinalPoints::calcExitPupilPost()
+real CardinalPoints::calcEXPP_lastSurface()
 {
-	using namespace std;
-	/*******************************************input values***********************************/
-	std::vector<double> matrixABCD = mSystemMatrixAfterStop;
+	if (mPositionApertureStop == mSizeOfOptSysMinTwo)
+	{
+		return mPosAndInteraSurfaceVector[mPositionApertureStop].getSurfaceInterRay_ptr()->getPoint().getZ() - mPosAndInteraSurfaceVector[mSizeOfOptSysMinOne].getSurfaceInterRay_ptr()->getPoint().getZ();
+	}
 
-	double image_plane = mSepSurAndImPlane;
-	double aperture_size = mDiameterOfApertureStop;
-	double sto = mSepSurfaceAndStop;
-	/*****************************************************************************/
-	double a, b, c, d;
+	//std::vector<PosAndIntsectionSurfaceStruct> posAndInteraSurfaceBeforeApertureStop_vec(mPositionApertureStop);
+	std::shared_ptr<SurfaceIntersectionRay_LLT> tempSurfacePointer{};
+	real tempDirection_Z{};
 
-	b = matrixABCD[0];
-	a = -matrixABCD[1];
-	d = -matrixABCD[2];
-	c = matrixABCD[3];
+	std::vector<real> distances_vec_afterAS(mSizeAfterStop);
+	std::vector<real> radii_vec_afterAS(mSizeAfterStop);
+	std::vector<real> refIndex_vec_afterAS(mSizeAfterStop);
+	std::vector<real> refIndex_dash_vec_afterAS(mSizeAfterStop);
+	std::vector<real> f_dash_vec_afterAS(mSizeAfterStop);
 
-	double efl = 1 / a;
-	double h1 = (1 - b) / a + sto;
-	double h2 = (c - 1) / a - image_plane;
+	mS_afterAS.resize(mSizeAfterStop);
+	mS_dash_afterAS.resize(mSizeAfterStop);
+
+	unsigned int posInVec = 0;
+	
+	for (unsigned int i = mPositionApertureStop + 1; i < mSizeOfOptSysMinOne; ++i)
+	{
+		tempSurfacePointer = mPosAndInteraSurfaceVector[i].getSurfaceInterRay_ptr();
+		distances_vec_afterAS[posInVec] = tempSurfacePointer->getPoint().getZ() - mPosAndInteraSurfaceVector[i - 1].getSurfaceInterRay_ptr()->getPoint().getZ();
+		radii_vec_afterAS[posInVec] = tempSurfacePointer->getRadius();
+		tempDirection_Z = tempSurfacePointer->getDirection().getZ();
+
+		if (tempDirection_Z > 0)
+		{
+			radii_vec_afterAS[posInVec] = tempSurfacePointer->getRadius();;
+			refIndex_vec_afterAS[posInVec] = tempSurfacePointer->getRefractiveIndex_A();
+			refIndex_dash_vec_afterAS[posInVec] = tempSurfacePointer->getRefractiveIndex_B();
+			f_dash_vec_afterAS[posInVec] = refIndex_dash_vec_afterAS[posInVec] * radii_vec_afterAS[posInVec] / (refIndex_dash_vec_afterAS[posInVec] - refIndex_vec_afterAS[posInVec]);
+		}
+
+		else
+		{
+			radii_vec_afterAS[posInVec] = -1.0 * tempSurfacePointer->getRadius();
+			refIndex_vec_afterAS[posInVec] = tempSurfacePointer->getRefractiveIndex_B();
+			refIndex_dash_vec_afterAS[posInVec] = tempSurfacePointer->getRefractiveIndex_A();
+			f_dash_vec_afterAS[posInVec] = refIndex_dash_vec_afterAS[posInVec] * radii_vec_afterAS[posInVec] / (refIndex_dash_vec_afterAS[posInVec] - refIndex_vec_afterAS[posInVec]);
+		}
+		++posInVec;
+	}
+
+	// calc s and s_dash
+	mS_dash_afterAS[0] = 0.0;
+	real tempS_dash{};
+	for (unsigned int i = 0; i < posInVec; ++i)
+	{
+		mS_afterAS[i] = -1.0 * (distances_vec_afterAS[i] - tempS_dash);
+		mS_dash_afterAS[i] = refIndex_dash_vec_afterAS[i] / (refIndex_dash_vec_afterAS[i] / f_dash_vec_afterAS[i] + refIndex_vec_afterAS[i] / mS_afterAS[i]);
+		tempS_dash = mS_dash_afterAS[i];
+	}
 
 
-	double pupil_pos;
-	double pupil_pos1;
-	double X = image_plane - h2;
-	pupil_pos = (h1*efl) / (h1 - efl);
-	pupil_pos1 = pupil_pos + h2;
-	//cout <<"exit pupil position = " << pupil_pos1 << endl;
+	real EXPP = mS_dash_afterAS.back() - mSepSurAndImPlane;
 
-
-	return pupil_pos1;
+	return EXPP;
 }
 
 
 // calculate the diameter of the exit pupil of the optical system
-real CardinalPoints::calcDiameterExitPupil()
+real CardinalPoints::calcEXPD()
 {
-	using namespace std;
-	/*******************************************input values***********************************/
-	std::vector<double> matrixABCD = mSystemMatrixAfterStop;
-
-	double image_plane = mSepSurAndImPlane;
-	double aperture_size = mDiameterOfApertureStop;
-	double sto = mSepSurfaceAndStop;
-	/*****************************************************************************/
-
-
-	double a, b, c, d;
-
-	b = matrixABCD[0];
-	a = -matrixABCD[1];
-	d = -matrixABCD[2];
-	c = matrixABCD[3];
-
-
-	double efl = 1 / a;
-	double h1 = (1 - b) / a;
-	double h2 = (c - 1) / a;
-	double pupil_pos;
-	double pupil_pos1;
-	double size_pupil;
-	double X = image_plane - h2;
-	pupil_pos = ((sto + h1)*efl) / (sto + h1 - efl);
-	pupil_pos1 = pupil_pos;
-	size_pupil = -aperture_size * (pupil_pos) / (sto + h1);
-
-	if (size_pupil < 0)
+	if (mPositionApertureStop == mSizeOfOptSysMinTwo)
 	{
-		size_pupil = -size_pupil;
+		return mDiameterOfApertureStop;
 	}
 
-	//cout << "size_pupil = " << size_pupil << endl;
-	return size_pupil;
+	real magAperStop_right = 1.0;
+	for (unsigned int i = 0; i < mSizeOfOptSysMinTwo - mPositionApertureStop; ++i)
+	{
+		magAperStop_right = magAperStop_right * mS_dash_afterAS[i] / mS_afterAS[i];
+	}
+
+	return std::abs(mDiameterOfApertureStop * magAperStop_right);
 }
 
 
 real CardinalPoints::calcMagnification()
 {
-	using namespace std;
-	double mag;
-	double image_plane = mSepSurAndImPlane;
-	double object_plane = mSepObjandSurface;
-	double paraxial_implane = image_plane + (-1 * mAntiPP);
-	double paraxial_objplane = object_plane + (mPP);
-	mag = paraxial_implane / paraxial_objplane;
-	//cout << "Magnification = " << mag << endl;
+	real mag = 1.0;
+
+	if (objectPoint_inf_obj::obj == mObjectPoint_inf_obj)
+	{
+		CalculateParaxialDistances calcParaDis(mOpticalSystem_LLT, notInfinity, 550.0);
+
+		std::vector<real> s_vec = calcParaDis.getAll_S();
+		std::vector<real> s_dash_vec = calcParaDis.getAll_S_dash();
+		unsigned int size = s_dash_vec.size();
+	
+		for (unsigned int i = 0; i < size; ++i)
+		{
+			mag = mag * s_dash_vec[i] / s_vec[i];
+		}
+	}
+
+	else
+	{
+		return 0.0;
+	}
+	
 	return mag;
 }
 
 // calc pos exit pupil gloabl coordinates
-real CardinalPoints::calcPosEXXPglobalCoordi()
+real CardinalPoints::calcEXPP_globalCoordi()
 {
-	real EXXPglobalCoordi;
+	real posZ_lastSurface = mPosAndInteraSurfaceVector[mSizeOfOptSysMinOne].getSurfaceInterRay_ptr()->getPoint().getZ();
 
-	unsigned int numSurfaces = mOpticalSystem_LLT.getNumberOfSurfaces();
-	real zPosLastSurface = mOpticalSystem_LLT.getPosAndInteractingSurface().at(numSurfaces).getSurfaceInterRay_ptr()->getPoint().getZ();
-
-	EXXPglobalCoordi = zPosLastSurface + mEXPP_accordingToLastSurface;
-	return EXXPglobalCoordi;
-
+	return posZ_lastSurface + mEXPP_lastSurface;
 }
 
+// calc numerical aperture
+real CardinalPoints::calcNA_objSpac()
+{
+	real NA_obj{};
+
+	if (mObjectPoint_inf_obj == objectPoint_inf_obj::obj)
+	{
+		RayAiming rayAiming(mOpticalSystem_LLT);
+		rayAiming.turn_On_RobustRayAiming();
+
+		VectorStructR3 pointApertureStop = mPosAndInteraSurfaceVector[mPositionApertureStop].getSurfaceInterRay_ptr()->getPoint();
+		real semiHeightAperStop = mPosAndInteraSurfaceVector[mPositionApertureStop].getSurfaceInterRay_ptr()->getSemiHeight();
+		VectorStructR3 vec = { 0.0,semiHeightAperStop, 0.0 };
+		VectorStructR3 targetPointRay = pointApertureStop + vec;
+		Light_LLT defaulLight = oftenUse::getDefaultLight();
+		LightRayStruct lightRay = rayAiming.rayAiming_obj(mStartPointRayToCalcNA_obj, targetPointRay, defaulLight, 1.0);
+
+		VectorStructR3 directionRayUnit = lightRay.getRay_LLT().getDirectionRayUnit();
+
+		real z = directionRayUnit.getZ();
+		real y = directionRayUnit.getY();
+
+		real angel = std::atan(y / z);
+		NA_obj = std::abs(std::sin(angel));
+	}
+
+	else // mObjectPoint_inf_obj == inf
+	{
+		NA_obj = 0;
+	}
+
+	return NA_obj;
+}
+
+// calc NA image space
+real CardinalPoints::calcNA_imaSpace()
+{
+	real NA_ima{};
+
+	RayAiming rayAiming(mOpticalSystem_LLT);
+	rayAiming.turn_On_RobustRayAiming();
+
+	VectorStructR3 pointApertureStop = mPosAndInteraSurfaceVector[mPositionApertureStop].getSurfaceInterRay_ptr()->getPoint();
+	real semiHeightAperStop = mPosAndInteraSurfaceVector[mPositionApertureStop].getSurfaceInterRay_ptr()->getSemiHeight();
+	VectorStructR3 vec = { 0.0,semiHeightAperStop, 0.0 };
+	VectorStructR3 targetPointRay = pointApertureStop + vec;
+	Light_LLT defaulLight = oftenUse::getDefaultLight();
+
+	LightRayStruct marginalLightRay;
+	if (mObjectPoint_inf_obj == objectPoint_inf_obj::obj)
+	{
+		marginalLightRay = rayAiming.rayAiming_obj(mStartPointRayToCalcNA_obj, targetPointRay, defaulLight, 1.0);
+	}
+
+	else
+	{
+		marginalLightRay = rayAiming.rayAiming_inf({ 0.0,0.0,1.0 }, targetPointRay, defaulLight, 1.0);
+
+	}
+
+	SequentialRayTracing seqTrace(mOpticalSystem_LLT);
+	seqTrace.sequentialRayTracing(marginalLightRay);
+
+	// check if the ray at the last surface is still alive
+	unsigned int sizeRealInterPoints = seqTrace.getAllIntersectionPointsSRT().size();
+	VectorStructR3 directionRayUnitAtLastSurface{};
+
+	if (sizeRealInterPoints == mSizeOfOpt)
+	{
+		directionRayUnitAtLastSurface = seqTrace.getAllInterInfosOfSurf_i(mSizeOfOptSysMinOne)[0].getDirectionRayUnit();
+	}
+
+	else
+	{
+		return 51818018.0; // ERROR
+	}
+
+
+	real z = directionRayUnitAtLastSurface.getZ();
+	real y = directionRayUnitAtLastSurface.getY();
+
+	real angel = std::atan(y / z);
+	NA_ima = std::abs(std::sin(y / z));
+
+
+	return NA_ima;
+}
+
+real CardinalPoints::calcWFNO()
+{
+	return 1 / (2 * mNA_imaSpace);
+}
 
 void CardinalPoints::calcAllRadius()
 {
@@ -674,7 +458,9 @@ void CardinalPoints::calcAllRadius()
 void CardinalPoints::calcAllRefractivIndexes()
 {
 	real tempRefIndex;
+	real tempRefIndex_dash;
 	real tempDirectionZ;
+	std::shared_ptr<SurfaceIntersectionRay_LLT> tempSurface_prt{};
 	unsigned int posInVec = 0;
 
 	for (unsigned int i = 0; i < mSizeOfOptSysMinOne; i++)
@@ -682,20 +468,20 @@ void CardinalPoints::calcAllRefractivIndexes()
 		if (typeid(*mPosAndInteraSurfaceVector.at(i).getSurfaceInterRay_ptr()) != typeid(mApertureStop))
 		{
 
-
 			tempDirectionZ = mPosAndInteraSurfaceVector[i].getSurfaceInterRay_ptr()->getDirection().getZ();
 
 
 			if (tempDirectionZ > 0)
 			{
-				tempRefIndex = mPosAndInteraSurfaceVector[i].getSurfaceInterRay_ptr()->getRefractiveIndex_B();
-				AllmRefractivIndexes[posInVec] = tempRefIndex;
+				mAllRefractivIndexes[posInVec] = mPosAndInteraSurfaceVector[i].getSurfaceInterRay_ptr()->getRefractiveIndex_A();
+				mAllRefractivIndexes_dash[posInVec] = mPosAndInteraSurfaceVector[i].getSurfaceInterRay_ptr()->getRefractiveIndex_B();
+				
 
 			}
 			else if (tempDirectionZ < 0)
 			{
-				tempRefIndex = mPosAndInteraSurfaceVector[i].getSurfaceInterRay_ptr()->getRefractiveIndex_A();
-				AllmRefractivIndexes[posInVec] = tempRefIndex;
+				mAllRefractivIndexes[posInVec] = mPosAndInteraSurfaceVector[i].getSurfaceInterRay_ptr()->getRefractiveIndex_B();
+				mAllRefractivIndexes_dash[posInVec] = mPosAndInteraSurfaceVector[i].getSurfaceInterRay_ptr()->getRefractiveIndex_A();
 
 			}
 			else
@@ -725,13 +511,13 @@ void CardinalPoints::calcAllSepSur()
 			if (typeid(*mPosAndInteraSurfaceVector.at(i + 1).getSurfaceInterRay_ptr()) != typeid(mApertureStop))
 			{
 				tempZ_Pos = mOpticalSystem_LLT.getPosAndInteractingSurface().at(i + 1).getSurfaceInterRay_ptr()->getPoint().getZ() - mOpticalSystem_LLT.getPosAndInteractingSurface().at(i).getSurfaceInterRay_ptr()->getPoint().getZ();
-				AllmSepSurface[posInVec] = tempZ_Pos;
+				mAllThickness_vec[posInVec] = tempZ_Pos;
 
 			}
 			else
 			{
 				tempZ_Pos = mOpticalSystem_LLT.getPosAndInteractingSurface().at(i + 2).getSurfaceInterRay_ptr()->getPoint().getZ() - mOpticalSystem_LLT.getPosAndInteractingSurface().at(i).getSurfaceInterRay_ptr()->getPoint().getZ();
-				AllmSepSurface[posInVec] = tempZ_Pos;
+				mAllThickness_vec[posInVec] = tempZ_Pos;
 
 			}
 			++posInVec;
@@ -741,256 +527,168 @@ void CardinalPoints::calcAllSepSur()
 
 }
 
+std::vector<real> CardinalPoints::calcVecTimesVec(std::vector<real> const vec1, std::vector<real> const vec2)
+{
+	std::vector<real> retunVec(4);
 
+	retunVec[0] = vec1[0] * vec2[0] + vec1[1] * vec2[2];
+	retunVec[1] = vec1[0] * vec2[1] + vec1[1] * vec2[3];
+	retunVec[2] = vec1[2] * vec2[0] + vec1[3] * vec2[2];
+	retunVec[3] = vec1[2] * vec2[1] + vec1[3] * vec2[3];
+
+	return retunVec;
+}
 
 void CardinalPoints::calcAllSystemMatrix()
 {
 
-	using namespace std;
+	mSystemMatrix_vec.resize(4);
+	mSystemMatrix_vec[0] = 1.0;
+	mSystemMatrix_vec[2] = 1.0;
 
-	/*******************************************input values***********************************/
-	unsigned int sizeOfOptSys = mOpticalSystem_LLT.getNumberOfSurfaces();
-	int s = sizeOfOptSys - 1;
-	//std::vector<double> R_ip = mAllRadius;
-	//std::vector<double> n_ip = AllmRefractivIndexes;
-	//std::vector<double> d_ip = AllmSepSurface;
+	std::vector<real> propagate(4);
+	propagate[0] = 1.0;
+	propagate[1] = 999.0;
+	propagate[2] = 0.0;
+	propagate[3] = 1.0;
 
-	/*****************************************************************************/
-	std::vector<double> R_i(s);
-	std::vector<double> R(2 * s - 2);
-	std::vector<double> n_i(s);
-	std::vector<double> n(2 * s - 1);
-	std::vector<double> d_i(s);
-	std::vector<double> dis(2 * s - 2);
+	std::vector<real> refract(4);
+	refract[0] = 1.0;
+	refract[1] = 0.0;
+	refract[2] = 999.0;
+	refract[3] = 999.0;
 
+	bool swichPropagatRefract = true;
 
-	/****************************************/
-	for (int i = 0; i < s; i++)
+	unsigned int counter = 0;
+
+	mSystemMatrix_vec[0] = 1.0;
+	mSystemMatrix_vec[1] = 0.0;
+	mSystemMatrix_vec[2] = (mAllRefractivIndexes[counter] - mAllRefractivIndexes_dash[counter]) / (mAllRadius[counter] * mAllRefractivIndexes_dash[counter]);
+	mSystemMatrix_vec[3] = mAllRefractivIndexes[counter] / mAllRefractivIndexes_dash[counter];
+
+	for (unsigned int i = 0; i < 2*mSizeOfOptSysMinTwo -1 ; i++)
 	{
+		if (swichPropagatRefract) // propagate
+		{
+			propagate[1] = mAllThickness_vec[counter];
+			mSystemMatrix_vec = calcVecTimesVec(propagate ,mSystemMatrix_vec);
 
-		R_i[i] = mAllRadius[s - i - 1];
+			swichPropagatRefract = false;
+			++counter;
+		}
 
+		else // refaction
+		{
+			refract[2] = (mAllRefractivIndexes[counter] - mAllRefractivIndexes_dash[counter]) / (mAllRadius[counter] * mAllRefractivIndexes_dash[counter]);
+			refract[3] = mAllRefractivIndexes[counter] / mAllRefractivIndexes_dash[counter];
+			mSystemMatrix_vec = calcVecTimesVec(refract, mSystemMatrix_vec);
+
+			swichPropagatRefract = true;
+		}
 	}
 
-	for (int i = 0; i < 2 * s - 2; i++)
-	{
-		if (i == 0)
-		{
-			R[i] = R_i[i];
-		}
-		else if (i > 0 && i % 2 == 0)
-		{
-			R[i] = 0;
-		}
-		else
-		{
-			R[i] = R_i[(i + 1) / 2];
+}
 
-		}
+real CardinalPoints::calcENPP_firstSurface()
+{
+
+	if (mPositionApertureStop == 0) // entrance pupil is aperture stop
+	{
+		return 0;
 	}
 
-	/****************************************/
+	//std::vector<PosAndIntsectionSurfaceStruct> posAndInteraSurfaceBeforeApertureStop_vec(mPositionApertureStop);
+	std::shared_ptr<SurfaceIntersectionRay_LLT> tempSurfacePointer{};
+	real tempDirection_Z{};
 
+	std::vector<real> distances_vec_BAS_rot(mPositionApertureStop);
+	std::vector<real> radii_vec_BAS_rot(mPositionApertureStop);
+	std::vector<real> refIndex_vec_BAS_rot(mPositionApertureStop);
+	std::vector<real> refIndex_vec_dash_BAS_rot(mPositionApertureStop);
+	std::vector<real> f_dash_vec_BAS_rot(mPositionApertureStop);
 
-	for (int i = 0; i < s - 1; i++)
+	mS_beforeAS_rot.resize(mPositionApertureStop);
+	mS_dash_beforeAS_rot.resize(mPositionApertureStop);
+
+	for (unsigned int i = 0; i < mPositionApertureStop; ++i)
 	{
+		//posAndInteraSurfaceBeforeApertureStop_vec[i] = mPosAndInteraSurfaceVector[i].clone();
+		tempSurfacePointer = mPosAndInteraSurfaceVector[mPositionApertureStop - 1 - i].getSurfaceInterRay_ptr();
+		distances_vec_BAS_rot[i] = mPosAndInteraSurfaceVector[mPositionApertureStop - i].getSurfaceInterRay_ptr()->getPoint().getZ() - tempSurfacePointer->getPoint().getZ();
+		radii_vec_BAS_rot[i] = tempSurfacePointer->getRadius();
+		tempDirection_Z = tempSurfacePointer->getDirection().getZ();
 
-		d_i[i] = AllmSepSurface[s - i - 2];
-
-
-	}
-
-	for (int i = 0; i < 2 * s - 2; i++)
-	{
-
-		if (i % 2 == 0)
+		if (tempDirection_Z > 0)
 		{
-			dis[i] = d_i[(i + 1) / 2];
-		}
-		else
-		{
-			dis[i] = 0;
-		}
-	}
-	/****************************************/
-
-	for (int i = 0; i < s; i++)
-	{
-
-		n_i[i] = AllmRefractivIndexes[s - i - 1];
-
-
-	}
-
-
-	for (int i = 0; i < 2 * s - 1; i++)
-	{
-		if (i == 0)
-		{
-			n[i] = n_i[i];
-		}
-		else if (i == 2 * s - 2)
-		{
-			n[i] = n_i[0];
-		}
-		else if (i > 0 && i % 2 == 0)
-		{
-			n[i] = n_i[(i + 2) / 2];
-		}
-		else
-		{
-			n[i] = n_i[(i + 1) / 2];
-		}
-	}
-	/*****************************************initiate 3D matrix******************************************************/
-
-	vector < vector < vector<double> > > t;
-	t.resize(2);
-	t[0].resize(2);
-	t[1].resize(2);
-	t[0][0].resize(2 * s - 2);
-	t[0][1].resize(2 * s - 2);
-	t[1][0].resize(2 * s - 2);
-	t[1][1].resize(2 * s - 2);
-
-	vector < vector < vector<double> > > r;
-	r.resize(2);
-	r[0].resize(2);
-	r[1].resize(2);
-	r[0][0].resize(2 * s - 1);
-	r[0][1].resize(2 * s - 1);
-	r[1][0].resize(2 * s - 1);
-	r[1][1].resize(2 * s - 1);
-
-
-
-	/*******************************spherical surface************************************************/
-
-	for (int k = 0; k < 2 * s - 2; k++)
-	{
-
-		if (k == 0)
-		{
-			r[0][0][k] = 1;
-			r[0][1][k] = -(n[k] - n[k + 1]) / R[k];
-			r[1][0][k] = 0;
-			r[1][1][k] = 1;
-
-
-			t[0][0][k] = 1;
-			t[0][1][k] = 0;
-			t[1][0][k] = dis[k] / n[k + 1];
-			t[1][1][k] = 1;
-
-		}
-
-
-		else if (k > 0 && k % 2 == 0)
-		{
-			r[0][0][k] = 0;
-			r[0][1][k] = 0;
-			r[1][0][k] = 0;
-			r[1][1][k] = 0;
-
-			t[0][0][k] = 1;
-			t[0][1][k] = 0;
-			t[1][0][k] = dis[k] / n[k + 1];
-			t[1][1][k] = 1;
-
-		}
-		else
-		{
-
-			r[0][0][k] = 1;
-			r[0][1][k] = -(n[k] - n[k + 1]) / R[k];
-			r[1][0][k] = 0;
-			r[1][1][k] = 1;
-
-
-			t[0][0][k] = 0;
-			t[0][1][k] = 0;
-			t[1][0][k] = 0;
-			t[1][1][k] = 0;
-		}
-
-	}
-
-	/**********************************************************************************************/
-	//cout << endl << endl;
-
-	double mult[2][2];
-	for (int z = 0; z < 2 * s - 2; z++)
-	{
-		mult[0][0] = 0;
-		mult[0][1] = 0;
-		mult[1][0] = 0;
-		mult[1][1] = 0;
-
-		for (int i = 0; i < 2; i++)
-		{
-			for (int j = 0; j < 2; j++)
-			{
-				for (int k = 0; k < 2; k++)
-				{
-
-					if (z % 2 == 0)
-					{
-						mult[i][j] += t[i][k][z] * r[k][j][z];
-					}
-					else
-					{
-						mult[i][j] += r[i][k][z] * t[k][j][z];
-
-					}
-				}
-			}
-		}
-		if (z % 2 == 0)
-		{
-			for (int p = 0; p < 2; p++)
-			{
-				for (int q = 0; q < 2; q++)
-				{
-					t[p][q][z + 1] = mult[p][q];
-				}
-			}
+			radii_vec_BAS_rot[i] = -1.0 * tempSurfacePointer->getRadius();;
+			refIndex_vec_BAS_rot[i] = tempSurfacePointer->getRefractiveIndex_B();
+			refIndex_vec_dash_BAS_rot[i] = tempSurfacePointer->getRefractiveIndex_A();
+			f_dash_vec_BAS_rot[i] = refIndex_vec_dash_BAS_rot[i] * radii_vec_BAS_rot[i] / (refIndex_vec_dash_BAS_rot[i] - refIndex_vec_BAS_rot[i]);
 		}
 
 		else
 		{
-			for (int p = 0; p < 2; p++)
-			{
-				for (int q = 0; q < 2; q++)
-				{
-					r[p][q][z + 1] = mult[p][q];
-				}
-			}
+			radii_vec_BAS_rot[i] = tempSurfacePointer->getRadius();
+			refIndex_vec_BAS_rot[i] = tempSurfacePointer->getRefractiveIndex_A();
+			refIndex_vec_dash_BAS_rot[i] = tempSurfacePointer->getRefractiveIndex_B();
+			f_dash_vec_BAS_rot[i] = refIndex_vec_dash_BAS_rot[i] * radii_vec_BAS_rot[i] / (refIndex_vec_dash_BAS_rot[i] - refIndex_vec_BAS_rot[i]);
 		}
-
 
 	}
-	/****************************************************************************************/
 
-
-	vector < vector < double > > matrix2D;
-	for (int i = 0; i < 2; i++)
+	// calc s and s_dash
+	mS_dash_beforeAS_rot[0] = 0.0;
+	real tempS_dash{};
+	for (unsigned int i = 0; i < mPositionApertureStop; ++i)
 	{
-		vector <double> zii;
-		matrix2D.push_back(zii);
-		for (int j = 0; j < 2; j++)
-		{
-			matrix2D[i].push_back(mult[1 - j][1 - i]);
-		}
+		mS_beforeAS_rot[i] = -1.0 * (distances_vec_BAS_rot[i] - tempS_dash);
+		mS_dash_beforeAS_rot[i] = refIndex_vec_dash_BAS_rot[i] / (refIndex_vec_dash_BAS_rot[i] / f_dash_vec_BAS_rot[i] + refIndex_vec_BAS_rot[i] / mS_beforeAS_rot[i]);
+		tempS_dash = mS_dash_beforeAS_rot[i];
 	}
 
 
 	
-	mAllSystemMatrix[0] = matrix2D[0][0];
-	mAllSystemMatrix[1] = matrix2D[0][1];
-	mAllSystemMatrix[2] = matrix2D[1][0];
-	mAllSystemMatrix[3] = matrix2D[1][1];
 
 
+	return -1.0 * mS_dash_beforeAS_rot.back();
 
 }
 
+real CardinalPoints::calcENPP_globalCoordi()
+{
+	return mPosAndInteraSurfaceVector[0].getSurfaceInterRay_ptr()->getPoint().getZ() + mENPP_firstSurface;
+}
+
+// calc entrance pupil diameter 
+real CardinalPoints::calcENPD()
+{
+	if (mPositionApertureStop == 0) // entrance pupil is aperture stop
+	{
+		return mDiameterOfApertureStop;
+	}
+
+	real magAperStop_left = 1.0;
+	for (unsigned int i = 0; i < mPositionApertureStop; ++i)
+	{
+		magAperStop_left = magAperStop_left * mS_dash_beforeAS_rot[i] / mS_beforeAS_rot[i];			
+	}
+
+	return std::abs(mDiameterOfApertureStop * magAperStop_left);
+
+}
+// calc f number
+real CardinalPoints::calcFnumberImaSpace()
+{
+	return mEFL / mENPD;
+}
+
+real CardinalPoints::getNA_objSpace()
+{
+	return mNA_objSpac;
+}
+
+void CardinalPoints::setObjectPoint(objectPoint_inf_obj point_inf_obj)
+{
+	mObjectPoint_inf_obj = point_inf_obj;
+}

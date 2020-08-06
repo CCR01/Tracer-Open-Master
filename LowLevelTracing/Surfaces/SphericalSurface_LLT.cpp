@@ -172,7 +172,7 @@ VectorStructR3 SphericalSurface_LLT::getDirection()
 }
 
 //get Refractiv Index Left
-double SphericalSurface_LLT::getRefractivIndexSide_A() const&
+double SphericalSurface_LLT::getRefractivIndexSide_A() const
 {
 	return mRefractiveIndexA;
 }
@@ -184,7 +184,7 @@ void SphericalSurface_LLT::setRefractiveIndexSide_A(double const refractiveIndex
 }
 
 //get Refractiv Index Right
-double SphericalSurface_LLT::getRefractivIndexSide_B() const&
+double SphericalSurface_LLT::getRefractivIndexSide_B() const
 {
 	return mRefractiveIndexB;
 }
@@ -259,17 +259,19 @@ void ALL_IntersectionPointsStruct::setAll(VectorStructR3 firstInterPoint, Vector
 	setNumIntersectionPoint(numInterPoints);
 }
 
-// get focal length side A
-real SphericalSurface_LLT::getFocalLength_A()
+// get focal length
+real SphericalSurface_LLT::getFocalLength()
 {
-	return mFocalLengthSphericalSurfaceSide_A;
+	return mFocalLength;
 }
 
-// get focal length side B
-real SphericalSurface_LLT::getFocalLength_B()
+// get focal length dash
+real SphericalSurface_LLT::getFocalLength_dash()
 {
-	return mFocalLengthSphericalSurfaceSide_B;
+	return mFocalLength_dash;
 }
+
+
 
 
 
@@ -575,20 +577,22 @@ IntersectInformationStruct SphericalSurface_LLT::calculateIntersection(LightRayS
 	return ReturnIntersectInformation;
 }
 
-// calculate focal length spherical surface
-double SphericalSurface_LLT::calcFocallLengthSphericalSurface(double const& refIndex_A, double const& refIndex_B, double  const& radius)
+void SphericalSurface_LLT::calcFocalLength()
 {
-	if (mDirection.getZ() < 0)
+	if (mDirection.getZ() > 0)
 	{
-		return (-radius * refIndex_A) / (refIndex_A - refIndex_B);
+		mFocalLength = - (mRadius * mRefractiveIndexA) / (mRefractiveIndexA - mRefractiveIndexB);
+		mFocalLength_dash = (mRadius * mRefractiveIndexA) / (mRefractiveIndexA - mRefractiveIndexB);
 	}
 
 	else
 	{
-		return (radius * refIndex_B) / (refIndex_B - refIndex_A);
+		mFocalLength =  (mRadius * mRefractiveIndexA) / (mRefractiveIndexA - mRefractiveIndexB);
+		mFocalLength_dash = - (mRadius * mRefractiveIndexA) / (mRefractiveIndexA - mRefractiveIndexB);
 	}
-
 }
+
+
 
 // get refractive index side A
 real SphericalSurface_LLT::getRefractiveIndex_A()
@@ -703,8 +707,8 @@ SphericalSurface_LLT::SphericalSurface_LLT(SphericalSurface_LLT &source)
 	mRefractiveIndexA = source.mRefractiveIndexA;
 	mRefractiveIndexB = source.mRefractiveIndexB;
 	mCenterSphereAfterRotation = source.mCenterSphereAfterRotation;
-	mFocalLengthSphericalSurfaceSide_A = source.mFocalLengthSphericalSurfaceSide_A;
-	mFocalLengthSphericalSurfaceSide_B = source.mFocalLengthSphericalSurfaceSide_B;
+	mFocalLength = source.mFocalLength;
+	mFocalLength_dash = source.mFocalLength_dash;
 	SphericalSurface_Qwt_Ptr = source.SphericalSurface_Qwt_Ptr;
 	pointsofSphericalSurface = source.pointsofSphericalSurface;
 	
@@ -724,8 +728,8 @@ SphericalSurface_LLT& SphericalSurface_LLT::operator=(SphericalSurface_LLT& sour
 	mRefractiveIndexA = source.mRefractiveIndexA;
 	mRefractiveIndexB = source.mRefractiveIndexB;
 	mCenterSphereAfterRotation = source.mCenterSphereAfterRotation;
-	mFocalLengthSphericalSurfaceSide_A = source.mFocalLengthSphericalSurfaceSide_A;
-	mFocalLengthSphericalSurfaceSide_B = source.mFocalLengthSphericalSurfaceSide_B;
+	mFocalLength = source.mFocalLength;
+	mFocalLength_dash = source.mFocalLength_dash;
 	SphericalSurface_Qwt_Ptr = source.SphericalSurface_Qwt_Ptr;
 	pointsofSphericalSurface = source.pointsofSphericalSurface;
 	return *this;

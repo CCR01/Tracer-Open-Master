@@ -39,7 +39,7 @@ unsigned int OPD::calcPosExPupil_Z()
 
 CardinalPoints OPD::calculateCardinalPoints()
 {
-	mCardinalPoints = CardinalPoints(mOptSys);
+	mCardinalPoints = CardinalPoints(mOptSys, objectPoint_inf_obj::obj);
 
 	return mCardinalPoints;
 }
@@ -955,7 +955,7 @@ cv::Mat OPD::calcPSF()
 	std::complex<double> twopi = 2 * 3.1415926535897932384626433832;
 
 	//static const int  N = floor(upscaledMatrixSize * (sqrt((32 / upscaledMatrixSize)))); /* check sampling*/
-	double aperture_diameter = mCardinalPoints.getDiameterAperture();  //meters; 1 inch
+	double aperture_diameter = mOptSys.getInforAS().getSemiHeightAS() * 2.0;  //meters; 1 inch
 	double efl = mCardinalPoints.getEFL();   //effective focal length in meters
 
 
@@ -1165,9 +1165,9 @@ double OPD::calcCutoffFreq()
 
 	double lambda = 0.550e-6;   //
 	double efl = mCardinalPoints.getEFL();                        //effective focal length
-	double	D = mCardinalPoints.getDiameterAperture();                              //extrance pupil dia or stop dia
+	double	D = mCardinalPoints.getENPD();       //extrance pupil dia or stop dia
 	double mag = mCardinalPoints.getMagnification();             //image magnification                  
-	double	EXPD = mCardinalPoints.getExitPupilDiameter();                   //exit pupil dia
+	double	EXPD = mCardinalPoints.getEXPD();                   //exit pupil dia
 	double	P = EXPD / D;                         //pupil magnification
 	double	F = efl / D;                             //f number
 	double	Fw = (1 + mag / P)*F;                   //working f nummber

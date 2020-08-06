@@ -71,16 +71,8 @@ bool BenchExitPupilCalc::checkMethodesExitPupilCalculation()
 	real rmsValue = spotE0.getRMS_mm();
 	real geoRadois = spotE0.getGeoRadius();
 	//*************
-	CardinalPoints calcExitPupilE0(optSysE0);
+	CardinalPoints calcExitPupilE0(optSysE0, objectPoint_inf_obj::obj);
 
-	std::vector<real> refractiveIndexes = calcExitPupilE0.getRefractivIndexesAfterStop();
-	std::vector<real> realRefIndex{ 1.5,1.0,1.6,1.0 };
-	bool checkRefIndex = Math::compareTwoSTDVecors_decimals(refractiveIndexes, realRefIndex, 5);
-	checkExpPupCalc.push_back(checkRefIndex);
-	real diameterApertureStop = calcExitPupilE0.getDiameterAperture();
-	real realDimApertStop = 2.0;
-	bool checkAperStopDia = Math::compareTwoNumbers_decimals(diameterApertureStop, realDimApertStop, 5);
-	checkExpPupCalc.push_back(checkAperStopDia);
 
 	//*************
 	//OpticalSystem_LLT optSysE1;

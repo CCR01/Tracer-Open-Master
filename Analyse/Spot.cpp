@@ -54,6 +54,8 @@ real Spot::calcRMS(std::vector<VectorStructR3> intersectionPoints, VectorStructR
 		distance = Math::distanceTwoVectors(referencePosition, intersectionPoints.at(i));
 
 		pow2distance = std::pow(distance, 2);
+		//just for debugging
+		//std::cout << "distance pow2: " << pow2distance << std::endl;
 		numerator = numerator + pow2distance;
 	}
 

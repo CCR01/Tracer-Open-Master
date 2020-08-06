@@ -66,9 +66,11 @@ public:
 	virtual IntersectInformationStruct calculateIntersection(LightRayStruct const lightRay) override;
 
 	// get focal length side A
-	virtual real getFocalLength_A() override;
+	virtual real getFocalLength() override;
 	// get focal length side B
-	virtual real getFocalLength_B() override;
+	virtual real getFocalLength_dash() override;
+	// calc focal length
+	virtual void calcFocalLength() override;
 	// get refractive index side A
 	virtual real getRefractiveIndex_A() override;
 	// get refractive index side B

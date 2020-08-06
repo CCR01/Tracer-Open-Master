@@ -24,6 +24,8 @@ public:
 	real getS_dash_atSurface_i(unsigned int i);
 	real getFocallength_atSurface_i(unsigned int i);
 
+	std::vector<real> getAll_S();
+	std::vector<real> getAll_S_dash();
 
 private:
 

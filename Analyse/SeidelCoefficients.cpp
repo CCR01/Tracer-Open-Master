@@ -206,7 +206,7 @@ void SeidelCoefficients::setRefractiveIndexesAccordingToPrimWavelength()
 
 void SeidelCoefficients::calcCardinalPoints()
 {
-	mCardinalPoints = CardinalPoints(mOpticalSys_Ele_USE.getLLTconversion_doConversion());
+	mCardinalPoints = CardinalPoints(mOpticalSys_Ele_USE.getLLTconversion_doConversion(), objectPoint_inf_obj::obj);
 	mFocalLenght = mCardinalPoints.getEFL();
 }
 

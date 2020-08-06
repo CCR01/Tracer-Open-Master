@@ -32,25 +32,25 @@ struct additionalInfosDeflectedRayParaLensStruct
 	VectorStructR3 pointOfIntersectSurface;
 
 	// get focal lenght of intersected surface side A
-	real getFocalLengthOfIntersecSurface_Side_A() const&;
+	real getFocalLengthOfIntersecSurface_Side_A() const;
 	// set focal lenght of intersected surface side A
-	void setfocalLengthOfIntersecSurface_Side_A(real const& focalLengthSide_A);
+	void setfocalLengthOfIntersecSurface_Side_A(real const focalLengthSide_A);
 	// get focal lenght of intersected surface side B
-	real getFocalLengthOfIntersecSurface_Side_B() const&;
+	real getFocalLengthOfIntersecSurface_Side_B() const;
 	// set focal lenght of intersected surface side B
-	void setfocalLengthOfIntersecSurface_Side_B(real const& focalLengthSide_B);
+	void setfocalLengthOfIntersecSurface_Side_B(real const focalLengthSide_B);
 	// get direction of intersected surface;
-	VectorStructR3 getDirectionOfIntersecSurfaceUNIT() const&;
+	VectorStructR3 getDirectionOfIntersecSurfaceUNIT() const;
 	// set direction of intersected surface;
-	void setDirectionOfIntersecSurfaceUNIT(VectorStructR3 const& directionIntersecSurface);
+	void setDirectionOfIntersecSurfaceUNIT(VectorStructR3 const directionIntersecSurface);
 	// get point of intersected surface
-	VectorStructR3 getPointofIntersectSurface() const&;
+	VectorStructR3 getPointofIntersectSurface() const;
 	// set point of intersected surface
-	void setPointofIntersectSurface(VectorStructR3 const& pointIntersecSurface);
+	void setPointofIntersectSurface(VectorStructR3 const pointIntersecSurface);
 
 	
 	// calculate unit vector
-	VectorStructR3 unitVectorForAddInfosParaLens(VectorStructR3 const& V);
+	VectorStructR3 unitVectorForAddInfosParaLens(VectorStructR3 const V);
 };
 
 class ParaxialLens_LLT : public SurfaceIntersectionRay_LLT
@@ -84,9 +84,9 @@ public:
 	void setDirectionParaxialLensUNIT(VectorStructR3 const direction);
 
 	// get focal length 
-	double getFocalLengthParaxialLens() const&;
+	double getFocalLengthParaxialLens() const;
 	// set focal lenght 
-	void setFocalLengthParaxialLens(double const& focalLenght);
+	void setFocalLengthParaxialLens(double const focalLenght);
 
 	// set refractive index side A
 	virtual void setRefractiveIndexSide_A(real const refractiveIndex) override;
@@ -97,7 +97,7 @@ public:
 	// set infos for deflection
 	void setInfosForDeflection();
 	// get infos for deflection
-	additionalInfosDeflectedRayParaLensStruct getInfosForDefelction() const&;
+	additionalInfosDeflectedRayParaLensStruct getInfosForDefelction() const;
 	//calculate intersection
 	virtual IntersectInformationStruct calculateIntersection(LightRayStruct const lightRay) override;
 
@@ -105,15 +105,17 @@ public:
 	void plot2D(cv::Mat image, unsigned int scale, unsigned int thickness, unsigned int lineType) override;
 
 	// get focal length side A
-	virtual real getFocalLength_A() override;
+	virtual real getFocalLength() override;
 	// get focal length side B
-	virtual real getFocalLength_B() override;
+	virtual real getFocalLength_dash() override;
 	// get refractive index side A
 	virtual real getRefractiveIndex_A() override;
 	// get refractive index side B
 	virtual real getRefractiveIndex_B() override;
 	//get Radius
 	virtual double getRadius() override; // the paraxial has no radius so we give 999999999.0
+	// calc focal length
+	virtual void calcFocalLength() override;
 	
 	virtual void setRadius(real radius) override;
 	virtual void setPosition(VectorStructR3 position) override;
@@ -126,15 +128,15 @@ public:
 
 
 private:
-	double mSemiHeightParaxialLens;
-	VectorStructR3 mPointParaxialLens;
-	VectorStructR3 mDirectionParaxialLens;
-	VectorStructR3 mDirectionParaxialLensUnit;
-	real mFocallenghtParaxialLensSide_A;
-	real mFocallenghtParaxialLensSide_B;
-	real mRefractiveIndexA_ParaxialLens;
-	real mRefractiveIndexB_ParaxialLens;
-	additionalInfosDeflectedRayParaLensStruct mInfosForDefelction;
+	double mSemiHeightParaxialLens{};
+	VectorStructR3 mPointParaxialLens{};
+	VectorStructR3 mDirectionParaxialLens{};
+	VectorStructR3 mDirectionParaxialLensUnit{};
+	real mFocallenght{};
+	real mFocallenght_dash{};
+	real mRefractiveIndexA_ParaxialLens{};
+	real mRefractiveIndexB_ParaxialLens{};
+	additionalInfosDeflectedRayParaLensStruct mInfosForDefelction{};
 	ParaxialLensQwtCurve* ParaxialLensQwtCurve_Ptr = new ParaxialLensQwtCurve(mSemiHeightParaxialLens, mPointParaxialLens, mDirectionParaxialLens);
 	QPolygonF PointsOfParaxialLens = ParaxialLensQwtCurve_Ptr->getPoints();
 };

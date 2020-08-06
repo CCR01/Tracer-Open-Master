@@ -18,7 +18,11 @@
 // genetic
 #include "..\..\OptimizeSystem\Genetic.h"
 
+// import export data
 #include "..\..\Inport_Export_Data\Inport_Export_Data.h"
+
+// cardinal points
+#include "..\..\Analyse\CardinalPoints.h"
 
 #include <iomanip>
 #include <iostream>
@@ -57,7 +61,7 @@ TestGenetic::TestGenetic()
 	mWave587 = 587.5618;
 	mWave486 = 486.1327;
 	mWave656 = 656.2725;
-	mWavelength_vec = { mWave587 , mWave486, mWave656 };
+	mWavelength_FdC_vec = { mWave587 , mWave486, mWave656 };
 
 	// field
 	mField0 = { 0.0,0.0,0.0 };
@@ -68,7 +72,22 @@ TestGenetic::TestGenetic()
 	mFields_vec012 = { mField0, mField1, mField2 };
 	mFields_vec024 = { mField0, mField2, mField4 };
 
-	mTolerance = 0.1;
+	// angles
+	mAngle_X0 = 0.0;
+	mAngle000_X_vec = { mAngle_X0, mAngle_X0, mAngle_X0 };
+
+	mAngle_Y0 = 0.0;
+	mAngle_Y1 = 1.0;
+	mAngle_Y2 = 2.0;
+	mAngle012_Y_vec = { mAngle_Y0,mAngle_Y1,mAngle_Y2 };
+
+	mTolerance_RMS = 0.1;
+	mTolerance_target = 10.0;
+
+	// wave 550 vec
+	mWave550_vec.push_back(550.0);
+	// start point optical axis
+	startOptA_vec.push_back( {0.0,0.0,0.0} );
 
 };
 TestGenetic::~TestGenetic() {};
@@ -78,25 +97,33 @@ bool TestGenetic::testGeneticSuperFunc()
 {
 	std::vector<bool> testSuperFct_vec;
 
-	// E0
-	bool checkE0 = testE0();
-	testSuperFct_vec.push_back(checkE0);
-	
-	// E1
-	bool checkE1 = testE1();
-	testSuperFct_vec.push_back(checkE1);
-	
-	// E2
-	bool chekeE2 = testE2();
-	testSuperFct_vec.push_back(chekeE2);
-	
-	// E3
-	bool checkE3 = testE3();
-	testSuperFct_vec.push_back(checkE3);
+	//// E0
+	//bool checkE0 = testE0();
+	//testSuperFct_vec.push_back(checkE0);
+	//
+	//// E1
+	//bool checkE1 = testE1();
+	//testSuperFct_vec.push_back(checkE1);
+	//
+	//// E2
+	//bool chekeE2 = testE2();
+	//testSuperFct_vec.push_back(chekeE2);
+	//
+	//// E3
+	//bool checkE3 = testE3();
+	//testSuperFct_vec.push_back(checkE3);
+	//
+	//// E4
+	//bool checkE4 = testE4();
+	//testSuperFct_vec.push_back(checkE4);
+	//
+	//// E5
+	//bool checkE5 = testE5();
+	//testSuperFct_vec.push_back(checkE5);
 
-	// E4
-	bool checkE4 = testE4();
-	testSuperFct_vec.push_back(checkE4);
+	// E6
+	bool checkE6 = testE6();
+	testSuperFct_vec.push_back(checkE6);
 
 
 	bool checker = Math::checkTrueOfVectorElements(testSuperFct_vec);
@@ -131,7 +158,7 @@ bool TestGenetic::testE0()
 
 	// test the system
 	std::vector<real> rms_Zemax{ 558.824 };
-	bool test_E0 = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E0, fields_vec_optA, wavelenth_vec_550, rms_Zemax, 1.0, comEqual);
+	bool test_E0 = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E0, fields_vec_optA, wavelenth_vec_550, rms_Zemax, 1.0, compareTOM_Zemax::comEqual);
 	test_vec.push_back(test_E0);
 
 	// genetic
@@ -182,7 +209,7 @@ bool TestGenetic::testE1()
 
 	// test the system
 	std::vector<real> rms_Zemax{ 345.544 };
-	bool test_E1 = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E1, fields_vec_optA, wavelenth_vec_550, rms_Zemax, 1.0, comEqual);
+	bool test_E1 = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E1, fields_vec_optA, wavelenth_vec_550, rms_Zemax, 1.0, compareTOM_Zemax::comEqual);
 	test_vec.push_back(test_E1);
 
 	// genetic
@@ -236,7 +263,7 @@ bool TestGenetic::testE2()
 
 	// test the system
 	std::vector<real> rms_Zemax{ 345.544 };
-	bool test_E2 = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E2, fields_vec_optA, wavelenth_vec_550, rms_Zemax, 1.0, comEqual);
+	bool test_E2 = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E2, fields_vec_optA, wavelenth_vec_550, rms_Zemax, 1.0, compareTOM_Zemax::comEqual);
 	test_vec.push_back(test_E2);
 
 	// genetic
@@ -293,15 +320,15 @@ bool TestGenetic::testE3()
 
 	// check the start system
 	std::vector<real> rmsStartSystem_Z{ 196.505,192.103,179.353 };
-	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSysEle_E3, mFields_vec012, mWavelength_vec, rmsStartSystem_Z, mTolerance, comEqual);
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSysEle_E3, mFields_vec012, mWavelength_FdC_vec, rmsStartSystem_Z, mTolerance_RMS, compareTOM_Zemax::comEqual);
 	test_vec.push_back(checkStartSys);
 
 	// genetic
-	Genetic genetic(/*optSysEle*/ optSysEle_E3, /*fields*/ mFields_vec012,/*wavelengths*/ mWavelength_vec, /*rings*/ defaultRings_6,/*arms*/ defaultArms_8,/*populatuion*/ 5000);
+	Genetic genetic(/*optSysEle*/ optSysEle_E3, /*fields*/ mFields_vec012,/*wavelengths*/ mWavelength_FdC_vec, /*rings*/ defaultRings_6,/*arms*/ defaultArms_8,/*populatuion*/ 5000);
 	genetic.doTheGeneticProcess();
 
 	OpticalSystemElement optimizedOpticalSystem = genetic.getOptimizedOpticalSystemElement();
-	oftenUse::print(optimizedOpticalSystem, mWavelength_vec[0]);
+	oftenUse::print(optimizedOpticalSystem, mWavelength_FdC_vec[0]);
 
 	bool checker = Math::checkTrueOfVectorElements(test_vec);
 	return checker;
@@ -341,21 +368,125 @@ bool TestGenetic::testE4()
 
 	// check the start system
 	std::vector<real> rmsStartSystem_Z{ 221.602,215.043,196.523 };
-	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E4, mFields_vec012, mWavelength_vec, rmsStartSystem_Z, mTolerance, comEqual);
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E4, mFields_vec012, mWavelength_FdC_vec, rmsStartSystem_Z, mTolerance_RMS, compareTOM_Zemax::comEqual);
 	test_vec.push_back(checkStartSys);
 
 	// genetic
-	Genetic genetic(/*optSysEle*/ optSystemElement_E4, /*fields*/ mFields_vec012,/*wavelengths*/ mWavelength_vec, /*rings*/ defaultRings_6,/*arms*/ defaultArms_8,/*populatuion*/ 5000);
+	Genetic genetic(/*optSysEle*/ optSystemElement_E4, /*fields*/ mFields_vec012,/*wavelengths*/ mWavelength_FdC_vec, /*rings*/ defaultRings_6,/*arms*/ defaultArms_8,/*populatuion*/ 5000);
 	genetic.doTheGeneticProcess();
 
 	std::vector<real> bestValues{ 9.21487,-14.09026,9.2527 };
 	test_vec.push_back(oftenUse::checkDeltaVariables(genetic.getOptimizedOpticalSystemElement(), bestValues, 300.0));
 
 	// print the optimized system
-	oftenUse::print(genetic.getOptimizedOpticalSystemElement(), mWavelength_vec[0]);
+	oftenUse::print(genetic.getOptimizedOpticalSystemElement(), mWavelength_FdC_vec[0]);
 
 	bool checker = Math::checkTrueOfVectorElements(test_vec);
 	return checker;
+}
+
+// E5
+bool TestGenetic::testE5()
+{
+	std::vector<bool> test_vec;
+
+	// surfaces E5
+	SphericalElement Sphere0_E5(/*radius*/ 80.00, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,0.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getBAFN10_S1());
+	SphericalElement Sphere1_E5(/*radius*/ 70.00, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getBAFN10_S1());
+	SphericalElement Sphere2_E5(/*radius*/ 40.00, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getSF6_S1());
+	SphericalElement Sphere3_E5(/*radius*/ 35.00, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,25.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getNBK7_S1(), /*refractive index B*/glasses.getSF6_S1());
+	SphericalElement Sphere4_E5(/*radius*/ 20.00, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBK7_S1());
+	ApertureStopElement AperStop5_E5(/* semi height*/1.0, /*point*/{ 0.0,0.0,35.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAir());
+	PlanElement Plan6_E5(/*semi height*/ 10.0, /*point*/{ 0.0,0.0,40.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getAir());
+
+	Sphere1_E5.setParameterPointZ(0.01, 20.0, 0.0, typeModifierVariable);
+	Sphere2_E5.setParameterRadius(-1000.0, 1000.0, 0.0, typeModifierVariable);
+	Sphere4_E5.setParameterRadius(-1000.0, 1000.0, 0.0, typeModifierVariable);
+
+	surfacePtr Sphere0_E5_ptr = Sphere0_E5.clone();
+	surfacePtr Sphere1_E5_ptr = Sphere1_E5.clone();
+	surfacePtr Sphere2_E5_ptr = Sphere2_E5.clone();
+	surfacePtr Sphere3_E5_ptr = Sphere3_E5.clone();
+	surfacePtr Sphere4_E5_ptr = Sphere4_E5.clone();
+	surfacePtr AperStop5_E5_ptr = AperStop5_E5.clone();
+	surfacePtr Plan6_E5_ptr = Plan6_E5.clone();
+
+	std::vector<surfacePtr> opticalSystem_E5_ptr{ Sphere0_E5_ptr, Sphere1_E5_ptr, Sphere2_E5_ptr , Sphere3_E5_ptr, Sphere4_E5_ptr, AperStop5_E5_ptr,  Plan6_E5_ptr };
+	std::vector<interaction_ptr> interactions_E5_ptr{ refrac.clone(),refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(), doNothing.clone(), absorb.clone() };
+
+	//	build optical system
+	OpticalSystemElement optSystemElement_E5(opticalSystem_E5_ptr, interactions_E5_ptr);
+
+	// check the start system
+	std::vector<real> rmsStartSystem_Z{ 36.272,54.120,135.459 };
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E5, mAngle000_X_vec, mAngle012_Y_vec, mWavelength_FdC_vec, rmsStartSystem_Z, mTolerance_RMS, compareTOM_Zemax::comEqual);
+	test_vec.push_back(checkStartSys);
+
+	// genetic
+	Genetic genetic(/*optSysEle*/ optSystemElement_E5, /*angleX*/ mAngle000_X_vec, /*angleY*/ mAngle012_Y_vec, /*wavelengths*/ mWavelength_FdC_vec, /*rings*/ defaultRings_6,/*arms*/ defaultArms_8,/*populatuion*/ 1000);
+	genetic.doTheGeneticProcess();
+
+	std::vector<real> bestValues{ 0.0,27.8377,-30.2265 };
+	test_vec.push_back(oftenUse::checkDeltaVariables(genetic.getOptimizedOpticalSystemElement(), bestValues, 600.0));
+
+	// print the optimized system
+	oftenUse::print(genetic.getOptimizedOpticalSystemElement(), mWavelength_FdC_vec[0]);
+
+	bool checker = Math::checkTrueOfVectorElements(test_vec);
+	return checker;
+
+
+}
+
+bool TestGenetic::testE6()
+{
+	std::vector<bool> test_vec;
+
+	// surfaces E6
+	SphericalElement Sphere0_E6(/*radius*/ 80.00, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getBAFN10_S1());
+	SphericalElement Sphere1_E6(/*radius*/ 70.00, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getBAFN10_S1());
+	SphericalElement Sphere2_E6(/*radius*/ 40.00, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getSF6_S1());
+	SphericalElement Sphere3_E6(/*radius*/ 35.00, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,35.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getNBK7_S1(), /*refractive index B*/glasses.getSF6_S1());
+	SphericalElement Sphere4_E6(/*radius*/ 20.00, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,40.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBK7_S1());
+	ApertureStopElement AperStop5_E6(/* semi height*/1.0, /*point*/{ 0.0,0.0,45.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAir());
+	PlanElement Plan6_E6(/*semi height*/ 10.0, /*point*/{ 0.0,0.0,65.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getAir());
+
+	Sphere1_E6.setParameterPointZ(0.01, 20.0, 0.0, typeModifierVariable);
+	Sphere2_E6.setParameterRadius(-1000.0, 1000.0, 0.0, typeModifierVariable);
+	Sphere4_E6.setParameterRadius(-1000.0, 1000.0, 0.0, typeModifierVariable);
+
+	surfacePtr Sphere0_E6_ptr = Sphere0_E6.clone();
+	surfacePtr Sphere1_E6_ptr = Sphere1_E6.clone();
+	surfacePtr Sphere2_E6_ptr = Sphere2_E6.clone();
+	surfacePtr Sphere3_E6_ptr = Sphere3_E6.clone();
+	surfacePtr Sphere4_E6_ptr = Sphere4_E6.clone();
+	surfacePtr AperStop5_E6_ptr = AperStop5_E6.clone();
+	surfacePtr Plan6_E6_ptr = Plan6_E6.clone();
+
+	std::vector<surfacePtr> opticalSystem_E6_ptr{ Sphere0_E6_ptr, Sphere1_E6_ptr, Sphere2_E6_ptr , Sphere3_E6_ptr, Sphere4_E6_ptr, AperStop5_E6_ptr,  Plan6_E6_ptr };
+	std::vector<interaction_ptr> interactions_E6_ptr{ refrac.clone(),refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(), doNothing.clone(), absorb.clone() };
+
+	//	build optical system
+	OpticalSystemElement optSystemElement_E6(opticalSystem_E6_ptr, interactions_E6_ptr);
+
+	//// check the start system
+	//std::vector<real> rmsStartSystem_Z{386.081, 384.057, 377.901 };
+	//bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E6, mFields_vec012, mWavelength_vec, rmsStartSystem_Z, mTolerance_RMS, compareTOM_Zemax::comEqual);
+	//test_vec.push_back(checkStartSys);
+
+	// genetic
+	Genetic genetic(/*optSysEle*/ optSystemElement_E6, mFields_vec012, /*wavelengths*/ mWavelength_FdC_vec, /*rings*/ defaultRings_6,/*arms*/ defaultArms_8,/*populatuion*/ 100);
+	genetic.doTheGeneticProcess();
+
+	std::vector<real> bestValues{ 14.978,26.708,-30.2265 };
+	test_vec.push_back(oftenUse::checkDeltaVariables(genetic.getOptimizedOpticalSystemElement(), bestValues, 600.0));
+
+	// print the optimized system
+	oftenUse::print(genetic.getOptimizedOpticalSystemElement(), mWavelength_FdC_vec[0]);
+
+	bool checker = Math::checkTrueOfVectorElements(test_vec);
+	return checker;
+
 }
 
 // test geneartion modes
@@ -587,5 +718,169 @@ bool TestGenetic::testNormalDistributionDeefaultMode(real min, real max, real sa
 	inportExportData::exportHistogramToExcel(location, nameExcel, histogram, sampling, min, max);
 
 	return true;
+
+}
+
+// test target cardinal points super function
+bool TestGenetic::testCardinalPointsSuperFct()
+{
+	std::vector<bool> test_vec;
+
+	// EFL
+	//bool checkEFL_obj = testTargetEFL_genetic_obj();
+	//test_vec.push_back(checkEFL_obj);
+	bool checkEFL_inf = testTargetEFL_genetic_inf();
+	test_vec.push_back(checkEFL_inf);
+
+	bool checker = Math::checkTrueOfVectorElements(test_vec);
+	return checker;
+}
+
+
+// test target EFL
+bool TestGenetic::testTargetEFL_genetic_obj()
+{
+	std::vector<bool> test_vec;
+
+	// surfaces 
+	SphericalElement Sphere0(/*radius*/ 20.0, /*semi height*/ 4.0, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBK7_S1());
+	SphericalElement Sphere1(/*radius*/ 15.00, /*semi height*/ 4.0, /*point*/{ 0.0,0.0,25.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getNBK7_S1(), /*refractive index B*/glasses.getSF11_S1());
+	SphericalElement Sphere2(/*radius*/ 15.00, /*semi height*/ 4.0, /*point*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getSF11_S1());
+	ApertureStopElement AperStop3(/* semi height*/1.5, /*point*/{ 0.0,0.0,35.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAir());
+	PlanElement Plan4(/*semi height*/ 7.0, /*point*/{ 0.0,0.0,50.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getAir());
+
+	Sphere0.setParameterRadius(-1000.0, 1000.0, 0.0, typeModifierVariable);
+	Sphere2.setParameterPointZ(0.0, 1000.0, 0.0, typeModifierVariable);
+
+
+	surfacePtr Sphere0_ptr = Sphere0.clone();
+	surfacePtr Sphere1_ptr = Sphere1.clone();
+	surfacePtr Sphere2_ptr = Sphere2.clone();
+	surfacePtr AperStop3_ptr = AperStop3.clone();
+	surfacePtr Plan4_ptr = Plan4.clone();
+
+	std::vector<surfacePtr> opticalSystem_ptr{ Sphere0_ptr, Sphere1_ptr, Sphere2_ptr , AperStop3_ptr, Plan4_ptr };
+	std::vector<interaction_ptr> interactions_ptr{refrac.clone(), refrac.clone(), refrac.clone(), doNothing.clone(), absorb.clone() };
+
+	//	build optical system
+	OpticalSystemElement optSysEle(opticalSystem_ptr, interactions_ptr);
+
+	std::cout << "" << std::endl;
+	std::cout << "start system" << std::endl;
+	oftenUse::print(optSysEle, mWavelength_FdC_vec[0]);
+
+	// calculate start cardinal points
+	CardinalPoints startCardinalPoints(optSysEle, mWavelength_FdC_vec[0], objectPoint_inf_obj::obj);
+	real startEFL = startCardinalPoints.getEFL();
+
+	// check the start system
+	std::vector<real> rmsStartSystem{ 56.243, 72.755 };
+	std::vector<VectorStructR3> startFields{ {0.0,0.0,0.0},{0.0,1.0,0.0} };
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSysEle, startFields, mWavelength_FdC_vec, rmsStartSystem, mTolerance_RMS, compareTOM_Zemax::comEqual);
+	test_vec.push_back(checkStartSys);
+
+	// ***
+	targetCardinalPointsStruct targetCarPoints;
+	real targetEFL = 20.0;
+	targetCarPoints.setTargetEFL(targetEFL);
+	// ***
+
+	// genetic
+	Genetic genetic(/*optSysEle*/ optSysEle, /*fields*/ startFields,/*wavelengths*/ mWave550_vec, /*rings*/ defaultRings_6,/*arms*/ defaultArms_8,/*populatuion*/ 1000);
+	genetic.set_OFF_CheckRMS_rayTracing();
+	genetic.setTargetCardinalPoints(targetCarPoints);
+	genetic.doTheGeneticProcess();
+
+	// optimized optical system
+	OpticalSystemElement optimizedSystem = genetic.getOptimizedOpticalSystemElement();
+	std::cout << "" << std::endl;
+	std::cout << "optimized system" << std::endl;
+	oftenUse::print(optimizedSystem, mWave550_vec[0]);
+
+	CardinalPoints cardinalPointsOptimizedSystem(optimizedSystem, mWavelength_FdC_vec[0], objectPoint_inf_obj::obj);
+	real optEFL = cardinalPointsOptimizedSystem.getEFL();
+
+	bool checkOptCar = oftenUse::optimizedTargetBetterThanStartCardinalPoint(/*start value*/ startEFL, /*optimized value*/ optEFL, /*target val*/ targetEFL);
+	test_vec.push_back(checkOptCar);
+
+	bool isEFL_target = targetCarPoints.isEFL_target();
+	test_vec.push_back(isEFL_target);
+
+
+	bool checker = Math::checkTrueOfVectorElements(test_vec);
+	return checker;
+}
+
+
+bool TestGenetic::testTargetEFL_genetic_inf()
+{
+	std::vector<bool> test_vec;
+
+	// surfaces 
+	SphericalElement Sphere0(/*radius*/ 40.0, /*semi height*/ 4.0, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBK7_S1());
+	SphericalElement Sphere1(/*radius*/ 30.00, /*semi height*/ 4.0, /*point*/{ 0.0,0.0,25.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getBAFN10_S1(), /*refractive index B*/glasses.getNBK7_S1());
+	SphericalElement Sphere2(/*radius*/ 20.00, /*semi height*/ 4.0, /*point*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getBAFN10_S1());
+	ApertureStopElement AperStop3(/* semi height*/1.5, /*point*/{ 0.0,0.0,40.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAir());
+	PlanElement Plan4(/*semi height*/ 7.0, /*point*/{ 0.0,0.0,50.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getAir());
+
+	Sphere1.setParameterRadius(-1000.0, 1000.0, 0.0, typeModifierVariable);
+
+	surfacePtr Sphere0_ptr = Sphere0.clone();
+	surfacePtr Sphere1_ptr = Sphere1.clone();
+	surfacePtr Sphere2_ptr = Sphere2.clone();
+	surfacePtr AperStop3_ptr = AperStop3.clone();
+	surfacePtr Plan4_ptr = Plan4.clone();
+
+	std::vector<surfacePtr> opticalSystem_ptr{ Sphere0_ptr, Sphere1_ptr, Sphere2_ptr , AperStop3_ptr, Plan4_ptr };
+	std::vector<interaction_ptr> interactions_ptr{ refrac.clone(), refrac.clone(), refrac.clone(), doNothing.clone(), absorb.clone() };
+
+	//	build optical system
+	OpticalSystemElement optSysEle(opticalSystem_ptr, interactions_ptr);
+
+	std::cout << "" << std::endl;
+	std::cout << "start system" << std::endl;
+	oftenUse::print(optSysEle, mWavelength_FdC_vec[0]);
+
+	// calculate start cardinal points
+	CardinalPoints startCardinalPoints(optSysEle, mWavelength_FdC_vec[0], objectPoint_inf_obj::obj);
+	real startEFL = startCardinalPoints.getEFL();
+
+	// check the start system
+	std::vector<real> rmsStartSystem{ 276.724, 273.232 };
+	std::vector<real> angelX{ 0.0, 0.0 };
+	std::vector<real> anlgeY{ 0.0, 1.0 };
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSysEle, angelX, anlgeY, mWavelength_FdC_vec, rmsStartSystem, mTolerance_RMS, compareTOM_Zemax::comEqual);
+	test_vec.push_back(checkStartSys);
+
+	targetCardinalPointsStruct targetCarPoints;
+	// ***
+	real targetEFL = 30.0;
+	targetCarPoints.setTargetEFL(targetEFL);
+	// ***
+
+	// genetic
+	Genetic genetic(/*optSysEle*/ optSysEle, angelX, anlgeY,/*wavelengths*/ mWavelength_FdC_vec, /*rings*/ defaultRings_6,/*arms*/ defaultArms_8,/*populatuion*/ 1000);
+	genetic.set_OFF_CheckRMS_rayTracing();
+	genetic.setTargetCardinalPoints(targetCarPoints);
+	genetic.doTheGeneticProcess();
+
+	// optimized optical system
+	OpticalSystemElement optimizedSystem = genetic.getOptimizedOpticalSystemElement();
+	oftenUse::print(optimizedSystem, mWavelength_FdC_vec[0]);
+
+	CardinalPoints cardinalPointsOptimizedSystem(optimizedSystem, mWave550_vec[0], objectPoint_inf_obj::obj);
+	real optEFL = cardinalPointsOptimizedSystem.getEFL();
+
+	std::cout << "targe EFL: " << targetEFL << std::endl;
+	std::cout << "optimized EFL: " << optEFL << std::endl;
+
+	bool checkOptCar = oftenUse::optimizedTargetBetterThanStartCardinalPoint(/*start value*/ startEFL, /*optimized value*/ optEFL, /*target val*/ targetEFL);
+	test_vec.push_back(checkOptCar);
+
+	bool isEFL_target = targetCarPoints.isEFL_target();
+	test_vec.push_back(isEFL_target);
+
+	bool checker = Math::checkTrueOfVectorElements(test_vec);
+	return checker;
 
 }

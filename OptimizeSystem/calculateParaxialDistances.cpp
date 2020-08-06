@@ -177,6 +177,15 @@ real CalculateParaxialDistances::getFocallength_atSurface_i(unsigned int i)
 	return mFocalLength_each_surface_vec.at(i);
 }
 
+std::vector<real> CalculateParaxialDistances::getAll_S()
+{
+	return mS_vec;
+}
+std::vector<real> CalculateParaxialDistances::getAll_S_dash()
+{
+	return mS_dash_vec;
+}
+
 //void CalculateParaxialDistances::calcRadius_with_prefix_forCombination()
 //{
 //	unsigned int lengthOptSys = mOptSysEle.getPosAndElement().size();

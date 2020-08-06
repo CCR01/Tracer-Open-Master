@@ -125,14 +125,14 @@ bool testDLS_multiThreads_12::checkE0()
 
 	// check the start system
 	std::vector<real> rmsStartSystem_Z{ 196.503,192.101,179.353 };
-	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSysEle_E0, mFields_vec012, mWavelength_vec, rmsStartSystem_Z, mMinTolerance, comEqual);
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSysEle_E0, mFields_vec012, mWavelength_vec, rmsStartSystem_Z, mMinTolerance, compareTOM_Zemax::comEqual);
 	check_vec.push_back(checkStartSys);
 
 	DLS_multiThreads_12 DLS_multi_12(optSysEle_E0, mFields_vec012, mWavelength_vec, mRings, mArms, mDefaultParamDLS);
 	OpticalSystemElement optimizedSyste_E0 = DLS_multi_12.DLS_optimisation_multiThreads_12();
 
 	std::vector<real> rmsOpti_Z{ 17.240,22.200,35.897 }; // sum 75.337
-	bool checkOptimizedSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optimizedSyste_E0, mFields_vec012, mWavelength_vec, rmsOpti_Z, mExtendeTolerance, comBetter);
+	bool checkOptimizedSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optimizedSyste_E0, mFields_vec012, mWavelength_vec, rmsOpti_Z, mExtendeTolerance, compareTOM_Zemax::comBetter);
 	check_vec.push_back(checkOptimizedSys);
 
 	bool checker = Math::checkTrueOfVectorElements(check_vec);

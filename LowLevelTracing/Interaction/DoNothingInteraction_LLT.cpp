@@ -8,8 +8,9 @@ std::vector<LightRayStruct> DoNothingInteraction_LLT::calcInteraction(const Inte
 	
 
 	if (intersectInformation.getSurfaceSide() == N) //there is no intersection point
-	{
-		std::cout << "there is no interaction point! \n";
+	{	
+		// just for debugging
+		// std::cout << "there is no interaction point! \n";
 		mReturnLightRay.setLightRayAbsorb();
 		mReturnLightRay.setIsAlive(false);
 	}

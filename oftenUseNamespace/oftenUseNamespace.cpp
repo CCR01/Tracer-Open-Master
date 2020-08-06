@@ -8,7 +8,7 @@
 #include "..\FillAptertureStop\FillApertureStop.h"
 //#define unsignedInt_INF (unsigned)!((int)0)
 
-bool oftenUse::checkRayTracing(VectorStructR3 startPoint, VectorStructR3 direction, VectorStructR3 targetPoint, OpticalSystem_LLT optSys_LLT, unsigned int surfaceNum, real tolerande)
+bool oftenUse::checkRayTracing(VectorStructR3 startPoint, VectorStructR3 direction, VectorStructR3 targetPoint, OpticalSystem_LLT optSys_LLT, unsigned int surfaceNum, real tolerance)
 {
 	SequentialRayTracing seqTrace(optSys_LLT);
 	// ray
@@ -26,7 +26,7 @@ bool oftenUse::checkRayTracing(VectorStructR3 startPoint, VectorStructR3 directi
 	
 	VectorStructR3 intersecPoint = seqTrace.getAllInterPointsAtSurf_i_notFiltered(surfaceNum)[0];
 
-	bool checker = Math::compareTwoVectorStructR3_tolerance(intersecPoint, targetPoint, tolerande);
+	bool checker = Math::compareTwoVectorStructR3_tolerance(intersecPoint, targetPoint, tolerance);
 
 	return checker;
 }
@@ -149,10 +149,11 @@ void oftenUse::print(OpticalSystemElement opticalSysElement, real wavelength)
 		std::cout << "" << std::endl;
 		std::cout << std::fixed;
 		std::cout << std::setprecision(3);
-		std::cout << "surface: " << i << '\t' << "radius: " << tempRadius << " " << tempTypeMode_Radius << '\t' << "thickness: " << thickness << " " << tempTypeMode_Thickness << '\t' << "glass: " << nameGlasRightSide << '\t' << "refIndex: " << tempRefIndexRightSide << "semi height: " << '\t' << semiHeight << std::endl;
+		std::cout << "surface: " << i << '\t' << "radius: " << tempRadius << " " << tempTypeMode_Radius << '\t' << "thickness: " << thickness << " " << tempTypeMode_Thickness << '\t' << "glass: " << nameGlasRightSide << '\t' << "refIndex: " << tempRefIndexRightSide << '\t' << "semi height: " << '\t' << semiHeight << std::endl;
 
 	}
 
+	std::cout << "" << std::endl;
 
 }
 
@@ -230,7 +231,7 @@ bool oftenUse::checkOptSysELement_Equal_Better_Zemax(OpticalSystemElement optimi
 	if (numFieldPoints != numRMS_ValZemax)
 	{
 		std::cout << "number of evaluated field does not match to the number of evaluated rms values" << std::endl;
-		check_Equal_Better_Zemax = false;
+		return false;
 	}
 
 	SequentialRayTracing tempSeqTrace;
@@ -261,6 +262,7 @@ bool oftenUse::checkOptSysELement_Equal_Better_Zemax(OpticalSystemElement optimi
 			
 			tempRayAiming.setOpticalSystem_LLT(optimizedSystemHLT.getOptSys_LLT_buildSystem());
 			tempRayAiming.loadImportantInfosForRayAiming();
+			tempRayAiming.turn_On_RobustRayAiming();
 
 			tempLightRay_vec = tempRayAiming.rayAimingMany_obj(FillApertureStop.getPointsInAS(), tempFieldPoint, lightVec[0], defaultRefractivIndex);
 
@@ -286,7 +288,7 @@ bool oftenUse::checkOptSysELement_Equal_Better_Zemax(OpticalSystemElement optimi
 	}
 
 	
-	if (compare == comEqual)
+	if (compare == compareTOM_Zemax::comEqual)
 	{
 		real tempRMS_TOM;
 		real tempRMS_Z;
@@ -299,6 +301,9 @@ bool oftenUse::checkOptSysELement_Equal_Better_Zemax(OpticalSystemElement optimi
 			tempRMS_TOM = allRMS[i];
 			tempRMS_Z = rmsValZemax[i];
 
+			std::cout << "temp rms tom: " << tempRMS_TOM << std::endl;
+			std::cout << "temp rms Zemax: " << tempRMS_Z << std::endl;
+
 			tempChecker = Math::compareTwoNumbers_tolerance(tempRMS_TOM, tempRMS_Z, tolerance);
 			checker[i] = tempChecker;
 
@@ -307,7 +312,7 @@ bool oftenUse::checkOptSysELement_Equal_Better_Zemax(OpticalSystemElement optimi
 		check_Equal_Better_Zemax = Math::checkTrueOfVectorElements(checker);
 	}
 
-	else if (compare == comBetter)
+	else if (compare == compareTOM_Zemax::comBetter)
 	{
 		real sumRMS_TOM = Math::sumAllVectorValues(allRMS);
 		real sumRMS_Z = Math::sumAllVectorValues(rmsValZemax);
@@ -323,6 +328,132 @@ bool oftenUse::checkOptSysELement_Equal_Better_Zemax(OpticalSystemElement optimi
 	
 
 	return check_Equal_Better_Zemax;
+}
+
+// check optical system HLT better / eauel than zemax
+bool oftenUse::checkOptSysELement_Equal_Better_Zemax(OpticalSystemElement optimizedSystemHLT, std::vector<real> anglesX_vec, std::vector<real> anglesY_vec, std::vector<real> wavelength_vec, std::vector<real> rmsValZemax, real tolerance, compareTOM_Zemax compare)
+{
+	bool check_Equal_Better_Zemax{};
+
+	unsigned int defaultRings = 6;
+	unsigned int defaultArms = 8;
+	real defaultRefractivIndex = 1.0;
+
+	unsigned int posLastSurface = optimizedSystemHLT.getPosAndElement().size() - 1;
+
+	unsigned int numAnglesX = anglesX_vec.size();
+	unsigned int numAnglesY = anglesY_vec.size();
+	unsigned int numRMS_ValZemax = rmsValZemax.size();
+	unsigned int numWavelengths = wavelength_vec.size();
+
+	std::vector<Light_LLT> lightVec = oftenUse::buildDefaultLight_Vec(wavelength_vec);
+
+	// check if number field points is equal to rms values from zemax
+	if (numAnglesX != numRMS_ValZemax || numAnglesX != numAnglesY)
+	{
+		std::cout << "ERROR - inf -> checkOptSysELement_Equal_Better_Zemax" << std::endl;
+		check_Equal_Better_Zemax = false;
+	}
+
+	SequentialRayTracing tempSeqTrace;
+	real tempAngle_X{};
+	real tempAngle_Y{};
+	real tempWavelength;
+
+
+	RayAiming tempRayAiming;
+	FillApertureStop FillApertureStop(optimizedSystemHLT.getOptSys_LLT_buildSystem(), defaultRings, defaultArms);
+	std::vector<LightRayStruct> tempLightRay_vec{};
+
+	std::vector<VectorStructR3> tempInterPoints{};
+	std::vector<VectorStructR3> saveAllInterPoints{};
+
+	real tempRMS;
+	std::vector<real> allRMS;
+	allRMS.resize(numAnglesX);
+
+	for (unsigned int i = 0; i < numAnglesX; ++i)
+	{
+		tempAngle_X = anglesX_vec[i];
+		tempAngle_Y = anglesY_vec[i];
+
+		for (unsigned int j = 0; j < numWavelengths; ++j)
+		{
+			tempWavelength = wavelength_vec[j];
+			optimizedSystemHLT.setRefractiveIndexAccordingToWavelength(tempWavelength);
+			//optimizedSystemHLT.convertSurfacesToLLT();
+
+			tempRayAiming.setOpticalSystem_LLT(optimizedSystemHLT.getOptSys_LLT_buildSystem());
+			tempRayAiming.loadImportantInfosForRayAiming();
+			tempRayAiming.turn_On_RobustRayAiming();
+
+			tempLightRay_vec = tempRayAiming.rayAimingMany_inf(FillApertureStop.getPointsInAS(), tempAngle_X, tempAngle_Y, lightVec[0], defaultRefractivIndex);
+
+			tempSeqTrace.setOpticalSystem(optimizedSystemHLT);
+			tempSeqTrace.setTraceToSurface(posLastSurface);
+			tempSeqTrace.seqRayTracingWithVectorOfLightRays(tempLightRay_vec);
+
+			tempInterPoints = tempSeqTrace.getAllInterPointsAtSurf_i_notFiltered(posLastSurface);
+
+			saveAllInterPoints.insert(saveAllInterPoints.end(), tempInterPoints.begin(), tempInterPoints.end());
+
+			tempSeqTrace.clearAllTracedRays();
+
+		}
+
+
+		// calc rms spot
+		Spot tempSpot(saveAllInterPoints, saveAllInterPoints[0]);
+		allRMS[i] = tempSpot.getRMS_µm();
+
+		saveAllInterPoints.clear();
+
+	}
+
+
+	if (compare == compareTOM_Zemax::comEqual)
+	{
+		real tempRMS_TOM;
+		real tempRMS_Z;
+		bool tempChecker;
+
+		std::vector<bool> checker;
+		checker.resize(numAnglesX);
+
+		for (unsigned int i = 0; i < numAnglesX; i++)
+		{
+			tempRMS_TOM = allRMS[i];
+			tempRMS_Z = rmsValZemax[i];
+
+			tempChecker = Math::compareTwoNumbers_tolerance(tempRMS_TOM, tempRMS_Z, tolerance);
+			checker[i] = tempChecker;
+
+			std::cout << "temp rms tom: " << tempRMS_TOM << std::endl;
+			std::cout << "temp rms Zemax: " << tempRMS_Z << std::endl;
+
+
+		}
+
+		check_Equal_Better_Zemax = Math::checkTrueOfVectorElements(checker);
+	}
+
+	else if (compare == compareTOM_Zemax::comBetter)
+	{
+		real sumRMS_TOM = Math::sumAllVectorValues(allRMS);
+		real sumRMS_Z = Math::sumAllVectorValues(rmsValZemax);
+
+		std::cout << "sum rms tom: " << sumRMS_TOM << std::endl;
+		std::cout << "sum rms Zemax: " << sumRMS_Z << std::endl;
+
+		check_Equal_Better_Zemax = (sumRMS_TOM - sumRMS_Z) < tolerance;
+	}
+
+
+
+
+
+	return check_Equal_Better_Zemax;
+
 }
 
 // check the thickness between surfaces
@@ -403,7 +534,7 @@ bool oftenUse::checkOptSysLLT_Equal_Better_Zemax(OpticalSystem_LLT optSys_LLT, s
 
 	}
 
-	if (compare == comEqual)
+	if (compare == compareTOM_Zemax::comEqual)
 	{
 		real tempRMS_TOM;
 		real tempRMS_Z;
@@ -416,6 +547,9 @@ bool oftenUse::checkOptSysLLT_Equal_Better_Zemax(OpticalSystem_LLT optSys_LLT, s
 			tempRMS_TOM = allRMS[i];
 			tempRMS_Z = rmsValZemax[i];
 
+			std::cout << "rms TOM: " << tempRMS_TOM << std::endl;
+			std::cout << "rms referencce: " << tempRMS_Z << std::endl;
+
 			tempChecker = Math::compareTwoNumbers_tolerance(tempRMS_TOM, tempRMS_Z, tolerance);
 			checker[i] = tempChecker;
 
@@ -424,7 +558,7 @@ bool oftenUse::checkOptSysLLT_Equal_Better_Zemax(OpticalSystem_LLT optSys_LLT, s
 		check_Equal_Better_Zemax = Math::checkTrueOfVectorElements(checker);
 	}
 
-	else if (compare == comBetter)
+	else if (compare == compareTOM_Zemax::comBetter)
 	{
 		real sumRMS_TOM = Math::sumAllVectorValues(allRMS);
 		real sumRMS_Z = Math::sumAllVectorValues(rmsValZemax);
@@ -825,4 +959,12 @@ bool oftenUse::checkDLS_resultRMS(DLS dls, real tolerance)
 	bool returnCheck = std::abs(bestMeritValueDLS - sumRMSoptimizedSystem) < tolerance;
 
 	return returnCheck;
+}
+
+bool oftenUse::optimizedTargetBetterThanStartCardinalPoint(/*start value*/ real startValue, /*optimized value*/ real optVal, /*target val*/ real targetVal)
+{
+	real startValVsTargetVal = std::abs(startValue - targetVal);
+	real optValVsTargetVal = std::abs(optVal - targetVal);
+
+	return optValVsTargetVal < startValVsTargetVal;
 }

@@ -32,6 +32,12 @@ public:
 	// E4
 	bool testE4();
 
+	// E5
+	bool testE5();
+
+	// E6
+	bool testE6();
+
 	// test geneartion modes
 	bool testGenerationModes(real min, real max, real sampling, unsigned int maxInteration);
 	// random generation mode
@@ -42,6 +48,15 @@ public:
 	bool testNormalDistributionMode(real min, real max, real sampling, unsigned int maxInteration);
 	// normal distribution default mode
 	bool testNormalDistributionDeefaultMode(real min, real max, real sampling, unsigned int maxInteration);
+
+
+	// test target cardinal points super function
+	bool testCardinalPointsSuperFct();
+	// test target EFL
+	bool testTargetEFL_genetic_obj();
+	bool testTargetEFL_genetic_inf();
+	
+
 
 private:
 
@@ -69,7 +84,12 @@ private:
 	real mWave587{};
 	real mWave486{};
 	real mWave656{};
-	std::vector<real> mWavelength_vec{};
+	std::vector<real> mWavelength_FdC_vec{};
+
+	// wave 550 vec
+	std::vector<real> mWave550_vec;
+	// start point optical axis
+	std::vector<VectorStructR3> startOptA_vec;
 
 	// field
 	VectorStructR3 mField0{};
@@ -80,5 +100,15 @@ private:
 	std::vector<VectorStructR3> mFields_vec012{};
 	std::vector<VectorStructR3> mFields_vec024{};
 
-	double mTolerance;
+	// angles
+	real mAngle_X0{};
+	std::vector<real> mAngle000_X_vec{};
+
+	real mAngle_Y0{};
+	real mAngle_Y1{};
+	real mAngle_Y2{};
+	std::vector<real> mAngle012_Y_vec{};
+
+	real mTolerance_RMS;
+	real mTolerance_target;
 };

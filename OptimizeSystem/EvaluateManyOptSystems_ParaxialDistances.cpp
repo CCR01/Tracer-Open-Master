@@ -209,7 +209,7 @@ real EvaluateManyOptSystems_ParaxialDistances::calcMeritValue(OpticalSystem_LLT 
 
 
 
-	CardinalPoints currentCardinalPoints(optSys_LLT);
+	CardinalPoints currentCardinalPoints(optSys_LLT, objectPoint_inf_obj::obj);
 
 	real comparisonValue = 1.0;
 
@@ -240,7 +240,7 @@ real EvaluateManyOptSystems_ParaxialDistances::calcMeritValue(OpticalSystem_LLT 
 	}
 	else
 	{
-		conPP = calcContributionMerit(mSettingMeritFunction.getWeightPP(), mSettingMeritFunction.getPP(), currentCardinalPoints.getPrincipaPlan(), comparisonValue);
+		conPP = calcContributionMerit(mSettingMeritFunction.getWeightPP(), mSettingMeritFunction.getPP(), currentCardinalPoints.getPP_obj(), comparisonValue);
 	}
 
 	// AntiPP
@@ -250,7 +250,7 @@ real EvaluateManyOptSystems_ParaxialDistances::calcMeritValue(OpticalSystem_LLT 
 	}
 	else
 	{
-		conAntiPP = calcContributionMerit(mSettingMeritFunction.getWeightAntiPP(), mSettingMeritFunction.getAntiPP(), currentCardinalPoints.getAntiPP(), comparisonValue);
+		conAntiPP = calcContributionMerit(mSettingMeritFunction.getWeightAntiPP(), mSettingMeritFunction.getAntiPP(), currentCardinalPoints.getPP_ima(), comparisonValue);
 	}
 
 	// EXPP_accordingToLastSurface
@@ -260,7 +260,7 @@ real EvaluateManyOptSystems_ParaxialDistances::calcMeritValue(OpticalSystem_LLT 
 	}
 	else
 	{
-		conEXPP_lastSurface = calcContributionMerit(mSettingMeritFunction.getWeightEXPP_accordingToLastSurface(), mSettingMeritFunction.getEXPP_accordingToLastSurface(), currentCardinalPoints.getExitPupilPosition_lastSurface(), comparisonValue);
+		conEXPP_lastSurface = calcContributionMerit(mSettingMeritFunction.getWeightEXPP_accordingToLastSurface(), mSettingMeritFunction.getEXPP_accordingToLastSurface(), currentCardinalPoints.getEXPP_lastSurface(), comparisonValue);
 	}
 
 	// EXPP_global
@@ -270,7 +270,7 @@ real EvaluateManyOptSystems_ParaxialDistances::calcMeritValue(OpticalSystem_LLT 
 	}
 	else
 	{
-		conEXPP_global = calcContributionMerit(mSettingMeritFunction.getWeightEXPP_global(), mSettingMeritFunction.getEXPP_global(), currentCardinalPoints.getExitPupilPosition_globalCoori(), comparisonValue);
+		conEXPP_global = calcContributionMerit(mSettingMeritFunction.getWeightEXPP_global(), mSettingMeritFunction.getEXPP_global(), currentCardinalPoints.getEXPP_globalCoori(), comparisonValue);
 	}
 
 	// EXPD
@@ -280,7 +280,7 @@ real EvaluateManyOptSystems_ParaxialDistances::calcMeritValue(OpticalSystem_LLT 
 	}
 	else
 	{
-		conEXPD = calcContributionMerit(mSettingMeritFunction.getWeightEXPD(), mSettingMeritFunction.getEXPD(), currentCardinalPoints.getExitPupilDiameter(), comparisonValue);
+		conEXPD = calcContributionMerit(mSettingMeritFunction.getWeightEXPD(), mSettingMeritFunction.getEXPD(), currentCardinalPoints.getEXPD(), comparisonValue);
 	}
 
 	// Mag

@@ -58,9 +58,14 @@ public:
 	// min damping number before switch factors
 	void set_Min_DamNumBefSwitchFactors(real minBeforeSwitchFactors);
 	real get_Min_DamNumBefSwitchFactors();
-		// max damping number before switch factors
+	// max damping number before switch factors
 	void set_Max_DamNumBefSwitchFactors(real maxBeforeSwitchFactors);
 	real get_Max_DamNumBefSwitchFactors();
+	// calculate rms using ray tracing
+	void turn_ON_calcRMSusingRayTracing();
+	void turn_OFF_caclRMSusingRayTracing();
+	bool getCalcRMSusingRayTracing();
+
 
 private:
 	real mDampingFactor{};
@@ -82,7 +87,8 @@ private:
 	real mToleranceWithout_MAX_radius{};
 	real m_Min_DampingNumberBeforSwitchFactors{};
 	real m_Max_DampingNumberBeforeSwitchFactors{};
-	
+	bool mCalcRMSaccordingToRayTracing{};
+
 };
 
 
@@ -115,12 +121,14 @@ public:
 	//void calcChange_Radius_AccordingToMeritVal();
 	//void calcChange_Position_AccordingToMeritVal();
 
-	std::vector<real> calculateDeviation(real oldVal, real newVal, unsigned surfaceNum, kindParaOptSys tempKindPara);
+	std::vector<real> calculateDeviation_rmsRayTrace(real oldVal, real newVal, unsigned surfaceNum, kindParaOptSys tempKindPara);
 
 
 	real checkBounderiesAndReturnNewVal(real val, unsigned int posDeltaVal, real minVal, real maxVal, real withoutMin, real withoutMax, unsigned int tempSurfaceNum, kindParaOptSys kindPar);
 
-	real calculateMeritVal_RMS(const VectorStructR3& fieldPoint);
+	real calculateMeritVal_RMS_obj(const VectorStructR3& fieldPoint);
+	real calculateMeritVal_RMS_inf(real angleX, real angleY);
+
 	void calculateAberrationFct();
 
 	std::vector<std::vector<real>> calc_A_T_times_A();
@@ -189,6 +197,10 @@ public:
 	// max damping number before switch factors
 	void set_Max_DamNumBefSwitchFactors(real maxBeforeSwitchFactors);
 	real get_Max_DamNumBefSwitchFactors();
+	// calculate rms using ray tracing
+	void turn_ON_calcRMSusingRayTracing();
+	void turn_OFF_caclRMSusingRayTracing();
+	bool getCalcRMSusingRayTracing();
 	// *** *** ///
 
 	unsigned int checkImprovementMeritVal(unsigned int iterCounter, const real& impMeritStop);
@@ -224,6 +236,8 @@ public:
 
 	void fixRadiusSurface_i(unsigned int surfaceNo);
 	void fixThicknessSurface_i(unsigned int surfaceNo);
+
+
 
 private:
 
@@ -299,5 +313,8 @@ private:
 	std::vector<real> factorWorst_vec{};
 	unsigned int mSizeFacrotBetterWorstVec{};
 	unsigned int mCounterChangeFactorBetterWorst{};
+
+	objectPoint_inf_obj mInf_Obj{};
+
 
 };

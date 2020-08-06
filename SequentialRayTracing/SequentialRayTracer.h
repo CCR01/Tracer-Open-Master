@@ -159,8 +159,10 @@ public:
 	void resizeAllRelevantVectorsAndSetConst_Element();
 	void resizeAllRelevantVectorsAndSetConst_LLT();
 
-private:
+	//std::vector<IntersectInformationStruct> getAllInterInfosOfSurf_i_notFiltered(unsigned int surfaceNo);
 
+private:
+	
 	OpticalSystemElement mOptSysEle{};
 	OpticalSystem_LLT mOpticalSystem_LLT{};
 	unsigned int mTraceToSurface_i{};

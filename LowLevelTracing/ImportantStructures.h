@@ -37,7 +37,7 @@ private:
 };
 
 enum surfaceSide { A, B, N };
-
+enum class objectPoint_inf_obj { inf, obj };
 
 
 struct IntersectInformationStruct

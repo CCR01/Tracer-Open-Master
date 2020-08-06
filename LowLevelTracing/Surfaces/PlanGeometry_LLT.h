@@ -47,7 +47,6 @@ public:
 	// get direction
 	virtual VectorStructR3 getDirection() override;
 
-
 	// set refractive index side A
 	virtual void setRefractiveIndexSide_A(double const refractiveIndex) override;
 
@@ -57,13 +56,16 @@ public:
 	// calculate the intersection information
 	virtual IntersectInformationStruct calculateIntersection(LightRayStruct const lightray) override;
 
+	// calc focal length
+	virtual void calcFocalLength() override;
+
 	// make the 2d plot
 	void plot2D(cv::Mat image, unsigned int scale, unsigned int thickness, unsigned int lineType) override;
 
 	// get focal length side A
-	virtual real getFocalLength_A() override;
+	virtual real getFocalLength() override;
 	// get focal length side B
-	virtual real getFocalLength_B() override;
+	virtual real getFocalLength_dash() override;
 	// get refractive index side A
 	virtual real getRefractiveIndex_A() override;
 	// get refractive index side B
@@ -87,14 +89,16 @@ public:
 	void calcSphericalSurfaceQwtCoord();
 
 private:
-	double mSemiHeightPlan;
-	VectorStructR3 mPointPlan;
-	VectorStructR3 mDirectionPlan;
-	double mRefractiveIndexA_Plan;
-	double mRefractiveIndexB_Plan;
+	double mSemiHeightPlan{};
+	VectorStructR3 mPointPlan{};
+	VectorStructR3 mDirectionPlan{};
+	double mRefractiveIndexA_Plan{};
+	double mRefractiveIndexB_Plan{};
+	real mFocalLength{};
+	real mFocalLength_dash{};
 
-	PlanGeometryQwt* PlanGeometry_Qwt_Ptr;
-	QPolygonF pointsofPlanGeometry;
+	PlanGeometryQwt* PlanGeometry_Qwt_Ptr{};
+	QPolygonF pointsofPlanGeometry{};
 
 	// TODO: Attention!!!
 	// Here we must be carefull! Maybe we can also use here smart pointe to delete the object (bacause of new)!

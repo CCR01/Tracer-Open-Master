@@ -26,15 +26,17 @@ public:
 	// get direction
 	virtual VectorStructR3 getDirection() = 0;
 	// get focal length side A
-	virtual real getFocalLength_A() = 0;
+	virtual real getFocalLength() = 0;
 	// get focal length side B
-	virtual real getFocalLength_B() = 0;
+	virtual real getFocalLength_dash() = 0;
 	// get refractive index side A
 	virtual real getRefractiveIndex_A() = 0;
 	// get refractive index side B
 	virtual real getRefractiveIndex_B() = 0;
 	// get radius of surface
 	virtual real getRadius() = 0;
+	// calc focal length
+	virtual void calcFocalLength() = 0;
 
 	virtual void setRefractiveIndexSide_A(double const refractiveIndexLeft) = 0;
 	virtual void setRefractiveIndexSide_B(double const refractiveIndexRight) = 0;

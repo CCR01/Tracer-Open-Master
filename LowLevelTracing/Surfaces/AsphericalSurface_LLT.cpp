@@ -499,16 +499,6 @@ IntersectInformationStruct AsphericalSurface_LLT::calculateIntersection(LightRay
 
 
 
-// calculate the focal lenght of the aspherical surface
-double AsphericalSurface_LLT::calcFolcalLengthAsphericalSurface()
-{
-	// TODO: Das muss ich noch fertig machen^^
-	double focalLenAsphericalSurface = 1.0;
-
-	return focalLenAsphericalSurface;
-
-}
-
 //set and get the prefix of the aspherical lens.
 void AsphericalSurface_LLT::setPrefixAsphere(VectorStructR3 V)
 {
@@ -525,18 +515,33 @@ int AsphericalSurface_LLT::getPrefixAsphere()
 	return mPrefix;
 }
 
+// calc focal length
+void AsphericalSurface_LLT::calcFocalLength()
+{
+	if (mDirectionAsphereUnit.getZ() > 0)
+	{
+		mFocalLength = -(mRadiusAsphere * mRefractiveSideA_Asphere) / (mRefractiveSideA_Asphere - mRefractiveSideB_Asphere);
+		mFocalLength_dash = (mRadiusAsphere * mRefractiveSideA_Asphere) / (mRefractiveSideA_Asphere - mRefractiveSideB_Asphere);
+	}
+
+	else
+	{
+		mFocalLength = (mRadiusAsphere * mRefractiveSideA_Asphere) / (mRefractiveSideA_Asphere - mRefractiveSideB_Asphere);
+		mFocalLength_dash = -(mRadiusAsphere * mRefractiveSideA_Asphere) / (mRefractiveSideA_Asphere - mRefractiveSideB_Asphere);
+	}
+}
 
 // get focal length side A
-real AsphericalSurface_LLT::getFocalLength_A()
+real AsphericalSurface_LLT::getFocalLength()
 {
 	std::cout << "we can not calculate the focal length of an aspherical length! there will be an mistake" << std::endl;
-	return 999;
+	return mFocalLength;
 }
 // get focal length side B
-real AsphericalSurface_LLT::getFocalLength_B()
+real AsphericalSurface_LLT::getFocalLength_dash()
 {
 	std::cout << "we can not calculate the focal length of an aspherical length! there will be an mistake" << std::endl;
-	return 999;
+	return mFocalLength_dash;
 }
 
 // get refractive index side A

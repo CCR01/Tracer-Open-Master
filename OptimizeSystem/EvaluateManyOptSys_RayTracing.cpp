@@ -267,7 +267,7 @@ real EvaluateManyOptSys_RayTracing::calcMeritValue(real conRMS, OpticalSystemEle
 
 	// TODO write a function to check wheater we have to calculat the cardinal points!
 	// --> to save calculation time
-	CardinalPoints cardinalPoints(optSysEle.getOptSys_LLT_buildSystem());
+	CardinalPoints cardinalPoints(optSysEle.getOptSys_LLT_buildSystem(), objectPoint_inf_obj::obj);
 
 	// TODO: Mayby we can set this comparsion value for every individual merid value;
 	real comparisonValue = 1.0;
@@ -297,7 +297,7 @@ real EvaluateManyOptSys_RayTracing::calcMeritValue(real conRMS, OpticalSystemEle
 	}
 	else
 	{
-		conPP = calcContributionMerit(mSettingsMeritFct.getWeightPP(), mSettingsMeritFct.getPP(), cardinalPoints.getPrincipaPlan(), comparisonValue);
+		conPP = calcContributionMerit(mSettingsMeritFct.getWeightPP(), mSettingsMeritFct.getPP(), cardinalPoints.getPP_obj(), comparisonValue);
 	}
 
 	// AntiPP
@@ -307,7 +307,7 @@ real EvaluateManyOptSys_RayTracing::calcMeritValue(real conRMS, OpticalSystemEle
 	}
 	else
 	{
-		conAntiPP = calcContributionMerit(mSettingsMeritFct.getWeightAntiPP(), mSettingsMeritFct.getAntiPP(), cardinalPoints.getAntiPP(), comparisonValue);
+		conAntiPP = calcContributionMerit(mSettingsMeritFct.getWeightAntiPP(), mSettingsMeritFct.getAntiPP(), cardinalPoints.getPP_ima(), comparisonValue);
 	}
 
 	// EXPP_accordingToLastSurface
@@ -317,7 +317,7 @@ real EvaluateManyOptSys_RayTracing::calcMeritValue(real conRMS, OpticalSystemEle
 	}
 	else
 	{
-		conEXPP_accordingToLastSurface = calcContributionMerit(mSettingsMeritFct.getWeightEXPP_accordingToLastSurface(), mSettingsMeritFct.getEXPP_accordingToLastSurface(), cardinalPoints.getExitPupilPosition_lastSurface(), comparisonValue);
+		conEXPP_accordingToLastSurface = calcContributionMerit(mSettingsMeritFct.getWeightEXPP_accordingToLastSurface(), mSettingsMeritFct.getEXPP_accordingToLastSurface(), cardinalPoints.getEXPP_lastSurface(), comparisonValue);
 	}
 
 	// EXPP_inGlobalCoordinatSystem
@@ -327,7 +327,7 @@ real EvaluateManyOptSys_RayTracing::calcMeritValue(real conRMS, OpticalSystemEle
 	}
 	else
 	{
-		conEXPP_inGlobalCoordinatSystem = calcContributionMerit(mSettingsMeritFct.getWeightEXPP_global(), mSettingsMeritFct.getEXPP_global(), cardinalPoints.getExitPupilPosition_globalCoori(), comparisonValue);
+		conEXPP_inGlobalCoordinatSystem = calcContributionMerit(mSettingsMeritFct.getWeightEXPP_global(), mSettingsMeritFct.getEXPP_global(), cardinalPoints.getEXPP_globalCoori(), comparisonValue);
 	}
 
 	// EXPD
@@ -337,7 +337,7 @@ real EvaluateManyOptSys_RayTracing::calcMeritValue(real conRMS, OpticalSystemEle
 	}
 	else
 	{
-		conEXPD = calcContributionMerit(mSettingsMeritFct.getWeightEXPD(), mSettingsMeritFct.getEXPD(), cardinalPoints.getExitPupilDiameter(), comparisonValue);
+		conEXPD = calcContributionMerit(mSettingsMeritFct.getWeightEXPD(), mSettingsMeritFct.getEXPD(), cardinalPoints.getEXPD(), comparisonValue);
 	}
 
 	// conMag

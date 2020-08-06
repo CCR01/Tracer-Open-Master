@@ -1,7 +1,5 @@
 #include "testOptimizeSystemSuperFct_GeneticAndDLS.h"
 
-
-
 // element surfaces
 #include "..\..\SurfaceElements\ApertureStopElement.h"
 #include "..\..\SurfaceElements\SphericalElement.h"
@@ -52,6 +50,7 @@ void testOptimizeSystemSuperFct_GeneticAndDLS::loadImportantStuff()
 	mDefaultParaGenetic.setDeltaMeritValueStop(0.1);
 	mDefaultParaGenetic.setToleranceForEvaluation(0.001);
 	mDefaultParaGenetic.setChooseValueMode(normalDistributionDefaultMode);
+	mDefaultParaGenetic.set_ON_CheckRMS_rayTracing();
 
 	// load defaul parameters for DLS
 	mDefaultParamDLS.setDampingFactor(5.0);
@@ -179,7 +178,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE0_optSysSupFct_GeneticAndDL
 	
 	// check the start system
 	std::vector<real> rmsStartSystem_Z{ 196.503,192.101,179.353 };
-	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSysEle_E0, mFields_vec012, mWavelength_vec, rmsStartSystem_Z, mTolerance, comEqual);
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSysEle_E0, mFields_vec012, mWavelength_vec, rmsStartSystem_Z, mTolerance, compareTOM_Zemax::comEqual);
 	check_vec.push_back(checkStartSys);
 	
 	// optimization
@@ -190,7 +189,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE0_optSysSupFct_GeneticAndDL
 	oftenUse::print(GeneticAndDLS.getOptimizedOpticalSystem(), mWavelength_vec[0]);
 
 	std::vector<real> rmsOpti_Z{ 17.240,22.200,35.897 }; // sum 75.337
-	bool checkOptimizedSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(GeneticAndDLS.getOptimizedOpticalSystem(), mFields_vec012, mWavelength_vec, rmsOpti_Z, mTolerance, comBetter);
+	bool checkOptimizedSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(GeneticAndDLS.getOptimizedOpticalSystem(), mFields_vec012, mWavelength_vec, rmsOpti_Z, mTolerance, compareTOM_Zemax::comBetter);
 	check_vec.push_back(checkOptimizedSys);
 	
 	bool checker = Math::checkTrueOfVectorElements(check_vec);
@@ -246,7 +245,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE1_optSysSupFct_GeneticAndDL
 
 	// check the start system
 	std::vector<real> rmsStartSystem_Z{ 77.542,87.021,113.632 };
-	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E1, mFields_vec012, mWavelength_vec, rmsStartSystem_Z, mTolerance, comEqual);
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E1, mFields_vec012, mWavelength_vec, rmsStartSystem_Z, mTolerance, compareTOM_Zemax::comEqual);
 	check_vec.push_back(checkStartSys);
 
 	// optimization
@@ -257,7 +256,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE1_optSysSupFct_GeneticAndDL
 	oftenUse::print(GeneticAndDLS.getOptimizedOpticalSystem(), mWavelength_vec[0]);
 
 	std::vector<real> rmsOpti_Z{ 20.872,28.502,50.817 }; // sum 100.191
-	bool checkOptimizedSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(GeneticAndDLS.getOptimizedOpticalSystem(), mFields_vec012, mWavelength_vec, rmsOpti_Z, mTolerance, comBetter);
+	bool checkOptimizedSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(GeneticAndDLS.getOptimizedOpticalSystem(), mFields_vec012, mWavelength_vec, rmsOpti_Z, mTolerance, compareTOM_Zemax::comBetter);
 	check_vec.push_back(checkOptimizedSys);
 
 	bool checker = Math::checkTrueOfVectorElements(check_vec);
@@ -309,7 +308,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE2_optSysSupFct_GeneticAndDL
 
 	// check the start system
 	std::vector<real> rmsStartSystem_Z{ 32.135,40.076,59.620 };
-	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E2, mFields_vec012, mWavelength_vec, rmsStartSystem_Z, mTolerance, comEqual);
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E2, mFields_vec012, mWavelength_vec, rmsStartSystem_Z, mTolerance, compareTOM_Zemax::comEqual);
 	check_vec.push_back(checkStartSys);
 	
 	// optimization
@@ -320,7 +319,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE2_optSysSupFct_GeneticAndDL
 	oftenUse::print(GeneticAndDLS.getOptimizedOpticalSystem(), mWavelength_vec[0]);
 	
 	std::vector<real> rmsOpti_Z{ 17.621,20.095,27.465 }; // sum 65.181
-	bool checkOptimizedSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(GeneticAndDLS.getOptimizedOpticalSystem(), mFields_vec012, mWavelength_vec, rmsOpti_Z, mTolerance, comBetter);
+	bool checkOptimizedSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(GeneticAndDLS.getOptimizedOpticalSystem(), mFields_vec012, mWavelength_vec, rmsOpti_Z, mTolerance, compareTOM_Zemax::comBetter);
 	check_vec.push_back(checkOptimizedSys);
 
 	bool checker = Math::checkTrueOfVectorElements(check_vec);
@@ -379,7 +378,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE3_optSysSupFct_GeneticAndDL
 	
 	// check the start system
 	std::vector<real> rmsStartSystem_Z{ 324.164,307.127,261.495 };
-	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E3, mFields_vec012, mWavelength_vec, rmsStartSystem_Z, mTolerance, comEqual);
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E3, mFields_vec012, mWavelength_vec, rmsStartSystem_Z, mTolerance, compareTOM_Zemax::comEqual);
 	check_vec.push_back(checkStartSys);
 		
 	// optimization
@@ -390,7 +389,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE3_optSysSupFct_GeneticAndDL
 	oftenUse::print(GeneticAndDLS.getOptimizedOpticalSystem(), mWavelength_vec[0]);
 	
 	std::vector<real> rmsOpti_Z{ 45.330,56.613,117.711 }; // sum 219.654
-	bool checkOptimizedSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(GeneticAndDLS.getOptimizedOpticalSystem(), mFields_vec012, mWavelength_vec, rmsOpti_Z, mTolerance, comBetter);
+	bool checkOptimizedSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(GeneticAndDLS.getOptimizedOpticalSystem(), mFields_vec012, mWavelength_vec, rmsOpti_Z, mTolerance, compareTOM_Zemax::comBetter);
 	check_vec.push_back(checkOptimizedSys);
 
 	bool checker = Math::checkTrueOfVectorElements(check_vec);
@@ -443,7 +442,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE4_optSysSupFct_GeneticAndDL
 	
 	// check the start system
 	std::vector<real> rmsStartSystem_Z{ 269.294,260.916,238.140 };
-	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E4, mFields_vec012, mWavelength_vec, rmsStartSystem_Z, mTolerance, comEqual);
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E4, mFields_vec012, mWavelength_vec, rmsStartSystem_Z, mTolerance, compareTOM_Zemax::comEqual);
 	check_vec.push_back(checkStartSys);
 		
 	// optimization
@@ -454,7 +453,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE4_optSysSupFct_GeneticAndDL
 	oftenUse::print(GeneticAndDLS.getOptimizedOpticalSystem(), mWavelength_vec[0]);
 	
 	std::vector<real> rmsOpti_Z{ 42.453,54.593,85.239 }; // sum 182.285
-	bool checkOptimizedSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(GeneticAndDLS.getOptimizedOpticalSystem(), mFields_vec012, mWavelength_vec, rmsOpti_Z, mTolerance, comBetter);
+	bool checkOptimizedSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(GeneticAndDLS.getOptimizedOpticalSystem(), mFields_vec012, mWavelength_vec, rmsOpti_Z, mTolerance, compareTOM_Zemax::comBetter);
 	check_vec.push_back(checkOptimizedSys);
 
 	bool checker = Math::checkTrueOfVectorElements(check_vec);
@@ -501,7 +500,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE5_optSysSupFct_GeneticAndDL
 	
 	// check the start system
 	std::vector<real> rmsStartSystem_Z{ 221.602,215.043,196.523 };
-	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E5, mFields_vec012, mWavelength_vec, rmsStartSystem_Z, mTolerance, comEqual);
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E5, mFields_vec012, mWavelength_vec, rmsStartSystem_Z, mTolerance, compareTOM_Zemax::comEqual);
 	check_vec.push_back(checkStartSys);
 		
 	// optimization
@@ -512,7 +511,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE5_optSysSupFct_GeneticAndDL
 	oftenUse::print(GeneticAndDLS.getOptimizedOpticalSystem(), mWavelength_vec[0]);
 	
 	std::vector<real> rmsOpti_Z{ 7.975,8.719,10.737 }; // sum 27.431
-	bool checkOptimizedSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(GeneticAndDLS.getOptimizedOpticalSystem(), mFields_vec012, mWavelength_vec, rmsOpti_Z, mTolerance, comBetter);
+	bool checkOptimizedSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(GeneticAndDLS.getOptimizedOpticalSystem(), mFields_vec012, mWavelength_vec, rmsOpti_Z, mTolerance, compareTOM_Zemax::comBetter);
 	check_vec.push_back(checkOptimizedSys);
 
 	bool checker = Math::checkTrueOfVectorElements(check_vec);
@@ -555,7 +554,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE6_optSysSupFct_GeneticAndDL
 	
 	// check the start system
 	std::vector<real> rmsStartSystem_Z{ 1032.04,981.987,859.466 };
-	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E6, mFields_vec012, mWavelength_vec, rmsStartSystem_Z, mTolerance, comEqual);
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E6, mFields_vec012, mWavelength_vec, rmsStartSystem_Z, mTolerance, compareTOM_Zemax::comEqual);
 	check_vec.push_back(checkStartSys);
 		
 	// optimization
@@ -566,7 +565,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE6_optSysSupFct_GeneticAndDL
 	oftenUse::print(GeneticAndDLS.getOptimizedOpticalSystem(), mWavelength_vec[0]);
 	
 	std::vector<real> rmsOpti_Z{ 180.933,274.871,522.848 }; // sum 978.652
-	bool checkOptimizedSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(GeneticAndDLS.getOptimizedOpticalSystem(), mFields_vec012, mWavelength_vec, rmsOpti_Z, mTolerance, comBetter);
+	bool checkOptimizedSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(GeneticAndDLS.getOptimizedOpticalSystem(), mFields_vec012, mWavelength_vec, rmsOpti_Z, mTolerance, compareTOM_Zemax::comBetter);
 	check_vec.push_back(checkOptimizedSys);
 
 	bool checker = Math::checkTrueOfVectorElements(check_vec);
@@ -609,7 +608,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE7_optSysSupFct_GeneticAndDL
 	
 	// check the start system
 	std::vector<real> rmsStartSystem_Z{ 102.085,125.210,184.717 };
-	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E7, mFields_vec012, mWavelength_vec, rmsStartSystem_Z, mTolerance, comEqual);
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E7, mFields_vec012, mWavelength_vec, rmsStartSystem_Z, mTolerance, compareTOM_Zemax::comEqual);
 	check_vec.push_back(checkStartSys);
 	
 	
@@ -621,7 +620,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE7_optSysSupFct_GeneticAndDL
 	oftenUse::print(GeneticAndDLS.getOptimizedOpticalSystem(), mWavelength_vec[0]);
 	
 	std::vector<real> rmsOpti_Z{ 64.942,77.548,114.383 }; // sum 256,873
-	bool checkOptimizedSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(GeneticAndDLS.getOptimizedOpticalSystem(), mFields_vec012, mWavelength_vec, rmsOpti_Z, mTolerance, comBetter);
+	bool checkOptimizedSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(GeneticAndDLS.getOptimizedOpticalSystem(), mFields_vec012, mWavelength_vec, rmsOpti_Z, mTolerance, compareTOM_Zemax::comBetter);
 	check_vec.push_back(checkOptimizedSys);
 
 	bool checker = Math::checkTrueOfVectorElements(check_vec);
@@ -671,7 +670,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE8_optSysSupFct_GeneticAndDL
 	
 	// check the start system
 	std::vector<real> rmsStartSystem_Z{ 318.440,307.550,278.838 };
-	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E8, mFields_vec012, mWavelength_vec, rmsStartSystem_Z, mTolerance, comEqual);
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E8, mFields_vec012, mWavelength_vec, rmsStartSystem_Z, mTolerance, compareTOM_Zemax::comEqual);
 	check_vec.push_back(checkStartSys);
 	
 	// optimization
@@ -682,7 +681,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE8_optSysSupFct_GeneticAndDL
 	oftenUse::print(GeneticAndDLS.getOptimizedOpticalSystem(), mWavelength_vec[0]);
 	
 	std::vector<real> rmsOpti_Z{ 58.661,73.741,118.741 }; // sum 251.143
-	bool checkOptimizedSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(GeneticAndDLS.getOptimizedOpticalSystem(), mFields_vec012, mWavelength_vec, rmsOpti_Z, mTolerance, comBetter);
+	bool checkOptimizedSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(GeneticAndDLS.getOptimizedOpticalSystem(), mFields_vec012, mWavelength_vec, rmsOpti_Z, mTolerance, compareTOM_Zemax::comBetter);
 	check_vec.push_back(checkOptimizedSys);
 
 	bool checker = Math::checkTrueOfVectorElements(check_vec);
@@ -733,7 +732,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE9_optSysSupFct_GeneticAndDL
 	
 	// check the start system
 	std::vector<real> rmsStartSystem_Z{ 1285.00,1251.18,1153.43 };
-	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E9, mFields_vec012, mWavelength_vec, rmsStartSystem_Z, mTolerance, comEqual);
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E9, mFields_vec012, mWavelength_vec, rmsStartSystem_Z, mTolerance, compareTOM_Zemax::comEqual);
 	check_vec.push_back(checkStartSys);
 		
 	// optimization
@@ -744,7 +743,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE9_optSysSupFct_GeneticAndDL
 	oftenUse::print(GeneticAndDLS.getOptimizedOpticalSystem(), mWavelength_vec[0]);
 	
 	std::vector<real> rmsOpti_Z{ 66.259,113.022,229.296 }; // sum 408,577
-	bool checkOptimizedSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(GeneticAndDLS.getOptimizedOpticalSystem(), mFields_vec012, mWavelength_vec, rmsOpti_Z, mTolerance, comBetter);
+	bool checkOptimizedSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(GeneticAndDLS.getOptimizedOpticalSystem(), mFields_vec012, mWavelength_vec, rmsOpti_Z, mTolerance, compareTOM_Zemax::comBetter);
 	check_vec.push_back(checkOptimizedSys);
 
 	bool checker = Math::checkTrueOfVectorElements(check_vec);
@@ -790,7 +789,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE10_optSysSupFct_GeneticAndD
 	
 	// check the start system
 	std::vector<real> rmsStartSystem_Z{ 533.850,529.486,516.527 };
-	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E10, mFields_vec012, mWavelength_vec, rmsStartSystem_Z, mTolerance, comEqual);
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E10, mFields_vec012, mWavelength_vec, rmsStartSystem_Z, mTolerance, compareTOM_Zemax::comEqual);
 	check_vec.push_back(checkStartSys);
 	
 	// optimization
@@ -801,7 +800,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE10_optSysSupFct_GeneticAndD
 	oftenUse::print(GeneticAndDLS.getOptimizedOpticalSystem(), mWavelength_vec[0]);
 	
 	std::vector<real> rmsOpti_Z{ 23.485,27.538,45.055 }; // sum 96.078
-	bool checkOptimizedSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(GeneticAndDLS.getOptimizedOpticalSystem(), mFields_vec012, mWavelength_vec, rmsOpti_Z, mTolerance, comBetter);
+	bool checkOptimizedSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(GeneticAndDLS.getOptimizedOpticalSystem(), mFields_vec012, mWavelength_vec, rmsOpti_Z, mTolerance, compareTOM_Zemax::comBetter);
 	check_vec.push_back(checkOptimizedSys);
 
 	bool checker = Math::checkTrueOfVectorElements(check_vec);

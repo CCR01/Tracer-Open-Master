@@ -81,8 +81,7 @@ public:
 		mRefractiveIndexB(refractiveSideB)
 	{
 		calcCenterSphereAfterRotation();
-		mFocalLengthSphericalSurfaceSide_A = calcFocallLengthSphericalSurface(getRefractivIndexSide_B(), getRefractivIndexSide_A(), getRadius());
-		mFocalLengthSphericalSurfaceSide_B = calcFocallLengthSphericalSurface(getRefractivIndexSide_A(), getRefractivIndexSide_B(), getRadius());
+		calcFocalLength();
 		setPointerPlotQwt();
 	}
 
@@ -127,25 +126,24 @@ public:
 	// get Direction
 	virtual VectorStructR3 getDirection() override;
 	//get Refractiv Index Left
-	double getRefractivIndexSide_A() const&;
+	double getRefractivIndexSide_A() const;
 	//set Refractive Index Left
 	virtual void setRefractiveIndexSide_A(double const refractiveIndexLeft) override;
 	//get Refractiv Index Right
-	double getRefractivIndexSide_B() const&;
+	double getRefractivIndexSide_B() const;
 	//set Refractive Index Right
 	virtual void setRefractiveIndexSide_B(double const refractiveIndexRight) override;
-	// calculate focal length spherical surface
-	double calcFocallLengthSphericalSurface(double const& refIndes1, double const& refIndex2, double const& radius);
 	// get the focal length of the surface
-	// get focal length side B
-	virtual real getFocalLength_B() override;
-	// get focal length side A
-	virtual real getFocalLength_A() override;
+	// get focal length
+	virtual real getFocalLength() override;
+	// get focal length dash
+	virtual real getFocalLength_dash() override;
 	// get refractive index side A
 	virtual real getRefractiveIndex_A() override;
 	// get refractive index side B
 	virtual real getRefractiveIndex_B() override;
-
+	// calc focal length
+	virtual void calcFocalLength() override;
 
 	// make the 2d plot
 	void plot2D(cv::Mat image, unsigned int scale, unsigned int thickness, unsigned int lineType) override;
@@ -180,8 +178,8 @@ private:
 	real mRefractiveIndexA{};
 	real mRefractiveIndexB{};
 	VectorStructR3 mCenterSphereAfterRotation{};
-	real mFocalLengthSphericalSurfaceSide_A{};
-	real mFocalLengthSphericalSurfaceSide_B{};
+	real mFocalLength{};
+	real mFocalLength_dash{};
 
 	SphericalSurfaceQwt* SphericalSurface_Qwt_Ptr{};
 	QPolygonF pointsofSphericalSurface{};

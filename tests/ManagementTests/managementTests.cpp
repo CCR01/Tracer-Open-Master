@@ -10,6 +10,10 @@
 #include "..\testParaxialLens_LLT\testParaxialLens_LLT.h"
 #include "..\testPlanGeometry\testPlanSurface.h"
 #include "..\testCardinalPoints\testCardinalPoints.h"
+#include "..\testRayAiming\testRayAiming.h"
+#include "..\testRayAimingSuperFct\testRayAiming_multiThreads_12.h"
+#include "..\TestGenetic\TestGenetic.h"
+#include "..\testDLS\testDLS.h"
 
 ManagementTests::ManagementTests() {};
 ManagementTests::ManagementTests(std::vector<testWhat> testWhat_vec) :
@@ -121,6 +125,60 @@ bool ManagementTests::testSuperFct()
 		bool checkCardinalPoints = testCarPoints.superFuncTestCalcCardinalPoints();
 		workTheSystem_test.push_back(checkCardinalPoints);
 	}
+
+	if (testWhatInTestWhatVec(testWhat::tRayAiming_obj) || testAll)
+	{
+		testRayAiming testRayAim_obj;
+		bool checkRayAiming_obj = testRayAim_obj.checkRayAimingSuperFct_obj();
+		workTheSystem_test.push_back(checkRayAiming_obj);
+	}
+
+	if (testWhatInTestWhatVec(testWhat::tRayAiming_inf) || testAll)
+	{
+		testRayAiming testRayAim_inf;
+		bool checkRayAiming_inf = testRayAim_inf.checkRayAimingSuperFct_inf();
+		workTheSystem_test.push_back(checkRayAiming_inf);
+	}
+
+
+	if (testWhatInTestWhatVec(testWhat::tRayAiming_12Cores) || testAll)
+	{
+		testRayAiming_multiThreads_12 testRayAiming_12;
+		bool checkRayAiming_12_obj = testRayAiming_12.testRayAiming_multiThreads_12_superFct_obj();
+		workTheSystem_test.push_back(checkRayAiming_12_obj);
+	}
+
+	if (testWhatInTestWhatVec(testWhat::tGenetic_opti) || testAll)
+	{
+	
+		TestGenetic testGenetic;
+		bool checkGenetic = testGenetic.testGeneticSuperFunc();
+		workTheSystem_test.push_back(checkGenetic);
+	}
+	
+	if (testWhatInTestWhatVec(testWhat::tGenetic_modes) || testAll)
+	{
+
+		TestGenetic testGenetic;
+		bool checkGeneticModes = testGenetic.testGenerationModes(-1000.0, 1000.0, 100.0, 50000);
+		workTheSystem_test.push_back(checkGeneticModes);
+	}
+		
+	if (testWhatInTestWhatVec(testWhat::tGenetic_cardinalPoints) || testAll)
+	{
+		TestGenetic testGenetic;
+		bool checkGeneticCardnalPoints = testGenetic.testCardinalPointsSuperFct();
+		workTheSystem_test.push_back(checkGeneticCardnalPoints);
+	}
+
+	// DLS opti rms
+	if (testWhatInTestWhatVec(testWhat::tDLS_optiRMS) || testAll)
+	{
+		testDLS testDLS_optiRMS;
+		bool checkDLS_optiRMS = testDLS_optiRMS.testDLS_superFct();
+		workTheSystem_test.push_back(checkDLS_optiRMS);
+	}
+
 
 
 	return Math::checkTrueOfVectorElements(workTheSystem_test);

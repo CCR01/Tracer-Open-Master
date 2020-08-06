@@ -60,16 +60,20 @@ public:
 	// choose value mode
 	chooseValueForGenerationMode getChooseValueMode();
 	void setChooseValueMode(chooseValueForGenerationMode chooseMode);
-
+	// check rms by ray tracing
+	bool getCheckRMS_rayTracing();
+	void set_ON_CheckRMS_rayTracing();
+	void set_OFF_CheckRMS_rayTracing();
 
 private:
 	real mStartRefractivIndex{};
-	real mToleranceWithoutMIN;
-	real mToleranceWithoutMAX;
-	unsigned int mMaxIterations;
-	real mDeltaMeritValueStop;
-	real mToleranceForEvaluation;
-	chooseValueForGenerationMode mChooseValueMode;
+	real mToleranceWithoutMIN{};
+	real mToleranceWithoutMAX{};
+	unsigned int mMaxIterations{};
+	real mDeltaMeritValueStop{};
+	real mToleranceForEvaluation{};
+	chooseValueForGenerationMode mChooseValueMode{};
+	bool mCheckRMS_rayTrac{};
 
 };
 
@@ -98,15 +102,22 @@ class Genetic
 {
 public:
 	Genetic();
+	// *** obj *** //
 	Genetic(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, unsigned int /*populatuion*/ population);
+	Genetic(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, unsigned int /*populatuion*/ population, targetCardinalPointsStruct targetCardinalPoints);
 	Genetic(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, unsigned int /*populatuion*/ population, /*default parameter*/ defaultParaGenetic defaultParameterGenetic);
+	// *** inf *** //
+	Genetic(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<real> /*angleX*/ angleX, std::vector<real> /*angleY*/ angleY, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, unsigned int /*populatuion*/ population);
+	
 	~Genetic();
 
 	void buildAndLoad(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, unsigned int /*populatuion*/ population, /*default parameter*/ defaultParaGenetic defaultParameterGenetic);
 
 	void buildOptSys_LLT_wave_vec();
 	real calcMeritVal();
-	real calculateMeritVal_RMS(const VectorStructR3& fieldPoint);
+	real calculateMeritVal_RMS_obj(const VectorStructR3& fieldPoint);
+	real calculateMeritVal_RMS_inf(real angleX, real angleY);
+
 	void resizeAllRelevantStdVectorsAndCalcConst();
 	void loadDefaultPra();
 
@@ -183,6 +194,10 @@ public:
 
 	real getMeritValBestSystem();
 
+	void setTargetCardinalPoints(const targetCardinalPointsStruct& targetCarPoints);
+
+	unsigned int sizeAngleXandY();
+
 	// ***
 	// mean to calc normal distribution
 	real getMeanToCalcND();
@@ -214,7 +229,13 @@ public:
 	// choose value mode
 	chooseValueForGenerationMode getChooseValueMode();
 	void setChooseValueMode(chooseValueForGenerationMode chooseMode);
+	// check rms by ray tracing
+	bool getCheckRMS_rayTracing();
+	void set_ON_CheckRMS_rayTracing();
+	void set_OFF_CheckRMS_rayTracing();
 	// ***
+
+	
 
 private:
 	OpticalSystemElement mOpticalSystemEle_initial{};
@@ -235,6 +256,7 @@ private:
 	std::vector<unsigned int> mWeightWavelenght_vec{};
 	std::vector<real> mWeightFields_vec{};
 	unsigned int mNumFieldPoints{};
+	unsigned int mNumAngleX_Y{};
 	Light_LLT mDefaultLight{};
 	unsigned int mNumVar{};
 	
@@ -268,5 +290,14 @@ private:
 
 	real mTempValueParent_1{};
 	real mTempValueParent_2{};
+
+	targetCardinalPointsStruct mTargetCardinalPoints{};
+
+	bool rayTracingOnOff{};
+
+	objectPoint_inf_obj mInf_Obj{};
+
+	std::vector<real> mAngleX;
+	std::vector<real> mAngleY;
 };
 
