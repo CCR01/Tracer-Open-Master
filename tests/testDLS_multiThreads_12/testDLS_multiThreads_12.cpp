@@ -15,7 +15,7 @@ testDLS_multiThreads_12::testDLS_multiThreads_12() { loadImportantStuff(); }
 testDLS_multiThreads_12::~testDLS_multiThreads_12(){}
 
 typedef std::shared_ptr< Element_CR > surfacePtr;
-typedef std::shared_ptr< InteractionRay_LLT > interaction_ptr;
+typedef std::shared_ptr< InteractionRay_LLT > interactionPtr;
 
 // load important stuff
 void testDLS_multiThreads_12::loadImportantStuff()
@@ -57,6 +57,7 @@ void testDLS_multiThreads_12::loadImportantStuff()
 	mDefaultParamDLS.setFactorGettingWorst(1.9);
 	mDefaultParamDLS.set_Min_DamNumBefSwitchFactors(0.00001);
 	mDefaultParamDLS.set_Max_DamNumBefSwitchFactors(9999.0);
+	mDefaultParamDLS.turn_ON_calcRMSusingRayTracing();
 
 	mRings = 6;
 	mArms = 8;
@@ -118,7 +119,7 @@ bool testDLS_multiThreads_12::checkE0()
 	surfacePtr Plan9_E0_ptr = Plan9_E0.clone();
 
 	std::vector<surfacePtr> opticalSystemE0_ptr{ Aper0_E0_ptr, Sphere1_E0_ptr, Sphere2_E0_ptr , Sphere3_E0_ptr, Sphere4_E0_ptr, Sphere5_E0_ptr, Sphere6_E0_ptr, Sphere7_E0_ptr, Sphere8_E0_ptr, Plan9_E0_ptr };
-	std::vector<interaction_ptr> interactionsE0_ptr{ doNothing.clone(), refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(), absorb.clone() };
+	std::vector<interactionPtr> interactionsE0_ptr{ doNothing.clone(), refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(), absorb.clone() };
 
 	//	build optical system
 	OpticalSystemElement optSysEle_E0(opticalSystemE0_ptr, interactionsE0_ptr);
@@ -129,7 +130,7 @@ bool testDLS_multiThreads_12::checkE0()
 	check_vec.push_back(checkStartSys);
 
 	DLS_multiThreads_12 DLS_multi_12(optSysEle_E0, mFields_vec012, mWavelength_vec, mRings, mArms, mDefaultParamDLS);
-	OpticalSystemElement optimizedSyste_E0 = DLS_multi_12.DLS_optimisation_multiThreads_12();
+	OpticalSystemElement optimizedSyste_E0 = DLS_multi_12.DLS_optimisation_multiThreads_12_obj();
 
 	std::vector<real> rmsOpti_Z{ 17.240,22.200,35.897 }; // sum 75.337
 	bool checkOptimizedSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optimizedSyste_E0, mFields_vec012, mWavelength_vec, rmsOpti_Z, mExtendeTolerance, compareTOM_Zemax::comBetter);

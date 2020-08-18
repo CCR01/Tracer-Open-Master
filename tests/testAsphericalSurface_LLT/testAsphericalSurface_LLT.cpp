@@ -19,7 +19,37 @@
 testAsphericalSurface_LLT::testAsphericalSurface_LLT() {};
 testAsphericalSurface_LLT::~testAsphericalSurface_LLT() {};
 
-bool testAsphericalSurface_LLT::checkAsphericalSurface_LLT()
+
+
+bool testAsphericalSurface_LLT::checkAsphericalSurfaceSuperFct_LLT()
+{
+	std::vector<bool> testAspSur_LLT;
+
+	// E0
+	bool checkE0 = checkAsphere_LLT_E0();
+	testAspSur_LLT.push_back(checkE0);
+	// E1
+	bool checkE1 = checkAsphere_LLT_E1();
+	testAspSur_LLT.push_back(checkE1);
+	// E2
+	bool checkE2 = checkAsphere_LLT_E2();
+	testAspSur_LLT.push_back(checkE2);
+	// E3
+	bool checkE3 = checkAsphere_LLT_E3();
+	testAspSur_LLT.push_back(checkE3);
+	// E4
+	bool checkE4 = checkAsphere_LLT_E4();
+	testAspSur_LLT.push_back(checkE4);
+	
+
+
+	bool workTheAsphere_LLT = Math::checkTrueOfVectorElements(testAspSur_LLT);
+	return workTheAsphere_LLT;
+
+}
+
+// E0
+bool testAsphericalSurface_LLT::checkAsphere_LLT_E0()
 {
 	std::vector<bool> testAspSur_LLT;
 	Light_LLT Light;
@@ -31,6 +61,7 @@ bool testAsphericalSurface_LLT::checkAsphericalSurface_LLT()
 	//*****
 	//E0
 	//*****
+
 	// surfaces
 	AsphericalSurface_LLT S0E0(/*radius*/ 1.7, /*semi height*/ 1.0,/*point*/{ 0.0,0.0,32.0 }, /*direction*/{ 0.0,0.0,1.0 },/*refractive index A*/ 1.0,/*refractive index B*/ 1.5,/*conic*/ 1.0,
 		/*second order term*/ -0.2, /*fourth order term*/ -0.12, /*sixth order term*/ 0.044, /*eighth order term*/ 0.02,/*tenth order term*/ -0.04,/*twelfth oder term*/ 0.0,
@@ -48,7 +79,7 @@ bool testAsphericalSurface_LLT::checkAsphericalSurface_LLT()
 	SequentialRayTracing seqTraceE0_optA(optSysE0);
 	FillApertureStop fillAperStopE0_optA(/*start point rays*/{ 0.0,0.0,0.0 },/*semi height of aperture stop*/ 0.5,/*point of aperture stop*/{ 0.0,0.0,30.0 },/*direction of aperture stop*/{ 0.0,0.0,1.0 }, /*rings*/6,/*arms*/ 8,/*refractive index*/ 1.0, Light);
 	seqTraceE0_optA.seqRayTracingWithVectorOfLightRays(fillAperStopE0_optA.getVectorWithLightRays());
-	Spot spotE0_optA(/*intersection points*/ seqTraceE0_optA.getAllInterPointsAtSurf_i_notFiltered(2), /*reference point*/seqTraceE0_optA.getAllInterPointsAtSurf_i_notFiltered(2).at(0) );
+	Spot spotE0_optA(/*intersection points*/ seqTraceE0_optA.getAllInterPointsAtSurf_i_notFiltered(2), /*reference point*/seqTraceE0_optA.getAllInterPointsAtSurf_i_notFiltered(2).at(0));
 	real rmsImageE0_optA = spotE0_optA.getRMS_mm();
 	real tartgetZemaxE0_optA = 0.107282;
 	bool checkE0_optA = Math::compareTwoNumbers_decimals(tartgetZemaxE0_optA, rmsImageE0_optA, 6);
@@ -65,6 +96,21 @@ bool testAsphericalSurface_LLT::checkAsphericalSurface_LLT()
 	bool checkE0_fieldY1 = Math::compareTwoNumbers_decimals(tartgetZemaxE0_fieldY1, rmsImageE0_fieldY1, 6);
 	testAspSur_LLT.push_back(checkE0_fieldY1);
 	// ---
+
+	bool returnCheck = Math::checkTrueOfVectorElements(testAspSur_LLT);
+	return returnCheck;
+
+}
+// E1
+bool testAsphericalSurface_LLT::checkAsphere_LLT_E1()
+{
+	std::vector<bool> testAspSur_LLT;
+	Light_LLT Light;
+	Light.buildDefaultLight();
+	// interactions
+	RefractedRay_LLT refrac;
+	Absorb_LLT absorb;
+
 
 	//*****
 	//E1
@@ -104,7 +150,7 @@ bool testAsphericalSurface_LLT::checkAsphericalSurface_LLT()
 	bool checkE1_optA = Math::compareTwoNumbers_decimals(tartgetZemaxE1_optA, rmsImageE1_optA, 6);
 	testAspSur_LLT.push_back(checkE1_optA);
 	// ---
-	
+
 	// ---
 	SequentialRayTracing seqTraceE1_fieldYneg1(optSysE1);
 	FillApertureStop fillAperStopE1_fieldYneg1(/*start point rays*/{ 0.0,-1.0,0.0 },/*semi height of aperture stop*/ 0.5,/*point of aperture stop*/{ 0.0,0.0,30.0 },/*direction of aperture stop*/{ 0.0,0.0,1.0 }, /*rings*/6,/*arms*/ 8,/*refractive index*/ 1.0, Light);
@@ -115,6 +161,21 @@ bool testAsphericalSurface_LLT::checkAsphericalSurface_LLT()
 	bool checkE1_fieldYneg1 = Math::compareTwoNumbers_decimals(tartgetZemaxE1_fieldYneg1, rmsImageE1_fieldYneg1, 6);
 	testAspSur_LLT.push_back(checkE1_fieldYneg1);
 	// ---
+
+	bool returnCheck = Math::checkTrueOfVectorElements(testAspSur_LLT);
+	return returnCheck;
+
+}
+// E2
+bool testAsphericalSurface_LLT::checkAsphere_LLT_E2()
+{
+	std::vector<bool> testAspSur_LLT;
+	Light_LLT Light;
+	Light.buildDefaultLight();
+	// interactions
+	RefractedRay_LLT refrac;
+	Absorb_LLT absorb;
+
 
 	//*****
 	//E2
@@ -165,6 +226,22 @@ bool testAsphericalSurface_LLT::checkAsphericalSurface_LLT()
 	testAspSur_LLT.push_back(checkE2_Xneg05_Y05);
 	// ---
 
+	bool returnCheck = Math::checkTrueOfVectorElements(testAspSur_LLT);
+	return returnCheck;
+
+}
+
+// E3
+bool testAsphericalSurface_LLT::checkAsphere_LLT_E3()
+{
+	std::vector<bool> testAspSur_LLT;
+	Light_LLT Light;
+	Light.buildDefaultLight();
+	// interactions
+	RefractedRay_LLT refrac;
+	Absorb_LLT absorb;
+
+
 	//*****
 	//E3
 	//*****
@@ -212,6 +289,20 @@ bool testAsphericalSurface_LLT::checkAsphericalSurface_LLT()
 	bool checkE3_X05_Y05 = Math::compareTwoNumbers_decimals(tartgetZemaxE3_X05_Y05, rmsImageE3_X05_Y05, 6);
 	testAspSur_LLT.push_back(checkE3_X05_Y05);
 	// ---
+
+
+	bool returnCheck = Math::checkTrueOfVectorElements(testAspSur_LLT);
+	return returnCheck;
+}
+// E4
+bool testAsphericalSurface_LLT::checkAsphere_LLT_E4()
+{
+	std::vector<bool> testAspSur_LLT;
+	Light_LLT Light;
+	Light.buildDefaultLight();
+	// interactions
+	RefractedRay_LLT refrac;
+	Absorb_LLT absorb;
 
 
 	// E4
@@ -280,7 +371,6 @@ bool testAsphericalSurface_LLT::checkAsphericalSurface_LLT()
 
 
 
-	bool workTheAsphere_LLT = Math::checkTrueOfVectorElements(testAspSur_LLT);
-	return workTheAsphere_LLT;
-
+	bool returnCheck = Math::checkTrueOfVectorElements(testAspSur_LLT);
+	return returnCheck;
 }

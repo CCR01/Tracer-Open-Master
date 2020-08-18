@@ -240,13 +240,15 @@ void ParaxialLens_LLT::calcFocalLength()
 {
 	if (mDirectionParaxialLens.getZ() > 0)
 	{
+		mFocallenght_dash = mFocallenght * mRefractiveIndexB_ParaxialLens;
 		mFocallenght = -1.0 * mFocallenght * mRefractiveIndexA_ParaxialLens;
-		mFocallenght_dash = mFocallenght_dash * mRefractiveIndexB_ParaxialLens;
+		
 	}
 	else
 	{
-		mFocallenght = mFocallenght * mRefractiveIndexA_ParaxialLens;
-		mFocallenght_dash = -1.0 * mFocallenght_dash * mRefractiveIndexB_ParaxialLens;
+		mFocallenght_dash =  mFocallenght * mRefractiveIndexA_ParaxialLens;
+		mFocallenght = -1.0 * mFocallenght * mRefractiveIndexB_ParaxialLens;
+		
 
 	}
 
@@ -277,6 +279,7 @@ ParaxialLens_LLT::ParaxialLens_LLT(double semiHeight, VectorStructR3 point, Vect
 	mPointParaxialLens(point),
 	mDirectionParaxialLens(direction),
 	mDirectionParaxialLensUnit(Math::unitVector(direction)),
+	mFocallenght(focallength),
 	mRefractiveIndexA_ParaxialLens(refractiveSideA),
 	mRefractiveIndexB_ParaxialLens(refractiveSideB)
 {

@@ -638,8 +638,21 @@ void SphericalElement::calcRefIndex_A_andSet(real wavelength)
 {
 	std::shared_ptr<SurfaceIntersectionRay_LLT> modSphere_LLT(new SphericalSurface_LLT);
 	modSphere_LLT = mSphericalSurface_LLT;
-	real tempRefIndexA = mGlassA.calcRefractiveIndexSnellmeier1(wavelength);
-	mRefractiveiSideA_Param.set(tempRefIndexA);
+
+	real tempRefIndexA{};
+
+	if (mGlassA.getRealGlass())
+	{
+		mGlassA.setRefractiveIndex(mSphericalSurface_LLT->getRefractiveIndex_A());
+		tempRefIndexA = mGlassA.calcRefractiveIndexSnellmeier1(wavelength);
+		mRefractiveiSideA_Param.set(tempRefIndexA);
+	}
+	else
+	{
+		tempRefIndexA = mGlassA.getRefractivIndex();
+		mRefractiveiSideA_Param.set(tempRefIndexA);
+	}
+
 	modSphere_LLT->setRefractiveIndexSide_A(mRefractiveiSideA_Param.getValue());
 	mSphericalSurface_LLT = modSphere_LLT;
 }
@@ -649,8 +662,22 @@ void SphericalElement::calcRefIndex_B_andSet(real wavelength)
 {
 	std::shared_ptr<SurfaceIntersectionRay_LLT> modSphere_LLT(new SphericalSurface_LLT);
 	modSphere_LLT = mSphericalSurface_LLT;
-	real tempRefIndexB = mGlassB.calcRefractiveIndexSnellmeier1(wavelength);
-	mRefractiveSideB_Param.set(tempRefIndexB);
+	
+
+	real tempRefIndexB{};
+
+	if (mGlassA.getRealGlass())
+	{
+		mGlassB.setRefractiveIndex(mSphericalSurface_LLT->getRefractiveIndex_B());
+		tempRefIndexB = mGlassB.calcRefractiveIndexSnellmeier1(wavelength);
+		mRefractiveSideB_Param.set(tempRefIndexB);
+	}
+	else
+	{
+		tempRefIndexB = mGlassB.getRefractivIndex();
+		mRefractiveSideB_Param.set(tempRefIndexB);
+	}
+
 	modSphere_LLT->setRefractiveIndexSide_B(mRefractiveSideB_Param.getValue());
 	mSphericalSurface_LLT = modSphere_LLT;
 }

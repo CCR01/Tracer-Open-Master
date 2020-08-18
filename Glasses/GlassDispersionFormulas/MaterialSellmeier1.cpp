@@ -113,12 +113,23 @@ void MaterialSellmeier1::setRealGlass(bool realGlass)
 {
 	mRealGlass = realGlass;
 }
+bool MaterialSellmeier1::getRealGlass()
+{
+	return mRealGlass;
+}
 
 void MaterialSellmeier1::setRefractiveIndex(double refractiveIndex)
 {
 	mRefractiveIndes = refractiveIndex;
 }
-
+double MaterialSellmeier1::getRefractivIndex()
+{
+	return mRefractiveIndes;
+}
+void MaterialSellmeier1::setNameGlas(std::string nameGlas)
+{
+	mName = nameGlas;
+}
 std::string MaterialSellmeier1::getNameGlas()
 {
 	return mName;

@@ -79,6 +79,7 @@ namespace Math {
 
 	// sum all values in a vector
 	real sumAllVectorValues(std::vector<real> vec);
+	real sumAllVectorValues_abs(std::vector<real> vec);
 
 	// print the vector
 	void print(VectorStructR3 VectorPrint);

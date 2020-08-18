@@ -76,8 +76,6 @@ private:
 	real mImprovementMeritStopDiff{};
 	unsigned int mMaxIterations{};
 	real mFlipRadius{};
-	real mMinThickness_Z_Default{};
-	real mMaxThickness_Z_Default{};
 	unsigned int mMaxBorderViolations{};
 	real mMaxDeltaPara{};
 	real mMinDeltaPara{};
@@ -103,6 +101,12 @@ public:
 	DLS();
 	DLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms);
 	DLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, defaultParaDLS defaultParameterDLS);
+	DLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, bool turnON_Off_rayTracing, targetCardinalPointsStruct targetCardinalPoint);
+	DLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, targetCardinalPointsStruct targetCardinalPoint, defaultParaDLS defaultParameterDLS);
+
+	DLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<real> /*fields X*/ fields_X, std::vector<real> /*fields Y*/ fields_Y, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms);
+	DLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<real> /*fields X*/ fields_X, std::vector<real> /*fields Y*/ fields_Y, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, bool turnON_Off_rayTracing, targetCardinalPointsStruct targetCardinalPoint);
+	DLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<real> /*fields X*/ fields_X, std::vector<real> /*fields Y*/ fields_Y, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, targetCardinalPointsStruct targetCardinalPoint, defaultParaDLS defaultParameterDLS);
 	~DLS();
 
 	void buildAndLoad(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, defaultParaDLS defaultParameterDLS);
@@ -112,9 +116,11 @@ public:
 	void loadAdditionalDefaultParameter();
 	void buildOptSys_LLT_wave_vec();
 	void calcJacobiMatrixDeviation_Aij();
-	void changeRadiusSurfaceTo(unsigned int surfaceNo, real newRadius);
+	void changeRadiusSurfaceTo_allWavelength(unsigned int surfaceNo, real newRadius);
+
 	void changePosition_Z_SurfaceTo(unsigned int surfaceNo, real newPositionZ);
-	void changeThickness_Z_SurfaceTo(unsigned int surfaceNo, real newThickness);
+	void changeThickness_Z_SurfaceTo_All(unsigned int surfaceNo, real newThickness);
+	void changeThickness_Z_SurfaceTo_primWavelength(unsigned int surfaceNo, real newThickness);
 	void optimizeSystem_DLS_multiplicativ_Damping();
 	void NOT_WORKING_optimizeSystem_DLS_additive_Damping();
 
@@ -122,10 +128,12 @@ public:
 	//void calcChange_Position_AccordingToMeritVal();
 
 	std::vector<real> calculateDeviation_rmsRayTrace(real oldVal, real newVal, unsigned surfaceNum, kindParaOptSys tempKindPara);
+	std::vector<real> calculateDeviation_targetCarPoints(real oldVal, real newVal, unsigned surfaceNum, kindParaOptSys tempKindPara);
 
 
 	real checkBounderiesAndReturnNewVal(real val, unsigned int posDeltaVal, real minVal, real maxVal, real withoutMin, real withoutMax, unsigned int tempSurfaceNum, kindParaOptSys kindPar);
 
+	//real calculateMeritVal();
 	real calculateMeritVal_RMS_obj(const VectorStructR3& fieldPoint);
 	real calculateMeritVal_RMS_inf(real angleX, real angleY);
 
@@ -135,7 +143,8 @@ public:
 
 	std::vector<real> calc_invMatrix_times_A_T_F(const std::vector<std::vector<real>>& matrix, const std::vector<real>& vector);
 
-	void fillJacobiMatrix(std::vector<real> vector, unsigned int row);
+	void fillJacobiMatrix_RMS(std::vector<real> vector, unsigned int row);
+	//void fillJacobiMatrix_CarPoint(real deviation);
 
 	void setNewSystemParameter();
 
@@ -199,7 +208,7 @@ public:
 	real get_Max_DamNumBefSwitchFactors();
 	// calculate rms using ray tracing
 	void turn_ON_calcRMSusingRayTracing();
-	void turn_OFF_caclRMSusingRayTracing();
+	void turn_OFF_calcRMSusingRayTracing();
 	bool getCalcRMSusingRayTracing();
 	// *** *** ///
 
@@ -222,6 +231,8 @@ public:
 	void checkDeltaParameter(std::vector<real>& deltaSysPara_vec);
 
 	std::vector<VectorStructR3> getField_vec();
+	std::vector<real> getFieldAngles_X();
+	std::vector<real> getFieldAngle_Y();
 	std::vector<real> getWavelength_vev();
 	unsigned int getRings();
 	unsigned int getArms();
@@ -236,6 +247,16 @@ public:
 
 	void fixRadiusSurface_i(unsigned int surfaceNo);
 	void fixThicknessSurface_i(unsigned int surfaceNo);
+	objectPoint_inf_obj getInfOrObj();
+
+	void setTargetCardinalPoints(const targetCardinalPointsStruct& targetCarPoints);
+	targetCardinalPointsStruct getTargetCardinalPoints();
+
+	void setWeightFields(std::vector<real> weightField_vec);
+	std::vector<real> getWeigthFields();
+	
+	void setWeightWavelength(std::vector<unsigned int> weightWavelength_vec);
+	std::vector<unsigned int> getWeightWavelength();
 
 
 
@@ -246,7 +267,10 @@ private:
 	std::vector<OpticalSystem_LLT> mBestOptSys_LLT_vec{};
 	OpticalSystemElement mOpticalSystemEle_initial{};
 	OpticalSystemElement mOpticaSystemEle_change{};
-	std::vector<VectorStructR3> mFields_vec{};
+	std::vector<VectorStructR3> mFields_obj_vec{};
+	std::vector<real> mFields_X_inf_vec{};
+	std::vector<real> mFields_Y_inf_vec{};
+
 	std::vector<real> mWeightFields_vec{};
 	std::vector<real> mWavelenght_vec{};
 	std::vector<unsigned int> mWeightWavelenght_vec{};
@@ -261,9 +285,13 @@ private:
 	
 	std::vector<real> mAberrationFct_F0{};
 	std::vector<real> mNewSystemParameter{};
-	unsigned int mNumFieldPoints{};
-	std::vector<real> mReturnDeviation_vec{};
-	std::vector<real> mDeviationAberrationFct{};
+	unsigned int mNumFieldPoints_Angles{};
+	unsigned int mNumTargetCarPoints{};
+	std::vector<real> mReturnDeviation_RMS_vec{};
+	std::vector<real> mReturnDeviation_targetCarPoints_vec{};
+	std::vector<real> mDeviationAberrationFct_RMS{};
+	std::vector<real> mDeviationAberrationFct_targetCarPoint{};
+	real mDeviatonVal_targetCarPoint{};
 	
 
 	unsigned int mColumns_A_T_A{};
@@ -272,6 +300,7 @@ private:
 	unsigned int mNumOptSys{};
 	VectorStructR3 mNewPosition{};
 	unsigned int mPosLastSurface{};
+	unsigned int mPosFillJacobi{};
 	std::vector<real> mReturnVector_invMatrix_times_A_T_F{};
 
 	std::vector<real> mAllMeritVal{};
@@ -316,5 +345,6 @@ private:
 
 	objectPoint_inf_obj mInf_Obj{};
 
+	targetCardinalPointsStruct mTargetCardinalPoints{};
 
 };

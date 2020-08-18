@@ -135,34 +135,22 @@ int main(int argc, char **argv)
 	std::vector<bool> workTheSystem;
 	// *****************************************************************************************************************
 
-	std::vector<testWhat> testWhatVec = { testWhat::tDLS_optiRMS};
-	ManagementTests managementTest(testWhatVec);
-	workTheSystem.push_back(managementTest.testSuperFct());
+	//std::vector<testWhat> testWhatVec_1 = { testWhat::tDLS_optiRMS };
+	//ManagementTests managementTest_1(testWhatVec_1);
+	//workTheSystem.push_back(managementTest_1.testSuperFct());
+	//
+	// std::vector<testWhat> testWhatVec_2 = { testWhat::tDLS_optiCarPoints };
+	// ManagementTests managementTest_2(testWhatVec_2);
+	// workTheSystem.push_back(managementTest_2.testSuperFct());
 
-	//std::vector<testWhat> testWhatVec_cardinalPoints = { testWhat::tCardinalPoints };
-	//ManagementTests managementTest(testWhatVec_cardinalPoints);
-	//workTheSystem.push_back(managementTest.testSuperFct());
-
-	//std::vector<benchWhat> benchWhatVec = { benchWhat::bALL };
-	//managementBenchmark managementBench(benchWhatVec);
-	//workTheSystem.push_back(managementBench.benchSuperFct());
-
-	//testOptimizeSystemSuperFct_GeneticAndDLS testOptimizerSuperFct;
-	//bool checkOptimizerSuperFct_GeneticAndDLS = testOptimizerSuperFct.testOptimizeSystemSysSupFct_GeneticDLS();
-	//workTheSystem.push_back(checkOptimizerSuperFct_GeneticAndDLS);
+	std::vector<testWhat> testWhatVec_3 = { testWhat::tGenetic_opti };
+	ManagementTests managementTest_3(testWhatVec_3);
+	workTheSystem.push_back(managementTest_3.testSuperFct());
 
 
 
 
-	//// DLS multi threads 12
-	//testDLS_multiThreads_12 testDLS_multi_12;
-	//bool checkDLS_multi_12 = testDLS_multi_12.testSuperFunction();
-	//workTheSystem.push_back(checkDLS_multi_12);
 
-	//// DLS multicheck
-	//DLSmulticheck DLSmulcheck;
-	//bool DLSmc = DLSmulcheck.checkSuperFuction();
-	//workTheSystem.push_back(DLSmc);
 
 	//// Optikkreis
 	//Optikkreis optKreis;
@@ -311,9 +299,6 @@ int main(int argc, char **argv)
 	//BenchOpticalSystemElement BenchOptSys;
 	//bool checkOptSysElement = BenchOptSys.checkMethodesOpticalSystemElement();
 	//workTheSystem.push_back(checkOptSysElement);
-
-
-
 
 
 

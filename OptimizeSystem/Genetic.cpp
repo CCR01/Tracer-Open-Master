@@ -220,6 +220,27 @@ Genetic::Genetic(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<Vecto
 	
 }
 
+Genetic::Genetic(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, unsigned int /*populatuion*/ population, /*target cardinal points*/ targetCardinalPointsStruct targetCardinalPoints, /*default parameter*/ defaultParaGenetic defaultParameterGenetic) :
+	mOpticalSystemEle_initial(optSysEle),
+	mFields_vec(fields),
+	mWavelength_vec(wavelengths),
+	mRings(rings),
+	mArms(arms),
+	mPopulation(population),
+	mDistribution(0.0, 300.0),
+	mTargetCardinalPoints(targetCardinalPoints),
+	mDefaultParaGenetic(defaultParameterGenetic)
+	{
+		mInf_Obj = objectPoint_inf_obj::obj;
+		buildOptSys_LLT_wave_vec();
+		mParameterVar.loadSystemParameter(mOpticalSystemEle_initial);
+		resizeAllRelevantStdVectorsAndCalcConst();
+		loadWithoutMinMaxDefault();
+		loadThicknessParameter();
+
+	}
+
+
 Genetic::Genetic(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<real> /*angleX*/ angleX, std::vector<real> /*angleY*/ angleY, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, unsigned int /*populatuion*/ population) :
 	mOpticalSystemEle_initial(optSysEle),
 	mAngleX(angleX),
@@ -238,7 +259,25 @@ Genetic::Genetic(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<real>
 	loadWithoutMinMaxDefault();
 	loadThicknessParameter();
 }
-
+Genetic::Genetic(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<real> /*angleX*/ angleX, std::vector<real> /*angleY*/ angleY, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, unsigned int /*populatuion*/ population, /*target cardinal points*/ targetCardinalPointsStruct targetCardinalPoints, /*default parameter*/ defaultParaGenetic defaultParameterGenetic) :
+	mOpticalSystemEle_initial(optSysEle),
+	mAngleX(angleX),
+	mAngleY(angleY),
+	mWavelength_vec(wavelengths),
+	mRings(rings),
+	mArms(arms),
+	mPopulation(population),
+	mTargetCardinalPoints(targetCardinalPoints),
+	mDefaultParaGenetic(defaultParameterGenetic),
+	mDistribution(0.0, 300.0)
+{
+	mInf_Obj = objectPoint_inf_obj::inf;
+	buildOptSys_LLT_wave_vec();
+	mParameterVar.loadSystemParameter(mOpticalSystemEle_initial);
+	resizeAllRelevantStdVectorsAndCalcConst();
+	loadWithoutMinMaxDefault();
+	loadThicknessParameter();
+}
 
 void Genetic::buildAndLoad(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, unsigned int /*populatuion*/ population, /*default parameter*/ defaultParaGenetic defaultParameterGenetic)
 {
@@ -666,9 +705,7 @@ void Genetic::buildTheGenerationsAndEvaluate()
 {
 	   	for (unsigned int i = 0; i < mPopulation; ++i)
 		{
-		
-		
-			
+					
 		// just for debugging
 		// mChangedOptSys_LLT_vec[0].printAllOptSysParameter_LLT(mChangedOptSys_LLT_vec[0]);
 
@@ -788,7 +825,7 @@ real Genetic::calcMeritVal()
 
 	if (mTargetCardinalPoints.getIsOneTargetCardinalPoint())
 	{
-		sumMerit = sumMerit + mTargetCardinalPoints.calculateMeritVal_targetCardianlPoints(mChangedOptSys_LLT_vec[0], mInf_Obj);
+		sumMerit = sumMerit + mTargetCardinalPoints.calculateMeritVal_targetCardianlPoints_forGenetic(mChangedOptSys_LLT_vec[0], mInf_Obj);
 	}
 
 

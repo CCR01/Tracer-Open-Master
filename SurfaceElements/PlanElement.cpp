@@ -508,10 +508,22 @@ void PlanElement::calcRefIndex_A_andSet(real wavelength)
 	std::shared_ptr<SurfaceIntersectionRay_LLT> modPLanG_LLT(new PlanGeometry_LLT);
 	modPLanG_LLT = mPlanGeometry_LLT;
 
-	real tempRefIndexA = mGlassA.calcRefractiveIndexSnellmeier1(wavelength);
-	mRefractiveIndexA_PlanParam.set(tempRefIndexA);
-	modPLanG_LLT->setRefractiveIndexSide_A(mRefractiveIndexA_PlanParam.getValue());
+	real tempRefIndexA{};
 
+	if (mGlassA.getRealGlass())
+	{
+		mGlassA.setRefractiveIndex(mPlanGeometry_LLT->getRefractiveIndex_A());
+		tempRefIndexA = mGlassA.calcRefractiveIndexSnellmeier1(wavelength);
+		mRefractiveIndexA_PlanParam.set(tempRefIndexA);
+	}
+	else
+	{
+		tempRefIndexA = mGlassA.getRefractivIndex();
+		mRefractiveIndexA_PlanParam.set(tempRefIndexA);
+	}
+
+
+	modPLanG_LLT->setRefractiveIndexSide_A(mRefractiveIndexA_PlanParam.getValue());
 	mPlanGeometry_LLT = modPLanG_LLT;
 
 
@@ -523,8 +535,20 @@ void PlanElement::calcRefIndex_B_andSet(real wavelength)
 	std::shared_ptr<SurfaceIntersectionRay_LLT> modPLanG_LLT(new PlanGeometry_LLT);
 	modPLanG_LLT = mPlanGeometry_LLT;
 
-	real tempRefIndexB = mGlassB.calcRefractiveIndexSnellmeier1(wavelength);
-	mRefractiveIndexB_PlanParam.set(tempRefIndexB);
+	real tempRefIndexB{};
+
+	if (mGlassB.getRealGlass())
+	{
+		mGlassB.setRefractiveIndex(mPlanGeometry_LLT->getRefractiveIndex_B());
+		tempRefIndexB = mGlassB.calcRefractiveIndexSnellmeier1(wavelength);
+		mRefractiveIndexB_PlanParam.set(tempRefIndexB);
+	}
+	else
+	{
+		tempRefIndexB = mGlassB.getRefractivIndex();
+		mRefractiveIndexB_PlanParam.set(tempRefIndexB);
+	}
+
 	modPLanG_LLT->setRefractiveIndexSide_B(mRefractiveIndexB_PlanParam.getValue());
 
 	mPlanGeometry_LLT = modPLanG_LLT;

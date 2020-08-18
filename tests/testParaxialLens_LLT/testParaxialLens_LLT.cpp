@@ -13,36 +13,70 @@ testParaxialLens::testParaxialLens() {};
 testParaxialLens::~testParaxialLens() {};
 
 // check methodes of class ParaxialLens_LLT
-bool  testParaxialLens::checkMethodesParaxialLens_LLT()
+bool  testParaxialLens::checkMethodesParaxialLens_LLT_superFct()
+{
+	std::vector<bool> checkParaxialLens;
+
+	// E0
+	bool checkE0 = checkParaxialE0();
+	checkParaxialLens.push_back(checkE0);
+	// E1
+	bool checkE1 = checkParaxialE1();
+	checkParaxialLens.push_back(checkE1);
+	// E2
+	bool checkE2 = checkParaxialE2();
+	checkParaxialLens.push_back(checkE2);
+	// E3
+	bool checkE3 = checkParaxialE3();
+	checkParaxialLens.push_back(checkE3);
+	// E4 
+	bool checkE4 = checkParaxialE4();
+	checkParaxialLens.push_back(checkE4);
+	// E5
+	bool checkE5 = checkParaxialE5();
+	checkParaxialLens.push_back(checkE5);
+	// E6 
+	bool checkE6 = checkParaxialE6();
+	checkParaxialLens.push_back(checkE6);
+	// E7 
+	bool checkE7 = checkParaxialE7();
+	checkParaxialLens.push_back(checkE7);
+	// E8 
+	bool checkE8 = checkParaxialE8();
+	checkParaxialLens.push_back(checkE8);
+	// E9 
+	bool checkE9 = checkParaxialE9();
+	checkParaxialLens.push_back(checkE9);
+
+	bool returnCheck = Math::checkTrueOfVectorElements(checkParaxialLens);
+	return returnCheck;
+
+}
+
+// E0
+bool testParaxialLens::checkParaxialE0()
 {
 	std::vector<bool> checkParaxialLens;
 	Absorb_LLT absorb;
 	Light_LLT Light;
 
-	// *****************************************************************************************************************
-	// *****************************************************************************************************************
-
-	//example 1
-	// *****************************************************************************************************************
-
-	
 	// fill entrance pupil with many rays
-	FillApertureStop FillEntPupilRayE1(/*start point ray*/{ 0.0,0.0,0.0 }, /*semi height*/ 1.0, /*apex*/{ 0.0,0.0,5.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0,Light);
-	
+	FillApertureStop FillEntPupilRayE1(/*start point ray*/{ 0.0,0.0,0.0 }, /*semi height*/ 1.0, /*apex*/{ 0.0,0.0,5.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, Light);
 
-	ParaxialLens_LLT ParaxialLens_0(/*semi Height*/ 9.0, /*apex*/ { 0.0,0.0,10.0 }, /*direction*/ { 0.0,0.0,1.0 }, /*focallength*/ 10.0, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
+
+	ParaxialLens_LLT ParaxialLens_0(/*semi Height*/ 9.0, /*apex*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*focallength*/ 10.0, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
 	DeflectedRayParaxialLens_LLT deflectP0(ParaxialLens_0.getInfosForDefelction());
-	ParaxialLens_LLT ParaxialLens_1(/*semi Height*/ 9.0, /*apex*/ { 0.0,0.0,15.0 }, /*direction*/ { 0.0,0.0,1.0 }, /*focallength*/ -100.0, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
+	ParaxialLens_LLT ParaxialLens_1(/*semi Height*/ 9.0, /*apex*/{ 0.0,0.0,15.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*focallength*/ -100.0, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
 	DeflectedRayParaxialLens_LLT deflectP1(ParaxialLens_1.getInfosForDefelction());
-	ParaxialLens_LLT ParaxialLens_2(/*semi Height*/ 9.0, /*apex*/ {0.0,0.0,20.0 }, /*direction*/  { 0.0,0.0,1.0 }, /*focallength*/ 10.0, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
+	ParaxialLens_LLT ParaxialLens_2(/*semi Height*/ 9.0, /*apex*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*focallength*/ 10.0, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
 	DeflectedRayParaxialLens_LLT deflectP2(ParaxialLens_2.getInfosForDefelction());
-	ParaxialLens_LLT ParaxialLens_3(/*semi Height*/ 9.0, /*apex*/ {0.0,0.0,30.0 }, /*direction*/ { 0.0,0.0,1.0 }, /*focallength*/ 10.0, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
+	ParaxialLens_LLT ParaxialLens_3(/*semi Height*/ 9.0, /*apex*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*focallength*/ 10.0, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
 	DeflectedRayParaxialLens_LLT deflectP3(ParaxialLens_3.getInfosForDefelction());
-	PlanGeometry_LLT Plan4E1(/*semi Height*/ 9.0, /*apex*/ { 0.0,0.0,31.0 }, /*direction*/  { 0.0,0.0,1.0 }, 1.0, 1.0);
+	PlanGeometry_LLT Plan4E1(/*semi Height*/ 9.0, /*apex*/{ 0.0,0.0,31.0 }, /*direction*/{ 0.0,0.0,1.0 }, 1.0, 1.0);
 
-//	//________________
+	//	//________________
 
-	
+
 	OpticalSystem_LLT OptSysE1;
 	OptSysE1.fillVectorSurfaceAndInteractingData(0, &ParaxialLens_0, deflectP0.clone());
 	OptSysE1.fillVectorSurfaceAndInteractingData(1, &ParaxialLens_1, deflectP1.clone());
@@ -64,9 +98,16 @@ bool  testParaxialLens::checkMethodesParaxialLens_LLT()
 	bool checkGeoRadiusE5 = Math::compareTwoNumbers_decimals(GEO_E1, 0.01, 2);
 	checkParaxialLens.push_back(checkGeoRadiusE5);
 
-	// *****************************************************************************************************************
-	// *****************************************************************************************************************
+	bool output = Math::checkTrueOfVectorElements(checkParaxialLens);
+	return output;
 
+}
+// E1
+bool testParaxialLens::checkParaxialE1()
+{
+	std::vector<bool> checkParaxialLens;
+	Absorb_LLT absorb;
+	Light_LLT Light;
 
 	ParaxialLens_LLT ParaxialLens4(/*semi Height*/ 5.0, /*apex*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*focallength*/ 5.0, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
 	DeflectedRayParaxialLens_LLT deflect4(ParaxialLens4.getInfosForDefelction());
@@ -78,7 +119,7 @@ bool  testParaxialLens::checkMethodesParaxialLens_LLT()
 
 	// start on optical axis
 	Ray_LLT Ray41(/*origin*/{ 0.0, 0.0, 0.0 }, /*direction*/{ 0.0,1.0,5.0 }, 1.0);
-	Ray_LLT Ray42(/*origin*/{ 0.0, 0.0, 0.0 }, /*direction*/{ 0.0,0.0,5.0 },  1.0);
+	Ray_LLT Ray42(/*origin*/{ 0.0, 0.0, 0.0 }, /*direction*/{ 0.0,0.0,5.0 }, 1.0);
 	Ray_LLT Ray43(/*origin*/{ 0.0, 0.0, 0.0 }, /*direction*/{ 0.0,-1.0,5.0 }, 1.0);
 
 	// start on filed {0.0,2.0,0.0}
@@ -86,14 +127,14 @@ bool  testParaxialLens::checkMethodesParaxialLens_LLT()
 	Ray_LLT Ray45(/*origin*/{ 0.0, 1.0, 0.0 }, /*direction*/{ 0.0,-1.0,5.0 }, 1.0);
 	Ray_LLT Ray46(/*origin*/{ 0.0, 1.0, 0.0 }, /*direction*/{ 0.0,-2.0,5.0 }, 1.0);
 
-	
+
 	LightRayStruct LightRay41(Light, Ray41, 1);
 	LightRayStruct LightRay42(Light, Ray42, 1);
 	LightRayStruct LightRay43(Light, Ray43, 1);
 	LightRayStruct LightRay44(Light, Ray44, 1);
 	LightRayStruct LightRay45(Light, Ray45, 1);
 	LightRayStruct LightRay46(Light, Ray46, 1);
-	
+
 	// fill tracing vector
 	std::vector<LightRayStruct> vecLightRay1{ LightRay41, LightRay42, LightRay43, LightRay44, LightRay45, LightRay46 };
 
@@ -110,14 +151,23 @@ bool  testParaxialLens::checkMethodesParaxialLens_LLT()
 	// compare trace open with Zemax data
 	bool chech1 = Math::compareAllVectorElements(allInterPoints, refInterPoints, 2);
 	checkParaxialLens.push_back(chech1);
-	// *****************************************************************************************************************
-	// *****************************************************************************************************************
+
+	bool output = Math::checkTrueOfVectorElements(checkParaxialLens);
+	return output;
+}
+// E2
+bool testParaxialLens::checkParaxialE2()
+{
+	std::vector<bool> checkParaxialLens;
+	Absorb_LLT absorb;
+	Light_LLT Light;
+
 	ParaxialLens_LLT ParaxialLensTestCR1(/*semi Height*/ 7.5, /*apex*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*focallength*/ 5.0, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
 	DeflectedRayParaxialLens_LLT deflectCR1(ParaxialLensTestCR1.getInfosForDefelction());
 	PlanGeometry_LLT PlanCR1(/*semi Height*/5.0, /*apex*/{ 0.0,0.0,19.8 }, /*direction*/{ 0.0,0.0,1.0 }, 1.0, 1.0);
-	FillApertureStop FillApStopCR1(/*start point ray*/{ 0.0,0.0,0.0 }, /*semi height*/ 1.0, /*apex*/{ 0.0,0.0,5.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0,Light);
+	FillApertureStop FillApStopCR1(/*start point ray*/{ 0.0,0.0,0.0 }, /*semi height*/ 1.0, /*apex*/{ 0.0,0.0,5.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, Light);
 	FillApertureStop FillApStopFieldCR1(/*start point ray*/{ 0.0,1.0,0.0 }, /*semi height*/ 1.0, /*apex*/{ 0.0,0.0,5.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, Light);
-	
+
 	OpticalSystem_LLT OptSysCR1;
 	OptSysCR1.fillVectorSurfaceAndInteractingData(0, &ParaxialLensTestCR1, deflectCR1.clone());
 	OptSysCR1.fillVectorSurfaceAndInteractingData(1, &PlanCR1, absorb.clone());
@@ -138,9 +188,16 @@ bool  testParaxialLens::checkMethodesParaxialLens_LLT()
 	bool checkFieldRMS_CR1 = Math::compareTwoNumbers_decimals(rmsFild_CR1, RMS_Field_CR1_Z, 2);
 	checkParaxialLens.push_back(checkFieldRMS_CR1);
 
-	// *****************************************************************************************************************
-	// *****************************************************************************************************************
-	
+	bool output = Math::checkTrueOfVectorElements(checkParaxialLens);
+	return output;
+}
+// E3
+bool testParaxialLens::checkParaxialE3()
+{
+	std::vector<bool> checkParaxialLens;
+	Absorb_LLT absorb;
+	Light_LLT Light;
+
 	ParaxialLens_LLT ParaxialLens5(/*semi Height*/ 5.0, /*apex*/{ 1.0,1.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*focallength*/ 5.0, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
 	DeflectedRayParaxialLens_LLT deflect5(ParaxialLens5.getInfosForDefelction());
 	PlanGeometry_LLT Plan5(/*semi Height*/20.0, /*apex*/{ 0.0,0.0,20.5 }, /*direction*/{ 0.0,0.0,1.0 }, 1.0, 1.0);
@@ -148,7 +205,7 @@ bool  testParaxialLens::checkMethodesParaxialLens_LLT()
 	OpticalSystem_LLT OptSys5;
 	OptSys5.fillVectorSurfaceAndInteractingData(0, &ParaxialLens5, deflect5.clone());
 	OptSys5.fillVectorSurfaceAndInteractingData(1, &Plan5, absorb.clone());
-	
+
 	// start on optical axis
 	Ray_LLT Ray51(/*origin*/{ 0.0, 0.0, 0.0 }, /*direction*/{ 0.0,1.0,5.0 }, 1.0);
 	Ray_LLT Ray52(/*origin*/{ 0.0, 0.0, 0.0 }, /*direction*/{ 0.0,0.0,5.0 }, 1.0);
@@ -183,9 +240,18 @@ bool  testParaxialLens::checkMethodesParaxialLens_LLT()
 	// compare trace open with Zemax data
 	bool check2 = Math::compareAllVectorElements(allInterPoints5, refInterPoints5, 8);
 	checkParaxialLens.push_back(check2);
-	// *****************************************************************************************************************
-	// *****************************************************************************************************************
-	
+
+	bool output = Math::checkTrueOfVectorElements(checkParaxialLens);
+	return output;
+
+}
+// E4 
+bool testParaxialLens::checkParaxialE4()
+{
+	std::vector<bool> checkParaxialLens;
+	Absorb_LLT absorb;
+	Light_LLT Light;
+
 	ParaxialLens_LLT ParaxialLens6(/*semi Height*/ 5.0, /*apex*/{ -1.0,1.0,10.0 }, /*direction*/{ 0.0,-1.0,1.0 }, /*focallength*/ 5.0, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
 	DeflectedRayParaxialLens_LLT deflect6(ParaxialLens6.getInfosForDefelction());
 	PlanGeometry_LLT Plan6(/*semi Height*/20.0, /*apex*/{ 0.0,0.0,20.5 }, /*direction*/{ 0.0,0.0,1.0 }, 1.0, 1.0);
@@ -233,13 +299,16 @@ bool  testParaxialLens::checkMethodesParaxialLens_LLT()
 	bool check3 = Math::compareAllVectorElements(allInterPoints6, refInterPoints6, 8);
 	checkParaxialLens.push_back(check3);
 
-	// *****************************************************************************************************************
-	// *****************************************************************************************************************
-	
-	// *****************************************************************************************************************
+	bool output = Math::checkTrueOfVectorElements(checkParaxialLens);
+	return output;
+}
+// E5
+bool testParaxialLens::checkParaxialE5()
+{
+	std::vector<bool> checkParaxialLens;
+	Absorb_LLT absorb;
+	Light_LLT Light;
 
-	// negative focal length!!!
-	// *****************************************************************************************************************
 	ParaxialLens_LLT ParaxialLens9(/*semi Height*/ 5.0, /*apex*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*focallength*/ -5.0, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
 	DeflectedRayParaxialLens_LLT deflect9(ParaxialLens9.getInfosForDefelction());
 	PlanGeometry_LLT Plan9(/*semi Height*/20.0, /*apex*/{ 0.0,0.0,20.5 }, /*direction*/{ 0.0,0.0,1.0 }, 1.0, 1.0);
@@ -282,9 +351,17 @@ bool  testParaxialLens::checkMethodesParaxialLens_LLT()
 	// compare trace open with Zemax data
 	bool check6 = Math::compareAllVectorElements(allInterPoints9, refInterPoints9, 8);
 	checkParaxialLens.push_back(check6);
-	// *****************************************************************************************************************
 
-	// *****************************************************************************************************************
+	bool output = Math::checkTrueOfVectorElements(checkParaxialLens);
+	return output;
+}
+// E6 
+bool testParaxialLens::checkParaxialE6()
+{
+	std::vector<bool> checkParaxialLens;
+	Absorb_LLT absorb;
+	Light_LLT Light;
+
 	ParaxialLens_LLT ParaxialLens10(/*semi Height*/ 5.0, /*apex*/{ 1.0,-1.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*focallength*/ -5.0, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
 	DeflectedRayParaxialLens_LLT deflect10(ParaxialLens10.getInfosForDefelction());
 	PlanGeometry_LLT Plan10(/*semi Height*/20.0, /*apex*/{ 0.0,0.0,20.5 }, /*direction*/{ 0.0,0.0,1.0 }, 1.0, 1.0);
@@ -327,8 +404,17 @@ bool  testParaxialLens::checkMethodesParaxialLens_LLT()
 	// compare trace open with Zemax data
 	bool check7 = Math::compareAllVectorElements(allInterPoints10, refInterPoints10, 8);
 	checkParaxialLens.push_back(check7);
-	// *****************************************************************************************************************
-	// *****************************************************************************************************************
+
+	bool output = Math::checkTrueOfVectorElements(checkParaxialLens);
+	return output;
+}
+// E7 
+bool testParaxialLens::checkParaxialE7()
+{
+	std::vector<bool> checkParaxialLens;
+	Absorb_LLT absorb;
+	Light_LLT Light;
+
 	ParaxialLens_LLT ParaxialLens11(/*semi Height*/ 5.0, /*apex*/{ -1.0,1.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*focallength*/ -5.0, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
 	DeflectedRayParaxialLens_LLT deflect11(ParaxialLens11.getInfosForDefelction());
 	PlanGeometry_LLT Plan11(/*semi Height*/20.0, /*apex*/{ 0.0,0.0,20.5 }, /*direction*/{ 0.0,0.0,1.0 }, 1.0, 1.0);
@@ -350,7 +436,7 @@ bool  testParaxialLens::checkMethodesParaxialLens_LLT()
 	Light_LLT Light11;
 	LightRayStruct LightRay111(Light11, Ray111, 1);
 	LightRayStruct LightRay112(Light11, Ray112, 1);
-	LightRayStruct LightRay113(Light11, Ray113,  1);
+	LightRayStruct LightRay113(Light11, Ray113, 1);
 	LightRayStruct LightRay114(Light11, Ray114, 1);
 	LightRayStruct LightRay115(Light11, Ray115, 1);
 	LightRayStruct LightRay116(Light11, Ray116, 1);
@@ -372,8 +458,16 @@ bool  testParaxialLens::checkMethodesParaxialLens_LLT()
 	bool check8 = Math::compareAllVectorElements(allInterPoints11, refInterPoints11, 8);
 	checkParaxialLens.push_back(check8);
 
-	// positiv focal length!!! --> change refractive index
-	// *****************************************************************************************************************
+	bool output = Math::checkTrueOfVectorElements(checkParaxialLens);
+	return output;
+}
+// E8
+bool testParaxialLens::checkParaxialE8()
+{
+	std::vector<bool> checkParaxialLens;
+	Absorb_LLT absorb;
+	Light_LLT Light;
+
 	ParaxialLens_LLT ParaxialLens16(/*semi Height*/ 5.0, /*apex*/{ 0.0,0.0,8.5 }, /*direction*/{ 0.0,0.0,1.0 }, /*focallength*/ 5.0, /*refractiveSideA*/ 1.5, /*refractiveSideB*/ 1.5);
 	DeflectedRayParaxialLens_LLT deflect16(ParaxialLens16.getInfosForDefelction());
 	PlanGeometry_LLT Plan16(/*semi Height*/20.0, /*apex*/{ 0.0,0.0,20.5 }, /*direction*/{ 0.0,0.0,1.0 }, 1.5, 1.0);
@@ -416,10 +510,17 @@ bool  testParaxialLens::checkMethodesParaxialLens_LLT()
 	// compare trace open with Zemax data
 	bool check13 = Math::compareAllVectorElements(allInterPoints16, refInterPoints16, 8);
 	checkParaxialLens.push_back(check13);
-	// *****************************************************************************************************************
 
-	// positiv focal length!!! --> change refractive index
-	// *****************************************************************************************************************
+	bool output = Math::checkTrueOfVectorElements(checkParaxialLens);
+	return output;
+}
+// E9
+bool testParaxialLens::checkParaxialE9()
+{
+	std::vector<bool> checkParaxialLens;
+	Absorb_LLT absorb;
+	Light_LLT Light;
+
 	ParaxialLens_LLT ParaxialLens20(/*semi Height*/ 5.0, /*apex*/{ 0.0,0.0,8.5 }, /*direction*/{ 0.0,0.0,1.0 }, /*focallength*/ -5.0, /*refractiveSideA*/ 1.5, /*refractiveSideB*/ 1.5);
 	DeflectedRayParaxialLens_LLT deflect20(ParaxialLens20.getInfosForDefelction());
 	PlanGeometry_LLT Plan20(/*semi Height*/20.0, /*apex*/{ 0.0,0.0,20.5 }, /*direction*/{ 0.0,0.0,1.0 }, 1.5, 1.0);
@@ -461,14 +562,9 @@ bool  testParaxialLens::checkMethodesParaxialLens_LLT()
 
 	// compare trace open with Zemax data
 
-	bool check17 = Math::compareAllVectorElements(allInterPoints20, refInterPoints20, 8); 
+	bool check17 = Math::compareAllVectorElements(allInterPoints20, refInterPoints20, 8);
 	checkParaxialLens.push_back(check17);
-	// *****************************************************************************************************************
-	// *****************************************************************************************************************
-	
-	// *****************************************************************************************************************
-	bool output = Math::checkTrueOfVectorElements(checkParaxialLens);
-	// *****************************************************************************************************************
 
+	bool output = Math::checkTrueOfVectorElements(checkParaxialLens);
 	return output;
 }

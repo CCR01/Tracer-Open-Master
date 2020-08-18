@@ -100,7 +100,7 @@ public:
 
 	// calculate refractive index side A
 	void calcRefIndex_A_andSet(real wavelength);
-	// calculate rearactive index side B
+	// calculate refractive index side B
 	void calcRefIndex_B_andSet(real wavelength);
 	// calculate refractive indexes side A and B
 	void calRefIndex_A_and_B_andSet(real wavelength) override;

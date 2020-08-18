@@ -16,9 +16,9 @@ public:
 
 	void loadImportantValues();
 
-
+	//**
 	// super function
-	bool testDLS_superFct();
+	bool testDLS_superFct_optiRMS();
 	// E0
 	bool testE0_DLS_MD();
 	// E1
@@ -35,12 +35,29 @@ public:
 	bool testE6_DLS_MD(); // min thickness is 0.01
 	// E7
 	bool testE7_DLS_MD(); // aperture stop is not first surface
+	// E8
+	bool testE8_DLS_MD(); // rays from infinity
+	//**
 
 
-	//// test cardinal points super function
-	//bool testCardinalPointsSuperFct();
-	//// test EFL
-	//bool testTargetEFL_DLS_obj();
+	//**
+	// test cardinal points super function
+	bool testDLS_superFct_optiCarPoints();
+	// E0
+	bool testE0_carPoint();
+	// E1
+	bool testE1_carPoint();
+	//**
+
+
+	//**
+	// test opti rms and cardinal points
+	bool testDLS_superFct_optiRMSAndCarPoints();
+	// test rms and efl
+	bool testRMSandEFL_E0_DLS();
+	// test rms and efl, PMAG
+	bool testRMSandEFLandPMAG();
+	//**
 
 
 private:
@@ -62,9 +79,9 @@ private:
 	std::vector<Light_LLT> mLightVec{};
 
 	// light FdC
-	real mWave587{};
-	real mWave486{};
-	real mWave656{};
+	real mWave587d{};
+	real mWave486F{};
+	real mWave656C{};
 	std::vector<real> mWavelength_FdV_vec{};
 	Light_LLT mLight587{};
 	Light_LLT mLight486{};
@@ -72,15 +89,22 @@ private:
 	std::vector<Light_LLT> mLight_FdC_Vec{};
 
 
-	// field
+	// field obj
 	VectorStructR3 mField0{};
 	VectorStructR3 mField05{};
 	VectorStructR3 mField1{};
 	VectorStructR3 mField2{};
-	std::vector<VectorStructR3> mFields012_vec{};
-	std::vector<VectorStructR3> mField0_05_1_vec{};
+	std::vector<VectorStructR3> mFields012_obj_vec{};
+	std::vector<VectorStructR3> mField0_05_1_obj_vec{};
 
-
+	// field angle
+	real mField_X_0{};
+	real mField_Y_0{};
+	real mField_Y_1{};
+	real mField_Y_2{};
+	std::vector<real> mFields000_inf_vec{};
+	std::vector<real> mFields012_inf_vec{};
+	
 
 	real mDefaultTolerance{};
 

@@ -4,6 +4,7 @@
 #include "..\LowLevelTracing\OpticalSystem_LLT.h"
 #include "..\OpticalSystemElement\OpticalSystemElement.h"
 #include "..\OptimizeSystem\DampedLeastSquares.h"
+#include "..\OptimizeSystem\Genetic.h"
 
 enum class compareTOM_Zemax{comEqual, comBetter};
 
@@ -42,6 +43,7 @@ namespace oftenUse
 
 	// get rms valus of optical system HLT
 	std::vector<real> getRMSoptSysHLT(OpticalSystemElement optimizedSystemHLT, std::vector<VectorStructR3> fieldPoints, std::vector<real> wavelength_vec, unsigned int rings, unsigned int arms);
+	std::vector<real> getRMSoptSysHLT(OpticalSystemElement optimizedSystemHLT, std::vector<real> fieldAngle_X, std::vector<real> fieldAngle_Y, std::vector<real> wavelength_vec, unsigned int rings, unsigned int arms);
 
 	// check optical system LLT better / equal than zemax
 	bool checkOptSysLLT_Equal_Better_Zemax(OpticalSystem_LLT optSys_LLT, std::vector<VectorStructR3> fieldPoints, std::vector<real> rmsValZemax, real tolerance, compareTOM_Zemax compare);
@@ -77,6 +79,22 @@ namespace oftenUse
 	real sum(std::vector<real> vec);
 
 	bool checkDLS_resultRMS(DLS dls, real tolerance);
+	bool checkDLS_resultTargetCarPoints(DLS dls, real tolerance);
 
+	
+	std::vector<real> weightingRMS_fields(std::vector<real> rms_vec, std::vector<real> weightRMS_vec);
+
+	// resize weight wavelength vector
+	std::vector<real> resizeWeightWave_vec(std::vector<real> wave_vec, std::vector<unsigned int> weightWave_vec);
+
+	// check optimized target cardinal point
 	bool optimizedTargetBetterThanStartCardinalPoint(/*start value*/ real startValue, /*optimized value*/ real optVal, /*target val*/ real targetVal);
+
+	// get default values for DLS optimization
+	defaultParaDLS getDefaultPara_DLS(bool rayTracing);
+
+	
+	// get default values for genetic optimisation
+	defaultParaGenetic getDafulatPara_Genetic(bool rayTracing);
+
 }

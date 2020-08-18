@@ -258,7 +258,7 @@ bool oftenUse::checkOptSysELement_Equal_Better_Zemax(OpticalSystemElement optimi
 		{
 			tempWavelength = wavelength_vec[j];
 			optimizedSystemHLT.setRefractiveIndexAccordingToWavelength(tempWavelength);
-			//optimizedSystemHLT.convertSurfacesToLLT();
+			optimizedSystemHLT.convertSurfacesToLLT();
 			
 			tempRayAiming.setOpticalSystem_LLT(optimizedSystemHLT.getOptSys_LLT_buildSystem());
 			tempRayAiming.loadImportantInfosForRayAiming();
@@ -720,7 +720,84 @@ std::vector<real> oftenUse::getRMSoptSysHLT(OpticalSystemElement optimizedSystem
 			tempSeqTrace.setTraceToSurface(posLastSurface);
 			tempSeqTrace.seqRayTracingWithVectorOfLightRays(tempLightRay_vec);
 
-			tempInterPoints = tempSeqTrace.getAllInterPointsAtSurf_i_notFiltered(posLastSurface);
+			tempInterPoints = tempSeqTrace.getAllInterPointsAtSurface_i_filtered(posLastSurface);
+
+			saveAllInterPoints.insert(saveAllInterPoints.end(), tempInterPoints.begin(), tempInterPoints.end());
+
+			tempSeqTrace.clearAllTracedRays();
+
+		}
+
+
+		// calc rms spot
+		Spot tempSpot(saveAllInterPoints, saveAllInterPoints[0]);
+		allRMS[i] = tempSpot.getRMS_µm();
+
+		saveAllInterPoints.clear();
+	}
+
+	return allRMS;
+}
+
+std::vector<real> oftenUse::getRMSoptSysHLT(OpticalSystemElement optimizedSystemHLT, std::vector<real> fieldAngle_X, std::vector<real> fieldAngle_Y, std::vector<real> wavelength_vec, unsigned int rings, unsigned int arms)
+{
+	real defaultRefractivIndex = 1.0;
+	std::vector<real> allRMS{};
+	unsigned int posLastSurface = optimizedSystemHLT.getPosAndElement().size() - 1;
+
+	unsigned int numAngles_X = fieldAngle_X.size();
+
+	// check size fields X and Y
+	if (fieldAngle_X.size() != fieldAngle_Y.size())
+	{
+		return allRMS;
+		std::cout << "number angle X is not number angles Y --> ERROR" << std::endl;
+	}
+
+	unsigned int numWavelengths = wavelength_vec.size();
+
+	std::vector<Light_LLT> lightVec = oftenUse::buildDefaultLight_Vec(wavelength_vec);
+
+
+	SequentialRayTracing tempSeqTrace;
+	real tempAngle_X{};
+	real tempAngle_Y{};
+	real tempWavelength;
+
+
+	RayAiming tempRayAiming;
+	FillApertureStop FillApertureStop(optimizedSystemHLT.getOptSys_LLT_buildSystem(), rings, arms);
+	std::vector<LightRayStruct> tempLightRay_vec{};
+
+	std::vector<VectorStructR3> tempInterPoints{};
+	std::vector<VectorStructR3> saveAllInterPoints{};
+
+	real tempRMS;
+
+	allRMS.resize(numAngles_X);
+
+	for (unsigned int i = 0; i < numAngles_X; ++i)
+	{
+		tempAngle_X = fieldAngle_X[i];
+		tempAngle_Y = fieldAngle_Y[i];
+
+
+		for (unsigned int j = 0; j < numWavelengths; ++j)
+		{
+			tempWavelength = wavelength_vec[j];
+			optimizedSystemHLT.setRefractiveIndexAccordingToWavelength(tempWavelength);
+			//optimizedSystemHLT.convertSurfacesToLLT();
+
+			tempRayAiming.setOpticalSystem_LLT(optimizedSystemHLT.getOptSys_LLT_buildSystem());
+			tempRayAiming.loadImportantInfosForRayAiming();
+
+			tempLightRay_vec = tempRayAiming.rayAimingMany_inf(FillApertureStop.getPointsInAS(), tempAngle_X, tempAngle_Y, lightVec[0], defaultRefractivIndex);
+
+			tempSeqTrace.setOpticalSystem(optimizedSystemHLT);
+			tempSeqTrace.setTraceToSurface(posLastSurface);
+			tempSeqTrace.seqRayTracingWithVectorOfLightRays(tempLightRay_vec);
+
+			tempInterPoints = tempSeqTrace.getAllInterPointsAtSurface_i_filtered(posLastSurface);
 
 			saveAllInterPoints.insert(saveAllInterPoints.end(), tempInterPoints.begin(), tempInterPoints.end());
 
@@ -947,24 +1024,278 @@ real oftenUse::sum(std::vector<real> vec)
 bool oftenUse::checkDLS_resultRMS(DLS dls, real tolerance)
 {
 	OpticalSystemElement optimizedOptSysHLT = dls.getOptimizedSystem_HLT();
-	std::vector<VectorStructR3> field_vec = dls.getField_vec();
-	std::vector<real> wave_vec = dls.getWavelength_vev();
+
+	std::vector<real> weight_fields = dls.getWeigthFields();
+	std::vector<unsigned int> weight_wavelength = dls.getWeightWavelength();
+
+	objectPoint_inf_obj inf_obj = dls.getInfOrObj();
 	real bestMeritValueDLS = dls.getBestMeritValue();
+	real sumMeritRMSoptimizedSystem = 0.0;
+	real sumMeritTargetCarPoints = 0.0;
+	real sumTotalMerit_RMS_TargetCarPoints = 0.0;
 	unsigned int rings = dls.getRings();
 	unsigned int arms = dls.getArms();
+	std::vector<real> wave_vec = dls.getWavelength_vev();
+	std::vector<real> wave_vec_resize = resizeWeightWave_vec(wave_vec, weight_wavelength);
 
-	std::vector<real> allRMS_vec = getRMSoptSysHLT(optimizedOptSysHLT, field_vec, wave_vec, rings, arms);
-	real sumRMSoptimizedSystem = sum(allRMS_vec);
+	if (dls.getCalcRMSusingRayTracing())
+	{
+		if (inf_obj == objectPoint_inf_obj::obj)
+		{
+			std::vector<VectorStructR3> field_vec = dls.getField_vec();
 
-	bool returnCheck = std::abs(bestMeritValueDLS - sumRMSoptimizedSystem) < tolerance;
+			std::vector<real> allRMS_vec = getRMSoptSysHLT(optimizedOptSysHLT, field_vec, wave_vec_resize, rings, arms);
+			allRMS_vec = weightingRMS_fields(allRMS_vec, weight_fields);
+
+			sumMeritRMSoptimizedSystem = sum(allRMS_vec);
+		}
+
+		else if (inf_obj == objectPoint_inf_obj::inf)
+		{
+			std::vector<real> fieldAngle_X = dls.getFieldAngles_X();
+			std::vector<real> fieldAngle_Y = dls.getFieldAngle_Y();
+
+			std::vector<real> allRMS_vec = getRMSoptSysHLT(optimizedOptSysHLT, fieldAngle_X, fieldAngle_Y, wave_vec_resize, rings, arms);
+
+			allRMS_vec = weightingRMS_fields(allRMS_vec, weight_fields);
+
+			sumMeritRMSoptimizedSystem = sum(allRMS_vec);
+		}
+	}
+	
+	if (dls.getTargetCardinalPoints().getIsOneTargetCardinalPoint())
+	{
+		optimizedOptSysHLT.setRefractiveIndexAccordingToWavelength(dls.getWavelength_vev()[0]);
+
+		targetCardinalPointsStruct targetCarPointsDLS;
+		targetCarPointsDLS = dls.getTargetCardinalPoints();
+		std::vector<real> abberationFct;
+		abberationFct.resize(dls.getTargetCardinalPoints().getNumerOfTargets());
+		targetCarPointsDLS.calcualteMeritVal_targetCardinalPoints_forDLS(optimizedOptSysHLT.getOptSys_LLT_buildSystem(), inf_obj, abberationFct);
+		sumMeritTargetCarPoints = sum(abberationFct);
+	}
+
+	sumTotalMerit_RMS_TargetCarPoints = sumMeritRMSoptimizedSystem + sumMeritTargetCarPoints;
+	bool returnCheck = std::abs(bestMeritValueDLS - sumTotalMerit_RMS_TargetCarPoints) < tolerance;
 
 	return returnCheck;
 }
+
+
 
 bool oftenUse::optimizedTargetBetterThanStartCardinalPoint(/*start value*/ real startValue, /*optimized value*/ real optVal, /*target val*/ real targetVal)
 {
 	real startValVsTargetVal = std::abs(startValue - targetVal);
 	real optValVsTargetVal = std::abs(optVal - targetVal);
 
-	return optValVsTargetVal < startValVsTargetVal;
+	return optValVsTargetVal <= startValVsTargetVal;
+}
+
+std::vector<real> oftenUse::weightingRMS_fields(std::vector<real> rms_vec, std::vector<real> weightRMS_vec)
+{
+	std::vector<real> returnWeighedRMS_fields;
+
+	unsigned int sizeRMS_fields = rms_vec.size();
+	unsigned int sizeWeight = weightRMS_vec.size();
+
+	if (sizeRMS_fields != sizeWeight)
+	{
+		std::cout << "ATTENTION: sizeRMS_fields is not sizeWeight" << std::endl;
+	}
+	
+	returnWeighedRMS_fields.resize(sizeRMS_fields);
+
+	for (unsigned int i = 0; i < sizeRMS_fields; ++i)
+	{
+		returnWeighedRMS_fields[i] = rms_vec[i] * weightRMS_vec[i];
+ 	}
+
+	return returnWeighedRMS_fields;
+}
+
+std::vector<real> oftenUse::resizeWeightWave_vec(std::vector<real> wave_vec, std::vector<unsigned int> weightWave_vec)
+{
+	std::vector<real> returnWeightWave_vec{};
+	unsigned int tempWeight{};
+	real tempWavelength{};
+
+	unsigned int size_wave_vec = wave_vec.size();
+	unsigned int size_weightWave_vec = weightWave_vec.size();
+
+	if (size_wave_vec != size_weightWave_vec)
+	{
+		std::cout << "ATTENTION: size_wave_vec is not size_weightWave_vec" << std::endl;
+	}
+
+	for (unsigned int i = 0; i < size_wave_vec; ++i)
+	{
+		tempWeight = weightWave_vec[i];
+		tempWavelength = wave_vec[i];
+
+		if (tempWeight == 1)
+		{
+			returnWeightWave_vec.push_back(tempWavelength);
+		}
+
+		else if (tempWeight == 2)
+		{
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+		}
+
+		else if (tempWeight == 3)
+		{
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+		}
+
+		else if (tempWeight == 4)
+		{
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+		}
+
+		else if (tempWeight == 5)
+		{
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+		}
+
+		else if (tempWeight == 6)
+		{
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+		}
+
+		else if (tempWeight == 7)
+		{
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+		}
+
+		else if (tempWeight == 8)
+		{
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+		}
+
+		else if (tempWeight == 9)
+		{
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+		}
+
+		else if (tempWeight == 10)
+		{
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+			returnWeightWave_vec.push_back(tempWavelength);
+		}
+
+		else
+		{
+			std::cout << "ATTENTION: the returnWeightWave_vec could not be initilized" << std::endl;
+		}
+	}
+
+	return returnWeightWave_vec;
+}
+
+// get default values for DLS optimization
+defaultParaDLS oftenUse::getDefaultPara_DLS(bool rayTracing)
+{
+	
+	defaultParaDLS defaultParamDLS;
+	defaultParamDLS.setDampingFactor(5.0);
+	defaultParamDLS.setFactorRadiusDeviation(0.000001);
+	defaultParamDLS.setFactorPositionDeviation(0.000001);
+	defaultParamDLS.setStartRefractivIndex(1.0);
+	defaultParamDLS.setMaxWorstCounter(300);
+	defaultParamDLS.setImproveMeritStopDiff(0.00000001);
+	defaultParamDLS.setMaxInterations(500);
+	defaultParamDLS.setFlipOrientationRadius(1000.0);
+	defaultParamDLS.setMaxBorderViolations(5);
+	defaultParamDLS.setMaxDeltaParameter(25.0);
+	defaultParamDLS.setMinDeltaParameter(0.00000001);
+	defaultParamDLS.setFactorGettingBetter(0.4);
+	defaultParamDLS.setFactorGettingWorst(1.9);
+	defaultParamDLS.setToleranceWithoutMin(0.0);
+	defaultParamDLS.setToleranceWithoutMax(0.0);
+	defaultParamDLS.set_Min_DamNumBefSwitchFactors(0.00001);
+	defaultParamDLS.set_Max_DamNumBefSwitchFactors(9999.0);
+	
+	if (rayTracing)
+	{
+		defaultParamDLS.turn_ON_calcRMSusingRayTracing();
+	}
+
+
+	else
+	{
+		defaultParamDLS.turn_OFF_caclRMSusingRayTracing();
+	}
+	
+	return defaultParamDLS;
+	
+}
+
+// get default values for genetic optimisation
+defaultParaGenetic oftenUse::getDafulatPara_Genetic(bool rayTracing)
+{
+	defaultParaGenetic defaultParaGenetic_rayTracing;
+	defaultParaGenetic_rayTracing.setStartRefIndex(1.0);
+	defaultParaGenetic_rayTracing.setToleranceWithoutMIN(-0.5);
+	defaultParaGenetic_rayTracing.setToleranceWithoutMAX(0.5);
+	defaultParaGenetic_rayTracing.setMaxInterationGenetic(3);
+	defaultParaGenetic_rayTracing.setDeltaMeritValueStop(0.1);
+	defaultParaGenetic_rayTracing.setToleranceForEvaluation(0.001);
+	defaultParaGenetic_rayTracing.setChooseValueMode(normalDistributionDefaultMode);
+
+	if (rayTracing)
+	{
+		defaultParaGenetic_rayTracing.set_ON_CheckRMS_rayTracing();
+	}
+	
+	else
+	{
+		defaultParaGenetic_rayTracing.set_OFF_CheckRMS_rayTracing();
+	}
+
+	return defaultParaGenetic_rayTracing;
+
 }

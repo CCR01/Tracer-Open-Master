@@ -499,10 +499,21 @@ void ApertureStopElement::calRefIndex_A_and_B_andSet(real wavelenth)
 {
 	std::shared_ptr<SurfaceIntersectionRay_LLT> modAperStop_LLT(new ApertureStop_LLT);
 	modAperStop_LLT = mAperture_LLT;
+	real temRefIndex{};
 
-	real temRefIndex = mGlass.calcRefractiveIndexSnellmeier1(wavelenth);
-	mRrefractiveIndex.set(temRefIndex);
-	modAperStop_LLT->setRefractiveIndexSide_A(mRrefractiveIndex.getValue());
+	if (mGlass.getRealGlass())
+	{
+		mGlass.setRefractiveIndex(mAperture_LLT->getRefractiveIndex_A());
+		temRefIndex = mGlass.calcRefractiveIndexSnellmeier1(wavelenth);
+		mRrefractiveIndex.set(temRefIndex);
+	}
+	else
+	{
+		temRefIndex = mGlass.getRefractivIndex();
+		mRrefractiveIndex.set(temRefIndex);
+	}
+
+		modAperStop_LLT->setRefractiveIndexSide_A(mRrefractiveIndex.getValue());
 
 	mAperture_LLT = modAperStop_LLT;
 

@@ -90,7 +90,7 @@ std::vector<LightRayStruct> DeflectedRayParaxialLens_LLT::calcInteraction(const 
 
 
 				// calculate focal plan
-				VectorStructR3 FocalPoint = mAddInfos.getPointofIntersectSurface() + mAddInfos.getFocalLengthOfIntersecSurface_Side_A() * mAddInfos.getDirectionOfIntersecSurfaceUNIT();
+				VectorStructR3 FocalPoint = mAddInfos.getPointofIntersectSurface() + mAddInfos.getFocalLengthOfIntersecSurface_Side_B() * mAddInfos.getDirectionOfIntersecSurfaceUNIT();
 				// flat in coordinate form: E:Nx * X+ Ny * Y+ Nz * Z= d 
 				double d = FocalPoint.getX() * mAddInfos.getDirectionOfIntersecSurfaceUNIT().getX() + FocalPoint.getY() * mAddInfos.getDirectionOfIntersecSurfaceUNIT().getY() + FocalPoint.getZ() * mAddInfos.getDirectionOfIntersecSurfaceUNIT().getZ();
 				// calculate Intersection point ray and plan in focal point

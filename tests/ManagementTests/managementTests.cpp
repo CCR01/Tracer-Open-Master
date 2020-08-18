@@ -14,6 +14,8 @@
 #include "..\testRayAimingSuperFct\testRayAiming_multiThreads_12.h"
 #include "..\TestGenetic\TestGenetic.h"
 #include "..\testDLS\testDLS.h"
+#include "..\testDLS_multiThreads_12\testDLS_multiThreads_12.h"
+#include "..\testOptimizeSystemSuperFct_GeneticAndDLS\testOptimizeSystemSuperFct_GeneticAndDLS.h"
 
 ManagementTests::ManagementTests() {};
 ManagementTests::ManagementTests(std::vector<testWhat> testWhat_vec) :
@@ -41,10 +43,10 @@ bool ManagementTests::testSuperFct()
 	if (testWhatInTestWhatVec(testWhat::tAspherical_LLT) || testAll)
 	{
 		testAsphericalSurface_LLT testClassAspericalSurface_LLT;
-		bool checkAsphericalSurface_LLT = testClassAspericalSurface_LLT.checkAsphericalSurface_LLT();
+		bool checkAsphericalSurface_LLT = testClassAspericalSurface_LLT.checkAsphericalSurfaceSuperFct_LLT();
 		workTheSystem_test.push_back(checkAsphericalSurface_LLT);
 	}
-
+	
 	// test namespace math
 	if (testWhatInTestWhatVec(testWhat::tMath) || testAll)
 	{
@@ -52,7 +54,7 @@ bool ManagementTests::testSuperFct()
 		bool Math = testNamespaceMath.checkMethodesMath();
 		workTheSystem_test.push_back(Math);
 	}
-
+	
 	// test fill aperture stop
 	if (testWhatInTestWhatVec(testWhat::tFillAS) || testAll)
 	{
@@ -60,7 +62,7 @@ bool ManagementTests::testSuperFct()
 		bool checkFillAS = testClassFillAS.chekMethodesFillAS();
 		workTheSystem_test.push_back(checkFillAS);
 	}
-
+	
 	// test aperture stop
 	if (testWhatInTestWhatVec(testWhat::tApertureStop_LLT) || testAll)
 	{
@@ -68,7 +70,7 @@ bool ManagementTests::testSuperFct()
 		bool checkAperStop = testClassApertureStop.checkApertureStop();
 		workTheSystem_test.push_back(checkAperStop);
 	}
-
+	
 	///test lens calalog from edmund optics
 	if (testWhatInTestWhatVec(testWhat::tLensCatalogEO) || testAll)
 	{
@@ -94,7 +96,7 @@ bool ManagementTests::testSuperFct()
 		bool checkSphericalLens = testClassSphSurface_LLT.checkSphericalSurface_LLT();
 		workTheSystem_test.push_back(checkSphericalLens);
 	}
-
+	
 	// test glasses
 	if (testWhatInTestWhatVec(testWhat::tGlasses) || testAll)
 	{
@@ -102,15 +104,15 @@ bool ManagementTests::testSuperFct()
 		bool checkGlasses = testClassGlasses.checkGlasses();
 		workTheSystem_test.push_back(checkGlasses);
 	}
-
+	
 	// test paraxial lens LLT
 	if (testWhatInTestWhatVec(testWhat::tParaxialLens_LLT) || testAll)
 	{
-	testParaxialLens testClassParaxialLens;
-	bool checkParaxialLens = testClassParaxialLens.checkMethodesParaxialLens_LLT();
-	workTheSystem_test.push_back(checkParaxialLens);
+		testParaxialLens testClassParaxialLens;
+		bool checkParaxialLens = testClassParaxialLens.checkMethodesParaxialLens_LLT_superFct();
+		workTheSystem_test.push_back(checkParaxialLens);
 	}
-
+	
 	// test plan geometry LLT
 	if (testWhatInTestWhatVec(testWhat::tParaxialLens_LLT) || testAll)
 	{
@@ -118,29 +120,29 @@ bool ManagementTests::testSuperFct()
 		bool checkPlanSurface = testClassPlanSurface.checkMethodesPlanSurface();
 		workTheSystem_test.push_back(checkPlanSurface);
 	}
-
+	
 	if (testWhatInTestWhatVec(testWhat::tCardinalPoints) || testAll)
 	{
 		testCardinalPoints testCarPoints;
 		bool checkCardinalPoints = testCarPoints.superFuncTestCalcCardinalPoints();
 		workTheSystem_test.push_back(checkCardinalPoints);
 	}
-
+	
 	if (testWhatInTestWhatVec(testWhat::tRayAiming_obj) || testAll)
 	{
 		testRayAiming testRayAim_obj;
 		bool checkRayAiming_obj = testRayAim_obj.checkRayAimingSuperFct_obj();
 		workTheSystem_test.push_back(checkRayAiming_obj);
 	}
-
+	
 	if (testWhatInTestWhatVec(testWhat::tRayAiming_inf) || testAll)
 	{
 		testRayAiming testRayAim_inf;
 		bool checkRayAiming_inf = testRayAim_inf.checkRayAimingSuperFct_inf();
 		workTheSystem_test.push_back(checkRayAiming_inf);
 	}
-
-
+	
+	
 	if (testWhatInTestWhatVec(testWhat::tRayAiming_12Cores) || testAll)
 	{
 		testRayAiming_multiThreads_12 testRayAiming_12;
@@ -175,9 +177,52 @@ bool ManagementTests::testSuperFct()
 	if (testWhatInTestWhatVec(testWhat::tDLS_optiRMS) || testAll)
 	{
 		testDLS testDLS_optiRMS;
-		bool checkDLS_optiRMS = testDLS_optiRMS.testDLS_superFct();
+		bool checkDLS_optiRMS = testDLS_optiRMS.testDLS_superFct_optiRMS();
 		workTheSystem_test.push_back(checkDLS_optiRMS);
 	}
+
+	// DLS opt cardinal points
+	if (testWhatInTestWhatVec(testWhat::tDLS_optiCarPoints) || testAll)
+	{
+		testDLS testDLS_optiCarPoints;
+		bool checkDLS_optiCarPoints = testDLS_optiCarPoints.testDLS_superFct_optiCarPoints();
+		workTheSystem_test.push_back(checkDLS_optiCarPoints);
+	}
+
+	// DLS opt rms and cardinal points
+	if (testWhatInTestWhatVec(testWhat::tDLS_optiRMS_carPoints) || testAll)
+	{
+		testDLS testDLS_optiRMS_CarPoints;
+		bool checkDLS_optiRMS_CarPoints = testDLS_optiRMS_CarPoints.testDLS_superFct_optiRMSAndCarPoints();
+		workTheSystem_test.push_back(checkDLS_optiRMS_CarPoints);
+	}
+
+	// optimize DLS parallel 12 threads
+	if (testWhatInTestWhatVec(testWhat::tDLS_Parallel) || testAll)
+	{
+		testDLS_multiThreads_12 testDLS_multi_12;
+		bool checkDLS_multi_12 = testDLS_multi_12.testSuperFunction();
+		workTheSystem_test.push_back(checkDLS_multi_12);
+	}
+
+	// optimize RMS including Genetic and DLS multicore
+	if (testWhatInTestWhatVec(testWhat::tOptiIncluding_GeneticAndDLS_Parallel_RMS) || testAll)
+	{
+		testOptimizeSystemSuperFct_GeneticAndDLS testOpti_GeneticAndDLS_rms;
+		bool checkOpti_GeneticAndDLS_rms = testOpti_GeneticAndDLS_rms.testOptimizeSys_SuperFunction_GeneticDLS_rms();
+		workTheSystem_test.push_back(checkOpti_GeneticAndDLS_rms);
+
+	}
+
+	// optimize Cardinal points including Genetic and DLS multicore
+	if (testWhatInTestWhatVec(testWhat::tOptiIncluding_GeneticAndDLS_Parallel_CardinalPoints) || testAll)
+	{
+		testOptimizeSystemSuperFct_GeneticAndDLS testOpti_GeneticAndDLS_carPoints;
+		bool checkOpti_GeneticAndDLS_carPoints = testOpti_GeneticAndDLS_carPoints.testOptimizeSystem_SuperFunction_GeneticDLS_carPoints();
+		workTheSystem_test.push_back(checkOpti_GeneticAndDLS_carPoints);
+
+	}
+	
 
 
 

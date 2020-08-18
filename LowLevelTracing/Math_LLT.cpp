@@ -73,6 +73,22 @@ real Math::sumAllVectorValues(std::vector<real> vec)
 	return sum_of_elems;
 }
 
+real Math::sumAllVectorValues_abs(std::vector<real> vec)
+{
+	unsigned int size = vec.size();
+	real temp_abs{};
+	real sum_abs = 0.0;
+
+	for (unsigned int i = 0; i < size; ++i)
+	{
+		temp_abs = std::abs(vec[i]);
+		sum_abs = sum_abs + temp_abs;
+	}
+
+	return sum_abs;
+}
+
+
 // multiply two system matrixes
 std::vector<std::vector<real>> Math::multiplyTwoSystemMatrixes2x2(std::vector<std::vector<real>> m1, std::vector<std::vector<real>> m2)
 {

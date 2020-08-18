@@ -70,14 +70,19 @@ public:
 	targetCardinalPointsStruct();
 	~targetCardinalPointsStruct();
 	
-	void setCardinalPointsNOtarget();
+	void setCardinalPoints_NO_target();
 	bool isTargetInVec(targetOptimization target);
 	unsigned int getNumerOfTargets();
 	void setAllWeightsToOne();
 	bool getIsOneTargetCardinalPoint();
+	void setIsOneTargetCardinalPoint(bool isOneTarget);
+
+	void setTargetOpti_vec(std::vector<targetOptimization> targetOpti_vec);
+	std::vector<targetOptimization> getTargetOpti_vec();
 
 	// calculate merit values according to cardinal points
-	real calculateMeritVal_targetCardianlPoints(const OpticalSystem_LLT& optSys_LLT, objectPoint_inf_obj inf_obj);
+	real calculateMeritVal_targetCardianlPoints_forGenetic(const OpticalSystem_LLT& optSys_LLT, objectPoint_inf_obj inf_obj);
+	void calcualteMeritVal_targetCardinalPoints_forDLS(const OpticalSystem_LLT& optSys_LLT, objectPoint_inf_obj inf_obj, std::vector<real>& aberrationFct);
 
 	// *** set and get target cardinal points *** //
 	// target EFL
@@ -133,7 +138,7 @@ public:
 	real getTargetNA_imaSpace();
 	bool isNA_imaSpace();
 	// working f number
-	void setWFNO(real targetWFNO);
+	void setTargetWFNO(real targetWFNO);
 	real getTargetWFNO();
 	bool isTargetWFNO();
 

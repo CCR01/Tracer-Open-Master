@@ -1,7 +1,12 @@
 #pragma once
 #include <vector>
 
-enum class testWhat{tALL, tNothing, tMath, tFillAS, tAspherical_LLT, tApertureStop_LLT, tLensCatalogEO, tSphericalSurface_LLT, tGlasses, tParaxialLens_LLT, tPlanGeo_LLT, tCardinalPoints, tRayAiming_obj, tRayAiming_inf, tRayAiming_12Cores, tGenetic_opti, tGenetic_modes, tGenetic_cardinalPoints, tDLS_optiRMS};
+enum class testWhat {
+	tALL, tNothing, tMath, tFillAS, tAspherical_LLT, tApertureStop_LLT, tLensCatalogEO, tSphericalSurface_LLT, tGlasses,
+	tParaxialLens_LLT, tPlanGeo_LLT, tCardinalPoints, tRayAiming_obj, tRayAiming_inf, tRayAiming_12Cores, tGenetic_opti, tGenetic_modes,
+	tGenetic_cardinalPoints, tDLS_optiRMS, tDLS_optiCarPoints, tDLS_optiRMS_carPoints, tDLS_Parallel, tOptiIncluding_GeneticAndDLS_Parallel_RMS,
+	tOptiIncluding_GeneticAndDLS_Parallel_CardinalPoints
+};
 
 class ManagementTests
 {

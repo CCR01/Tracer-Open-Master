@@ -9,7 +9,7 @@ class CardinalPoints
 public:
 	CardinalPoints();
 	CardinalPoints(OpticalSystem_LLT OptSys, objectPoint_inf_obj objPoint_inf_obj);
-	CardinalPoints(OpticalSystemElement optSysEle, real primWavelenght, objectPoint_inf_obj objPoint_inf_obj);
+	CardinalPoints(OpticalSystemElement optSysEle, real primvelenght, objectPoint_inf_obj objPoint_inf_obj);
 	~CardinalPoints();
 
 	void loadAndResizeParameters();

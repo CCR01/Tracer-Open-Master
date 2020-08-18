@@ -20,40 +20,50 @@ public:
 	~testOptimizeSystemSuperFct_GeneticAndDLS();
 
 	// super function
-	bool testOptimizeSystemSysSupFct_GeneticDLS();
+	bool testOptimizeSys_SuperFunction_GeneticDLS_rms();
+	bool testOptimizeSystem_SuperFunction_GeneticDLS_carPoints();
 
-	//E0
-	bool checkE0_optSysSupFct_GeneticAndDLS();
+	//E0 _rms
+	bool checkE0_GeneticAndDLS_rms();
 
-	//E1
-	bool checkE1_optSysSupFct_GeneticAndDLS();
+	//E1 _rms
+	bool checkE1_GeneticAndDLS_rms();
 
-	//E2
-	bool checkE2_optSysSupFct_GeneticAndDLS();
+	//E2 _rms
+	bool checkE2_GeneticAndDLS_rms();
 
-	//E3
-	bool checkE3_optSysSupFct_GeneticAndDLS();
+	//E3 _rms
+	bool checkE3_GeneticAndDLS_rms();
 
-	//E4
-	bool checkE4_optSysSupFct_GeneticAndDLS();
+	//E4 _rms
+	bool checkE4_GeneticAndDLS_rms();
 
-	//E5
-	bool checkE5_optSysSupFct_GeneticAndDLS();
+	//E5 _rms
+	bool checkE5_GeneticAndDLS_rms();
 
-	//E6
-	bool checkE6_optSysSupFct_GeneticAndDLS();
+	//E6 _rms
+	bool checkE6_GeneticAndDLS_rms();
 
-	//E7
-	bool checkE7_optSysSupFct_GeneticAndDLS();
+	//E7 _rms
+	bool checkE7_GeneticAndDLS_rms();
 
-	//E8
-	bool checkE8_optSysSupFct_GeneticAndDLS();
+	//E8 _rms
+	bool checkE8_GeneticAndDLS_rms();
+	 
+	//E9 _rms
+	bool checkE9_GeneticAndDLS_rms();
 
-	//E9
-	bool checkE9_optSysSupFct_GeneticAndDLS();
+	//E10 _rms
+	bool checkE10_GeneticAndDLS_rms();
 
-	//E10
-	bool checkE10_optSysSupFct_GeneticAndDLS();
+	// E11 _rms
+	bool checkE11_GeneticAndDLS_rms();
+
+
+
+	//E0 _cardinalPoints
+	bool checkE0_GeneticAndDLS_cardinalPoints();
+
 
 
 	// load important stuff
@@ -65,17 +75,17 @@ private:
 	real mTolerance{};
 	glass glasses{};
 
-	RefractedRay_LLT refrac{};
-	Absorb_LLT absorb{};
-	DoNothingInteraction_LLT doNothing{};
+	RefractedRay_LLT mRefrac{};
+	Absorb_LLT mAbsorb{};
+	DoNothingInteraction_LLT mDoNothing{};
 
 	// wave
 	real mWave587{};
 	real mWave486{};
 	real mWave656{};
-	std::vector<real> mWavelength_vec{};
+	std::vector<real> mWavelength_FdC_vec{};
 
-	// field
+	// field obj
 	VectorStructR3 mField0{};
 	VectorStructR3 mField1{};
 	VectorStructR3 mField2{};
@@ -84,8 +94,21 @@ private:
 	std::vector<VectorStructR3> mFields_vec012{};
 	std::vector<VectorStructR3> mFields_vec024{};
 
-	defaultParaGenetic mDefaultParaGenetic{};
-	defaultParaDLS mDefaultParamDLS{};
+	// field angle inf
+	real mAngleX_0{};
+	real mAngleY_0{};
+	real mAngleY_1{};
+	real mAngleY_2{};
+	std::vector<real> mAngleX_000_vec{};
+	std::vector<real> mAngleY_012_vec{};
+
+	targetCardinalPointsStruct m_NO_targetCarPoint{};
+
+	defaultParaGenetic mDefaultParaGenetic_rayTracing_ON{};
+	defaultParaDLS mDefaultParamDLS_rayTracing_ON{};
+
+	defaultParaGenetic mDefaultParaGenetic_rayTracing_OFF{};
+	defaultParaDLS mDefaultParamDLS_rayTracing_OFF{};
 
 	unsigned int mRings{};
 	unsigned int mArms{};

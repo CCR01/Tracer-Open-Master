@@ -187,7 +187,7 @@ DLS::DLS() {};
 DLS::DLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms) :
 mOpticalSystemEle_initial(optSysEle.getDeepCopyOptSysEle()),
 mOpticaSystemEle_change(optSysEle.getDeepCopyOptSysEle()),
-mFields_vec(fields),
+mFields_obj_vec(fields),
 mWavelenght_vec(wavelengths),
 mRings(rings),
 mArms(arms)
@@ -205,13 +205,13 @@ mArms(arms)
 	loadBestFactorBetterFactorWorstCombinations();
 }
 DLS::DLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, defaultParaDLS defaultParameterDLS) :
-	mOpticalSystemEle_initial(optSysEle.getDeepCopyOptSysEle()),
-	mOpticaSystemEle_change(optSysEle.getDeepCopyOptSysEle()),
-	mFields_vec(fields),
-	mWavelenght_vec(wavelengths),
-	mRings(rings),
-	mArms(arms),
-	mDefaultParamDLS(defaultParameterDLS)
+mOpticalSystemEle_initial(optSysEle.getDeepCopyOptSysEle()),
+mOpticaSystemEle_change(optSysEle.getDeepCopyOptSysEle()),
+mFields_obj_vec(fields),
+mWavelenght_vec(wavelengths),
+mRings(rings),
+mArms(arms),
+mDefaultParamDLS(defaultParameterDLS)
 {
 	mInf_Obj = objectPoint_inf_obj::obj;
 	loadAdditionalDefaultParameter();
@@ -224,13 +224,151 @@ DLS::DLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR
 	loadThicknessParameter();
 	loadBestFactorBetterFactorWorstCombinations();
 }
+
+DLS::DLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, bool turnON_Off_rayTracing, targetCardinalPointsStruct targetCardinalPoint) :
+mOpticalSystemEle_initial(optSysEle.getDeepCopyOptSysEle()),
+mOpticaSystemEle_change(optSysEle.getDeepCopyOptSysEle()),
+mFields_obj_vec(fields),
+mWavelenght_vec(wavelengths),
+mRings(rings),
+mArms(arms),
+mTargetCardinalPoints(targetCardinalPoint)
+{
+	mInf_Obj = objectPoint_inf_obj::obj;
+	loadDefaultParameter();
+	if (turnON_Off_rayTracing)
+	{
+		mDefaultParamDLS.turn_ON_calcRMSusingRayTracing();
+	}
+	else
+	{
+		mDefaultParamDLS.turn_OFF_caclRMSusingRayTracing();
+	}
+	loadAdditionalDefaultParameter();
+	buildOptSys_LLT_wave_vec();
+	mParameterVar.loadSystemParameter(mOpticalSystemEle_initial);
+	mChangedOptSys_LLT_vec = deepCopyOptSysLLT_vec(mOptSys_LLT_vec);
+	mBestOptSys_LLT_vec = deepCopyOptSysLLT_vec(mOptSys_LLT_vec);
+
+
+	resizeAllRelevantStdVectorsAndCalcConst();
+	loadWithoutMinMaxDefault();
+	loadThicknessParameter();
+	loadBestFactorBetterFactorWorstCombinations();
+}
+
+DLS::DLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, targetCardinalPointsStruct targetCardinalPoint, defaultParaDLS defaultParameterDLS) :
+	mOpticalSystemEle_initial(optSysEle.getDeepCopyOptSysEle()),
+	mOpticaSystemEle_change(optSysEle.getDeepCopyOptSysEle()),
+	mFields_obj_vec(fields),
+	mWavelenght_vec(wavelengths),
+	mRings(rings),
+	mArms(arms),
+	mTargetCardinalPoints(targetCardinalPoint),
+	mDefaultParamDLS(defaultParameterDLS)
+{
+	mInf_Obj = objectPoint_inf_obj::obj;
+
+	loadAdditionalDefaultParameter();
+	buildOptSys_LLT_wave_vec();
+	mParameterVar.loadSystemParameter(mOpticalSystemEle_initial);
+	mChangedOptSys_LLT_vec = deepCopyOptSysLLT_vec(mOptSys_LLT_vec);
+	mBestOptSys_LLT_vec = deepCopyOptSysLLT_vec(mOptSys_LLT_vec);
+
+	resizeAllRelevantStdVectorsAndCalcConst();
+	loadWithoutMinMaxDefault();
+	loadThicknessParameter();
+	loadBestFactorBetterFactorWorstCombinations();
+}
+
+DLS::DLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<real> /*fields X*/ fields_X, std::vector<real> /*fields Y*/ fields_Y, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms) :
+mOpticalSystemEle_initial(optSysEle.getDeepCopyOptSysEle()),
+mOpticaSystemEle_change(optSysEle.getDeepCopyOptSysEle()),
+mFields_X_inf_vec(fields_X),
+mFields_Y_inf_vec(fields_Y),
+mWavelenght_vec(wavelengths),	
+mRings(rings),
+mArms(arms)
+{
+	mInf_Obj = objectPoint_inf_obj::inf;
+	loadDefaultParameter();
+	loadAdditionalDefaultParameter();
+	buildOptSys_LLT_wave_vec();
+	mParameterVar.loadSystemParameter(mOpticalSystemEle_initial);
+	mChangedOptSys_LLT_vec = deepCopyOptSysLLT_vec(mOptSys_LLT_vec);
+	mBestOptSys_LLT_vec = deepCopyOptSysLLT_vec(mOptSys_LLT_vec);
+	resizeAllRelevantStdVectorsAndCalcConst();
+	loadWithoutMinMaxDefault();
+	loadThicknessParameter();
+	loadBestFactorBetterFactorWorstCombinations();
+}
+
+DLS::DLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<real> /*fields X*/ fields_X, std::vector<real> /*fields Y*/ fields_Y, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, bool turnON_Off_rayTracing, targetCardinalPointsStruct targetCardinalPoint) :
+mOpticalSystemEle_initial(optSysEle.getDeepCopyOptSysEle()),
+mOpticaSystemEle_change(optSysEle.getDeepCopyOptSysEle()),
+mFields_X_inf_vec(fields_X),
+mFields_Y_inf_vec(fields_Y),
+mWavelenght_vec(wavelengths),
+mRings(rings),
+mArms(arms),
+mTargetCardinalPoints(targetCardinalPoint)
+{
+	mInf_Obj = objectPoint_inf_obj::inf;
+	loadDefaultParameter();
+	if (turnON_Off_rayTracing)
+	{
+		mDefaultParamDLS.turn_ON_calcRMSusingRayTracing();
+	}
+	else
+	{
+		mDefaultParamDLS.turn_OFF_caclRMSusingRayTracing();
+	}
+	loadAdditionalDefaultParameter();
+	buildOptSys_LLT_wave_vec();
+	mParameterVar.loadSystemParameter(mOpticalSystemEle_initial);
+	mChangedOptSys_LLT_vec = deepCopyOptSysLLT_vec(mOptSys_LLT_vec);
+	mBestOptSys_LLT_vec = deepCopyOptSysLLT_vec(mOptSys_LLT_vec);
+
+
+	resizeAllRelevantStdVectorsAndCalcConst();
+	loadWithoutMinMaxDefault();
+	loadThicknessParameter();
+	loadBestFactorBetterFactorWorstCombinations();
+
+
+}
+DLS::DLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<real> /*fields X*/ fields_X, std::vector<real> /*fields Y*/ fields_Y, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, targetCardinalPointsStruct targetCardinalPoint, defaultParaDLS defaultParameterDLS) :
+	mOpticalSystemEle_initial(optSysEle.getDeepCopyOptSysEle()),
+	mOpticaSystemEle_change(optSysEle.getDeepCopyOptSysEle()),
+	mFields_X_inf_vec(fields_X),
+	mFields_Y_inf_vec(fields_Y),
+	mWavelenght_vec(wavelengths),
+	mRings(rings),
+	mArms(arms),
+	mTargetCardinalPoints(targetCardinalPoint),
+	mDefaultParamDLS(defaultParameterDLS)
+{
+	mInf_Obj = objectPoint_inf_obj::inf;
+
+	loadAdditionalDefaultParameter();
+	buildOptSys_LLT_wave_vec();
+	mParameterVar.loadSystemParameter(mOpticalSystemEle_initial);
+	mChangedOptSys_LLT_vec = deepCopyOptSysLLT_vec(mOptSys_LLT_vec);
+	mBestOptSys_LLT_vec = deepCopyOptSysLLT_vec(mOptSys_LLT_vec);
+
+	resizeAllRelevantStdVectorsAndCalcConst();
+	loadWithoutMinMaxDefault();
+	loadThicknessParameter();
+	loadBestFactorBetterFactorWorstCombinations();
+}
+
 DLS::~DLS() {};
 
 void DLS::buildAndLoad(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, defaultParaDLS defaultParameterDLS)
 {
 	mOpticalSystemEle_initial = optSysEle.getDeepCopyOptSysEle();
 	mOpticaSystemEle_change = optSysEle.getDeepCopyOptSysEle();
-	mFields_vec = fields;
+	mFields_obj_vec = fields;
 	mWavelenght_vec = wavelengths;
 	mRings = rings;
 	mArms = arms;
@@ -251,16 +389,21 @@ void DLS::buildAndLoad(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector
 void DLS::resizeAllRelevantStdVectorsAndCalcConst()
 {
 	
-	mAberrationFct_F0.resize(mNumFieldPoints);
+	mAberrationFct_F0.resize(mNumFieldPoints_Angles + mNumTargetCarPoints);
 
-	mReturnDeviation_vec.resize(mNumFieldPoints);
+	mReturnDeviation_RMS_vec.resize(mNumFieldPoints_Angles);
+	mReturnDeviation_targetCarPoints_vec.resize(mNumTargetCarPoints);
 
 	mNumVar = mParameterVar.getAllParaWithVar().size();
-	mJacobi_Aij.resize(mNumFieldPoints);
+	mJacobi_Aij.resize(mNumFieldPoints_Angles + mNumTargetCarPoints);
 	oftenUse::resizeAllRowsMatrix(mJacobi_Aij, mNumVar);
 
-	mDeviationAberrationFct.resize(mNumFieldPoints);
-	
+	mDeviationAberrationFct_RMS.resize(mNumFieldPoints_Angles);
+	mDeviationAberrationFct_targetCarPoint.resize(mNumTargetCarPoints);
+
+
+	mPosFillJacobi = 0;
+
 	mColumns_A_T_A = mJacobi_Aij.size();
 	mRows_A_T_A = mJacobi_Aij[0].size();
 
@@ -300,8 +443,8 @@ void DLS::resizeAllRelevantStdVectorsAndCalcConst()
 	mCounterChangeFactorBetterWorst = 0;
 
 	// 
-	calculateAberrationFct();
-	mAllMeritVal.push_back(oftenUse::sum(mAberrationFct_F0));
+	//calculateAberrationFct();
+	mAllMeritVal.push_back(oftenUse::getInfReal());
 	mBestMeritVal = mAllMeritVal[0];
 }
 
@@ -349,21 +492,45 @@ void DLS::loadDefaultParameter()
 
 void DLS::loadAdditionalDefaultParameter()
 {
-	// weight field default
-	mNumFieldPoints = mFields_vec.size();
-	mWeightFields_vec.resize(mNumFieldPoints); // --
-	std::fill(mWeightFields_vec.begin(), mWeightFields_vec.end(), 1);
+	// rms from obj
+	if (mInf_Obj == objectPoint_inf_obj::obj && mDefaultParamDLS.getCalcRMSusingRayTracing())
+	{	
+		mNumFieldPoints_Angles = mFields_obj_vec.size();
+	}
+
+	// rms from inf
+	else if (mInf_Obj == objectPoint_inf_obj::inf && mDefaultParamDLS.getCalcRMSusingRayTracing())
+	{
+		if (mFields_X_inf_vec.size() != mFields_Y_inf_vec.size())
+		{
+			std::cout << "ATTENTION: number angles X is not number angle Y" << std::endl;
+		}
+
+		mNumFieldPoints_Angles = mFields_X_inf_vec.size();
+
+	}
+
+	// cardinal points
+	if (mTargetCardinalPoints.getIsOneTargetCardinalPoint())
+	{
+		mNumTargetCarPoints = mTargetCardinalPoints.getNumerOfTargets();
+	}
+
+	mWeightFields_vec.resize(mNumFieldPoints_Angles); // --
+	std::fill(mWeightFields_vec.begin(), mWeightFields_vec.end(), 1.0);
 
 	// weight wavelength default
 	unsigned int numWavelength = mWavelenght_vec.size();
 	mWeightWavelenght_vec.resize(numWavelength); // --
-	std::fill(mWeightWavelenght_vec.begin(), mWeightWavelenght_vec.end(), 1);
+	std::fill(mWeightWavelenght_vec.begin(), mWeightWavelenght_vec.end(), 1.0);
 
 	// build defautl light
 	mDefaultLight.setIntensity(1.0);
 	mDefaultLight.setJonesVector({ 1.0,1.0,1.0,1.0 });
 	mDefaultLight.setTypeLight(typeLight::typeLightRay);
 	mDefaultLight.setWavelength(550.0);
+
+
 }
 
 void DLS::buildOptSys_LLT_wave_vec()
@@ -384,7 +551,7 @@ void DLS::buildOptSys_LLT_wave_vec()
 	
 }
 
-void DLS::changeRadiusSurfaceTo(unsigned int surfaceNo, real newRadius)
+void DLS::changeRadiusSurfaceTo_allWavelength(unsigned int surfaceNo, real newRadius)
 {	
 	real radiusFlipper = mDefaultParamDLS.getFlipOrientationRadius();
 
@@ -417,7 +584,8 @@ void DLS::changeRadiusSurfaceTo(unsigned int surfaceNo, real newRadius)
 
 }
 
-void DLS::changeThickness_Z_SurfaceTo(unsigned int surfaceNo, real newThickness)
+
+void DLS::changeThickness_Z_SurfaceTo_All(unsigned int surfaceNo, real newThickness)
 {
 	real tempSurface_Pos_Z;
 	real tempNewPosNextSurface_Z;
@@ -446,6 +614,35 @@ void DLS::changeThickness_Z_SurfaceTo(unsigned int surfaceNo, real newThickness)
 		counter = 1;
 	}
 
+}
+
+void DLS::changeThickness_Z_SurfaceTo_primWavelength(unsigned int surfaceNo, real newThickness)
+{
+	real tempSurface_Pos_Z;
+	real tempNewPosNextSurface_Z;
+	real deltaThickness;
+	unsigned int counter = 1;
+
+
+	tempSurface_Pos_Z = mChangedOptSys_LLT_vec[0].getPosAndInteractingSurface()[surfaceNo].getSurfaceInterRay_ptr()->getPoint().getZ();
+	deltaThickness = newThickness - mThickness_vec[surfaceNo];
+	tempNewPosNextSurface_Z = tempSurface_Pos_Z + newThickness;
+
+	while (surfaceNo + counter < mSizeOptSys)
+	{
+		mNewPosition.setZ(tempNewPosNextSurface_Z);
+		mChangedOptSys_LLT_vec[0].getPosAndInteractingSurface()[surfaceNo + counter].getSurfaceInterRay_ptr()->setPosition(mNewPosition);
+		++counter;
+		if (surfaceNo + counter < mSizeOptSys)
+		{
+			tempNewPosNextSurface_Z = mChangedOptSys_LLT_vec[0].getPosAndInteractingSurface()[surfaceNo + counter].getSurfaceInterRay_ptr()->getPoint().getZ();
+			tempNewPosNextSurface_Z = tempNewPosNextSurface_Z + deltaThickness;
+		}
+
+
+	}
+	counter = 1;
+	
 }
 
 void DLS::changePosition_Z_SurfaceTo(unsigned int surfaceNo, real newPositionZ)
@@ -612,25 +809,40 @@ void DLS::calculateAberrationFct()
 {
 		
 	VectorStructR3 tempFieldPoint{};
+	real tempFieldAngle_X{};
+	real tempFieldAngle_Y{};
 	real tempWeightFieldPoint{};
 	real tempMeritField = 0.0;
+	unsigned int i = 0;
 
 	if (mInf_Obj == objectPoint_inf_obj::obj && mDefaultParamDLS.getCalcRMSusingRayTracing())
 	{
-		for (unsigned int i = 0; i < mNumFieldPoints; ++i)
+		for (i; i < mNumFieldPoints_Angles; ++i)
 		{
-			tempFieldPoint = mFields_vec[i];
+			tempFieldPoint = mFields_obj_vec[i];
 			tempWeightFieldPoint = mWeightFields_vec[i];
 			tempMeritField = calculateMeritVal_RMS_obj(tempFieldPoint);
 			mAberrationFct_F0[i] = tempWeightFieldPoint * tempMeritField;
 		}
 	}
 
-	//else if (mInf_Obj == objectPoint_inf_obj::inf && mDefaultParamDLS.getCalcRMSusingRayTracing())
-	//{
-	//	make calc rms inf
-	//}
+	else if (mInf_Obj == objectPoint_inf_obj::inf && mDefaultParamDLS.getCalcRMSusingRayTracing())
+	{
+		for (i; i < mNumFieldPoints_Angles; ++i)
+		{
+			tempFieldAngle_X = mFields_X_inf_vec[i];
+			tempFieldAngle_Y = mFields_Y_inf_vec[i];
+			tempWeightFieldPoint = mWeightFields_vec[i];
+			tempMeritField = calculateMeritVal_RMS_inf(tempFieldAngle_X, tempFieldAngle_Y);
+			mAberrationFct_F0[i] = tempWeightFieldPoint * tempMeritField;
+		}
+	}
  
+
+	if (mTargetCardinalPoints.getIsOneTargetCardinalPoint())
+	{
+		mTargetCardinalPoints.calcualteMeritVal_targetCardinalPoints_forDLS(mChangedOptSys_LLT_vec[0], mInf_Obj,mAberrationFct_F0);
+	}
 
 
 }
@@ -646,37 +858,124 @@ std::vector<real> DLS::calculateDeviation_rmsRayTrace(real oldVal, real newVal, 
 	{
 		//calcChange_Radius_AccordingToMeritVal();
 		//changeRadiusSurfaceTo(surfaceNum, newVal);
-		changeRadiusSurfaceTo(surfaceNum, newVal);
-		for(unsigned int i=0; i< mNumFieldPoints;++i)
+		changeRadiusSurfaceTo_allWavelength(surfaceNum, newVal);
+
+		for(unsigned int i=0; i< mNumFieldPoints_Angles;++i)
 		{ 
-			tempNewMeritValue = calculateMeritVal_RMS_obj(mFields_vec[i]);
+
+			if (mInf_Obj == objectPoint_inf_obj::obj && mDefaultParamDLS.getCalcRMSusingRayTracing())
+			{
+				tempNewMeritValue = calculateMeritVal_RMS_obj(mFields_obj_vec[i]);
+			}
+
+			else if (mInf_Obj == objectPoint_inf_obj::inf && mDefaultParamDLS.getCalcRMSusingRayTracing())
+			{
+				tempNewMeritValue = calculateMeritVal_RMS_inf(mFields_X_inf_vec[i], mFields_Y_inf_vec[i]);
+			}
 			
 			tempDiviation = (tempNewMeritValue - mAberrationFct_F0[i]) / mDefaultParamDLS.getFactorRadiusDeviation();
 				
-			mReturnDeviation_vec[i] = tempDiviation;
+			mReturnDeviation_RMS_vec[i] = tempDiviation;
 		}
-		changeRadiusSurfaceTo(surfaceNum, oldVal);
+
+		changeRadiusSurfaceTo_allWavelength(surfaceNum, oldVal);
 		
 	}
 
 	else if (tempKindPara == thickness_Var)
 	{
 		//calcChange_Position_AccordingToMeritVal();
-		changeThickness_Z_SurfaceTo(surfaceNum, newVal);
+		changeThickness_Z_SurfaceTo_All(surfaceNum, newVal);
 		mThickness_vec[surfaceNum] = newVal;
-		for (unsigned int i = 0; i < mNumFieldPoints; ++i)
+		for (unsigned int i = 0; i < mNumFieldPoints_Angles; ++i)
 		{
-		tempNewMeritValue = calculateMeritVal_RMS_obj(mFields_vec[i]);
-		tempDiviation = (tempNewMeritValue - mAberrationFct_F0[i]) / mDefaultParamDLS.getFactorPositionDeviation();
-		mReturnDeviation_vec[i] = tempDiviation;
+			if (mInf_Obj == objectPoint_inf_obj::obj && mDefaultParamDLS.getCalcRMSusingRayTracing())
+			{
+				tempNewMeritValue = calculateMeritVal_RMS_obj(mFields_obj_vec[i]);
+			}
+
+			else if (mInf_Obj == objectPoint_inf_obj::inf && mDefaultParamDLS.getCalcRMSusingRayTracing())
+			{
+				tempNewMeritValue = calculateMeritVal_RMS_inf(mFields_X_inf_vec[i], mFields_Y_inf_vec[i]);
+			}
+			
+			
+			tempDiviation = (tempNewMeritValue - mAberrationFct_F0[i]) / mDefaultParamDLS.getFactorPositionDeviation();
+			mReturnDeviation_RMS_vec[i] = tempDiviation;
 		}
 		
-		changeThickness_Z_SurfaceTo(surfaceNum, oldVal);
+		changeThickness_Z_SurfaceTo_All(surfaceNum, oldVal);
 		mThickness_vec[surfaceNum] = oldVal;
 	}
 
 
-	return mReturnDeviation_vec;
+	return mReturnDeviation_RMS_vec;
+}
+
+std::vector<real> DLS::calculateDeviation_targetCarPoints(real oldVal, real newVal, unsigned surfaceNum, kindParaOptSys tempKindPara)
+{
+	real tempNewMeritValue{};
+	real tempDiviation;
+
+
+	if (tempKindPara == radiusVar)
+	{
+		mChangedOptSys_LLT_vec[0].getPosAndInteractingSurface()[surfaceNum].getSurfaceInterRay_ptr()->setRadius(std::abs(newVal));
+
+
+		if (mInf_Obj == objectPoint_inf_obj::obj)
+		{
+			mTargetCardinalPoints.calcualteMeritVal_targetCardinalPoints_forDLS(mChangedOptSys_LLT_vec[0],objectPoint_inf_obj::obj, mDeviationAberrationFct_targetCarPoint);
+		}
+
+		else if (mInf_Obj == objectPoint_inf_obj::inf)
+		{
+			mTargetCardinalPoints.calcualteMeritVal_targetCardinalPoints_forDLS(mChangedOptSys_LLT_vec[0], objectPoint_inf_obj::inf, mDeviationAberrationFct_targetCarPoint);
+		}
+
+		mChangedOptSys_LLT_vec[0].getPosAndInteractingSurface()[surfaceNum].getSurfaceInterRay_ptr()->setRadius(std::abs(oldVal));
+	
+		for (unsigned int i = 0; i < mNumTargetCarPoints; ++i)
+		{
+			tempNewMeritValue = mDeviationAberrationFct_targetCarPoint[i];
+
+			tempDiviation = (tempNewMeritValue - mAberrationFct_F0[i + mNumFieldPoints_Angles]) / mDefaultParamDLS.getFactorRadiusDeviation();
+			mReturnDeviation_targetCarPoints_vec[i] = tempDiviation;
+		}
+		
+	}
+
+	else if (tempKindPara == thickness_Var)
+	{
+		//calcChange_Position_AccordingToMeritVal();
+		changeThickness_Z_SurfaceTo_primWavelength(surfaceNum, newVal);
+		mThickness_vec[surfaceNum] = newVal;
+
+
+		if (mInf_Obj == objectPoint_inf_obj::obj && mDefaultParamDLS.getCalcRMSusingRayTracing())
+		{
+			mTargetCardinalPoints.calcualteMeritVal_targetCardinalPoints_forDLS(mChangedOptSys_LLT_vec[0], objectPoint_inf_obj::obj, mDeviationAberrationFct_targetCarPoint);
+		}
+
+		else if (mInf_Obj == objectPoint_inf_obj::inf && mDefaultParamDLS.getCalcRMSusingRayTracing())
+		{
+			mTargetCardinalPoints.calcualteMeritVal_targetCardinalPoints_forDLS(mChangedOptSys_LLT_vec[0], objectPoint_inf_obj::inf, mDeviationAberrationFct_targetCarPoint);
+		}
+
+		changeThickness_Z_SurfaceTo_primWavelength(surfaceNum, oldVal);
+		mThickness_vec[surfaceNum] = oldVal;
+
+		for (unsigned int i = 0; i < mNumTargetCarPoints; ++i)
+		{
+			tempNewMeritValue = mDeviationAberrationFct_targetCarPoint[i];
+
+			tempDiviation = (tempNewMeritValue - mAberrationFct_F0[i + mNumFieldPoints_Angles]) / mDefaultParamDLS.getFactorPositionDeviation();
+			mReturnDeviation_targetCarPoints_vec[i] = tempDiviation;
+		}
+
+	}
+
+	return mReturnDeviation_targetCarPoints_vec;
 }
 
 void DLS::calcJacobiMatrixDeviation_Aij()
@@ -685,8 +984,6 @@ void DLS::calcJacobiMatrixDeviation_Aij()
 	real tempVal;
 	real newVal;
 	VectorStructR3 tempFieldPoint;
-
-	real newMeritValue{};
 
 	unsigned int tempSurfaceNum{};
 	kindParaOptSys tempKindPara{};
@@ -704,7 +1001,7 @@ void DLS::calcJacobiMatrixDeviation_Aij()
 				tempVal = mChangedOptSys_LLT_vec[0].getPosAndInteractingSurface()[tempSurfaceNum].getSurfaceInterRay_ptr()->getRadius();
 				newVal = tempVal + mDefaultParamDLS.getFactorRadiusDeviation();
 
-				mDeviationAberrationFct = calculateDeviation_rmsRayTrace(tempVal, newVal, tempSurfaceNum, tempKindPara);
+				mDeviationAberrationFct_RMS = calculateDeviation_rmsRayTrace(tempVal, newVal, tempSurfaceNum, tempKindPara);
 
 				// just for debugging
 				// std::cout << "deviation surface: " << tempSurfaceNum << " " << mDeviationAberrationFct[0] + mDeviationAberrationFct[1] + mDeviationAberrationFct[2] << std::endl;
@@ -716,27 +1013,76 @@ void DLS::calcJacobiMatrixDeviation_Aij()
 				tempVal = mThickness_vec[tempSurfaceNum];
 				newVal = tempVal + mDefaultParamDLS.getFactorPositionDeviation();
 
-				mDeviationAberrationFct = calculateDeviation_rmsRayTrace(tempVal, newVal, tempSurfaceNum, tempKindPara);
+				mDeviationAberrationFct_RMS = calculateDeviation_rmsRayTrace(tempVal, newVal, tempSurfaceNum, tempKindPara);
+			}
+
+			fillJacobiMatrix_RMS(mDeviationAberrationFct_RMS, i);
+			mPosFillJacobi = 0.0;
+		}
+	}
+
+	if (mTargetCardinalPoints.getIsOneTargetCardinalPoint())
+	{
+		std::vector<unsigned int> surfaceNumWithVar = mParameterVar.getAllSurfaceNumWithVar();
+		real tempVal;
+		real newVal;
+
+		unsigned int tempSurfaceNum{};
+		kindParaOptSys tempKindPara{};
+
+
+		for (unsigned int i = 0; i < mNumVar; ++i)
+		{
+			tempSurfaceNum = surfaceNumWithVar[i];
+			tempKindPara = mParameterVar.getAllParaWithVar()[i];
+			mPosFillJacobi = mNumFieldPoints_Angles;
+
+			if (tempKindPara == radiusVar)
+			{
+				tempVal = mChangedOptSys_LLT_vec[0].getPosAndInteractingSurface()[tempSurfaceNum].getSurfaceInterRay_ptr()->getRadius();
+				newVal = tempVal + mDefaultParamDLS.getFactorRadiusDeviation();
+
+				mDeviationAberrationFct_targetCarPoint = calculateDeviation_targetCarPoints(tempVal, newVal, tempSurfaceNum, tempKindPara);
+			}
+
+			else if (tempKindPara == thickness_Var)
+			{
+				tempVal = mThickness_vec[tempSurfaceNum];
+				newVal = tempVal + mDefaultParamDLS.getFactorPositionDeviation();
+				mDeviationAberrationFct_targetCarPoint = calculateDeviation_targetCarPoints(tempVal, newVal, tempSurfaceNum, tempKindPara);
 			}
 
 
-			fillJacobiMatrix(mDeviationAberrationFct, i);
+			fillJacobiMatrix_RMS(mDeviationAberrationFct_targetCarPoint,i);
+
 		}
+
+		mPosFillJacobi = 0;
 	}
+	
 
 	// just for debugging
 	//oftenUse::print(mJacobi_Aij);
 	
 }
 
-void DLS::fillJacobiMatrix(std::vector<real> vector, unsigned int row)
+void DLS::fillJacobiMatrix_RMS(std::vector<real> vector, unsigned int row)
 {	
+	unsigned int sizeVec = vector.size();
 
-	for (unsigned int i = 0; i < mColumns_A_T_A; i++)
+	for (unsigned int i = 0; i < sizeVec; i++)
 	{
-		mJacobi_Aij[i][row] = vector[i];
+		mJacobi_Aij[mPosFillJacobi][row] = vector[i];
+		++mPosFillJacobi;
 	}
+	
 }
+
+//void DLS::fillJacobiMatrix_CarPoint(real deviation)
+//{
+//		mJacobi_Aij[mPosFillJacobi][0] = deviation;
+//		++mPosFillJacobi;
+//}
 
 real DLS::checkBounderiesAndReturnNewVal(real val, unsigned int posDeltaValt, real minVal, real maxVal, real withoutMin, real withoutMax, unsigned int tempSurfaceNum, kindParaOptSys kindPara)
 {
@@ -957,7 +1303,7 @@ void DLS::setNewSystemParameter()
 			std::cout << "set radius of surface " << tempSurfaceNum << " to " << newVal << std::endl;
 			std::cout << std::endl;
 
-			changeRadiusSurfaceTo(tempSurfaceNum, newVal);
+			changeRadiusSurfaceTo_allWavelength(tempSurfaceNum, newVal);
 
 
 		}
@@ -981,7 +1327,7 @@ void DLS::setNewSystemParameter()
 			// std::cout << "set thickness of surface " << tempSurfaceNum << " to " << newVal << std::endl;
 			// std::cout << std::endl;
 
-			changeThickness_Z_SurfaceTo(tempSurfaceNum, newVal);
+			changeThickness_Z_SurfaceTo_All(tempSurfaceNum, newVal);
 			mThickness_vec[tempSurfaceNum] = newVal;
 		}
 
@@ -1044,7 +1390,7 @@ void DLS::optimizeSystem_DLS_multiplicativ_Damping()
 	real improveMeritStop = mDefaultParamDLS.getImprovMeritStopDiff();
 
 
-	calculateAberrationFct();
+ 	calculateAberrationFct();
 	// just for debugging -> print aberration fct
 	// std::cout << "aberration fct:" << std::endl;
 	// oftenUse::print(mAberrationFct_F0);
@@ -1056,6 +1402,8 @@ void DLS::optimizeSystem_DLS_multiplicativ_Damping()
 
 	real minBeforSwitch = mDefaultParamDLS.get_Min_DamNumBefSwitchFactors();
 	real maxBeforeSwitch = mDefaultParamDLS.get_Max_DamNumBefSwitchFactors();
+	unsigned int absolutStop = 2 * maxIterations;
+	unsigned int absolutStopCounter = 0;
 
 	while (maxIterations >= mIterationCounter && mGlobalStop)
 	{
@@ -1198,8 +1546,12 @@ void DLS::optimizeSystem_DLS_multiplicativ_Damping()
 		}
 		
 		
-		// just for debugging
-		// printCurVariables();
+		++absolutStopCounter;
+		if (absolutStopCounter > absolutStop)
+		{
+			mIterationCounter = maxIterations + 1;
+			std::cout << "ABSOLUT STOP" << std::endl;
+		}
 
 
 		
@@ -1389,9 +1741,11 @@ void DLS::turn_ON_calcRMSusingRayTracing()
 {
 	mDefaultParamDLS.turn_ON_calcRMSusingRayTracing();
 }
-void DLS::turn_OFF_caclRMSusingRayTracing()
+void DLS::turn_OFF_calcRMSusingRayTracing()
 {
 	mDefaultParamDLS.turn_OFF_caclRMSusingRayTracing();
+	mNumFieldPoints_Angles = mTargetCardinalPoints.getNumerOfTargets();
+	mAberrationFct_F0.resize(mNumFieldPoints_Angles);
 }
 bool DLS::getCalcRMSusingRayTracing()
 {
@@ -1659,7 +2013,7 @@ void DLS::calc_F_T_times_F()
 	real tempVal{};
 	mF_T_times_F = 0;
 
-	for (unsigned int i = 0; i < mNumFieldPoints; ++i)
+	for (unsigned int i = 0; i < mNumFieldPoints_Angles; ++i)
 	{
 		tempVal = std::pow(mAberrationFct_F0[i], 2);
 		mF_T_times_F = mF_T_times_F + tempVal;
@@ -1744,7 +2098,15 @@ void DLS::checkDeltaParameter(std::vector<real>& deltaSysPara_vec)
 
 std::vector<VectorStructR3> DLS::getField_vec()
 {
-	return mFields_vec;
+	return mFields_obj_vec;
+}
+std::vector<real> DLS::getFieldAngles_X()
+{
+	return mFields_X_inf_vec;
+}
+std::vector<real> DLS::getFieldAngle_Y()
+{
+	return mFields_Y_inf_vec;
 }
 std::vector<real> DLS::getWavelength_vev()
 {
@@ -1862,3 +2224,37 @@ void DLS::loadBestFactorBetterFactorWorstCombinations()
 
 	mSizeFacrotBetterWorstVec = factorWorst_vec.size();
 }
+
+objectPoint_inf_obj DLS::getInfOrObj()
+{
+	return mInf_Obj;
+}
+
+void DLS::setTargetCardinalPoints(const targetCardinalPointsStruct& targetCarPoints)
+{
+	mTargetCardinalPoints = targetCarPoints;
+}
+
+targetCardinalPointsStruct DLS::getTargetCardinalPoints()
+{
+	return mTargetCardinalPoints;
+}
+
+void DLS::setWeightFields(std::vector<real> weightField_vec)
+{
+	mWeightFields_vec = weightField_vec;
+}
+std::vector<real> DLS::getWeigthFields()
+{
+	return mWeightFields_vec;
+}
+
+void DLS::setWeightWavelength(std::vector<unsigned int> weightWavelength_vec)
+{
+	mWeightWavelenght_vec = weightWavelength_vec;
+}
+std::vector<unsigned int> DLS::getWeightWavelength()
+{
+	return mWeightWavelenght_vec;
+}
+

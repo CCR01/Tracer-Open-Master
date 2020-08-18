@@ -32,9 +32,12 @@ public:
 	double getAbbeNumerNewDef();
 
 	void setRealGlass(bool realGlass);
+	bool getRealGlass();
 	void setRefractiveIndex(double refractiveIndex);
-
+	double getRefractivIndex();
+	void setNameGlas(std::string nameGlas);
 	std::string getNameGlas();
+	
 
 	/*
 	//Fraunhofer lines

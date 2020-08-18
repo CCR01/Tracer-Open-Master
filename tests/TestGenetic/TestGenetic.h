@@ -38,6 +38,9 @@ public:
 	// E6
 	bool testE6();
 
+	// E7
+	bool testE7();
+
 	// test geneartion modes
 	bool testGenerationModes(real min, real max, real sampling, unsigned int maxInteration);
 	// random generation mode
@@ -60,9 +63,9 @@ public:
 
 private:
 
-	DoNothingInteraction_LLT doNothing{};
-	RefractedRay_LLT refrac{};
-	Absorb_LLT absorb{};
+	DoNothingInteraction_LLT mDoNothing{};
+	RefractedRay_LLT mRefrac{};
+	Absorb_LLT mAbsorb{};
 
 	glass glasses{};
 
@@ -111,4 +114,5 @@ private:
 
 	real mTolerance_RMS;
 	real mTolerance_target;
+	
 };
