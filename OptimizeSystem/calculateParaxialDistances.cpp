@@ -68,7 +68,7 @@ void CalculateParaxialDistances::calcNandNdash()
 	real tempN_dash;
 	real tempDirection;
 
-	for (unsigned int i = 0; i < lengthOptSys - 1; i++)
+	for (unsigned int i = 0; i < lengthOptSys ; i++)
 	{
 		tempDirection = optSys_LLT.getPosAndInteractingSurface().at(i).getSurfaceInterRay_ptr()->getDirection().getZ();
 
@@ -101,7 +101,7 @@ void CalculateParaxialDistances::calcFocallength_each_surface()
 	real focallength_each_surface;
 	real tempDirection;
 
-	for (unsigned int i = 0; i < lengthOptSys - 1; i++)
+	for (unsigned int i = 0; i < lengthOptSys; i++)
 	{
 		int prefix = 1;
 		tempDirection = optSys_LLT.getPosAndInteractingSurface().at(i).getSurfaceInterRay_ptr()->getDirection().getZ();
@@ -151,7 +151,7 @@ void CalculateParaxialDistances::calcS_object_image()
 	mS_dash_vec.push_back(s_dash);
 
 
-	for (unsigned int i = 1; i < lengthOptSys - 1; i++)
+	for (unsigned int i = 1; i < lengthOptSys; i++)
 	{
 		s = s_dash - mDistancesAllSurfaces.at(i);
 		mS_vec.push_back(s);

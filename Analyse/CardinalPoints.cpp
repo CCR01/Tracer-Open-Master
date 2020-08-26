@@ -138,12 +138,12 @@ void CardinalPoints::loadAndResizeParameters()
 	mPositionApertureStop = mOpticalSystem_LLT.getInforAS().getPosAS();
 	mSizeOfOptSysMinOne = mSizeOfOpt - 1;
 	mSizeOfOptSysMinTwo = mSizeOfOpt - 2;
-	mSizeAfterStop = mSizeOfOptSysMinTwo - mPositionApertureStop;
+	mSizeAfterStop = mSizeOfOpt - mPositionApertureStop;
 
 	//// resize
-	mAllRadius.resize(mSizeOfOptSysMinTwo);
-	mAllRefractivIndexes.resize(mSizeOfOptSysMinTwo);
-	mAllRefractivIndexes_dash.resize(mSizeOfOptSysMinTwo);
+	mAllRadius.resize(mSizeOfOptSysMinOne);
+	mAllRefractivIndexes.resize(mSizeOfOptSysMinOne);
+	mAllRefractivIndexes_dash.resize(mSizeOfOptSysMinOne);
 	mAllThickness_vec.resize(mSizeOfOptSysMinTwo);
 	mAllSystemMatrix.resize(4);
 
@@ -228,18 +228,18 @@ real CardinalPoints::calcEXPP_lastSurface()
 	std::shared_ptr<SurfaceIntersectionRay_LLT> tempSurfacePointer{};
 	real tempDirection_Z{};
 
-	std::vector<real> distances_vec_afterAS(mSizeAfterStop);
-	std::vector<real> radii_vec_afterAS(mSizeAfterStop);
-	std::vector<real> refIndex_vec_afterAS(mSizeAfterStop);
-	std::vector<real> refIndex_dash_vec_afterAS(mSizeAfterStop);
-	std::vector<real> f_dash_vec_afterAS(mSizeAfterStop);
+	std::vector<real> distances_vec_afterAS(mSizeAfterStop - 1);
+	std::vector<real> radii_vec_afterAS(mSizeAfterStop - 1);
+	std::vector<real> refIndex_vec_afterAS(mSizeAfterStop - 1);
+	std::vector<real> refIndex_dash_vec_afterAS(mSizeAfterStop - 1);
+	std::vector<real> f_dash_vec_afterAS(mSizeAfterStop - 1);
 
-	mS_afterAS.resize(mSizeAfterStop);
-	mS_dash_afterAS.resize(mSizeAfterStop);
+	mS_afterAS.resize(mSizeAfterStop - 1);
+	mS_dash_afterAS.resize(mSizeAfterStop - 1);
 
 	unsigned int posInVec = 0;
 	
-	for (unsigned int i = mPositionApertureStop + 1; i < mSizeOfOptSysMinOne; ++i)
+	for (unsigned int i = mPositionApertureStop + 1; i < mSizeOfOpt; ++i)
 	{
 		tempSurfacePointer = mPosAndInteraSurfaceVector[i].getSurfaceInterRay_ptr();
 		distances_vec_afterAS[posInVec] = tempSurfacePointer->getPoint().getZ() - mPosAndInteraSurfaceVector[i - 1].getSurfaceInterRay_ptr()->getPoint().getZ();
@@ -275,7 +275,7 @@ real CardinalPoints::calcEXPP_lastSurface()
 	}
 
 
-	real EXPP = mS_dash_afterAS.back() - mSepSurAndImPlane;
+	real EXPP = mS_dash_afterAS.back();
 
 	return EXPP;
 }
@@ -290,7 +290,9 @@ real CardinalPoints::calcEXPD()
 	}
 
 	real magAperStop_right = 1.0;
-	for (unsigned int i = 0; i < mSizeOfOptSysMinTwo - mPositionApertureStop; ++i)
+
+	unsigned int size = mS_dash_afterAS.size();
+	for (unsigned int i = 0; i < size; ++i)
 	{
 		magAperStop_right = magAperStop_right * mS_dash_afterAS[i] / mS_afterAS[i];
 	}
@@ -356,7 +358,7 @@ real CardinalPoints::calcNA_objSpac()
 		real y = directionRayUnit.getY();
 
 		real angel = std::atan(y / z);
-		NA_obj = std::abs(std::sin(angel));
+		NA_obj = mAllRefractivIndexes[0] * std::abs(std::sin(angel));
 	}
 
 	else // mObjectPoint_inf_obj == inf
@@ -415,7 +417,7 @@ real CardinalPoints::calcNA_imaSpace()
 	real y = directionRayUnitAtLastSurface.getY();
 
 	real angel = std::atan(y / z);
-	NA_ima = std::abs(std::sin(y / z));
+	NA_ima = mAllRefractivIndexes.back() * std::abs(std::sin(y / z));
 
 
 	return NA_ima;
@@ -433,7 +435,7 @@ void CardinalPoints::calcAllRadius()
 	int sign;
 	unsigned int posInVec = 0;
 
-	for (unsigned int i = 0; i < mSizeOfOptSysMinOne; i++)
+	for (unsigned int i = 0; i < mSizeOfOpt; i++)
 	{
 		if (typeid(*mPosAndInteraSurfaceVector.at(i).getSurfaceInterRay_ptr()) != typeid(mApertureStop))
 		{
@@ -463,7 +465,7 @@ void CardinalPoints::calcAllRefractivIndexes()
 	std::shared_ptr<SurfaceIntersectionRay_LLT> tempSurface_prt{};
 	unsigned int posInVec = 0;
 
-	for (unsigned int i = 0; i < mSizeOfOptSysMinOne; i++)
+	for (unsigned int i = 0; i < mSizeOfOpt; i++)
 	{
 		if (typeid(*mPosAndInteraSurfaceVector.at(i).getSurfaceInterRay_ptr()) != typeid(mApertureStop))
 		{
@@ -567,7 +569,7 @@ void CardinalPoints::calcAllSystemMatrix()
 	mSystemMatrix_vec[2] = (mAllRefractivIndexes[counter] - mAllRefractivIndexes_dash[counter]) / (mAllRadius[counter] * mAllRefractivIndexes_dash[counter]);
 	mSystemMatrix_vec[3] = mAllRefractivIndexes[counter] / mAllRefractivIndexes_dash[counter];
 
-	for (unsigned int i = 0; i < 2*mSizeOfOptSysMinTwo -1 ; i++)
+	for (unsigned int i = 0; i < 2*mSizeOfOptSysMinTwo; i++)
 	{
 		if (swichPropagatRefract) // propagate
 		{

@@ -71,8 +71,8 @@ bool testCardinalPoints::superFuncTestCalcCardinalPoints()
 	checkCalcCardinal.push_back(testE10);
 	bool testE11 = testCalcCardinalPointsE11_obj();
 	checkCalcCardinal.push_back(testE11);
-	//bool testE12 = testCalcCardinalPointsE12_obj();
-	//checkCalcCardinal.push_back(testE12);
+	bool testE12 = testCalcCardinalPointsE12_obj();
+	checkCalcCardinal.push_back(testE12);
 	bool testE13 = testCalcCardinalPointsE13_obj();
 	checkCalcCardinal.push_back(testE13);
 	bool testE14 = testCalcCardinalPointsE14_obj();
@@ -97,7 +97,8 @@ bool testCardinalPoints::superFuncTestCalcCardinalPoints()
 	checkCalcCardinal.push_back(testE23);
 	bool testE24 = testCalcCardinalPointsE24_inf();
 	checkCalcCardinal.push_back(testE24);
-
+	bool testE25 = testCalcCardinalPointsE25_obj();
+	checkCalcCardinal.push_back(testE25);
 
 	bool returnCheck = Math::checkTrueOfVectorElements(checkCalcCardinal);
 
@@ -128,7 +129,7 @@ bool testCardinalPoints::testCalcCardinalPointsE0_obj()
 		/*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.5, /*refIndexSideB*/1.0);
 	SphericalSurface_LLT SphericalSurface6E0(/*radius*/40.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0,0.0,40.0 },
 		/*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.5, /*refIndexSideB*/1.0);
-	PlanGeometry_LLT Plan5E0(/*semi Height*/ 10.0, /*apex*/{ 0.0,0.0,50.0 }, /*direction*/{ 0.0,0.0,1.0 }, 1.5, 1.0);
+	PlanGeometry_LLT Plan5E0(/*semi Height*/ 10.0, /*apex*/{ 0.0,0.0,50.0 }, /*direction*/{ 0.0,0.0,1.0 }, 1.0, 1.0);
 
 
 	//*************
@@ -235,7 +236,7 @@ bool testCardinalPoints::testCalcCardinalPointsE1_obj()
 		/*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.5, /*refIndexSideB*/1.0);
 	SphericalSurface_LLT SphericalSurface4E1(/*radius*/100.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0,0.0,25.0 },
 		/*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.5, /*refIndexSideB*/1.0);
-	PlanGeometry_LLT Plan5E1(/*semi Height*/ 10.0, /*apex*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0,1.0 }, 1.5, 1.0);
+	PlanGeometry_LLT Plan5E1(/*semi Height*/ 10.0, /*apex*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0,1.0 }, 1.0, 1.0);
 
 
 	//*************
@@ -495,7 +496,7 @@ bool testCardinalPoints::testCalcCardinalPointsE3_obj()
 	SphericalSurface_LLT SphericalSurface8E3(/*radius*/25.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0,0.0,70.0 },
 		/*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
 
-	PlanGeometry_LLT Plan9E3(/*semi Height*/ 10.0, /*apex*/{ 0.0,0.0,75.0 }, /*direction*/{ 0.0,0.0,1.0 }, 1.5, 1.0);
+	PlanGeometry_LLT Plan9E3(/*semi Height*/ 10.0, /*apex*/{ 0.0,0.0,75.0 }, /*direction*/{ 0.0,0.0,1.0 }, 1.0, 1.0);
 
 
 	//*************
@@ -1531,8 +1532,8 @@ bool testCardinalPoints::testCalcCardinalPointsE12_obj()
 	PlanElement Plan3_E12(/*semi height*/ 7.0, /*point*/{ 0.0,0.0,75.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getNSK15_S1(), /*refractive index B*/ glasses.getAir());
 	SphericalElement Sphere4_E12(/*radius*/ 50.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,80.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNSK4_S1());
 	SphericalElement Sphere5_E12(/*radius*/ 30.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,110.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getNBK7_S1(), /*refractive index B*/glasses.getNSK4_S1());
-	SphericalElement Sphere6_E12(/*radius*/ 30.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,120.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getNBK7_S1(), /*refractive index B*/glasses.getAir());
-	PlanElement Plan7_E12(/*semi height*/ 10.0, /*point*/{ 0.0,0.0,130.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getAir());
+	SphericalElement Sphere6_E12(/*radius*/ 30.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,120.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getNBK7_S1(), /*refractive index B*/glasses.getSF14_S1());
+	PlanElement Plan7_E12(/*semi height*/ 10.0, /*point*/{ 0.0,0.0,130.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getSF14_S1(), /*refractive index B*/ glasses.getAir());
 
 	surfacePtr Aper0_E12_ptr = AperStop0_E12.clone();
 	surfacePtr Sphere1_E12_ptr = Sphere1_E12.clone();
@@ -2993,5 +2994,130 @@ bool testCardinalPoints::testCalcCardinalPointsE24_inf()
 	return checkE24;
 }
 
+bool testCardinalPoints::testCalcCardinalPointsE25_obj()
+{
+	MaterialSellmeier1 glass1{};
+	MaterialSellmeier1 glass15{};
+	MaterialSellmeier1 glass16{};
+	MaterialSellmeier1 glass17{};
 
+	glass1.setRefractiveIndex(1.0);
+	glass1.setRealGlass(false);
+
+	glass15.setRefractiveIndex(1.5);
+	glass15.setRealGlass(false);
+
+	glass16.setRefractiveIndex(1.6);
+	glass16.setRealGlass(false);
+
+	glass17.setRefractiveIndex(1.7);
+	glass17.setRealGlass(false);
+
+	std::vector<bool> checkE25_vecBool;
+
+	glass glasses;
+	glasses.loadGlassCatalog_Schott();
+
+	RefractedRay_LLT refrac;
+	Absorb_LLT absorb;
+	DoNothingInteraction_LLT doNothing;
+	Light_LLT Light;
+	real defaultWavelength = 550.0;
+	Light.setWavelength(defaultWavelength);
+
+	// surfaces E25
+	ApertureStopElement AperStop0_E25(/* semi height*/0.25, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glass1);
+	SphericalElement Sphere1_E25(/*radius*/ 70.0, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,60.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glass1, /*refractive index B*/ glass17);
+	SphericalElement Sphere2_E25(/*radius*/ 50.0, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,65.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/glass16, /*refractive index B*/glass17);
+	SphericalElement Sphere3_E25(/*radius*/ 30.0, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,75.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glass15, /*refractive index B*/glass16);
+	PlanElement Plan4_E25(/*semi height*/ 10.0, /*point*/{ 0.0,0.0,80.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glass15, /*refractive index B*/ glass1);
+
+	surfacePtr Aper0_E25_ptr = AperStop0_E25.clone();
+	surfacePtr Sphere1_E25_ptr = Sphere1_E25.clone();
+	surfacePtr Sphere2_E25_ptr = Sphere2_E25.clone();
+	surfacePtr Sphere3_E25_ptr = Sphere3_E25.clone();
+	surfacePtr Plan4_E25_ptr = Plan4_E25.clone();
+
+	std::vector<surfacePtr> opticalSystemE25_ptr{ Aper0_E25_ptr, Sphere1_E25_ptr, Sphere2_E25_ptr, Sphere3_E25_ptr , Plan4_E25_ptr };
+	std::vector<interaction_ptr> interactionsE25_ptr{ doNothing.clone() , refrac.clone(), refrac.clone(), refrac.clone() , absorb.clone() };
+
+	//	build optical system
+	OpticalSystemElement optSystemElement_E25(opticalSystemE25_ptr, interactionsE25_ptr);
+	//optSystemElement_E25.setRefractiveIndexAccordingToWavelength(defaultWavelength);
+
+	// check the start system
+	std::vector<VectorStructR3> fieldPoint_0_vec(1);
+	fieldPoint_0_vec[0] = { 0.0,0.0,0.0 };
+	std::vector<real> wavelenght_vec(1);
+	wavelenght_vec[0] = defaultWavelength;
+	std::vector<real> rmsStartSystem{ 1200.72 };
+	bool checkTheSystem = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E25, fieldPoint_0_vec, wavelenght_vec, rmsStartSystem, mGlobalToleranceExtender, compareTOM_Zemax::comEqual);
+	checkE25_vecBool.push_back(checkTheSystem);
+	// ***
+
+	// print the system
+	oftenUse::print(optSystemElement_E25, defaultWavelength);
+
+	CardinalPoints calcCardinalPointsE25(optSystemElement_E25, defaultWavelength, objectPoint_inf_obj::obj);
+
+	real EFL_ref = 66.9896;
+	real PP_obj_ref = 52.438223;
+	real PP_ima_ref = -10.303204;
+	real EXPP_lastSurface_ref = -251.7128;
+	real EXPP_global_ref = 80 - 251.7128;
+	real EXPD_ref = 2.301828;
+	real Mag_ref = 14.719;
+	real NA_objSpace_ref = 0.02499219;
+	real ENPP_firstSurface_ref = 0;
+	real ENPP_global_ref = 10;
+	real ENPD_ref = 0.5;
+	real f_number__imaSpace_ref = 133.9791;
+	real NA_imaSpace_ref = 0.001698527;
+	real WFNO_ref = 299.427;
+
+	real EFL_calc = calcCardinalPointsE25.getEFL();
+	real PP_objSpace_calc = calcCardinalPointsE25.getPP_obj();
+	real PP_imageSpace_calc = calcCardinalPointsE25.getPP_ima();
+	real EXPP_LastSurface_calc = calcCardinalPointsE25.getEXPP_lastSurface();
+	real EXPD_calc = calcCardinalPointsE25.getEXPD();
+	real Mag_calc = calcCardinalPointsE25.getMagnification();
+	real NA_objSpace_calc = calcCardinalPointsE25.getNA_objSpace();
+	real ENPP_firstSurface_calc = calcCardinalPointsE25.getENPP_firstSurface();
+	real ENPP_global_calc = calcCardinalPointsE25.getENPP_globalCoodi();
+	real ENPD_calc = calcCardinalPointsE25.getENPD();
+	real f_number_imaSpace_calc_imaSpace = calcCardinalPointsE25.getF_num_imaSpace();
+	real NA_imaSpace_calc = calcCardinalPointsE25.getNA_imaSpace();
+	real WFNO_calc = calcCardinalPointsE25.getWorkingFnumber();
+
+
+	bool checkEFL = Math::compareTwoNumbers_tolerance(EFL_ref, EFL_calc, mGlobalTolerance);
+	checkE25_vecBool.push_back(checkEFL);
+	bool checkPP = Math::compareTwoNumbers_tolerance(PP_obj_ref, PP_objSpace_calc, mGlobalTolerance);
+	checkE25_vecBool.push_back(checkPP);
+	bool checkAntiPP = Math::compareTwoNumbers_tolerance(PP_ima_ref, PP_imageSpace_calc, mGlobalTolerance);
+	checkE25_vecBool.push_back(checkAntiPP);
+	bool checkEXPP = Math::compareTwoNumbers_tolerance(EXPP_lastSurface_ref, EXPP_LastSurface_calc, mGlobalTolerance);
+	checkE25_vecBool.push_back(checkEXPP);
+	bool checkEXPD = Math::compareTwoNumbers_tolerance(EXPD_ref, EXPD_calc, mGlobalTolerance);
+	checkE25_vecBool.push_back(checkEXPD);
+	bool checkMag = Math::compareTwoNumbers_tolerance(Mag_ref, Mag_calc, mGlobalTolerance);
+	checkE25_vecBool.push_back(checkMag);
+	bool checkNA_objSpac = Math::compareTwoNumbers_tolerance(NA_objSpace_ref, NA_objSpace_calc, mGlobalTolerance);
+	checkE25_vecBool.push_back(checkNA_objSpac);
+	bool checkENPP_firstSurface = Math::compareTwoNumbers_tolerance(ENPP_firstSurface_ref, ENPP_firstSurface_calc, mGlobalTolerance);
+	checkE25_vecBool.push_back(checkENPP_firstSurface);
+	bool checkENPP_globalCoordi = Math::compareTwoNumbers_tolerance(ENPP_global_ref, ENPP_global_calc, mGlobalTolerance);
+	checkE25_vecBool.push_back(checkENPP_globalCoordi);
+	bool checkENPD = Math::compareTwoNumbers_tolerance(ENPD_ref, ENPD_calc, mGlobalTolerance);
+	checkE25_vecBool.push_back(checkENPD);
+	bool checkF_number_imaSpace = Math::compareTwoNumbers_tolerance(f_number_imaSpace_calc_imaSpace, f_number__imaSpace_ref, mGlobalTolerance);
+	checkE25_vecBool.push_back(checkF_number_imaSpace);
+	bool checkNA_imaSpace = Math::compareTwoNumbers_tolerance(NA_imaSpace_ref, NA_imaSpace_calc, mGlobalTolerance);
+	checkE25_vecBool.push_back(checkNA_imaSpace);
+	bool checkWFNO = Math::compareTwoNumbers_tolerance(WFNO_ref, WFNO_calc, mGlobalTolerance);
+	checkE25_vecBool.push_back(checkWFNO);
+
+	bool checkE25 = Math::checkTrueOfVectorElements(checkE25_vecBool);
+	return checkE25;
+}
 
