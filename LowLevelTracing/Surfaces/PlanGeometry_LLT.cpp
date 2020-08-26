@@ -245,7 +245,7 @@ void PlanGeometry_LLT::plot2D(cv::Mat image, unsigned int scale, unsigned int th
 //get Radius
 double PlanGeometry_LLT::getRadius()
 {
-	return 999.0;
+	return 999999999999.0;
 }
 
 // calc focal length

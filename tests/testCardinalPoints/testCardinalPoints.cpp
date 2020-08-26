@@ -2699,7 +2699,7 @@ bool testCardinalPoints::testCalcCardinalPointsE22_inf()
 	std::vector<real> anglesXvec{ 0.0 };
 	std::vector<real> anglesYvec{ 0.0 };
 	std::vector<real> wavelenght_vec{ defaultWavelength };
-	std::vector<real> rmsStartSystem{ 339.154 };
+	std::vector<real> rmsStartSystem{ 339.152 };
 	bool checkTheSystem = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E22, anglesXvec, anglesYvec, wavelenght_vec, rmsStartSystem, mGlobalToleranceExtender, compareTOM_Zemax::comEqual);
 	checkE22_vecBool.push_back(checkTheSystem);
 	//// ***

@@ -680,7 +680,7 @@ real CardinalPoints::calcENPD()
 // calc f number
 real CardinalPoints::calcFnumberImaSpace()
 {
-	return std::abs(mEFL / mENPD)
+	return std::abs(mEFL / mENPD);
 }
 
 real CardinalPoints::getNA_objSpace()

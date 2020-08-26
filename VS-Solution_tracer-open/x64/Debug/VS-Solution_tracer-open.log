@@ -1,4 +1,4 @@
-﻿  TestGenetic.cpp
+﻿  testCardinalPoints.cpp
 C:\Tracer-Open-Master\LowLevelTracing\ImportantStructures.h(53,60): warning C4227: anachronism used: qualifiers on reference are ignored
 C:\Tracer-Open-Master\LowLevelTracing\ImportantStructures.h(57,65): warning C4227: anachronism used: qualifiers on reference are ignored
 C:\Tracer-Open-Master\LowLevelTracing\ImportantStructures.h(77,58): warning C4227: anachronism used: qualifiers on reference are ignored
@@ -9,16 +9,4 @@ C:\Tracer-Open-Master\LowLevelTracing\Ray_LLT.h(21,65): warning C4227: anachroni
 C:\Tracer-Open-Master\LowLevelTracing\Ray_LLT.h(27,65): warning C4227: anachronism used: qualifiers on reference are ignored
 C:\Tracer-Open-Master\LowLevelTracing\Interaction\InteractionRay_LLT.h(20,39): warning C4227: anachronism used: qualifiers on reference are ignored
 C:\Tracer-Open-Master\LowLevelTracing\Interaction\InteractionRay_LLT.h(31,45): warning C4227: anachronism used: qualifiers on reference are ignored
-  testOptimizeSystemSuperFct_GeneticAndDLS.cpp
-C:\Tracer-Open-Master\LowLevelTracing\ImportantStructures.h(53,60): warning C4227: anachronism used: qualifiers on reference are ignored
-C:\Tracer-Open-Master\LowLevelTracing\ImportantStructures.h(57,65): warning C4227: anachronism used: qualifiers on reference are ignored
-C:\Tracer-Open-Master\LowLevelTracing\ImportantStructures.h(77,58): warning C4227: anachronism used: qualifiers on reference are ignored
-C:\Tracer-Open-Master\LowLevelTracing\ImportantStructures.h(91,73): warning C4227: anachronism used: qualifiers on reference are ignored
-C:\Tracer-Open-Master\LowLevelTracing\ImportantStructures.h(124,46): warning C4227: anachronism used: qualifiers on reference are ignored
-C:\Tracer-Open-Master\LowLevelTracing\Ray_LLT.h(15,54): warning C4227: anachronism used: qualifiers on reference are ignored
-C:\Tracer-Open-Master\LowLevelTracing\Ray_LLT.h(21,65): warning C4227: anachronism used: qualifiers on reference are ignored
-C:\Tracer-Open-Master\LowLevelTracing\Ray_LLT.h(27,65): warning C4227: anachronism used: qualifiers on reference are ignored
-C:\Tracer-Open-Master\LowLevelTracing\Interaction\InteractionRay_LLT.h(20,39): warning C4227: anachronism used: qualifiers on reference are ignored
-C:\Tracer-Open-Master\LowLevelTracing\Interaction\InteractionRay_LLT.h(31,45): warning C4227: anachronism used: qualifiers on reference are ignored
-  Generating Code...
   VS-Solution_tracer-open.vcxproj -> C:\Tracer-Open-Master\VS-Solution_tracer-open\x64\Debug\VS-Solution_tracer-open.exe
