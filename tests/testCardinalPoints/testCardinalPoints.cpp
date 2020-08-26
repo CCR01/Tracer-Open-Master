@@ -99,6 +99,8 @@ bool testCardinalPoints::superFuncTestCalcCardinalPoints()
 	checkCalcCardinal.push_back(testE24);
 	bool testE25 = testCalcCardinalPointsE25_obj();
 	checkCalcCardinal.push_back(testE25);
+	bool testE26 = testCalcCardinalPointsE26_inf();
+	checkCalcCardinal.push_back(testE26);
 
 	bool returnCheck = Math::checkTrueOfVectorElements(checkCalcCardinal);
 
@@ -1454,7 +1456,7 @@ bool testCardinalPoints::testCalcCardinalPointsE11_obj()
 	real PP_obj_ref = 9.4021;
 	real PP_ima_ref = -47.8712;
 	real EXPP_lastSurface_ref = -10.0;
-	real EXPP_global_ref = 140;
+	real EXPP_global_ref = 140.0;
 	real EXPD_ref = 2.0;
 	real Mag_ref = -0.8749;
 	real NA_objSpace_ref = 0.0151;
@@ -1570,7 +1572,7 @@ bool testCardinalPoints::testCalcCardinalPointsE12_obj()
 	real PP_obj_ref = 74.3930;
 	real PP_ima_ref = -28.3218;
 	real EXPP_lastSurface_ref = 78.4006;
-	real EXPP_global_ref = 130 + 78.4006;
+	real EXPP_global_ref = 130.0 + 78.4006;
 	real EXPD_ref = 0.7173;
 	real Mag_ref = -1.0809;
 	real NA_objSpace_ref = 0.0250;
@@ -1683,7 +1685,7 @@ bool testCardinalPoints::testCalcCardinalPointsE13_obj()
 	real PP_obj_ref = 36.4825;
 	real PP_ima_ref = -39.5184;
 	real EXPP_lastSurface_ref = -75.8193;
-	real EXPP_global_ref = 70 - 75.8193;
+	real EXPP_global_ref = 70.0 - 75.8193;
 	real EXPD_ref = 36.7335;
 	real Mag_ref = -1.1352;
 	real NA_objSpace_ref = 0.2149;
@@ -1912,7 +1914,7 @@ bool testCardinalPoints::testCalcCardinalPointsE15_obj()
 	real PP_obj_ref = -52.049128;
 	real PP_ima_ref = -44.571867;
 	real EXPP_lastSurface_ref = -24.98126;
-	real EXPP_global_ref = 70 - 24.98126;
+	real EXPP_global_ref = 70.0 - 24.98126;
 	real EXPD_ref = 1.315936;
 	real Mag_ref = 0.345;
 	real NA_objSpace_ref = 0.04460836;
@@ -2026,8 +2028,8 @@ bool testCardinalPoints::testCalcCardinalPointsE16_inf()
 	real EFL_ref = 20.211;
 	real PP_obj_ref = 22.121718;
 	real PP_ima_ref = -106.092074;
-	real EXPP_lastSurface_ref = -10;
-	real EXPP_global_ref = 60;
+	real EXPP_lastSurface_ref = -10.0;
+	real EXPP_global_ref = 60.0;
 	real EXPD_ref = 6.0;
 	real Mag_ref = 0.0;
 	real NA_objSpace_ref = 0.0;
@@ -2255,7 +2257,7 @@ bool testCardinalPoints::testCalcCardinalPointsE18_inf()
 	real PP_obj_ref = 6.6484;
 	real PP_ima_ref = -48.4997;
 	real EXPP_lastSurface_ref = -68.0388;
-	real EXPP_global_ref = 56 - 68.0388;
+	real EXPP_global_ref = 56.0 - 68.0388;
 	real EXPD_ref = 5.8778;
 	real Mag_ref = 0.0;
 	real NA_objSpace_ref = 0.0;
@@ -2368,7 +2370,7 @@ bool testCardinalPoints::testCalcCardinalPointsE19_inf()
 	real PP_obj_ref = 172.6703;
 	real PP_ima_ref = -10.7111;
 	real EXPP_lastSurface_ref = -34.3585;
-	real EXPP_global_ref = 110 - 34.3585;
+	real EXPP_global_ref = 110.0 - 34.3585;
 	real EXPD_ref = 3.3464;
 	real Mag_ref = 0.0;
 	real NA_objSpace_ref = 0.0;
@@ -2597,7 +2599,7 @@ bool testCardinalPoints::testCalcCardinalPointsE21_inf()
 	real PP_obj_ref = 117.6151;
 	real PP_ima_ref = -29.6882;
 	real EXPP_lastSurface_ref = -2.2988;
-	real EXPP_global_ref = 60 - 2.2988;
+	real EXPP_global_ref = 60.0 - 2.2988;
 	real EXPD_ref = 1.4868;
 	real Mag_ref = 0.0;
 	real NA_objSpace_ref = 0.0;
@@ -2711,7 +2713,7 @@ bool testCardinalPoints::testCalcCardinalPointsE22_inf()
 	real PP_obj_ref = 24.684;
 	real PP_ima_ref = -59.4145;
 	real EXPP_lastSurface_ref = -69.559;
-	real EXPP_global_ref = 75 - 69.559;
+	real EXPP_global_ref = 75.0 - 69.559;
 	real EXPD_ref = 8.6766;
 	real Mag_ref = 0.0;
 	real NA_objSpace_ref = 0.0;
@@ -2823,7 +2825,7 @@ bool testCardinalPoints::testCalcCardinalPointsE23_inf()
 	real PP_obj_ref = 122.6035;
 	real PP_ima_ref = -17.7721;
 	real EXPP_lastSurface_ref = 3.5218;
-	real EXPP_global_ref = 90 + 3.5218;
+	real EXPP_global_ref = 90.0 + 3.5218;
 	real EXPD_ref = 0.3473587;
 	real Mag_ref = 0.0;
 	real NA_objSpace_ref = 0.0;
@@ -2937,7 +2939,7 @@ bool testCardinalPoints::testCalcCardinalPointsE24_inf()
 	real PP_obj_ref = 615.3224;
 	real PP_ima_ref = -624.8682;
 	real EXPP_lastSurface_ref = -20.001;
-	real EXPP_global_ref = 410 - 20.001;
+	real EXPP_global_ref = 410.0 - 20.001;
 	real EXPD_ref = 20.0;
 	real Mag_ref = 0.0;
 	real NA_objSpace_ref = 0.0;
@@ -3064,7 +3066,7 @@ bool testCardinalPoints::testCalcCardinalPointsE25_obj()
 	real PP_obj_ref = 52.438223;
 	real PP_ima_ref = -10.303204;
 	real EXPP_lastSurface_ref = -251.7128;
-	real EXPP_global_ref = 80 - 251.7128;
+	real EXPP_global_ref = 80.0 - 251.7128;
 	real EXPD_ref = 2.301828;
 	real Mag_ref = 14.719;
 	real NA_objSpace_ref = 0.02499219;
@@ -3121,3 +3123,145 @@ bool testCardinalPoints::testCalcCardinalPointsE25_obj()
 	return checkE25;
 }
 
+bool testCardinalPoints::testCalcCardinalPointsE26_inf()
+{
+	MaterialSellmeier1 glass1{};
+	MaterialSellmeier1 glass14{};
+	MaterialSellmeier1 glass15{};
+	MaterialSellmeier1 glass16{};
+	MaterialSellmeier1 glass17{};
+	MaterialSellmeier1 glass18{};
+
+	glass1.setRefractiveIndex(1.0);
+	glass1.setRealGlass(false);
+
+	glass14.setRefractiveIndex(1.4);
+	glass14.setRealGlass(false);
+
+	glass15.setRefractiveIndex(1.5);
+	glass15.setRealGlass(false);
+
+	glass16.setRefractiveIndex(1.6);
+	glass16.setRealGlass(false);
+
+	glass17.setRefractiveIndex(1.7);
+	glass17.setRealGlass(false);
+
+	glass18.setRefractiveIndex(1.8);
+	glass18.setRealGlass(false);
+
+	std::vector<bool> checkE26_vecBool;
+
+
+	RefractedRay_LLT refrac;
+	Absorb_LLT absorb;
+	DoNothingInteraction_LLT doNothing;
+	Light_LLT Light;
+	real defaultWavelength = 550.0;
+	Light.setWavelength(defaultWavelength);
+
+	// surfaces E26
+	
+	SphericalElement Sphere0_E26(/*radius*/ 70.0, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,0.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glass18, /*refractive index B*/ glass17);
+	SphericalElement Sphere1_E26(/*radius*/ 50.0, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/glass16, /*refractive index B*/glass17);
+	SphericalElement Sphere2_E26(/*radius*/ 30.0, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glass1, /*refractive index B*/glass16);
+	ApertureStopElement AperStop3_E26(/* semi height*/1.0, /*point*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glass1);
+	SphericalElement Sphere4_E26(/*radius*/ 100.0, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,40.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glass15, /*refractive index B*/ glass1);
+	SphericalElement Sphere5_E26(/*radius*/ 70.0, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,50.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/glass15, /*refractive index B*/glass14);
+	PlanElement Plan6_E26(/*semi height*/ 10.0, /*point*/{ 0.0,0.0,60.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glass14, /*refractive index B*/ glass1);
+
+	
+	surfacePtr Sphere0_E26_ptr = Sphere0_E26.clone();
+	surfacePtr Sphere1_E26_ptr = Sphere1_E26.clone();
+	surfacePtr Sphere2_E26_ptr = Sphere2_E26.clone();
+	surfacePtr Aper3_E26_ptr = AperStop3_E26.clone();
+	surfacePtr Sphere4_E26_ptr = Sphere4_E26.clone();
+	surfacePtr Sphere5_E26_ptr = Sphere5_E26.clone();
+	surfacePtr Plan6_E26_ptr = Plan6_E26.clone();
+
+	std::vector<surfacePtr> opticalSystemE26_ptr{ Sphere0_E26_ptr, Sphere1_E26_ptr, Sphere2_E26_ptr, Aper3_E26_ptr, Sphere4_E26_ptr , Sphere5_E26_ptr, Plan6_E26_ptr };
+	std::vector<interaction_ptr> interactionsE26_ptr{ refrac.clone(), refrac.clone(), refrac.clone(), doNothing.clone(), refrac.clone(), refrac.clone() , absorb.clone() };
+
+	//	build optical system
+	OpticalSystemElement optSystemElement_E26(opticalSystemE26_ptr, interactionsE26_ptr);
+	optSystemElement_E26.setRefractiveIndexAccordingToWavelength(defaultWavelength);
+
+	// check singel ray
+	bool checkSingleRay = oftenUse::checkRayTracing({ 0.0,1.2547522492,0.0 }, { 0.0,0.0,10.0 }, { 0.0,0.43829966324,60.0 }, optSystemElement_E26.getLLTconversion_doConversion(), 6, mGlobalTolerance);
+	checkE26_vecBool.push_back(checkSingleRay);
+
+	// check the start system
+	std::vector<real> angleX = {0.0};
+	std::vector<real> angleY = { 0.0 };
+	std::vector<real> wavelenght_vec(1);
+	wavelenght_vec[0] = defaultWavelength;
+	std::vector<real> rmsStartSystem{ 333.740 };
+	bool checkTheSystem = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E26, angleX, angleY, wavelenght_vec, rmsStartSystem, mGlobalToleranceExtender, compareTOM_Zemax::comEqual);
+	checkE26_vecBool.push_back(checkTheSystem);
+	// ***
+
+	// print the system
+	oftenUse::print(optSystemElement_E26, defaultWavelength);
+
+	CardinalPoints calcCardinalPointsE26(optSystemElement_E26, defaultWavelength, objectPoint_inf_obj::inf);
+
+	real EFL_ref = 58.6446;
+	real PP_obj_ref = 7.491531;
+	real PP_ima_ref = -38.055105;
+	real EXPP_lastSurface_ref = -22.96733;
+	real EXPP_global_ref = 60.0 - 22.96733;
+	real EXPD_ref = 1.861702;
+	real Mag_ref = 0.0;
+	real NA_objSpace_ref = 0.0;
+	real ENPP_firstSurface_ref = 44.05687;
+	real ENPP_global_ref = 44.05687;
+	real ENPD_ref = 2.506582;
+	real f_number__imaSpace_ref = 23.39625;
+	real NA_imaSpace_ref = 0.02136607;
+	real WFNO_ref = 23.3197;
+
+	real EFL_calc = calcCardinalPointsE26.getEFL();
+	real PP_objSpace_calc = calcCardinalPointsE26.getPP_obj();
+	real PP_imageSpace_calc = calcCardinalPointsE26.getPP_ima();
+	real EXPP_LastSurface_calc = calcCardinalPointsE26.getEXPP_lastSurface();
+	real EXPD_calc = calcCardinalPointsE26.getEXPD();
+	real Mag_calc = calcCardinalPointsE26.getMagnification();
+	real NA_objSpace_calc = calcCardinalPointsE26.getNA_objSpace();
+	real ENPP_firstSurface_calc = calcCardinalPointsE26.getENPP_firstSurface();
+	real ENPP_global_calc = calcCardinalPointsE26.getENPP_globalCoodi();
+	real ENPD_calc = calcCardinalPointsE26.getENPD();
+	real f_number_imaSpace_calc_imaSpace = calcCardinalPointsE26.getF_num_imaSpace();
+	real NA_imaSpace_calc = calcCardinalPointsE26.getNA_imaSpace();
+	real WFNO_calc = calcCardinalPointsE26.getWorkingFnumber();
+
+
+	bool checkEFL = Math::compareTwoNumbers_tolerance(EFL_ref, EFL_calc, mGlobalTolerance);
+	checkE26_vecBool.push_back(checkEFL);
+	bool checkPP = Math::compareTwoNumbers_tolerance(PP_obj_ref, PP_objSpace_calc, mGlobalTolerance);
+	checkE26_vecBool.push_back(checkPP);
+	bool checkAntiPP = Math::compareTwoNumbers_tolerance(PP_ima_ref, PP_imageSpace_calc, mGlobalTolerance);
+	checkE26_vecBool.push_back(checkAntiPP);
+	bool checkEXPP = Math::compareTwoNumbers_tolerance(EXPP_lastSurface_ref, EXPP_LastSurface_calc, mGlobalTolerance);
+	checkE26_vecBool.push_back(checkEXPP);
+	bool checkEXPD = Math::compareTwoNumbers_tolerance(EXPD_ref, EXPD_calc, mGlobalTolerance);
+	checkE26_vecBool.push_back(checkEXPD);
+	bool checkMag = Math::compareTwoNumbers_tolerance(Mag_ref, Mag_calc, mGlobalTolerance);
+	checkE26_vecBool.push_back(checkMag);
+	bool checkNA_objSpac = Math::compareTwoNumbers_tolerance(NA_objSpace_ref, NA_objSpace_calc, mGlobalTolerance);
+	checkE26_vecBool.push_back(checkNA_objSpac);
+	bool checkENPP_firstSurface = Math::compareTwoNumbers_tolerance(ENPP_firstSurface_ref, ENPP_firstSurface_calc, mGlobalTolerance);
+	checkE26_vecBool.push_back(checkENPP_firstSurface);
+	bool checkENPP_globalCoordi = Math::compareTwoNumbers_tolerance(ENPP_global_ref, ENPP_global_calc, mGlobalTolerance);
+	checkE26_vecBool.push_back(checkENPP_globalCoordi);
+	bool checkENPD = Math::compareTwoNumbers_tolerance(ENPD_ref, ENPD_calc, mGlobalTolerance);
+	checkE26_vecBool.push_back(checkENPD);
+	bool checkF_number_imaSpace = Math::compareTwoNumbers_tolerance(f_number_imaSpace_calc_imaSpace, f_number__imaSpace_ref, mGlobalTolerance);
+	checkE26_vecBool.push_back(checkF_number_imaSpace);
+	bool checkNA_imaSpace = Math::compareTwoNumbers_tolerance(NA_imaSpace_ref, NA_imaSpace_calc, mGlobalTolerance);
+	checkE26_vecBool.push_back(checkNA_imaSpace);
+	bool checkWFNO = Math::compareTwoNumbers_tolerance(WFNO_ref, WFNO_calc, mGlobalTolerance);
+	checkE26_vecBool.push_back(checkWFNO);
+
+	bool checkE26 = Math::checkTrueOfVectorElements(checkE26_vecBool);
+	return checkE26;
+}

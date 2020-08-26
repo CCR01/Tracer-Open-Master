@@ -37,6 +37,7 @@ public:
 	bool testCalcCardinalPointsE24_inf();
 
 	bool testCalcCardinalPointsE25_obj();
+	bool testCalcCardinalPointsE26_inf();
 
 
 private:

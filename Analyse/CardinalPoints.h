@@ -144,5 +144,11 @@ private:
 	ApertureStop_LLT mApertureStop{};
 	unsigned int mPositionApertureStop{};
 
+	// parameters before aperture stop
+	std::vector<real> mDistances_vec_BAS_rot;
+	std::vector<real> mRadii_vec_BAS_rot;
+	std::vector<real> mRefIndex_vec_BAS_rot;
+	std::vector<real> mRefIndex_vec_dash_BAS_rot;
+	std::vector<real> mF_dash_vec_BAS_rot;
 };
 

@@ -149,6 +149,13 @@ void CardinalPoints::loadAndResizeParameters()
 
 	// NA 
 	mStartPointRayToCalcNA_obj = { 0.0,0.0,0.0 };
+
+	// parametes before aperture stop
+	mDistances_vec_BAS_rot.resize(mPositionApertureStop);
+	mRadii_vec_BAS_rot.resize(mPositionApertureStop);
+	mRefIndex_vec_BAS_rot.resize(mPositionApertureStop);
+	mRefIndex_vec_dash_BAS_rot.resize(mPositionApertureStop);
+	mF_dash_vec_BAS_rot.resize(mPositionApertureStop);
 }
 
 void CardinalPoints::calcSystemMatrix()
@@ -199,7 +206,7 @@ real CardinalPoints::calcEFL()
 // calculat the global principal plan of the optical system
 real CardinalPoints::calcPP_obj()
 {
-	real PP_obj = (mSystemMatrix_vec[3] - 1) / (mSystemMatrix_vec[2]);
+	real PP_obj = (mSystemMatrix_vec[3] - mAllRefractivIndexes[0]) / (mSystemMatrix_vec[2]);
 
 	if (mPositionApertureStop == 0)
 	{
@@ -213,7 +220,7 @@ real CardinalPoints::calcPP_obj()
 // calculat the global anti principal plan of the optical syste
 real CardinalPoints::calcPP_ima()
 {
-	return -(mSystemMatrix_vec[0] - 1) / mSystemMatrix_vec[2];
+	return -(mSystemMatrix_vec[0] - 1.0) / mSystemMatrix_vec[2];
 }
 
 //calculate the exit Pupul position
@@ -604,12 +611,6 @@ real CardinalPoints::calcENPP_firstSurface()
 	std::shared_ptr<SurfaceIntersectionRay_LLT> tempSurfacePointer{};
 	real tempDirection_Z{};
 
-	std::vector<real> distances_vec_BAS_rot(mPositionApertureStop);
-	std::vector<real> radii_vec_BAS_rot(mPositionApertureStop);
-	std::vector<real> refIndex_vec_BAS_rot(mPositionApertureStop);
-	std::vector<real> refIndex_vec_dash_BAS_rot(mPositionApertureStop);
-	std::vector<real> f_dash_vec_BAS_rot(mPositionApertureStop);
-
 	mS_beforeAS_rot.resize(mPositionApertureStop);
 	mS_dash_beforeAS_rot.resize(mPositionApertureStop);
 
@@ -617,24 +618,24 @@ real CardinalPoints::calcENPP_firstSurface()
 	{
 		//posAndInteraSurfaceBeforeApertureStop_vec[i] = mPosAndInteraSurfaceVector[i].clone();
 		tempSurfacePointer = mPosAndInteraSurfaceVector[mPositionApertureStop - 1 - i].getSurfaceInterRay_ptr();
-		distances_vec_BAS_rot[i] = mPosAndInteraSurfaceVector[mPositionApertureStop - i].getSurfaceInterRay_ptr()->getPoint().getZ() - tempSurfacePointer->getPoint().getZ();
-		radii_vec_BAS_rot[i] = tempSurfacePointer->getRadius();
+		mDistances_vec_BAS_rot[i] = mPosAndInteraSurfaceVector[mPositionApertureStop - i].getSurfaceInterRay_ptr()->getPoint().getZ() - tempSurfacePointer->getPoint().getZ();
+		mRadii_vec_BAS_rot[i] = tempSurfacePointer->getRadius();
 		tempDirection_Z = tempSurfacePointer->getDirection().getZ();
 
 		if (tempDirection_Z > 0)
 		{
-			radii_vec_BAS_rot[i] = -1.0 * tempSurfacePointer->getRadius();;
-			refIndex_vec_BAS_rot[i] = tempSurfacePointer->getRefractiveIndex_B();
-			refIndex_vec_dash_BAS_rot[i] = tempSurfacePointer->getRefractiveIndex_A();
-			f_dash_vec_BAS_rot[i] = refIndex_vec_dash_BAS_rot[i] * radii_vec_BAS_rot[i] / (refIndex_vec_dash_BAS_rot[i] - refIndex_vec_BAS_rot[i]);
+			mRadii_vec_BAS_rot[i] = -1.0 * tempSurfacePointer->getRadius();;
+			mRefIndex_vec_BAS_rot[i] = tempSurfacePointer->getRefractiveIndex_B();
+			mRefIndex_vec_dash_BAS_rot[i] = tempSurfacePointer->getRefractiveIndex_A();
+			mF_dash_vec_BAS_rot[i] = mRefIndex_vec_dash_BAS_rot[i] * mRadii_vec_BAS_rot[i] / (mRefIndex_vec_dash_BAS_rot[i] - mRefIndex_vec_BAS_rot[i]);
 		}
 
 		else
 		{
-			radii_vec_BAS_rot[i] = tempSurfacePointer->getRadius();
-			refIndex_vec_BAS_rot[i] = tempSurfacePointer->getRefractiveIndex_A();
-			refIndex_vec_dash_BAS_rot[i] = tempSurfacePointer->getRefractiveIndex_B();
-			f_dash_vec_BAS_rot[i] = refIndex_vec_dash_BAS_rot[i] * radii_vec_BAS_rot[i] / (refIndex_vec_dash_BAS_rot[i] - refIndex_vec_BAS_rot[i]);
+			mRadii_vec_BAS_rot[i] = tempSurfacePointer->getRadius();
+			mRefIndex_vec_BAS_rot[i] = tempSurfacePointer->getRefractiveIndex_A();
+			mRefIndex_vec_dash_BAS_rot[i] = tempSurfacePointer->getRefractiveIndex_B();
+			mF_dash_vec_BAS_rot[i] = mRefIndex_vec_dash_BAS_rot[i] * mRadii_vec_BAS_rot[i] / (mRefIndex_vec_dash_BAS_rot[i] - mRefIndex_vec_BAS_rot[i]);
 		}
 
 	}
@@ -644,8 +645,8 @@ real CardinalPoints::calcENPP_firstSurface()
 	real tempS_dash{};
 	for (unsigned int i = 0; i < mPositionApertureStop; ++i)
 	{
-		mS_beforeAS_rot[i] = -1.0 * (distances_vec_BAS_rot[i] - tempS_dash);
-		mS_dash_beforeAS_rot[i] = refIndex_vec_dash_BAS_rot[i] / (refIndex_vec_dash_BAS_rot[i] / f_dash_vec_BAS_rot[i] + refIndex_vec_BAS_rot[i] / mS_beforeAS_rot[i]);
+		mS_beforeAS_rot[i] = -1.0 * (mDistances_vec_BAS_rot[i] - tempS_dash);
+		mS_dash_beforeAS_rot[i] = mRefIndex_vec_dash_BAS_rot[i] / (mRefIndex_vec_dash_BAS_rot[i] / mF_dash_vec_BAS_rot[i] + mRefIndex_vec_BAS_rot[i] / mS_beforeAS_rot[i]);
 		tempS_dash = mS_dash_beforeAS_rot[i];
 	}
 
@@ -675,6 +676,8 @@ real CardinalPoints::calcENPD()
 	{
 		magAperStop_left = magAperStop_left * mS_dash_beforeAS_rot[i] / mS_beforeAS_rot[i];			
 	}
+
+	magAperStop_left = mRefIndex_vec_BAS_rot[0] / mRefIndex_vec_dash_BAS_rot.back() * magAperStop_left;
 
 	return std::abs(mDiameterOfApertureStop * magAperStop_left);
 
