@@ -518,7 +518,7 @@ unsigned RayAiming::getPositionApertureStop(OpticalSystem_LLT optSys)
 			if (positionAperture != i)
 			{
 				//just for debugging
-				std::cout << "there is maybe a mistake in the position of the apertrure stop\n";
+				//std::cout << "there is maybe a mistake in the position of the apertrure stop\n";
 			}
 
 		}
@@ -530,7 +530,7 @@ unsigned RayAiming::getPositionApertureStop(OpticalSystem_LLT optSys)
 	{
 		positionAperture = -1;
 		//just for debugging
-		std::cout << "there is no or more than one aperture stop in your optical system!\n";
+		//std::cout << "there is no or more than one aperture stop in your optical system!\n";
 	}
 
 	return positionAperture;
@@ -709,7 +709,7 @@ bool RayAiming::checkIfThereIsAtLeastOneValidInterPoint(const std::vector<lightR
 
 	if (isOnValidInterPoint == false)
 	{
-		std::cout << "ATTENTION: There is no valid intersection point at the aperture stop by the first guess" << std::endl;
+		//std::cout << "ATTENTION: There is no valid intersection point at the aperture stop by the first guess" << std::endl;
 		mGlobalSTOP = true;
 	}
 
@@ -2444,7 +2444,7 @@ LightRayStruct RayAiming::checkLightRay(const LightRayStruct& lightRayToCheck, c
 			if (mCounter_RaysThatNotBeAimed > mDefaultParaRayAiming.getMaxRayThatNotBeAimable())
 			{
 				// just for debugging
-				std::cout << i << std::endl;
+				//std::cout << i << std::endl;
 				i = 5;
 				mGlobalSTOP = true;
 			}

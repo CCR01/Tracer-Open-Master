@@ -127,6 +127,8 @@ private:
 
 	Parameter<real> mSemiHeightPlanEleParam;
 
+	Parameter<real> mRadiusPlanEleParam;
+
 	Parameter<real> mRefractiveIndexA_PlanParam;
 	Parameter<real> mRefractiveIndexB_PlanParam;
 

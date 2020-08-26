@@ -6,7 +6,8 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
-
+#include <chrono>
+#include <ctime> 
 
 
 // convert a vector with double to strings
@@ -43,6 +44,34 @@ void inportExportData::saveDoubleInTXT(std::string locationTXT, std::string name
 	}
 	file.close();
 
+
+}
+
+
+
+void inportExportData::saveStringInTXT(std::string locationTXT, std::string nameTXT, std::string stringToSave)
+{
+	std::string type = ".txt";
+	std::string holeFile = locationTXT + nameTXT + type;
+
+	std::ofstream file;
+	file.open(holeFile, std::ios_base::app);
+
+	auto end = std::chrono::system_clock::now();
+	std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+
+	//std::cout << "finished computation at " << std::ctime(&end_time)
+
+
+	if (file.is_open())
+	{
+		file << "________________________" << std::endl;
+		file << stringToSave << std::endl;
+		file << std::ctime(&end_time) << std::endl;
+		file << "________________________" << std::endl;
+	}
+
+	file.close();
 
 }
 

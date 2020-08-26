@@ -47,22 +47,22 @@ bool testCardinalPoints::superFuncTestCalcCardinalPoints()
 {
 	std::vector<bool> checkCalcCardinal;
 
-	//bool testE0 = testCalcCardinalPointsE0_obj();
-	//checkCalcCardinal.push_back(testE0);
-	//bool testE1 = testCalcCardinalPointsE1_obj();
-	//checkCalcCardinal.push_back(testE1);
-	//bool testE2 = testCalcCardinalPointsE2_obj();
-	//checkCalcCardinal.push_back(testE2);
-	//bool testE3 = testCalcCardinalPointsE3_obj();
-	//checkCalcCardinal.push_back(testE3);
-	//bool testE4 =testCalcCardinalPointsE4_obj();
-	//checkCalcCardinal.push_back(testE4);
-	//bool testE5 = testCalcCardinalPointsE5_obj();
-	//checkCalcCardinal.push_back(testE5);
-	//bool testE6 = testCalcCardinalPointsE6_inf();
-	//checkCalcCardinal.push_back(testE6);
-	//bool testE7 = testCalcCardinalPointsE7_inf();
-	//checkCalcCardinal.push_back(testE7);
+	bool testE0 = testCalcCardinalPointsE0_obj();
+	checkCalcCardinal.push_back(testE0);
+	bool testE1 = testCalcCardinalPointsE1_obj();
+	checkCalcCardinal.push_back(testE1);
+	bool testE2 = testCalcCardinalPointsE2_obj();
+	checkCalcCardinal.push_back(testE2);
+	bool testE3 = testCalcCardinalPointsE3_obj();
+	checkCalcCardinal.push_back(testE3);
+	bool testE4 =testCalcCardinalPointsE4_obj();
+	checkCalcCardinal.push_back(testE4);
+	bool testE5 = testCalcCardinalPointsE5_obj();
+	checkCalcCardinal.push_back(testE5);
+	bool testE6 = testCalcCardinalPointsE6_inf();
+	checkCalcCardinal.push_back(testE6);
+	bool testE7 = testCalcCardinalPointsE7_inf();
+	checkCalcCardinal.push_back(testE7);
 	bool testE8 = testCalcCardinalPointsE8_inf();
 	checkCalcCardinal.push_back(testE8);
 

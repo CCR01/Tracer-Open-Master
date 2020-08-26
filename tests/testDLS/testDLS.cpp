@@ -858,9 +858,9 @@ bool testDLS::testDLS_superFct_optiCarPoints()
 {
 	std::vector<bool> testSuperFct_vec_cardinalPoints;
 
-	//// opti efl
-	//bool checkEFL = testE0_carPoint();
-	//testSuperFct_vec_cardinalPoints.push_back(checkEFL);
+	// opti efl
+	bool checkEFL = testE0_carPoint();
+	testSuperFct_vec_cardinalPoints.push_back(checkEFL);
 	// E1
 	bool checkE1 = testE1_carPoint();
 	testSuperFct_vec_cardinalPoints.push_back(checkE1);

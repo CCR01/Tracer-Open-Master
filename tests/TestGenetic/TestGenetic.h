@@ -41,6 +41,9 @@ public:
 	// E7
 	bool testE7();
 
+	// E8
+	bool testE8();
+
 	// test geneartion modes
 	bool testGenerationModes(real min, real max, real sampling, unsigned int maxInteration);
 	// random generation mode

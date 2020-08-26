@@ -1550,7 +1550,7 @@ void DLS::optimizeSystem_DLS_multiplicativ_Damping()
 		if (absolutStopCounter > absolutStop)
 		{
 			mIterationCounter = maxIterations + 1;
-			std::cout << "ABSOLUT STOP" << std::endl;
+			//std::cout << "ABSOLUT STOP" << std::endl;
 		}
 
 
@@ -1576,8 +1576,8 @@ void DLS::printCurVariables()
 		if (tempKindParameter == radiusVar)
 		{
 			tempVal = mChangedOptSys_LLT_vec[0].getPosAndInteractingSurface()[tempSurfaceNum].getSurfaceInterRay_ptr()->getRadius();
-			std::cout << "radius of surface " << tempSurfaceNum << " is " << tempVal << std::endl;
-			std::cout << std::endl;
+			//std::cout << "radius of surface " << tempSurfaceNum << " is " << tempVal << std::endl;
+			//std::cout << std::endl;
 
 		}
 
@@ -1585,8 +1585,8 @@ void DLS::printCurVariables()
 		{
 			//tempVal = mChangedOptSys_LLT_vec[0].getPosAndInteractingSurface()[tempSurfaceNum].getSurfaceInterRay_ptr()->getPoint().getZ();
 			tempVal = mThickness_vec[tempSurfaceNum];
-			std::cout << "thickness Z of surface " << tempSurfaceNum << " is " << tempVal << std::endl;
-			std::cout << std::endl;
+			//std::cout << "thickness Z of surface " << tempSurfaceNum << " is " << tempVal << std::endl;
+			//std::cout << std::endl;
 		}
 
 	}
@@ -2005,7 +2005,7 @@ void DLS::calc_individualDampingFactors()
 	calcF_T_times_A_times_A_T_times_F();
 	mIndividualDampingFactor = 2 * mF_T_times_A_times_A_T_times_F / mF_T_times_F;
 
-	std::cout << "individual damping factor: " << mIndividualDampingFactor << std::endl;
+	//std::cout << "individual damping factor: " << mIndividualDampingFactor << std::endl;
 }
 
 void DLS::calc_F_T_times_F()

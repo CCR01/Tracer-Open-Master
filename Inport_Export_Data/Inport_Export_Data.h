@@ -8,6 +8,9 @@ namespace inportExportData
 	// convert a vector with double to strings
 	std::vector<std::string> convertDoubleToString_vector_withComma(std::vector<real> vectorDouble);
 
+	// save string in txt
+	void saveStringInTXT(std::string locationTXT, std::string nameTXT, std::string stringToSave);
+
 	// export data to TXT
 	void saveDoubleInTXT(std::string locationTXT, std::string nameTXT, std::string nameDoubel, real valueToSave);
 	void makeLineInTXT(std::string locationTXT, std::string nameTXT);

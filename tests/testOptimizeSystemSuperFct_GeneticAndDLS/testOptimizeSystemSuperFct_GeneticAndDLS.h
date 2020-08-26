@@ -59,6 +59,8 @@ public:
 	// E11 _rms
 	bool checkE11_GeneticAndDLS_rms();
 
+	// E12 _rms
+	bool checkE12_GeneticAndDLS_rms();
 
 
 	//E0 _cardinalPoints

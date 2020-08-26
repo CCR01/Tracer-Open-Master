@@ -103,53 +103,57 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::testOptimizeSys_SuperFunction_Gen
 {
 	std::vector<bool> workTheOptimizerSuperFct_rms;
 	
-	//// E0
-	//bool checkE0_rms = checkE0_GeneticAndDLS_rms();
-	//workTheOptimizerSuperFct_rms.push_back(checkE0_rms);
-	//
-	//// E1
-	//bool checkE1_rms = checkE1_GeneticAndDLS_rms();
-	//workTheOptimizerSuperFct_rms.push_back(checkE1_rms);
-	//
-	//// E2
-	//bool checkE2_rms = checkE2_GeneticAndDLS_rms();
-	//workTheOptimizerSuperFct_rms.push_back(checkE2_rms);
-	//
-	//// E3
-	//bool checkE3_rms = checkE3_GeneticAndDLS_rms();
-	//workTheOptimizerSuperFct_rms.push_back(checkE3_rms);
-	//
-	//// E4
-	//bool checkE4_rms = checkE4_GeneticAndDLS_rms();
-	//workTheOptimizerSuperFct_rms.push_back(checkE4_rms);
-	//
-	//// E5
-	//bool checkE5_rms = checkE5_GeneticAndDLS_rms();
-	//workTheOptimizerSuperFct_rms.push_back(checkE5_rms);
-	//
-	//// E6
-	//bool checkE6_rms = checkE6_GeneticAndDLS_rms();
-	//workTheOptimizerSuperFct_rms.push_back(checkE6_rms);
-	//
-	//// E7
-	//bool checkE7_rms = checkE7_GeneticAndDLS_rms();
-	//workTheOptimizerSuperFct_rms.push_back(checkE7_rms);
-	//
-	//// E8
-	//bool checkE8_rms = checkE8_GeneticAndDLS_rms();
-	//workTheOptimizerSuperFct_rms.push_back(checkE8_rms);
-	//
-	//// E9
-	//bool checkE9_rms = checkE9_GeneticAndDLS_rms();
-	//workTheOptimizerSuperFct_rms.push_back(checkE9_rms);
-	//
-	//// E10
-	//bool checkE10_rms = checkE10_GeneticAndDLS_rms();
-	//workTheOptimizerSuperFct_rms.push_back(checkE10_rms);
-
+	// E0
+	bool checkE0_rms = checkE0_GeneticAndDLS_rms();
+	workTheOptimizerSuperFct_rms.push_back(checkE0_rms);
+	
+	// E1
+	bool checkE1_rms = checkE1_GeneticAndDLS_rms();
+	workTheOptimizerSuperFct_rms.push_back(checkE1_rms);
+	
+	// E2
+	bool checkE2_rms = checkE2_GeneticAndDLS_rms();
+	workTheOptimizerSuperFct_rms.push_back(checkE2_rms);
+	
+	// E3
+	bool checkE3_rms = checkE3_GeneticAndDLS_rms();
+	workTheOptimizerSuperFct_rms.push_back(checkE3_rms);
+	
+	// E4
+	bool checkE4_rms = checkE4_GeneticAndDLS_rms();
+	workTheOptimizerSuperFct_rms.push_back(checkE4_rms);
+	
+	// E5
+	bool checkE5_rms = checkE5_GeneticAndDLS_rms();
+	workTheOptimizerSuperFct_rms.push_back(checkE5_rms);
+	
+	// E6
+	bool checkE6_rms = checkE6_GeneticAndDLS_rms();
+	workTheOptimizerSuperFct_rms.push_back(checkE6_rms);
+	
+	// E7
+	bool checkE7_rms = checkE7_GeneticAndDLS_rms();
+	workTheOptimizerSuperFct_rms.push_back(checkE7_rms);
+	
+	// E8
+	bool checkE8_rms = checkE8_GeneticAndDLS_rms();
+	workTheOptimizerSuperFct_rms.push_back(checkE8_rms);
+	
+	// E9
+	bool checkE9_rms = checkE9_GeneticAndDLS_rms();
+	workTheOptimizerSuperFct_rms.push_back(checkE9_rms);
+	
+	// E10
+	bool checkE10_rms = checkE10_GeneticAndDLS_rms();
+	workTheOptimizerSuperFct_rms.push_back(checkE10_rms);
+	
 	// E11
 	bool checkE11_rms = checkE11_GeneticAndDLS_rms();
 	workTheOptimizerSuperFct_rms.push_back(checkE11_rms);
+
+	// E12 
+	bool checkE12_rms = checkE12_GeneticAndDLS_rms();
+	workTheOptimizerSuperFct_rms.push_back(checkE12_rms);
 
 	bool returnChecker_rms = Math::checkTrueOfVectorElements(workTheOptimizerSuperFct_rms);
 
@@ -889,14 +893,76 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE11_GeneticAndDLS_rms()
 	// print the optical system
 	oftenUse::print(GeneticAndDLS.getOptimizedOpticalSystem(), mWavelength_FdC_vec[0]);
 
-	std::vector<real> rmsOpti_Z{ 50.937,53.852,79.788 }; // sum 184,577
-	bool checkOptimizedSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(GeneticAndDLS.getOptimizedOpticalSystem(), mFields_vec012, mWavelength_FdC_vec, rmsOpti_Z, mTolerance, compareTOM_Zemax::comBetter);
+	std::vector<real> rmsOpti_Z{ 29.190,40.285,79.644 }; // sum 149,119
+	bool checkOptimizedSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(GeneticAndDLS.getOptimizedOpticalSystem(), /*fields X*/ mAngleX_000_vec, /*fields Y*/ mAngleY_012_vec, mWavelength_FdC_vec, rmsOpti_Z, mTolerance, compareTOM_Zemax::comBetter);
 	test_E11_vec.push_back(checkOptimizedSys);
 
 	bool checker = Math::checkTrueOfVectorElements(test_E11_vec);
 	return checker;
 
 }
+
+// E12 _rms
+bool testOptimizeSystemSuperFct_GeneticAndDLS ::checkE12_GeneticAndDLS_rms()
+{
+	std::vector<bool> test_E12_vec;
+
+	// surfaces _E12
+	SphericalElement Sphere0_E12(/*radius*/ 40.00, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getBAFN10_S1());
+	SphericalElement Sphere1_E12(/*radius*/ 80.00, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getNBK7_S1(), /*refractive index B*/glasses.getBAFN10_S1());
+	SphericalElement Sphere2_E12(/*radius*/ 30.00, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,35.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBK7_S1());
+	ApertureStopElement AperStop3_E12(/* semi height*/1.5, /*point*/{ 0.0,0.0,40.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAir());
+	SphericalElement Sphere4_E12(/*radius*/ 100.00, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,45.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getSF11_S1());
+	SphericalElement Sphere5_E12(/*radius*/ 100.00, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,50.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getSF6_S1(), /*refractive index B*/glasses.getSF11_S1());
+	SphericalElement Sphere6_E12(/*radius*/ 100.00, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,55.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getSF6_S1(), /*refractive index B*/glasses.getAir());
+	PlanElement Plan7_E12(/*semi height*/ 7.0, /*point*/{ 0.0,0.0,65.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getAir());
+
+	Sphere0_E12.setParameterRadius(-1000.0, 1000.0, 0.0, typeModifierVariable);
+	Sphere2_E12.setParameterRadius(-1000.0, 1000.0, 0.0, typeModifierVariable);
+	Sphere4_E12.setParameterRadius(-1000.0, 1000.0, 0.0, typeModifierVariable);
+	Sphere6_E12.setParameterPointZ(5.0, 30.0, 0.0, typeModifierVariable);
+
+
+	surfacePtr Sphere0_E12_ptr = Sphere0_E12.clone();
+	surfacePtr Sphere1_E12_ptr = Sphere1_E12.clone();
+	surfacePtr Sphere2_E12_ptr = Sphere2_E12.clone();
+	surfacePtr Aper3_E12_ptr = AperStop3_E12.clone();
+	surfacePtr Sphere4_E12_ptr = Sphere4_E12.clone();
+	surfacePtr Sphere5_E12_ptr = Sphere5_E12.clone();
+	surfacePtr Sphere6_E12_ptr = Sphere6_E12.clone();
+	surfacePtr Plan7_E12_ptr = Plan7_E12.clone();
+
+	std::vector<surfacePtr> opticalSystem_E12_ptr{ Sphere0_E12_ptr , Sphere1_E12_ptr, Sphere2_E12_ptr, Aper3_E12_ptr, Sphere4_E12_ptr, Sphere5_E12_ptr, Sphere6_E12_ptr,  Plan7_E12_ptr };
+	std::vector<interactionPtr> interactions_E12_ptr{ mRefrac.clone(), mRefrac.clone(),mRefrac.clone(),mDoNothing.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mAbsorb.clone() };
+
+	//	build optical system
+	OpticalSystemElement optSystemElement_E12(opticalSystem_E12_ptr, interactions_E12_ptr);
+
+	// print the start system
+	std::cout << "" << std::endl;
+	std::cout << "start system _E12" << std::endl;
+	oftenUse::print(optSystemElement_E12, mWave587);
+
+	// check the start system
+	std::vector<real> rmsStartSystem_Z{ 80.182,81.547,85.672 };
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E12, mAngleX_000_vec, mAngleY_012_vec, mWavelength_FdC_vec, rmsStartSystem_Z, 0.1, compareTOM_Zemax::comEqual);
+	test_E12_vec.push_back(checkStartSys);
+
+	// optimization
+	OptimizeSystemSuperFct_GeneticAndDLS GeneticAndDLS(/*optSysEle*/ optSystemElement_E12, /*fields X*/ mAngleX_000_vec, /*fields Y*/ mAngleY_012_vec, /*wavelength*/ mWavelength_FdC_vec, /*rings*/ 6, /*arms*/ 8, /*populatuion*/ mPopulation, /*target cardinal points*/ m_NO_targetCarPoint, /*default Genetic*/ mDefaultParaGenetic_rayTracing_ON, /*default DLS*/ mDefaultParamDLS_rayTracing_ON);
+	GeneticAndDLS.optimizeSuperFct_GeneticAndDLS_12Cores();
+
+	// print the optical system
+	oftenUse::print(GeneticAndDLS.getOptimizedOpticalSystem(), mWavelength_FdC_vec[0]);
+
+	std::vector<real> rmsOpti_Z{ 7.633,8.860,12.429 }; // sum 28.922
+	bool checkOptimizedSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(GeneticAndDLS.getOptimizedOpticalSystem(),  /*fields X*/ mAngleX_000_vec, /*fields Y*/ mAngleY_012_vec, mWavelength_FdC_vec, rmsOpti_Z, mTolerance, compareTOM_Zemax::comBetter);
+	test_E12_vec.push_back(checkOptimizedSys);
+
+	bool checker = Math::checkTrueOfVectorElements(test_E12_vec);
+	return checker;
+}
+
 
 //E0 _cardinalPoints
 bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE0_GeneticAndDLS_cardinalPoints()

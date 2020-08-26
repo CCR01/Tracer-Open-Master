@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <string>
 
 enum class testWhat {
 	tALL, tNothing, tMath, tFillAS, tAspherical_LLT, tApertureStop_LLT, tLensCatalogEO, tSphericalSurface_LLT, tGlasses,
@@ -17,7 +18,9 @@ public:
 
 	bool testSuperFct();
 	bool testWhatInTestWhatVec(testWhat checkTestWhatInVec);
+	void checkerAndCout(bool check, std::string currentTestSystem);
 
 private:
 	std::vector<testWhat> mTestWhat_vec{};
 };
+

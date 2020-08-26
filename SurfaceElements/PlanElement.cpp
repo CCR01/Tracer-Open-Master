@@ -8,6 +8,8 @@ PlanElement::PlanElement(double semiHeight, VectorStructR3 point, VectorStructR3
 
 	mSemiHeightPlanEleParam.set(semiHeight);
 
+	mRadiusPlanEleParam.set(999999.0);
+
 	mPointParamX.set(point.getX());
 	mPointParamY.set(point.getY());
 	mPointParamZ.set(point.getZ());
@@ -28,6 +30,7 @@ PlanElement::PlanElement(double semiHeight, VectorStructR3 point, VectorStructR3
 PlanElement::PlanElement(double /*semi height*/ semiHeight, VectorStructR3 /*point*/ point, VectorStructR3 /*direction*/ direction, MaterialSellmeier1 /*glass sinde A*/ glassA, MaterialSellmeier1 /*glass side B*/ glassB)
 {
 	mSemiHeightPlanEleParam.set(semiHeight);
+	mRadiusPlanEleParam.set(999999.0);
 
 	mPointParamX.set(point.getX());
 	mPointParamY.set(point.getY());
@@ -54,6 +57,7 @@ void PlanElement::setAllParameterFix()
 {
 
 	mSemiHeightPlanEleParam.setModifier(typeModifierFixed);
+	mRadiusPlanEleParam.setModifier(typeModifierFixed);
 
 	mRefractiveIndexA_PlanParam.setModifier(typeModifierFixed);
 	mRefractiveIndexB_PlanParam.setModifier(typeModifierFixed);
@@ -449,6 +453,7 @@ PlanElement::PlanElement(PlanElement &source)
 	mPlanGeometry_LLT = source.mPlanGeometry_LLT;
 
 	mSemiHeightPlanEleParam = source.mSemiHeightPlanEleParam;
+	mRadiusPlanEleParam = source.mRadiusPlanEleParam;
 
 	mRefractiveIndexA_PlanParam = source.mRefractiveIndexA_PlanParam;
 	mRefractiveIndexB_PlanParam = source.mRefractiveIndexB_PlanParam;
@@ -484,6 +489,8 @@ PlanElement& PlanElement::operator=(PlanElement& source)
 	mPlanGeometry_LLT = source.mPlanGeometry_LLT;
 
 	mSemiHeightPlanEleParam = source.mSemiHeightPlanEleParam;
+
+	mRadiusPlanEleParam = source.mRadiusPlanEleParam;
 
 	mRefractiveIndexA_PlanParam = source.mRefractiveIndexA_PlanParam;
 	mRefractiveIndexB_PlanParam = source.mRefractiveIndexB_PlanParam;
@@ -572,9 +579,7 @@ void PlanElement::setGlassB(MaterialSellmeier1 glassB)
 
 Parameter<real> PlanElement::getParameterRadius()
 {
-	//TODO: we ask here for the radius parameters. They do not exit for a plan surface!
-	// maybe we cen change that to infinity
-	return mPointParamZ;
+	return mRadiusPlanEleParam;
 }
 Parameter<real> PlanElement::getParameterPositionZ()
 {

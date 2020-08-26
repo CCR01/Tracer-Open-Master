@@ -316,9 +316,9 @@ int main(int argc, char **argv)
 	//*****************************************************************************************************************
 	
 
-	/*int i;
+	int i;
 	std::cout << "insert a rendom number" << std::endl;
-	std::cin >> i;*/
+	std::cin >> i;
 
 	return a.exec();
 }
