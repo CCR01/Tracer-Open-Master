@@ -31,10 +31,6 @@
 
 
 
-
-// TODO: es wäre bestimmt hilfreich, wenn die Größe und Lage der Ein- und Austrittspupille direkt im optischen System gespeichert wird
-// --> dann muss man das hier nicht als Parameter übergeben!
-
 class OPD
 {
 public:
@@ -42,12 +38,12 @@ public:
 	OPD() {};
 	// to calculate the global OPD
 	OPD(/*exit pupil*/ std::shared_ptr<SurfaceIntersectionRay_LLT> exitPupil,  /*optical system*/ OpticalSystem_LLT optSys,
-		/*fill apertur stop with light ray*/ std::vector<LightRayStruct> lightRayFillAperturStop, /*chief ray*/ LightRayStruct chiefLightRay, /*Scalling*/int scalling) :
-		mExitPupil(exitPupil),
-		mOptSys(optSys),
-		mLightRayFillAperturStop(lightRayFillAperturStop),
-		mChiefLightRay(chiefLightRay),
-		mScaling(scalling)
+		/*fill apertur stop with light ray*/ std::vector<LightRayStruct> lightRayFillAperturStop, /*chief ray*/ LightRayStruct chiefLightRay, /*Scalling*/int scalling) //:
+		//mExitPupil(exitPupil),
+		//mOptSys(optSys),
+		//mLightRayFillAperturStop(lightRayFillAperturStop),
+		//mChiefLightRay(chiefLightRay),
+		//mScaling(scalling)
 	{
 
 		mPosObject = mChiefLightRay.getRay_LLT().getOriginRay();
@@ -62,20 +58,6 @@ public:
 
 		SphericalSurface_LLT refSphere(/*radius*/mRadiusRefSphere, /*semiHeight*/mExitPupil->getSemiHeight() / 2, /*Apex of the sphere*/mChiefRayAtExitPupil,/*Direction*/mChiefRayAtImage - mChiefRayAtExitPupil, /*refIndexSideA*/1.0, /*refIndexSideB*/1.0);
 		mRefSphere = refSphere;
-
-		mGlobalOPD = calcGlobalOPD();
-		mUpscaledGlobalOPD = calcUpscaledGlobalOPD();
-
-		mSampledOPDMatrixforPSF = calcSampledOPDMatrixforPSF();
-
-		mCutoffFreq = calcCutoffFreq();
-
-		mPSF = calcPSF();
-
-		mMTF = calcMTF();
-
-		mHuygenPSF = calcHuygenPSF();
-
 
 
 	};
@@ -159,35 +141,18 @@ public:
 	//fuction to calculate FFT
 	cv::Mat OPD::calcFFT(cv::Mat Matrix);
 
-	//calculating PSF
-	cv::Mat calcPSF();
 
-	//calculate the cut off frequency
-	double OPD::calcCutoffFreq();
+
 
 	//plot function for MTF
 	//int OPD::PlotGraph(cv::Mat & data);
 
-	//calculate MTF
-	cv::Mat OPD::calcMTF();
-
-	// calcultat cardinal points
-	CardinalPoints calculateCardinalPoints();
-
-	//Calculate huygen's integral
-	cv::Mat OPD::calcHuygenIntegral(cv::Mat PupilFunction, double waveVector, double prop_distance, double sampling_in);
-
-	//calculate Huygens PSF
-	cv::Mat OPD::calcHuygenPSF();
 
 	// export a cv::mat to excel
 	void exportCV_MatToExcel(cv::Mat matToExport, std::string locationAndfilename);
 
 	// get vector with all calculated global OPD --> just for debugging
 	std::vector<real> getVecWithAllCalcGlobalOPD();
-
-	// export the global OPD as an .csv file
-	void exportGloblaOPD(std::string const& directionAndFilename);
 
 	// get the PSF
 	cv::Mat getPSF();
@@ -215,31 +180,19 @@ private:
 	VectorStructR3 mRefPoint;
 
 	DoNothingInteraction_LLT doNothingInter;
-	std::shared_ptr<InteractionRay_LLT> mDoNothingInteraction_ptr = doNothingInter.clone();
+	std::shared_ptr<InteractionRay_LLT> mDoNothingInteraction_ptr;
 	//std::shared_ptr<InteractionRay_LLT> refractionRay_LLT(new RefractedRay_LLT(*this));
 	unsigned numImageSurfaceWithoutExitPupil;
 
 	std::vector<LightRayStruct> mLightRayFillAperturStop;
 
+	std::vector<real> mVecWithAllCalcGlobalOPD;
+	
 	cv::Mat mGlobalOPD;
 
-	cv::Mat mUpscaledGlobalOPD;
-
-	cv::Mat mSampledOPDMatrixforPSF;
-
-	double mCutoffFreq;
-
-	cv::Mat mPSF;
-
-	cv::Mat mMTF;
-
-	CardinalPoints mCardinalPoints;
+	int mScaling;
 
 	cv::Mat mHuygenPSF;
-
-	std::vector<real> mVecWithAllCalcGlobalOPD; // we need that for debugging
-
-	int mScaling;
 
 };
 

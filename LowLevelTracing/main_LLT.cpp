@@ -24,7 +24,7 @@
 #include "../Analyse/Spot.h"
 #include "Surfaces\ParaxialLens_LLT.h"
 #include "Interaction\DeflectedRayParaxialLens_LLT.h"
-#include "..\benchmark\BenchAnalyse\BenchmarkOpticalPathDifference.h"
+
 #include "..\benchmark\Plot\BenchPlotSpotDiagram.h"
 #include "..\benchmark\Plot\BenchPlotOPD.h"
 #include "..\benchmark\Plot\BenchPlot2D.h"
@@ -37,7 +37,6 @@
 #include "..\benchmark\ComplexOptSys\BenchmarkComplexOptSys.h"
 #include "..\benchmark\Element\SphericalElement\BenchSphericalElement.h"
 
-#include "..\benchmark\BenchAnalyse\TestGlobalOPD.h"
 
 #include "..\benchmark\ZemaxExamples\Objectives\Cooke40DegreeField.h"
 
@@ -142,7 +141,7 @@ int main(int argc, char **argv)
 	// ManagementTests managementTest_2(testWhatVec_2);
 	// workTheSystem.push_back(managementTest_2.testSuperFct());
 
-	std::vector<testWhat> testWhatVec_3 = { testWhat::tLensReplace };
+	std::vector<testWhat> testWhatVec_3 = { testWhat::tOPD };
 	ManagementTests managementTest_3(testWhatVec_3);
 	workTheSystem.push_back(managementTest_3.testSuperFct());
 
