@@ -291,7 +291,7 @@ OpticalSystemElement OpticalSystemElement::getDeepCopyOptSysEle()
 	for (unsigned int i = 0; i < mPosAndElement.size(); i++)
 	{
 		tempEle_ptr = mPosAndElement.at(i).getElementInOptSys_ptr();
-		deepCopyEle_ptr = tempEle_ptr->getDeepCopyElement_ptr(mPosAndElement.at(i).getElementInOptSys_ptr());
+		deepCopyEle_ptr = tempEle_ptr->clone();
 
 		tempInteraction_ptr = mPosAndInteraction_LLT.at(i).getInteractionAtSur_ptr();
 	

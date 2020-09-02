@@ -18,6 +18,7 @@
 #include "..\testDLS\testDLS.h"
 #include "..\testDLS_multiThreads_12\testDLS_multiThreads_12.h"
 #include "..\testOptimizeSystemSuperFct_GeneticAndDLS\testOptimizeSystemSuperFct_GeneticAndDLS.h"
+#include "..\testLensReplace\testLenseReplace.h"
 
 ManagementTests::ManagementTests() {};
 ManagementTests::ManagementTests(std::vector<testWhat> testWhat_vec) :
@@ -278,7 +279,14 @@ bool ManagementTests::testSuperFct()
 		checkerAndCout(checkOpti_GeneticAndDLS_carPoints, "test optimize Cardinal points including Genetic and DLS multicore");
 	}
 	
-
+	// test lens replace
+	if (testWhatInTestWhatVec(testWhat::tLensReplace) || testAll)
+	{
+		testLensReplace checkTestLensReplace;
+		bool checkLensReplace = checkTestLensReplace.testLensReplace_superFct();
+		workTheSystem_test.push_back(checkLensReplace);
+		checkerAndCout(checkLensReplace, "test lens replace");
+	}
 
 
 	return Math::checkTrueOfVectorElements(workTheSystem_test);

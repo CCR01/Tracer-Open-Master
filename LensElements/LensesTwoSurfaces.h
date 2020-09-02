@@ -209,13 +209,69 @@ public:
 	void setBackFocalLength(real const backFocalLength);
 	//---
 
-	// *** *** // -> get functions
-	// focal length
-	real getFocalLength();
-	// thickness
+	// get functions
+	//---
+	// get lens catalog
+	std::string getLensCatalog();
+	// get number in catalog
+	unsigned int getCatalogNumber();
+	// get diameter
+	real getDiameter();
+	// get min diameter tolerance
+	real getMinDiaTolerance();
+	// get max diameter tolerance
+	real getMaxDiaTolerance();
+	// get real max surface quality; 
+	real getMaxSurfaceQuality();
+	// get real min surface quality; 
+	real getMinSurfaceQuality();
+	// get curvature PV
+	real getCurvaturePV();
+	// get tolerance center thickness
+	real getToleranceCenterThickness();
+	// get radius first surface
+	real getRadiusFirstSurface();
+	// get radius second surface
+	real getRadiusSecondSurface();
+	// tolerance focal length
+	real getToleranceFocallength();
+	// get min wavelength
+	real getMinWavelength();
+	// get max wavelength
+	real getMaxWavelength();
+	// get coating
+	std::string getCoating();
+	// get material
+	MaterialSellmeier1 getMaterial();
+	// get power PV
+	real getPowerPV();
+	// get min center
+	real getMinCenter();
+	// get max center
+	real getMaxCenter();
+	// get thickness
 	real getThickness();
-	// semi height
-	real getSemiHeight();
+	// get edge thickness
+	real getEdgeThickness();
+	// get design wavelength
+	real getDesignWavelength();
+	// get numerical aperture
+	real getNumericalAperture();
+	// get price
+	real getPrice();
+	// get wavelength to trace
+	real getWavelengthToTrace();
+	// get optical system two surfaces
+	OpticalSystemElement getOpticalSystemTwoSurfaces();
+	// get centering
+	real getCentering();
+	// get focal length
+	real getFocalLength();
+	// get free apertur
+	real getFreeAperture();
+	// get back focal length
+	real getBackFocalLength();
+	//---
 
 private:
 	std::string mLensCatalog{};

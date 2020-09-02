@@ -74,7 +74,6 @@
     <ClCompile Include="..\OptimizeSystem\EvaluateManyOptSystems_SeidelCoef.cpp" />
     <ClCompile Include="..\benchmark\testSeidelCombinations\testSeidelCombinations.cpp" />
     <ClCompile Include="..\lensReplace\LensReplace.cpp" />
-    <ClCompile Include="..\benchmark\testLensReplace\testLensReplace.cpp" />
     <ClCompile Include="..\benchmark\testSystemsPeterMA\testAchromatPerforAndAccuracy.cpp" />
     <ClCompile Include="..\benchmark\testSystemsPeterMA\testSystemsPeterMA.cpp" />
     <ClCompile Include="..\benchmark\testCalcCombinationVector\testCalcCombinationVector_Paraxial.cpp" />
@@ -132,6 +131,7 @@
     <ClCompile Include="..\RayAiming\RayAimingSuperFct.cpp" />
     <ClCompile Include="..\tests\testRayAimingSuperFct\testRayAiming_multiThreads_12.cpp" />
     <ClCompile Include="..\tests\testDLS\testDLS.cpp" />
+    <ClCompile Include="..\tests\testLensReplace\testLensReplace.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Analyse\CardinalPoints.h" />
@@ -209,7 +209,6 @@
     <ClInclude Include="..\OptimizeSystem\EvaluateManyOptSystems_SeidelCoef.h" />
     <ClInclude Include="..\benchmark\testSeidelCombinations\testSeidelCombinations.h" />
     <ClInclude Include="..\lensReplace\LensReplace.h" />
-    <ClInclude Include="..\benchmark\testLensReplace\testLenseReplace.h" />
     <ClInclude Include="..\benchmark\testSystemsPeterMA\testAchromatPerforAndAccuracy.h" />
     <ClInclude Include="..\benchmark\testSystemsPeterMA\testSystemsPeterMA.h" />
     <ClInclude Include="..\benchmark\testCalcCombinationVector\testCalcCombinationVector_Paraxial.h" />
@@ -269,5 +268,6 @@
     <ClInclude Include="..\RayAiming\RayAimingSuperFct.h" />
     <ClInclude Include="..\tests\testRayAimingSuperFct\testRayAiming_multiThreads_12.h" />
     <ClInclude Include="..\tests\testDLS\testDLS.h" />
+    <ClInclude Include="..\tests\testLensReplace\testLenseReplace.h" />
   </ItemGroup>
 </Project>

@@ -181,7 +181,6 @@
     <ClCompile Include="..\benchmark\testImageProcessing\TestImageProcessing.cpp" />
     <ClCompile Include="..\benchmark\testImages\testImages.cpp" />
     <ClCompile Include="..\benchmark\testImproveImageQuality\testImproveImageQuality.cpp" />
-    <ClCompile Include="..\benchmark\testLensReplace\testLensReplace.cpp" />
     <ClCompile Include="..\benchmark\testOptimizer_Paper\testOptimizer_Paper_P0.cpp" />
     <ClCompile Include="..\benchmark\testOptimizer_Paper\testOptimizer_Paper_P1.cpp" />
     <ClCompile Include="..\benchmark\testQwtPlots\testOPDQwtPlot.cpp" />
@@ -268,6 +267,7 @@
     <ClCompile Include="..\tests\TestGenetic\TestGenetic.cpp" />
     <ClCompile Include="..\tests\testGlasses\testGlasses.cpp" />
     <ClCompile Include="..\tests\testLensCatalog\testLensCatalogEO.cpp" />
+    <ClCompile Include="..\tests\testLensReplace\testLensReplace.cpp" />
     <ClCompile Include="..\tests\testMath\testMath.cpp" />
     <ClCompile Include="..\tests\testOptimizeSystemSuperFct_GeneticAndDLS\testOptimizeSystemSuperFct_GeneticAndDLS.cpp" />
     <ClCompile Include="..\tests\testParaxialLens_LLT\testParaxialLens_LLT.cpp" />
@@ -315,7 +315,6 @@
     <ClInclude Include="..\benchmark\testImageProcessing\TestImageProcessing.h" />
     <ClInclude Include="..\benchmark\testImages\testImages.h" />
     <ClInclude Include="..\benchmark\testImproveImageQuality\testImproveImageQuality.h" />
-    <ClInclude Include="..\benchmark\testLensReplace\testLenseReplace.h" />
     <ClInclude Include="..\benchmark\testOptimizer_Paper\testOptimizer_Paper_P0.h" />
     <ClInclude Include="..\benchmark\testOptimizer_Paper\testOptimizer_Paper_P1.h" />
     <ClInclude Include="..\benchmark\testQwtPlots\testOPDQwtPlot.h" />
@@ -405,6 +404,7 @@
     <ClInclude Include="..\tests\TestGenetic\TestGenetic.h" />
     <ClInclude Include="..\tests\testGlasses\testGlasses.h" />
     <ClInclude Include="..\tests\testLensCatalog\testLensCatalogEO.h" />
+    <ClInclude Include="..\tests\testLensReplace\testLenseReplace.h" />
     <ClInclude Include="..\tests\testMath\testMath.h" />
     <ClInclude Include="..\tests\testOptimizeSystemSuperFct_GeneticAndDLS\testOptimizeSystemSuperFct_GeneticAndDLS.h" />
     <ClInclude Include="..\tests\testParaxialLens_LLT\testParaxialLens_LLT.h" />

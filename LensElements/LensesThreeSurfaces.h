@@ -59,7 +59,6 @@ class LensThreeSurfaces
 		
 
 		// set functions
-
 		// set lens catalog
 		void setLensCatalog(std::string lensCatalog);
 		// set number in catalog
@@ -91,7 +90,7 @@ class LensThreeSurfaces
 		// set tolerance center Thickness
 		void setToleranceCenterThickness(real const toleranceCenterThickness);
 		// set radius first surface
-		void setRadisuFirstSurface(real const radiusFirstSurface);
+		void setRadiusFirstSurface(real const radiusFirstSurface);
 		// set radius second surface
 		void setRadisuSecondSurface(real const radiusSecondSurface);
 		// set radius third surface
@@ -136,12 +135,80 @@ class LensThreeSurfaces
 		void setWavelenghtToTrace(real const waveToTrace);
 
 		// *** *** // get functions
-		// focal length
-		real getFocalLenth();
-		// thickness 
-		real getThickness();
-		// semi height
-		real getSemiHeight();
+		// get lens catalog
+		std::string getLensCatalog();
+		// get number in catalog
+		unsigned int getCatalogNumber();
+		// get diameter
+		real getDiameter();
+		// get max diameter tolerance
+		real getMaxDiameterTolerance();
+		// get min diameter tolerance
+		real getMinDiameterTolerance();
+		// get focal lenght
+		real getFocalLength();
+		// get tolerance focal length
+		real getToleranceFocalLength();
+		// get back focal lenght
+		real getBackFocalLength();
+		// get design wavelength
+		real getDesignWavelength();
+		// get free aperture
+		real getFreeAperture();
+		// get min centering
+		real getMinCentering();
+		// get max centering
+		real getMaxCentering();
+		// get first thickness
+		real getFirstThickness();
+		// get second thickness
+		real getSecondThickness();
+		// get tolerance center Thickness
+		real getToleranceCenterThickness();
+		// get radius first surface
+		real getRadisuFirstSurface();
+		// get radius second surface
+		real getRadisuSecondSurface();
+		// get radius third surface
+		real getRadiusThirdSurface();
+		// get edge thickness 
+		real getEdgeThickness();
+		// get material first
+		MaterialSellmeier1 getMaterialFirst();
+		// get material second
+		MaterialSellmeier1 getMaterialSecond();
+		// get max surface quality
+		real getMaxSurfaceQuality();
+		// get min surface quality
+		real getMinSurfaceQuality();
+		// get stop
+		real getStop();
+		// get numerical aperture
+		real getNumericalAperture();
+		// get coating
+		std::string getCoating();
+		//get coating specification
+		real getCoatingSpecification();
+		// get power wavelength
+		real getPowerWavelength();
+		// get power PV
+		real getPowerPV();
+		// get curvature wavelength
+		real getCurvatureWave();
+		// get curvature PV
+		real getCurvaturePV();
+		// get bevel
+		std::string getBevel();
+		// get type
+		std::string getType();
+		// get minimal wavelength
+		real getMinimalWavelength();
+		// get maximum wavelength
+		real getMaximumWavelength();
+		// get price
+		real getPrice();
+		// get wavelengthToTrace
+		real getWavelenghtToTrace();
 
 	private:
 		std::string mLensCatalog{};

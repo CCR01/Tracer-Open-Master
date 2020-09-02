@@ -1,5 +1,5 @@
 #include "LensReplace.h"
-
+#include "..\oftenUseNamespace\oftenUseNamespace.h"
 
 // prefere lens Type
 lensTypes prefLensTypeAndFactro::getPrefLensType()
@@ -47,7 +47,24 @@ void OptSysEle_Merit_LensType::setLensType(lensTypes lensType)
 {
 	mLensType = lensType;
 }
-
+// name of the lens
+std::string OptSysEle_Merit_LensType::getLensCatalog()
+{
+	return mNameLens;
+}
+void OptSysEle_Merit_LensType::setLensCatalog(std::string nameLens)
+{
+	mNameLens = nameLens;
+}
+// catalog number
+unsigned int OptSysEle_Merit_LensType::getCatalogNumber()
+{
+	return mCatalogNumber;
+}
+void OptSysEle_Merit_LensType::setCatalogNumber(unsigned int catalogNumber)
+{
+	mCatalogNumber = catalogNumber;
+}
 // value
 real ValueMinMax::getValue()
 {
@@ -102,7 +119,7 @@ void defaultPara_LensReplace_struct::loadDefaultPara(unsigned int NoLenses)
 {
 	// load default catalog
 	std::vector<lensTypes> CatalogToLoad;
-	CatalogToLoad.push_back(posAchromat);
+	CatalogToLoad.push_back(lensTypes::posAchromat);
 	mCatalotToLoad_default = CatalogToLoad;
 
 	setMinDefault_percent(10.0);
@@ -136,7 +153,7 @@ void defaultPara_LensReplace_struct::loadDefaultPara(unsigned int NoLenses)
 	mPrefLensType_vec.resize(NoLenses);
 	for (unsigned int i = 0; i < NoLenses; ++i)
 	{
-		mPrefLensType_vec[i].setPrefensType(posAchromat);
+		mPrefLensType_vec[i].setPrefensType(lensTypes::posAchromat);
 		mPrefLensType_vec[i].setFactor(1.5);
 	}
 
@@ -327,36 +344,38 @@ real parameterLens::calcMaxValue(real value, real percent)
 
 void LensReplace::loadLensCata(std::vector<lensTypes> loadLensCatalogEO)
 {
+	mLoadLensCatalogEO = loadLensCatalogEO;
+
 	//DConvexL
-	bool load_DConvexL = findCatalog(loadLensCatalogEO, DConvexL);
+	bool load_DConvexL = findCatalog(mLoadLensCatalogEO, lensTypes::DConvexL);
 	if (load_DConvexL)
 	{
 		mEOLensCatalog.loadLensCatalogEO_double_convex_lenses();
 		mAll_DoubleConvexLenses = mEOLensCatalog.getAll_DoubleConvexLenses();
 	}
 	//posAchromat
-	bool load_posAchromat = findCatalog(loadLensCatalogEO, posAchromat);
+	bool load_posAchromat = findCatalog(mLoadLensCatalogEO, lensTypes::posAchromat);
 	if (load_posAchromat)
 	{
 		mEOLensCatalog.loadLensCatalogEO_achroamticLensesMgF();
 		mAll_AchromaticLensesMgF = mEOLensCatalog.getAll_achroamticLensesMgF();
 	}
 	//PConvexL
-	bool load_PConvexL = findCatalog(loadLensCatalogEO, PConvexL);
+	bool load_PConvexL = findCatalog(mLoadLensCatalogEO, lensTypes::PConvexL);
 	if (load_PConvexL)
 	{
 		mEOLensCatalog.loadLensCatalogEO_plan_convex_lenses_VIS_NIR();
 		mAll_PlanConvexLenses = mEOLensCatalog.getAll_PlanConvexLenses();
 	}
 	//DConcavL
-	bool load_DConcavL = findCatalog(loadLensCatalogEO, DConcavL);
+	bool load_DConcavL = findCatalog(mLoadLensCatalogEO, lensTypes::DConcavL);
 	if (load_DConcavL)
 	{
 		mEOLensCatalog.loadLensCatalogEO_double_concav_lenses_VIS_NIR();
 		mAll_DoubleConcavLenses = mEOLensCatalog.getAll_DoubleConcavLenses();
 	}
 	//PConcavL
-	bool load_PConcavL = findCatalog(loadLensCatalogEO, PConcavL);
+	bool load_PConcavL = findCatalog(mLoadLensCatalogEO, lensTypes::PConcavL);
 	if (load_PConcavL)
 	{
 		mEOLensCatalog.loadLensCatalogEO_plan_concav_lenses_VIS_NIR();
@@ -387,10 +406,7 @@ real LensReplace::calcFocalLenghtOptSys(OpticalSystem_LLT optSys_LLT)
 	systemMatrix[0].resize(2);
 	systemMatrix[1].resize(2);
 	
-
-
 	std::vector<std::vector<std::vector<real>>> AllMatrix;
-
 
 	// temp propagation matrix
 	std::vector<std::vector<real>> tempMatrix_propagation;
@@ -427,8 +443,6 @@ real LensReplace::calcFocalLenghtOptSys(OpticalSystem_LLT optSys_LLT)
 	// calc all refraction matrix
 	for (int i = size; i >= 0; --i)
 	{
-
-
 		tempSurface_ptr = optSys_LLT.getPosAndInteractingSurface()[i].getSurfaceInterRay_ptr();
 
 		tempDirection_Z = tempSurface_ptr->getDirection().getZ();
@@ -640,6 +654,11 @@ std::vector<OpticalSystem_LLT> LensReplace::findLensesInOptSys_LLT(OpticalSystem
 
 	}
 
+	if (optSys_lenses_LLT_vec.size() == 0)
+	{
+		optSys_lenses_LLT_vec.push_back(tempOptSys_lens_LLT);
+	}
+
 	return optSys_lenses_LLT_vec;
 }
 
@@ -741,7 +760,7 @@ OptSysEle_Merit_LensType LensReplace::findOptSysEle_lens_inCatalog_TwoSurfaces(p
 	for (unsigned int i = 0; i < numberLenses; ++i)
 	{
 		focalLenghtCatLens_temp = AllLensesTwoSurfaces[i].getFocalLength();
-		semiHeightCatLens_temp = AllLensesTwoSurfaces[i].getSemiHeight();
+		semiHeightCatLens_temp = AllLensesTwoSurfaces[i].getDiameter() / 2.0;
 		thicknessCatLens_temp = AllLensesTwoSurfaces[i].getThickness();
 
 		tempMerit = calcualteMerit_lens(focaLengthParam, minFocalLengthParam, maxFocalLengthParam, weightFocal, thicknessParam, minThicknessParam, maxThicknessParam, weightThickness, semiHeightParam, minSemiHeightParam, maxSemiHeightParam, weightSemiHeight, focalLenghtCatLens_temp, thicknessCatLens_temp, semiHeightCatLens_temp);
@@ -760,9 +779,14 @@ OptSysEle_Merit_LensType LensReplace::findOptSysEle_lens_inCatalog_TwoSurfaces(p
 
 
 	OpticalSystemElement returnOptSysEle = AllLensesTwoSurfaces[posLowestMertitFalue].getHLT_TwoSurfaces().getDeepCopyOptSysEle();
+	std::string catalog = AllLensesTwoSurfaces[posLowestMertitFalue].getLensCatalog();
+	unsigned int catalogNumer = AllLensesTwoSurfaces[posLowestMertitFalue].getCatalogNumber();
+	//std::string nameBestFitLens = AllLensesTwoSurfaces[posLowestMertitFalue].get
 
 	returnOptSysEle_Merit.setOpticalSystemEle(returnOptSysEle);
 	returnOptSysEle_Merit.setMerit(returnMerit);
+	returnOptSysEle_Merit.setCatalogNumber(catalogNumer);
+	returnOptSysEle_Merit.setLensCatalog(catalog);
 
 	return returnOptSysEle_Merit;
 }
@@ -798,9 +822,9 @@ OptSysEle_Merit_LensType LensReplace::findOptSysEle_lens_inCatalog_ThreeSurfaces
 
 	for (unsigned int i = 0; i < numberLenses; ++i)
 	{
-		focalLenghtCatLens_temp = AllLensesThreeSurfaces[i].getFocalLenth();
-		semiHeightCatLens_temp = AllLensesThreeSurfaces[i].getSemiHeight();
-		thicknessCatLens_temp = AllLensesThreeSurfaces[i].getThickness();
+		focalLenghtCatLens_temp = AllLensesThreeSurfaces[i].getFocalLength();
+		semiHeightCatLens_temp = AllLensesThreeSurfaces[i].getDiameter() / 2.0;
+		thicknessCatLens_temp = AllLensesThreeSurfaces[i].getFirstThickness() + AllLensesThreeSurfaces[i].getSecondThickness();
 
 		tempMerit = calcualteMerit_lens(focaLengthParam, minFocalLengthParam, maxFocalLengthParam, weightFocal, thicknessParam, minThicknessParam, maxThicknessParam, weightThickness, semiHeightParam, minSemiHeightParam, maxSemiHeightParam, weightSemiHeight, focalLenghtCatLens_temp, thicknessCatLens_temp, semiHeightCatLens_temp);
 
@@ -817,8 +841,13 @@ OptSysEle_Merit_LensType LensReplace::findOptSysEle_lens_inCatalog_ThreeSurfaces
 
 
 	OpticalSystemElement returnOptSysEle = AllLensesThreeSurfaces[posLowestMertitFalue].getHLT_ThreeSurfaces().getDeepCopyOptSysEle();
+	std::string lensCatalog = AllLensesThreeSurfaces[posLowestMertitFalue].getLensCatalog();
+	unsigned int lensNumber = AllLensesThreeSurfaces[posLowestMertitFalue].getCatalogNumber();
+
 	returnOptSysEle_Merit.setOpticalSystemEle(returnOptSysEle);
 	returnOptSysEle_Merit.setMerit(returnMerit);
+	returnOptSysEle_Merit.setLensCatalog(lensCatalog);
+	returnOptSysEle_Merit.setCatalogNumber(lensNumber);
 
 	return returnOptSysEle_Merit;
 }
@@ -832,7 +861,7 @@ real LensReplace::calcualteMerit(real target, real is, real weight)
 
 real LensReplace::calcualteMerit_lens(real focalParam, real minFocalParam, real maxFocalParam, real focalWeight, real thicknessParam, real minThicknessParam, real maxThicknessParam, real thicknessWeight, real semiHeightParam, real minSemiHeightParam, real maxSemiHeightParam, real semiHeightWeight, real focalTemp,real thicknessTemp, real semiHeightTemp)
 {
-	real veryHeighNumber = 9999999999999999999999999999999.0;
+	real veryHeighNumber = oftenUse::getInfReal();
 
 	real returnMeritLens;
 	real meritFocalLenght = veryHeighNumber;
@@ -876,13 +905,10 @@ real LensReplace::calcualteMerit_lens(real focalParam, real minFocalParam, real 
 	return returnMeritLens;
 }
 
-OpticalSystemElement LensReplace::checkLensCatalogsForBestFitLens(/*number lens*/ unsigned int lensNo,/*parameter lens*/ parameterLens paraLens, /*load lens catalog*/ std::vector<lensTypes> loadLensCatalogEO_vec)
+OptSysEle_Merit_LensType LensReplace::checkLensCatalogsForBestFitLens(/*number lens*/ unsigned int lensNo,/*parameter lens*/ parameterLens paraLens)
 {
-	real veryHeighNumber = 9999999999999999999999999999999.0;
+	real veryHeighNumber = oftenUse::getInfReal();
 	std::vector<OptSysEle_Merit_LensType> OptSysEleMertit_LensType_vec;
-
-	// load lens catalogs
-	loadLensCata(loadLensCatalogEO_vec);
 
 	OptSysEle_Merit_LensType DConvexL_opt_mertir_type;
 	DConvexL_opt_mertir_type.setMerit(veryHeighNumber);
@@ -904,12 +930,12 @@ OpticalSystemElement LensReplace::checkLensCatalogsForBestFitLens(/*number lens*
 	real prefFactor = mDefaultPara_LensReplace.getPrefLensTyeAndFactorSurface_i(lensNo).getFactor();
 
 	//DConvexL
-	bool load_DConvexL = findCatalog(loadLensCatalogEO_vec, DConvexL);
+	bool load_DConvexL = findCatalog(mLoadLensCatalogEO, lensTypes::DConvexL);
 	if (load_DConvexL)
 	{
 		DConvexL_opt_mertir_type = findOptSysEle_lens_inCatalog_TwoSurfaces(paraLens, mAll_DoubleConvexLenses, weightFocal, weightThickness, weightSemiHeight);
-		DConvexL_opt_mertir_type.setLensType(DConvexL);
-		if (prefLensType == DConvexL)
+		DConvexL_opt_mertir_type.setLensType(lensTypes::DConvexL);
+		if (prefLensType == lensTypes::DConvexL)
 		{
 			DConvexL_opt_mertir_type.setMerit(DConvexL_opt_mertir_type.getMerit() / prefFactor);
 		}
@@ -917,13 +943,13 @@ OpticalSystemElement LensReplace::checkLensCatalogsForBestFitLens(/*number lens*
 		OptSysEleMertit_LensType_vec.push_back(DConvexL_opt_mertir_type);
 	}
 	//posAchromat
-	bool load_posAchromat = findCatalog(loadLensCatalogEO_vec, posAchromat);
+	bool load_posAchromat = findCatalog(mLoadLensCatalogEO, lensTypes::posAchromat);
 
 	if (load_posAchromat)
 	{
 		PosAchromat_opt_mertir_type = findOptSysEle_lens_inCatalog_ThreeSurfaces(paraLens, mAll_AchromaticLensesMgF, weightFocal, weightThickness, weightSemiHeight);
-		PosAchromat_opt_mertir_type.setLensType(posAchromat);
-		if (prefLensType == posAchromat)
+		PosAchromat_opt_mertir_type.setLensType(lensTypes::posAchromat);
+		if (prefLensType == lensTypes::posAchromat)
 		{
 			PosAchromat_opt_mertir_type.setMerit(PosAchromat_opt_mertir_type.getMerit() / prefFactor);
 		}
@@ -931,12 +957,12 @@ OpticalSystemElement LensReplace::checkLensCatalogsForBestFitLens(/*number lens*
 		OptSysEleMertit_LensType_vec.push_back(PosAchromat_opt_mertir_type);
 	}
 	//PConvexL
-	bool load_PConvexL = findCatalog(loadLensCatalogEO_vec, PConvexL);
+	bool load_PConvexL = findCatalog(mLoadLensCatalogEO, lensTypes::PConvexL);
 	if (load_PConvexL)
 	{
 		PConvexL_opt_mertir_type = findOptSysEle_lens_inCatalog_TwoSurfaces(paraLens, mAll_PlanConvexLenses, weightFocal, weightThickness, weightSemiHeight);
-		PConvexL_opt_mertir_type.setLensType(PConvexL);
-		if (prefLensType == PConvexL)
+		PConvexL_opt_mertir_type.setLensType(lensTypes::PConvexL);
+		if (prefLensType == lensTypes::PConvexL)
 		{
 			PConvexL_opt_mertir_type.setMerit(PConvexL_opt_mertir_type.getMerit() / prefFactor);
 		}
@@ -944,24 +970,24 @@ OpticalSystemElement LensReplace::checkLensCatalogsForBestFitLens(/*number lens*
 		OptSysEleMertit_LensType_vec.push_back(PConvexL_opt_mertir_type);
 	}
 	//DConcavL
-	bool load_DConcavL = findCatalog(loadLensCatalogEO_vec, DConcavL);
+	bool load_DConcavL = findCatalog(mLoadLensCatalogEO, lensTypes::DConcavL);
 	if (load_DConcavL)
 	{
 		DConcavL_opt_mertir_type = findOptSysEle_lens_inCatalog_TwoSurfaces(paraLens, mAll_DoubleConcavLenses, weightFocal, weightThickness, weightSemiHeight);
-		DConcavL_opt_mertir_type.setLensType(DConcavL);
-		if (prefLensType == DConcavL)
+		DConcavL_opt_mertir_type.setLensType(lensTypes::DConcavL);
+		if (prefLensType == lensTypes::DConcavL)
 		{
 			DConcavL_opt_mertir_type.setMerit(DConcavL_opt_mertir_type.getMerit() / prefFactor);
 		}
 		OptSysEleMertit_LensType_vec.push_back(DConcavL_opt_mertir_type);
 	}
 	//PConcavL
-	bool load_PConcavL = findCatalog(loadLensCatalogEO_vec, PConcavL);
+	bool load_PConcavL = findCatalog(mLoadLensCatalogEO, lensTypes::PConcavL);
 	if (load_PConcavL)
 	{
 		PConcavL_opt_mertir_type = findOptSysEle_lens_inCatalog_TwoSurfaces(paraLens, mAll_PlanConcavLenses, weightFocal, weightThickness, weightSemiHeight);
-		PConcavL_opt_mertir_type.setLensType(PConcavL);
-		if (prefLensType == DConcavL)
+		PConcavL_opt_mertir_type.setLensType(lensTypes::PConcavL);
+		if (prefLensType == lensTypes::DConcavL)
 		{
 			PConcavL_opt_mertir_type.setMerit(PConcavL_opt_mertir_type.getMerit() / prefFactor);
 		}
@@ -972,12 +998,14 @@ OpticalSystemElement LensReplace::checkLensCatalogsForBestFitLens(/*number lens*
 }
 
 
-OpticalSystemElement LensReplace::getBestOptSys(std::vector<OptSysEle_Merit_LensType> optSysEle_merit_lensType_vec)
+OptSysEle_Merit_LensType LensReplace::getBestOptSys(std::vector<OptSysEle_Merit_LensType> optSysEle_merit_lensType_vec)
 {
 	unsigned int numOptSys = optSysEle_merit_lensType_vec.size();
 	real bestMeritValue = optSysEle_merit_lensType_vec[0].getMerit();
 	OpticalSystemElement bestOptSysEle = optSysEle_merit_lensType_vec[0].getOptSysEle();
 	
+	unsigned int counter = 0;
+
 	real tempMeritValue;
 	for (unsigned int i = 1; i < numOptSys; ++i)
 	{
@@ -986,22 +1014,22 @@ OpticalSystemElement LensReplace::getBestOptSys(std::vector<OptSysEle_Merit_Lens
 		if (tempMeritValue < bestMeritValue)
 		{
 			bestMeritValue = tempMeritValue;
-			bestOptSysEle = optSysEle_merit_lensType_vec[i].getOptSysEle();
+			counter = i;
 		}
 	}
 
-	return bestOptSysEle;
+	return optSysEle_merit_lensType_vec[counter];
 }
 
-void LensReplace::replaceLens(unsigned int surfaceNo, OpticalSystemElement fillInOptSysEle)
+void LensReplace::replaceLens(unsigned int lensNo, OpticalSystemElement fillInOptSysEle)
 {
 	std::vector<unsigned int> lensNumbersToReplace;
 	unsigned int posLensToReplace;
-	unsigned int size = mOptSysLLT_lenses_vec[surfaceNo].getPosAndInteractingSurface().size();
+	unsigned int size = mOptSysLLT_lenses_vec[lensNo].getPosAndInteractingSurface().size();
 
 	for (unsigned int i = 0; i < size; ++i)
 	{
-		posLensToReplace = mOptSysLLT_lenses_vec[surfaceNo].getPosAndInteractingSurface()[i].getPosition();
+		posLensToReplace = mOptSysLLT_lenses_vec[lensNo].getPosAndInteractingSurface()[i].getPosition();
 		lensNumbersToReplace.push_back(posLensToReplace);
 	}
 
@@ -1018,8 +1046,8 @@ void LensReplace::replaceLens(unsigned int surfaceNo, OpticalSystemElement fillI
 		thicknesToSurface0.push_back(tempThicknessTotal);
 	}
 
-	int lastLens = lensNumbersToReplace.size() - 1;
-	int lastPos = lensNumbersToReplace[lastLens];
+	
+	int lastPos = lensNumbersToReplace.back();
 	mOpticalSystemEle.delSurfaceNumber_from_TO(lensNumbersToReplace[0], lastPos);
 
 	for(unsigned int i=0; i< lensNumbersToReplace.size();++i)
@@ -1031,6 +1059,30 @@ void LensReplace::replaceLens(unsigned int surfaceNo, OpticalSystemElement fillI
 
 }
 
+void LensReplace::saveFixedThicknessesLenses()
+{
+	real surroundingrefractiveIndex = 1.0;
+	// surfaces before
+	std::shared_ptr<SurfaceIntersectionRay_LLT> Surface_ptr_before = mOpticalSystem_LLT.getPosAndInteractingSurface()[0].getSurfaceInterRay_ptr();
+	// position of first surface must be fixed
+	mThicknessesLenses_vec_Fixed.push_back(Surface_ptr_before->getPoint().getZ());
+
+	unsigned int sizeOptSys = mOpticalSystem_LLT.getPosAndInteractingSurface().size();
+
+	std::shared_ptr<SurfaceIntersectionRay_LLT> tempSurface_ptr;
+	for (unsigned int i = 0; i < sizeOptSys; ++i)
+	{
+		//tempSurface_ptr
+
+		// hier gehts dann weiter!!!
+		// wir müssten die Abstände zwischen den Linsen nach der Ersetung konstant lassen
+		// falls refIndex A || redIndex B == surroundingrefractiveIndex --> muss der Abstand gespeichert werden
+		// speichere alle Abstände zwischen den Linsen um diese nach der Ersetzung einzustellen!
+	}
+
+
+
+}
 
 OpticalSystemElement LensReplace::getOpticalSysEle()
 {

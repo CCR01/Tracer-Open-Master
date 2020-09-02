@@ -4,7 +4,7 @@
 
 #include "..\LensCatalog\EdmundOptics\EdmundOpticsLensCatalog.h"
 
-enum lensTypes { DConvexL, posAchromat, PConvexL, DConcavL, PConcavL };
+enum class lensTypes { DConvexL, posAchromat, PConvexL, DConcavL, PConcavL };
 
 
 struct prefLensTypeAndFactro
@@ -36,13 +36,19 @@ public:
 	// lens type
 	lensTypes getLensType();
 	void setLensType(lensTypes lensType);
-
+	// name of the lens
+	std::string getLensCatalog();
+	void setLensCatalog(std::string nameLens);
+	// catalog number
+	unsigned int getCatalogNumber();
+	void setCatalogNumber(unsigned int catalogNumber);
 
 private:
-	OpticalSystemElement mOptSysEle;
-	real mMerit;
-	lensTypes mLensType;
-
+	OpticalSystemElement mOptSysEle{};
+	real mMerit{};
+	lensTypes mLensType{};
+	std::string mNameLens{};
+	unsigned int mCatalogNumber{};
 };
 
 struct ValueMinMax
@@ -168,7 +174,7 @@ public:
 	 LensReplace(OpticalSystemElement opticalSystemElement);
 	~ LensReplace();
 	
-
+	void saveFixedThicknessesLenses();
 	void loadLensCata(std::vector<lensTypes> loadLensCatalogEO);
 	bool findCatalog(std::vector<lensTypes> loadLensCatalogEO_vec, lensTypes toLoadCatalog);
 
@@ -190,15 +196,15 @@ public:
 	OptSysEle_Merit_LensType findOptSysEle_lens_inCatalog_TwoSurfaces(parameterLens paraLens, std::vector<LensesTwoSurfaces> AllLensesTwoSurfaces, real weightFocal, real weightThickness, real weightSemiHeight);
 	OptSysEle_Merit_LensType findOptSysEle_lens_inCatalog_ThreeSurfaces(parameterLens paraLens, std::vector<LensThreeSurfaces> AllLensesThreeSurfaces, real weightFocal, real weightThickness, real weightSemiHeight);
 
-	OpticalSystemElement checkLensCatalogsForBestFitLens(unsigned int lensNo, parameterLens paraLens, std::vector<lensTypes> loadLensCatalogEO_vec);
-	OpticalSystemElement getBestOptSys(std::vector<OptSysEle_Merit_LensType> optSysEle_merit_lensType_vec);
+	OptSysEle_Merit_LensType checkLensCatalogsForBestFitLens(/*lens number*/ unsigned int lensNo, /*parameter lens*/ parameterLens paraLens);
+	OptSysEle_Merit_LensType getBestOptSys(std::vector<OptSysEle_Merit_LensType> optSysEle_merit_lensType_vec);
 
 	real calcualteMerit(real target, real is, real weight);
 	real calcualteMerit_lens(real focalParam, real minFocalParam, real maxFocalParam, 
-		real thicknessParam, real minThicknessParam, real maxThicknessParam, real semiHeightParam, real minSemiHeightParam, 
-		real maxSemiHeightParam, real focalTemp, real focalWeight, real thicknessTemp, real thicknessWeight, real semiHeightTemp, real semiHeightWeigh);
+	real thicknessParam, real minThicknessParam, real maxThicknessParam, real semiHeightParam, real minSemiHeightParam, 
+	real maxSemiHeightParam, real focalTemp, real focalWeight, real thicknessTemp, real thicknessWeight, real semiHeightTemp, real semiHeightWeigh);
 
-	void replaceLens(unsigned int surfaceNo, OpticalSystemElement fillInOptSysEle);
+	void replaceLens(unsigned int lensNo, OpticalSystemElement fillInOptSysEle);
 
 	void replaceSuperFuction();
 
@@ -208,6 +214,7 @@ private:
 	OpticalSystemElement mOpticalSystemEle;
 	OpticalSystem_LLT mOpticalSystem_LLT;
 	EdmundOpticsLensCatalog mEOLensCatalog;
+	std::vector<lensTypes> mLoadLensCatalogEO;
 
 	std::vector<LensesTwoSurfaces> mAll_DoubleConvexLenses; //https://www.edmundoptics.de/f/vis-nir-coated-double-convex-dcx-lenses/13504/
 	std::vector<LensThreeSurfaces> mAll_AchromaticLensesMgF; //https://www.edmundoptics.de/f/MgFsub2sub-Coated-Achromatic-Lenses/12006/
@@ -221,5 +228,7 @@ private:
 	unsigned mNoLenses;
 
 	OpticalSystemElement replacedOptSysEle;
+
+	std::vector<real> mThicknessesLenses_vec_Fixed;
 };
 

@@ -82,7 +82,6 @@
 
 #include "..\benchmark\testSeidelCombinations\testSeidelCombinations.h"
 
-#include "..\benchmark\testLensReplace\testLenseReplace.h"
 
 #include "..\benchmark\testEvaluateManyOptSys_RayTracing\testEvaluateManyOptSys_RayTracing.h"
 
@@ -143,7 +142,7 @@ int main(int argc, char **argv)
 	// ManagementTests managementTest_2(testWhatVec_2);
 	// workTheSystem.push_back(managementTest_2.testSuperFct());
 
-	std::vector<testWhat> testWhatVec_3 = { testWhat::tALL };
+	std::vector<testWhat> testWhatVec_3 = { testWhat::tLensReplace };
 	ManagementTests managementTest_3(testWhatVec_3);
 	workTheSystem.push_back(managementTest_3.testSuperFct());
 

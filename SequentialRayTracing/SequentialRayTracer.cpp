@@ -93,8 +93,10 @@ SequentialRayTracing::~SequentialRayTracing()
 
 // sequential ray tracing with the optical system element
 SequentialRayTracing::SequentialRayTracing(OpticalSystemElement opticalSysElement) :
-	mOpticalSystem_LLT(opticalSysElement.getLLTconversion_doConversion())
+	mOptSysEle(opticalSysElement),
+	mOpticalSystem_LLT(mOptSysEle.getLLTconversion_doConversion())
 {
+	mTraceToSurface_i = mOptSysEle.getPosAndElement().size();
 	resizeAllRelevantVectorsAndSetConst_Element();
 
 };
@@ -901,7 +903,7 @@ std::vector<SequentialRayTracingandColorStruct> RayTracingSystem::getVectorRayTr
 void SequentialRayTracing::resizeAllRelevantVectorsAndSetConst_LLT()
 {
 	mTraceToSurface_i = mOpticalSystem_LLT.getPosAndInteractingSurface().size() - 1;
-		;
+		
 	mNoInterPointAndPos.setNoIntersectionPoint();
 }
 

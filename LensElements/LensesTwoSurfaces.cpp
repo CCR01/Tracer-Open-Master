@@ -436,6 +436,8 @@ void LensesTwoSurfaces::buildOpticalSystemTwoSurfaces_OneSurfacePlan()
 // build optical System with two surfaces
 void LensesTwoSurfaces::buildOpticalSystemTwoSurfaces()
 {
+	MaterialSellmeier1 materialAir;
+	materialAir.setParameterAndCalcVd_Ve("Schott", "Air", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0); // refractive index is 1
 
 	typedef std::shared_ptr< Element_CR > surfacePtr;
 	RefractedRay_LLT refrac;
@@ -448,10 +450,15 @@ void LensesTwoSurfaces::buildOpticalSystemTwoSurfaces()
 	real radiusFirstSurface;
 	real refIndex_A_FirstSurface;
 	real refIndex_B_FirstSurface;
+	MaterialSellmeier1 materialSellmeier_A_FirstSurface;
+	MaterialSellmeier1 materialSellmeier_B_FirstSurface;
 	// parameter second surface
 	real radiusSecondSurface;
 	real refIndex_A_SecondSurface;
 	real refIndex_B_SecondSurface;
+	MaterialSellmeier1 materialSellmeier_A_SecondSurface;
+	MaterialSellmeier1 materialSellmeier_B_SecondSurface;
+
 
 
 	if (mRadiusFirstSurface > 0)
@@ -459,6 +466,8 @@ void LensesTwoSurfaces::buildOpticalSystemTwoSurfaces()
 		radiusFirstSurface = std::abs(mRadiusFirstSurface);
 		refIndex_A_FirstSurface = refractiveIndexAir;
 		refIndex_B_FirstSurface = mMaterial.calcRefractiveIndexSnellmeier1(mWavelengthToTrace);
+		materialSellmeier_A_FirstSurface = materialAir;
+		materialSellmeier_B_FirstSurface = mMaterial;
 	}
 
 	if (mRadiusSecondSurface > 0)
@@ -466,7 +475,8 @@ void LensesTwoSurfaces::buildOpticalSystemTwoSurfaces()
 		radiusSecondSurface = std::abs(mRadiusSecondSurface);
 		refIndex_A_SecondSurface = mMaterial.calcRefractiveIndexSnellmeier1(mWavelengthToTrace);
 		refIndex_B_SecondSurface = refractiveIndexAir;
-
+		materialSellmeier_A_SecondSurface = mMaterial;
+		materialSellmeier_B_SecondSurface = materialAir;
 	}
 
 	if (mRadiusFirstSurface < 0)
@@ -477,6 +487,8 @@ void LensesTwoSurfaces::buildOpticalSystemTwoSurfaces()
 		radiusFirstSurface = std::abs(mRadiusFirstSurface);
 		refIndex_A_FirstSurface = mMaterial.calcRefractiveIndexSnellmeier1(mWavelengthToTrace);
 		refIndex_B_FirstSurface = refractiveIndexAir;
+		materialSellmeier_A_FirstSurface = mMaterial;
+		materialSellmeier_B_FirstSurface = materialAir;
 
 	}
 	if (mRadiusSecondSurface < 0)
@@ -487,7 +499,8 @@ void LensesTwoSurfaces::buildOpticalSystemTwoSurfaces()
 		radiusSecondSurface = std::abs(mRadiusSecondSurface);
 		refIndex_A_SecondSurface = refractiveIndexAir;
 		refIndex_B_SecondSurface = mMaterial.calcRefractiveIndexSnellmeier1(mWavelengthToTrace);
-
+		materialSellmeier_A_SecondSurface = materialAir;
+		materialSellmeier_B_SecondSurface = mMaterial;
 	}
 
 	// TODO: We have to fix that.Write function setRadiusValue, setSemiHeightValue, ...
@@ -500,6 +513,7 @@ void LensesTwoSurfaces::buildOpticalSystemTwoSurfaces()
 	firstSurface.setDirectionValue(directionFirstSurface);
 	firstSurface.setRefIndexValue_A(refIndex_A_FirstSurface);
 	firstSurface.setRefIndexValue_B(refIndex_B_FirstSurface);
+	firstSurface.setAllParameterFix();
 	firstSurface.buildSurface_LLT();
 	surfacePtr firstSurface_ptr = firstSurface.clone();
 
@@ -514,6 +528,7 @@ void LensesTwoSurfaces::buildOpticalSystemTwoSurfaces()
 	secondSurface.setDirectionValue(directionSecondSurface);
 	secondSurface.setRefIndexValue_A(refIndex_A_SecondSurface);
 	secondSurface.setRefIndexValue_B(refIndex_B_SecondSurface);
+	secondSurface.setAllParameterFix();
 	secondSurface.buildSurface_LLT();
 	surfacePtr secondSurface_ptr = secondSurface.clone();
 
@@ -689,19 +704,157 @@ OpticalSystemElement LensesTwoSurfaces::getHLT_TwoSurfaces()
 	return mOptSysTwoSurfaces_HLT;
 }
 
-// *** *** // -> get functions
-// focal length
-real LensesTwoSurfaces::getFocalLength()
+// get functions
+//---
+// get lens catalog
+std::string LensesTwoSurfaces::getLensCatalog()
 {
-	return mFocalLength;
+	return mLensCatalog;
 }
-// thickness
+// get number in catalog
+unsigned int LensesTwoSurfaces::getCatalogNumber()
+{
+	return mCatalogNumber;
+}
+// get diameter
+real LensesTwoSurfaces::getDiameter()
+{
+	return mDiameter;
+}
+// get min diameter tolerance
+real LensesTwoSurfaces::getMinDiaTolerance()
+{
+	return mMinDiamterTolerance;
+}
+// get max diameter tolerance
+real LensesTwoSurfaces::getMaxDiaTolerance()
+{
+	return mMaxDiamterTolerance;
+}
+// get real max surface quality; 
+real LensesTwoSurfaces::getMaxSurfaceQuality()
+{
+	return mMaxSurfaceQuality;
+}
+// get real min surface quality; 
+real LensesTwoSurfaces::getMinSurfaceQuality()
+{
+	return mMinSurfaceQuality;
+}
+
+// get curvature PV
+real LensesTwoSurfaces::getCurvaturePV()
+{
+	return mCurvaturePV;
+}
+// get tolerance center thickness
+real LensesTwoSurfaces::getToleranceCenterThickness()
+{
+	return mToleraceCenterThickness;
+}
+// get radius first surface
+real LensesTwoSurfaces::getRadiusFirstSurface()
+{
+	return mRadiusFirstSurface;
+}
+// get radius second surface
+real LensesTwoSurfaces::getRadiusSecondSurface()
+{
+	return mRadiusSecondSurface;
+}
+// tolerance focal length
+real LensesTwoSurfaces::getToleranceFocallength()
+{
+	return mToleranceFocallength;
+}
+// get min wavelength
+real LensesTwoSurfaces::getMinWavelength()
+{
+	return mMinWavelength;
+}
+// get max wavelength
+real LensesTwoSurfaces::getMaxWavelength()
+{
+	return mMaxWavelenght;
+}
+// get coating
+std::string LensesTwoSurfaces::getCoating()
+{
+	return mCoating;
+}
+// get material
+MaterialSellmeier1 LensesTwoSurfaces::getMaterial()
+{
+	return mMaterial;
+}
+// get power PV
+real LensesTwoSurfaces::getPowerPV()
+{
+	return mPowerPV;
+}
+// get min center
+real LensesTwoSurfaces::getMinCenter()
+{
+	return mMinCenter;
+}
+// get max center
+real LensesTwoSurfaces::getMaxCenter()
+{
+	return mMaxCenter;
+}
+// get thickness
 real LensesTwoSurfaces::getThickness()
 {
 	return mThickness;
 }
-// semi height
-real LensesTwoSurfaces::getSemiHeight()
+// get edge thickness
+real LensesTwoSurfaces::getEdgeThickness()
 {
-	return mDiameter / 2;
+	return mEdgeThickness;
 }
+// get design wavelength
+real LensesTwoSurfaces::getDesignWavelength()
+{
+	return mDesignWavelength;
+}
+// get numerical aperture
+real LensesTwoSurfaces::getNumericalAperture()
+{
+	return mNumericalAperture;
+}
+// get price
+real LensesTwoSurfaces::getPrice()
+{
+	return mPrice;
+}
+// get wavelength to trace
+real LensesTwoSurfaces::getWavelengthToTrace()
+{
+	return mWavelengthToTrace;
+}
+// get optical system two surfaces
+OpticalSystemElement LensesTwoSurfaces::getOpticalSystemTwoSurfaces()
+{
+	return mOptSysTwoSurfaces_HLT;
+}
+// get centering
+real LensesTwoSurfaces::getCentering()
+{
+	return mCentering;
+}
+// get focal length
+real LensesTwoSurfaces::getFocalLength()
+{
+	return mFocalLength;
+}
+// get free apertur
+real LensesTwoSurfaces::getFreeAperture()
+{
+	return mFreeAperture;
+}
+// get back focal length
+real LensesTwoSurfaces::getBackFocalLength()
+{
+	return mBackFocalLength;
+}
+//---

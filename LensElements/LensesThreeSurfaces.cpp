@@ -84,7 +84,7 @@ void LensThreeSurfaces::setToleranceCenterThickness(real const toleranceCenterTh
 	mToleraceCenterThickness = toleranceCenterThickness;
 }
 // set radius first surface
-void LensThreeSurfaces::setRadisuFirstSurface(real const radiusFirstSurface)
+void LensThreeSurfaces::setRadiusFirstSurface(real const radiusFirstSurface)
 {
 	mRadiusFirstSurface = radiusFirstSurface;
 }
@@ -269,7 +269,7 @@ void LensThreeSurfaces::buildLensThreeSurfaces
 	// set tolerance center Thickness
 	setToleranceCenterThickness(toleraceCenterThickness);
 	// set radius first surface
-	setRadisuFirstSurface(radiusFirstSurface);
+	setRadiusFirstSurface(radiusFirstSurface);
 	// set radius second surface
 	setRadisuSecondSurface(radiusSecondSurface);
 	// set radius third surface
@@ -321,6 +321,9 @@ void LensThreeSurfaces::buildLensThreeSurfaces
 // build an optical system with three surfaces
 void LensThreeSurfaces::buildOpticalSystemThreeSurfaces()
 {
+	MaterialSellmeier1 materialAir;
+	materialAir.setParameterAndCalcVd_Ve("Schott", "Air", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0); // refractive index is 1
+
 	typedef std::shared_ptr< Element_CR > surfacePtr;
 	RefractedRay_LLT refrac;
 	std::shared_ptr<InteractionRay_LLT> refrac_ptr = refrac.clone();
@@ -330,22 +333,35 @@ void LensThreeSurfaces::buildOpticalSystemThreeSurfaces()
 	VectorStructR3 directionFirstSurface{ 0.0,0.0,1.0 };
 	real refIndex_A_FirstSurface;
 	real refIndex_B_FirstSurface;
+	MaterialSellmeier1 materialSellmeier_A_FirstSurface;
+	MaterialSellmeier1 materialSellmeier_B_FirstSurface;
 	// parameter second surface
 	real radiusSecondSurface;
 	VectorStructR3 directionSecondSurface{ 0.0,0.0,1.0 };
 	real refIndex_A_SecondSurface;
 	real refIndex_B_SecondSurface;
+	MaterialSellmeier1 materialSellmeier_A_SecondSurface;
+	MaterialSellmeier1 materialSellmeier_B_SecondSurface;
 	// parameter third surface
 	real radiusThirdSurface;
 	VectorStructR3 directionThirdSurface{ 0.0,0.0,1.0 };
 	real refIndex_A_ThirdSurface;
 	real refIndex_B_ThirdSurface;
+	MaterialSellmeier1 materialSellmeier_A_ThirdSurface;
+	MaterialSellmeier1 materialSellmeier_B_ThirdSurface;
+
+
+
+
 
 	if (mRadiusFirstSurface > 0)
 	{
 		radiusFirstSurface = std::abs(mRadiusFirstSurface);
 		refIndex_A_FirstSurface = refractiveIndexAir;
 		refIndex_B_FirstSurface = mMaterialFirst.calcRefractiveIndexSnellmeier1(mWavelengthToTrace);
+		materialSellmeier_A_FirstSurface = materialAir;
+		materialSellmeier_B_FirstSurface = mMaterialFirst;
+
 	}
 
 	if (mRadiusSecondSurface > 0)
@@ -353,7 +369,8 @@ void LensThreeSurfaces::buildOpticalSystemThreeSurfaces()
 		radiusSecondSurface = std::abs(mRadiusSecondSurface);
 		refIndex_A_SecondSurface = mMaterialFirst.calcRefractiveIndexSnellmeier1(mWavelengthToTrace);
 		refIndex_B_SecondSurface = mMaterialSecond.calcRefractiveIndexSnellmeier1(mWavelengthToTrace);
-
+		materialSellmeier_A_SecondSurface = mMaterialFirst;
+		materialSellmeier_B_SecondSurface = mMaterialSecond;
 	}
 
 	if (mRadiusThirdSurface > 0)
@@ -361,6 +378,8 @@ void LensThreeSurfaces::buildOpticalSystemThreeSurfaces()
 		radiusThirdSurface = std::abs(mRadiusThirdSurface);
 		refIndex_A_ThirdSurface = mMaterialSecond.calcRefractiveIndexSnellmeier1(mWavelengthToTrace);
 		refIndex_B_ThirdSurface = refractiveIndexAir;
+		materialSellmeier_A_ThirdSurface = mMaterialSecond;
+		materialSellmeier_B_ThirdSurface = materialAir;
 	}
 
 	if (mRadiusFirstSurface < 0)
@@ -371,6 +390,8 @@ void LensThreeSurfaces::buildOpticalSystemThreeSurfaces()
 		radiusFirstSurface = std::abs(mRadiusFirstSurface);
 		refIndex_A_FirstSurface = mMaterialFirst.calcRefractiveIndexSnellmeier1(mWavelengthToTrace);
 		refIndex_B_FirstSurface = refractiveIndexAir;
+		materialSellmeier_A_FirstSurface = mMaterialFirst;
+		materialSellmeier_B_FirstSurface = materialAir;
 
 	}
 	if (mRadiusSecondSurface < 0)
@@ -381,7 +402,8 @@ void LensThreeSurfaces::buildOpticalSystemThreeSurfaces()
 		radiusSecondSurface = std::abs(mRadiusSecondSurface);
 		refIndex_A_SecondSurface = mMaterialSecond.calcRefractiveIndexSnellmeier1(mWavelengthToTrace);
 		refIndex_B_SecondSurface = mMaterialFirst.calcRefractiveIndexSnellmeier1(mWavelengthToTrace);
-
+		materialSellmeier_A_SecondSurface = mMaterialSecond;
+		materialSellmeier_B_SecondSurface = mMaterialFirst;
 	}
 
 	if (mRadiusThirdSurface < 0)
@@ -391,6 +413,8 @@ void LensThreeSurfaces::buildOpticalSystemThreeSurfaces()
 		radiusThirdSurface = std::abs(mRadiusThirdSurface);
 		refIndex_A_ThirdSurface = refractiveIndexAir;
 		refIndex_B_ThirdSurface = mMaterialSecond.calcRefractiveIndexSnellmeier1(mWavelengthToTrace);
+		materialSellmeier_A_ThirdSurface = materialAir;
+		materialSellmeier_B_ThirdSurface = mMaterialSecond;
 	}
 
 	//TODO: We have to fix that. Write function setRadiusValue, setSemiHeightValue,...
@@ -403,6 +427,9 @@ void LensThreeSurfaces::buildOpticalSystemThreeSurfaces()
 	firstSurface.setDirectionValue(directionFirstSurface);
 	firstSurface.setRefIndexValue_A(refIndex_A_FirstSurface);
 	firstSurface.setRefIndexValue_B(refIndex_B_FirstSurface);
+	firstSurface.setGlassA(materialSellmeier_A_FirstSurface);	
+	firstSurface.setGlassB(materialSellmeier_B_FirstSurface);	
+	firstSurface.setAllParameterFix();
 	firstSurface.buildSurface_LLT();
 	surfacePtr firstSurface_ptr = firstSurface.clone();
 
@@ -415,6 +442,9 @@ void LensThreeSurfaces::buildOpticalSystemThreeSurfaces()
 	secondSurface.setDirectionValue(directionSecondSurface);
 	secondSurface.setRefIndexValue_A(refIndex_A_SecondSurface);
 	secondSurface.setRefIndexValue_B(refIndex_B_SecondSurface);
+	secondSurface.setGlassA(materialSellmeier_A_SecondSurface);
+	secondSurface.setGlassB(materialSellmeier_B_SecondSurface);
+	secondSurface.setAllParameterFix();
 	secondSurface.buildSurface_LLT();
 	surfacePtr secondSurface_ptr = secondSurface.clone();
 
@@ -426,6 +456,9 @@ void LensThreeSurfaces::buildOpticalSystemThreeSurfaces()
 	thirdSurface.setDirectionValue(directionThirdSurface);
 	thirdSurface.setRefIndexValue_A(refIndex_A_ThirdSurface);
 	thirdSurface.setRefIndexValue_B(refIndex_B_ThirdSurface);
+	thirdSurface.setGlassA(materialSellmeier_A_ThirdSurface);
+	thirdSurface.setGlassB(materialSellmeier_B_ThirdSurface);
+	thirdSurface.setAllParameterFix();
 	thirdSurface.buildSurface_LLT();
 	surfacePtr thirdSurface_ptr = thirdSurface.clone();
 
@@ -445,18 +478,189 @@ OpticalSystemElement LensThreeSurfaces::getHLT_ThreeSurfaces()
 
 
 // *** *** // get functions
-// focal length
-real LensThreeSurfaces::getFocalLenth()
+
+// get lens catalog
+std::string LensThreeSurfaces::getLensCatalog()
+{
+	return mLensCatalog;
+}
+// get number in catalog
+unsigned int LensThreeSurfaces::getCatalogNumber()
+{
+	return mCatalogNumber;
+}
+// get diameter
+real LensThreeSurfaces::getDiameter()
+{
+	return mDiameter;
+}
+// get max diameter tolerance
+real LensThreeSurfaces::getMaxDiameterTolerance()
+{
+	return mMaxDiamterTolerance;
+}
+// get min diameter tolerance
+real LensThreeSurfaces::getMinDiameterTolerance()
+{
+	return mMinDiamterTolerance;
+}
+// get focal lenght
+real LensThreeSurfaces::getFocalLength()
 {
 	return mFocalLength;
 }
-// thickness 
-real LensThreeSurfaces::getThickness()
+// get tolerance focal length
+real LensThreeSurfaces::getToleranceFocalLength()
 {
-	return mFirstThicknessCT1 + mSecondThicknessCT2;
+	return mToleranceFocallength;
 }
-// semi height
-real LensThreeSurfaces::getSemiHeight()
+// get back focal lenght
+real LensThreeSurfaces::getBackFocalLength()
 {
-	return mDiameter / 2;
+	return mBackFocalLength;
+}
+// get design wavelength
+real LensThreeSurfaces::getDesignWavelength()
+{
+	return mDesignWavelength;
+}
+// get free aperture
+real LensThreeSurfaces::getFreeAperture()
+{
+	return mFreeApertureCA;
+}
+// get min centering
+real LensThreeSurfaces::getMinCentering()
+{
+	return mMinCentering;
+}
+// get max centering
+real LensThreeSurfaces::getMaxCentering()
+{
+	return mMaxCentering;
+}
+// get first thickness
+real LensThreeSurfaces::getFirstThickness()
+{
+	return mFirstThicknessCT1;
+}
+// get second thickness
+real LensThreeSurfaces::getSecondThickness()
+{
+	return mSecondThicknessCT2;
+}
+// get tolerance center Thickness
+real LensThreeSurfaces::getToleranceCenterThickness()
+{
+	return mToleraceCenterThickness;
+}
+// get radius first surface
+real LensThreeSurfaces::getRadisuFirstSurface()
+{
+	return mRadiusFirstSurface;
+}
+// get radius second surface
+real LensThreeSurfaces::getRadisuSecondSurface()
+{
+	return mRadiusSecondSurface;
+}
+// get radius third surface
+real LensThreeSurfaces::getRadiusThirdSurface()
+{
+	return mRadiusThirdSurface;
+}
+// get edge thickness 
+real LensThreeSurfaces::getEdgeThickness()
+{
+	return mEdgeThickness;
+}
+// get material first
+MaterialSellmeier1 LensThreeSurfaces::getMaterialFirst()
+{
+	return mMaterialFirst;
+}
+// get material second
+MaterialSellmeier1 LensThreeSurfaces::getMaterialSecond()
+{
+	return mMaterialSecond;
+}
+// get max surface quality
+real LensThreeSurfaces::getMaxSurfaceQuality()
+{
+	return mMaxSurfaceQuality;
+}
+// get min surface quality
+real LensThreeSurfaces::getMinSurfaceQuality()
+{
+	return mMinSurfaceQuality;
+}
+// get stop
+real LensThreeSurfaces::getStop()
+{
+	return mStop;
+}
+// get numerical aperture
+real LensThreeSurfaces::getNumericalAperture()
+{
+	return mNumericalAperture;
+}
+// get coating
+std::string LensThreeSurfaces::getCoating()
+{
+	return mCoating;
+}
+//get coating specification
+real LensThreeSurfaces::getCoatingSpecification()
+{
+	return mCoatingtionSpecification;
+}
+// get power wavelength
+real LensThreeSurfaces::getPowerWavelength()
+{
+	return mPowerWavelength;
+}
+// get power PV
+real LensThreeSurfaces::getPowerPV()
+{
+	return mPowerPV;
+}
+// get curvature wavelength
+real LensThreeSurfaces::getCurvatureWave()
+{
+	return mCurvatureWavelength;
+}
+// get curvature PV
+real LensThreeSurfaces::getCurvaturePV()
+{
+	return mCurvaturePV;
+}
+// get bevel
+std::string LensThreeSurfaces::getBevel()
+{
+	return mBevel;
+}
+// get type
+std::string LensThreeSurfaces::getType()
+{
+	return mType;
+}
+// get minimal wavelength
+real LensThreeSurfaces::getMinimalWavelength()
+{
+	return mMinWavelength;
+}
+// get maximum wavelength
+real LensThreeSurfaces::getMaximumWavelength()
+{
+	return mMaxWavelenght;
+}
+// get price
+real LensThreeSurfaces::getPrice()
+{
+	return mPrice;
+}
+// get wavelengthToTrace
+real LensThreeSurfaces::getWavelenghtToTrace()
+{
+	return mWavelengthToTrace;
 }
