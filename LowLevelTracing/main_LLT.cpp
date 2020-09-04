@@ -82,7 +82,6 @@
 
 #include "..\benchmark\testSeidelCombinations\testSeidelCombinations.h"
 
-#include "..\benchmark\testLensReplace\testLenseReplace.h"
 
 #include "..\benchmark\testEvaluateManyOptSys_RayTracing\testEvaluateManyOptSys_RayTracing.h"
 

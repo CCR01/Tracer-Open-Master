@@ -114,7 +114,7 @@ bool IOC2020_Dresden::systemFor_IOC2020_Dresten()
 	//// *** *** //
 	//
 	//int numberLens = 0;
-	std::vector<lensTypes> loadLensCatalogEO_vec{ posAchromat };
+	std::vector<lensTypes> loadLensCatalogEO_vec{ lensTypes::posAchromat };
 	//OpticalSystemElement bestFitLens0 = lensReplace_IOC220.checkLensCatalogsForBestFitLens(/*number lens*/ numberLens,/*parameter lens*/ lensReplace_IOC220.getParameterLenses()[numberLens], /*load lens catalog*/ loadLensCatalogEO_vec);
 	//
 	//OpticalSystemElement bestFitLens0_rot = bestFitLens0.reverseOptSysEle(bestFitLens0);
@@ -178,10 +178,10 @@ bool IOC2020_Dresden::systemFor_IOC2020_Dresten()
 	// *** *** //
 
 
-	int numberLens1 = 1;
-	LensReplace lensReplace_IOC220_replace0(optSysEle_IOC_replace0);
-	////std::vector<lensTypes> loadLensCatalogEO_vec{ posAchromat };
-	OpticalSystemElement bestFitLens1 = lensReplace_IOC220_replace0.checkLensCatalogsForBestFitLens(/*number lens*/ numberLens1,/*parameter lens*/ lensReplace_IOC220_replace0.getParameterLenses()[numberLens1], /*load lens catalog*/ loadLensCatalogEO_vec);
+	//int numberLens1 = 1;
+	//LensReplace lensReplace_IOC220_replace0(optSysEle_IOC_replace0);
+	//////std::vector<lensTypes> loadLensCatalogEO_vec{ posAchromat };
+	//OptSysEle_Merit_LensType bestFitLens1 = lensReplace_IOC220_replace0.checkLensCatalogsForBestFitLens(/*number lens*/ numberLens1,/*parameter lens*/ lensReplace_IOC220_replace0.getParameterLenses()[numberLens1], /*load lens catalog*/ loadLensCatalogEO_vec);
 
 
 	bool check_IOC2020 = Math::checkTrueOfVectorElements(workTheSystem_IOC2020);
