@@ -30,7 +30,7 @@
 
 // typedef
 typedef std::shared_ptr< Element_CR > surfacePtr;
-typedef std::shared_ptr< InteractionRay_LLT > interactionPtr;
+typedef std::shared_ptr< InteractionRay_LLT > interaction_ptr;
 // ***
 
 lightRay_interPoint_onTarget::lightRay_interPoint_onTarget() {};
@@ -1091,7 +1091,7 @@ bool testRayAiming::checkRayAimingE5_inf()
 	surfacePtr Plan6_E5_ptr = Plan6_E5.clone();
 
 	std::vector<surfacePtr> opticalSystem_E5_ptr{Sphere0_E5_ptr, Sphere1_E5_ptr, Sphere2_E5_ptr , Sphere3_E5_ptr, Sphere4_E5_ptr, AperStop5_E5_ptr, Plan6_E5_ptr };
-	std::vector<interactionPtr> interactions_E5_ptr{refrac.clone(),refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(), doNothing.clone(), absorb.clone() };
+	std::vector<interaction_ptr> interactions_E5_ptr{refrac.clone(),refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(), doNothing.clone(), absorb.clone() };
 
 	//	build optical system
 	OpticalSystemElement optSystemElement_E5(opticalSystem_E5_ptr, interactions_E5_ptr);

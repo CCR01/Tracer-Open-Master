@@ -316,7 +316,7 @@ void targetCardinalPointsStruct::setTargetENPD(real targetENPD)
 {
 	mTargetENPD = targetENPD;
 	mIsENPD_target = true;
-	mTargetOpti_vec.push_back(targetOptimization::targetEXPD);
+	mTargetOpti_vec.push_back(targetOptimization::targetENPD);
 	mIsOneTargetCardinalPoint = true;
 
 }

@@ -141,7 +141,7 @@ int main(int argc, char **argv)
 	// ManagementTests managementTest_2(testWhatVec_2);
 	// workTheSystem.push_back(managementTest_2.testSuperFct());
 
-	std::vector<testWhat> testWhatVec_3 = { testWhat::tOPD };
+	std::vector<testWhat> testWhatVec_3 = { testWhat::tGenetic_cardinalPoints };
 	ManagementTests managementTest_3(testWhatVec_3);
 	workTheSystem.push_back(managementTest_3.testSuperFct());
 

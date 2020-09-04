@@ -13,7 +13,10 @@
 #include "..\..\LowLevelTracing\Interaction\Absorb_LLT.h"
 #include "..\..\LowLevelTracing\Surfaces\ApertureStop_LLT.h"
 
-bool TestOPD::checkOPD_superFct()
+typedef std::shared_ptr< SurfaceIntersectionRay_LLT > surfacePtr_LLT;
+
+// E0
+bool checkE0()
 {
 	std::vector<bool> checkOPD;
 
@@ -23,15 +26,7 @@ bool TestOPD::checkOPD_superFct()
 	Light500.setWavelength(500.0);
 	Absorb_LLT absorb;
 
-	typedef std::shared_ptr< SurfaceIntersectionRay_LLT > surfacePtr_LLT;
-
-	real Air = 1.000269;
-
-
-	//**********************************************************************************************
-	//**********************************************************************************************
-	//**********************************************************************************************
-	//**********************************************************************************************
+	real Air = 1.0;
 
 	// define rays to trace
 	Ray_LLT Ray1(/*origin*/{ 0.0, 0.0, 0.0 }, /*direction*/{ 0.0, 1.0, 20.0 }, 1.0);
@@ -45,12 +40,11 @@ bool TestOPD::checkOPD_superFct()
 	LightRayStruct LightRayOptAx = { Light500, Ray3, 1 };
 
 	// surfaces of the optical system
-	ApertureStop_LLT ApertureStop0E0(2.0, { 0.0,0.0,20.0 }, { 0.0,0.0,1.0 }, 1.0);
-	SphericalSurface_LLT S0(/*radius*/15.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 40.0 },
-		/*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
-	SphericalSurface_LLT S1(/*radius*/10.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 45.0 },
-		/*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
+	ApertureStop_LLT ApertureStop0E0(1.0, { 0.0,0.0,20.0 }, { 0.0,0.0,1.0 }, 1.0);
+	SphericalSurface_LLT S0(/*radius*/15.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 40.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
+	SphericalSurface_LLT S1(/*radius*/10.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 45.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
 	PlanGeometry_LLT Plan0(/*semiHeight*/3.0, /*point*/{ 0.0,0.0,62.07317073 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
+	
 	PlanGeometry_LLT PlanExP(/*semiHeight*/3.0, /*point*/{ 0.0,0.0,74.23076923 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
 
 	// build opitcal system
@@ -129,7 +123,22 @@ bool TestOPD::checkOPD_superFct()
 	//**********************************************************************************************
 	//**********************************************************************************************
 
+	bool returnCheckOPD = Math::checkTrueOfVectorElements(checkOPD);
+	return returnCheckOPD;
 
+}
+
+// E1
+bool TestOPD::checkE1()
+{	
+	RefractedRay_LLT refrac;
+	DoNothingInteraction_LLT doNothing;
+	Light_LLT Light500;
+	Light500.setWavelength(500.0);
+	Absorb_LLT absorb;
+	
+	std::vector<bool> checkOPD;
+	
 	// check how Zemax calculate the OPD
 	// exit pupil is global coordinate reference
 	// Py = 1 at the exit pupil: y = 0.83106246530, z = 0
@@ -138,6 +147,7 @@ bool TestOPD::checkOPD_superFct()
 
 	LightRayStruct LightRayE2Py1 = { Light500, RayPy1E2, 1 };
 
+	ApertureStop_LLT ApertureStop0E0(1.0, { 0.0,0.0,20.0 }, { 0.0,0.0,1.0 }, 1.0);
 	SphericalSurface_LLT S0E2(/*radius*/5.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 13 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
 	SphericalSurface_LLT S1E2(/*radius*/5.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 18 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
 	SphericalSurface_LLT S2E2(/*radius*/10.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 21 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.5, /*refIndexSideB*/1.0);
@@ -286,9 +296,16 @@ bool TestOPD::checkOPD_superFct()
 	// *****************************************************************************************************************
 	// *****************************************************************************************************************
 	bool output = Math::checkTrueOfVectorElements(checkOPD);
-	// *****************************************************************************************************************
-	// *****************************************************************************************************************
-	// *****************************************************************************************************************
-
 	return output;
+
+}
+
+bool TestOPD::checkOPD_superFct()
+{
+	
+	std::vector<bool> workOPD;// hier gehts dann weiter
+
+	
+	bool returnCheckOPD = Math::checkTrueOfVectorElements(workOPD);
+	return returnCheckOPD;
 }

@@ -20,7 +20,7 @@
 #include "..\..\oftenUseNamespace\oftenUseNamespace.h"
 
 typedef std::shared_ptr< Element_CR > surfacePtr;
-typedef std::shared_ptr< InteractionRay_LLT > interactionPtr;
+typedef std::shared_ptr< InteractionRay_LLT > interaction_ptr;
 
 DLSmulticheck::DLSmulticheck()
 {
