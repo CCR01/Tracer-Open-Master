@@ -30,7 +30,7 @@ testLensReplace::testLensReplace() { loadDefaulParameter_testLensReplace(); }
 testLensReplace::~testLensReplace(){}
 
 typedef std::shared_ptr< Element_CR > surfacePtr;
-typedef std::shared_ptr< InteractionRay_LLT > interactionPtr;
+typedef std::shared_ptr< InteractionRay_LLT > interaction_ptr;
 
 void testLensReplace::loadDefaulParameter_testLensReplace()
 {
@@ -248,7 +248,7 @@ bool testLensReplace::testLensReplace_E2()
 	surfacePtr P4_E2_ptr = P4_E2.clone();
 
 	std::vector<surfacePtr> opticalSystemE0_ptr{ A0_E2_ptr, S1_E2_ptr, S2_E2_ptr, S3_E2_ptr, P4_E2_ptr };
-	std::vector<interactionPtr> interactionsE0_ptr{ mDoNot.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
+	std::vector<interaction_ptr> interactionsE0_ptr{ mDoNot.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
 
 
 	//	build optical system
@@ -268,7 +268,7 @@ bool testLensReplace::testLensReplace_E2()
 
 	// *** check rotate opt sys ele *** //
 	std::vector<surfacePtr> opticalSystemE0_ptr_toRotate{S1_E2_ptr, S2_E2_ptr, S3_E2_ptr};
-	std::vector<interactionPtr> interactionsE0_ptr_toRotate{mRefrac.clone(), mRefrac.clone(), mRefrac.clone()};
+	std::vector<interaction_ptr> interactionsE0_ptr_toRotate{mRefrac.clone(), mRefrac.clone(), mRefrac.clone()};
 	OpticalSystemElement optSystemElement_E2_toRotate(opticalSystemE0_ptr_toRotate, interactionsE0_ptr_toRotate);
 
 	OpticalSystemElement optSystemElement_E2_rotate = optSystemElement_E2.reverseOptSysEle(optSystemElement_E2_toRotate);
@@ -316,7 +316,7 @@ bool testLensReplace::testLensReplace_E3()
 	surfacePtr P7_E3_ptr = P7_E3.clone();
 
 	std::vector<surfacePtr> opticalSystem_E3_ptr{ A0_E3_ptr, S1_E3_ptr, S2_E3_ptr, S3_E3_ptr, S4_E3_ptr,S5_E3_ptr,S6_E3_ptr, P7_E3_ptr };
-	std::vector<interactionPtr> interactions_E3_ptr{ mDoNot.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
+	std::vector<interaction_ptr> interactions_E3_ptr{ mDoNot.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
 
 
 	//	build optical system

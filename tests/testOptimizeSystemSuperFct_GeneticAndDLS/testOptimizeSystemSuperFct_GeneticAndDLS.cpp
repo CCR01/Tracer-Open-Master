@@ -21,7 +21,7 @@ testOptimizeSystemSuperFct_GeneticAndDLS::testOptimizeSystemSuperFct_GeneticAndD
 testOptimizeSystemSuperFct_GeneticAndDLS::~testOptimizeSystemSuperFct_GeneticAndDLS() {}
 
 typedef std::shared_ptr< Element_CR > surfacePtr;
-typedef std::shared_ptr< InteractionRay_LLT > interactionPtr;
+typedef std::shared_ptr< InteractionRay_LLT > interaction_ptr;
 
 // load important stuff
 void testOptimizeSystemSuperFct_GeneticAndDLS::loadImportantStuff()
@@ -211,7 +211,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE0_GeneticAndDLS_rms()
 	surfacePtr Plan9_E0_ptr = Plan9_E0.clone();
 	
 	std::vector<surfacePtr> opticalSystemE0_ptr{ Aper0_E0_ptr, Sphere1_E0_ptr, Sphere2_E0_ptr , Sphere3_E0_ptr, Sphere4_E0_ptr, Sphere5_E0_ptr, Sphere6_E0_ptr, Sphere7_E0_ptr, Sphere8_E0_ptr, Plan9_E0_ptr };
-	std::vector<interactionPtr> interactionsE0_ptr{ mDoNothing.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
+	std::vector<interaction_ptr> interactionsE0_ptr{ mDoNothing.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
 	
 	//	build optical system
 	OpticalSystemElement optSysEle_E0(opticalSystemE0_ptr, interactionsE0_ptr);
@@ -278,7 +278,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE1_GeneticAndDLS_rms()
 	surfacePtr Plan11_E1_ptr = Plan11_E1.clone();
 
 	std::vector<surfacePtr> opticalSystemE1_ptr{ Aper0_E1_ptr, Sphere1_E1_ptr, Sphere2_E1_ptr , Sphere3_E1_ptr, Sphere4_E1_ptr, Sphere5_E1_ptr, Sphere6_E1_ptr, Sphere7_E1_ptr, Sphere8_E1_ptr, Sphere9_E1_ptr, Sphere10_E1_ptr, Plan11_E1_ptr };
-	std::vector<interactionPtr> interactionsE1_ptr{ mDoNothing.clone(), mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
+	std::vector<interaction_ptr> interactionsE1_ptr{ mDoNothing.clone(), mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
 
 	//	build optical system
 	OpticalSystemElement optSystemElement_E1(opticalSystemE1_ptr, interactionsE1_ptr);
@@ -341,7 +341,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE2_GeneticAndDLS_rms()
 	surfacePtr Plan9_E2_ptr = Plan9_E2.clone();
 
 	std::vector<surfacePtr> opticalSystemE2_ptr{ Aper0_E2_ptr, Sphere1_E2_ptr, Sphere2_E2_ptr , Sphere3_E2_ptr, Sphere4_E2_ptr, Sphere5_E2_ptr, Sphere6_E2_ptr, Sphere7_E2_ptr, Sphere8_E2_ptr, Plan9_E2_ptr };
-	std::vector<interactionPtr> interactionsE2_ptr{ mDoNothing.clone(), mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mAbsorb.clone() };
+	std::vector<interaction_ptr> interactionsE2_ptr{ mDoNothing.clone(), mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mAbsorb.clone() };
 
 	//	build optical system
 	OpticalSystemElement optSystemElement_E2(opticalSystemE2_ptr, interactionsE2_ptr);
@@ -411,7 +411,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE3_GeneticAndDLS_rms()
 	surfacePtr Plan12_E3_ptr = Plan12_E3.clone();
 	
 	std::vector<surfacePtr> opticalSystemE3_ptr{ Aper0_E3_ptr, Sphere1_E3_ptr, Sphere2_E3_ptr , Sphere3_E3_ptr, Sphere4_E3_ptr, Sphere5_E3_ptr, Sphere6_E3_ptr, Sphere7_E3_ptr, Sphere8_E3_ptr, Sphere9_E3_ptr, Sphere10_E3_ptr, Sphere11_E3_ptr, Plan12_E3_ptr };
-	std::vector<interactionPtr> interactionsE3_ptr{ mDoNothing.clone(), mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
+	std::vector<interaction_ptr> interactionsE3_ptr{ mDoNothing.clone(), mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
 	
 	//	build optical system
 	OpticalSystemElement optSystemElement_E3(opticalSystemE3_ptr, interactionsE3_ptr);
@@ -475,7 +475,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE4_GeneticAndDLS_rms()
 	surfacePtr Plan9_E4_ptr = Plan9_E4.clone();
 	
 	std::vector<surfacePtr> opticalSystemE4_ptr{ Aper0_E4_ptr, Sphere1_E4_ptr, Sphere2_E4_ptr , Sphere3_E4_ptr, Sphere4_E4_ptr, Sphere5_E4_ptr, Sphere6_E4_ptr, Sphere7_E4_ptr, Sphere8_E4_ptr, Plan9_E4_ptr };
-	std::vector<interactionPtr> interactionsE4_ptr{ mDoNothing.clone(), mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mAbsorb.clone() };
+	std::vector<interaction_ptr> interactionsE4_ptr{ mDoNothing.clone(), mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mAbsorb.clone() };
 	
 	//	build optical system
 	OpticalSystemElement optSystemElement_E4(opticalSystemE4_ptr, interactionsE4_ptr);
@@ -533,7 +533,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE5_GeneticAndDLS_rms()
 	surfacePtr Plan6_E5_ptr = Plan6_E5.clone();
 	
 	std::vector<surfacePtr> opticalSystemE5_ptr{ Aper0_E5_ptr, Sphere1_E5_ptr, Sphere2_E5_ptr , Sphere3_E5_ptr, Sphere4_E5_ptr, Sphere5_E5_ptr,  Plan6_E5_ptr };
-	std::vector<interactionPtr> interactionsE5_ptr{ mDoNothing.clone(), mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(),mAbsorb.clone() };
+	std::vector<interaction_ptr> interactionsE5_ptr{ mDoNothing.clone(), mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(),mAbsorb.clone() };
 	
 	//	build optical system
 	OpticalSystemElement optSystemElement_E5(opticalSystemE5_ptr, interactionsE5_ptr);
@@ -587,7 +587,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE6_GeneticAndDLS_rms()
 	surfacePtr Plan4_E6_ptr = Plan4_E6.clone();
 	
 	std::vector<surfacePtr> opticalSystemE6_ptr{ Aper0_E6_ptr, Sphere1_E6_ptr, Sphere2_E6_ptr , Sphere3_E6_ptr, Plan4_E6_ptr };
-	std::vector<interactionPtr> interactionsE6_ptr{ mDoNothing.clone(), mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
+	std::vector<interaction_ptr> interactionsE6_ptr{ mDoNothing.clone(), mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
 	
 	//	build optical system
 	OpticalSystemElement optSystemElement_E6(opticalSystemE6_ptr, interactionsE6_ptr);
@@ -641,7 +641,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE7_GeneticAndDLS_rms()
 	surfacePtr Plan4_E7_ptr = Plan4_E7.clone();
 	
 	std::vector<surfacePtr> opticalSystemE7_ptr{ Aper0_E7_ptr, Sphere1_E7_ptr, Sphere2_E7_ptr , Sphere3_E7_ptr, Plan4_E7_ptr };
-	std::vector<interactionPtr> interactionsE7_ptr{ mDoNothing.clone(), mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
+	std::vector<interaction_ptr> interactionsE7_ptr{ mDoNothing.clone(), mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
 	
 	//	build optical system
 	OpticalSystemElement optSystemElement_E7(opticalSystemE7_ptr, interactionsE7_ptr);
@@ -702,7 +702,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE8_GeneticAndDLS_rms()
 	surfacePtr Plan7_E8_ptr = Plan7_E8.clone();
 	
 	std::vector<surfacePtr> opticalSystemE8_ptr{ Aper0_E8_ptr, Sphere1_E8_ptr, Sphere2_E8_ptr , Sphere3_E8_ptr, Sphere4_E8_ptr, Sphere5_E8_ptr, Sphere6_E8_ptr, Plan7_E8_ptr };
-	std::vector<interactionPtr> interactionsE8_ptr{ mDoNothing.clone(), mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(),mRefrac.clone(),mAbsorb.clone() };
+	std::vector<interaction_ptr> interactionsE8_ptr{ mDoNothing.clone(), mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(),mRefrac.clone(),mAbsorb.clone() };
 	
 	//	build optical system
 	OpticalSystemElement optSystemElement_E8(opticalSystemE8_ptr, interactionsE8_ptr);
@@ -765,7 +765,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE9_GeneticAndDLS_rms()
 	surfacePtr Plan8_E9_ptr = Plan8_E9.clone();
 	
 	std::vector<surfacePtr> opticalSystemE9_ptr{ Aper0_E9_ptr, Sphere1_E9_ptr, Sphere2_E9_ptr , Sphere3_E9_ptr, Sphere4_E9_ptr, Sphere5_E9_ptr, Sphere6_E9_ptr, Sphere7_E9_ptr, Plan8_E9_ptr };
-	std::vector<interactionPtr> interactionsE9_ptr{ mDoNothing.clone(), mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mAbsorb.clone() };
+	std::vector<interaction_ptr> interactionsE9_ptr{ mDoNothing.clone(), mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mAbsorb.clone() };
 	
 	//	build optical system
 	OpticalSystemElement optSystemElement_E9(opticalSystemE9_ptr, interactionsE9_ptr);
@@ -822,7 +822,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE10_GeneticAndDLS_rms()
 	surfacePtr Plan4_E10_ptr = Plan4_E10.clone();
 	
 	std::vector<surfacePtr> opticalSystemE10_ptr{ Aper0_E10_ptr, Sphere1_E10_ptr, Sphere2_E10_ptr , Sphere3_E10_ptr, Plan4_E10_ptr };
-	std::vector<interactionPtr> interactionsE10_ptr{ mDoNothing.clone(), mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
+	std::vector<interaction_ptr> interactionsE10_ptr{ mDoNothing.clone(), mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
 	
 	//	build optical system
 	OpticalSystemElement optSystemElement_E10(opticalSystemE10_ptr, interactionsE10_ptr);
@@ -871,7 +871,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE11_GeneticAndDLS_rms()
 	surfacePtr Plan4_E11_ptr = Plan4_E11.clone();
 
 	std::vector<surfacePtr> opticalSystem_E11_ptr{ Sphere0_E11_ptr , Sphere1_E11_ptr, Sphere2_E11_ptr, Aper3_E11_ptr,  Plan4_E11_ptr };
-	std::vector<interactionPtr> interactions_E11_ptr{ mRefrac.clone(), mRefrac.clone(),mRefrac.clone(),mDoNothing.clone(),mAbsorb.clone() };
+	std::vector<interaction_ptr> interactions_E11_ptr{ mRefrac.clone(), mRefrac.clone(),mRefrac.clone(),mDoNothing.clone(),mAbsorb.clone() };
 
 	//	build optical system
 	OpticalSystemElement optSystemElement_E11(opticalSystem_E11_ptr, interactions_E11_ptr);
@@ -933,7 +933,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS ::checkE12_GeneticAndDLS_rms()
 	surfacePtr Plan7_E12_ptr = Plan7_E12.clone();
 
 	std::vector<surfacePtr> opticalSystem_E12_ptr{ Sphere0_E12_ptr , Sphere1_E12_ptr, Sphere2_E12_ptr, Aper3_E12_ptr, Sphere4_E12_ptr, Sphere5_E12_ptr, Sphere6_E12_ptr,  Plan7_E12_ptr };
-	std::vector<interactionPtr> interactions_E12_ptr{ mRefrac.clone(), mRefrac.clone(),mRefrac.clone(),mDoNothing.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mAbsorb.clone() };
+	std::vector<interaction_ptr> interactions_E12_ptr{ mRefrac.clone(), mRefrac.clone(),mRefrac.clone(),mDoNothing.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mAbsorb.clone() };
 
 	//	build optical system
 	OpticalSystemElement optSystemElement_E12(opticalSystem_E12_ptr, interactions_E12_ptr);
@@ -1002,7 +1002,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE0_GeneticAndDLS_cardinalPoi
 	surfacePtr Plan9_E0_ptr = Plan9_E0.clone();
 
 	std::vector<surfacePtr> opticalSystemE0_ptr{ Aper0_E0_ptr, Sphere1_E0_ptr, Sphere2_E0_ptr , Sphere3_E0_ptr, Sphere4_E0_ptr, Sphere5_E0_ptr, Sphere6_E0_ptr, Sphere7_E0_ptr, Sphere8_E0_ptr, Plan9_E0_ptr };
-	std::vector<interactionPtr> interactionsE0_ptr{ mDoNothing.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
+	std::vector<interaction_ptr> interactionsE0_ptr{ mDoNothing.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
 
 	//	build optical system
 	OpticalSystemElement optSysEle_E0(opticalSystemE0_ptr, interactionsE0_ptr);
@@ -1131,7 +1131,7 @@ bool testOptimizeSystemSuperFct_GeneticAndDLS::checkE0_GeneticAndDLS_cardinalPoi
 	surfacePtr Plan9_E0_compare_ptr = Plan9_E0_compare.clone();
 
 	std::vector<surfacePtr> opticalSystem_E0_compare_ptr{ Aper0_E0_compare_ptr, Sphere1_E0_compare_ptr, Sphere2_E0_compare_ptr , Sphere3_E0_compare_ptr, Sphere4_E0_compare_ptr, Sphere5_E0_compare_ptr, Sphere6_E0_compare_ptr, Sphere7_E0_compare_ptr, Sphere8_E0_compare_ptr, Plan9_E0_compare_ptr };
-	std::vector<interactionPtr> interactions_E0_compare_ptr{ mDoNothing.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
+	std::vector<interaction_ptr> interactions_E0_compare_ptr{ mDoNothing.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
 
 	//	build optical system
 	OpticalSystemElement optSysEle_E0_ref(opticalSystem_E0_compare_ptr, interactions_E0_compare_ptr);

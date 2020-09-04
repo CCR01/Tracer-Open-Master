@@ -61,14 +61,50 @@ public:
 	// test target EFL
 	bool testTargetEFL_genetic_obj();
 	bool testTargetEFL_genetic_inf();
+	// test target PP_obj
+	bool testTargetPP_genetic_obj();
+	bool testTargetPP_genetic_inf();
+	//test target PP_ima
+	bool testTargetPP_ima_genetic_obj();
+	bool testTargetPP_ima_genetic_inf();
+	//test target EXPP_lastSurface
+	bool testTargetEXPP_lastSurface_genetic_obj();
+	bool testTargetEXPP_lastSurface_genetic_inf();
+	//test target EXPD
+	bool testTargetEXPD_obj();
+	bool testTargetEXPD_inf();
+	//test target Mag
+	bool testTargetMag_obj();
+	bool testTargetMag_inf();
+	// test target NA_objSpace
+	bool testTargetNA_objSpace_obj();
+	bool testTargetNA_objSpace_inf();
+	//test target ENPP_firstSurface
+	bool testTargetENPP_firstSurface_obj();
+	bool testTargetENPP_firstSurface_inf();
+	//test target ENPP_global
+	bool testTargetENPP_global_obj();
+	bool testTargetENPP_global_inf();
+	//test target ENPD
+	bool testTargetENPD_obj();
+	bool testTargetENPD_inf();
+	//test target f_number_imaSpace
+	bool testTargetf_number_imaSpace_obj();
+	bool testTargetf_number_imaSpace_inf();
+	//test target NA_imaSpace
+	bool testTargetNA_imaSpace_obj();
+	bool testTargetNA_imaSpace_inf();
+	//test target WFNO
+	bool testTargetWFNO_obj();
+	bool testTargetWFNO_inf();
 	
 
 
 private:
 
-	DoNothingInteraction_LLT mDoNothing{};
-	RefractedRay_LLT mRefrac{};
-	Absorb_LLT mAbsorb{};
+	DoNothingInteraction_LLT doNothing{};
+	RefractedRay_LLT refrac{};
+	Absorb_LLT absorb{};
 
 	glass glasses{};
 

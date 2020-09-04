@@ -15,7 +15,7 @@ testDLS_multiThreads_12::testDLS_multiThreads_12() { loadImportantStuff(); }
 testDLS_multiThreads_12::~testDLS_multiThreads_12(){}
 
 typedef std::shared_ptr< Element_CR > surfacePtr;
-typedef std::shared_ptr< InteractionRay_LLT > interactionPtr;
+typedef std::shared_ptr< InteractionRay_LLT > interaction_ptr;
 
 // load important stuff
 void testDLS_multiThreads_12::loadImportantStuff()
@@ -119,7 +119,7 @@ bool testDLS_multiThreads_12::checkE0()
 	surfacePtr Plan9_E0_ptr = Plan9_E0.clone();
 
 	std::vector<surfacePtr> opticalSystemE0_ptr{ Aper0_E0_ptr, Sphere1_E0_ptr, Sphere2_E0_ptr , Sphere3_E0_ptr, Sphere4_E0_ptr, Sphere5_E0_ptr, Sphere6_E0_ptr, Sphere7_E0_ptr, Sphere8_E0_ptr, Plan9_E0_ptr };
-	std::vector<interactionPtr> interactionsE0_ptr{ doNothing.clone(), refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(), absorb.clone() };
+	std::vector<interaction_ptr> interactionsE0_ptr{ doNothing.clone(), refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(), absorb.clone() };
 
 	//	build optical system
 	OpticalSystemElement optSysEle_E0(opticalSystemE0_ptr, interactionsE0_ptr);

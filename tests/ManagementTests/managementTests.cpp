@@ -19,6 +19,8 @@
 #include "..\testDLS_multiThreads_12\testDLS_multiThreads_12.h"
 #include "..\testOptimizeSystemSuperFct_GeneticAndDLS\testOptimizeSystemSuperFct_GeneticAndDLS.h"
 #include "..\testLensReplace\testLenseReplace.h"
+#include "..\testOPD\testOPD.h"
+#include "..\testGlobalOPD\TestGlobalOPD.h"
 
 ManagementTests::ManagementTests() {};
 ManagementTests::ManagementTests(std::vector<testWhat> testWhat_vec) :
@@ -286,6 +288,25 @@ bool ManagementTests::testSuperFct()
 		bool checkLensReplace = checkTestLensReplace.testLensReplace_superFct();
 		workTheSystem_test.push_back(checkLensReplace);
 		checkerAndCout(checkLensReplace, "test lens replace");
+	}
+
+	// test OPD
+	if (testWhatInTestWhatVec(testWhat::tOPD) || testAll)
+	{
+		TestOPD checkTestOPD;
+		bool checkOPD = checkTestOPD.checkOPD_superFct();
+		workTheSystem_test.push_back(checkOPD);
+		checkerAndCout(checkOPD, "test OPD");
+	}
+
+
+	// test global OPD
+	if (testWhatInTestWhatVec(testWhat::tGlobalOPD) || testAll)
+	{
+		TestGlobalOPD checkTestGlobalOPD;
+		bool checkGlobalOPD = checkTestGlobalOPD.checkGlobalOPD_superFunction();
+		workTheSystem_test.push_back(checkGlobalOPD);
+		checkerAndCout(checkGlobalOPD, "test global OPD");
 	}
 
 
