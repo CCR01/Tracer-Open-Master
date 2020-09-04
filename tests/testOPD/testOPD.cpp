@@ -15,8 +15,26 @@
 
 typedef std::shared_ptr< SurfaceIntersectionRay_LLT > surfacePtr_LLT;
 
+
+bool TestOPD::checkOPD_superFct()
+{
+
+	std::vector<bool> workOPD;// hier gehts dann weiter
+
+	// E0
+	bool chE0 = checkE0();
+	workOPD.push_back(chE0);
+
+	//// E1
+	//bool chE1 = checkE1();
+	//workOPD.push_back(chE1);
+
+	bool returnCheckOPD = Math::checkTrueOfVectorElements(workOPD);
+	return returnCheckOPD;
+}
+
 // E0
-bool checkE0()
+bool TestOPD::checkE0()
 {
 	std::vector<bool> checkOPD;
 
@@ -43,9 +61,9 @@ bool checkE0()
 	ApertureStop_LLT ApertureStop0E0(1.0, { 0.0,0.0,20.0 }, { 0.0,0.0,1.0 }, 1.0);
 	SphericalSurface_LLT S0(/*radius*/15.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 40.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
 	SphericalSurface_LLT S1(/*radius*/10.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 45.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
-	PlanGeometry_LLT Plan0(/*semiHeight*/3.0, /*point*/{ 0.0,0.0,62.07317073 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
+	PlanGeometry_LLT Plan0(/*semiHeight*/3.0, /*point*/{ 0.0,0.0,62.073 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
 	
-	PlanGeometry_LLT PlanExP(/*semiHeight*/3.0, /*point*/{ 0.0,0.0,74.23076923 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
+	SphericalSurface_LLT RefSpherAtExitPupilPlanExP(/*radius*/12.158, /*semiHeight*/4.0, /*Apex of the sphere*/{ 0.0, 0.0, 74.231 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.0);
 
 	// build opitcal system
 	// the exit pupil is behing the paraxial image point
@@ -56,7 +74,7 @@ bool checkE0()
 	OptSys1.fillVectorSurfaceAndInteractingData(1, S0.clone(), refrac.clone());
 	OptSys1.fillVectorSurfaceAndInteractingData(2, S1.clone(), refrac.clone());
 	OptSys1.fillVectorSurfaceAndInteractingData(3, Plan0.clone(), doNothing.clone());
-	OptSys1.fillVectorSurfaceAndInteractingData(4, PlanExP.clone(), doNothing.clone());
+	OptSys1.fillVectorSurfaceAndInteractingData(4, RefSpherAtExitPupilPlanExP.clone(), doNothing.clone());
 
 	//**********************************************************************************************
 	// check optical path with marginal ray Py=1
@@ -66,9 +84,10 @@ bool checkE0()
 	real distance1 = SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(1).at(0).getIntersecInfos().getStepsToWalk();
 	real distance2 = SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(2).at(0).getIntersecInfos().getStepsToWalk();
 	real distance3 = SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(3).at(0).getIntersecInfos().getStepsToWalk();
+	real distance4 = SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(4).at(0).getIntersecInfos().getStepsToWalk();
 
-	real sumOPDPy1 = distance0 + distance1 + distance2 + distance3;
-	real OPDPy1sys = SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(3).at(0).getTotalSteps();
+	real sumOPDPy1 = distance0 + distance1 + distance2 + distance3 + distance4;
+	real OPDPy1sys = SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(4).at(0).getTotalSteps();
 	bool checkOPDPy = Math::compareTwoNumbers_decimals(sumOPDPy1, OPDPy1sys, 7);
 	checkOPD.push_back(checkOPDPy);
 	//**********************************************************************************************
@@ -80,48 +99,54 @@ bool checkE0()
 	real distance1OA = SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(1).at(0).getIntersecInfos().getStepsToWalk();
 	real distance2OA = SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(2).at(0).getIntersecInfos().getStepsToWalk();
 	real distance3OA = SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(3).at(0).getIntersecInfos().getStepsToWalk();
+	real distance4OA = SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(4).at(0).getIntersecInfos().getStepsToWalk();
 
-	real sumOPDoptAx = distance0OA + distance1OA + distance2OA + distance3OA;
-	real OPDoptAxSys = SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(3).at(0).getTotalSteps();
+	real sumOPDoptAx = distance0OA + distance1OA + distance2OA + distance3OA + distance4OA;
+	real OPDoptAxSys = SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(4).at(0).getTotalSteps();
 	bool checkOPDoptAx = Math::compareTwoNumbers_decimals(sumOPDoptAx, OPDoptAxSys, 7);
 	checkOPD.push_back(checkOPDoptAx);
 
 
 	SeqTrac1.clearAllTracedRays();
 	SeqTrac1.sequentialRayTracing(LightRayPyHalf);
-	real sumOPD_Py_Half = SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(3).at(0).getTotalSteps();
+	real sumOPD_Py_Half = SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(4).at(0).getTotalSteps();
 	//**********************************************************************************************
-	real OPDPy1 = (sumOPDoptAx - sumOPDPy1) * 1000; //µm
+	real OPDPy1 = (sumOPDoptAx - sumOPDPy1) / 1000; //µm
 	//**********************************************************************************************
-	bool checkOPDPy1 = Math::compareTwoNumbers_decimals(OPDPy1, -96.1683399876, 3);
+	bool checkOPDPy1 = Math::compareTwoNumbers_tolerance(OPDPy1 / (Light500.getWavelength() / 1000), 7.656, 0.001);
 	//**********************************************************************************************
-	real OPDYHalf = (sumOPDoptAx - sumOPD_Py_Half) * 1000; //µm
+	real OPDYHalf = (sumOPDoptAx - sumOPD_Py_Half) / 1000; //µm
 	 //**********************************************************************************************
-	bool checkOPDYHalf = Math::compareTwoNumbers_decimals(OPDYHalf, -20.71933545669, 4);
+	bool checkOPDYHalf = Math::compareTwoNumbers_tolerance(OPDYHalf / (Light500.getWavelength() / 1000), 0.393, 0.001);
 	//**********************************************************************************************
-	std::vector<LightRayStruct> lightRayAlong_YE1 = SequentialRayTracing::lightRayAlongY({ 0.0,0.0,0.0 }, 21, 20, -1, +1, 550, 1.0);
+	std::vector<LightRayStruct> lightRayAlong_YE1 = SequentialRayTracing::lightRayAlongY({ 0.0,0.0,0.0 }, 11, 20, -1, +1, 550, 1.0);
 	SeqTrac1.clearAllTracedRays();
 	SeqTrac1.seqRayTracingWithVectorOfLightRays(lightRayAlong_YE1);
-	double referenceLenght = SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(3).at(10).getTotalSteps();
-	double OPDPX_1 = (referenceLenght - SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(3).at(11).getTotalSteps()) * 1000;
-	double OPDPX_2 = (referenceLenght - SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(3).at(12).getTotalSteps()) * 1000;
-	double OPDPX_3 = (referenceLenght - SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(3).at(13).getTotalSteps()) * 1000;
-	double OPDPX_4 = (referenceLenght - SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(3).at(14).getTotalSteps()) * 1000;
-	double OPDPX_5 = (referenceLenght - SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(3).at(15).getTotalSteps()) * 1000;
-	double OPDPX_6 = (referenceLenght - SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(3).at(16).getTotalSteps()) * 1000;
-	double OPDPX_7 = (referenceLenght - SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(3).at(17).getTotalSteps()) * 1000;
-	double OPDPX_8 = (referenceLenght - SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(3).at(18).getTotalSteps()) * 1000;
-	double OPDPX_9 = (referenceLenght - SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(3).at(19).getTotalSteps()) * 1000;
-	double OPDPX_10 = (referenceLenght - SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(3).at(20).getTotalSteps()) * 1000;
+	double referenceLenght = SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(4).at(4).getTotalSteps();
+	double OPDPX_0 = ((referenceLenght - SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(4).at(0).getTotalSteps()) / Light500.getWavelength()) * 1000000 ;
+	double OPDPX_1 = ((referenceLenght - SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(4).at(1).getTotalSteps()) / Light500.getWavelength()) * 1000000;
+	double OPDPX_2 = ((referenceLenght - SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(4).at(2).getTotalSteps()) / Light500.getWavelength()) * 1000000;
+	double OPDPX_3 = ((referenceLenght - SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(4).at(3).getTotalSteps()) / Light500.getWavelength()) * 1000000;
+	double OPDPX_4 = ((referenceLenght - SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(4).at(4).getTotalSteps()) / Light500.getWavelength()) * 1000000;
+	double OPDPX_5 = ((referenceLenght - SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(4).at(5).getTotalSteps()) / Light500.getWavelength()) * 1000000;
+	double OPDPX_6 = ((referenceLenght - SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(4).at(6).getTotalSteps()) / Light500.getWavelength()) * 1000000;
+	double OPDPX_7 = ((referenceLenght - SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(4).at(7).getTotalSteps()) / Light500.getWavelength()) * 1000000;
+	double OPDPX_8 = ((referenceLenght - SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(4).at(8).getTotalSteps()) / Light500.getWavelength()) * 1000000;
+	double OPDPX_9 = ((referenceLenght - SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(4).at(9).getTotalSteps()) / Light500.getWavelength()) * 1000000;
+	double OPDPX_10 = ((referenceLenght - SeqTrac1.getInterInf_PosSurface_TotalSteps_ofSur_i(4).at(10).getTotalSteps()) / Light500.getWavelength()) * 1000000;
 
-	std::vector<double> allOPD = { OPDPX_1 , OPDPX_2 ,OPDPX_3 , OPDPX_4 ,OPDPX_5, OPDPX_6 , OPDPX_7, OPDPX_8 , OPDPX_9 , OPDPX_10 };
-	std::vector<double> refAllOPD = { -0.790038, -3.1791536, -7.22486, -13.024775, -20.719335, -30.495816, -42.5938366, -57.3126788, -75.02083805, -96.168399 };
+	std::vector<double> allOPD = { OPDPX_0, OPDPX_1 , OPDPX_2 ,OPDPX_3 , OPDPX_4 ,OPDPX_5, OPDPX_6 , OPDPX_7, OPDPX_8 , OPDPX_9 , OPDPX_10 };
+	std::vector<double> refAllOPD = { 7.656, 2.855, 0.839, 0.157, 9.430E-3, 0.0, 9.430E-3, 0.157, 0.839, 2.855, 7.656 };
 	//**********************************************************************************************
-	bool checkOPDE1 = Math::compareTwoSTDVecors_decimals(allOPD, refAllOPD, 3);
+	bool checkOPDE1 = Math::compateTwoSTDVector_tolerance(allOPD, refAllOPD, 0.01);
 	//**********************************************************************************************
 	checkOPD.push_back(checkOPDE1);
 	//**********************************************************************************************
 	//**********************************************************************************************
+
+	hier gehts dann weiter -> strahlen, die von nem Feld kommen und nicht der optischen Achse --> referenzsphere an der Austrittspupille bekommt nen neuen Mittelpunkt!
+
+
 
 	bool returnCheckOPD = Math::checkTrueOfVectorElements(checkOPD);
 	return returnCheckOPD;
@@ -300,12 +325,3 @@ bool TestOPD::checkE1()
 
 }
 
-bool TestOPD::checkOPD_superFct()
-{
-	
-	std::vector<bool> workOPD;// hier gehts dann weiter
-
-	
-	bool returnCheckOPD = Math::checkTrueOfVectorElements(workOPD);
-	return returnCheckOPD;
-}
