@@ -4,7 +4,7 @@
 #include "OpticalPathDifference.h"
 #include "..\LowLevelTracing\Surfaces\SphericalSurface_LLT.h"
 #include "..\LowLevelTracing\Interaction\Absorb_LLT.h"
-#include "..\SequentialRayTracing\SequentialRayTracer.h
+#include "..\SequentialRayTracing\SequentialRayTracer.h"
 
 #include <cmath>
 #include <limits>
