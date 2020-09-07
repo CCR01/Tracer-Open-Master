@@ -16,4 +16,10 @@ public:
 	// E1
 	bool checkE1();
 
+	// E2
+	bool checkE2();
+
+	// E3
+	bool checkE3();
+
 };

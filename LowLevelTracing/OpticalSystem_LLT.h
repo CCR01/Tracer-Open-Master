@@ -235,7 +235,7 @@ public:
 
 	void cleanSurfaceAndInteractionStartAt_i(unsigned int aimSize);
 
-	
+	void setInteractionOfSurface_i(unsigned int surfaceNumber, std::shared_ptr<InteractionRay_LLT> interactinSurface);
 
 	void printAllPositions();
 	void printAllRadii();

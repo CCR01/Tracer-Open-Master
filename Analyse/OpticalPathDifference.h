@@ -27,67 +27,29 @@
 #include "..\LowLevelTracing\Interaction\DoNothingInteraction_LLT.h"
 #include "..\LowLevelTracing\Surfaces\PlanGeometry_LLT.h"
 
-#include "CardinalPoints.h"
 
 
+enum class posExitPupil {exitPupil_Left_ImaSurface, exitPupil_Right_ImaSurface};
 
 class OPD
 {
 public:
 	static const int  upscaledMatrixSize = 128;
-	OPD() {};
+
+	OPD();
 	// to calculate the global OPD
 	OPD(/*exit pupil*/ std::shared_ptr<SurfaceIntersectionRay_LLT> exitPupil,  /*optical system*/ OpticalSystem_LLT optSys,
-		/*fill apertur stop with light ray*/ std::vector<LightRayStruct> lightRayFillAperturStop, /*chief ray*/ LightRayStruct chiefLightRay, /*Scalling*/int scalling) //:
-		//mExitPupil(exitPupil),
-		//mOptSys(optSys),
-		//mLightRayFillAperturStop(lightRayFillAperturStop),
-		//mChiefLightRay(chiefLightRay),
-		//mScaling(scalling)
-	{
-
-		mPosObject = mChiefLightRay.getRay_LLT().getOriginRay();
-		mPosImageSurface = mOptSys.getNumberOfSurfaces();
-		mPosExPupilInOptSys = calcPosExPupil_Z();
-		//***
-		mOptSysWithExitPupil = mOptSys;
-		mOptSysWithExitPupil.fillInSurfaceAndInteracAtPos_i(mPosExPupilInOptSys, mExitPupil, mDoNothingInteraction_ptr);
-		//***
-		mRadiusRefSphere = calcRefDisForRefSphere();
-		mRefDistance = calcRefDisForOPD();
-
-		SphericalSurface_LLT refSphere(/*radius*/mRadiusRefSphere, /*semiHeight*/mExitPupil->getSemiHeight() / 2, /*Apex of the sphere*/mChiefRayAtExitPupil,/*Direction*/mChiefRayAtImage - mChiefRayAtExitPupil, /*refIndexSideA*/1.0, /*refIndexSideB*/1.0);
-		mRefSphere = refSphere;
-
-
-	};
+		/*fill apertur stop with light ray*/ std::vector<LightRayStruct> lightRayFillAperturStop, /*chief ray*/ LightRayStruct chiefLightRay, /*Scalling*/int scalling);
 
 	// to calculate the OPD in X and Y direction
 	OPD(/*exit pupil*/ std::shared_ptr<SurfaceIntersectionRay_LLT> exitPupil,  /*optical system*/ OpticalSystem_LLT optSys,
-		std::vector<LightRayStruct> lightRayAlong_X, std::vector<LightRayStruct> lightRayAlong_Y, LightRayStruct chiefLightRay) :
-		mExitPupil(exitPupil),
-		mOptSys(optSys),
-		mLightRayX(lightRayAlong_X),
-		mLightRayY(lightRayAlong_Y),
-		mChiefLightRay(chiefLightRay)
-	{
-		mPosObject = mChiefLightRay.getRay_LLT().getOriginRay();
-		mPosImageSurface = mOptSys.getNumberOfSurfaces();
-		mPosExPupilInOptSys = calcPosExPupil_Z();
-		//***
-		mOptSysWithExitPupil = mOptSys;
-		mOptSysWithExitPupil.fillInSurfaceAndInteracAtPos_i(mPosExPupilInOptSys, mExitPupil, mDoNothingInteraction_ptr);
-		//***
-		mRadiusRefSphere = calcRefDisForRefSphere();
-		mRefDistance = calcRefDisForOPD();
+		std::vector<LightRayStruct> lightRayAlong_X, std::vector<LightRayStruct> lightRayAlong_Y, LightRayStruct chiefLightRay);
+	~OPD();
 
-
-		SphericalSurface_LLT refSphere(/*radius*/mRadiusRefSphere, /*semiHeight*/mExitPupil->getSemiHeight() / 2, /*Apex of the sphere*/mChiefRayAtExitPupil,/*Direction*/mChiefRayAtImage - mChiefRayAtExitPupil, /*refIndexSideA*/1.0, /*refIndexSideB*/1.0);
-		mRefSphere = refSphere;
-		mOPD_X = calcOPD_X();
-		mOPD_Y = calcOPD_Y();
-	};
-	~OPD() {};
+	// calculate OPD for single Ray
+	real OPD_singelRay_obj(OpticalSystem_LLT optSys, VectorStructR3 startPointRay, real pupilPositionX, real pupilPositionY, Light_LLT light);
+	real calculateOPD_exitPupilBehindOptSys(OpticalSystem_LLT optSys, real posExitPupil_Z_global, VectorStructR3 startPointRay, real pupilPositionX, real pupilPositionY, Light_LLT light);
+	real calculateOPD_exitPupilLeftFromImaSurface(OpticalSystem_LLT optSys, real posExitPupil_Z_global, VectorStructR3 startPointRay, real pupilPositionX, real pupilPositionY, Light_LLT light);
 
 	// calculate position of exit pupil in optical system according to z direction
 	unsigned int calcPosExPupil_Z();

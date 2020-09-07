@@ -646,3 +646,8 @@ infosAS OpticalSystem_LLT::getInforAS()
 	return returnInfosAS;
 
 }
+
+void OpticalSystem_LLT::setInteractionOfSurface_i(unsigned int surfaceNumber, std::shared_ptr<InteractionRay_LLT> interactinSurface)
+{
+	mPosAndInteraction[surfaceNumber].setInteractionAtSur(interactinSurface);
+}

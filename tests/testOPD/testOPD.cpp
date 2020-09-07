@@ -12,6 +12,7 @@
 #include "..\..\Analyse\Spot.h"
 #include "..\..\LowLevelTracing\Interaction\Absorb_LLT.h"
 #include "..\..\LowLevelTracing\Surfaces\ApertureStop_LLT.h"
+#include "..\..\Analyse\CardinalPoints.h"
 
 typedef std::shared_ptr< SurfaceIntersectionRay_LLT > surfacePtr_LLT;
 
@@ -21,13 +22,17 @@ bool TestOPD::checkOPD_superFct()
 
 	std::vector<bool> workOPD;// hier gehts dann weiter
 
-	// E0
-	bool chE0 = checkE0();
-	workOPD.push_back(chE0);
+	//// E0
+	//bool chE0 = checkE0();
+	//workOPD.push_back(chE0);
+	//
+	//// E1
+	//bool chE1 = checkE1();
+	//workOPD.push_back(chE1);
 
-	// E1
-	bool chE1 = checkE1();
-	workOPD.push_back(chE1);
+	// E2
+	bool chE2 = checkE2();
+	workOPD.push_back(chE2);
 
 	bool returnCheckOPD = Math::checkTrueOfVectorElements(workOPD);
 	return returnCheckOPD;
@@ -236,28 +241,27 @@ bool TestOPD::checkE1()
 
 	LightRayStruct LightRayE2Py1 = { Light500, RayPy1E2, 1 };
 
-	ApertureStop_LLT ApertureStop0_E0(1.0, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, 1.0);
-	SphericalSurface_LLT S0_E2(/*radius*/5.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 13 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
-	SphericalSurface_LLT S1_E2(/*radius*/5.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 18 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
-	SphericalSurface_LLT S2_E2(/*radius*/10.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 21 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.6, /*refIndexSideB*/1.0);
-	SphericalSurface_LLT S3_E2(/*radius*/10.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 26 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.6, /*refIndexSideB*/1.0);
-	PlanGeometry_LLT Image_E2(/*semiHeight*/3.0, /*point*/{ 0.0,0.0,31.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
+	ApertureStop_LLT ApertureStop_S0_E1(1.0, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, 1.0);
+	SphericalSurface_LLT S0_E1(/*radius*/5.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 13 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
+	SphericalSurface_LLT S1_E1(/*radius*/5.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 18 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
+	SphericalSurface_LLT S2_E1(/*radius*/10.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 21 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.6, /*refIndexSideB*/1.0);
+	SphericalSurface_LLT S3_E1(/*radius*/10.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 26 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.6, /*refIndexSideB*/1.0);
+	PlanGeometry_LLT Image_E1(/*semiHeight*/3.0, /*point*/{ 0.0,0.0,31.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
 
 	// build the optical system
-	// exit pupil it at position of Plan_Ex2_2
 	OpticalSystem_LLT OptSysE2;
-	OptSysE2.fillVectorSurfaceAndInteractingData(0, ApertureStop0_E0.clone(), doNothing.clone());
-	OptSysE2.fillVectorSurfaceAndInteractingData(1, S0_E2.clone(), refrac.clone());
-	OptSysE2.fillVectorSurfaceAndInteractingData(2, S1_E2.clone(), refrac.clone());
-	OptSysE2.fillVectorSurfaceAndInteractingData(3, S2_E2.clone(), refrac.clone());
-	OptSysE2.fillVectorSurfaceAndInteractingData(4, S3_E2.clone(), refrac.clone());
-	OptSysE2.fillVectorSurfaceAndInteractingData(5, Image_E2.clone(), refrac.clone());
+	OptSysE2.fillVectorSurfaceAndInteractingData(0, ApertureStop_S0_E1.clone(), doNothing.clone());
+	OptSysE2.fillVectorSurfaceAndInteractingData(1, S0_E1.clone(), refrac.clone());
+	OptSysE2.fillVectorSurfaceAndInteractingData(2, S1_E1.clone(), refrac.clone());
+	OptSysE2.fillVectorSurfaceAndInteractingData(3, S2_E1.clone(), refrac.clone());
+	OptSysE2.fillVectorSurfaceAndInteractingData(4, S3_E1.clone(), refrac.clone());
+	OptSysE2.fillVectorSurfaceAndInteractingData(5, Image_E1.clone(), refrac.clone());
 
 	//**********************************************************************************************
 	CardinalPoints carPointsE2(OptSysE2, objectPoint_inf_obj::obj);
 	real exitPupilPosition_globalCoodiSys_Z = carPointsE2.getEXPP_globalCoori();
 	VectorStructR3 posExitPos = { 0.0,0.0,exitPupilPosition_globalCoodiSys_Z };
-	real radiusExitPupilOptA = (Image_E2.getPoint() - posExitPos).getZ();
+	real radiusExitPupilOptA = (Image_E1.getPoint() - posExitPos).getZ();
 	
 	SphericalSurface_LLT refSphereAtExitPupil_optA(/*radius*/radiusExitPupilOptA, /*semiHeight*/99.0, /*Apex of the sphere*/posExitPos, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/refractiveIndexAir, /*refIndexSideB*/refractiveIndexAir);
 
@@ -523,3 +527,102 @@ bool TestOPD::checkE1()
 
 }
 
+
+// E2
+bool TestOPD::checkE2()
+{
+	std::vector<bool> checkOPD;
+
+	RefractedRay_LLT refrac;
+	DoNothingInteraction_LLT doNothing;
+	Light_LLT Light500;
+	Light500.setWavelength(500.0);
+	Absorb_LLT absorb;
+
+
+	Ray_LLT RayPy1E2(/*origin*/{ 0.0, 0.83106246530, 0.0 }, /*direction*/{ 0.0, -0.247422749, 1.8380709316 }, 1.0);
+
+	LightRayStruct LightRayE2Py1 = { Light500, RayPy1E2, 1 };
+		
+	SphericalSurface_LLT S0_E2(/*radius*/10.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 10.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
+	SphericalSurface_LLT S1_E2(/*radius*/10.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 15.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
+	ApertureStop_LLT S2_E2(0.75, { 0.0,0.0,20.0 }, { 0.0,0.0,1.0 }, 1.0);
+	SphericalSurface_LLT S3_E2(/*radius*/7.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 30.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.6);
+	SphericalSurface_LLT S4_E2(/*radius*/7.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 35.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.6);
+	PlanGeometry_LLT S5_E2(/*semiHeight*/3.0, /*point*/{ 0.0,0.0,40.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
+
+	// build the optical system
+	OpticalSystem_LLT OptSysE2;
+	OptSysE2.fillVectorSurfaceAndInteractingData(0, S0_E2.clone(), refrac.clone());
+	OptSysE2.fillVectorSurfaceAndInteractingData(1, S1_E2.clone(), refrac.clone());
+	OptSysE2.fillVectorSurfaceAndInteractingData(2, S2_E2.clone(), doNothing.clone());
+	OptSysE2.fillVectorSurfaceAndInteractingData(3, S3_E2.clone(), refrac.clone());
+	OptSysE2.fillVectorSurfaceAndInteractingData(4, S4_E2.clone(), refrac.clone());
+	OptSysE2.fillVectorSurfaceAndInteractingData(5, S5_E2.clone(), absorb.clone());
+
+	OPD testOPDE2_0;
+	VectorStructR3 startPointRayOptA{ 0.0,0.0,0.0 };
+
+	real OPD11 = testOPDE2_0.OPD_singelRay_obj(OptSysE2, startPointRayOptA, 1.0, 1.0, Light500);
+	real refOPD11 = 12.853;
+	bool checkOPD11 = Math::compareTwoNumbers_tolerance(OPD11, refOPD11, 0.01);
+	checkOPD.push_back(checkOPD11);
+	
+	real OPD051 = testOPDE2_0.OPD_singelRay_obj(OptSysE2, startPointRayOptA, 0.5, 1.0, Light500);
+	real refOPD051 = 7.358;
+	bool checkOPD051 = Math::compareTwoNumbers_tolerance(OPD051, refOPD051, 0.01);
+	checkOPD.push_back(checkOPD051);
+	
+	real OPDneg0507 = testOPDE2_0.OPD_singelRay_obj(OptSysE2, startPointRayOptA, -0.5, 0.7, Light500);
+	real refOPDneg0507 = 4.092;
+	bool checkOPDneg0507 = Math::compareTwoNumbers_tolerance(OPDneg0507, refOPDneg0507, 0.01);
+	checkOPD.push_back(checkOPDneg0507);
+	
+	real OPDneg05neg03 = testOPDE2_0.OPD_singelRay_obj(OptSysE2, startPointRayOptA, -0.5, -0.3, Light500);
+	real refOPDneg05neg03 = 1.787;
+	bool checkOPDneg05neg03 = Math::compareTwoNumbers_tolerance(OPDneg05neg03, refOPDneg05neg03, 0.01);
+	checkOPD.push_back(checkOPDneg05neg03);
+	
+	real OPDn07neg03 = testOPDE2_0.OPD_singelRay_obj(OptSysE2, startPointRayOptA, 0.7, -0.3, Light500);
+	real refOPD07neg03 = 3.143;
+	bool checkOPD07neg03 = Math::compareTwoNumbers_tolerance(OPDn07neg03, refOPD07neg03, 0.01);
+	checkOPD.push_back(checkOPD07neg03);
+	
+	VectorStructR3 startPointField_0{ 0.0,1.0,0.0 };
+	real OPDfield_0 = testOPDE2_0.OPD_singelRay_obj(OptSysE2, startPointField_0, 1.0, 0.0, Light500);
+	real refOPDfield_0 = 7.870;
+	bool checkOPD_0 = Math::compareTwoNumbers_tolerance(OPDfield_0, refOPDfield_0, 0.01);
+	checkOPD.push_back(checkOPD_0);
+
+	VectorStructR3 startPointField_1{ 0.5,0.5,0.0 };
+	real OPDfield_1 = testOPDE2_0.OPD_singelRay_obj(OptSysE2, startPointField_1, 0.5, 0.5, Light500);
+	real refOPDfield_1 = 3.490;
+	bool checkOPD_1 = Math::compareTwoNumbers_tolerance(OPDfield_1, refOPDfield_1, 0.01);
+	checkOPD.push_back(checkOPD_1);
+
+	VectorStructR3 startPointField_2{ -0.3,0.7,0.0 };
+	real OPDfield_2 = testOPDE2_0.OPD_singelRay_obj(OptSysE2, startPointField_2, -0.3, 0.7, Light500);
+	real refOPDfield_2 = 4.237;
+	bool checkOPD_2 = Math::compareTwoNumbers_tolerance(OPDfield_2, refOPDfield_2, 0.01);
+	checkOPD.push_back(checkOPD_2);
+	
+	VectorStructR3 startPointField_3{ 0.5,-0.8,0.0 };
+	real OPDfield_3 = testOPDE2_0.OPD_singelRay_obj(OptSysE2, startPointField_3, 0.8, 0.2, Light500);
+	real refOPDfield_3 = 4.829;
+	bool checkOPD_3 = Math::compareTwoNumbers_tolerance(OPDfield_3, refOPDfield_3, 0.01);
+	checkOPD.push_back(checkOPD_3);
+
+	bool output = Math::checkTrueOfVectorElements(checkOPD);
+	return output;
+}
+
+// E3
+bool checkE3()
+{
+	std::vector<bool> checkOPD;
+
+
+
+	bool output = Math::checkTrueOfVectorElements(checkOPD);
+	return output;
+}
