@@ -25,9 +25,9 @@ bool TestOPD::checkOPD_superFct()
 	bool chE0 = checkE0();
 	workOPD.push_back(chE0);
 
-	//// E1
-	//bool chE1 = checkE1();
-	//workOPD.push_back(chE1);
+	// E1
+	bool chE1 = checkE1();
+	workOPD.push_back(chE1);
 
 	bool returnCheckOPD = Math::checkTrueOfVectorElements(workOPD);
 	return returnCheckOPD;
@@ -104,18 +104,6 @@ bool TestOPD::checkE0()
 	checkOPD.push_back(checkOPDoptAx);
 
 
-	SeqTrac_0.clearAllTracedRays();
-	SeqTrac_0.sequentialRayTracing(LightRayPyHalf);
-	real sumOPD_Py_Half = SeqTrac_0.getInterInf_PosSurface_TotalSteps_ofSur_i(4).at(0).getTotalSteps();
-	//**********************************************************************************************
-	real OPDPy1 = (sumOPDoptAx - sumOPDPy1) / 1000; //µm
-	//**********************************************************************************************
-	bool checkOPDPy1 = Math::compareTwoNumbers_tolerance(OPDPy1 / (Light500.getWavelength() / 1000), 7.656, 0.001);
-	//**********************************************************************************************
-	real OPDYHalf = (sumOPDoptAx - sumOPD_Py_Half) / 1000; //µm
-	 //**********************************************************************************************
-	bool checkOPDYHalf = Math::compareTwoNumbers_tolerance(OPDYHalf / (Light500.getWavelength() / 1000), 0.393, 0.001);
-	//**********************************************************************************************
 	std::vector<LightRayStruct> lightRayAlong_YE1 = SequentialRayTracing::lightRayAlongY({ 0.0,0.0,0.0 }, 11, 20, -1, +1, 550, 1.0);
 	SeqTrac_0.clearAllTracedRays();
 	SeqTrac_0.seqRayTracingWithVectorOfLightRays(lightRayAlong_YE1);
@@ -136,7 +124,6 @@ bool TestOPD::checkE0()
 	std::vector<double> refAllOPD = { 7.656, 2.855, 0.839, 0.157, 9.430E-3, 0.0, 9.430E-3, 0.157, 0.839, 2.855, 7.656 };
 	//**********************************************************************************************
 	bool checkOPDE1 = Math::compateTwoSTDVector_tolerance(allOPD, refAllOPD, 0.01);
-	//**********************************************************************************************
 	checkOPD.push_back(checkOPDE1);
 	//**********************************************************************************************
 	//**********************************************************************************************
@@ -245,162 +232,292 @@ bool TestOPD::checkE1()
 	
 	std::vector<bool> checkOPD;
 	
-	// check how Zemax calculate the OPD
-	// exit pupil is global coordinate reference
-	// Py = 1 at the exit pupil: y = 0.83106246530, z = 0
-	// direction ray = (0.0,0.58363971658,1.8380709316) - (0.0, 0.83106246530, 0.0) = (0.0, -0.247422749, 1.8380709316)
 	Ray_LLT RayPy1E2(/*origin*/{ 0.0, 0.83106246530, 0.0 }, /*direction*/{ 0.0, -0.247422749, 1.8380709316 }, 1.0);
 
 	LightRayStruct LightRayE2Py1 = { Light500, RayPy1E2, 1 };
 
-	ApertureStop_LLT ApertureStop0E0(1.0, { 0.0,0.0,20.0 }, { 0.0,0.0,1.0 }, 1.0);
-	SphericalSurface_LLT S0E2(/*radius*/5.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 13 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
-	SphericalSurface_LLT S1E2(/*radius*/5.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 18 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
-	SphericalSurface_LLT S2E2(/*radius*/10.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 21 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.5, /*refIndexSideB*/1.0);
-	SphericalSurface_LLT S3E2(/*radius*/10.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 26 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.5, /*refIndexSideB*/1.0);
-	PlanGeometry_LLT ImageE2(/*semiHeight*/3.0, /*point*/{ 0.0,0.0,31.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
+	ApertureStop_LLT ApertureStop0_E0(1.0, { 0.0,0.0,10.0 }, { 0.0,0.0,1.0 }, 1.0);
+	SphericalSurface_LLT S0_E2(/*radius*/5.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 13 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
+	SphericalSurface_LLT S1_E2(/*radius*/5.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 18 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
+	SphericalSurface_LLT S2_E2(/*radius*/10.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 21 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.6, /*refIndexSideB*/1.0);
+	SphericalSurface_LLT S3_E2(/*radius*/10.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 26 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.6, /*refIndexSideB*/1.0);
+	PlanGeometry_LLT Image_E2(/*semiHeight*/3.0, /*point*/{ 0.0,0.0,31.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
 
 	// build the optical system
 	// exit pupil it at position of Plan_Ex2_2
 	OpticalSystem_LLT OptSysE2;
-	OptSysE2.fillVectorSurfaceAndInteractingData(0, ApertureStop0E0.clone(), doNothing.clone());
-	OptSysE2.fillVectorSurfaceAndInteractingData(1, S0E2.clone(), refrac.clone());
-	OptSysE2.fillVectorSurfaceAndInteractingData(2, S1E2.clone(), refrac.clone());
-	OptSysE2.fillVectorSurfaceAndInteractingData(3, S2E2.clone(), refrac.clone());
-	OptSysE2.fillVectorSurfaceAndInteractingData(4, S3E2.clone(), refrac.clone());
-	OptSysE2.fillVectorSurfaceAndInteractingData(5, ImageE2.clone(), refrac.clone());
+	OptSysE2.fillVectorSurfaceAndInteractingData(0, ApertureStop0_E0.clone(), doNothing.clone());
+	OptSysE2.fillVectorSurfaceAndInteractingData(1, S0_E2.clone(), refrac.clone());
+	OptSysE2.fillVectorSurfaceAndInteractingData(2, S1_E2.clone(), refrac.clone());
+	OptSysE2.fillVectorSurfaceAndInteractingData(3, S2_E2.clone(), refrac.clone());
+	OptSysE2.fillVectorSurfaceAndInteractingData(4, S3_E2.clone(), refrac.clone());
+	OptSysE2.fillVectorSurfaceAndInteractingData(5, Image_E2.clone(), refrac.clone());
 
 	//**********************************************************************************************
+	CardinalPoints carPointsE2(OptSysE2, objectPoint_inf_obj::obj);
+	real exitPupilPosition_globalCoodiSys_Z = carPointsE2.getEXPP_globalCoori();
+	VectorStructR3 posExitPos = { 0.0,0.0,exitPupilPosition_globalCoodiSys_Z };
+	real radiusExitPupilOptA = (Image_E2.getPoint() - posExitPos).getZ();
+	
+	SphericalSurface_LLT refSphereAtExitPupil_optA(/*radius*/radiusExitPupilOptA, /*semiHeight*/99.0, /*Apex of the sphere*/posExitPos, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/refractiveIndexAir, /*refIndexSideB*/refractiveIndexAir);
 
-	//// calculate OPD with start point on optical axis
-	//std::vector<LightRayStruct> lightRayAlong_X_optA1 = SequentialRayTracing::lightRayAlongX({ 0.0, 0.0, 0.0 }, 5, 12.0, -1.0, 1.0, 550, 1.0);
-	//std::vector<LightRayStruct> lightRayAlong_Y_optA1 = SequentialRayTracing::lightRayAlongY({ 0.0, 0.0, 0.0 }, 5, 12.0, -1.0, 1.0, 550, 1.0);
-	//Ray_LLT chiefRayoptA1({ 0.0,0.0,0.0 }, { 0.0,0.0,1.0 }, 0.55, 1.0);
-	//LightRayStruct chiefLightRayOptA1(Light, chiefRayoptA1, 1);
-	PlanGeometry_LLT exitPupil1(/*semiHeight*/3.0, /*point*/{ 0.0,0.0,19.144876330 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
-	//OPD OPDoptA1(exitPupil1, OptSysE2, lightRayAlong_X_optA1, lightRayAlong_Y_optA1, chiefLightRayOptA1);
-	//
-	//std::vector<cv::Point2d> OPD_X_optAx1 = OPDoptA1.getPointsOPD_X();
-	//std::vector<cv::Point2d> OPD_Y_optAx1 = OPDoptA1.getPointsOPD_Y();
-	//
-	//std::vector<real> refOPDoptA1{ 10.160700194561, 1.5657142552642, 0.0, 1.5657142552642 , 10.160700194561 };
-	//std::vector<real> sysOPD_XoptA1 = OPDoptA1.getOPD_X_inVec();
-	//std::vector<real> sysOPD_YoptA1 = OPDoptA1.getOPD_Y_inVec();
-	//
-	//bool checkOPD_XoptA1 = Math::compareTwoSTDVecors(refOPDoptA1, sysOPD_XoptA1, 3);
-	//bool checkOPD_YoptA1 = Math::compareTwoSTDVecors(refOPDoptA1, sysOPD_YoptA1, 3);
-//	//**********************************************************************************************
-//	//checkOPD.push_back(checkOPD_XoptA1);
-//	checkOPD.push_back(checkOPD_YoptA1);
-//	//**********************************************************************************************
-//
-//	// calculate OPD with start point in the field {0.0,1.0,0.0}
-//
-//	std::vector<LightRayStruct> lightRayAlong_X_F1_1 = SequentialRayTracing::lightRayAlongX({ 0.0, 1.0, 0.0 }, 5, 12.0, -1.0, 1.0, 550, 1.0);
-//	std::vector<LightRayStruct> lightRayAlong_Y_F1_1 = SequentialRayTracing::lightRayAlongY({ 0.0, 1.0, 0.0 }, 5, 12.0, -1.0, 1.0, 550, 1.0);
-//	Ray_LLT chiefRayF1_1({ 0.0,1.0,0.0 }, { 0.0,-1.0,12.0 }, 0.550, 1.0);
-//	LightRayStruct chiefLightRayF1_1(Light, chiefRayF1_1, 1);
-//	OPD OPDF1_1(exitPupil1, OptSysE2, lightRayAlong_X_F1_1, lightRayAlong_Y_F1_1, chiefLightRayF1_1);
-//
-//	//std::vector<cv::Point2d> OPD_X_F1 = OPDF1_1.getPointsOPD_X();
-//	//std::vector<cv::Point2d> OPD_Y_F1 = OPDF1_1.getPointsOPD_Y();
-//
-//	std::vector<real> refOPDF1_X{ 11.095197787414, 1.5657364218168, 0.0, 1.5657364218168 , 11.095197787414};
-//	std::vector<real> refOPDF1_Y{ 16.831192337267, 2.5979333278438, 0.0, 1.6389782904700, 8.3923622095689};
-//
-//	std::vector<real> sysOPD_XF1 = OPDF1_1.getOPD_X_inVec();
-//	std::vector<real> sysOPD_YF1 = OPDF1_1.getOPD_Y_inVec();
-//
-//	bool checkOPD_XF1 = Math::compareTwoSTDVecors(sysOPD_XF1, refOPDF1_X, 1);
-//	bool checkOPD_YF1 = Math::compareTwoSTDVecors(sysOPD_YF1, refOPDF1_Y, 1);
-//
-//	//**********************************************************************************************
-//	checkOPD.push_back(checkOPD_XF1);
-//	checkOPD.push_back(checkOPD_YF1);
-//	//**********************************************************************************************
-//
-//	// surfaces of the optical system
-	SphericalSurface_LLT S0E3(/*radius*/15.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 40.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
-	SphericalSurface_LLT S1E3(/*radius*/10.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 45.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
-	PlanGeometry_LLT PlanE3(/*semiHeight*/5.0, /*point*/{ 0.0,0.0,60.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
-	//
-	OpticalSystem_LLT optSysE3;
-	optSysE3.fillVectorSurfaceAndInteractingData(0, ApertureStop0E0.clone(), doNothing.clone());
-	optSysE3.fillVectorSurfaceAndInteractingData(1, S0E3.clone(), refrac.clone());
-	optSysE3.fillVectorSurfaceAndInteractingData(2, S1E3.clone(), refrac.clone());
-	optSysE3.fillVectorSurfaceAndInteractingData(3, PlanE3.clone(), refrac.clone());
-	//
-	PlanGeometry_LLT exitPupilE3(/*semiHeight*/5.0, /*point*/{ 0.0,0.0,74.230762215072 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
-	surfacePtr_LLT exitPupilE3_ptr = exitPupilE3.clone();
+	Ray_LLT Ray0_chief(/*origin*/{ 0.0, 0.0, 0.0 }, /*direction*/{ 0.0, 0.0, 10.0 }, 1.0); 
+	Ray_LLT Ray1(/*origin*/{ 0.0, 0.0, 0.0 }, /*direction*/{ 0.0, 0.5, 10.0 }, 1.0); 
+	Ray_LLT Ray2(/*origin*/{ 0.0, 0.0, 0.0 }, /*direction*/{ 0.5, 0.5, 10.0 }, 1.0); 
+	Ray_LLT Ray3(/*origin*/{ 0.0, 0.0, 0.0 }, /*direction*/{ -0.5, 0.5, 10.0 }, 1.0);
+	Ray_LLT Ray4(/*origin*/{ 0.0, 0.0, 0.0 }, /*direction*/{ 0.5, -0.5, 10.0 }, 1.0);
+	Ray_LLT Ray5(/*origin*/{ 0.0, 0.0, 0.0 }, /*direction*/{ 0.2, -0.5, 10.0 }, 1.0);
+	Ray_LLT Ray6(/*origin*/{ 0.0, 0.0, 0.0 }, /*direction*/{ -0.7, 0.3, 10.0 }, 1.0);
+	Ray_LLT Ray7(/*origin*/{ 0.0, 0.0, 0.0 }, /*direction*/{ -0.3, -0.4, 10.0 }, 1.0);
+	Ray_LLT Ray8(/*origin*/{ 0.0, 0.0, 0.0 }, /*direction*/{ 0.7, 0.3, 10.0 }, 1.0);
+	Ray_LLT Ray9(/*origin*/{ 0.0, 0.0, 0.0 }, /*direction*/{ 0.6, 0.5, 10.0 }, 1.0);
 
-	// OPD on optical axis
-	std::vector<LightRayStruct> lightRayAlong_X_optA_E3 = SequentialRayTracing::lightRayAlongX({ 0.0, 0.0, 0.0 }, 5, 20.0, -1.0, 1.0, 550, 1.0);
-	std::vector<LightRayStruct> lightRayAlong_Y_optA_E3 = SequentialRayTracing::lightRayAlongY({ 0.0, 0.0, 0.0 }, 5, 20.0, -1.0, 1.0, 550, 1.0);
+	LightRayStruct lightRay0(Light500, Ray0_chief, 1);
+	LightRayStruct lightRay1(Light500, Ray1, 1);
+	LightRayStruct lightRay2(Light500, Ray2, 1);
+	LightRayStruct lightRay3(Light500, Ray3, 1);
+	LightRayStruct lightRay4(Light500, Ray4, 1);
+	LightRayStruct lightRay5(Light500, Ray5, 1);
+	LightRayStruct lightRay6(Light500, Ray6, 1);
+	LightRayStruct lightRay7(Light500, Ray7, 1);
+	LightRayStruct lightRay8(Light500, Ray8, 1);
+	LightRayStruct lightRay9(Light500, Ray9, 1);
 
-	Ray_LLT chiefRayOptA_E3({ 0.0,0.0,0.0 }, { 0.0,0.0,1.0 }, 1.0);
-	Light_LLT Light550;
-	Light550.setWavelength(550);
-	LightRayStruct chiefLightRayOptA_E3(Light550, chiefRayOptA_E3, 1);
+	std::vector<LightRayStruct> lightRay_optA{ lightRay0 ,lightRay1 ,lightRay2 ,lightRay3 ,lightRay4 ,lightRay5 ,lightRay6 ,lightRay7 ,lightRay8,lightRay9 };
 
-	OPD OPD3OptA(exitPupilE3_ptr, optSysE3, lightRayAlong_X_optA_E3, lightRayAlong_Y_optA_E3, chiefLightRayOptA_E3);
+	SequentialRayTracing seqTraceE1_optA(OptSysE2);
+	seqTraceE1_optA.seqRayTracingWithVectorOfLightRays(lightRay_optA);
 
-	std::vector<real> refVecOPD2OptA{ -19.35254296825, -5.174155019256, 0.0, -5.174155019256, -19.35254296825 };
+	// distance to image surface
+	real distance_imaSurface_0 = seqTraceE1_optA.getInterInf_PosSurface_TotalSteps_ofSur_i(5)[0].getTotalSteps();
+	real distance_imaSurface_1 = seqTraceE1_optA.getInterInf_PosSurface_TotalSteps_ofSur_i(5)[1].getTotalSteps();
+	real distance_imaSurface_2 = seqTraceE1_optA.getInterInf_PosSurface_TotalSteps_ofSur_i(5)[2].getTotalSteps();
+	real distance_imaSurface_3 = seqTraceE1_optA.getInterInf_PosSurface_TotalSteps_ofSur_i(5)[3].getTotalSteps();
+	real distance_imaSurface_4 = seqTraceE1_optA.getInterInf_PosSurface_TotalSteps_ofSur_i(5)[4].getTotalSteps();
+	real distance_imaSurface_5 = seqTraceE1_optA.getInterInf_PosSurface_TotalSteps_ofSur_i(5)[5].getTotalSteps();
+	real distance_imaSurface_6 = seqTraceE1_optA.getInterInf_PosSurface_TotalSteps_ofSur_i(5)[6].getTotalSteps();
+	real distance_imaSurface_7 = seqTraceE1_optA.getInterInf_PosSurface_TotalSteps_ofSur_i(5)[7].getTotalSteps();
+	real distance_imaSurface_8 = seqTraceE1_optA.getInterInf_PosSurface_TotalSteps_ofSur_i(5)[8].getTotalSteps();
+	real distance_imaSurface_9 = seqTraceE1_optA.getInterInf_PosSurface_TotalSteps_ofSur_i(5)[9].getTotalSteps();
 
-	std::vector<real> refSysOPD3OptA_X = OPD3OptA.getOPD_X_inVec();
-	std::vector<real> refSysOPD3OptA_Y = OPD3OptA.getOPD_Y_inVec();
+	VectorStructR3 directionRayToTraceack_0 = -1.0 * seqTraceE1_optA.getAllInterInfosOfSurf_i(5)[0].getDirectionRayUnit();
+	VectorStructR3 directionRayToTraceack_1 = -1.0 * seqTraceE1_optA.getAllInterInfosOfSurf_i(5)[1].getDirectionRayUnit();
+	VectorStructR3 directionRayToTraceack_2 = -1.0 * seqTraceE1_optA.getAllInterInfosOfSurf_i(5)[2].getDirectionRayUnit();
+	VectorStructR3 directionRayToTraceack_3 = -1.0 * seqTraceE1_optA.getAllInterInfosOfSurf_i(5)[3].getDirectionRayUnit();
+	VectorStructR3 directionRayToTraceack_4 = -1.0 * seqTraceE1_optA.getAllInterInfosOfSurf_i(5)[4].getDirectionRayUnit();
+	VectorStructR3 directionRayToTraceack_5 = -1.0 * seqTraceE1_optA.getAllInterInfosOfSurf_i(5)[5].getDirectionRayUnit();
+	VectorStructR3 directionRayToTraceack_6 = -1.0 * seqTraceE1_optA.getAllInterInfosOfSurf_i(5)[6].getDirectionRayUnit();
+	VectorStructR3 directionRayToTraceack_7 = -1.0 * seqTraceE1_optA.getAllInterInfosOfSurf_i(5)[7].getDirectionRayUnit();
+	VectorStructR3 directionRayToTraceack_8 = -1.0 * seqTraceE1_optA.getAllInterInfosOfSurf_i(5)[8].getDirectionRayUnit();
+	VectorStructR3 directionRayToTraceack_9 = -1.0 * seqTraceE1_optA.getAllInterInfosOfSurf_i(5)[9].getDirectionRayUnit();
 
-	bool checkOPD3_OpdA_X = Math::compareTwoSTDVecors_decimals(refSysOPD3OptA_X, refVecOPD2OptA, 3);
-	bool checkOPD3_OpdA_Y = Math::compareTwoSTDVecors_decimals(refSysOPD3OptA_Y, refVecOPD2OptA, 3);
+	VectorStructR3 interPointIma_0 = seqTraceE1_optA.getAllInterPointsAtSurface_i_filtered(5)[0];
+	VectorStructR3 interPointIma_1 = seqTraceE1_optA.getAllInterPointsAtSurface_i_filtered(5)[1];
+	VectorStructR3 interPointIma_2 = seqTraceE1_optA.getAllInterPointsAtSurface_i_filtered(5)[2];
+	VectorStructR3 interPointIma_3 = seqTraceE1_optA.getAllInterPointsAtSurface_i_filtered(5)[3];
+	VectorStructR3 interPointIma_4 = seqTraceE1_optA.getAllInterPointsAtSurface_i_filtered(5)[4];
+	VectorStructR3 interPointIma_5 = seqTraceE1_optA.getAllInterPointsAtSurface_i_filtered(5)[5];
+	VectorStructR3 interPointIma_6 = seqTraceE1_optA.getAllInterPointsAtSurface_i_filtered(5)[6];
+	VectorStructR3 interPointIma_7 = seqTraceE1_optA.getAllInterPointsAtSurface_i_filtered(5)[7];
+	VectorStructR3 interPointIma_8 = seqTraceE1_optA.getAllInterPointsAtSurface_i_filtered(5)[8];
+	VectorStructR3 interPointIma_9 = seqTraceE1_optA.getAllInterPointsAtSurface_i_filtered(5)[9];
 
-	checkOPD.push_back(checkOPD3_OpdA_X);
-	checkOPD.push_back(checkOPD3_OpdA_Y);
+	Ray_LLT ray0_back(/*origin*/interPointIma_0, /*direction*/directionRayToTraceack_0, 1.0);
+	Ray_LLT ray1_back(/*origin*/interPointIma_1, /*direction*/directionRayToTraceack_1, 1.0);
+	Ray_LLT ray2_back(/*origin*/interPointIma_2, /*direction*/directionRayToTraceack_2, 1.0);
+	Ray_LLT ray3_back(/*origin*/interPointIma_3, /*direction*/directionRayToTraceack_3, 1.0);
+	Ray_LLT ray4_back(/*origin*/interPointIma_4, /*direction*/directionRayToTraceack_4, 1.0);
+	Ray_LLT ray5_back(/*origin*/interPointIma_5, /*direction*/directionRayToTraceack_5, 1.0);
+	Ray_LLT ray6_back(/*origin*/interPointIma_6, /*direction*/directionRayToTraceack_6, 1.0);
+	Ray_LLT ray7_back(/*origin*/interPointIma_7, /*direction*/directionRayToTraceack_7, 1.0);
+	Ray_LLT ray8_back(/*origin*/interPointIma_8, /*direction*/directionRayToTraceack_8, 1.0);
+	Ray_LLT ray9_back(/*origin*/interPointIma_9, /*direction*/directionRayToTraceack_9, 1.0);
 
-	// *****************************************************************************************************************
+	LightRayStruct lightRay0_back(Light500, ray0_back, 1);
+	LightRayStruct lightRay1_back(Light500, ray1_back, 1);
+	LightRayStruct lightRay2_back(Light500, ray2_back, 1);
+	LightRayStruct lightRay3_back(Light500, ray3_back, 1);
+	LightRayStruct lightRay4_back(Light500, ray4_back, 1);
+	LightRayStruct lightRay5_back(Light500, ray5_back, 1);
+	LightRayStruct lightRay6_back(Light500, ray6_back, 1);
+	LightRayStruct lightRay7_back(Light500, ray7_back, 1);
+	LightRayStruct lightRay8_back(Light500, ray8_back, 1);
+	LightRayStruct lightRay9_back(Light500, ray9_back, 1);
 
-	// OPD on optical in field x=1
-	std::vector<LightRayStruct> lightRayAlong_X_F1_E3 = SequentialRayTracing::lightRayAlongX({ -0.5, 0.0, 0.0 }, 5, 20.0, -1.0, 1.0, 550, 1.0);
-	std::vector<LightRayStruct> lightRayAlong_Y_F1_E3 = SequentialRayTracing::lightRayAlongY({ -0.5, 0.0, 0.0 }, 5, 20.0, -1.0, 1.0, 550, 1.0);
+	std::vector<LightRayStruct> lightRay_traceBack_vec{ lightRay0_back ,lightRay1_back ,lightRay2_back ,lightRay3_back ,lightRay4_back ,lightRay5_back ,lightRay6_back ,lightRay7_back ,lightRay8_back,lightRay9_back };
 
-	Ray_LLT chiefRayF05_E3({ -0.5,0.0,0.0 }, { 0.5,0.0,20.0 }, 1.0);
-	LightRayStruct chiefLightRayF1_E3(Light550, chiefRayF05_E3, 1);
+	OpticalSystem_LLT optSysExitPupil;
+	PlanGeometry_LLT exitPupil(/*semiHeight*/99.0, /*point*/posExitPos, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
+	optSysExitPupil.fillVectorSurfaceAndInteractingData(0, exitPupil.clone(), doNothing.clone());
 
-	OPD OPD3F1(exitPupilE3_ptr, optSysE3, lightRayAlong_X_F1_E3, lightRayAlong_Y_F1_E3, chiefLightRayF1_E3);
+	OpticalSystem_LLT optSysRefSphereAtExitPupil;
+	optSysRefSphereAtExitPupil.fillVectorSurfaceAndInteractingData(0, refSphereAtExitPupil_optA.clone(), doNothing.clone());
+	SequentialRayTracing seqTrace_back(optSysRefSphereAtExitPupil);
+	seqTrace_back.seqRayTracingWithVectorOfLightRays(lightRay_traceBack_vec);
+
+	real distanceBack_0 = seqTrace_back.getInterInf_PosSurface_TotalSteps_ofSur_i(0)[0].getTotalSteps();
+	real distanceBack_1 = seqTrace_back.getInterInf_PosSurface_TotalSteps_ofSur_i(0)[1].getTotalSteps();
+	real distanceBack_2 = seqTrace_back.getInterInf_PosSurface_TotalSteps_ofSur_i(0)[2].getTotalSteps();
+	real distanceBack_3 = seqTrace_back.getInterInf_PosSurface_TotalSteps_ofSur_i(0)[3].getTotalSteps();
+	real distanceBack_4 = seqTrace_back.getInterInf_PosSurface_TotalSteps_ofSur_i(0)[4].getTotalSteps();
+	real distanceBack_5 = seqTrace_back.getInterInf_PosSurface_TotalSteps_ofSur_i(0)[5].getTotalSteps();
+	real distanceBack_6 = seqTrace_back.getInterInf_PosSurface_TotalSteps_ofSur_i(0)[6].getTotalSteps();
+	real distanceBack_7 = seqTrace_back.getInterInf_PosSurface_TotalSteps_ofSur_i(0)[7].getTotalSteps();
+	real distanceBack_8 = seqTrace_back.getInterInf_PosSurface_TotalSteps_ofSur_i(0)[8].getTotalSteps();
+	real distanceBack_9 = seqTrace_back.getInterInf_PosSurface_TotalSteps_ofSur_i(0)[9].getTotalSteps();
+
+	real referenceDistance = distance_imaSurface_0 - distanceBack_0;
+
+	real OPD1 = ((referenceDistance - (distance_imaSurface_1 - distanceBack_1)) / Light500.getWavelength()) * 1000000;
+	real OPD2 = ((referenceDistance - (distance_imaSurface_2 - distanceBack_2)) / Light500.getWavelength()) * 1000000;
+	real OPD3 = ((referenceDistance - (distance_imaSurface_3 - distanceBack_3)) / Light500.getWavelength()) * 1000000;
+	real OPD4 = ((referenceDistance - (distance_imaSurface_4 - distanceBack_4)) / Light500.getWavelength()) * 1000000;
+	real OPD5 = ((referenceDistance - (distance_imaSurface_5 - distanceBack_5)) / Light500.getWavelength()) * 1000000;
+	real OPD6 = ((referenceDistance - (distance_imaSurface_6 - distanceBack_6)) / Light500.getWavelength()) * 1000000;
+	real OPD7 = ((referenceDistance - (distance_imaSurface_7 - distanceBack_7)) / Light500.getWavelength()) * 1000000;
+	real OPD8 = ((referenceDistance - (distance_imaSurface_8 - distanceBack_8)) / Light500.getWavelength()) * 1000000;
+	real OPD9 = ((referenceDistance - (distance_imaSurface_9 - distanceBack_9)) / Light500.getWavelength()) * 1000000;
+
+	std::vector<real> calcOPD_optA = { OPD1 ,OPD2 ,OPD3 ,OPD4 ,OPD5 ,OPD6 ,OPD7 ,OPD8 ,OPD9 };
+	std::vector<real> refOPD_optA = {0.162,1.738,1.738,1.738,0.314,2.578,0.162,2.578,2.938 };
+
+	bool checkOPD_optA = Math::compateTwoSTDVector_tolerance(calcOPD_optA, refOPD_optA, 0.01);
+	checkOPD.push_back(checkOPD_optA);
+
+	// ******************************************************************
+
+	// field 0 1
+	Ray_LLT Ray10_chief(/*origin*/{ 0.0, 1.0, 0.0 }, /*direction*/{ 0.0, -1.0, 10.0 }, 1.0);
+	Ray_LLT Ray11(/*origin*/{ 0.0, 1.0, 0.0 }, /*direction*/{ 0.0, -0.5, 10.0 }, 1.0);	// 0 0,5
+	Ray_LLT Ray12(/*origin*/{ 0.0, 1.0, 0.0 }, /*direction*/{ -0.5, -0.5, 10.0 }, 1.0); // -0,5 0,5
+	Ray_LLT Ray13(/*origin*/{ 0.0, 1.0, 0.0 }, /*direction*/{ -1.0, -1.0, 10.0 }, 1.0);	// -1 0
+	Ray_LLT Ray14(/*origin*/{ 0.0, 1.0, 0.0 }, /*direction*/{ -0.5, -1.5, 10.0 }, 1.0);	// -0,5 -0,5
+	Ray_LLT Ray15(/*origin*/{ 0.0, 1.0, 0.0 }, /*direction*/{ -0.2, -0.5, 10.0 }, 1.0);	// -0,2 0,5
+	Ray_LLT Ray16(/*origin*/{ 0.0, 1.0, 0.0 }, /*direction*/{ -0.7, -0.3, 10.0 }, 1.0);	// -0,7 0,7
+	Ray_LLT Ray17(/*origin*/{ 0.0, 1.0, 0.0 }, /*direction*/{ -0.3, -0.4, 10.0 }, 1.0);	// -0,3 0,6
+	Ray_LLT Ray18(/*origin*/{ 0.0, 1.0, 0.0 }, /*direction*/{ -0.7, -0.7, 10.0 }, 1.0);	// -0,7 0,3
+	Ray_LLT Ray19(/*origin*/{ 0.0, 1.0, 0.0 }, /*direction*/{ -0.6, -0.5, 10.0 }, 1.0);	// -0,6 0,5
+
+	LightRayStruct lightRay10(Light500, Ray10_chief, 1);
+	LightRayStruct lightRay11(Light500, Ray11, 1);
+	LightRayStruct lightRay12(Light500, Ray12, 1);
+	LightRayStruct lightRay13(Light500, Ray13, 1);
+	LightRayStruct lightRay14(Light500, Ray14, 1);
+	LightRayStruct lightRay15(Light500, Ray15, 1);
+	LightRayStruct lightRay16(Light500, Ray16, 1);
+	LightRayStruct lightRay17(Light500, Ray17, 1);
+	LightRayStruct lightRay18(Light500, Ray18, 1);
+	LightRayStruct lightRay19(Light500, Ray19, 1);
+
+	std::vector<LightRayStruct> lightRay_field01{ lightRay10 ,lightRay11 ,lightRay12 ,lightRay13 ,lightRay14 ,lightRay15 ,lightRay16 ,lightRay17 ,lightRay18,lightRay19 };
+
+	SequentialRayTracing seqTraceE1_field01(OptSysE2);
+	seqTraceE1_field01.seqRayTracingWithVectorOfLightRays(lightRay_field01);
+
+	// distance to image surface
+	real distance_imaSurface_10 = seqTraceE1_field01.getInterInf_PosSurface_TotalSteps_ofSur_i(5)[0].getTotalSteps();
+	real distance_imaSurface_11 = seqTraceE1_field01.getInterInf_PosSurface_TotalSteps_ofSur_i(5)[1].getTotalSteps();
+	real distance_imaSurface_12 = seqTraceE1_field01.getInterInf_PosSurface_TotalSteps_ofSur_i(5)[2].getTotalSteps();
+	real distance_imaSurface_13 = seqTraceE1_field01.getInterInf_PosSurface_TotalSteps_ofSur_i(5)[3].getTotalSteps();
+	real distance_imaSurface_14 = seqTraceE1_field01.getInterInf_PosSurface_TotalSteps_ofSur_i(5)[4].getTotalSteps();
+	real distance_imaSurface_15 = seqTraceE1_field01.getInterInf_PosSurface_TotalSteps_ofSur_i(5)[5].getTotalSteps();
+	real distance_imaSurface_16 = seqTraceE1_field01.getInterInf_PosSurface_TotalSteps_ofSur_i(5)[6].getTotalSteps();
+	real distance_imaSurface_17 = seqTraceE1_field01.getInterInf_PosSurface_TotalSteps_ofSur_i(5)[7].getTotalSteps();
+	real distance_imaSurface_18 = seqTraceE1_field01.getInterInf_PosSurface_TotalSteps_ofSur_i(5)[8].getTotalSteps();
+	real distance_imaSurface_19 = seqTraceE1_field01.getInterInf_PosSurface_TotalSteps_ofSur_i(5)[9].getTotalSteps();
+
+	VectorStructR3 directionRayToTraceack_10 = -1.0 * seqTraceE1_field01.getAllInterInfosOfSurf_i(5)[0].getDirectionRayUnit();
+	VectorStructR3 directionRayToTraceack_11 = -1.0 * seqTraceE1_field01.getAllInterInfosOfSurf_i(5)[1].getDirectionRayUnit();
+	VectorStructR3 directionRayToTraceack_12 = -1.0 * seqTraceE1_field01.getAllInterInfosOfSurf_i(5)[2].getDirectionRayUnit();
+	VectorStructR3 directionRayToTraceack_13 = -1.0 * seqTraceE1_field01.getAllInterInfosOfSurf_i(5)[3].getDirectionRayUnit();
+	VectorStructR3 directionRayToTraceack_14 = -1.0 * seqTraceE1_field01.getAllInterInfosOfSurf_i(5)[4].getDirectionRayUnit();
+	VectorStructR3 directionRayToTraceack_15 = -1.0 * seqTraceE1_field01.getAllInterInfosOfSurf_i(5)[5].getDirectionRayUnit();
+	VectorStructR3 directionRayToTraceack_16 = -1.0 * seqTraceE1_field01.getAllInterInfosOfSurf_i(5)[6].getDirectionRayUnit();
+	VectorStructR3 directionRayToTraceack_17 = -1.0 * seqTraceE1_field01.getAllInterInfosOfSurf_i(5)[7].getDirectionRayUnit();
+	VectorStructR3 directionRayToTraceack_18 = -1.0 * seqTraceE1_field01.getAllInterInfosOfSurf_i(5)[8].getDirectionRayUnit();
+	VectorStructR3 directionRayToTraceack_19 = -1.0 * seqTraceE1_field01.getAllInterInfosOfSurf_i(5)[9].getDirectionRayUnit();
+
+	VectorStructR3 interPointIma_10 = seqTraceE1_field01.getAllInterPointsAtSurface_i_filtered(5)[0];
+	VectorStructR3 interPointIma_11 = seqTraceE1_field01.getAllInterPointsAtSurface_i_filtered(5)[1];
+	VectorStructR3 interPointIma_12 = seqTraceE1_field01.getAllInterPointsAtSurface_i_filtered(5)[2];
+	VectorStructR3 interPointIma_13 = seqTraceE1_field01.getAllInterPointsAtSurface_i_filtered(5)[3];
+	VectorStructR3 interPointIma_14 = seqTraceE1_field01.getAllInterPointsAtSurface_i_filtered(5)[4];
+	VectorStructR3 interPointIma_15 = seqTraceE1_field01.getAllInterPointsAtSurface_i_filtered(5)[5];
+	VectorStructR3 interPointIma_16 = seqTraceE1_field01.getAllInterPointsAtSurface_i_filtered(5)[6];
+	VectorStructR3 interPointIma_17 = seqTraceE1_field01.getAllInterPointsAtSurface_i_filtered(5)[7];
+	VectorStructR3 interPointIma_18 = seqTraceE1_field01.getAllInterPointsAtSurface_i_filtered(5)[8];
+	VectorStructR3 interPointIma_19 = seqTraceE1_field01.getAllInterPointsAtSurface_i_filtered(5)[9];
+
+	Ray_LLT ray10_back(/*origin*/interPointIma_10, /*direction*/directionRayToTraceack_10, 1.0);
+	Ray_LLT ray11_back(/*origin*/interPointIma_11, /*direction*/directionRayToTraceack_11, 1.0);
+	Ray_LLT ray12_back(/*origin*/interPointIma_12, /*direction*/directionRayToTraceack_12, 1.0);
+	Ray_LLT ray13_back(/*origin*/interPointIma_13, /*direction*/directionRayToTraceack_13, 1.0);
+	Ray_LLT ray14_back(/*origin*/interPointIma_14, /*direction*/directionRayToTraceack_14, 1.0);
+	Ray_LLT ray15_back(/*origin*/interPointIma_15, /*direction*/directionRayToTraceack_15, 1.0);
+	Ray_LLT ray16_back(/*origin*/interPointIma_16, /*direction*/directionRayToTraceack_16, 1.0);
+	Ray_LLT ray17_back(/*origin*/interPointIma_17, /*direction*/directionRayToTraceack_17, 1.0);
+	Ray_LLT ray18_back(/*origin*/interPointIma_18, /*direction*/directionRayToTraceack_18, 1.0);
+	Ray_LLT ray19_back(/*origin*/interPointIma_19, /*direction*/directionRayToTraceack_19, 1.0);
+
+	LightRayStruct lightRay10_back(Light500, ray10_back, 1);
+	LightRayStruct lightRay11_back(Light500, ray11_back, 1);
+	LightRayStruct lightRay12_back(Light500, ray12_back, 1);
+	LightRayStruct lightRay13_back(Light500, ray13_back, 1);
+	LightRayStruct lightRay14_back(Light500, ray14_back, 1);
+	LightRayStruct lightRay15_back(Light500, ray15_back, 1);
+	LightRayStruct lightRay16_back(Light500, ray16_back, 1);
+	LightRayStruct lightRay17_back(Light500, ray17_back, 1);
+	LightRayStruct lightRay18_back(Light500, ray18_back, 1);
+	LightRayStruct lightRay19_back(Light500, ray19_back, 1);
+
+	std::vector<LightRayStruct> lightRay10_traceBack{ lightRay10_back ,lightRay11_back ,lightRay12_back ,lightRay13_back ,lightRay14_back ,lightRay15_back ,lightRay16_back ,lightRay17_back ,lightRay18_back,lightRay19_back };
+
+	OpticalSystem_LLT optSys_LLT_exitPupilPlan;
+	optSys_LLT_exitPupilPlan.fillVectorSurfaceAndInteractingData(0, exitPupil.clone(), doNothing.clone());
+	SequentialRayTracing seqTraceImaToExitPlan_back(optSys_LLT_exitPupilPlan);
+	seqTraceImaToExitPlan_back.sequentialRayTracing(lightRay10_back);
+	VectorStructR3 interPointChiefRayExitPupil01 = seqTraceImaToExitPlan_back.getAllInterPointsAtSurface_i_filtered(0)[0];
+
+	VectorStructR3 directionRefSphere01 = interPointIma_10 - interPointChiefRayExitPupil01;
+	real radiusRefSphere01 = Math::lengthOfVector(directionRefSphere01);
+
+	SphericalSurface_LLT refSphereAtExitPupil_01(/*radius*/radiusRefSphere01, /*semiHeight*/99.0, /*Apex of the sphere*/interPointChiefRayExitPupil01, /*Direction*/ directionRefSphere01, /*refIndexSideA*/refractiveIndexAir, /*refIndexSideB*/refractiveIndexAir);
+
+	OpticalSystem_LLT optSysImaAndRefSphere;
+	optSysImaAndRefSphere.fillVectorSurfaceAndInteractingData(0, refSphereAtExitPupil_01.clone(), doNothing.clone());
+	SequentialRayTracing seqTrace_back_01(optSysImaAndRefSphere);
+	seqTrace_back_01.seqRayTracingWithVectorOfLightRays(lightRay10_traceBack);
+
+	real distanceBack_10 = seqTrace_back_01.getInterInf_PosSurface_TotalSteps_ofSur_i(0)[0].getTotalSteps();
+	real distanceBack_11 = seqTrace_back_01.getInterInf_PosSurface_TotalSteps_ofSur_i(0)[1].getTotalSteps();
+	real distanceBack_12 = seqTrace_back_01.getInterInf_PosSurface_TotalSteps_ofSur_i(0)[2].getTotalSteps();
+	real distanceBack_13 = seqTrace_back_01.getInterInf_PosSurface_TotalSteps_ofSur_i(0)[3].getTotalSteps();
+	real distanceBack_14 = seqTrace_back_01.getInterInf_PosSurface_TotalSteps_ofSur_i(0)[4].getTotalSteps();
+	real distanceBack_15 = seqTrace_back_01.getInterInf_PosSurface_TotalSteps_ofSur_i(0)[5].getTotalSteps();
+	real distanceBack_16 = seqTrace_back_01.getInterInf_PosSurface_TotalSteps_ofSur_i(0)[6].getTotalSteps();
+	real distanceBack_17 = seqTrace_back_01.getInterInf_PosSurface_TotalSteps_ofSur_i(0)[7].getTotalSteps();
+	real distanceBack_18 = seqTrace_back_01.getInterInf_PosSurface_TotalSteps_ofSur_i(0)[8].getTotalSteps();
+	real distanceBack_19 = seqTrace_back_01.getInterInf_PosSurface_TotalSteps_ofSur_i(0)[9].getTotalSteps();
+
+	real referenceDistance01 = distance_imaSurface_10 - distanceBack_10;
+
+	real OPD11 = ((referenceDistance01 - (distance_imaSurface_11 - distanceBack_11)) / Light500.getWavelength()) * 1000000;
+	real OPD12 = ((referenceDistance01 - (distance_imaSurface_12 - distanceBack_12)) / Light500.getWavelength()) * 1000000;
+	real OPD13 = ((referenceDistance01 - (distance_imaSurface_13 - distanceBack_13)) / Light500.getWavelength()) * 1000000;
+	real OPD14 = ((referenceDistance01 - (distance_imaSurface_14 - distanceBack_14)) / Light500.getWavelength()) * 1000000;
+	real OPD15 = ((referenceDistance01 - (distance_imaSurface_15 - distanceBack_15)) / Light500.getWavelength()) * 1000000;
+	real OPD16 = ((referenceDistance01 - (distance_imaSurface_16 - distanceBack_16)) / Light500.getWavelength()) * 1000000;
+	real OPD17 = ((referenceDistance01 - (distance_imaSurface_17 - distanceBack_17)) / Light500.getWavelength()) * 1000000;
+	real OPD18 = ((referenceDistance01 - (distance_imaSurface_18 - distanceBack_18)) / Light500.getWavelength()) * 1000000;
+	real OPD19 = ((referenceDistance01 - (distance_imaSurface_19 - distanceBack_19)) / Light500.getWavelength()) * 1000000;
+
+	std::vector<real> calcOPD_01 = { OPD11 ,OPD12 ,OPD13 ,OPD14 ,OPD15 ,OPD16 ,OPD17 ,OPD18 ,OPD19 };
+	std::vector<real> refOPD_01 = { 0.585,1.099,14.009,9.363,0.578,4.694,0.871,2.366, 1.774 };
+
+	bool checkOPD_01 = Math::compateTwoSTDVector_tolerance(calcOPD_01, refOPD_01, 0.01);
+	checkOPD.push_back(checkOPD_01);
 
 
-	std::vector<real> refSysOPD3F05_X = OPD3F1.getOPD_X_inVec();
-	std::vector<real> refSysOPD3F05_Y = OPD3F1.getOPD_Y_inVec();
-
-	std::vector<real> refVecOPD3_F05_X{ -20.77287044221, -5.128251783727, 0.0, -4.549571108316, -13.46850743476 };
-	std::vector<real> refVecOPD3_F05_Y{ -18.76999535012, -5.069924289691, 0.0, -5.069924289691, -18.76999535012 };
-
-	bool checkOPD3_F05_X = Math::compareTwoSTDVecors_decimals(refSysOPD3F05_X, refVecOPD3_F05_X, 3);
-	bool checkOPD3_F05_Y = Math::compareTwoSTDVecors_decimals(refSysOPD3F05_Y, refVecOPD3_F05_Y, 3);
-
-	checkOPD.push_back(checkOPD3_F05_X);
-	checkOPD.push_back(checkOPD3_F05_Y);
-
-	// *****************************************************************************************************************
-	// *****************************************************************************************************************
-	// *****************************************************************************************************************
-	// calculate global OPD
-	// we build that optical system before
-	// OPD on optical axis
-	FillApertureStop fillAperStopE4_optAchse({ 0.0,0.0,0.0 }, 1, { 0.0,0.0,20.0 }, { 0.0,0.0,1.0 }, 18, 25, 1.0, Light550);
-	OPD OPD4globalOPD_optAchse(/*exit pupil*/ exitPupilE3_ptr,  /*optical system*/ optSysE3,
-		/*fill apertur stop with light ray*/ fillAperStopE4_optAchse.getVectorWithLightRays(), /*chief ray*/ fillAperStopE4_optAchse.getVectorWithLightRays().at(0), /*scalling*/ 0);
-	OPD4globalOPD_optAchse.exportCV_MatToExcel(OPD4globalOPD_optAchse.getGlobalOPD(), "D:\optA_test.csv");
-	// OPD in field
-	FillApertureStop fillAperStopE4_field({ 0.0,0.5,0.0 }, 1, { 0.0,0.0,20.0 }, { 0.0,0.0,1.0 }, 15, 20, 1.0, Light550);
-	OPD OPD4globalOPD_field(/*exit pupil*/ exitPupilE3_ptr,  /*optical system*/ optSysE3,
-		/*fill apertur stop with light ray*/ fillAperStopE4_field.getVectorWithLightRays(), /*chief ray*/ fillAperStopE4_field.getVectorWithLightRays().at(0), /*scalling*/ 0);
-	OPD4globalOPD_field.exportCV_MatToExcel(OPD4globalOPD_field.getGlobalOPD(), "field_test.csv");
-
-	// *****************************************************************************************************************
-	// *****************************************************************************************************************
-
-	// *****************************************************************************************************************
-	// *****************************************************************************************************************
-	// *****************************************************************************************************************
 	bool output = Math::checkTrueOfVectorElements(checkOPD);
 	return output;
 
