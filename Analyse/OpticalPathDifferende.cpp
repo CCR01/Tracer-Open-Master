@@ -160,7 +160,7 @@ real OPD::calculateOPD_exitPupilLeftFromImaSurface(OpticalSystem_LLT optSys, rea
 {
 	real returnOPD{};
 
-	// do it!
+	
 
 	return returnOPD;
 }
