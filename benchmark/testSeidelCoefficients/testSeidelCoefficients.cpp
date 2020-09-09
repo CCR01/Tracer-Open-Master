@@ -54,7 +54,7 @@ bool testSeidelCoefficients::checkCalculationOfSeidelCoefficients()
 //	std::vector<real> wavelenght_vec{ 587.6,656.3,486.1 };
 //
 //	// surfaces E0
-//	//ApertureStopElement AperStop0_E0(/* semi height*/999.0, /*point*/{ 0.0,0.0,5.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAirZemax());
+//	//ApertureStopElement AperStop0_E0(/* semi height*/999.0, /*point*/{ 0.0,0.0,5.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAir());
 //	SphericalElement Sphere0_E0(/*radius*/ 42.987900, /*semi height*/ 11.5, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getSK16_S1());
 //	SphericalElement Sphere1_E0(/*radius*/ 248.077400, /*semi height*/ 11.5, /*point*/{ 0.0,0.0,14.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getSK16_S1());
 //	SphericalElement Sphere2_E0(/*radius*/ 38.210335, /*semi height*/ 9.852, /*point*/{ 0.0,0.0,24.51018 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getF4_S1(), /*refractive index B*/glasses.getAir());
@@ -101,17 +101,17 @@ bool testSeidelCoefficients::checkCalculationOfSeidelCoefficients()
 //	SequentialRayTracing seqTrace_E0_marginalRay(/*optical system element*/ optSystemElement_E0, lightRayMarginal);
 //	SequentialRayTracing seqTrace_E0_chiefRay(/*optical system element*/ optSystemElement_E0, lightRayChief);
 //
-//	VectorStructR3 checkRayOptA = seqTrace_E0_optA.getAllInterPointsAtSurf_i_notFiltered(7).at(0);
+//	VectorStructR3 checkRayOptA = seqTrace_E0_optA.getAllInterPointsAtSurface_i_filtered_notFiltered(7).at(0);
 //	VectorStructR3 testZemaxOptA{ 0.0, 0.0, 1.2786607000E2 };
 //	bool checkOptA = Math::compareTwoVectorStructR3_decimals(checkRayOptA, testZemaxOptA, 3);
 //	checkCalcSeidel.push_back(checkOptA);
 //
-//	VectorStructR3 checkRayMarginal = seqTrace_E0_marginalRay.getAllInterPointsAtSurf_i_notFiltered(7).at(0);
+//	VectorStructR3 checkRayMarginal = seqTrace_E0_marginalRay.getAllInterPointsAtSurface_i_filtered_notFiltered(7).at(0);
 //	VectorStructR3 testZemaxMarginal{ 0.0, 0.014, 1.2786607000E2 };
 //	bool checkMarginalRay = Math::compareTwoVectorStructR3_decimals(testZemaxMarginal, checkRayMarginal, 3);
 //	checkCalcSeidel.push_back(checkMarginalRay);
 //
-//	VectorStructR3 checkRayChief = seqTrace_E0_chiefRay.getAllInterPointsAtSurf_i_notFiltered(7).at(0);
+//	VectorStructR3 checkRayChief = seqTrace_E0_chiefRay.getAllInterPointsAtSurface_i_filtered_notFiltered(7).at(0);
 //	VectorStructR3 testZemaxCheifRay{ 0.0, 36.7981, 1.2786607000E2 };
 //	bool checkCheifRay = Math::compareTwoVectorStructR3_decimals(checkRayChief, testZemaxCheifRay, 2);
 //	checkCalcSeidel.push_back(checkCheifRay);
@@ -163,7 +163,7 @@ bool testSeidelCoefficients::checkCalculationOfSeidelCoefficients()
 //	std::vector<real> wavelenght_vec_E1{ 587.6,656.3,486.1 };
 //
 //	// surfaces E1
-//	//PlanElement Plan0_E1(/*semi height*/ 26.0, /*point*/{ 0.0,0.0,0.0001 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAirZemax(), /*refractive index B*/ glasses.getAirZemax());
+//	//PlanElement Plan0_E1(/*semi height*/ 26.0, /*point*/{ 0.0,0.0,0.0001 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getAir());
 //	PlanElement Plan0_E1(/*semi height*/ 26.0, /*point*/{ 0.0,0.0,0.0001 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getSK16_S1());
 //	PlanElement Plan1_E1(/*semi height*/ 26.0, /*point*/{ 0.0,0.0,3.4701 },  /*direction*/{ 0.0,0.0,-1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getSK16_S1());
 //	SphericalElement Sphere2_E1(/*radius*/ 45.31, /*semi height*/ 26.00, /*point*/{ 0.0,0.0,13.3201 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getLASFN9_S1(), /*refractive index B*/glasses.getAir());

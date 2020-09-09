@@ -6,7 +6,6 @@
 #include "..\LowLevelTracing\Surfaces\SphericalSurface_LLT.h"
 #include "..\LowLevelTracing\Interaction\Absorb_LLT.h"
 #include "..\SequentialRayTracing\SequentialRayTracer.h"
-#include "..\LowLevelTracing\ImportantStructures.h"
 #include "..\LowLevelTracing\Math_LLT.h"
 #include "..\LowLevelTracing\OpticalSystem_LLT.h"
 // plot
@@ -16,25 +15,26 @@
 class RayFan {
 public:
 	RayFan() {};
-	RayFan(std::shared_ptr<SurfaceIntersectionRay_LLT> EntrancePupil, OpticalSystem_LLT optSys, std::vector<LightRayStruct> lightRayAlong_X, std::vector<LightRayStruct> lightRayAlong_Y):
+	RayFan(std::shared_ptr<SurfaceIntersectionRay_LLT> EntrancePupil, OpticalSystem_LLT optSys, std::vector<LightRayStruct> lightRayAlong_X, std::vector<LightRayStruct> lightRayAlong_Y, double centerWavelenth) :
 		mEntrancePupil(EntrancePupil),
 		mOptSys(optSys),
 		mLightRayX(lightRayAlong_X),
-		mLightRayY(lightRayAlong_Y)
+		mLightRayY(lightRayAlong_Y),
+		mcenterWavelength(centerWavelenth)
 	{
-		
+
 		mPosImageSurface = mOptSys.getNumberOfSurfaces();
 		mPosEnPupilInOptSys = calcPosEnPupil_Z();
-		
+
 		//***
-		
+
 		mOptSysWithEntrancePupil = mOptSys;
 		mOptSysWithEntrancePupil.fillInSurfaceAndInteracAtPos_i(mPosEnPupilInOptSys, mEntrancePupil, mDoNothingInteraction_ptr);
 		//***
 
-		
+
 		calcMatrixRayFanPlane();
-		
+
 	}
 	~RayFan() {};
 
@@ -65,7 +65,11 @@ public:
 	//get the Y values of the points on the Y axis
 	QVector<double> getYY();
 
+	//get Wavelength
+	double getRayFanWavelength();
+
 private:
+	double mcenterWavelength;
 	// hight 
 	unsigned int mHeight = 400;
 	// wide

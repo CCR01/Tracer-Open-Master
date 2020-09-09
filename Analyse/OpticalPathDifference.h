@@ -31,12 +31,20 @@
 
 enum class posExitPupil {exitPupil_Left_ImaSurface, exitPupil_Right_ImaSurface};
 
+struct defaultParameter
+{
+
+};
+
 class OPD
 {
 public:
 	static const int  upscaledMatrixSize = 128;
 
 	OPD();
+	OPD(OpticalSystem_LLT optSys, std::vector<LightRayStruct> aimedLightRay, objectPoint_inf_obj inf_obj);
+
+
 	// to calculate the global OPD
 	OPD(/*exit pupil*/ std::shared_ptr<SurfaceIntersectionRay_LLT> exitPupil,  /*optical system*/ OpticalSystem_LLT optSys,
 		/*fill apertur stop with light ray*/ std::vector<LightRayStruct> lightRayFillAperturStop, /*chief ray*/ LightRayStruct chiefLightRay, /*Scalling*/int scalling);
@@ -60,7 +68,12 @@ public:
 	// calculate position of exit pupil in optical system according to z direction
 	unsigned int calcPosExPupil_Z();
 
+	/// ***
+	// calculate global OPD
+	void calcGlobalOPD_new();
+	void calcGlobalOPD_new_leftSideOfOptSys();
 
+	// ***
 
 
 
@@ -129,17 +142,28 @@ public:
 	// get the PSF
 	cv::Mat getPSF();
 
+	//get the light
+	LightRayStruct getChiefLightRay();
+
 private:
+
+	std::vector<LightRayStruct> mAimedLightRay{};
+	OpticalSystem_LLT mOptSys{};
+	OpticalSystem_LLT mOptSysWithExitPupilPlan{};
+	OpticalSystem_LLT mOptSysWithReferenceSphere{};
+	objectPoint_inf_obj mInf_obj{};
+
 	VectorStructR3 mPosObject;
 	std::shared_ptr<SurfaceIntersectionRay_LLT> mExitPupil;
-	OpticalSystem_LLT mOptSys;
-	OpticalSystem_LLT mOptSysWithExitPupil;
+	
+	
 	VectorStructR3 mChiefRayAtImage;
 	VectorStructR3 mChiefRayAtExitPupil;
 	std::vector<LightRayStruct> mLightRayX;
 	std::vector<LightRayStruct> mLightRayY;
 	LightRayStruct mChiefLightRay;
 
+	
 
 	unsigned int mPosImageSurface;
 	unsigned int mPosExPupilInOptSys;

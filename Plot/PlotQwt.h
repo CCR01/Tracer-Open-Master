@@ -9,53 +9,7 @@
 #include "..\Plot\QwtPloItems.h"
 #include "..\Plot\PlotParameterQwt.h"
 #include "..\Plot\PlotRayFan.h"
-
-class SystemPlots
-{
-public:
-	SystemPlots() {};
-	~SystemPlots() {};
-
-
-	// fill vector plots
-	std::vector<QwtPlotCurve*> getCurveVector()
-	{
-		return mVectorCurve;
-	}
-	//get vector plots
-
-	void fillCurveVector(QwtPlotCurve* curvept)
-	{
-		mVectorCurve.push_back(curvept);
-	}
-
-	// fill the vector with rayFan
-	void fillVectorRayFanDiagramToPlot(PlotRayFan* plotRayFan);
-
-	//get vector ray fan diagrams
-	std::vector<PlotRayFan*> getVectorRayFanDiagram();
-
-	//get min Scale Ray Fan
-	double getMaxRayFanScale();
-
-
-	// fill the vector with rayFan
-	void fillVectorplotOPDDiagramToPlot(PlotOPD* plotOPD);
-
-
-	//get vector ray fan diagrams
-	std::vector<PlotOPD*> getVectorOPDDiagram();
-
-	//get min Scale Ray Fan
-	double getMaxOPDPlotScale();
-
-private:
-	std::vector<PlotRayFan*> mVectorRayPlotDiagramm;
-	std::vector<PlotOPD*> mVectorOPDPlotDiagramm;
-	std::vector<QwtPlotCurve*> mVectorCurve;
-};
-
-
+#include "..\Plot\OpticalSystemPlots.h"
 
 
 class RayTracingQwtPlot : public QwtPlot
@@ -65,29 +19,24 @@ public:
 	//plot one ray line with a defined color
 	RayTracingQwtPlot(OpticalSystem_LLT optSys, SequentialRayTracing* SeqRayTrac, QwtPlot* plot, QColor color);
 	//plot surfaces and rays in one plot
-	RayTracingQwtPlot(OpticalSystem_LLT optSys, RayTracingSystem RayTracSys, PlotParameterQwt Parameter);
+	RayTracingQwtPlot(OpticalSystemCurves Plots, OpticalSystem_LLT optSys, PlotParameterQwt Parameter);
 
 private:
-
+	OpticalSystemCurves mPlots;
 	PlotParameterQwt mParameter;
 	OpticalSystem_LLT mOptSys;
-	RayTracingSystem mRayTracSys;
-	SystemPlots mSystem;
+	OpticalSystemCurves mSystem;
 	SequentialRayTracing* mSeqRayTrac;
 	QwtPlot* mPlot;
 	QColor mColor;
 };
 
 
-
-
-
-
 class PlotOPDQwt : public QwtPlot
 {
 public:
 	//Plot the optical path difference 
-	PlotOPDQwt(SystemPlots Plots, PlotOPD mOPD, PlotParameterQwt Parameter);
+	PlotOPDQwt(OpticalSystemCurves Plots, PlotParameterQwt Parameter);
 	//return the length of the field under the spot diagram depending on the number pf th fields
 	double getLengthTextFieldOPD();
 	//return the height of the field under the spot diagram depending on the number of the fileds
@@ -96,8 +45,7 @@ public:
 	std::vector <VectorStructR2> coordinatesOfFramesOPD(int numberOffields);
 
 private:
-	SystemPlots mSystemPlots;
-	PlotOPD mOPD;
+	OpticalSystemCurves mSystemPlots;
 	PlotParameterQwt mParameter;
 	std::vector <VectorStructR2> mAllCoordinates;
 };
@@ -108,7 +56,7 @@ class SpotPlotDiagramQwt : public QwtPlot
 public:
 
 	//plot spot diagrams
-	SpotPlotDiagramQwt(OpticalSystem_LLT OptSys, PlotParameterQwt SpotPlotParameter, double NumberOfLines, double AiryDiskRadius, QWidget* = NULL);
+	SpotPlotDiagramQwt(OpticalSystemCurves Plots, PlotParameterQwt SpotPlotParameter, double NumberOfLines, double AiryDiskRadius, QWidget* = NULL);
 	//get a vector with the coordinates as (x,y) of the spot frames depending on the given number of Spot Diagrams((x1,y1),(x2,y2),..)
 	std::vector <VectorStructR2> coordinatesOfFrames(int numberOfSpotDiagrams);
 	//get a vector with the coordinates of the spot frames depending on the given number of Spot Diagrams (x1,y1,x2,y2,..)
@@ -122,7 +70,7 @@ public:
 
 
 private:
-	OpticalSystem_LLT mOptSys;
+	OpticalSystemCurves mPlots;
 	double mNumberOfLines;
 	double mAiryDiskRadius;
 	std::vector <VectorStructR2> mcoordinatesOfFrames;
@@ -131,11 +79,12 @@ private:
 	PlotParameterQwt mSpotPlotParameter;
 };
 
+
 class PlotRayFanQwt : public QwtPlot
 {
 public:
 	//Plot the optical path difference 
-	PlotRayFanQwt(SystemPlots Plots, PlotRayFan RayFanPlot, PlotParameterQwt Parameter);
+	PlotRayFanQwt(OpticalSystemCurves Plots, PlotParameterQwt Parameter);
 	//return the length of the field under the spot diagram depending on the number pf th fields
 	double getLengthTextFieldRayFan();
 	//return the height of the field under the spot diagram depending on the number of the fileds
@@ -144,8 +93,7 @@ public:
 	std::vector <VectorStructR2> coordinatesOfFramesRayFan(int numberOffields);
 
 private:
-	SystemPlots mSystemPlots;
-	PlotRayFan mRayFanPlot;
+	OpticalSystemCurves mSystemPlots;
 	PlotParameterQwt mParameter;
 	std::vector <VectorStructR2> mAllCoordinates;
 };

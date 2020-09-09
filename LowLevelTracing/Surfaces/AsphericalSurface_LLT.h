@@ -140,10 +140,12 @@ public:
 	void plot2D(cv::Mat image, unsigned int scale, unsigned int thickness, unsigned int lineType) override;
 
 	//get the pointer of the qwt curve
-	AsphericalSurfaceQwt* getPointerPlot();
+	virtual AsphericalSurfaceQwt* getPointerPlot();
 
 	//get QPolygonF of the surface
 	virtual QPolygonF* getQPolygonFCurve();
+
+	void calcAsphericalSurfaceQwtCoord();
 
 private:
 	double mRadiusAsphere;

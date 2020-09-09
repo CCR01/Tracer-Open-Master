@@ -31,6 +31,8 @@ AsphericalSurface_LLT::AsphericalSurface_LLT(/*radius*/ double radius, /*semi he
 	m_A8(A8)
 {
 	setPrefixAsphere(mDirectionAsphere); // we need that to switch the prefix of the height order terms
+	calcAsphericalSurfaceQwtCoord();
+
 };
 
 //get radius asphere
@@ -587,9 +589,8 @@ AsphericalSurface_LLT::AsphericalSurface_LLT(AsphericalSurface_LLT &source)
 	m_A8 = source.m_A8;
 
 	mPrefix = source.mPrefix;
-
-	// TODO: Also copy the spherical informaltion to plot!
-	// SphericalSurfaceQwt* SphericalSurface_Qwt_Ptr = new SphericalSurfaceQwt(mRadius, mSemiHeight, mDirection, mPointSphere);
+	AsphericalSurfaceQwt_Ptr = source.AsphericalSurfaceQwt_Ptr;
+	pointsofASphericalSurface = source.pointsofASphericalSurface;
 }
 
 AsphericalSurface_LLT& AsphericalSurface_LLT::operator=(AsphericalSurface_LLT& source)
@@ -735,7 +736,7 @@ QPolygonF AsphericalSurfaceQwt::points(double radius, double semiHeight, VectorS
 		double Y_Steps = i * deltaY + deltaY;
 
 		double PointToZ_Achse = pow(0, 2) + pow(Y_Steps, 2);
-		double sqrtTerm = 1.0 - (1.0 + conic)*pow(1.0 / radius, 2)*PointToZ_Achse;
+		double sqrtTerm = 1.0 - (1.0 + conic) * pow(1.0 / radius, 2) * PointToZ_Achse;
 
 		double z =
 			(1 / radius * PointToZ_Achse) / (1.0 + std::sqrt(sqrtTerm)) +
@@ -768,7 +769,7 @@ QPolygonF AsphericalSurfaceQwt::points(double radius, double semiHeight, VectorS
 		double Y_Steps = i * deltaY + deltaY;
 
 		double PointToZ_Achse = pow(0, 2) + pow(Y_Steps, 2);
-		double sqrtTerm = 1.0 - (1.0 + conic)*pow(1.0 / radius, 2)*PointToZ_Achse;
+		double sqrtTerm = 1.0 - (1.0 + conic) * pow(1.0 / radius, 2) * PointToZ_Achse;
 
 		double z =
 			(1 / radius * PointToZ_Achse) / (1.0 + std::sqrt(sqrtTerm)) +
@@ -805,4 +806,12 @@ QPolygonF AsphericalSurfaceQwt::points(double radius, double semiHeight, VectorS
 void AsphericalSurface_LLT::setDirection(VectorStructR3 direction)
 {
 	mDirectionAsphere = direction;
+}
+
+void AsphericalSurface_LLT::calcAsphericalSurfaceQwtCoord()
+{
+	AsphericalSurfaceQwt_Ptr = new AsphericalSurfaceQwt(mRadiusAsphere, mSemiHeightAsphere, mPointAsphere,
+		mDirectionAsphere, mConic, m_A1, m_A2, m_A3, m_A4, m_A5, m_A6, m_A7, m_A8);
+	pointsofASphericalSurface = AsphericalSurfaceQwt_Ptr->points(mRadiusAsphere, mSemiHeightAsphere, mPointAsphere,
+		mDirectionAsphere, mConic, m_A1, m_A2, m_A3, m_A4, m_A5, m_A6, m_A7, m_A8);
 }

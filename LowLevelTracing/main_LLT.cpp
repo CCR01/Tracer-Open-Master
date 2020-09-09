@@ -123,9 +123,13 @@
 
 #include "..\tests\testDLS_multiThreads_12\testDLS_multiThreads_12.h"
 
+#include "..\benchmark\testImageSimulation\BenchmarkImageSimulationOpenCV.h"
+
+#include "..\benchmark\testQwtPlots\BenchmarkOpticalSystemAllSurfaces.h"
+
 int main(int argc, char **argv)
 {
-	//QApplication a(argc, argv);
+	QApplication a(argc, argv);
 
 	// *****************************************************************************************************************
 	// Benchmark for traceropen
@@ -133,6 +137,41 @@ int main(int argc, char **argv)
 	std::vector<bool> workTheSystem;
 	// *****************************************************************************************************************
 
+
+	//***********************************************
+	// test systems Aya
+		//horizontale und verticle lines blurring
+	//https://answers.opencv.org/question/209189/make-edges-clearer-in-image/
+	//https://docs.opencv.org/master/dd/dd7/tutorial_morph_lines_detection.html 
+
+	//OpticalSystemAllSurfaces system;
+	//system.testQwtPlotsSytem();
+
+	//Optikkreis OptikkreisSystem;
+	//OptikkreisSystem.systemForOptikkreis();
+
+	//testRayTracingQwtPlot checkRayTracingPlot;
+	//bool checkCardinal_superFct_RayTracing = checkRayTracingPlot.superFuncTestRayTracingQwtPlot();
+	//workTheSystem.push_back(checkCardinal_superFct_RayTracing);
+
+	//testRayFanQwtPlot checkRayFanPlot;
+	//bool checkCardinal_superFct_RayFan = checkRayFanPlot.superFuncTestRayFanQwtPlot();
+	//workTheSystem.push_back(checkCardinal_superFct_RayFan);
+
+	//testSpotDiagramQwtPlot checkSpotDiagramPlot;
+	//bool checkCardinal_superFct_SpotDiagram = checkSpotDiagramPlot.superFuncTestSpotDiagramQwtPlot();
+	//workTheSystem.push_back(checkCardinal_superFct_SpotDiagram);
+
+	testOPDQwtPlot checkOPDPlot;
+	bool checkCardinal_superFct_OPD = checkOPDPlot.superFuncTestOPDQwtPlot();
+	workTheSystem.push_back(checkCardinal_superFct_OPD);
+
+	//***********************************************
+	
+	
+	
+	
+	
 	//std::vector<testWhat> testWhatVec_1 = { testWhat::tDLS_optiRMS };
 	//ManagementTests managementTest_1(testWhatVec_1);
 	//workTheSystem.push_back(managementTest_1.testSuperFct());
@@ -141,11 +180,12 @@ int main(int argc, char **argv)
 	// ManagementTests managementTest_2(testWhatVec_2);
 	// workTheSystem.push_back(managementTest_2.testSuperFct());
 
-	std::vector<testWhat> testWhatVec_3 = { testWhat::tOPD };
-	ManagementTests managementTest_3(testWhatVec_3);
-	workTheSystem.push_back(managementTest_3.testSuperFct());
+	//std::vector<testWhat> testWhatVec_3 = { testWhat::tOPD };
+	//ManagementTests managementTest_3(testWhatVec_3);
+	//workTheSystem.push_back(managementTest_3.testSuperFct());
 
-	
+	//BenchmarkSimulationOpenCV ImgFormula;
+	//ImgFormula.test3();
 
 
 
@@ -314,12 +354,12 @@ int main(int argc, char **argv)
 	//*****************************************************************************************************************
 	
 
-	int i;
-	std::cout << "insert a rendom number" << std::endl;
-	std::cin >> i;
+	//int i;
+	//std::cout << "insert a rendom number" << std::endl;
+	//std::cin >> i;
 
-	return 0;
-	//return a.exec();
+	//return 0;
+	return a.exec();
 }
 
 

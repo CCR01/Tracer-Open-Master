@@ -44,47 +44,6 @@ void infosAS::setDirAS(VectorStructR3 dirAS)
 	mDirectionAS = dirAS;
 }
 
-void TitelandPlotSpotDiagramToPlot::setImageName(std::string imageName)
-{
-	mimageName = imageName;
-}
-
-
-
-void TitelandPlotSpotDiagramToPlot::setPlotSpotDiagramm(PlotSpotDiagramm* plotSpot)
-{
-	mplotSpot = plotSpot;
-};
-
-
-PlotSpotDiagramm* TitelandPlotSpotDiagramToPlot::getPlotSpotDiagramm()
-{
-	return mplotSpot;
-}
-
-void PosAndCurveStructToPlot::setPosition(unsigned int const pos)
-{
-	position = pos;
-}
-
-// get position
-unsigned int PosAndCurveStructToPlot::getPosition() const
-{
-	return position;
-}
-
-// set interacting surface
-void PosAndCurveStructToPlot::setCurve(QwtPlotCurve * const curve)
-{
-	Qwtcurve = curve;
-}
-
-
-// get interaction surface
-QwtPlotCurve*  PosAndCurveStructToPlot::getCurve() const
-{
-	return Qwtcurve;
-};
 
 PosAndIntsectionSurfaceStruct::PosAndIntsectionSurfaceStruct() {};
 PosAndIntsectionSurfaceStruct::PosAndIntsectionSurfaceStruct(unsigned int const pos, std::shared_ptr<SurfaceIntersectionRay_LLT> interactinSur) :
@@ -364,39 +323,6 @@ std::vector<PosAndInteraSurfaceToPlot2D> OpticalSystem_LLT::getPosAndSurfToPlot2
 
 
 
-void OpticalSystem_LLT::fillVectorToPlot2DQwt(unsigned int pos, QwtPlotCurve* curve)
-{
-	PosAndCurveStructToPlot tempPosAndSurToPlot;
-	tempPosAndSurToPlot.setPosition(pos);
-	tempPosAndSurToPlot.setCurve(curve);
-	mPosAndCurveVector.push_back(tempPosAndSurToPlot);
-	CurveCounter++;
-}
-
-
-
-
-// get pos and surface to plot 2D qwt
-
-std::vector<PosAndCurveStructToPlot> OpticalSystem_LLT::getPosAndCurveToPlot2DQwt()
-{
-	return mPosAndCurveVector;
-}
-
-
-void OpticalSystem_LLT::fillVectorSpotDiagramToPlot(std::string imageName, PlotSpotDiagramm* plotSpot)
-{
-	TitelandPlotSpotDiagramToPlot titelandSpotDiagramToPlot;
-	titelandSpotDiagramToPlot.setImageName(imageName);
-	titelandSpotDiagramToPlot.setPlotSpotDiagramm(plotSpot);
-	mtitelandSpotDiagramToPlot.push_back(titelandSpotDiagramToPlot);
-}
-
-std::vector < TitelandPlotSpotDiagramToPlot> OpticalSystem_LLT::getVectorSpotDiagramToPlot()
-{
-	return mtitelandSpotDiagramToPlot;
-}
-
 
 OpticalSystem_LLT OpticalSystem_LLT::clone()
 {
@@ -462,49 +388,7 @@ void OpticalSystem_LLT::cleanSurfaceAndInteractionStartAt_i(unsigned int aimSize
 
 }
 
-void CommentandPosCommentToPlotInRayTracing::setComment(QString Comment)
-{
-	mComment = Comment;
-}
-//get Image name
-QString CommentandPosCommentToPlotInRayTracing::getComment()
-{
-	return mComment;
-}
-// set PlotSpot Diagramm
-void CommentandPosCommentToPlotInRayTracing::setPositionComment(VectorStructR2 PositionComment)
-{
-	mPositionComment = PositionComment;
-}
-//get Plot Spot Diagramm
-VectorStructR2 CommentandPosCommentToPlotInRayTracing::getPositionComment()
-{
-	return mPositionComment;
-}
 
-
-std::string TitelandPlotSpotDiagramToPlot::getImageName()
-{
-	return mimageName;
-}
-
-
-
-
-double OpticalSystem_LLT::getMinSpotDiagrammScale()
-{
-	double maxScale = mtitelandSpotDiagramToPlot.at(0).getPlotSpotDiagramm()->calculateScaleSpotDia();
-
-	for (unsigned int i = 0; i < mtitelandSpotDiagramToPlot.size(); i++)
-	{
-		if (mtitelandSpotDiagramToPlot.at(i).getPlotSpotDiagramm()->calculateScaleSpotDia() > maxScale)
-		{
-			maxScale = mtitelandSpotDiagramToPlot.at(i).getPlotSpotDiagramm()->calculateScaleSpotDia();
-		}
-	}
-
-	return maxScale;
-}
 
  void OpticalSystem_LLT::printAllPositions()
 {
@@ -569,12 +453,6 @@ void OpticalSystem_LLT::clean_optSys_LLT()
 	mPosAndIntersectionSurfaceVector.clear();
 	mPosAndInteraction.clear();
 	mPosAndSurfaceToPlot2D.clear();
-
-	mPosAndCurveVector.clear();
-	mtitelandSpotDiagramToPlot.clear();
-
-	mCommentandPosCommentToRayTracingPlot.clear();
-	mCommentandPosCommentToSpotDiagramPlot.clear();
 
 
 }

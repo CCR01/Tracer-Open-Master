@@ -858,47 +858,7 @@ void SequentialRayTracing::setTraceToSurface(unsigned int traceToSurface)
 	mTraceToSurface_i = traceToSurface;
 }
 
-SequentialRayTracingandColorStruct::SequentialRayTracingandColorStruct() {};
-SequentialRayTracingandColorStruct::~SequentialRayTracingandColorStruct() {};
-SequentialRayTracingandColorStruct::SequentialRayTracingandColorStruct(SequentialRayTracing* SeqRayTrac, QColor color) 
-{
-	mSeqRayTrac = SeqRayTrac;
-	mColor = color;
-};
 
-void SequentialRayTracingandColorStruct::setColor(QColor const color)
-{
-	mColor = color;
-}
-
-QColor SequentialRayTracingandColorStruct::getColor() const
-{
-	return mColor;
-}
-
-void SequentialRayTracingandColorStruct::setSequentialRayTracing(SequentialRayTracing* SeqRayTrac)
-{
-	mSeqRayTrac = SeqRayTrac;
-}
-
-SequentialRayTracing* SequentialRayTracingandColorStruct::getSequentialRayTracing() const
-{
-	return mSeqRayTrac;
-}
-
-void RayTracingSystem::fillVectorRayTracing(SequentialRayTracing* SeqRayTrac, QColor color)
-{
-	SequentialRayTracingandColorStruct SeqRayTracAndColorStruct;
-	SeqRayTracAndColorStruct.setColor(color);
-	SeqRayTracAndColorStruct.setSequentialRayTracing(SeqRayTrac);
-	mSeqRayTracAndColorStruct.push_back(SeqRayTracAndColorStruct);
-
-}
-
-std::vector<SequentialRayTracingandColorStruct> RayTracingSystem::getVectorRayTracing()
-{
-	return mSeqRayTracAndColorStruct;
-}
 
 void SequentialRayTracing::resizeAllRelevantVectorsAndSetConst_LLT()
 {

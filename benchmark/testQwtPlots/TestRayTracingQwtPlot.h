@@ -13,12 +13,13 @@ public:
 	bool testRayTracingQwtPlotE0();
 	bool testRayTracingQwtPlotE1();
 	bool testRayTracingQwtPlotE2();
-	bool testRayTracingQwtPlotE3();
+
 
 
 private:
 	RayTracingQwtPlot* mRayTracingQwtPlotSystem0;
 	RayTracingQwtPlot* mRayTracingQwtPlotSystem1;
 	RayTracingQwtPlot* mRayTracingQwtPlotSystem2;
+
 };
 

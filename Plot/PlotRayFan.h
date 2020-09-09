@@ -2,19 +2,17 @@
 #include "..\Analyse\RayFan.h"
 #include "..\Plot\Plot.h"
 #include <qwt_plot_curve.h>
-
+#include "..\LowLevelTracing\SurfaceIntersectionRay_LLT.h"
+#include "..\LowLevelTracing\OpticalSystem_LLT.h"
+#include "..\OpticalSystemElement\OpticalSystemElement.h"
 
 class PlotRayFan
 {
 public:
 
 	PlotRayFan() {};
-	PlotRayFan(RayFan RayFan) :
-		mRayFan(RayFan)
-	{
-		 calcYPlanescale();
-		 calXPlanescale();
-	}
+	PlotRayFan(RayFan RayFan);
+	PlotRayFan(std::shared_ptr<SurfaceIntersectionRay_LLT> Aperture, std::shared_ptr<SurfaceIntersectionRay_LLT> EntrancePupil, OpticalSystemElement OptSys, VectorStructR3 StartPointLightRay, real centerWavelenth, unsigned int numberLightRay);
 	~PlotRayFan() {};
 
 	//get the QPoints of the Y Plan
@@ -25,7 +23,9 @@ public:
 	double getScaleRayFanPlot();
 	//
 	void calcYPlanescale();
-	void calXPlanescale();
+	void calcXPlanescale();
+
+	double getWavelength();
 
 private:
 	unsigned int edge = 20;
@@ -54,6 +54,17 @@ private:
 	RayFan mRayFan;
 	QPolygonF RayFan_Image_X_Plane_Qwt;
 	QPolygonF RayFan_Image_Y_Plane_Qwt;
-
 	QPolygonF testPointsYPlane;
+
+
+	/////
+
+	std::shared_ptr<SurfaceIntersectionRay_LLT> mAperture;
+	OpticalSystemElement mOptSysEle;
+	VectorStructR3 mStartPointLightRay;
+	real mCenterWavelenth;
+	unsigned int mNumberLightRay;
+	real curRefInd = 1.0;
+	std::shared_ptr<SurfaceIntersectionRay_LLT> mEntrancePupil;
+
 };

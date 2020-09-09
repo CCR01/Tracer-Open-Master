@@ -21,6 +21,12 @@
 
 OPD::OPD() {};
 
+OPD::OPD(OpticalSystem_LLT optSys, std::vector<LightRayStruct> aimedLightRay, objectPoint_inf_obj inf_obj) :
+	mOptSys(optSys),
+	mAimedLightRay(aimedLightRay)
+	
+{};
+
 // to calculate the global OPD
 OPD::OPD(/*exit pupil*/ std::shared_ptr<SurfaceIntersectionRay_LLT> exitPupil,  /*optical system*/ OpticalSystem_LLT optSys,
 	/*fill apertur stop with light ray*/ std::vector<LightRayStruct> lightRayFillAperturStop, /*chief ray*/ LightRayStruct chiefLightRay, /*Scalling*/int scalling):
@@ -35,8 +41,8 @@ OPD::OPD(/*exit pupil*/ std::shared_ptr<SurfaceIntersectionRay_LLT> exitPupil,  
 	mPosImageSurface = mOptSys.getNumberOfSurfaces();
 	mPosExPupilInOptSys = calcPosExPupil_Z();
 	//***
-	mOptSysWithExitPupil = mOptSys;
-	mOptSysWithExitPupil.fillInSurfaceAndInteracAtPos_i(mPosExPupilInOptSys, mExitPupil, mDoNothingInteraction_ptr);
+	mOptSysWithExitPupilPlan = mOptSys;
+	mOptSysWithExitPupilPlan.fillInSurfaceAndInteracAtPos_i(mPosExPupilInOptSys, mExitPupil, mDoNothingInteraction_ptr);
 	//***
 	mRadiusRefSphere = calcRefDisForRefSphere();
 	mRefDistance = calcRefDisForOPD();
@@ -60,8 +66,8 @@ OPD::OPD(/*exit pupil*/ std::shared_ptr<SurfaceIntersectionRay_LLT> exitPupil,  
 	mPosImageSurface = mOptSys.getNumberOfSurfaces();
 	mPosExPupilInOptSys = calcPosExPupil_Z();
 	//***
-	mOptSysWithExitPupil = mOptSys;
-	mOptSysWithExitPupil.fillInSurfaceAndInteracAtPos_i(mPosExPupilInOptSys, mExitPupil, mDoNothingInteraction_ptr);
+	mOptSysWithExitPupilPlan = mOptSys;
+	mOptSysWithExitPupilPlan.fillInSurfaceAndInteracAtPos_i(mPosExPupilInOptSys, mExitPupil, doNothingInter.clone());
 	//***
 	mRadiusRefSphere = calcRefDisForRefSphere();
 	mRefDistance = calcRefDisForOPD();
@@ -341,9 +347,35 @@ unsigned int OPD::calcPosExPupil_Z()
 }
 
 
+// calculate global OPD
+void OPD::calcGlobalOPD_new()
+{
+	// calculate the cardinal points to get psoition of exit pupil
+	CardinalPoints carPoints(mOptSys, mInf_obj);
+	real positionExitPupil_global = carPoints.getEXPP_globalCoori();
+
+	unsigned int sizeOptSys = mOptSys.getPosAndInteractingSurface().size();
+	real positionZ_lastSurface = mOptSys.getPosAndInteractingSurface()[sizeOptSys - 1].getSurfaceInterRay_ptr()->getPoint().getZ();
+
+	// position of exit pupil is on the - right side - of the image surface
+	if (positionExitPupil_global > positionZ_lastSurface)
+	{
+		calcGlobalOPD_new_leftSideOfOptSys();
+	}
+	// position of exit pupil is in the - left side - of the image surface
+	else
+	{
+		
+	}
+
+}
+
+void OPD::calcGlobalOPD_new_leftSideOfOptSys()
+{
 
 
 
+}
 
 // calc reference distance for OPD
 real OPD::calcRefDisForRefSphere()
@@ -352,7 +384,7 @@ real OPD::calcRefDisForRefSphere()
 	SequentialRayTracing seqTrace1(mOptSys);
 	seqTrace1.sequentialRayTracing(mChiefLightRay);
 	mChiefRayAtImage = seqTrace1.getAllInterPointsAtSurf_i_notFiltered(mPosImageSurface).at(0);
-	SequentialRayTracing seqTrace2(mOptSysWithExitPupil);
+	SequentialRayTracing seqTrace2(mOptSysWithExitPupilPlan);
 	seqTrace2.sequentialRayTracing(mChiefLightRay);
 	mChiefRayAtExitPupil = seqTrace2.getAllInterPointsAtSurf_i_notFiltered(mPosExPupilInOptSys).at(0);
 	real refDistanceForRefSphere = Math::distanceTwoVectors(mChiefRayAtImage, mChiefRayAtExitPupil);
@@ -406,12 +438,12 @@ std::vector<cv::Point2d> OPD::calcOPD_X()
 		// fill in reference sphere
 		OpticalSystem_LLT OptSysWithRefSphere;
 		OptSysWithRefSphere = mOptSys;
-		OptSysWithRefSphere.fillInSurfaceAndInteracAtPos_i(mPosExPupilInOptSys, mRefSphere.clone(), mDoNothingInteraction_ptr);
+		OptSysWithRefSphere.fillInSurfaceAndInteracAtPos_i(mPosExPupilInOptSys, mRefSphere.clone(), doNothingInter.clone());
 
 		SequentialRayTracing seqTraceRefSphere(OptSysWithRefSphere);
 		seqTraceRefSphere.seqRayTracingWithVectorOfLightRays(mLightRayX);
 
-		SequentialRayTracing seqTraceExitPup(mOptSysWithExitPupil);
+		SequentialRayTracing seqTraceExitPup(mOptSysWithExitPupilPlan);
 		seqTraceExitPup.seqRayTracingWithVectorOfLightRays(mLightRayX);
 
 		for (unsigned int i = 0; i < seqTraceRefSphere.getAllInterPointsAtSurf_i_notFiltered(mPosExPupilInOptSys).size(); i++)
@@ -427,7 +459,7 @@ std::vector<cv::Point2d> OPD::calcOPD_X()
 	}
 
 	SequentialRayTracing seqTrace(mOptSys);
-	SequentialRayTracing seqTraceWithExitPupil(mOptSysWithExitPupil);
+	SequentialRayTracing seqTraceWithExitPupil(mOptSysWithExitPupilPlan);
 	// trace all ray
 	seqTrace.seqRayTracingWithVectorOfLightRays(mLightRayX);
 	seqTraceWithExitPupil.seqRayTracingWithVectorOfLightRays(mLightRayX);
@@ -523,7 +555,7 @@ std::vector<cv::Point2d> OPD::calcOPD_Y()
 		SequentialRayTracing seqTraceRefSphere(OptSysWithRefSphere); // optical system include referece sphere
 		seqTraceRefSphere.seqRayTracingWithVectorOfLightRays(mLightRayY);
 
-		SequentialRayTracing seqTraceExitPup(mOptSysWithExitPupil); // optical system include exit pupil (plan surface)
+		SequentialRayTracing seqTraceExitPup(mOptSysWithExitPupilPlan); // optical system include exit pupil (plan surface)
 		seqTraceExitPup.seqRayTracingWithVectorOfLightRays(mLightRayY);
 
 		for (unsigned int i = 0; i < seqTraceRefSphere.getAllInterPointsAtSurf_i_notFiltered(mPosExPupilInOptSys).size(); i++)
@@ -540,7 +572,7 @@ std::vector<cv::Point2d> OPD::calcOPD_Y()
 
 	// exit pupil is not behind the image surface
 	SequentialRayTracing seqTrace(mOptSys);
-	SequentialRayTracing seqTraceWithExitPupil(mOptSysWithExitPupil);
+	SequentialRayTracing seqTraceWithExitPupil(mOptSysWithExitPupilPlan);
 	// trace all ray
 	seqTrace.seqRayTracingWithVectorOfLightRays(mLightRayY);
 	seqTraceWithExitPupil.seqRayTracingWithVectorOfLightRays(mLightRayY);
@@ -689,7 +721,7 @@ cv::Mat OPD::calcGlobalOPD()
 		SequentialRayTracing seqTraceRefSphere(OptSysWithRefSphere); // optical system include referece sphere
 		seqTraceRefSphere.seqRayTracingWithVectorOfLightRays(mLightRayFillAperturStop);
 
-		SequentialRayTracing seqTraceExitPup(mOptSysWithExitPupil); // optical system include exit pupil (plan surface)
+		SequentialRayTracing seqTraceExitPup(mOptSysWithExitPupilPlan); // optical system include exit pupil (plan surface)
 		seqTraceExitPup.seqRayTracingWithVectorOfLightRays(mLightRayFillAperturStop);
 
 		std::vector<real> vectorXvalues;
@@ -833,9 +865,10 @@ cv::Mat OPD::calcGlobalOPD()
 	//***
 	// exit pupil is not behind the image surface
 	//***
-	else {
+	else 
+	{
 		SequentialRayTracing seqTrace(mOptSys);
-		SequentialRayTracing seqTraceWithExitPupil(mOptSysWithExitPupil);
+		SequentialRayTracing seqTraceWithExitPupil(mOptSysWithExitPupilPlan);
 		// trace all ray
 		seqTrace.seqRayTracingWithVectorOfLightRays(mLightRayFillAperturStop);
 		seqTraceWithExitPupil.seqRayTracingWithVectorOfLightRays(mLightRayFillAperturStop);
@@ -1244,6 +1277,11 @@ cv::Mat OPD::calcFFT(cv::Mat Matrix)
 cv::Mat OPD::getPSF()
 {
 	return mHuygenPSF;
+}
+
+LightRayStruct OPD::getChiefLightRay()
+{
+	return mChiefLightRay;
 }
 
 //cv::Mat OPD::calcPSF()

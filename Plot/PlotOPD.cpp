@@ -1,38 +1,45 @@
 #include "PlotOPD.h"
 
-//set Image name
-void  CommentandPosCommentToPlotInOPD::setComment(QString Comment)
+PlotOPD::PlotOPD(std::shared_ptr<SurfaceIntersectionRay_LLT> Aperture, std::shared_ptr<SurfaceIntersectionRay_LLT> exitPupil, OpticalSystemElement OptSysEle,
+	VectorStructR3 StartPointLightRay, real centerWavelenth, unsigned int numberLightRay) :
+	mAperture(Aperture),
+	mExitPupil(exitPupil),
+	mOptSysEle(OptSysEle),
+	mStartPointLightRay(StartPointLightRay),
+	mCenterWavelenth(centerWavelenth),
+	mNumberLightRay(numberLightRay)
 {
-	mComment = Comment;
-}
-//get Image name
-QString  CommentandPosCommentToPlotInOPD::getComment()
-{
-	return mComment;
-}
-// set PlotSpot Diagramm
-void  CommentandPosCommentToPlotInOPD::setPositionComment(VectorStructR2 PositionComment)
-{
-	mPositionComment = PositionComment;
-}
-//get Plot Spot Diagramm
-VectorStructR2  CommentandPosCommentToPlotInOPD::getPositionComment()
-{
-	return mPositionComment;
+	Light_LLT light;
+	light.setWavelength(mCenterWavelenth);
+
+	mOptSysEle.setRefractiveIndexAccordingToWavelength(mCenterWavelenth);
+	OpticalSystem_LLT OptSys = mOptSysEle.getLLTconversion_doConversion();
+
+	std::vector<LightRayStruct> lightRayAlong_X_Field = SequentialRayTracing::lightRayAlongX(mStartPointLightRay, mNumberLightRay, mAperture->getPoint().getZ(), -mAperture->getSemiHeight(), mAperture->getSemiHeight(), mCenterWavelenth, 1.0);
+	std::vector<LightRayStruct> lightRayAlong_Y_Field = SequentialRayTracing::lightRayAlongY(mStartPointLightRay, mNumberLightRay, mAperture->getPoint().getZ(), -mAperture->getSemiHeight(), mAperture->getSemiHeight(), mCenterWavelenth, 1.0);
+
+	Ray_LLT chiefRayField(mStartPointLightRay, { mStartPointLightRay.getX(), mStartPointLightRay.getY(), mAperture->getPoint().getZ() }, 1.0);
+	LightRayStruct chiefLightRayField(light, chiefRayField, 1);
+
+	mOPD = OPD(mExitPupil, OptSys, lightRayAlong_X_Field, lightRayAlong_Y_Field, chiefLightRayField);
+
+	calcMatrixToPlotOPD_X_Plane();
+	calcMatrixtoPlotOPD_Y_Plane();
 }
 
+
+PlotOPD::PlotOPD(OPD OPD) :
+	mOPD(OPD)
+{
+	calcMatrixToPlotOPD_X_Plane();
+	calcMatrixtoPlotOPD_Y_Plane();
+}
 
 // calculate Matrix to plot OPD
 void PlotOPD::calcMatrixToPlotOPD_X_Plane()
 {
 
-	unsigned int edge = 20;
-	// hight 
-	unsigned int height = 500;
-	unsigned int heightOPDF = height - 2 * edge;
-	// wide
-	unsigned int wide = 500;
-	unsigned int wideOPDFanHalfe = (wide - 2 * edge) / 2;
+
 	// point to plot
 	cv::Point P;
 	// scale points to plot
@@ -141,13 +148,7 @@ void PlotOPD::calcMatrixToPlotOPD_X_Plane()
 void PlotOPD::calcMatrixtoPlotOPD_Y_Plane()
 {
 
-	unsigned int edge = 20;
-	// hight 
-	unsigned int height = 500;
-	unsigned int heightOPDF = height - 2 * edge;
-	// wide
-	unsigned int wide = 500;
-	unsigned int wideOPDFanHalfe = (wide - 2 * edge) / 2;
+
 	// point to plot
 	cv::Point P;
 	// scale points to plot
@@ -266,67 +267,16 @@ cv::Mat PlotOPD::getMatrixToPlotOPD_Y_Plane()
 
 QPolygonF PlotOPD::getPointsVectorPolygon_X_Plane(double scale, double StartX, double StartY)
 {
-	double edge = 20;
-	// hight 
-	double height = 500;
-	double heightOPDF = height - 2 * edge;
-	// wide
-	double wide = 500;
-	double wideOPDFanHalfe = (wide - 2 * edge) / 2;
 
-	double symmetrie = height / 2;
-	double Shiftintheplot = 550;
-	unsigned howManyPointsX = mOPD.getPointsOPD_X().size();
+	double howManyPointsX = mOPD.getPointsOPD_X().size();
+
 
 	double maxX = PlotCarsten::getMaxValueOfPointX(mOPD.getPointsOPD_X());
 	double minX = PlotCarsten::getMinValueOfPointX(mOPD.getPointsOPD_X());
 
-	double maxY = PlotCarsten::getMaxValueOfPointY(mOPD.getPointsOPD_X());
-	double minY = PlotCarsten::getMinValueOfPointY(mOPD.getPointsOPD_X());
 
 
-
-	if (maxX < PlotCarsten::getMaxValueOfPointX(mOPD.getPointsOPD_X()))
-	{
-		maxX = PlotCarsten::getMaxValueOfPointX(mOPD.getPointsOPD_X());
-	}
-
-	if (minX > PlotCarsten::getMinValueOfPointX(mOPD.getPointsOPD_X()))
-	{
-		minX = PlotCarsten::getMinValueOfPointX(mOPD.getPointsOPD_X());
-	}
-
-	if (maxY < PlotCarsten::getMaxValueOfPointY(mOPD.getPointsOPD_X()))
-	{
-		maxY = PlotCarsten::getMaxValueOfPointY(mOPD.getPointsOPD_X());
-	}
-
-	if (minY > PlotCarsten::getMinValueOfPointY(mOPD.getPointsOPD_X()))
-	{
-		minY = PlotCarsten::getMinValueOfPointY(mOPD.getPointsOPD_X());
-	}
-
-
-	// scale points to plot
-
-
-
-	double absMaxY;
-	if (std::abs(maxY) > std::abs(minY))
-	{
-		absMaxY = maxY;
-	}
-	else // if(std::abs(maxY) < std::abs(minY))
-	{
-		absMaxY = minY;
-	}
-
-
-
-	// middle of diagram on X achse
-	double middleDiagramX_Achse = wide / 2;
-
-	unsigned int vectorSize = mOPD.getPointsOPD_X().size();
+	double vectorSize = mOPD.getPointsOPD_X().size();
 	double pointXmiddle = mOPD.getPointsOPD_X().at(vectorSize / 2).x;
 
 	QPolygonF OPD_Image_X_Plane_Qwt;
@@ -343,15 +293,15 @@ QPolygonF PlotOPD::getPointsVectorPolygon_X_Plane(double scale, double StartX, d
 			double tempScaleOPD;
 			if (tempOPD >= 0)
 			{
-				tempScaleOPD = (height) / 2 + tempOPD / absMaxY * heightOPDF / 2;
+				tempScaleOPD = (height) / 2 + tempOPD / scale * heightOPDF / 3;
 			}
 			else
 			{
-				tempScaleOPD = (height) / 2 - tempOPD / absMaxY * heightOPDF / 2;
+				tempScaleOPD = (height) / 2 - tempOPD / scale * heightOPDF / 3;
 			}
 
-			double currentScaledPointX = middleDiagramX_Achse + std::abs(currentPointX - pointXmiddle) / (minX - pointXmiddle) * wideOPDFanHalfe + Shiftintheplot;
-			QPointF centerP(currentScaledPointX, tempScaleOPD);
+			double currentScaledPointX = middleDiagramX_Achse + std::abs(currentPointX - pointXmiddle) / (minX - pointXmiddle) * wideOPDFanHalfe;
+			QPointF centerP(currentScaledPointX + StartX, tempScaleOPD + StartY);
 			OPD_Image_X_Plane_Qwt << centerP;
 		}
 		else
@@ -360,15 +310,15 @@ QPolygonF PlotOPD::getPointsVectorPolygon_X_Plane(double scale, double StartX, d
 			double tempScaleOPD;
 			if (tempOPD >= 0)
 			{
-				tempScaleOPD = (heightOPDF + 2 * edge) / 2 + tempOPD / absMaxY * heightOPDF / 2;
+				tempScaleOPD = (heightOPDF + 2 * edge) / 2 + tempOPD / scale * heightOPDF / 3;
 			}
 			else
 			{
-				tempScaleOPD = (heightOPDF + 2 * edge) / 2 - tempOPD / absMaxY * heightOPDF / 2;
+				tempScaleOPD = (heightOPDF + 2 * edge) / 2 - tempOPD / scale * heightOPDF / 3;
 			}
 
-			double currentScaledPointX = middleDiagramX_Achse + std::abs(currentPointX - pointXmiddle) / (maxX - pointXmiddle) * wideOPDFanHalfe + Shiftintheplot;
-			QPointF centerP(currentScaledPointX, tempScaleOPD);
+			double currentScaledPointX = middleDiagramX_Achse + std::abs(currentPointX - pointXmiddle) / (maxX - pointXmiddle) * wideOPDFanHalfe;
+			QPointF centerP(currentScaledPointX + StartX, tempScaleOPD + StartY);
 			OPD_Image_X_Plane_Qwt << centerP;
 		}
 
@@ -380,17 +330,9 @@ QPolygonF PlotOPD::getPointsVectorPolygon_X_Plane(double scale, double StartX, d
 }
 
 
-QPolygonF PlotOPD::getPointsVectorPolygon(double scale, double StartX, double StartY)
+QPolygonF PlotOPD::getPointsVectorPolygon_Y_Plane(double scale, double StartX, double StartY)
 {
-	double edge = 20;
-	// hight 
-	double height = 500;
-	double heightOPDF = height - 2 * edge;
-	// wide
-	double wide = 500;
-	double wideOPDFanHalfe = (wide - 2 * edge) / 2;
 
-	double symmetrie = height / 2;
 
 
 
@@ -399,36 +341,10 @@ QPolygonF PlotOPD::getPointsVectorPolygon(double scale, double StartX, double St
 	double maxX = PlotCarsten::getMaxValueOfPointX(mOPD.getPointsOPD_Y());
 	double minX = PlotCarsten::getMinValueOfPointX(mOPD.getPointsOPD_Y());
 
-	double maxY = PlotCarsten::getMaxValueOfPointY(mOPD.getPointsOPD_Y());
-	double minY = PlotCarsten::getMinValueOfPointY(mOPD.getPointsOPD_Y());
-
-
-
-	if (maxY < PlotCarsten::getMaxValueOfPointY(mOPD.getPointsOPD_X()))
-	{
-		maxY = PlotCarsten::getMaxValueOfPointY(mOPD.getPointsOPD_X());
-	}
-
-	if (minY > PlotCarsten::getMinValueOfPointY(mOPD.getPointsOPD_X()))
-	{
-		minY = PlotCarsten::getMinValueOfPointY(mOPD.getPointsOPD_X());
-	}
-
 	QPolygonF OPD_Image_Y_Plane_Qwt;
-
-	double absMaxY;
-	if (std::abs(maxY) > std::abs(minY))
-	{
-		absMaxY = maxY;
-	}
-	else // if(std::abs(maxY) < std::abs(minY))
-	{
-		absMaxY = minY;
-	}
 
 
 	// middle of diagram on X achse
-	double middleDiagramX_Achse = wide / 2;
 
 	unsigned int vectorSize = mOPD.getPointsOPD_Y().size();
 	double pointXmiddle = mOPD.getPointsOPD_Y().at(vectorSize / 2).x;
@@ -437,9 +353,6 @@ QPolygonF PlotOPD::getPointsVectorPolygon(double scale, double StartX, double St
 	// create matrix to plot OPD_Y
 	for (unsigned int i = 0; i < howManyPointsX; i++)
 	{
-
-
-
 		double currentPointX = mOPD.getPointsOPD_Y().at(i).x;
 		//real refY = mOPD.getRefPoints().getY();
 
@@ -449,15 +362,15 @@ QPolygonF PlotOPD::getPointsVectorPolygon(double scale, double StartX, double St
 			double tempScaleOPD;
 			if (tempOPD >= 0)
 			{
-				tempScaleOPD = (height) / 2 + tempOPD / absMaxY * heightOPDF / 2;
+				tempScaleOPD = (height) / 2 + tempOPD / scale * heightOPDF / 3;
 			}
 			else
 			{
-				tempScaleOPD = (height) / 2 - tempOPD / absMaxY * heightOPDF / 2;
+				tempScaleOPD = (height) / 2 - tempOPD / scale * heightOPDF / 3;
 			}
 
 			double currentScaledPointX = middleDiagramX_Achse + std::abs(currentPointX - pointXmiddle) / (minX - pointXmiddle) * wideOPDFanHalfe;
-			QPointF centerP(currentScaledPointX, tempScaleOPD);
+			QPointF centerP(currentScaledPointX + StartX, tempScaleOPD + StartY);
 			OPD_Image_Y_Plane_Qwt << centerP;
 		}
 		else
@@ -466,79 +379,19 @@ QPolygonF PlotOPD::getPointsVectorPolygon(double scale, double StartX, double St
 			double tempScaleOPD;
 			if (tempOPD >= 0)
 			{
-				tempScaleOPD = (heightOPDF + 2 * edge) / 2 + tempOPD / absMaxY * heightOPDF / 2;
+				tempScaleOPD = (heightOPDF + 2 * edge) / 2 + tempOPD / scale * heightOPDF / 3;
 			}
 			else
 			{
-				tempScaleOPD = (heightOPDF + 2 * edge) / 2 - tempOPD / absMaxY * heightOPDF / 2;
+				tempScaleOPD = (heightOPDF + 2 * edge) / 2 - tempOPD / scale * heightOPDF / 3;
 			}
 
 			double currentScaledPointX = middleDiagramX_Achse + std::abs(currentPointX - pointXmiddle) / (maxX - pointXmiddle) * wideOPDFanHalfe;
-			QPointF centerP(currentScaledPointX, tempScaleOPD);
+			QPointF centerP(currentScaledPointX + StartX, tempScaleOPD + StartY);
 			OPD_Image_Y_Plane_Qwt << centerP;
 		}
 
 	}
-
-
-
-
-
-	howManyPointsX = mOPD.getPointsOPD_X().size();
-
-
-	maxX = PlotCarsten::getMaxValueOfPointX(mOPD.getPointsOPD_X());
-	minX = PlotCarsten::getMinValueOfPointX(mOPD.getPointsOPD_X());
-
-	vectorSize = mOPD.getPointsOPD_X().size();
-	pointXmiddle = mOPD.getPointsOPD_X().at(vectorSize / 2).x;
-
-	QPolygonF OPD_Image_X_Plane_Qwt;
-	// create matrix to plot OPD_X
-	for (unsigned int i = 0; i < howManyPointsX; i++)
-	{
-
-		double currentPointX = mOPD.getPointsOPD_X().at(i).x;
-		//real refY = mOPD.getRefPoints().getY();
-
-		if (vectorSize / 2 > i)
-		{
-			double tempOPD = mOPD.getPointsOPD_X().at(i).y;
-			double tempScaleOPD;
-			if (tempOPD >= 0)
-			{
-				tempScaleOPD = (height) / 2 + tempOPD / absMaxY * heightOPDF / 2;
-			}
-			else
-			{
-				tempScaleOPD = (height) / 2 - tempOPD / absMaxY * heightOPDF / 2;
-			}
-
-			double currentScaledPointX = middleDiagramX_Achse + std::abs(currentPointX - pointXmiddle) / (minX - pointXmiddle) * wideOPDFanHalfe + 520;
-			QPointF centerP(currentScaledPointX, tempScaleOPD);
-			OPD_Image_Y_Plane_Qwt << centerP;
-		}
-		else
-		{
-			double tempOPD = mOPD.getPointsOPD_X().at(i).y;
-			double tempScaleOPD;
-			if (tempOPD >= 0)
-			{
-				tempScaleOPD = (heightOPDF + 2 * edge) / 2 + tempOPD / absMaxY * heightOPDF / 2;
-			}
-			else
-			{
-				tempScaleOPD = (heightOPDF + 2 * edge) / 2 - tempOPD / absMaxY * heightOPDF / 2;
-			}
-
-			double currentScaledPointX = middleDiagramX_Achse + std::abs(currentPointX - pointXmiddle) / (maxX - pointXmiddle) * wideOPDFanHalfe + 520;
-			QPointF centerP(currentScaledPointX, tempScaleOPD);
-			OPD_Image_Y_Plane_Qwt << centerP;
-		}
-
-	}
-
-
 
 	return OPD_Image_Y_Plane_Qwt;
 }
@@ -579,4 +432,10 @@ double PlotOPD::getScaleOPDPlot()
 
 
 	return scaleOPD;
+}
+
+
+int PlotOPD::getWavelengthOPD()
+{
+	return mOPD.getChiefLightRay().getLight_LLT().getWavelength();
 }

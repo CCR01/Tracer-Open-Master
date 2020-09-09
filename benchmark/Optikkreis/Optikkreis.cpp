@@ -26,11 +26,11 @@
 // fill aperture stop
 #include "..\..\FillAptertureStop\FillApertureStop.h"
 
+#include "..\..\Plot\OpticalSystemPlots.h"
 
+Optikkreis::Optikkreis() {}
 
-Optikkreis::Optikkreis(){}
-
-Optikkreis::~Optikkreis(){}
+Optikkreis::~Optikkreis() {}
 
 bool Optikkreis::systemForOptikkreis()
 {
@@ -64,7 +64,7 @@ bool Optikkreis::systemForOptikkreis()
 
 	// **********************************
 	// set parameter variable
-	Sphere1.setParameterRadius(/*min value*/ 7.0,  /*max value*/ 30.0, 0.0, typeModifierVariable); 
+	Sphere1.setParameterRadius(/*min value*/ 7.0,  /*max value*/ 30.0, 0.0, typeModifierVariable);
 	Sphere4.setParameterRadius(/*min value*/ 12.0, /*max value*/ 70.0, 0.0, typeModifierVariable);
 	// **********************************
 
@@ -82,9 +82,10 @@ bool Optikkreis::systemForOptikkreis()
 	//	build optical system
 	OpticalSystemElement optSystemElement(opticalSystem_ptr, interactions_ptr);
 	optSystemElement.setRefractiveIndexAccordingToWavelength(550.0);
-	
+
+
 	bool checkTest = testTheSystem(optSystemElement);
-	
+
 	// plot the optical system
 	plotStartSystemOK(optSystemElement, seqTrace_vec);
 
@@ -105,7 +106,7 @@ bool Optikkreis::systemForOptikkreis()
 	// set light
 	optimizedOptSys.set_Light(light);
 	// set target EFL to 20 mm
-	optimizedOptSys.add_TargetEFL(20.0,1.0);
+	optimizedOptSys.add_TargetEFL(20.0, 1.0);
 	//print basic definitions
 	printBasics(optimizedOptSys);
 	// start the optimization
@@ -128,7 +129,7 @@ bool Optikkreis::systemForOptikkreis()
 	CardinalPoints cardinalPoints(opticalSystem_LLT, objectPoint_inf_obj::obj);
 	real EFL = cardinalPoints.getEFL();
 	std::cout << "EFL" << EFL << "(target EFL 20)" << std::endl;
-	
+
 
 	bool returnCheck = Math::checkTrueOfVectorElements(workOptSys);
 	return returnCheck;
@@ -167,7 +168,7 @@ bool Optikkreis::plotSpotDiagramme_startSystem(std::vector<Spot> spot_vec)
 	SequentialRayTracing seqTrace_optA(/*optical system element*/ optSys);
 	FillApertureStop fillAperOptA(/*start point rays*/{ 0.0,0.0,0.0 },/*semi height of aperture stop*/ 2.0,/*point of aperture stop*/{ 0.0,0.0,20.0 },/*direction of aperture stop*/{ 0.0,0.0,1.0 }, /*rings*/ 6,/*arms*/ 8,/*refractive index*/ 1,/*light*/ light);
 	seqTrace_optA.seqRayTracingWithVectorOfLightRays(fillAperOptA.getVectorWithLightRays());
-	Spot spot_optA(seqTrace_optA.getAllInterPointsAtSurf_i_notFiltered(6), seqTrace_optA.getAllInterPointsAtSurf_i_notFiltered(6).at(0));
+	Spot spot_optA(seqTrace_optA.getAllInterPointsAtSurface_i_filtered(6), seqTrace_optA.getAllInterPointsAtSurface_i_filtered(6).at(0));
 	real rms_optA = spot_optA.getRMS_µm();
 	bool checkRMSoptA = Math::compareTwoNumbers_decimals(rms_optA, 1550.00, 2);
 	workOptSys.push_back(checkRMSoptA);
@@ -176,7 +177,7 @@ bool Optikkreis::plotSpotDiagramme_startSystem(std::vector<Spot> spot_vec)
 	SequentialRayTracing seqTrace_y2(/*optical system element*/ optSys);
 	FillApertureStop fillAper_y2(/*start point rays*/{ 0.0,2.0,0.0 },/*semi height of aperture stop*/ 2.0,/*point of aperture stop*/{ 0.0,0.0,20.0 },/*direction of aperture stop*/{ 0.0,0.0,1.0 }, /*rings*/ 6,/*arms*/ 8,/*refractive index*/ 1,/*light*/ light);
 	seqTrace_y2.seqRayTracingWithVectorOfLightRays(fillAper_y2.getVectorWithLightRays());
-	Spot spot_y2(seqTrace_y2.getAllInterPointsAtSurf_i_notFiltered(6), seqTrace_y2.getAllInterPointsAtSurf_i_notFiltered(6).at(0));
+	Spot spot_y2(seqTrace_y2.getAllInterPointsAtSurface_i_filtered(6), seqTrace_y2.getAllInterPointsAtSurface_i_filtered(6).at(0));
 	real rms_y2 = spot_y2.getRMS_µm();
 	bool checkRMS_y2 = Math::compareTwoNumbers_decimals(rms_y2, 1522.54, 2);
 	workOptSys.push_back(checkRMS_y2);
@@ -185,7 +186,7 @@ bool Optikkreis::plotSpotDiagramme_startSystem(std::vector<Spot> spot_vec)
 	SequentialRayTracing seqTrace_y4(/*optical system element*/ optSys);
 	FillApertureStop fillAper_y4(/*start point rays*/{ 0.0,4.0,0.0 },/*semi height of aperture stop*/ 2.0,/*point of aperture stop*/{ 0.0,0.0,20.0 },/*direction of aperture stop*/{ 0.0,0.0,1.0 }, /*rings*/ 6,/*arms*/ 8,/*refractive index*/ 1,/*light*/ light);
 	seqTrace_y4.seqRayTracingWithVectorOfLightRays(fillAper_y4.getVectorWithLightRays());
-	Spot spot_y4(seqTrace_y4.getAllInterPointsAtSurf_i_notFiltered(6), seqTrace_y4.getAllInterPointsAtSurf_i_notFiltered(6).at(0));
+	Spot spot_y4(seqTrace_y4.getAllInterPointsAtSurface_i_filtered(6), seqTrace_y4.getAllInterPointsAtSurface_i_filtered(6).at(0));
 	real rms_y4 = spot_y4.getRMS_µm();
 	bool checkRMS_y4 = Math::compareTwoNumbers_decimals(rms_y4, 1442.29, 2);
 	workOptSys.push_back(checkRMS_y4);
@@ -199,9 +200,11 @@ bool Optikkreis::plotSpotDiagramme_startSystem(std::vector<Spot> spot_vec)
 	PlotSpotDiagramm PlotSpot_y4(spot_y4.getRefPoint(), vecSpot_y4, 0.09950372, 550);
 
 	//fill vectorSpotDiagram
-	optSys.fillVectorSpotDiagramToPlot("Spot Diagram optical achse START", &PlotSpot_optAchse);
-	optSys.fillVectorSpotDiagramToPlot("Spot Diagram field 1 START", &PlotSpot_y2);
-	optSys.fillVectorSpotDiagramToPlot("Spot Diagram field 1 START", &PlotSpot_y4);
+	OpticalSystemCurves optSysPlot;
+	optSysPlot.giveNumberWavelengthsSpotDiagram(1);
+	optSysPlot.fillVectorSpotDiagramm(&PlotSpot_optAchse, 1);
+	optSysPlot.fillVectorSpotDiagramm(&PlotSpot_y2, 1);
+	optSysPlot.fillVectorSpotDiagramm(&PlotSpot_y4, 1);
 
 	// parameter to plot
 	PlotParameterQwt ParameterPlotSpotDiagram;
@@ -218,11 +221,11 @@ bool Optikkreis::plotSpotDiagramme_startSystem(std::vector<Spot> spot_vec)
 
 	//-change the attributes of the points of the spot diagram
 	//-----Style:Ellipse,Rect,Diamond,Triangle, DTriangle, UTriangle, LTriangle, Cross, HLine, Star1, Hexagon, ...
-	ParameterPlotSpotDiagram.setSymbolStyleOfSpotDiagrammPoints(QwtSymbol::LTriangle);
+	ParameterPlotSpotDiagram.setSymbolStyleOfSpotDiagrammPoints(QwtSymbol::LTriangle, 1);
 	//-----Color of the inside of the symbol
-	ParameterPlotSpotDiagram.setSymbolColorOfSpotDiagrammPoints(QBrush(Qt::yellow));
+	ParameterPlotSpotDiagram.setSymbolColorOfSpotDiagrammPoints(QBrush(Qt::yellow), 1);
 	//-----Color of the outline of the symbol
-	ParameterPlotSpotDiagram.setContourColorSymbolOfSpotDiagrammPoints(QPen(Qt::black, 1));
+	ParameterPlotSpotDiagram.setContourColorSymbolOfSpotDiagrammPoints(QPen(Qt::black, 1), 1);
 	//-----Size:
 	ParameterPlotSpotDiagram.setSizeSymbolOfSpotDiagrammPoints(QSize(4, 4));
 	//-----Color of the grid
@@ -230,7 +233,8 @@ bool Optikkreis::plotSpotDiagramme_startSystem(std::vector<Spot> spot_vec)
 
 	//Plot spot diagram opt achse and field
 	QwtPlot* spotDiagramQwtPlotSystem_start;
-	spotDiagramQwtPlotSystem_start = new SpotPlotDiagramQwt(optSys, ParameterPlotSpotDiagram, 10, 40);
+
+	spotDiagramQwtPlotSystem_start = new SpotPlotDiagramQwt(optSysPlot, ParameterPlotSpotDiagram, 10, 40);
 	spotDiagramQwtPlotSystem_start->show();
 	bool chekerPLot = spotDiagramQwtPlotSystem_start->isVisible();
 	workOptSys.push_back(chekerPLot);
@@ -250,13 +254,13 @@ bool Optikkreis::plotStartSystemOK(OpticalSystemElement optSysEle, std::vector<S
 	light.setWavelength(550.0);
 
 	ApertureStop_LLT S0(/*semiHeight*/ 2.0, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveIndex*/ 1.0);
-	SphericalSurface_LLT S1(/*radius*/40.0, /*semiHeight*/7.0, /*Apex of the sphere*/{ 0.0, 0.0, 25.0 }, /*Direction*/ { 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.52);
-	SphericalSurface_LLT S2(/*radius*/40.0, /*semiHeight*/7.0, /*Apex of the sphere*/{ 0.0, 0.0, 35.0 }, /*Direction*/ { 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.61, /*refIndexSideB*/1.52);
-	SphericalSurface_LLT S3(/*radius*/40.0, /*semiHeight*/7.0, /*Apex of the sphere*/{ 0.0, 0.0, 40.0 }, /*Direction*/ { 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.61);
-	SphericalSurface_LLT S4(/*radius*/30.0, /*semiHeight*/10.0, /*Apex of the sphere*/{ 0.0, 0.0, 50.0 }, /*Direction*/ { 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.73);
-	SphericalSurface_LLT S5(/*radius*/50.0, /*semiHeight*/10.0, /*Apex of the sphere*/{ 0.0, 0.0, 60.0 }, /*Direction*/ { 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.73);
+	SphericalSurface_LLT S1(/*radius*/40.0, /*semiHeight*/7.0, /*Apex of the sphere*/{ 0.0, 0.0, 25.0 }, /*Direction*/{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.52);
+	SphericalSurface_LLT S2(/*radius*/40.0, /*semiHeight*/7.0, /*Apex of the sphere*/{ 0.0, 0.0, 35.0 }, /*Direction*/{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.61, /*refIndexSideB*/1.52);
+	SphericalSurface_LLT S3(/*radius*/40.0, /*semiHeight*/7.0, /*Apex of the sphere*/{ 0.0, 0.0, 40.0 }, /*Direction*/{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.61);
+	SphericalSurface_LLT S4(/*radius*/30.0, /*semiHeight*/10.0, /*Apex of the sphere*/{ 0.0, 0.0, 50.0 }, /*Direction*/{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.73);
+	SphericalSurface_LLT S5(/*radius*/50.0, /*semiHeight*/10.0, /*Apex of the sphere*/{ 0.0, 0.0, 60.0 }, /*Direction*/{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.73);
 	PlanGeometry_LLT S6(/*semiHeight*/7.0, /*point*/{ 0.0,0.0,70.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
-	
+
 	OpticalSystem_LLT optSys;
 	optSys.fillVectorSurfaceAndInteractingData(0, S0.clone(), doNothing.clone());
 	optSys.fillVectorSurfaceAndInteractingData(1, S1.clone(), refrac.clone());
@@ -269,14 +273,15 @@ bool Optikkreis::plotStartSystemOK(OpticalSystemElement optSysEle, std::vector<S
 	//to draw the aperturre stop two curves must be added to the table of surfaces to be ploted the upper part through getPointerPlotUp() and the other through getPointerPlotDown()
 	//can be ploted using one curve when finding a method to plot a curve with gaps
 
-	optSys.fillVectorToPlot2DQwt(0, S0.getPointerPlotUp());
-	optSys.fillVectorToPlot2DQwt(1, S0.getPointerPlotDown());
-	optSys.fillVectorToPlot2DQwt(2, S1.getPointerPlot());
-	optSys.fillVectorToPlot2DQwt(3, S2.getPointerPlot());
-	optSys.fillVectorToPlot2DQwt(4, S3.getPointerPlot());
-	optSys.fillVectorToPlot2DQwt(5, S4.getPointerPlot());
-	optSys.fillVectorToPlot2DQwt(6, S5.getPointerPlot());
-	optSys.fillVectorToPlot2DQwt(7, S6.getPointerPlot());
+	OpticalSystemCurves optSysPlot;
+	optSysPlot.fillVectorRayTracSurfaces(S0.getPointerPlotUp());
+	optSysPlot.fillVectorRayTracSurfaces(S0.getPointerPlotDown());
+	optSysPlot.fillVectorRayTracSurfaces(S1.getPointerPlot());
+	optSysPlot.fillVectorRayTracSurfaces(S2.getPointerPlot());
+	optSysPlot.fillVectorRayTracSurfaces(S3.getPointerPlot());
+	optSysPlot.fillVectorRayTracSurfaces(S4.getPointerPlot());
+	optSysPlot.fillVectorRayTracSurfaces(S5.getPointerPlot());
+	optSysPlot.fillVectorRayTracSurfaces(S6.getPointerPlot());
 
 
 	// ray tracing from the optical axis
@@ -295,10 +300,10 @@ bool Optikkreis::plotStartSystemOK(OpticalSystemElement optSysEle, std::vector<S
 	SeqTrace_plot2D_y4.seqRayTracingWithVectorOfLightRays(lightRayAlong_y4);
 
 	//fill vector Ray Tracing
-	RayTracingSystem RayTracSys;
-	RayTracSys.fillVectorRayTracing(&SeqTrace_plot2D_optA, { 0,0,255 });
-	RayTracSys.fillVectorRayTracing(&SeqTrace_plot2D_y2, { 0,255,0 });
-	RayTracSys.fillVectorRayTracing(&SeqTrace_plot2D_y4, { 255,0,0 });
+
+	optSysPlot.fillVectorSequentialRayTracing(&SeqTrace_plot2D_optA, { 0,0,255 });
+	optSysPlot.fillVectorSequentialRayTracing(&SeqTrace_plot2D_y2, { 0,255,0 });
+	optSysPlot.fillVectorSequentialRayTracing(&SeqTrace_plot2D_y4, { 255,0,0 });
 
 	//change Plot Parameter 
 	PlotParameterQwt ParameterPlotOptSysE0;
@@ -311,7 +316,7 @@ bool Optikkreis::plotStartSystemOK(OpticalSystemElement optSysEle, std::vector<S
 
 	//// show surfaces with rays
 	RayTracingQwtPlot* rayTracingQwtPlotSystem;
-	rayTracingQwtPlotSystem = new RayTracingQwtPlot(optSys, RayTracSys, ParameterPlotOptSysE0);
+	rayTracingQwtPlotSystem = new RayTracingQwtPlot(optSysPlot, optSys, ParameterPlotOptSysE0);
 	rayTracingQwtPlotSystem->show();
 	bool checker = rayTracingQwtPlotSystem->isVisible();
 
@@ -331,21 +336,21 @@ bool Optikkreis::testTheSystem(OpticalSystemElement optSysEle)
 
 	// trace optical axis
 	SequentialRayTracing seqTrace_optA(/*optical system element*/ optSysEle, /*start point lightRay*/{ 0.0,0.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, light_vec);
-	Spot spot_optA(seqTrace_optA.getAllInterPointsAtSurf_i_notFiltered(6), seqTrace_optA.getAllInterPointsAtSurf_i_notFiltered(6).at(0));
+	Spot spot_optA(seqTrace_optA.getAllInterPointsAtSurface_i_filtered(6), seqTrace_optA.getAllInterPointsAtSurface_i_filtered(6).at(0));
 	real rms_optA = spot_optA.getRMS_µm();
 	bool checkRMSoptA = Math::compareTwoNumbers_decimals(rms_optA, 1550.00, 2);
 	workOptSys.push_back(checkRMSoptA);
 
 	// trace field 1 -> y=2
 	SequentialRayTracing seqTrace_y2(/*optical system element*/ optSysEle, /*start point lightRay*/{ 0.0,2.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, light_vec);
-	Spot spot_y2(seqTrace_y2.getAllInterPointsAtSurf_i_notFiltered(6), seqTrace_y2.getAllInterPointsAtSurf_i_notFiltered(6).at(0));
+	Spot spot_y2(seqTrace_y2.getAllInterPointsAtSurface_i_filtered(6), seqTrace_y2.getAllInterPointsAtSurface_i_filtered(6).at(0));
 	real rms_y2 = spot_y2.getRMS_µm();
 	bool checkRMS_y2 = Math::compareTwoNumbers_decimals(rms_y2, 1522.54, 2);
 	workOptSys.push_back(checkRMS_y2);
 
 	// trace field 2 -> y=4
 	SequentialRayTracing seqTrace_y4(/*optical system element*/ optSysEle, /*start point lightRay*/{ 0.0,4.0,0.0 }, /*rings*/ 6, /*arms*/ 8, /*refractive index*/ 1.0, light_vec);
-	Spot spot_y4(seqTrace_y4.getAllInterPointsAtSurf_i_notFiltered(6), seqTrace_y4.getAllInterPointsAtSurf_i_notFiltered(6).at(0));
+	Spot spot_y4(seqTrace_y4.getAllInterPointsAtSurface_i_filtered(6), seqTrace_y4.getAllInterPointsAtSurface_i_filtered(6).at(0));
 	real rms_y4 = spot_y4.getRMS_µm();
 	bool checkRMS_y4 = Math::compareTwoNumbers_decimals(rms_y4, 1442.29, 2);
 	workOptSys.push_back(checkRMS_y4);
@@ -376,7 +381,7 @@ void Optikkreis::printBasics(OptimizeOpticalSystem optimizedOptSys)
 	real targetEFL = optimizedOptSys.getMeritConfig().getEFL_targetValue();
 	real targetEXPD = optimizedOptSys.getMeritConfig().getEXPD_targetValue();
 
-	std::cout << "local start: "<< localSt << std::endl;
+	std::cout << "local start: " << localSt << std::endl;
 	std::cout << "mutation factor: " << mutationFactos << std::endl;
 	std::cout << "pupulation: " << population << std::endl;
 	std::cout << "check all local combos: " << checkAllLocalCom << std::endl;
@@ -386,7 +391,7 @@ void Optikkreis::printBasics(OptimizeOpticalSystem optimizedOptSys)
 	std::cout << "wavelength: " << wavelenght << " mm" << std::endl;
 	std::cout << "target EFL: " << targetEFL << " mm" << std::endl;
 	std::cout << "target EXPD: " << targetEXPD << " mm" << std::endl;
-	
+
 }
 
 
@@ -417,15 +422,15 @@ bool Optikkreis::plotOptimizedSystemOK(OpticalSystemElement optSysEle, std::vect
 
 	//to draw the aperturre stop two curves must be added to the table of surfaces to be ploted the upper part through getPointerPlotUp() and the other through getPointerPlotDown()
 	//can be ploted using one curve when finding a method to plot a curve with gaps
-
-	optSys.fillVectorToPlot2DQwt(0, S0.getPointerPlotUp());
-	optSys.fillVectorToPlot2DQwt(1, S0.getPointerPlotDown());
-	optSys.fillVectorToPlot2DQwt(2, S1.getPointerPlot());
-	optSys.fillVectorToPlot2DQwt(3, S2.getPointerPlot());
-	optSys.fillVectorToPlot2DQwt(4, S3.getPointerPlot());
-	optSys.fillVectorToPlot2DQwt(5, S4.getPointerPlot());
-	optSys.fillVectorToPlot2DQwt(6, S5.getPointerPlot());
-	optSys.fillVectorToPlot2DQwt(7, S6.getPointerPlot());
+	OpticalSystemCurves optSysPlot;
+	optSysPlot.fillVectorRayTracSurfaces(S0.getPointerPlotUp());
+	optSysPlot.fillVectorRayTracSurfaces(S0.getPointerPlotDown());
+	optSysPlot.fillVectorRayTracSurfaces(S1.getPointerPlot());
+	optSysPlot.fillVectorRayTracSurfaces(S2.getPointerPlot());
+	optSysPlot.fillVectorRayTracSurfaces(S3.getPointerPlot());
+	optSysPlot.fillVectorRayTracSurfaces(S4.getPointerPlot());
+	optSysPlot.fillVectorRayTracSurfaces(S5.getPointerPlot());
+	optSysPlot.fillVectorRayTracSurfaces(S6.getPointerPlot());
 
 
 	// ray tracing from the optical axis
@@ -444,10 +449,10 @@ bool Optikkreis::plotOptimizedSystemOK(OpticalSystemElement optSysEle, std::vect
 	SeqTrace_plot2D_y4.seqRayTracingWithVectorOfLightRays(lightRayAlong_y4);
 
 	//fill vector Ray Tracing
-	RayTracingSystem RayTracSys;
-	RayTracSys.fillVectorRayTracing(&SeqTrace_plot2D_optA, { 0,0,255 });
-	RayTracSys.fillVectorRayTracing(&SeqTrace_plot2D_y2, { 0,255,0 });
-	RayTracSys.fillVectorRayTracing(&SeqTrace_plot2D_y4, { 255,0,0 });
+
+	optSysPlot.fillVectorSequentialRayTracing(&SeqTrace_plot2D_optA, { 0,0,255 });
+	optSysPlot.fillVectorSequentialRayTracing(&SeqTrace_plot2D_y2, { 0,255,0 });
+	optSysPlot.fillVectorSequentialRayTracing(&SeqTrace_plot2D_y4, { 255,0,0 });
 
 	//change Plot Parameter 
 	PlotParameterQwt ParameterPlotOptSysE0;
@@ -460,7 +465,7 @@ bool Optikkreis::plotOptimizedSystemOK(OpticalSystemElement optSysEle, std::vect
 
 	//// show surfaces with rays
 	RayTracingQwtPlot* rayTracingQwtPlotSystem;
-	rayTracingQwtPlotSystem = new RayTracingQwtPlot(optSys, RayTracSys, ParameterPlotOptSysE0);
+	rayTracingQwtPlotSystem = new RayTracingQwtPlot(optSysPlot, optSys, ParameterPlotOptSysE0);
 	rayTracingQwtPlotSystem->show();
 	bool checker = rayTracingQwtPlotSystem->isVisible();
 
@@ -486,7 +491,7 @@ bool Optikkreis::plotSpotDiagramme_optimizedSystem(std::vector<Spot> spot_vec)
 	SphericalSurface_LLT S4(/*radius*/17.9998, /*semiHeight*/10.0, /*Apex of the sphere*/{ 0.0, 0.0, 50.0 }, /*Direction*/{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.73);
 	SphericalSurface_LLT S5(/*radius*/50.0, /*semiHeight*/10.0, /*Apex of the sphere*/{ 0.0, 0.0, 60.0 }, /*Direction*/{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.73);
 	PlanGeometry_LLT S6(/*semiHeight*/7.0, /*point*/{ 0.0,0.0,70.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
-	
+
 	OpticalSystem_LLT optSys;
 	optSys.fillVectorSurfaceAndInteractingData(0, S0.clone(), doNothing.clone());
 	optSys.fillVectorSurfaceAndInteractingData(1, S1.clone(), refrac.clone());
@@ -500,7 +505,7 @@ bool Optikkreis::plotSpotDiagramme_optimizedSystem(std::vector<Spot> spot_vec)
 	SequentialRayTracing seqTrace_optA(/*optical system element*/ optSys);
 	FillApertureStop fillAperOptA(/*start point rays*/{ 0.0,0.0,0.0 },/*semi height of aperture stop*/ 2.0,/*point of aperture stop*/{ 0.0,0.0,20.0 },/*direction of aperture stop*/{ 0.0,0.0,1.0 }, /*rings*/ 6,/*arms*/ 8,/*refractive index*/ 1,/*light*/ light);
 	seqTrace_optA.seqRayTracingWithVectorOfLightRays(fillAperOptA.getVectorWithLightRays());
-	Spot spot_optA(seqTrace_optA.getAllInterPointsAtSurf_i_notFiltered(6), seqTrace_optA.getAllInterPointsAtSurf_i_notFiltered(6).at(0));
+	Spot spot_optA(seqTrace_optA.getAllInterPointsAtSurface_i_filtered(6), seqTrace_optA.getAllInterPointsAtSurface_i_filtered(6).at(0));
 	real rms_optA = spot_optA.getRMS_µm();
 	bool checkRMSoptA = Math::compareTwoNumbers_decimals(rms_optA, 1550.00, 2);
 	workOptSys.push_back(checkRMSoptA);
@@ -509,7 +514,7 @@ bool Optikkreis::plotSpotDiagramme_optimizedSystem(std::vector<Spot> spot_vec)
 	SequentialRayTracing seqTrace_y2(/*optical system element*/ optSys);
 	FillApertureStop fillAper_y2(/*start point rays*/{ 0.0,2.0,0.0 },/*semi height of aperture stop*/ 2.0,/*point of aperture stop*/{ 0.0,0.0,20.0 },/*direction of aperture stop*/{ 0.0,0.0,1.0 }, /*rings*/ 6,/*arms*/ 8,/*refractive index*/ 1,/*light*/ light);
 	seqTrace_y2.seqRayTracingWithVectorOfLightRays(fillAper_y2.getVectorWithLightRays());
-	Spot spot_y2(seqTrace_y2.getAllInterPointsAtSurf_i_notFiltered(6), seqTrace_y2.getAllInterPointsAtSurf_i_notFiltered(6).at(0));
+	Spot spot_y2(seqTrace_y2.getAllInterPointsAtSurface_i_filtered(6), seqTrace_y2.getAllInterPointsAtSurface_i_filtered(6).at(0));
 	real rms_y2 = spot_y2.getRMS_µm();
 	bool checkRMS_y2 = Math::compareTwoNumbers_decimals(rms_y2, 1522.54, 2);
 	workOptSys.push_back(checkRMS_y2);
@@ -518,7 +523,7 @@ bool Optikkreis::plotSpotDiagramme_optimizedSystem(std::vector<Spot> spot_vec)
 	SequentialRayTracing seqTrace_y4(/*optical system element*/ optSys);
 	FillApertureStop fillAper_y4(/*start point rays*/{ 0.0,4.0,0.0 },/*semi height of aperture stop*/ 2.0,/*point of aperture stop*/{ 0.0,0.0,20.0 },/*direction of aperture stop*/{ 0.0,0.0,1.0 }, /*rings*/ 6,/*arms*/ 8,/*refractive index*/ 1,/*light*/ light);
 	seqTrace_y4.seqRayTracingWithVectorOfLightRays(fillAper_y4.getVectorWithLightRays());
-	Spot spot_y4(seqTrace_y4.getAllInterPointsAtSurf_i_notFiltered(6), seqTrace_y4.getAllInterPointsAtSurf_i_notFiltered(6).at(0));
+	Spot spot_y4(seqTrace_y4.getAllInterPointsAtSurface_i_filtered(6), seqTrace_y4.getAllInterPointsAtSurface_i_filtered(6).at(0));
 	real rms_y4 = spot_y4.getRMS_µm();
 	bool checkRMS_y4 = Math::compareTwoNumbers_decimals(rms_y4, 1442.29, 2);
 	workOptSys.push_back(checkRMS_y4);
@@ -532,9 +537,11 @@ bool Optikkreis::plotSpotDiagramme_optimizedSystem(std::vector<Spot> spot_vec)
 	PlotSpotDiagramm PlotSpot_y4(spot_y4.getRefPoint(), vecSpot_y4, 0.09950372, 550);
 
 	//fill vectorSpotDiagram
-	optSys.fillVectorSpotDiagramToPlot("Spot Diagram optical achse OPTIMIZED", &PlotSpot_optAchse);
-	optSys.fillVectorSpotDiagramToPlot("Spot Diagram field 1 OPTIMIZED", &PlotSpot_y2);
-	optSys.fillVectorSpotDiagramToPlot("Spot Diagram field 1 OPTIMIZED", &PlotSpot_y4);
+	OpticalSystemCurves optSysPlot;
+	optSysPlot.giveNumberWavelengthsSpotDiagram(1);
+	optSysPlot.fillVectorSpotDiagramm(&PlotSpot_optAchse, 1);
+	optSysPlot.fillVectorSpotDiagramm(&PlotSpot_y2, 1);
+	optSysPlot.fillVectorSpotDiagramm(&PlotSpot_y4, 1);
 
 	// parameter to plot
 	PlotParameterQwt ParameterPlotSpotDiagram;
@@ -551,11 +558,11 @@ bool Optikkreis::plotSpotDiagramme_optimizedSystem(std::vector<Spot> spot_vec)
 
 	//-change the attributes of the points of the spot diagram
 	//-----Style:Ellipse,Rect,Diamond,Triangle, DTriangle, UTriangle, LTriangle, Cross, HLine, Star1, Hexagon, ...
-	ParameterPlotSpotDiagram.setSymbolStyleOfSpotDiagrammPoints(QwtSymbol::Cross);
+	ParameterPlotSpotDiagram.setSymbolStyleOfSpotDiagrammPoints(QwtSymbol::Cross, 1);
 	//-----Color of the inside of the symbol
-	ParameterPlotSpotDiagram.setSymbolColorOfSpotDiagrammPoints(QBrush(Qt::blue));
+	ParameterPlotSpotDiagram.setSymbolColorOfSpotDiagrammPoints(QBrush(Qt::blue), 1);
 	//-----Color of the outline of the symbol
-	ParameterPlotSpotDiagram.setContourColorSymbolOfSpotDiagrammPoints(QPen(Qt::red, 1));
+	ParameterPlotSpotDiagram.setContourColorSymbolOfSpotDiagrammPoints(QPen(Qt::red, 1), 1);
 	//-----Size:
 	ParameterPlotSpotDiagram.setSizeSymbolOfSpotDiagrammPoints(QSize(4, 4));
 	//-----Color of the grid
@@ -563,7 +570,7 @@ bool Optikkreis::plotSpotDiagramme_optimizedSystem(std::vector<Spot> spot_vec)
 
 	//Plot spot diagram opt achse and field
 	QwtPlot* spotDiagramQwtPlotSystem_start;
-	spotDiagramQwtPlotSystem_start = new SpotPlotDiagramQwt(optSys, ParameterPlotSpotDiagram, 10, 40);
+	spotDiagramQwtPlotSystem_start = new SpotPlotDiagramQwt(optSysPlot, ParameterPlotSpotDiagram, 10, 40);
 	spotDiagramQwtPlotSystem_start->show();
 	bool chekerPLot = spotDiagramQwtPlotSystem_start->isVisible();
 	workOptSys.push_back(chekerPLot);

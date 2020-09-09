@@ -4,40 +4,15 @@
 #include <qwt_plot_curve.h>
 #include <qwt_symbol.h>
 
-struct CommentandPosCommentToPlotInOPD
-{
-	CommentandPosCommentToPlotInOPD() {};
-	~CommentandPosCommentToPlotInOPD() {};
-	CommentandPosCommentToPlotInOPD(QString Comment, VectorStructR2 PositionComment)
-	{
-		mComment = Comment;
-		mPositionComment = PositionComment;
-	}
-	QString mComment;
-	VectorStructR2 mPositionComment;
-
-	//set Image name
-	void setComment(QString Comment);
-	//get Image name
-	QString getComment();
-	// set PlotSpot Diagramm
-	void setPositionComment(VectorStructR2 PositionComment);
-	//get Plot Spot Diagramm
-	VectorStructR2 getPositionComment();
-};
 
 
 class PlotOPD
 {
 public:
 	PlotOPD() {};
-	PlotOPD(OPD OPD) :
-		mOPD(OPD)
-
-	{
-		calcMatrixToPlotOPD_X_Plane();
-		calcMatrixtoPlotOPD_Y_Plane();
-	}
+	PlotOPD(OPD OPD);
+	PlotOPD(std::shared_ptr<SurfaceIntersectionRay_LLT> Aperture, std::shared_ptr<SurfaceIntersectionRay_LLT> exitPupil, OpticalSystemElement OptSysEle,
+		VectorStructR3 StartPointLightRay, real centerWavelenth, unsigned int numberLightRay);
 	~PlotOPD() {};
 
 	// calculate Matrix to plot OPD in x plane
@@ -56,10 +31,14 @@ public:
 	QPolygonF getPointsVectorPolygon_X_Plane(double scale, double StartX, double StartY);
 
 	//get points to plot in y plane mit Qwt
-	QPolygonF getPointsVectorPolygon(double scale, double StartX, double StartY);
+	QPolygonF getPointsVectorPolygon_Y_Plane(double scale, double StartX, double StartY);
 
 	//calculate the scale of the OPD plot
 	double getScaleOPDPlot();
+
+	//get light wavelength
+	int getWavelengthOPD();
+
 
 private:
 	OPD mOPD;
@@ -67,5 +46,22 @@ private:
 	unsigned int mWide;
 	cv::Mat mImageOPD_X_Plane;
 	cv::Mat mImageOPD_Y_Plane;
+	double edge = 20;
+	// hight 
+	double height = 500;
+	double heightOPDF = height - 2 * edge;
+	// wide
+	double wide = 500;
+	double wideOPDFanHalfe = (wide - 2 * edge) / 2;
+	double middleDiagramX_Achse = wide / 2;
+	double symmetrie = height / 2;
+	double Shiftintheplot = 550;
+
+	std::shared_ptr<SurfaceIntersectionRay_LLT> mAperture;
+	std::shared_ptr<SurfaceIntersectionRay_LLT> mExitPupil;
+	OpticalSystemElement mOptSysEle;
+	VectorStructR3 mStartPointLightRay;
+	real mCenterWavelenth;
+	unsigned int mNumberLightRay;
 };
 

@@ -5,7 +5,7 @@
 void  SaveQwtPlot(const QString location, QwtPlot* plot)
 {
 	plot->replot();
-	QwtPlotRenderer *renderer = new QwtPlotRenderer();
+	QwtPlotRenderer* renderer = new QwtPlotRenderer();
 	renderer->renderDocument(plot, location, QString("JPG"), QSizeF(1600, 1000), 1200);
 
 }
@@ -17,7 +17,7 @@ void SaveQwtPlotbetterResolution(QwtPlot* plot, QString FileName)
 	QPixmap pix = QPixmap::grabWidget(plot);
 	QPixmap pixmap(1600, 1200);
 	pixmap.rect();
-	QPainter * painter = new QPainter(&pixmap);
+	QPainter* painter = new QPainter(&pixmap);
 	QwtPlotRenderer rend;
 	rend.render(plot, painter, plot->geometry());
 	pixmap.save(FileName/*"e.g. Name.jpg"*/);
@@ -60,7 +60,7 @@ GridLineHorizontal::GridLineHorizontal(int x, int y, int factor)
 	for (unsigned int i = 0; i < 11; i++)
 	{
 
-		points << QPointF(x + ((factor*i) / 10), y);
+		points << QPointF(x + ((factor * i) / 10), y);
 
 	}
 
@@ -75,7 +75,7 @@ GridLineVertical::GridLineVertical(int x, int y, int factor)
 	for (unsigned int i = 0; i < 11; i++)
 	{
 
-		points << QPointF(x, y + ((factor*i) / 10));
+		points << QPointF(x, y + ((factor * i) / 10));
 
 	}
 	setPen(QColor("lightGrey"));
@@ -95,18 +95,35 @@ ConfiguratedText::ConfiguratedText(QString TextToPlot, int XCoordinate, int YCoo
 {
 	setValue(XCoordinate, YCoordinate);
 	QwtText titel(TextToPlot);
+	titel.setColor(textColor);
 	QFont font("Times", size);
 	titel.setFont(font);
 	setLabel(titel);
 }
+
+void setTextColor(QColor newColor);
+
 ConfiguratedText::ConfiguratedText(QString TextToPlot, int XCoordinate, int YCoordinate)
 {
+	double HalfLengthText = TextToPlot.length();
 	setValue(XCoordinate, YCoordinate);
 	QwtText titel(TextToPlot);
 	QFont font("Times", 12);
 	titel.setFont(font);
 	setLabel(titel);
 }
+
+ConfiguratedText::ConfiguratedText(QString TextToPlot, int XCoordinate, int YCoordinate, double size, QColor color)
+{
+	double HalfLengthText = TextToPlot.length();
+	setValue(XCoordinate, YCoordinate);
+	QwtText titel(TextToPlot);
+	titel.setColor(color);
+	QFont font("Times", size);
+	titel.setFont(font);
+	setLabel(titel);
+}
+
 
 AiryDiskCurve::AiryDiskCurve(double x, double y, double radius)
 {
@@ -141,9 +158,10 @@ AiryDiskCurve::AiryDiskCurve(double x, double y, double radius)
 
 SpotDiagramScaleBar::SpotDiagramScaleBar(double startx, double starty)
 {
+	setPen(QPen(Qt::red, 2));
 	QPolygonF points;
 	points << QPointF(startx, starty) << QPointF(startx, starty + 400);
-	QwtSymbol *symbol = new QwtSymbol(QwtSymbol::HLine, QBrush(Qt::black), QPen(Qt::black, 1), QSize(2, 2));       // Größe in Pixel
+	QwtSymbol* symbol = new QwtSymbol(QwtSymbol::HLine, QBrush(Qt::red), QPen(Qt::red, 2), QSize(8, 4));       // Größe in Pixel
 	setSymbol(symbol);
 	setSamples(points);
 

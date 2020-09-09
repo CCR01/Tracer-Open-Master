@@ -77,65 +77,67 @@ bool TOM_LOGO::plotTOM_Logo()
 	// check by single ray trace
 	JonesVector_LLT polarisation;
 	typeLight lightType = typeLight::typeLightRay;
-	Light_LLT mLight(/*wavelength*/ 550.0, /*intensity*/ 1.0,/*polarisation*/ polarisation,/*light type*/ lightType);
+	Light_LLT light(/*wavelength*/ 550.0, /*intensity*/ 1.0,/*polarisation*/ polarisation,/*light type*/ lightType);
 
 
 	// *** *** // sequential ray tracing
 	// optical axis
 	Ray_LLT ray_optA(/*origin*/{ 0.0,0.0,0.0 },/*direction*/{ 0.0,0.0,1.0 },/*refractive index*/ 1.0);
-	LightRayStruct lightRay_optA(mLight, ray_optA, 1);
+	LightRayStruct lightRay_optA(light, ray_optA, 1);
 	SequentialRayTracing seqTrace_optA(optSysTOM_LLT);
 	seqTrace_optA.sequentialRayTracing(lightRay_optA);
 	VectorStructR3 rayOptA_Zemax_optA = { 0.0,-110.0,359.42533317 };
-	VectorStructR3 rayOptA_TOM_optA = seqTrace_optA.getAllInterPointsAtSurf_i_notFiltered(19)[0];
+	VectorStructR3 rayOptA_TOM_optA = seqTrace_optA.getAllInterPointsAtSurface_i_filtered(19)[0];
 	bool checkRayOptA = Math::compareTwoVectorStructR3_decimals(rayOptA_Zemax_optA, rayOptA_TOM_optA, 3);
 	checkPlotTOM.push_back(checkRayOptA);
 
 	// field y=0.01
 	Ray_LLT ray_field1(/*origin*/{ 0.0,0.01,0.0 },/*direction*/{ 0.0,-8.01,5.0 },/*refractive index*/ 1.0);
-	LightRayStruct lightRay_field1(mLight, ray_field1, 1);
+	LightRayStruct lightRay_field1(light, ray_field1, 1);
 	SequentialRayTracing seqTrace_field1(optSysTOM_LLT);
 	seqTrace_field1.sequentialRayTracing(lightRay_field1);
 	VectorStructR3 rayOptA_Zemax_field1 = { 0.0,-110.0,371.29649984 };
-	VectorStructR3 rayOptA_TOM_field1 = seqTrace_field1.getAllInterPointsAtSurf_i_notFiltered(19)[0];
+	VectorStructR3 rayOptA_TOM_field1 = seqTrace_field1.getAllInterPointsAtSurface_i_filtered(19)[0];
 	bool checkRayField1 = Math::compareTwoVectorStructR3_decimals(rayOptA_Zemax_field1, rayOptA_TOM_field1, 3);
 	checkPlotTOM.push_back(checkRayField1);
 
 	// field y=-0.01
 	Ray_LLT ray_field2(/*origin*/{ 0.0,-0.01,0.0 },/*direction*/{ 0.0,8.01,5.0 },/*refractive index*/ 1.0);
-	LightRayStruct lightRay_field2(mLight, ray_field2, 1);
+	LightRayStruct lightRay_field2(light, ray_field2, 1);
 	SequentialRayTracing seqTrace_field2(optSysTOM_LLT);
 	seqTrace_field2.sequentialRayTracing(lightRay_field2);
 	VectorStructR3 rayOptA_Zemax_field2 = { 0.0,-110.0,347.55416651 };
-	VectorStructR3 rayOptA_TOM_field2 = seqTrace_field2.getAllInterPointsAtSurf_i_notFiltered(19)[0];
+	VectorStructR3 rayOptA_TOM_field2 = seqTrace_field2.getAllInterPointsAtSurface_i_filtered(19)[0];
 	bool checkRayfield2 = Math::compareTwoVectorStructR3_decimals(rayOptA_Zemax_field2, rayOptA_TOM_field2, 3);
 	checkPlotTOM.push_back(checkRayfield2);
 	// *** *** //
 
 	// plot the system
 	// build optical system
+	OpticalSystemCurves optSysTOMPlots;
+	optSysTOMPlots.fillVectorRayTracSurfaces(A0.getPointerPlotUp());
+	optSysTOMPlots.fillVectorRayTracSurfaces(A0.getPointerPlotDown());
+	optSysTOMPlots.fillVectorRayTracSurfaces(P1.getPointerPlot());
+	optSysTOMPlots.fillVectorRayTracSurfaces(M2.getPointerPlot());
+	optSysTOMPlots.fillVectorRayTracSurfaces(M3.getPointerPlot());
+	optSysTOMPlots.fillVectorRayTracSurfaces(M4.getPointerPlot());
+	optSysTOMPlots.fillVectorRayTracSurfaces(M5.getPointerPlot());
+	optSysTOMPlots.fillVectorRayTracSurfaces(P6.getPointerPlot());
+	optSysTOMPlots.fillVectorRayTracSurfaces(P7.getPointerPlot());
+	optSysTOMPlots.fillVectorRayTracSurfaces(M8.getPointerPlot());
+	optSysTOMPlots.fillVectorRayTracSurfaces(M9.getPointerPlot());
+	optSysTOMPlots.fillVectorRayTracSurfaces(M10.getPointerPlot());
+	optSysTOMPlots.fillVectorRayTracSurfaces(M11.getPointerPlot());
+	optSysTOMPlots.fillVectorRayTracSurfaces(P12.getPointerPlot());
+	optSysTOMPlots.fillVectorRayTracSurfaces(P13.getPointerPlot());
+	optSysTOMPlots.fillVectorRayTracSurfaces(M14.getPointerPlot());
+	optSysTOMPlots.fillVectorRayTracSurfaces(M15.getPointerPlot());
+	optSysTOMPlots.fillVectorRayTracSurfaces(M16.getPointerPlot());
+	optSysTOMPlots.fillVectorRayTracSurfaces(M17.getPointerPlot());
+	optSysTOMPlots.fillVectorRayTracSurfaces(M18.getPointerPlot());
+	optSysTOMPlots.fillVectorRayTracSurfaces(M19.getPointerPlot());
 
-	optSysTOM_LLT.fillVectorToPlot2DQwt(0, A0.getPointerPlotUp());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(1, A0.getPointerPlotDown());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(2, P1.getPointerPlot());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(3, M2.getPointerPlot());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(4, M3.getPointerPlot());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(5, M4.getPointerPlot());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(6, M5.getPointerPlot());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(7, P6.getPointerPlot());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(8, P7.getPointerPlot());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(9, M8.getPointerPlot());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(10, M9.getPointerPlot());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(11, M10.getPointerPlot());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(12, M11.getPointerPlot());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(13, P12.getPointerPlot());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(14, P13.getPointerPlot());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(15, M14.getPointerPlot());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(16, M15.getPointerPlot());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(17, M16.getPointerPlot());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(18, M17.getPointerPlot());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(19, M18.getPointerPlot());
-	optSysTOM_LLT.fillVectorToPlot2DQwt(20, M19.getPointerPlot());
+
 
 	SequentialRayTracing SeqTraceTOM_plot2D_optachse(optSysTOM_LLT);
 
@@ -151,14 +153,13 @@ bool TOM_LOGO::plotTOM_Logo()
 	SeqTraceTOM_plot2D_Field2.seqRayTracingWithVectorOfLightRays(lightRayAlong_PlotTOM_field2);
 
 	//fill vector Ray Tracing
-	RayTracingSystem RayTracSysTOM_LLT;
-	RayTracSysTOM_LLT.fillVectorRayTracing(&SeqTraceTOM_plot2D_optachse, { 0,0,255 });
-	RayTracSysTOM_LLT.fillVectorRayTracing(&SeqTraceTOM_plot2D_Field1, { 255,0,0 });
-	RayTracSysTOM_LLT.fillVectorRayTracing(&SeqTraceTOM_plot2D_Field2, { 80,200, 100 });
+
+	optSysTOMPlots.fillVectorSequentialRayTracing(&SeqTraceTOM_plot2D_optachse, { 0,0,255 });
+	optSysTOMPlots.fillVectorSequentialRayTracing(&SeqTraceTOM_plot2D_Field1, { 255,0,0 });
+	optSysTOMPlots.fillVectorSequentialRayTracing(&SeqTraceTOM_plot2D_Field2, { 80,200, 100 });
 
 	PlotParameterQwt ParameterTOM;
-
-	RayTracingQwtPlot* SysTOMPlot = new RayTracingQwtPlot(optSysTOM_LLT, RayTracSysTOM_LLT, ParameterTOM);
+	RayTracingQwtPlot* SysTOMPlot = new RayTracingQwtPlot(optSysTOMPlots, optSysTOM_LLT, ParameterTOM);
 	SysTOMPlot->show();
 	bool checkerTOM = Math::checkTrueOfVectorElements(checkPlotTOM);
 

@@ -29,6 +29,10 @@ public:
 	//print TexttoPlot at (X,Y)
 	ConfiguratedText(QString TextToPlot, int XCoordinate, int YCoordinate, double size);
 	ConfiguratedText(QString TextToPlot, int XCoordinate, int YCoordinate);
+	ConfiguratedText(QString TextToPlot, int XCoordinate, int YCoordinate, double size, QColor color);
+
+private:
+	QColor textColor = Qt::black;
 
 };
 

@@ -1,5 +1,9 @@
 #include "TestOPDQwtPlot.h"
 
+
+// glasses
+#include "..\..\Glasses\Glasses.h"
+
 //Qwt
 #include <qwt_plot.h>
 #include <qwt_plot_curve.h>
@@ -11,7 +15,9 @@
 #include "..\..\LowLevelTracing\Surfaces\ApertureStop_LLT.h"
 #include "..\..\LowLevelTracing\Surfaces\AsphericalSurface_LLT.h"
 #include "..\..\LowLevelTracing\Surfaces\ParaxialLens_LLT.h"
-
+#include "..\..\SurfaceElements\ApertureStopElement.h"
+#include "..\..\SurfaceElements\SphericalElement.h"
+#include "..\..\SurfaceElements\PlanElement.h"
 
 // interactions
 #include "..\..\LowLevelTracing\Interaction\RefractedRay_LLT.h"
@@ -43,11 +49,12 @@ bool testOPDQwtPlot::superFuncTestOPDQwtPlot()
 
 	bool testE0 = testOPDQwtPlotE0();
 	checkOPDPlot.push_back(testE0);
-	bool testE1 = true;// testOPDQwtPlotE1();
-	checkOPDPlot.push_back(testE1);
-	bool testE2 = true;// testOPDQwtPlotE2();
-	checkOPDPlot.push_back(testE2);
-
+	//bool testE1 = testOPDQwtPlotE1(); // do it -> tut noch nicht richtig !!!!!
+	//checkOPDPlot.push_back(testE1);
+	//bool testE2 = true;// testOPDQwtPlotE2();
+	//checkOPDPlot.push_back(testE2);
+	//bool testE3 = testOPDQwtPlotE3();
+	//checkOPDPlot.push_back(testE3);
 
 	bool returnCheck = Math::checkTrueOfVectorElements(checkOPDPlot);
 
@@ -63,9 +70,8 @@ bool testOPDQwtPlot::testOPDQwtPlotE0()
 	// interactions
 	RefractedRay_LLT refrac;
 	Absorb_LLT absorb;
-	Light_LLT mLight;
-	mLight.setWavelength(550.0);
-
+	Light_LLT light;
+	light.setWavelength(550.0);
 
 	// surfaces
 	ApertureStop_LLT S0E0(/*semiHeight*/ 0.5, /*point*/{ 0.0,0.0,5.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveIndex*/ 1.0);
@@ -87,12 +93,10 @@ bool testOPDQwtPlot::testOPDQwtPlotE0()
 	SphericalSurface_LLT S7E0(/*radius*/ 20.0,/*semi height*/ 6.0,/*point*/{ 0.0,0.0,40.0 }, /*direction*/{ 0.0,0.0,-1.0 },/*refractive index A*/ 1.0,/*refractive index B*/ 1.3);
 	PlanGeometry_LLT S8E0(/*semi Height*/5.0, /*apex*/{ 0.0,0.0,45.0 }, /*direction*/{ 0.0,0.0,1.0 }, 1.0, 1.0);
 
-
-
 	// build optical system
 	OpticalSystem_LLT optSysE0;
-	optSysE0.fillVectorSurfaceAndInteractingData(1, S0E0.clone(), refrac.clone());
-	optSysE0.fillVectorSurfaceAndInteractingData(0, S1E0.clone(), refrac.clone());
+	optSysE0.fillVectorSurfaceAndInteractingData(0, S0E0.clone(), refrac.clone());
+	optSysE0.fillVectorSurfaceAndInteractingData(1, S1E0.clone(), refrac.clone());
 	optSysE0.fillVectorSurfaceAndInteractingData(2, S2E0.clone(), refrac.clone());
 	optSysE0.fillVectorSurfaceAndInteractingData(3, S3E0.clone(), deflectCR3.clone());
 	optSysE0.fillVectorSurfaceAndInteractingData(4, S4E0.clone(), refrac.clone());
@@ -101,38 +105,50 @@ bool testOPDQwtPlot::testOPDQwtPlotE0()
 	optSysE0.fillVectorSurfaceAndInteractingData(7, S7E0.clone(), refrac.clone());
 	optSysE0.fillVectorSurfaceAndInteractingData(8, S8E0.clone(), absorb.clone());
 
-
 	// Plot OPD opt achse
-	Ray_LLT chiefRayE0_optAchse({ 0.0,0.0,0.0 }, { 0.0,0.0,0.5 }, 1.0);
-	LightRayStruct chiefLightRayE0_optAchse(mLight, chiefRayE0_optAchse, 1);
+	Ray_LLT chiefRayE0_optAchse({ 0.0,0.0,0.0 }, { 0.0,0.0,1.0 }, 1.0);
+	LightRayStruct chiefLightRayE0_optAchse(light, chiefRayE0_optAchse, 1);
 	Ray_LLT chiefRayE0_field({ 0.0,0.5,0.0 }, { 0.0,0.5,10.0 }, 1.0);
-	LightRayStruct chiefLightRayE0_field(mLight, chiefRayE0_field, 1);
+	LightRayStruct chiefLightRayE0_field(light, chiefRayE0_field, 1);
 	PlanGeometry_LLT exitPupilE0(/*semiHeight*/20.0, /*point*/{ 0.0,0.0,2.5696182 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
 	std::vector<LightRayStruct> lightRayAlong_X_E0_optAchse2 = SequentialRayTracing::lightRayAlongX({ 0.0, 0.0, 0.0 }, 100, 10.0, -1.0, 1.0, 550, 1.0);
 	std::vector<LightRayStruct> lightRayAlong_Y_E0_optAchse2 = SequentialRayTracing::lightRayAlongY({ 0.0, 0.0, 0.0 }, 100, 10.0, -1.0, 1.0, 550, 1.0);
 	OPD OPD_E0_optAchse2(exitPupilE0.clone(), optSysE0, lightRayAlong_X_E0_optAchse2, lightRayAlong_Y_E0_optAchse2, chiefLightRayE0_optAchse);
 	PlotOPD plotOPD_E0_optAchse(OPD_E0_optAchse2);
 
-	//load the parameters of the OPD plot
+	Light_LLT light_1;
+	light_1.setWavelength(450.0);
+
+	Ray_LLT chiefRayE0_optAchse_1({ 0.0,0.0,0.0 }, { 0.0,0.0,1.0 }, 1.0);
+	LightRayStruct chiefLightRayE0_optAchse_1(light_1, chiefRayE0_optAchse_1, 1);
+	std::vector<LightRayStruct> lightRayAlong_X_E0_optAchse_1 = SequentialRayTracing::lightRayAlongX({ 0.0, 0.0, 0.0 }, 100, 10.0, -1.0, 1.0, 450, 1.0);
+	std::vector<LightRayStruct> lightRayAlong_Y_E0_optAchse_1 = SequentialRayTracing::lightRayAlongY({ 0.0, 0.0, 0.0 }, 100, 10.0, -1.0, 1.0, 450, 1.0);
+	OPD OPD_E0_optAchse_1(exitPupilE0.clone(), optSysE0, lightRayAlong_X_E0_optAchse_1, lightRayAlong_Y_E0_optAchse_1, chiefLightRayE0_optAchse_1);
+	PlotOPD plotOPD_E0_optAchse_1(OPD_E0_optAchse_1);
+
+
+	///load the parameters of the OPD plot
 	PlotParameterQwt plotOPD_E0_Parameter;
 	//change the style of the symbols
-	//plotOPD_E0_Parameter.setOPDSymbolStyle(QwtSymbol::Rect);
+	plotOPD_E0_Parameter.setOPDSymbolStyle(QwtSymbol::Diamond, 1);
 	//change the size of the symbols
-	//plotOPD_E0_Parameter.setOPDSizeSymbol(QSize(4, 3));
+	plotOPD_E0_Parameter.setOPDSizeSymbol(QSize(4, 3));
 	//change the colour of the symbols
-	//plotOPD_E0_Parameter.setOPDSymbolColor(QBrush(Qt::red));
+	plotOPD_E0_Parameter.setOPDSymbolColor(QBrush(Qt::red), 1);
 	//change the contour colour of the symbols
-	//plotOPD_E0_Parameter.setOPDContourColorSymbol(QPen(Qt::blue, 1));
+	plotOPD_E0_Parameter.setOPDContourColorSymbol(QPen(Qt::red, 1), 1);
 	//add a comment to the OPD plot at a given position
-	//plotOPD_E0_Parameter.AddCommentToOPDPlot("Comment_OPD_Plot", { -5,-200 });
+	plotOPD_E0_Parameter.AddCommentToOPDPlot("Comment_OPD_Plot", { -5,-200 });
 	//change the colour of the frame of the plots
-	//plotOPD_E0_Parameter.setOPDFrameColor(QColor("lightblue"));
+	plotOPD_E0_Parameter.setOPDFrameColor(QColor("lightblue"));
+
+	OpticalSystemCurves systemPlotsE0;
+	systemPlotsE0.giveNumberWavelengthsOPD(1);
+	systemPlotsE0.fillVectorplotOPDDiagramToPlot(&plotOPD_E0_optAchse, 1);
 
 
-	SystemPlots systemPlotsE0;
-	systemPlotsE0.fillVectorplotOPDDiagramToPlot(&plotOPD_E0_optAchse);
 	//OPD plot
-	mOPDQwtPlotSystem0 = new PlotOPDQwt(systemPlotsE0, plotOPD_E0_optAchse, plotOPD_E0_Parameter);
+	mOPDQwtPlotSystem0 = new PlotOPDQwt(systemPlotsE0, plotOPD_E0_Parameter);
 	mOPDQwtPlotSystem0->show();
 
 	//check if the OPD plot is shown
@@ -143,67 +159,65 @@ bool testOPDQwtPlot::testOPDQwtPlotE0()
 //OPD plot SystemE1
 bool testOPDQwtPlot::testOPDQwtPlotE1()
 {
-
-
-	//all the surfaces
-	SphericalSurface_LLT S1E1(/*radius*/38.73360379131933, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, -0.6, 15.0 }, /*Direction*/ VectorStructR3{ 0.0, -0.2, -1.0 }, /*refIndexSideA*/1.5, /*refIndexSideB*/1.0);
-	SphericalSurface_LLT S2E1(/*radius*/10.33817058758478, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.2, 20.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.1, /*refIndexSideB*/1.5);
-	SphericalSurface_LLT S3E1(/*radius*/51.02696739895755, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 22.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
-	PlanGeometry_LLT S4E1(/*semiHeight*/5.0, /*point*/{ 0.0,0.5,27.0 }, /*direction*/{ 0.0,-0.1,1.0 }, /*refractiveSideA*/ 1.5, /*refractiveSideB*/ 1.0);
-	SphericalSurface_LLT S5E1(/*radius*/61.48513190056155, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 29.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
-	PlanGeometry_LLT S6E1(/*semiHeight*/5.0, /*point*/{ 0.0,0.0,34.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.5, /*refractiveSideB*/ 1.0);
-	SphericalSurface_LLT S7E1(/*radius*/13.22318498941039, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 36.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
-	PlanGeometry_LLT S8E1(/*semiHeight*/5.0, /*point*/{ 0.0,0.0,41.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.5, /*refractiveSideB*/ 1.0);
-	SphericalSurface_LLT S9E1(/*radius*/12.07896133399859, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 43.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.5, /*refIndexSideB*/1.0);
-	SphericalSurface_LLT S10E1(/*radius*/26.46510860484050, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 48.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.4, /*refIndexSideB*/1.6);
-	SphericalSurface_LLT S11E1(/*radius*/21.48098096423011, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 53.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.6);
-	SphericalSurface_LLT S12E1(/*radius*/30.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 55.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
-	SphericalSurface_LLT S13E1(/*radius*/70.0, /*semiHeight*/6.0, /*Apex of the sphere*/{ 0.0, 0.0, 60.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.6, /*refIndexSideB*/1.5);
-	SphericalSurface_LLT S14E1(/*radius*/40.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 65.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.6, /*refIndexSideB*/1.0);
-	PlanGeometry_LLT S15E1(/*semiHeight*/5.0, /*point*/{ 0.0,0.0,76.8 }, /*direction*/{ 0.0,0.2,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
-
-
-
-
-	// build the optical system
 	RefractedRay_LLT refrac;
+	DoNothingInteraction_LLT doNothing;
+	typedef std::shared_ptr< SurfaceIntersectionRay_LLT > surfacePtr_LLT;
+
+	// surfaces of the optical system
+	ApertureStop_LLT ApertureStop0E1(1.0, { 0.0,0.0,20.0 }, { 0.0,0.0,1.0 }, 1.0);
+	SphericalSurface_LLT S0E1(/*radius*/15.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 40.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
+	SphericalSurface_LLT S1E1(/*radius*/10.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 45.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
+	PlanGeometry_LLT PlanE3(/*semiHeight*/5.0, /*point*/{ 0.0,0.0,60.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
+	//
 	OpticalSystem_LLT optSysE1;
-	optSysE1.fillVectorSurfaceAndInteractingData(0, S1E1.clone(), refrac.clone());
-	optSysE1.fillVectorSurfaceAndInteractingData(1, S2E1.clone(), refrac.clone());
-	optSysE1.fillVectorSurfaceAndInteractingData(2, S3E1.clone(), refrac.clone());
-	optSysE1.fillVectorSurfaceAndInteractingData(3, S4E1.clone(), refrac.clone());
-	optSysE1.fillVectorSurfaceAndInteractingData(4, S5E1.clone(), refrac.clone());
-	optSysE1.fillVectorSurfaceAndInteractingData(5, S6E1.clone(), refrac.clone());
-	optSysE1.fillVectorSurfaceAndInteractingData(6, S7E1.clone(), refrac.clone());
-	optSysE1.fillVectorSurfaceAndInteractingData(7, S8E1.clone(), refrac.clone());
-	optSysE1.fillVectorSurfaceAndInteractingData(8, S9E1.clone(), refrac.clone());
-	optSysE1.fillVectorSurfaceAndInteractingData(9, S10E1.clone(), refrac.clone());
-	optSysE1.fillVectorSurfaceAndInteractingData(10, S11E1.clone(), refrac.clone());
-	optSysE1.fillVectorSurfaceAndInteractingData(11, S12E1.clone(), refrac.clone());
-	optSysE1.fillVectorSurfaceAndInteractingData(12, S13E1.clone(), refrac.clone());
-	optSysE1.fillVectorSurfaceAndInteractingData(13, S14E1.clone(), refrac.clone());
-	optSysE1.fillVectorSurfaceAndInteractingData(14, S15E1.clone(), refrac.clone());
+	optSysE1.fillVectorSurfaceAndInteractingData(0, ApertureStop0E1.clone(), doNothing.clone());
+	optSysE1.fillVectorSurfaceAndInteractingData(1, S0E1.clone(), refrac.clone());
+	optSysE1.fillVectorSurfaceAndInteractingData(2, S1E1.clone(), refrac.clone());
+	optSysE1.fillVectorSurfaceAndInteractingData(3, PlanE3.clone(), refrac.clone());
 
-	Light_LLT mLight;
-	mLight.setWavelength(550.0);
+	PlanGeometry_LLT exitPupilE1(/*semiHeight*/5.0, /*point*/{ 0.0,0.0,74.230762215072 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
+	surfacePtr_LLT exitPupilE1_ptr = exitPupilE1.clone();
 
-	// Plot OPD field start { 0.0, 1.0, 0.0 }
-	Ray_LLT chiefRayE1_optAchse({ 0.0,0.0,0.0 }, { 0.0,0.0,1.0 }, 1.0);
-	LightRayStruct chiefLightRayE1_optAchse(mLight, chiefRayE1_optAchse, 1);
-	Ray_LLT chiefRayE1_field({ 0.0,1.0,0.0 }, { 0.0,-1.0,10.0 }, 1.0);
-	LightRayStruct chiefLightRayE1_field(mLight, chiefRayE1_field, 1);
-	PlanGeometry_LLT exitPupilE1(/*semiHeight*/20.0, /*point*/{ 0.0,0.0,201.5696182 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
-	std::vector<LightRayStruct> lightRayAlong_X_E1_field2 = SequentialRayTracing::lightRayAlongX({ 0.0, 1.0, 0.0 }, 80, 10.0, -1.0, 1.0, 550, 1.0);
-	std::vector<LightRayStruct> lightRayAlong_Y_E1_field2 = SequentialRayTracing::lightRayAlongY({ 0.0, 1.0, 0.0 }, 80, 10.0, -1.0, 1.0, 550, 1.0);
-	OPD OPD_E1_field2(exitPupilE1.clone(), optSysE1, lightRayAlong_X_E1_field2, lightRayAlong_Y_E1_field2, chiefLightRayE1_field);
-	PlotOPD plotOPD_E1_field(OPD_E1_field2);
+	// OPD on optical axis
+	std::vector<LightRayStruct> lightRayAlong_X_optA_E1 = SequentialRayTracing::lightRayAlongX({ 0.0, 0.0, 0.0 }, 100, 20.0, -1.0, 1.0, 550, 1.0);
+	std::vector<LightRayStruct> lightRayAlong_Y_optA_E1 = SequentialRayTracing::lightRayAlongY({ 0.0, 0.0, 0.0 }, 100, 20.0, -1.0, 1.0, 550, 1.0);
+
+	Ray_LLT chiefRayOptA_E1({ 0.0,0.0,0.0 }, { 0.0,0.0,1.0 }, 1.0);
+	Light_LLT Light550;
+	Light550.setWavelength(550);
+	LightRayStruct chiefLightRayOptA_E1(Light550, chiefRayOptA_E1, 1);
+
+	OPD OPD1OptA(exitPupilE1_ptr, optSysE1, lightRayAlong_X_optA_E1, lightRayAlong_Y_optA_E1, chiefLightRayOptA_E1);
+	PlotOPD plotOPD_E1_optA(OPD1OptA);
+
+	std::vector<LightRayStruct> lightRayAlong_X_Field_E1 = SequentialRayTracing::lightRayAlongX({ 0.0, 0.05, 0.0 }, 100, 20.0, -1.0, 1.0, 550, 1.0);
+	std::vector<LightRayStruct> lightRayAlong_Y_Field_E1 = SequentialRayTracing::lightRayAlongY({ 0.0, 0.05, 0.0 }, 100, 20.0, -1.0, 1.0, 550, 1.0);
+
+	Ray_LLT chiefRayField_E1({ 0.0,0.1,0.0 }, { 0.0,0.0,1.0 }, 1.0);
+	LightRayStruct chiefLightRayField_E1(Light550, chiefRayField_E1, 1);
+
+	OPD OPD1Field(exitPupilE1_ptr, optSysE1, lightRayAlong_X_Field_E1, lightRayAlong_Y_Field_E1, chiefLightRayField_E1);
+	PlotOPD plotOPD_E1_Field(OPD1Field);
+
+	std::vector<LightRayStruct> lightRayAlong_X_Field1_E1 = SequentialRayTracing::lightRayAlongX({ 0.0, -0.05, 0.0 }, 100, 20.0, -1.0, 1.0, 550, 1.0);
+	std::vector<LightRayStruct> lightRayAlong_Y_Field1_E1 = SequentialRayTracing::lightRayAlongY({ 0.0, -0.05, 0.0 }, 100, 20.0, -1.0, 1.0, 550, 1.0);
+
+	Ray_LLT chiefRayField1_E1({ 0.0,-0.1,0.0 }, { 0.0,0.0,1.0 }, 1.0);
+	LightRayStruct chiefLightRayField1_E1(Light550, chiefRayField1_E1, 1);
+
+	OPD OPD1Field1(exitPupilE1_ptr, optSysE1, lightRayAlong_X_Field1_E1, lightRayAlong_Y_Field1_E1, chiefLightRayField1_E1);
+	PlotOPD plotOPD_E1_Field1(OPD1Field1);
 
 	//initiate the parameter of the OPD plot
 	PlotParameterQwt plotOPD_E1_Parameter;
-	SystemPlots systemPlotsE1;
-	systemPlotsE1.fillVectorplotOPDDiagramToPlot(&plotOPD_E1_field);
+	OpticalSystemCurves systemPlotsE1;
+	systemPlotsE1.giveNumberWavelengthsOPD(1);
+	systemPlotsE1.fillVectorplotOPDDiagramToPlot(&plotOPD_E1_optA, 1);
+	systemPlotsE1.fillVectorplotOPDDiagramToPlot(&plotOPD_E1_Field, 1);
+	systemPlotsE1.fillVectorplotOPDDiagramToPlot(&plotOPD_E1_Field1, 1);
+
 	//Plot the OPD plot
-	mOPDQwtPlotSystem1 = new PlotOPDQwt(systemPlotsE1, plotOPD_E1_field, plotOPD_E1_Parameter);
+	mOPDQwtPlotSystem1 = new PlotOPDQwt(systemPlotsE1, plotOPD_E1_Parameter);
 	mOPDQwtPlotSystem1->show();
 	//check if the OPD plot is shown
 	return mOPDQwtPlotSystem1->isVisible();
@@ -213,59 +227,125 @@ bool testOPDQwtPlot::testOPDQwtPlotE1()
 //OPD plot SystemE2
 bool testOPDQwtPlot::testOPDQwtPlotE2()
 {
+	//glass catalog
+	glass glasses;
+	glasses.loadGlassCatalog_Schott();
 
+	//types definition
+	typedef std::shared_ptr< Element_CR > surfacePtr;
+	typedef std::shared_ptr< InteractionRay_LLT > interactionPtr;
 
-	Light_LLT mLight;
-	mLight.setWavelength(550.0);
-
-	//all the surfaces
-	SphericalSurface_LLT S1E2(/*radius*/28.73360379131933, /*semiHeight*/4.0, /*Apex of the sphere*/{ 0.0, 0.0, 15.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.5, /*refIndexSideB*/1.0);
-	SphericalSurface_LLT S2E2(/*radius*/50.33817058758478, /*semiHeight*/4.0, /*Apex of the sphere*/{ 0.0, 0.0, 20.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
-	SphericalSurface_LLT S3E2(/*radius*/51.02696739895755, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 22.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.6);
-	PlanGeometry_LLT S4E2(/*semiHeight*/5.0, /*point*/{ 0.0,0.5,27.0 }, /*direction*/{ 0.0,-0.1,1.0 }, /*refractiveSideA*/ 1.5, /*refractiveSideB*/ 1.0);
-	SphericalSurface_LLT S5E2(/*radius*/61.48513190056155, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, -0.2, 29.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
-	PlanGeometry_LLT S6E2(/*semiHeight*/5.0, /*point*/{ 0.0,0.0,34.0 }, /*direction*/{ 0.0,-0.1,1.0 }, /*refractiveSideA*/ 1.5, /*refractiveSideB*/ 1.0);
-	SphericalSurface_LLT S7E2(/*radius*/10.22318498941039, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 36.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
-	PlanGeometry_LLT S8E2(/*semiHeight*/5.0, /*point*/{ 0.0,0.0,41.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.5, /*refractiveSideB*/ 1.0);
-	SphericalSurface_LLT S9E2(/*radius*/10.07896133399859, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 43.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
-	PlanGeometry_LLT S10E2(/*semiHeight*/5.0, /*point*/{ 0.0,0.0,59.5 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
-
-
-	// build the optical system
+	//interactions
 	RefractedRay_LLT refrac;
-	OpticalSystem_LLT optSysE2;
-	optSysE2.fillVectorSurfaceAndInteractingData(0, S1E2.clone(), refrac.clone());
-	optSysE2.fillVectorSurfaceAndInteractingData(1, S2E2.clone(), refrac.clone());
-	optSysE2.fillVectorSurfaceAndInteractingData(2, S3E2.clone(), refrac.clone());
-	optSysE2.fillVectorSurfaceAndInteractingData(3, S4E2.clone(), refrac.clone());
-	optSysE2.fillVectorSurfaceAndInteractingData(4, S5E2.clone(), refrac.clone());
-	optSysE2.fillVectorSurfaceAndInteractingData(5, S6E2.clone(), refrac.clone());
-	optSysE2.fillVectorSurfaceAndInteractingData(6, S7E2.clone(), refrac.clone());
-	optSysE2.fillVectorSurfaceAndInteractingData(7, S8E2.clone(), refrac.clone());
-	optSysE2.fillVectorSurfaceAndInteractingData(8, S9E2.clone(), refrac.clone());
-	optSysE2.fillVectorSurfaceAndInteractingData(9, S10E2.clone(), refrac.clone());
+	Absorb_LLT absorb;
+
+	Light_LLT light;
+	light.setWavelength(550.0);
+
+	DoNothingInteraction_LLT doNothing;
 
 
+	ApertureStopElement ApertureStop0E2(2.0, { 0.0,0.0,5.0 }, { 0.0,0.0,1.0 }, glasses.getAir());
+	SphericalElement S0E2(/*radius*/20.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 13 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/glasses.getAir(), /*refIndexSideB*/glasses.getNBK7_S1());
+	SphericalElement S1E2(/*radius*/20.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 18 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/glasses.getAir(), /*refIndexSideB*/glasses.getNBK7_S1());
+	SphericalElement S2E2(/*radius*/30.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 21 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/glasses.getNBK7_S1(), /*refIndexSideB*/glasses.getAir());
+	SphericalElement S3E2(/*radius*/60.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 26 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/glasses.getNBK7_S1(), /*refIndexSideB*/glasses.getAir());
+	PlanElement ImageE2(/*semiHeight*/3.0, /*point*/{ 0.0,0.0,31.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ glasses.getAir(), /*refractiveSideB*/ glasses.getAir());
 
-	// Plot OPD opt achse
-	Ray_LLT chiefRayE2_optAchse({ 0.0,0.0,0.0 }, { 0.0,0.0,0.5 }, 1.0);
-	LightRayStruct chiefLightRayE2_optAchse(mLight, chiefRayE2_optAchse, 1);
-	Ray_LLT chiefRayE2_field({ 0.0,0.5,0.0 }, { 0.0,0.5,10.0 }, 1.0);
-	LightRayStruct chiefLightRayE2_field(mLight, chiefRayE2_field, 1);
-	PlanGeometry_LLT exitPupilE2(/*semiHeight*/20.0, /*point*/{ 0.0,0.0,2.5696182 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
-	std::vector<LightRayStruct> lightRayAlong_X_E2_optAchse2 = SequentialRayTracing::lightRayAlongX({ 0.0, 0.0, 0.0 }, 100, 10.0, -1.0, 1.0, 550, 1.0);
-	std::vector<LightRayStruct> lightRayAlong_Y_E2_optAchse2 = SequentialRayTracing::lightRayAlongY({ 0.0, 0.0, 0.0 }, 100, 10.0, -1.0, 1.0, 550, 1.0);
-	OPD OPD_E2_optAchse2(exitPupilE2.clone(), optSysE2, lightRayAlong_X_E2_optAchse2, lightRayAlong_Y_E2_optAchse2, chiefLightRayE2_optAchse);
-	PlotOPD plotOPD_E2_optAchse(OPD_E2_optAchse2);
+	//*************
+	// build the optical system
+	surfacePtr Aperture0_ptr = ApertureStop0E2.clone();
+	surfacePtr Sphere0_ptr = S0E2.clone();
+	surfacePtr Sphere1_ptr = S1E2.clone();
+	surfacePtr Sphere2_ptr = S2E2.clone();
+	surfacePtr Sphere3_ptr = S3E2.clone();
+	surfacePtr Plan0_ptr = ImageE2.clone();
+
+	std::vector<surfacePtr> opticalSystem_ptr{ Aperture0_ptr, Sphere0_ptr, Sphere1_ptr, Sphere2_ptr, Sphere3_ptr, Plan0_ptr };
+	std::vector<interactionPtr> interactions_ptr{ doNothing.clone(), refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(), absorb.clone() };
+	OpticalSystem_LLT OptSysE2;
+
+	//*System definition
+	OpticalSystemElement optSystemElement(opticalSystem_ptr, interactions_ptr);
+	optSystemElement.setRefractiveIndexAccordingToWavelength(550);
+	OptSysE2 = optSystemElement.getOpticalSystem_LLT();
+
+	//**********************************************************************************************
+	//// calculate OPD with start point on optical axis
+	std::vector<LightRayStruct> lightRayAlong_X_Field = SequentialRayTracing::lightRayAlongX({ 0.0, 0.0, 0.0 }, 100, 5.0, -2.0, 2.0, 550, 1.0);
+	std::vector<LightRayStruct> lightRayAlong_Y_Field = SequentialRayTracing::lightRayAlongY({ 0.0, 0.0, 0.0 }, 100, 5.0, -2.0, 2.0, 550, 1.0);
+	Ray_LLT chiefRayField({ 0.0,0.0,0.0 }, { 0.0,2.0,0.0 }, 1.0);
+	LightRayStruct chiefLightRayField(light, chiefRayField, 1);
+	PlanGeometry_LLT exitPupil1(/*semiHeight*/4.0, /*point*/{ 0.0,0.0,22.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
+	OPD OPDoptField(exitPupil1.clone(), OptSysE2, lightRayAlong_X_Field, lightRayAlong_Y_Field, chiefLightRayField);
+	PlotOPD plotOPD_E2_Field(OPDoptField);
+	//PlotOPD plotOPD_E2_Field(ApertureStop0E2.clone(), exitPupil1, );
 	//initiate the parameter of the OPD plot
 	PlotParameterQwt plotOPD_E2_Parameter;
-	SystemPlots systemPlotsE2;
-	systemPlotsE2.fillVectorplotOPDDiagramToPlot(&plotOPD_E2_optAchse);
+	OpticalSystemCurves SystemPlotsE2;
+	SystemPlotsE2.giveNumberWavelengthsOPD(1);
+	SystemPlotsE2.fillVectorplotOPDDiagramToPlot(&plotOPD_E2_Field, 1);
 	//Plot the OPD plot
-	mOPDQwtPlotSystem2 = new PlotOPDQwt(systemPlotsE2, plotOPD_E2_optAchse, plotOPD_E2_Parameter);
+	mOPDQwtPlotSystem2 = new PlotOPDQwt(SystemPlotsE2, plotOPD_E2_Parameter);
 	mOPDQwtPlotSystem2->show();
 
 	//check if the OPD plot is shown
 	return mOPDQwtPlotSystem2->isVisible();
 }
 
+
+//OPD plot SystemE1
+bool testOPDQwtPlot::testOPDQwtPlotE3()
+{
+
+	glass glasses;
+	glasses.loadGlassCatalog_Schott();
+
+	typedef std::shared_ptr< Element_CR > surfacePtr;
+	typedef std::shared_ptr< InteractionRay_LLT > interactionPtr;
+
+
+	RefractedRay_LLT refrac;
+	DoNothingInteraction_LLT doNothing;
+	typedef std::shared_ptr< SurfaceIntersectionRay_LLT > surfacePtr_LLT;
+
+	// surfaces of the optical system
+	ApertureStopElement ApertureStop0E3(1.0, { 0.0,0.0,20.0 }, { 0.0,0.0,1.0 }, glasses.getAir());
+	SphericalElement S0E3(/*radius*/15.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 40.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/glasses.getAir(), /*refIndexSideB*/glasses.getNBK7_S1());
+	SphericalElement S1E3(/*radius*/10.0, /*semiHeight*/3.0, /*Apex of the sphere*/{ 0.0, 0.0, 45.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/glasses.getAir(), /*refIndexSideB*/glasses.getNBK7_S1());
+	PlanElement PlanE3(/*semiHeight*/5.0, /*point*/{ 0.0,0.0,60.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ glasses.getAir(), /*refractiveSideB*/ glasses.getAir());
+	//
+	OpticalSystem_LLT optSysE3;
+	surfacePtr Aperture0_ptr = ApertureStop0E3.clone();
+	surfacePtr Sphere0_ptr = S0E3.clone();
+	surfacePtr Sphere1_ptr = S1E3.clone();
+	surfacePtr Plan0_ptr = PlanE3.clone();
+
+	std::vector<surfacePtr> opticalSystem_ptr{ Aperture0_ptr, Sphere0_ptr, Sphere1_ptr, Plan0_ptr };
+	std::vector<interactionPtr> interactions_ptr{ doNothing.clone(), refrac.clone(), refrac.clone(), refrac.clone() };
+
+	OpticalSystemElement optSystemElement(opticalSystem_ptr, interactions_ptr);
+
+
+	PlanGeometry_LLT exitPupilE3(/*semiHeight*/5.0, /*point*/{ 0.0,0.0,74.230762215072 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
+	surfacePtr_LLT exitPupilE3_ptr = exitPupilE3.clone();
+
+	PlotOPD plotOPD_E3_optA(ApertureStop0E3.getSurfaceForLLT_ptr(), exitPupilE3_ptr, optSystemElement, { 0.0, 0.0, 0.0 }, 550, 100);
+	PlotOPD plotOPD_E3_optA_1(ApertureStop0E3.getSurfaceForLLT_ptr(), exitPupilE3_ptr, optSystemElement, { 0.0, 0.0, 0.0 }, 450, 100);
+
+
+
+	//initiate the parameter of the OPD plot
+	PlotParameterQwt plotOPD_E3_Parameter;
+	OpticalSystemCurves systemPlotsE3;
+	systemPlotsE3.giveNumberWavelengthsOPD(2);
+	systemPlotsE3.fillVectorplotOPDDiagramToPlot(&plotOPD_E3_optA, 1);
+	systemPlotsE3.fillVectorplotOPDDiagramToPlot(&plotOPD_E3_optA_1, 2);
+
+
+	//Plot the OPD plot
+	mOPDQwtPlotSystem3 = new PlotOPDQwt(systemPlotsE3, plotOPD_E3_Parameter);
+	mOPDQwtPlotSystem3->show();
+	//check if the OPD plot is shown
+	return mOPDQwtPlotSystem3->isVisible();
+}

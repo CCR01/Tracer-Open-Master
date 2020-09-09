@@ -90,29 +90,29 @@ int PlotParameterQwt::getAiryDiskThickness()
 	return mAiryDiskThickness;
 }
 
-void PlotParameterQwt::setSymbolColorOfSpotDiagrammPoints(QBrush SymbolColor)
+void PlotParameterQwt::setSymbolColorOfSpotDiagrammPoints(QBrush SymbolColor, int WavelengthNumber)
 {
-	mSymbolColorSpotDiagram = SymbolColor;
+	mSymbolColorSpotDiagramVector[WavelengthNumber - 1] = SymbolColor;
 }
-QBrush PlotParameterQwt::getSymbolColorOfSpotDiagrammPoints()
+QBrush PlotParameterQwt::getSymbolColorOfSpotDiagrammPoints(int Wavelengthnumber)
 {
-	return mSymbolColorSpotDiagram;
+	return mSymbolColorSpotDiagramVector[Wavelengthnumber - 1];
 }
-void PlotParameterQwt::setSymbolStyleOfSpotDiagrammPoints(QwtSymbol::Style SymbolStyle)
+void PlotParameterQwt::setSymbolStyleOfSpotDiagrammPoints(QwtSymbol::Style SymbolStyle, int Wavelengthnumber)
 {
-	mSymbolStyleSpotDiagram = SymbolStyle;
+	mSymbolStyleSpotDiagramVector[Wavelengthnumber - 1] = SymbolStyle;
 }
-QwtSymbol::Style PlotParameterQwt::getSymbolStyleOfSpotDiagrammPoints()
+QwtSymbol::Style PlotParameterQwt::getSymbolStyleOfSpotDiagrammPoints(int Wavelengthnumber)
 {
-	return mSymbolStyleSpotDiagram;
+	return mSymbolStyleSpotDiagramVector[Wavelengthnumber - 1];
 }
-void PlotParameterQwt::setContourColorSymbolOfSpotDiagrammPoints(QPen SymbolPen)
+void PlotParameterQwt::setContourColorSymbolOfSpotDiagrammPoints(QPen SymbolPen, int numberOfWavelength)
 {
-	mSymbolPenSpotDiagram = SymbolPen;
+	mSymbolPenSpotDiagramVector[numberOfWavelength - 1] = SymbolPen;
 }
-QPen PlotParameterQwt::getContourColorSymbolOfSpotDiagrammPoints()
+QPen PlotParameterQwt::getContourColorSymbolOfSpotDiagrammPoints(int numberOfWavelength)
 {
-	return mSymbolPenSpotDiagram;
+	return mSymbolPenSpotDiagramVector[numberOfWavelength - 1];
 }
 void PlotParameterQwt::setSizeSymbolOfSpotDiagrammPoints(QSize SymbolSize)
 {
@@ -147,29 +147,29 @@ std::vector<CommentandPosCommentToPlot> PlotParameterQwt::getOPDVectorComments()
 	return mCommentandPosCommentToOPDPlot;
 }
 
-void PlotParameterQwt::setOPDSymbolColor(QBrush SymbolColor)
+void PlotParameterQwt::setOPDSymbolColor(QBrush SymbolColor, int Wavelengthnumber)
 {
-	mSymbolColorOPD = SymbolColor;
+	mSymbolColorOPD[Wavelengthnumber - 1] = SymbolColor;
 }
-QBrush PlotParameterQwt::getOPDSymbolColor()
+QBrush PlotParameterQwt::getOPDSymbolColor(int Wavelengthnumber)
 {
-	return mSymbolColorOPD;
+	return mSymbolColorOPD[Wavelengthnumber - 1];
 }
-void PlotParameterQwt::setOPDSymbolStyle(QwtSymbol::Style SymbolStyle)
+void PlotParameterQwt::setOPDSymbolStyle(QwtSymbol::Style SymbolStyle, int Wavelength)
 {
-	mSymbolStyleOPD = SymbolStyle;
+	mSymbolStyleOPD[Wavelength - 1] = SymbolStyle;
 }
-QwtSymbol::Style PlotParameterQwt::getOPDSymbolStyle()
+QwtSymbol::Style PlotParameterQwt::getOPDSymbolStyle(int Wavelength)
 {
-	return mSymbolStyleOPD;
+	return mSymbolStyleOPD[Wavelength - 1];
 }
-void PlotParameterQwt::setOPDContourColorSymbol(QPen SymbolPen)
+void PlotParameterQwt::setOPDContourColorSymbol(QPen SymbolPen, int Wavelength)
 {
-	mSymbolPenOPD = SymbolPen;
+	mSymbolPenOPD[Wavelength - 1] = SymbolPen;
 }
-QPen PlotParameterQwt::getOPDContourColorSymbol()
+QPen PlotParameterQwt::getOPDContourColorSymbol(int Wavelength)
 {
-	return mSymbolPenOPD;
+	return mSymbolPenOPD[Wavelength - 1];
 }
 void PlotParameterQwt::setOPDSizeSymbol(QSize SymbolSize)
 {
@@ -203,29 +203,29 @@ std::vector<CommentandPosCommentToPlot> PlotParameterQwt::getRayFanVectorComment
 	return mCommentandPosCommentToRayFanPlot;
 }
 
-void PlotParameterQwt::setRayFanSymbolColor(QBrush SymbolColor)
+void PlotParameterQwt::setRayFanSymbolColor(QBrush SymbolColor, int Wavelength)
 {
-	mSymbolColorRayFan = SymbolColor;
+	mSymbolColorRayFan.at(Wavelength - 1) = SymbolColor;
 }
-QBrush PlotParameterQwt::getRayFanSymbolColor()
+QBrush PlotParameterQwt::getRayFanSymbolColor(int Wavelength)
 {
-	return mSymbolColorRayFan;
+	return mSymbolColorRayFan.at(Wavelength - 1);
 }
-void PlotParameterQwt::setRayFanSymbolStyle(QwtSymbol::Style SymbolStyle)
+void PlotParameterQwt::setRayFanSymbolStyle(QwtSymbol::Style SymbolStyle, int Wavelength)
 {
-	mSymbolStyleRayFan = SymbolStyle;
+	mSymbolStyleRayFan.at(Wavelength - 1) = SymbolStyle;
 }
-QwtSymbol::Style PlotParameterQwt::getRayFanSymbolStyle()
+QwtSymbol::Style PlotParameterQwt::getRayFanSymbolStyle(int Wavelength)
 {
-	return mSymbolStyleRayFan;
+	return mSymbolStyleRayFan.at(Wavelength - 1);
 }
-void PlotParameterQwt::setRayFanContourColorSymbol(QPen SymbolPen)
+void PlotParameterQwt::setRayFanContourColorSymbol(QPen SymbolPen, int Wavelength)
 {
-	mSymbolPenRayFan = SymbolPen;
+	mSymbolPenRayFan.at(Wavelength - 1) = SymbolPen;
 }
-QPen PlotParameterQwt::getRayFanContourColorSymbol()
+QPen PlotParameterQwt::getRayFanContourColorSymbol(int Wavelength)
 {
-	return mSymbolPenRayFan;
+	return mSymbolPenRayFan.at(Wavelength - 1);
 }
 void PlotParameterQwt::setRayFanSizeSymbol(QSize SymbolSize)
 {
