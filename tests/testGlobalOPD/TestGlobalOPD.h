@@ -20,8 +20,8 @@ public:
 	// check OPD super function
 	bool checkGlobalOPD_superFunction();
 
-	bool checkE0_OPD();
-	bool checkE1_OPD();
+	bool checkGlobalOPD_E0();
+	bool checkGlobalOPD_E1();
 
 private:
 	RefractedRay_LLT mRefrac{};

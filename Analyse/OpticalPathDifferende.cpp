@@ -19,6 +19,44 @@
 
 #include "..\LowLevelTracing\Interaction\RefractedRay_LLT.h"
 
+
+// rings
+unsigned int defaultParameterOPD::getRings()
+{
+	return mRings;
+}
+void defaultParameterOPD::setRings(unsigned int rings)
+{
+	mRings = rings;
+}
+// arms
+unsigned int defaultParameterOPD::getArms()
+{
+	return mArms;
+}
+void defaultParameterOPD::setArms(unsigned int arms)
+{
+	mArms = arms;
+}
+// size matrix OPD in X and Y
+unsigned int  defaultParameterOPD::getSizeMatrixOPD_XandY()
+{
+	return mSizeMatrixGlobalOPX_X_Y;
+}
+void defaultParameterOPD::setSizeMatrixOPD_XandY(unsigned int sizeMatrixOPD_XandY)
+{
+	mSizeMatrixGlobalOPX_X_Y = sizeMatrixOPD_XandY;
+}
+// tolerance for ray Aiming
+real defaultParameterOPD::getToleranceRayAiming()
+{
+	return mToleranceRayAiming;
+}
+void defaultParameterOPD::setToleranceRayAiming(real toleranceRayAiming)
+{
+	mToleranceRayAiming = toleranceRayAiming;
+}
+
 OPD::OPD() {};
 
 OPD::OPD(OpticalSystem_LLT optSys, std::vector<LightRayStruct> aimedLightRay, objectPoint_inf_obj inf_obj) :
@@ -67,7 +105,7 @@ OPD::OPD(/*exit pupil*/ std::shared_ptr<SurfaceIntersectionRay_LLT> exitPupil,  
 	mPosExPupilInOptSys = calcPosExPupil_Z();
 	//***
 	mOptSysWithExitPupilPlan = mOptSys;
-	mOptSysWithExitPupilPlan.fillInSurfaceAndInteracAtPos_i(mPosExPupilInOptSys, mExitPupil, doNothingInter.clone());
+	mOptSysWithExitPupilPlan.fillInSurfaceAndInteracAtPos_i(mPosExPupilInOptSys, mExitPupil, mDoNothingInter.clone());
 	//***
 	mRadiusRefSphere = calcRefDisForRefSphere();
 	mRefDistance = calcRefDisForOPD();
@@ -360,20 +398,77 @@ void OPD::calcGlobalOPD_new()
 	// position of exit pupil is on the - right side - of the image surface
 	if (positionExitPupil_global > positionZ_lastSurface)
 	{
-		calcGlobalOPD_new_leftSideOfOptSys();
+		calcGlobalOPD_new_Right_SideOfImaSurface(positionExitPupil_global);
 	}
 	// position of exit pupil is in the - left side - of the image surface
 	else
 	{
-		
+		calcGlobalOPD_new_LEFT_SideOfImaSurface();
 	}
 
 }
 
-void OPD::calcGlobalOPD_new_leftSideOfOptSys()
+void OPD::loadDefaultParameterGlobalOPD()
+{
+	mDefaultParameterGlobalOPD.setArms(8);
+	mDefaultParameterGlobalOPD.setRings(6);
+	mDefaultParameterGlobalOPD.setSizeMatrixOPD_XandY(33);
+	mDefaultParameterGlobalOPD.setToleranceRayAiming(0.000000001);
+}
+
+
+void OPD::calcGlobalOPD_new_Right_SideOfImaSurface(real positionExitPupil_global)
 {
 
+	cv::Mat returnGlobalOPD = cv::Mat::zeros(mDefaultParameterGlobalOPD.getSizeMatrixOPD_XandY(), mDefaultParameterGlobalOPD.getSizeMatrixOPD_XandY(), CV_64F);
+	// build the optical system with the exit pupil plan
+	buildOpticalSystemWithExitPupilPlan(positionExitPupil_global);
 
+	// build chiefLightRay
+	infosAS infosApertureStop = mOptSys.getInforAS();
+	RayAiming rayAiming(mOptSys);
+	rayAiming.setTolerance_XandY(mDefaultParameterGlobalOPD.getToleranceRayAiming());
+	LightRayStruct chiefLightRay = rayAiming.rayAiming_obj(mAimedLightRay[0].getRay_LLT().getOriginRay(), infosApertureStop.getPointAS(), mAimedLightRay[0].getLight_LLT(), mAimedLightRay[0].getRay_LLT().getCurrentRefractiveIndex());
+
+	SequentialRayTracing seqTraceToExitPupilPlan(mOptSysWithExitPupilPlan);
+	seqTraceToExitPupilPlan.sequentialRayTracing(chiefLightRay);
+
+	VectorStructR3 interPointChiefRayImaSurface = seqTraceToExitPupilPlan.getAllInterPointsAtSurface_i_filtered(sizeOptSys - 1)[0];
+	VectorStructR3 interPointChiefRayAtExitPupil = seqTraceToExitPupilPlan.getAllInterPointsAtSurface_i_filtered(sizeOptSys)[0];
+	VectorStructR3 directionRefSphere = interPointChiefRayImaSurface - interPointChiefRayAtExitPupil;
+
+	real RadiusRefSphere = Math::lengthOfVector(directionRefSphere);
+	real referenceDistance = seqTraceToExitPupilPlan.getInterInf_PosSurface_TotalSteps_ofSur_i(sizeOptSys)[0].getTotalSteps();
+
+
+}
+
+void OPD::buildOpticalSystemWithExitPupilPlan(real positionExitPupil_global)
+{
+	// build the exit pupil plan
+	unsigned int sizeOptSysMinOne = mOptSys.getPosAndInteractingSurface().size() - 1;
+	real refIndexBehindImaSurface{};
+	real directionImaSurface = mOptSys.getPosAndInteractingSurface()[sizeOptSysMinOne].getSurfaceInterRay_ptr()->getDirection().getZ();
+	if (directionImaSurface > 0)
+	{
+		refIndexBehindImaSurface = mOptSys.getPosAndInteractingSurface()[sizeOptSysMinOne].getSurfaceInterRay_ptr()->getRefractiveIndex_B();
+	}
+	else
+	{
+		refIndexBehindImaSurface = mOptSys.getPosAndInteractingSurface()[sizeOptSysMinOne].getSurfaceInterRay_ptr()->getRefractiveIndex_A();
+	}
+
+	PlanGeometry_LLT exitPupil(/*semi height*/ oftenUse::getInfReal(),/*point*/{ 0.0,0.0,positionExitPupil_global },/*direction*/{ 0.0,0.0,1.0 },/*refractive index A*/ refIndexBehindImaSurface, /*refractive index B*/ refIndexBehindImaSurface);
+
+	mOptSysWithExitPupilPlan = mOptSys.clone();
+	mOptSysWithExitPupilPlan.fillInSurfaceAndInteracAtPos_i(sizeOptSysMinOne + 1, exitPupil.clone(), mDoNothingInter.clone());
+	RefractedRay_LLT refrac;
+	mOptSysWithExitPupilPlan.setInteractionOfSurface_i(sizeOptSysMinOne, refrac.clone());
+}
+
+void OPD::calcGlobalOPD_new_LEFT_SideOfImaSurface()
+{
+	// do it!!!
 
 }
 
@@ -438,7 +533,7 @@ std::vector<cv::Point2d> OPD::calcOPD_X()
 		// fill in reference sphere
 		OpticalSystem_LLT OptSysWithRefSphere;
 		OptSysWithRefSphere = mOptSys;
-		OptSysWithRefSphere.fillInSurfaceAndInteracAtPos_i(mPosExPupilInOptSys, mRefSphere.clone(), doNothingInter.clone());
+		OptSysWithRefSphere.fillInSurfaceAndInteracAtPos_i(mPosExPupilInOptSys, mRefSphere.clone(), mDoNothingInter.clone());
 
 		SequentialRayTracing seqTraceRefSphere(OptSysWithRefSphere);
 		seqTraceRefSphere.seqRayTracingWithVectorOfLightRays(mLightRayX);
@@ -702,16 +797,7 @@ std::vector<real> OPD::getOPD_Y_inVec()
 cv::Mat OPD::calcGlobalOPD()
 {
 
-	unsigned int numerOfRay = mLightRayFillAperturStop.size();
-	//
-	unsigned int sizeOfMatrixToCalcOPD = 33;
-	//
-	cv::Mat returnGlobalOPD = cv::Mat::zeros(sizeOfMatrixToCalcOPD, sizeOfMatrixToCalcOPD, CV_64F);
 
-
-	// check if the exit pupil is behind the image surface
-	// if not, we have to fill the reference sphere!
-	if (mPosImageSurface <= mPosExPupilInOptSys)
 	{
 		// fill in reference sphere
 		OpticalSystem_LLT OptSysWithRefSphere;

@@ -72,11 +72,11 @@ bool TestGlobalOPD::checkGlobalOPD_superFunction()
 	std::vector<bool> workTheSystem;
 
 	// E0
-	bool checkE0 = checkE0_OPD();
+	bool checkE0 = checkGlobalOPD_E0();
 	workTheSystem.push_back(checkE0);
 
 	//// E1
-	//bool checkE1 = checkE1_OPD();
+	//bool checkE1 = checkGlobalOPD_E1();
 	//workTheSystem.push_back(checkE1);
 
 	bool checkOPD_superFct = Math::checkTrueOfVectorElements(workTheSystem);
@@ -84,7 +84,7 @@ bool TestGlobalOPD::checkGlobalOPD_superFunction()
 	
 }
 
-bool TestGlobalOPD::checkE0_OPD()
+bool TestGlobalOPD::checkGlobalOPD_E0()
 {
 	// work the system
 	std::vector<bool> workTheSystem;
@@ -379,7 +379,7 @@ bool TestGlobalOPD::checkE0_OPD()
 	return workReturn;
 }
 
-bool TestGlobalOPD::checkE1_OPD()
+bool TestGlobalOPD::checkGlobalOPD_E1()
 {
 	// work the system
 	std::vector<bool> workTheSystem;

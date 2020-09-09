@@ -31,9 +31,28 @@
 
 enum class posExitPupil {exitPupil_Left_ImaSurface, exitPupil_Right_ImaSurface};
 
-struct defaultParameter
+struct defaultParameterOPD
 {
+public:
 
+	// rings
+	unsigned int getRings();
+	void setRings(unsigned int rings);
+	// arms
+	unsigned int getArms();
+	void setArms(unsigned int arms);
+	// size matrix OPD in X and Y
+	unsigned int  getSizeMatrixOPD_XandY();
+	void setSizeMatrixOPD_XandY(unsigned int sizeMatrixOPD_XandY);
+	// tolerance for ray Aiming
+	real getToleranceRayAiming();
+	void setToleranceRayAiming(real toleranceRayAiming);
+
+private:
+	unsigned int mRings{};
+	unsigned int mArms{};
+	unsigned int mSizeMatrixGlobalOPX_X_Y{};
+	real mToleranceRayAiming{};
 };
 
 class OPD
@@ -71,8 +90,13 @@ public:
 	/// ***
 	// calculate global OPD
 	void calcGlobalOPD_new();
-	void calcGlobalOPD_new_leftSideOfOptSys();
+	void loadDefaultParameterGlobalOPD();
+	
+	void calcGlobalOPD_new_Right_SideOfImaSurface(real positionExitPupil_global);
+	void buildOpticalSystemWithExitPupilPlan(real positionExitPupil_global);
+	void buildOpticalSystemWithReferenceSphereAtExitPupil(real radiusRefSphere, VectorStructR3 pointRefSphere, VectorStructR3 directionRefSphere);
 
+	void calcGlobalOPD_new_LEFT_SideOfImaSurface();
 	// ***
 
 
@@ -152,6 +176,7 @@ private:
 	OpticalSystem_LLT mOptSysWithExitPupilPlan{};
 	OpticalSystem_LLT mOptSysWithReferenceSphere{};
 	objectPoint_inf_obj mInf_obj{};
+	defaultParameterOPD mDefaultParameterGlobalOPD{};
 
 	VectorStructR3 mPosObject;
 	std::shared_ptr<SurfaceIntersectionRay_LLT> mExitPupil;
@@ -175,7 +200,7 @@ private:
 	std::vector<cv::Point2d> mOPD_Y;
 	VectorStructR3 mRefPoint;
 
-	DoNothingInteraction_LLT doNothingInter;
+	DoNothingInteraction_LLT mDoNothingInter;
 	std::shared_ptr<InteractionRay_LLT> mDoNothingInteraction_ptr;
 	//std::shared_ptr<InteractionRay_LLT> refractionRay_LLT(new RefractedRay_LLT(*this));
 	unsigned numImageSurfaceWithoutExitPupil;

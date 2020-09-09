@@ -23,25 +23,26 @@ bool TestOPD::checkOPD_superFct()
 
 	std::vector<bool> workOPD;// hier gehts dann weiter
 
-	//// E0
-	//bool chE0 = checkE0();
-	//workOPD.push_back(chE0);
-	//
-	//// E1
-	//bool chE1 = checkE1();
-	//workOPD.push_back(chE1);
+	// E0
+	bool chE0 = checkE0();
+	workOPD.push_back(chE0);
+	
+	// E1
+	bool chE1 = checkE1();
+	workOPD.push_back(chE1);
 
-	//// E2
-	//bool chE2 = checkE2();
-	//workOPD.push_back(chE2);
+	// E2
+	bool chE2 = checkE2();
+	workOPD.push_back(chE2);
 
-	//// E3
-	//bool chE3 = checkE3();
-	//workOPD.push_back(chE3);
+	// E3
+	bool chE3 = checkE3();
+	workOPD.push_back(chE3);
 
 	// E4
 	bool chE4 = checkE4();
 	workOPD.push_back(chE4);
+
 
 	bool returnCheckOPD = Math::checkTrueOfVectorElements(workOPD);
 	return returnCheckOPD;
