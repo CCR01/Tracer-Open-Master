@@ -129,7 +129,7 @@
 
 int main(int argc, char **argv)
 {
-	QApplication a(argc, argv);
+	//QApplication a(argc, argv);
 
 	// *****************************************************************************************************************
 	// Benchmark for traceropen
@@ -143,6 +143,9 @@ int main(int argc, char **argv)
 		//horizontale und verticle lines blurring
 	//https://answers.opencv.org/question/209189/make-edges-clearer-in-image/
 	//https://docs.opencv.org/master/dd/dd7/tutorial_morph_lines_detection.html 
+
+	//BenchmarkSimulationOpenCV ImgFormula;
+	//ImgFormula.test3();
 
 	//OpticalSystemAllSurfaces system;
 	//system.testQwtPlotsSytem();
@@ -162,9 +165,9 @@ int main(int argc, char **argv)
 	//bool checkCardinal_superFct_SpotDiagram = checkSpotDiagramPlot.superFuncTestSpotDiagramQwtPlot();
 	//workTheSystem.push_back(checkCardinal_superFct_SpotDiagram);
 
-	testOPDQwtPlot checkOPDPlot;
-	bool checkCardinal_superFct_OPD = checkOPDPlot.superFuncTestOPDQwtPlot();
-	workTheSystem.push_back(checkCardinal_superFct_OPD);
+	//testOPDQwtPlot checkOPDPlot;
+	//bool checkCardinal_superFct_OPD = checkOPDPlot.superFuncTestOPDQwtPlot();
+	//workTheSystem.push_back(checkCardinal_superFct_OPD);
 
 	//***********************************************
 	
@@ -180,12 +183,11 @@ int main(int argc, char **argv)
 	// ManagementTests managementTest_2(testWhatVec_2);
 	// workTheSystem.push_back(managementTest_2.testSuperFct());
 
-	//std::vector<testWhat> testWhatVec_3 = { testWhat::tOPD };
-	//ManagementTests managementTest_3(testWhatVec_3);
-	//workTheSystem.push_back(managementTest_3.testSuperFct());
+	std::vector<testWhat> testWhatVec_3 = { testWhat::tOPD };
+	ManagementTests managementTest_3(testWhatVec_3);
+	workTheSystem.push_back(managementTest_3.testSuperFct());
 
-	//BenchmarkSimulationOpenCV ImgFormula;
-	//ImgFormula.test3();
+
 
 
 
@@ -354,12 +356,12 @@ int main(int argc, char **argv)
 	//*****************************************************************************************************************
 	
 
-	//int i;
-	//std::cout << "insert a rendom number" << std::endl;
-	//std::cin >> i;
+	int i;
+	std::cout << "insert a rendom number" << std::endl;
+	std::cin >> i;
 
-	//return 0;
-	return a.exec();
+	return 0;
+	//return a.exec();
 }
 
 
