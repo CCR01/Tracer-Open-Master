@@ -52,7 +52,17 @@ public:
 	real calculateOPD_exitPupilLeftFromImaSurface(OpticalSystem_LLT optSys, real posExitPupil_Z_global, VectorStructR3 startPointRay, real pupilPositionX, real pupilPositionY, Light_LLT light);
 
 	// calculate position of exit pupil in optical system according to z direction
+	unsigned int calcPosExPupil_Z(OpticalSystem_LLT optSys, real position_Z_exitPupil);
+
+	// calculate refractiv index start media
+	real calcRefractivIndexStartMedia(OpticalSystem_LLT optSys);
+
+	// calculate position of exit pupil in optical system according to z direction
 	unsigned int calcPosExPupil_Z();
+
+
+
+
 
 	// calc OPD in X direction
 	std::vector<cv::Point2d> calcOPD_X();

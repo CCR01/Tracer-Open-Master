@@ -35,9 +35,13 @@ bool TestOPD::checkOPD_superFct()
 	//bool chE2 = checkE2();
 	//workOPD.push_back(chE2);
 
-	// E3
-	bool chE3 = checkE3();
-	workOPD.push_back(chE3);
+	//// E3
+	//bool chE3 = checkE3();
+	//workOPD.push_back(chE3);
+
+	// E4
+	bool chE4 = checkE4();
+	workOPD.push_back(chE4);
 
 	bool returnCheckOPD = Math::checkTrueOfVectorElements(workOPD);
 	return returnCheckOPD;
@@ -630,9 +634,9 @@ bool TestOPD::checkE3()
 	SphericalSurface_LLT S0_E3(/*radius*/10.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 10.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
 	SphericalSurface_LLT S1_E3(/*radius*/10.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 15.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
 	ApertureStop_LLT S2_E3(1.25, { 0.0,0.0,20.0 }, { 0.0,0.0,1.0 }, 1.0);
-	SphericalSurface_LLT S3_E3(/*radius*/10.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 30.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.6, /*refIndexSideB*/1.0);
-	SphericalSurface_LLT S4_E3(/*radius*/20.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 35.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.6, /*refIndexSideB*/1.0);
-	PlanGeometry_LLT S5_E3(/*semiHeight*/3.0, /*point*/{ 0.0,0.0,40.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
+	SphericalSurface_LLT S3_E3(/*radius*/10.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 25.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.6, /*refIndexSideB*/1.0);
+	SphericalSurface_LLT S4_E3(/*radius*/20.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 30.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.6, /*refIndexSideB*/1.0);
+	PlanGeometry_LLT S5_E3(/*semiHeight*/3.0, /*point*/{ 0.0,0.0,35.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
 
 	// build the optical system
 	OpticalSystem_LLT OptSys_E3;
@@ -652,11 +656,175 @@ bool TestOPD::checkE3()
 	OPD testOPDE3;
 	VectorStructR3 startPointRayOptA{ 0.0,0.0,0.0 };
 
-	real OPD11 = testOPDE3.OPD_singelRay_obj(OptSys_E3, startPointRayOptA, 1.0, 1.0, Light500);
-	real refOPD11 = -275.229;
-	bool checkOPD11 = Math::compareTwoNumbers_tolerance(OPD11, refOPD11, 0.01);
-	checkOPD.push_back(checkOPD11);
+	//real OPD11 = testOPDE3.OPD_singelRay_obj(OptSys_E3, startPointRayOptA, 1.0, 1.0, Light500);
+	//real refOPD11 = -275.229;
+	//bool checkOPD11 = Math::compareTwoNumbers_tolerance(OPD11, refOPD11, 0.1);
+	//checkOPD.push_back(checkOPD11);
+
+	//real OPD_05neg002 = testOPDE3.OPD_singelRay_obj(OptSys_E3, startPointRayOptA, 0.5, -0.02, Light500);
+	//real refOPD_05neg002 = -35.462;
+	//bool checkOPD_05neg002 = Math::compareTwoNumbers_tolerance(OPD_05neg002, refOPD_05neg002, 0.1);
+	//checkOPD.push_back(checkOPD_05neg002);
+
+	//real OPD_neg0308 = testOPDE3.OPD_singelRay_obj(OptSys_E3, startPointRayOptA, -0.3, 0.8, Light500);
+	//real refOPD_neg0308 = -102.553;
+	//bool checkOPD_neg0308 = Math::compareTwoNumbers_tolerance(OPD_neg0308, refOPD_neg0308, 0.1);
+	//checkOPD.push_back(checkOPD_neg0308);
+
+	//VectorStructR3 startPointField0503{ 0.5,0.3,0.0 };
+	//real OPD_0806 = testOPDE3.OPD_singelRay_obj(OptSys_E3, startPointField0503, 0.8, 0.6, Light500);
+	//real refOPD_0806 = -140.813;
+	//bool checkOPD_0806 = Math::compareTwoNumbers_tolerance(OPD_0806, refOPD_0806, 1.0);
+	//checkOPD.push_back(checkOPD_0806);
+
+	//VectorStructR3 startPointField0705{ 0.7,0.5,0.0 };
+	//real OPD_0705 = testOPDE3.OPD_singelRay_obj(OptSys_E3, startPointField0705, 0.7, 0.5, Light500);
+	//real refOPD_0705 = -102.601;
+	//bool checkOPD_0705 = Math::compareTwoNumbers_tolerance(OPD_0705, refOPD_0705, 1.0);
+	//checkOPD.push_back(checkOPD_0705);
+
+	VectorStructR3 startPointField1neg02{ 1.0,-0.2,0.0 };
+	real OPD_neg04neg06 = testOPDE3.OPD_singelRay_obj(OptSys_E3, startPointField1neg02, -0.4, -0.6, Light500);
+	real refOPD_neg04neg06 = -68.870;
+	bool checkOPD_neg04neg06 = Math::compareTwoNumbers_tolerance(OPD_neg04neg06, refOPD_neg04neg06, 2.0);
+	checkOPD.push_back(checkOPD_neg04neg06);
 
 	bool output = Math::checkTrueOfVectorElements(checkOPD);
 	return output;
+}
+
+
+// E4
+bool TestOPD::checkE4()
+{
+	std::vector<bool> checkOPD;
+
+	RefractedRay_LLT refrac;
+	DoNothingInteraction_LLT doNothing;
+	Light_LLT Light500;
+	Light500.setWavelength(500.0);
+	Absorb_LLT absorb;
+
+	SphericalSurface_LLT S0_E3(/*radius*/10.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 10.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
+	SphericalSurface_LLT S1_E3(/*radius*/10.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 15.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
+	ApertureStop_LLT S2_E3(1.25, { 0.0,0.0,20.0 }, { 0.0,0.0,1.0 }, 1.0);
+	SphericalSurface_LLT S3_E3(/*radius*/10.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 25.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.6, /*refIndexSideB*/1.0);
+	SphericalSurface_LLT S4_E3(/*radius*/20.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 30.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.6, /*refIndexSideB*/1.0);
+	PlanGeometry_LLT S5_E3(/*semiHeight*/3.0, /*point*/{ 0.0,0.0,35.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
+
+	// build the optical system
+	OpticalSystem_LLT OptSys_E3;
+	OptSys_E3.fillVectorSurfaceAndInteractingData(0, S0_E3.clone(), refrac.clone());
+	OptSys_E3.fillVectorSurfaceAndInteractingData(1, S1_E3.clone(), refrac.clone());
+	OptSys_E3.fillVectorSurfaceAndInteractingData(2, S2_E3.clone(), doNothing.clone());
+	OptSys_E3.fillVectorSurfaceAndInteractingData(3, S3_E3.clone(), refrac.clone());
+	OptSys_E3.fillVectorSurfaceAndInteractingData(4, S4_E3.clone(), refrac.clone());
+	OptSys_E3.fillVectorSurfaceAndInteractingData(5, S5_E3.clone(), absorb.clone());
+
+	CardinalPoints cardinalPoint(OptSys_E3, objectPoint_inf_obj::obj);
+	real positionExitPupilGlobal_Z = cardinalPoint.getEXPP_globalCoori();
+	real exitPupil_refIma = cardinalPoint.getEXPP_lastSurface();
+	bool checkExitPupil = Math::compareTwoNumbers_tolerance(exitPupil_refIma, -10.765, 0.01);
+	checkOPD.push_back(checkExitPupil);
+	real posEXP_global = S5_E3.getPoint().getZ() + exitPupil_refIma;
+	bool checkEXP_global = Math::compareTwoNumbers_tolerance(positionExitPupilGlobal_Z, posEXP_global, 0.01);
+	checkOPD.push_back(checkEXP_global);
+
+	// *** chief ray ***
+	VectorStructR3 startPointChiefRay = { 1.0,-0.2,0.0 };
+	VectorStructR3 interPointFirstSurfaceChiefRay = { 0.66836378124, -0.13367275625, 10.023255969 };
+	VectorStructR3 directionChiefRay = interPointFirstSurfaceChiefRay - startPointChiefRay;
+	Ray_LLT cheifRay(startPointChiefRay, directionChiefRay, 1.0);
+	LightRayStruct chiefLightRay(Light500, cheifRay, true);
+
+	SequentialRayTracing seqTraceOptSys(OptSys_E3);
+	seqTraceOptSys.sequentialRayTracing(chiefLightRay);
+	VectorStructR3 interPointImaSurface = seqTraceOptSys.getAllInterPointsAtSurface_i_filtered(5)[0];
+
+	// *** build optical system with exit pupil
+	PlanGeometry_LLT ExitPupil(/*semiHeight*/3.0, /*point*/{ 0.0,0.0,positionExitPupilGlobal_Z }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
+	OpticalSystem_LLT OptSys_E3_includingExitPupil;
+	OptSys_E3_includingExitPupil.fillVectorSurfaceAndInteractingData(0, S0_E3.clone(), refrac.clone());
+	OptSys_E3_includingExitPupil.fillVectorSurfaceAndInteractingData(1, S1_E3.clone(), refrac.clone());
+	OptSys_E3_includingExitPupil.fillVectorSurfaceAndInteractingData(2, S2_E3.clone(), doNothing.clone());
+	OptSys_E3_includingExitPupil.fillVectorSurfaceAndInteractingData(3, ExitPupil.clone(), doNothing.clone());
+	OptSys_E3_includingExitPupil.fillVectorSurfaceAndInteractingData(4, S3_E3.clone(), refrac.clone());
+	OptSys_E3_includingExitPupil.fillVectorSurfaceAndInteractingData(5, S4_E3.clone(), refrac.clone());
+	OptSys_E3_includingExitPupil.fillVectorSurfaceAndInteractingData(6, S5_E3.clone(), absorb.clone());
+
+	SequentialRayTracing seqTraceChiefRay_sysIncExP(OptSys_E3_includingExitPupil);
+	seqTraceChiefRay_sysIncExP.sequentialRayTracing(chiefLightRay);
+
+	VectorStructR3 interPointExitPupilChiefRay = seqTraceChiefRay_sysIncExP.getAllInterPointsAtSurface_i_filtered(3)[0];
+	VectorStructR3 interPointImaSurfaceChiefRay = seqTraceChiefRay_sysIncExP.getAllInterPointsAtSurface_i_filtered(6)[0];
+	VectorStructR3 directionRefSphere = interPointImaSurfaceChiefRay - interPointExitPupilChiefRay;
+	real radiusRefSphere = Math::lengthOfVector(directionRefSphere);
+
+	// check both interpoints with the ima surface
+	bool checkInterImaChiefRay = Math::compareTwoVectorStructR3_tolerance(interPointImaSurfaceChiefRay, interPointImaSurface, 0.001);
+	checkOPD.push_back(checkInterImaChiefRay);
+
+	// trace wanted ray
+	VectorStructR3 startPointWantedRay = { 1.0, -0.2,0.0 };
+	VectorStructR3 interPointFirstSurfaceWantedRay = { 0.22022158989, -0.80847303321, 10.035168150 };
+	VectorStructR3 directionWanterRay = interPointFirstSurfaceWantedRay - startPointWantedRay;
+	Ray_LLT wantedRay(startPointWantedRay, directionWanterRay, 1.0);
+	LightRayStruct wantedLightRay(Light500, wantedRay, true);
+
+	SequentialRayTracing seqTraceWantedRay(OptSys_E3);
+	seqTraceWantedRay.sequentialRayTracing(wantedLightRay);
+
+	VectorStructR3 interPointWantedRayImaSurface = seqTraceWantedRay.getAllInterPointsAtSurface_i_filtered(5)[0];
+	VectorStructR3 directionRayWantedImaSurface = seqTraceWantedRay.getAllInterInfosOfSurf_i(5)[0].getDirectionRayUnit();
+
+	VectorStructR3 interPointWantedBeforeImaSurface = seqTraceWantedRay.getAllInterPointsAtSurface_i_filtered(4)[0];
+	VectorStructR3 directionWantedBeforImaToIma = interPointWantedRayImaSurface - interPointWantedBeforeImaSurface;
+	VectorStructR3 directionWantedBeforImaToIma_unit = Math::unitVector(directionWantedBeforImaToIma);
+	bool checkDirection = Math::compareTwoVectorStructR3_tolerance(directionRayWantedImaSurface, directionWantedBeforImaToIma_unit, 0.01);
+	checkOPD.push_back(checkDirection);
+
+	// Reference sphere
+	SphericalSurface_LLT ReferenceSphere(/*radius*/radiusRefSphere, /*semiHeight*/5.0, /*Apex of the sphere*/interPointExitPupilChiefRay, /*Direction*/ directionRefSphere, /*refIndexSideA*/1.0, /*refIndexSideB*/1.0);
+
+	// *** trace the ray back
+	Ray_LLT chiefRayTraceBack(interPointImaSurfaceChiefRay, -1.0 * directionRefSphere, 1.0);
+	LightRayStruct chiefLightRayBack(Light500, chiefRayTraceBack, true);
+
+	Ray_LLT wantedRayTraceBack(interPointWantedRayImaSurface, -1.0 * directionRayWantedImaSurface, 1.0);
+	LightRayStruct wanterLightRayBack(Light500, wantedRayTraceBack, true);
+
+	OpticalSystem_LLT optSysTraceBack;
+	optSysTraceBack.fillVectorSurfaceAndInteractingData(0, ReferenceSphere.clone(), doNothing.clone());
+
+	SequentialRayTracing seqTraceBack(optSysTraceBack);
+	seqTraceBack.sequentialRayTracing(chiefLightRayBack);
+	seqTraceBack.sequentialRayTracing(wanterLightRayBack);
+
+	// lenght start chief ray
+	real lengthStarChiefRay = Math::lengthOfVector(directionChiefRay);
+
+	// length wanted ray
+	real lengthStartWantedRay = Math::lengthOfVector(directionWanterRay);
+
+	// length cheif ray
+	real lengthChief_1 = seqTraceOptSys.getInterInf_PosSurface_TotalSteps_ofSur_i(5)[0].getTotalSteps();
+	real lengthChief_back = seqTraceBack.getAllInterInfosOfSurf_i(0)[0].getStepsToWalk();
+	real refLength = lengthChief_1 - lengthChief_back;
+
+	// length wanted ray
+	real lengthWanted_1 = seqTraceWantedRay.getInterInf_PosSurface_TotalSteps_ofSur_i(5)[0].getTotalSteps();
+	real lengthWanted_back = seqTraceBack.getAllInterInfosOfSurf_i(0)[1].getStepsToWalk();
+	real lengthWanted = lengthWanted_1 - lengthWanted_back;
+
+	real calcOPD_1 = ((refLength - lengthWanted) / Light500.getWavelength()) * 1000000.0;
+	OPD refOPD;
+	real calcOPD_2 = refOPD.OPD_singelRay_obj(OptSys_E3, { 1.0,-0.2,0.0 },-0.4,-0.6,Light500);
+	bool checkCalcOPD = Math::compareTwoNumbers_tolerance(calcOPD_1, calcOPD_2, 0.01);
+	checkOPD.push_back(checkCalcOPD);
+
+
+
+	bool output = Math::checkTrueOfVectorElements(checkOPD);
+	return output;
+
 }

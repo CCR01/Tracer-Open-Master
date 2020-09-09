@@ -22,4 +22,7 @@ public:
 	// E3
 	bool checkE3();
 
+	// E4
+	bool checkE4();
+
 };

@@ -17,6 +17,8 @@
 #include <fstream>
 #include <stdlib.h>
 
+#include "..\LowLevelTracing\Interaction\RefractedRay_LLT.h"
+
 OPD::OPD() {};
 
 // to calculate the global OPD
@@ -101,24 +103,40 @@ real OPD::OPD_singelRay_obj(OpticalSystem_LLT optSys, VectorStructR3 startPointR
 
 real OPD::calculateOPD_exitPupilBehindOptSys(OpticalSystem_LLT optSys, real posExitPupil_Z_global, VectorStructR3 startPointRay, real pupilPositionX, real pupilPositionY, Light_LLT light)
 {
-	real refIndexStartMedia = refractiveIndexAir;
-
+	// calc ref index start media
+	real refIndexStartMedia = calcRefractivIndexStartMedia(optSys);
+	
+	real toleranceForRayAiming = 0.00000000001;
+		
+	
 	real returnOPD{};
-	DoNothingInteraction_LLT doNothing{};
+	RefractedRay_LLT refrac{};
 	unsigned int sizeOptSys = optSys.getPosAndInteractingSurface().size();
-	real refIndexBehindImaSurface = optSys.getPosAndInteractingSurface()[sizeOptSys - 1].getSurfaceInterRay_ptr()->getRefractiveIndex_B();
+
+	real refIndexBehindImaSurface{};
+	real directionImaSurface = optSys.getPosAndInteractingSurface()[sizeOptSys - 1].getSurfaceInterRay_ptr()->getDirection().getZ();
+	if (directionImaSurface > 0)
+	{
+		refIndexBehindImaSurface = optSys.getPosAndInteractingSurface()[sizeOptSys - 1].getSurfaceInterRay_ptr()->getRefractiveIndex_B();
+	}
+	else
+	{
+		refIndexBehindImaSurface = optSys.getPosAndInteractingSurface()[sizeOptSys - 1].getSurfaceInterRay_ptr()->getRefractiveIndex_A();
+	}
+	
 
 	PlanGeometry_LLT exitPupilPlan(/*semiHeight*/oftenUse::getInfReal(), /*point*/{ 0.0,0.0,posExitPupil_Z_global }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ refIndexBehindImaSurface, /*refractiveSideB*/ refIndexBehindImaSurface);
 
 	OpticalSystem_LLT optSys_includingExitPupilPlan{};
 	optSys_includingExitPupilPlan = optSys.clone();
-	optSys_includingExitPupilPlan.setInteractionOfSurface_i(sizeOptSys - 1, doNothing.clone());
-	optSys_includingExitPupilPlan.fillInSurfaceAndInteracAtPos_i(sizeOptSys, exitPupilPlan.clone(), doNothing.clone());
+	optSys_includingExitPupilPlan.setInteractionOfSurface_i(sizeOptSys - 1, refrac.clone());
+	optSys_includingExitPupilPlan.fillInSurfaceAndInteracAtPos_i(sizeOptSys, exitPupilPlan.clone(), refrac.clone());
 
 	// build chiefLightRay
 	infosAS infosApertureStop = optSys.getInforAS();
-	RayAiming rayAimingChiefRay(optSys);
-	LightRayStruct chiefLightRay = rayAimingChiefRay.rayAiming_obj(startPointRay, infosApertureStop.getPointAS(), light, refIndexStartMedia);
+	RayAiming rayAiming(optSys);
+	rayAiming.setTolerance_XandY(toleranceForRayAiming);
+	LightRayStruct chiefLightRay = rayAiming.rayAiming_obj(startPointRay, infosApertureStop.getPointAS(), light, refIndexStartMedia);
 
 	SequentialRayTracing seqTraceToExitPupilPlan(optSys_includingExitPupilPlan);
 	seqTraceToExitPupilPlan.sequentialRayTracing(chiefLightRay);
@@ -134,16 +152,15 @@ real OPD::calculateOPD_exitPupilBehindOptSys(OpticalSystem_LLT optSys, real posE
 	SphericalSurface_LLT RefSpherAtExitPupilPlanExP(/*radius*/RadiusRefSphere, /*semiHeight*/oftenUse::getInfReal(), /*Apex of the sphere*/interPointChiefRayAtExitPupil, /*Direction*/ directionRefSphere, /*refIndexSideA*/refIndexBehindImaSurface, /*refIndexSideB*/refIndexBehindImaSurface);
 	OpticalSystem_LLT optSys_includingRefSphere;
 	optSys_includingRefSphere = optSys.clone();
-	optSys_includingRefSphere.setInteractionOfSurface_i(sizeOptSys - 1, doNothing.clone());
-	optSys_includingRefSphere.fillInSurfaceAndInteracAtPos_i(sizeOptSys, RefSpherAtExitPupilPlanExP.clone(), doNothing.clone());
+	optSys_includingRefSphere.setInteractionOfSurface_i(sizeOptSys - 1, refrac.clone());
+	optSys_includingRefSphere.fillInSurfaceAndInteracAtPos_i(sizeOptSys, RefSpherAtExitPupilPlanExP.clone(), refrac.clone());
 
 	SequentialRayTracing seqTrace(optSys_includingRefSphere);
 	real pos_X_InApertureStop = pupilPositionX * infosApertureStop.getSemiHeightAS();
 	real pos_Y_InApertureStop = pupilPositionY * infosApertureStop.getSemiHeightAS();
 	VectorStructR3 targetPointInApertureStop(pos_X_InApertureStop, pos_Y_InApertureStop, infosApertureStop.getPointAS().getZ());
 
-	RayAiming rayAiming_wantedRay(optSys);
-	LightRayStruct wantedLighRay = rayAiming_wantedRay.rayAiming_obj(startPointRay, targetPointInApertureStop, light, refIndexStartMedia);
+	LightRayStruct wantedLighRay = rayAiming.rayAiming_obj(startPointRay, targetPointInApertureStop, light, refIndexStartMedia);
 
 	SequentialRayTracing seqTraceWantedLighRay(optSys_includingRefSphere);
 	seqTraceWantedLighRay.sequentialRayTracing(wantedLighRay);
@@ -158,13 +175,151 @@ real OPD::calculateOPD_exitPupilBehindOptSys(OpticalSystem_LLT optSys, real posE
 
 real OPD::calculateOPD_exitPupilLeftFromImaSurface(OpticalSystem_LLT optSys, real posExitPupil_Z_global, VectorStructR3 startPointRay, real pupilPositionX, real pupilPositionY, Light_LLT light)
 {
+	real toleranceForRayAiming = 0.00000000001;
+	real refIndexStartMedia = calcRefractivIndexStartMedia(optSys);
 	real returnOPD{};
 
+	RefractedRay_LLT refrac{};
+	DoNothingInteraction_LLT doNothing{};
+	unsigned int sizeOptSys = optSys.getPosAndInteractingSurface().size();
+
+	// get refractiv index before exit pupil
+	real refIndexBeforeExitPupil{};
+	unsigned int positionExitPupilInOptSys = calcPosExPupil_Z(optSys, posExitPupil_Z_global);
+	real directionSurfaceBeforeExitPupil = optSys.getPosAndInteractingSurface()[positionExitPupilInOptSys - 1].getSurfaceInterRay_ptr()->getDirection().getZ();
+	if (directionSurfaceBeforeExitPupil > 0)
+	{
+		refIndexBeforeExitPupil = optSys.getPosAndInteractingSurface()[sizeOptSys - 1].getSurfaceInterRay_ptr()->getRefractiveIndex_B();
+	}
+	else
+	{
+		refIndexBeforeExitPupil = optSys.getPosAndInteractingSurface()[sizeOptSys - 1].getSurfaceInterRay_ptr()->getRefractiveIndex_A();
+	}
+	// ***
+
+
+	// get refractiv index after exit pupil
+	real refIndexAfterExitPupil{};
+	real directionSurfaceAfterExitPupil = optSys.getPosAndInteractingSurface()[positionExitPupilInOptSys].getSurfaceInterRay_ptr()->getDirection().getZ();
+	if (directionSurfaceAfterExitPupil > 0)
+	{
+		refIndexAfterExitPupil = optSys.getPosAndInteractingSurface()[positionExitPupilInOptSys].getSurfaceInterRay_ptr()->getRefractiveIndex_A();
+	}
+	else
+	{
+		refIndexAfterExitPupil = optSys.getPosAndInteractingSurface()[positionExitPupilInOptSys].getSurfaceInterRay_ptr()->getRefractiveIndex_B();
+	}
+	// ***
+
+	PlanGeometry_LLT exitPupilPlan(/*semiHeight*/oftenUse::getInfReal(), /*point*/{ 0.0,0.0,posExitPupil_Z_global }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ refIndexBeforeExitPupil, /*refractiveSideB*/ refIndexAfterExitPupil);
 	
+
+	OpticalSystem_LLT optSys_includingExitPupilPlan{};
+	optSys_includingExitPupilPlan = optSys.clone();
+	optSys_includingExitPupilPlan.fillInSurfaceAndInteracAtPos_i(positionExitPupilInOptSys, exitPupilPlan.clone(), doNothing.clone());
+
+	// build chiefLightRay
+	infosAS infosApertureStop = optSys.getInforAS();
+	RayAiming rayAimingChiefRay(optSys);
+	rayAimingChiefRay.setTolerance_XandY(toleranceForRayAiming);
+	LightRayStruct chiefLightRay = rayAimingChiefRay.rayAiming_obj(startPointRay, infosApertureStop.getPointAS(), light, refIndexStartMedia);
+
+	SequentialRayTracing seqTraceToImaSurface(optSys_includingExitPupilPlan);
+	seqTraceToImaSurface.sequentialRayTracing(chiefLightRay);
+
+	VectorStructR3 interPointChiefRayImaSurface = seqTraceToImaSurface.getAllInterPointsAtSurface_i_filtered(sizeOptSys)[0];
+	VectorStructR3 interPointChiefRayAtExitPupil = seqTraceToImaSurface.getAllInterPointsAtSurface_i_filtered(positionExitPupilInOptSys)[0];
+	VectorStructR3 directionRefSphere = interPointChiefRayImaSurface - interPointChiefRayAtExitPupil;
+
+	real RadiusRefSphere = Math::lengthOfVector(directionRefSphere);
+
+	real refIndexBeforeImaSurface{};
+	real directionImaSurface = optSys.getPosAndInteractingSurface()[sizeOptSys - 1].getSurfaceInterRay_ptr()->getDirection().getZ();
+	if (directionImaSurface > 0)
+	{
+		refIndexBeforeImaSurface = optSys.getPosAndInteractingSurface()[sizeOptSys - 1].getSurfaceInterRay_ptr()->getRefractiveIndex_A();
+	}
+	else
+	{
+		refIndexBeforeImaSurface = optSys.getPosAndInteractingSurface()[sizeOptSys - 1].getSurfaceInterRay_ptr()->getRefractiveIndex_B();
+	}
+
+	// building optical system with refSphere at exit pupil
+	SphericalSurface_LLT RefSpherAtExitPupilPlanExP(/*radius*/RadiusRefSphere, /*semiHeight*/oftenUse::getInfReal(), /*Apex of the sphere*/interPointChiefRayAtExitPupil, /*Direction*/ directionRefSphere, /*refIndexSideA*/refIndexBeforeExitPupil, /*refIndexSideB*/refIndexBeforeExitPupil);
+	OpticalSystem_LLT optSys_includingRefSphere;
+	optSys_includingRefSphere.fillVectorSurfaceAndInteractingData(0, RefSpherAtExitPupilPlanExP.clone(), doNothing.clone());
+
+	// calculate referece distance
+	real length_1_cheif = seqTraceToImaSurface.getInterInf_PosSurface_TotalSteps_ofSur_i(sizeOptSys)[0].getTotalSteps();
+	// build light ray to trace back
+	Ray_LLT chiefRayToTraceBack(/*origin*/ interPointChiefRayImaSurface,/*direction*/ -1.0 * directionRefSphere,/*refractive index*/ refIndexBeforeImaSurface);
+	LightRayStruct chiefLightRay_back(light, chiefRayToTraceBack, true);
+	SequentialRayTracing seqTraceBack(optSys_includingRefSphere);
+	seqTraceBack.sequentialRayTracing(chiefLightRay_back);
+	real lenght_2_chief = seqTraceBack.getInterInf_PosSurface_TotalSteps_ofSur_i(0)[0].getTotalSteps();
+
+	real referenceLenght = length_1_cheif - lenght_2_chief;
+
+	// calculate lenght wanted ray
+	// build wanted light ray
+	real pos_X_InApertureStop = pupilPositionX * infosApertureStop.getSemiHeightAS();
+	real pos_Y_InApertureStop = pupilPositionY * infosApertureStop.getSemiHeightAS();
+	VectorStructR3 targetPointInApertureStop(pos_X_InApertureStop, pos_Y_InApertureStop, infosApertureStop.getPointAS().getZ());
+	LightRayStruct wantedLightRay = rayAimingChiefRay.rayAiming_obj(startPointRay, targetPointInApertureStop, light, refIndexStartMedia);
+	SequentialRayTracing seqTraceWantedRay(optSys);
+	seqTraceWantedRay.sequentialRayTracing(wantedLightRay);
+	real length_wanted_1 = seqTraceWantedRay.getInterInf_PosSurface_TotalSteps_ofSur_i(sizeOptSys - 1)[0].getTotalSteps();
+	VectorStructR3 interPointWanted = seqTraceWantedRay.getAllInterPointsAtSurface_i_filtered(sizeOptSys - 1)[0];
+	VectorStructR3 directionWantedRay_back = -1.0 * seqTraceWantedRay.getAllInterInfosOfSurf_i(sizeOptSys - 1)[0].getDirectionRayUnit();
+	Ray_LLT wantedRayToTraceBack(/*origin*/ interPointWanted,/*direction*/directionWantedRay_back,/*refractive index*/ refIndexBeforeImaSurface);
+	LightRayStruct wantedLightRayToTraceBack(light, wantedRayToTraceBack, true);
+	seqTraceBack.sequentialRayTracing(wantedLightRayToTraceBack);
+	real length_wanted_2 = seqTraceBack.getInterInf_PosSurface_TotalSteps_ofSur_i(0)[1].getTotalSteps();
+
+	real wantedLength = length_wanted_1 - length_wanted_2;
+
+
+	returnOPD = ((referenceLenght - wantedLength) / light.getWavelength()) * 1000000;;
 
 	return returnOPD;
 }
 
+// calculate position of exit pupil in optical system according to z direction
+unsigned int OPD::calcPosExPupil_Z(OpticalSystem_LLT optSys, real position_Z_exitPupil)
+{
+	unsigned int i = 0.0;
+	unsigned int size = optSys.getPosAndInteractingSurface().size();
+	//
+
+	for (i; i < size; ++i)
+	{
+		real Z = optSys.getPosAndInteractingSurface()[i].getSurfaceInterRay_ptr()->getPoint().getZ();
+		if (Z >= position_Z_exitPupil)
+		{
+			return optSys.getPosAndInteractingSurface()[i].getPosition();
+		}
+	}
+
+	return i;
+}
+
+// calculate refractiv index start media
+real OPD::calcRefractivIndexStartMedia(OpticalSystem_LLT optSys)
+{	
+	real refIndexStartMedia{};
+	real directionFirstSurface = optSys.getPosAndInteractingSurface()[0].getSurfaceInterRay_ptr()->getDirection().getZ();
+	if (directionFirstSurface > 0)
+	{
+		refIndexStartMedia = optSys.getPosAndInteractingSurface()[0].getSurfaceInterRay_ptr()->getRefractiveIndex_A();
+	}
+	else
+	{
+		refIndexStartMedia = optSys.getPosAndInteractingSurface()[0].getSurfaceInterRay_ptr()->getRefractiveIndex_B();
+	}
+
+	return refIndexStartMedia;
+
+}
 
 // calculate position of exit pupil in optical system according to z direction
 unsigned int OPD::calcPosExPupil_Z()
