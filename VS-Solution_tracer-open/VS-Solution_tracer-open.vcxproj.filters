@@ -130,9 +130,18 @@
     <ClCompile Include="..\tests\testRayAimingSuperFct\testRayAiming_multiThreads_12.cpp" />
     <ClCompile Include="..\tests\testDLS\testDLS.cpp" />
     <ClCompile Include="..\tests\testLensReplace\testLensReplace.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="..\tests\testGlobalOPD\TestGlobalOPD.cpp" />
     <ClCompile Include="..\tests\testOPD\testOPD.cpp" />
     <ClCompile Include="..\Image\ImageSimulationPlot.cpp" />
+=======
+    <ClCompile Include="..\tests\testOPD\testOPD.cpp" />
+    <ClCompile Include="..\tests\testGlobalOPD\TestGlobalOPD.cpp" />
+    <ClCompile Include="..\Image\ImageSimulationPlot.cpp" />
+    <ClCompile Include="..\benchmark\testImageSimulation\BenchmarkImageSimulationOpenCV.cpp" />
+    <ClCompile Include="..\Plot\OpticalSystemPlots.cpp" />
+    <ClCompile Include="..\benchmark\testQwtPlots\BenchmarkOpticalSystemAllSurfaces.cpp" />
+>>>>>>> 7d53bb77f22646910a9c0cd8f9b0568edaf2541e
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Analyse\CardinalPoints.h" />
@@ -268,7 +277,16 @@
     <ClInclude Include="..\tests\testRayAimingSuperFct\testRayAiming_multiThreads_12.h" />
     <ClInclude Include="..\tests\testDLS\testDLS.h" />
     <ClInclude Include="..\tests\testLensReplace\testLenseReplace.h" />
+<<<<<<< HEAD
     <ClInclude Include="..\tests\testGlobalOPD\TestGlobalOPD.h" />
     <ClInclude Include="..\Image\ImageSimulationPlot.h" />
+=======
+    <ClInclude Include="..\tests\testOPD\testOPD.h" />
+    <ClInclude Include="..\tests\testGlobalOPD\TestGlobalOPD.h" />
+    <ClInclude Include="..\Image\ImageSimulationPlot.h" />
+    <ClInclude Include="..\benchmark\testImageSimulation\BenchmarkImageSimulationOpenCV.h" />
+    <ClInclude Include="..\Plot\OpticalSystemPlots.h" />
+    <ClInclude Include="..\benchmark\testQwtPlots\BenchmarkOpticalSystemAllSurfaces.h" />
+>>>>>>> 7d53bb77f22646910a9c0cd8f9b0568edaf2541e
   </ItemGroup>
 </Project>
