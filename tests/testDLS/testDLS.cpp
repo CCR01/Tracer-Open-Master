@@ -77,6 +77,23 @@ bool testDLS::testDLS_superFct_optiRMS()
 
 }
 
+
+// test cardinal points super function
+bool testDLS::testDLS_superFct_optiCarPoints()
+{
+	std::vector<bool> testSuperFct_vec_cardinalPoints;
+
+	// opti efl
+	bool checkEFL = testE0_carPoint();
+	testSuperFct_vec_cardinalPoints.push_back(checkEFL);
+	// E1
+	bool checkE1 = testE1_carPoint();
+	testSuperFct_vec_cardinalPoints.push_back(checkE1);
+
+	bool returnChecker = Math::checkTrueOfVectorElements(testSuperFct_vec_cardinalPoints);
+	return returnChecker;
+}
+
 void testDLS::loadImportantValues()
 {
 	// load glass catalog
@@ -853,21 +870,7 @@ bool testDLS::testE8_DLS_MD() // rays from infinity
 }
 
 
-// test cardinal points super function
-bool testDLS::testDLS_superFct_optiCarPoints()
-{
-	std::vector<bool> testSuperFct_vec_cardinalPoints;
 
-	// opti efl
-	bool checkEFL = testE0_carPoint();
-	testSuperFct_vec_cardinalPoints.push_back(checkEFL);
-	// E1
-	bool checkE1 = testE1_carPoint();
-	testSuperFct_vec_cardinalPoints.push_back(checkE1);
-
-	bool returnChecker = Math::checkTrueOfVectorElements(testSuperFct_vec_cardinalPoints);
-	return returnChecker;
-}
 
 // test EFL
 bool testDLS::testE0_carPoint()
@@ -900,10 +903,10 @@ bool testDLS::testE0_carPoint()
 	std::cout << "start system _efl" << std::endl;
 	oftenUse::print(optSystemElement_efl, mWave587d);
 
-	//// check the start system
-	//std::vector<real> rmsStartSystem_Z{ 207.944,203.879,200.495 };
-	//bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_efl, mFields000_inf_vec, mFields012_inf_vec, mWavelength_FdV_vec, rmsStartSystem_Z, 0.1, compareTOM_Zemax::comEqual);
-	//test_efl_vec.push_back(checkStartSys);
+	// check the start system
+	std::vector<real> rmsStartSystem_Z{ 207.944,203.879,200.495 };
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_efl, mFields000_inf_vec, mFields012_inf_vec, mWavelength_FdV_vec, rmsStartSystem_Z, 0.1, compareTOM_Zemax::comEqual);
+	test_efl_vec.push_back(checkStartSys);
 
 	// check initial cardinal point
 	CardinalPoints carPoints(optSystemElement_efl, mWave587d, objectPoint_inf_obj::inf);

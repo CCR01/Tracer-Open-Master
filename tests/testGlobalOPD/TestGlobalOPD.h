@@ -20,6 +20,7 @@ public:
 	// check OPD super function
 	bool checkGlobalOPD_superFunction();
 
+	//bool checkPointsToFillAS_ToCalcGLobalOPD();
 	bool checkGlobalOPD_E0();
 	bool checkGlobalOPD_E1();
 
