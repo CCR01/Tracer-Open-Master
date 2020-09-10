@@ -129,7 +129,7 @@
 
 int main(int argc, char **argv)
 {
-	//QApplication a(argc, argv);
+	QApplication a(argc, argv);
 
 	// *****************************************************************************************************************
 	// Benchmark for traceropen
@@ -361,8 +361,8 @@ int main(int argc, char **argv)
 	std::cout << "insert a rendom number" << std::endl;
 	std::cin >> i;
 
-	return 0;
-	//return a.exec();
+	//return 0;
+	return a.exec();
 }
 
 
