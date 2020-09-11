@@ -20,14 +20,20 @@ public:
 	// check OPD super function
 	bool checkGlobalOPD_superFunction();
 
-	bool checkGlobalOPD_E0();
-	bool checkGlobalOPD_E1();
+	// check points to fill AS
+	bool checkPointsToFillAS_ToCalcGLobalOPD();
+
+	// check fill OPD in Matrix
+	bool checkFillOPDinMatrix();
+
+	//bool checkGlobalOPD_E0();
+	//bool checkGlobalOPD_E1();
 
 private:
 	RefractedRay_LLT mRefrac{};
 	Absorb_LLT mAbsorb{};
 	DoNothingInteraction_LLT mDoNothing{};
-	Light_LLT mLight{};
+	Light_LLT mLight550{};
 	std::vector<LightRayStruct> mVecLightRaysE0_Field_negY1{};
 	LightRayStruct mChiefLightRay_Field_negY1{};
 	glass mGlasCat{};

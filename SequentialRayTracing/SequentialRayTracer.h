@@ -159,6 +159,8 @@ public:
 	void resizeAllRelevantVectorsAndSetConst_Element();
 	void resizeAllRelevantVectorsAndSetConst_LLT();
 
+	std::vector<real> getAllDistancesSurface_i(unsigned int surfaceNo);
+
 	//std::vector<IntersectInformationStruct> getAllInterInfosOfSurf_i_notFiltered(unsigned int surfaceNo);
 
 private:

@@ -43,10 +43,16 @@ public:
 	//**
 	// test cardinal points super function
 	bool testDLS_superFct_optiCarPoints();
-	// E0
-	bool testE0_carPoint();
-	// E1
-	bool testE1_carPoint();
+	// EFL
+	bool testDLS_carPoint_EFL();
+	// Weitere test Funktionen für einzelne cardinal points
+	bool testDLS_carPoint_PP_obj();
+
+
+
+
+	// E0 multiCarPoints
+	bool testDLS__E0_MultiCarPoints();
 	//**
 
 

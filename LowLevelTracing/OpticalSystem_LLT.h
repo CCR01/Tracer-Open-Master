@@ -120,6 +120,9 @@ public:
 	void fillVectorSurfaceAndInteractingData(int position, std::shared_ptr<SurfaceIntersectionRay_LLT> interactinSurface, std::shared_ptr<InteractionRay_LLT> interaction);
 	void fillVectorSurfaceAndInteractingData(int position, SurfaceIntersectionRay_LLT* interactinSurface, std::shared_ptr<InteractionRay_LLT> interaction); // better is the function above with shared pointes
 
+	// fill optical system with surfaces and interaction
+	void fillOptSysWithSurfaceAndInteractions(std::vector< std::shared_ptr<SurfaceIntersectionRay_LLT>> surface_vec, std::vector< std::shared_ptr<InteractionRay_LLT>> interaction_vec);
+
 	// fill the vector with surfaces
 	void fillTracingVectorSurfaces(int position, std::shared_ptr<SurfaceIntersectionRay_LLT> interactinSurface);
 

@@ -124,6 +124,11 @@ void oftenUse::print(OpticalSystemElement opticalSysElement, real wavelength)
 			tempRefIndexRightSide = tempSurface_ptr->getRefractiveIndex_A();
 		}
 
+		if (std::abs(tempRadius) > 999.0)
+		{
+			tempRadius = 999.0;
+		}
+
 		// get tempPoint
 		tempTypeMode_Thickness = oftenUse::convertTypeModeToString(opticalSysElement.getPosAndElement()[i].getElementInOptSys_ptr()->getPointTypeModifier_Z());
 		if (i < size - 1)
@@ -155,6 +160,80 @@ void oftenUse::print(OpticalSystemElement opticalSysElement, real wavelength)
 
 	std::cout << "" << std::endl;
 
+}
+
+void oftenUse::print(OpticalSystem_LLT optSys)
+{
+	unsigned int size = optSys.getPosAndInteractingSurface().size();
+	std::shared_ptr<SurfaceIntersectionRay_LLT> tempSurface_ptr;
+	std::shared_ptr<SurfaceIntersectionRay_LLT> tempSurface_ptr_next;
+
+	std::string tempTypeMode_Radius;
+	std::string tempTypeMode_Thickness;
+
+	real tempRadius{};
+	real tempPoint_Z{};
+	real tempPoint_Z_next{};
+	real tempDirection_Z{};
+	real semiHeight{};
+	real tempPointZ = 0;
+	std::string nameGlasRightSide{};
+	real thickness = 0;
+	real tempRefIndexRightSide{};
+
+	for (unsigned int i = 0; i < size; i++)
+	{
+		tempSurface_ptr = optSys.getPosAndInteractingSurface()[i].getSurfaceInterRay_ptr();
+
+		// get radius
+		tempRadius = tempSurface_ptr->getRadius();
+		tempDirection_Z = tempSurface_ptr->getDirection().getZ();
+		// glass by name
+		if (tempDirection_Z > 0)
+		{
+			tempRefIndexRightSide = tempSurface_ptr->getRefractiveIndex_B();
+		}
+
+		else if (tempDirection_Z < 0)
+		{
+			tempRadius = -1 * tempRadius;
+			tempRefIndexRightSide = tempSurface_ptr->getRefractiveIndex_A();
+		}
+
+		if (std::abs(tempRadius) > 999.0)
+		{
+			tempRadius = 999.0;
+		}
+
+		// get tempPoint
+		if (i < size - 1)
+		{
+			tempSurface_ptr_next = optSys.getPosAndInteractingSurface()[i + 1].getSurfaceInterRay_ptr();
+			tempPoint_Z = tempSurface_ptr->getPoint().getZ();
+			tempPoint_Z_next = tempSurface_ptr_next->getPoint().getZ();
+		}
+
+		else
+		{
+			tempPoint_Z = 99.0;
+			tempPoint_Z_next = 99.0;
+		}
+
+		thickness = tempPoint_Z_next - tempPoint_Z;
+
+
+
+		// get semiHeight
+		semiHeight = tempSurface_ptr->getSemiHeight();
+
+		std::cout << "" << std::endl;
+		std::cout << std::fixed;
+		std::cout << std::setprecision(3);
+		std::cout << "surface: " << i << '\t' << "radius: " << tempRadius << " " << tempTypeMode_Radius << '\t' << "thickness: " << thickness << " " << tempTypeMode_Thickness << '\t' << "glass: " << nameGlasRightSide << '\t' << "refIndex: " << tempRefIndexRightSide << '\t' << "semi height: " << '\t' << semiHeight << std::endl;
+
+	}
+
+	std::cout << "" << std::endl;
 }
 
 // get very height number
@@ -323,11 +402,20 @@ bool oftenUse::checkOptSysELement_Equal_Better_Zemax(OpticalSystemElement optimi
 		check_Equal_Better_Zemax = (sumRMS_TOM - sumRMS_Z) < tolerance;
 	}
 
-
-
 	
-
 	return check_Equal_Better_Zemax;
+}
+
+
+bool oftenUse::checkOptSysELement_Equal_Better_Zemax(OpticalSystemElement optimizedSystemHLT, VectorStructR3 fieldPoint, real wavelength, real rmsValZemax, real tolerance, compareTOM_Zemax compare)
+{
+	std::vector<VectorStructR3> field_vec = { fieldPoint };
+	std::vector<real> wace_vec = { wavelength };
+	std::vector<real> ref_rms = { rmsValZemax };
+
+	bool checkTheSystem = checkOptSysELement_Equal_Better_Zemax(optimizedSystemHLT, field_vec, wace_vec, ref_rms, tolerance, compare);
+
+	return checkTheSystem;
 }
 
 // check optical system HLT better / eauel than zemax
@@ -569,6 +657,16 @@ bool oftenUse::checkOptSysLLT_Equal_Better_Zemax(OpticalSystem_LLT optSys_LLT, s
 
 	return check_Equal_Better_Zemax;
 
+}
+
+bool oftenUse::checkOptSysLLT_Equal_Better_Zemax(OpticalSystem_LLT optSys_LLT, VectorStructR3 fieldPoints, real rmsValZemax, real tolerance, compareTOM_Zemax compare)
+{
+	std::vector<VectorStructR3> field_vec = { fieldPoints };
+	std::vector<real> ref_rms_vec = { rmsValZemax };
+
+	bool checkEqualBetter = checkOptSysLLT_Equal_Better_Zemax(optSys_LLT, field_vec, ref_rms_vec, tolerance, compare);
+
+	return checkEqualBetter;
 }
 
 bool oftenUse::DLSmulticheck(DLS startDLS, std::vector<real> factorBetter_vec, std::vector<real> factorWorst_vec, std::vector<real> rmsZ_vec, unsigned int systemNum)

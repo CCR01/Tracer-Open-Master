@@ -40,7 +40,7 @@ public:
 	ApertureStop_LLT& operator=(ApertureStop_LLT& source);
 	virtual std::shared_ptr<SurfaceIntersectionRay_LLT> clone() override;
 	
-	ApertureStop_LLT(double semiHeight, VectorStructR3 point, VectorStructR3 direction, double refractiveIndex);
+	ApertureStop_LLT(/*semi height*/ double semiHeight, /*point*/ VectorStructR3 point,/*direction*/ VectorStructR3 direction,/*refractiv index*/ double refractiveIndex);
 	
 	void calcApertureStopQwtCoord();
 	// get semt height

@@ -88,7 +88,8 @@ public:
 	// Ändert die Intensität eines Strahls anhand des nach einer .csv-Tabelle/Vector gegebenen Gradzahl
 	LightRayStruct changeIntensityByDegree(LightRayStruct lightRay, std::vector<VectorStructR2> vec1);
 
-
+	// fill aperture Stop to calculate OPD
+	std::vector<VectorStructR3> fillApertureStopToCalcGlobalOPD_doNoteUsesThat(infosAS infosAS_OptSys, unsigned int sizeMatrixToCalcGlobalOPD);
 
 private:
 	VectorStructR3 mStartPointRay{};

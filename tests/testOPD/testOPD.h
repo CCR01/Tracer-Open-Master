@@ -25,4 +25,7 @@ public:
 	// E4
 	bool checkE4();
 
+	// E5
+	bool checkE5();
+
 };

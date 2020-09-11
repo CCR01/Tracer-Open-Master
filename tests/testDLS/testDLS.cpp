@@ -77,6 +77,33 @@ bool testDLS::testDLS_superFct_optiRMS()
 
 }
 
+
+// test cardinal points super function
+bool testDLS::testDLS_superFct_optiCarPoints()
+{
+	std::vector<bool> testSuperFct_vec_cardinalPoints;
+
+	//// opti efl
+	//bool checkEFL = testDLS_carPoint_EFL();
+	//testSuperFct_vec_cardinalPoints.push_back(checkEFL);
+	// Weitere test Funktionen für einzelne cardinal points
+	bool checkPP_obj = testDLS_carPoint_PP_obj();
+	testSuperFct_vec_cardinalPoints.push_back(checkPP_obj);
+
+
+
+
+
+
+
+	//// E0 multiCarPoints
+	//bool checkE1 = testDLS__E0_MultiCarPoints();
+	//testSuperFct_vec_cardinalPoints.push_back(checkE1);
+
+	bool returnChecker = Math::checkTrueOfVectorElements(testSuperFct_vec_cardinalPoints);
+	return returnChecker;
+}
+
 void testDLS::loadImportantValues()
 {
 	// load glass catalog
@@ -853,24 +880,10 @@ bool testDLS::testE8_DLS_MD() // rays from infinity
 }
 
 
-// test cardinal points super function
-bool testDLS::testDLS_superFct_optiCarPoints()
-{
-	std::vector<bool> testSuperFct_vec_cardinalPoints;
 
-	// opti efl
-	bool checkEFL = testE0_carPoint();
-	testSuperFct_vec_cardinalPoints.push_back(checkEFL);
-	// E1
-	bool checkE1 = testE1_carPoint();
-	testSuperFct_vec_cardinalPoints.push_back(checkE1);
-
-	bool returnChecker = Math::checkTrueOfVectorElements(testSuperFct_vec_cardinalPoints);
-	return returnChecker;
-}
 
 // test EFL
-bool testDLS::testE0_carPoint()
+bool testDLS::testDLS_carPoint_EFL()
 {
 	std::vector<bool> test_efl_vec;
 
@@ -900,10 +913,10 @@ bool testDLS::testE0_carPoint()
 	std::cout << "start system _efl" << std::endl;
 	oftenUse::print(optSystemElement_efl, mWave587d);
 
-	//// check the start system
-	//std::vector<real> rmsStartSystem_Z{ 207.944,203.879,200.495 };
-	//bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_efl, mFields000_inf_vec, mFields012_inf_vec, mWavelength_FdV_vec, rmsStartSystem_Z, 0.1, compareTOM_Zemax::comEqual);
-	//test_efl_vec.push_back(checkStartSys);
+	// check the start system
+	std::vector<real> rmsStartSystem_Z{ 207.944,203.879,200.495 };
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_efl, mFields000_inf_vec, mFields012_inf_vec, mWavelength_FdV_vec, rmsStartSystem_Z, 0.1, compareTOM_Zemax::comEqual);
+	test_efl_vec.push_back(checkStartSys);
 
 	// check initial cardinal point
 	CardinalPoints carPoints(optSystemElement_efl, mWave587d, objectPoint_inf_obj::inf);
@@ -949,9 +962,60 @@ bool testDLS::testE0_carPoint()
 	return returnChecker_efl;
 }
 
+bool testDLS::testDLS_carPoint_PP_obj()
+{
+	// save bools in this vector
+	std::vector<bool> test_vec;
+
+	// surfaces _efl
+	SphericalElement S0(/*radius*/ 20.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getBAFN10_S1());
+	SphericalElement S1(/*radius*/ 20.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getBAFN10_S1());
+	ApertureStopElement S2(/* semi height*/1.5, /*point*/{ 0.0,0.0,35.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAir());
+	PlanElement S3(/*semi height*/ 7.0, /*point*/{ 0.0,0.0,40.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getAir());
+
+	S1.setParameterRadius(-1000.0, 1000.0, 0.0, typeModifierVariable);
+
+	std::vector<surfacePtr> opticalSystem_efl_ptr = { S0.clone() , S1.clone(), S2.clone(), S3.clone()};
+	std::vector<interaction_ptr> interactions_efl_ptr = { mRefrac.clone(), mRefrac.clone() ,mDoNothing.clone(), mAbsorb.clone() };
+
+	//	build optical system
+	OpticalSystemElement optSys(opticalSystem_efl_ptr, interactions_efl_ptr);
+
+	// print the start system
+	std::cout << "" << std::endl;
+	std::cout << "start system _efl" << std::endl;
+	oftenUse::print(optSys, mWave550);
+
+	// check the start system
+	real rmsStartSystem = 1019.87;
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSys, { 0.0,0.0,0.0 }, mWave550, rmsStartSystem, 0.5, compareTOM_Zemax::comEqual);
+	test_vec.push_back(checkStartSys);
+
+	// load the target cardinal point
+	targetCardinalPointsStruct targetCarPointEFL;
+	real targetPP_obj = 2.0;
+	targetCarPointEFL.setTargetPP_obj(targetPP_obj);
+
+	// optimization the system
+	std::vector<VectorStructR3> field_vec = { {0.0,0.0,0.0} };
+	std::vector<real> wave550_vec = { mWave550 };
+	DLS DLS_PP_obj(/*optSysEle*/ optSys, field_vec, /*wavelength*/ wave550_vec, /*rings*/ 6, /*arms*/ 8, false, targetCarPointEFL);
+	DLS_PP_obj.optimizeSystem_DLS_multiplicativ_Damping();
+
+	// check cardinal point
+	CardinalPoints carPoints_efl(DLS_PP_obj.getOptimizedSystem_HLT(), mWave550, objectPoint_inf_obj::obj);
+	real optimizedPP_obj = carPoints_efl.getPP_obj();
+	bool checkPP_obj = std::abs(optimizedPP_obj - targetPP_obj) < 0.1;
+	test_vec.push_back(checkPP_obj);
+	bool isPP_obj_var = DLS_PP_obj.getTargetCardinalPoints().isPP_obj_target();
+	test_vec.push_back(isPP_obj_var);
+
+	bool returnChecker= Math::checkTrueOfVectorElements(test_vec);
+	return returnChecker;
+}
 
 // E1
-bool testDLS::testE1_carPoint()
+bool testDLS::testDLS__E0_MultiCarPoints()
 {
 	//***
 	unsigned int systemNum = 1;
