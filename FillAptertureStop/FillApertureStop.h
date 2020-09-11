@@ -89,7 +89,7 @@ public:
 	LightRayStruct changeIntensityByDegree(LightRayStruct lightRay, std::vector<VectorStructR2> vec1);
 
 	// fill aperture Stop to calculate OPD
-	std::vector<VectorStructR3> fillApertureStopToCalcGlobalOPD(infosAS infosAS_OptSys, unsigned int sizeMatrixToCalcGlobalOPD);
+	std::vector<VectorStructR3> fillApertureStopToCalcGlobalOPD_doNoteUsesThat(infosAS infosAS_OptSys, unsigned int sizeMatrixToCalcGlobalOPD);
 
 private:
 	VectorStructR3 mStartPointRay{};

@@ -20,48 +20,14 @@
 #include "..\LowLevelTracing\Interaction\RefractedRay_LLT.h"
 
 
-// rings
-unsigned int defaultParameterOPD::getRings()
-{
-	return mRings;
-}
-void defaultParameterOPD::setRings(unsigned int rings)
-{
-	mRings = rings;
-}
-// arms
-unsigned int defaultParameterOPD::getArms()
-{
-	return mArms;
-}
-void defaultParameterOPD::setArms(unsigned int arms)
-{
-	mArms = arms;
-}
-// size matrix OPD in X and Y
-unsigned int  defaultParameterOPD::getSizeMatrixOPD_XandY()
-{
-	return mSizeMatrixGlobalOPX_X_Y;
-}
-void defaultParameterOPD::setSizeMatrixOPD_XandY(unsigned int sizeMatrixOPD_XandY)
-{
-	mSizeMatrixGlobalOPX_X_Y = sizeMatrixOPD_XandY;
-}
-// tolerance for ray Aiming
-real defaultParameterOPD::getToleranceRayAiming()
-{
-	return mToleranceRayAiming;
-}
-void defaultParameterOPD::setToleranceRayAiming(real toleranceRayAiming)
-{
-	mToleranceRayAiming = toleranceRayAiming;
-}
+
 
 OPD::OPD() {};
 
-OPD::OPD(OpticalSystem_LLT optSys, std::vector<LightRayStruct> aimedLightRay, objectPoint_inf_obj inf_obj) :
+OPD::OPD(OpticalSystem_LLT optSys, std::vector<LightRayStruct> aimedLightRay, objectPoint_inf_obj inf_obj, /*size matrix with OPDs*/ unsigned int sizeMatrix) :
 	mOptSys(optSys),
-	mAimedLightRay(aimedLightRay)
+	mAimedLightRay(aimedLightRay),
+	mSizeMatrix(sizeMatrix)
 	
 {};
 
@@ -408,28 +374,23 @@ void OPD::calcGlobalOPD_new()
 
 }
 
-void OPD::loadDefaultParameterGlobalOPD()
-{
-	mDefaultParameterGlobalOPD.setArms(8);
-	mDefaultParameterGlobalOPD.setRings(6);
-	mDefaultParameterGlobalOPD.setSizeMatrixOPD_XandY(33);
-	mDefaultParameterGlobalOPD.setToleranceRayAiming(0.000000001);
-}
+
 
 
 void OPD::calcGlobalOPD_new_Right_SideOfImaSurface(real positionExitPupil_global)
 {
 
-	cv::Mat returnGlobalOPD = cv::Mat::zeros(mDefaultParameterGlobalOPD.getSizeMatrixOPD_XandY(), mDefaultParameterGlobalOPD.getSizeMatrixOPD_XandY(), CV_64F);
+	
 	// build the optical system with the exit pupil plan
 	buildOpticalSystemWithExitPupilPlan(positionExitPupil_global);
 
 	// build chiefLightRay
 	infosAS infosApertureStop = mOptSys.getInforAS();
 	RayAiming rayAiming(mOptSys);
-	rayAiming.setTolerance_XandY(mDefaultParameterGlobalOPD.getToleranceRayAiming());
+	rayAiming.setTolerance_XandY(0.000000001);
 	LightRayStruct chiefLightRay = rayAiming.rayAiming_obj(mAimedLightRay[0].getRay_LLT().getOriginRay(), infosApertureStop.getPointAS(), mAimedLightRay[0].getLight_LLT(), mAimedLightRay[0].getRay_LLT().getCurrentRefractiveIndex());
 
+	// collect infomrations to build optical system including reference sphere
 	SequentialRayTracing seqTraceToExitPupilPlan(mOptSysWithExitPupilPlan);
 	seqTraceToExitPupilPlan.sequentialRayTracing(chiefLightRay);
 
@@ -439,8 +400,134 @@ void OPD::calcGlobalOPD_new_Right_SideOfImaSurface(real positionExitPupil_global
 	VectorStructR3 directionRefSphere = interPointChiefRayImaSurface - interPointChiefRayAtExitPupil;
 
 	real RadiusRefSphere = Math::lengthOfVector(directionRefSphere);
+
+	// reference distance
 	real referenceDistance = seqTraceToExitPupilPlan.getInterInf_PosSurface_TotalSteps_ofSur_i(positionExitPupil)[0].getTotalSteps();
 
+	// build the optical system including reference sphere at exit pupil
+	buildOpticalSystemWithReferenceSphereAtExitPupil(RadiusRefSphere, interPointChiefRayAtExitPupil, directionRefSphere);
+
+	// trace many ray to fill matrix with OPDs
+	SequentialRayTracing seqTrace(mOptSysWithReferenceSphere);
+	seqTrace.seqRayTracingWithVectorOfLightRays(mAimedLightRay);
+
+	// save all OPD
+	std::vector<real> allDistances = seqTrace.getAllDistancesSurface_i(positionExitPupil);
+	calcAllOPDs(referenceDistance, allDistances);
+
+	// save all OPD in matrix
+	saveAllOPDsInMatrix();
+}
+
+
+// calc all OPD
+void OPD::calcAllOPDs(real referenceDistance, const std::vector<real>& allDistances)
+{
+	unsigned int size = allDistances.size();
+	mAllOPDs.resize(size);
+	real wavelength = mAimedLightRay[0].getLight_LLT().getWavelength();
+
+	real tempOPD{};
+	for (unsigned int i = 0; i < size; ++i)
+	{
+		mAllOPDs[i] = ((referenceDistance - allDistances[i]) / wavelength) * 1000000;
+	}
+}
+
+// save all OPDS in matrix
+void OPD::saveAllOPDsInMatrix()
+{
+
+	mGlobalOPD = cv::Mat::zeros(mSizeMatrix, mSizeMatrix, CV_64F);
+
+	unsigned int middlePoint_X = mSizeMatrix / 2;
+	unsigned int middlePoint_Y = mSizeMatrix / 2;
+	unsigned int numberCircles = middlePoint_X;
+
+	unsigned int rayInTheCircle[34] = { 8,16,24,32,40,48,56,64,72,80,88,96,104,112,120,128,136,144,152,160,168,176,184,192,200,208,216,224,232,240,248,256,264,272 };
+	unsigned int numberOfRay[34] = { 8,24,48,80,120,168,224,288,260,440,528,624,728,840,960,1088,124,1368,1520,1680,1848,2024,2208,2400,2600,2808,3024,3248,3480,3720,3960,4224,4760 };
+	unsigned int maxNumberRay = numberOfRay[numberCircles - 1];
+
+	std::vector<unsigned int > startPointY(numberCircles);
+
+	// calculate start points in y direction (x direction is constant)
+	for (unsigned int i = 0; i < numberCircles; ++i)
+	{
+		startPointY[i] = middlePoint_Y - 1 - i;
+	}
+
+	unsigned int tempYpos{};
+	unsigned int tempXpos{};
+
+	unsigned tempMAX_XCounter_pos_start = 1;
+	unsigned tempMAX_XCounter_neg = 2;
+	unsigned tempMAX_XCounter_end = 0;
+	unsigned tempMAX_YCounter_pos = 2;
+	unsigned tempMAX_YCounter_neg = 2;
+
+	unsigned int OPDinMatrixCounter = 0;
+
+	unsigned int startPointCounter = 0;
+	while (OPDinMatrixCounter < maxNumberRay)
+	{
+		tempYpos = startPointY[startPointCounter];
+		tempXpos = middlePoint_X;
+		++startPointCounter;
+
+		mGlobalOPD.at<unsigned int>(tempXpos, tempYpos) = mAllOPDs[0];
+		++OPDinMatrixCounter;
+
+		// first row pos x direction
+		for (unsigned int posX_start = 0; posX_start < tempMAX_XCounter_pos_start; ++posX_start)
+		{
+			++tempXpos;
+			mGlobalOPD.at<real>(tempXpos, tempYpos) = mAllOPDs[OPDinMatrixCounter];
+		
+			++OPDinMatrixCounter;
+		}
+
+		// col pos y direction
+		for (unsigned int posY = 0; posY < tempMAX_YCounter_pos; ++posY)
+		{
+			++tempYpos;
+			mGlobalOPD.at<real>(tempXpos, tempYpos) = mAllOPDs[OPDinMatrixCounter];
+			++OPDinMatrixCounter;
+		}
+
+		// row neg x direction
+		for (unsigned int negX = 0; negX < tempMAX_XCounter_neg; ++negX)
+		{
+			--tempXpos;
+			mGlobalOPD.at<real>(tempXpos, tempYpos) = mAllOPDs[OPDinMatrixCounter];
+			++OPDinMatrixCounter;
+		}
+
+		// col neg y direction
+		for (unsigned int negY = 0; negY < tempMAX_YCounter_neg; ++negY)
+		{
+			--tempYpos;
+			mGlobalOPD.at<real>(tempXpos, tempYpos) = mAllOPDs[OPDinMatrixCounter];
+			++OPDinMatrixCounter;
+		}
+
+		// neg row pos x direction
+		for (unsigned int posX_end = 0; posX_end < tempMAX_XCounter_end; ++posX_end)
+		{
+			++tempXpos;
+			mGlobalOPD.at<real>(tempXpos, tempYpos) = mAllOPDs[OPDinMatrixCounter];
+			++OPDinMatrixCounter;
+		}
+
+
+		++tempMAX_XCounter_pos_start;
+		tempMAX_XCounter_neg = 2 + tempMAX_XCounter_neg;
+		++tempMAX_XCounter_end;
+		tempMAX_YCounter_pos = 2 + tempMAX_YCounter_pos;
+		tempMAX_YCounter_neg = 2 + tempMAX_YCounter_neg;
+
+
+
+	}
 
 }
 
@@ -465,6 +552,33 @@ void OPD::buildOpticalSystemWithExitPupilPlan(real positionExitPupil_global)
 	mOptSysWithExitPupilPlan.fillInSurfaceAndInteracAtPos_i(sizeOptSysMinOne + 1, exitPupil.clone(), mDoNothingInter.clone());
 	RefractedRay_LLT refrac;
 	mOptSysWithExitPupilPlan.setInteractionOfSurface_i(sizeOptSysMinOne, refrac.clone());
+}
+
+
+void OPD::buildOpticalSystemWithReferenceSphereAtExitPupil(real radiusRefSphere, VectorStructR3 pointRefSphere, VectorStructR3 directionRefSphere)
+{
+	unsigned int posLastSurface_imaPlan = mOptSys.getPosAndInteractingSurface().size() - 1;
+	real directionZ_lastSurface = mOptSys.getPosAndInteractingSurface()[posLastSurface_imaPlan].getSurfaceInterRay_ptr()->getDirection().getZ();
+
+	real refIndexBehindImaSurface;
+	if (directionZ_lastSurface > 0)
+	{
+		refIndexBehindImaSurface = mOptSys.getPosAndInteractingSurface()[posLastSurface_imaPlan].getSurfaceInterRay_ptr()->getRefractiveIndex_B();
+	}
+	else
+	{
+		refIndexBehindImaSurface = mOptSys.getPosAndInteractingSurface()[posLastSurface_imaPlan].getSurfaceInterRay_ptr()->getRefractiveIndex_A();
+	}
+
+
+	// build the reference sphere
+	SphericalSurface_LLT referenceSphere(/*radius*/radiusRefSphere, /*semiHeight*/oftenUse::getInfReal(), /*Apex of the sphere*/pointRefSphere, /*Direction*/  directionRefSphere, /*refIndexSideA*/refIndexBehindImaSurface, /*refIndexSideB*/refIndexBehindImaSurface);
+	
+	mOptSysWithReferenceSphere = mOptSys.clone();
+	RefractedRay_LLT refrac{};
+	Absorb_LLT absorb{};
+	mOptSysWithReferenceSphere.setInteractionOfSurface_i(posLastSurface_imaPlan, refrac.clone());
+	mOptSysWithReferenceSphere.fillInSurfaceAndInteracAtPos_i(posLastSurface_imaPlan + 1, referenceSphere.clone(), absorb.clone());
 }
 
 void OPD::calcGlobalOPD_new_LEFT_SideOfImaSurface()
@@ -1162,11 +1276,13 @@ cv::Mat OPD::getGlobalOPD()
 }
 
 // export a cv::mat to excel
-void OPD::exportCV_MatToExcel(cv::Mat matToExport, std::string locationAndfilename)
+void OPD::exportCV_MatToExcel(cv::Mat matToExport, std::string location, std::string nameFile)
 {
-
 	std::ofstream outData;
-	outData.open(locationAndfilename, std::ios::app);
+
+	std::string loactionAndFile = location + "/" + nameFile + ".csv";
+
+	outData.open(loactionAndFile, std::ios::app);
 	outData << matToExport << std::endl;
 }
 

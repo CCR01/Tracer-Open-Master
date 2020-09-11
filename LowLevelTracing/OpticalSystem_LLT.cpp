@@ -204,6 +204,17 @@ void OpticalSystem_LLT::fillVectorSurfaceAndInteractingData(int position, Surfac
 	fillTracingVectorInteraction(position, interaction);
 }
 
+// fill optical system with surfaces and interaction
+void OpticalSystem_LLT::fillOptSysWithSurfaceAndInteractions(std::vector< std::shared_ptr<SurfaceIntersectionRay_LLT>> surface_vec, std::vector< std::shared_ptr<InteractionRay_LLT>> interaction_vec)
+{
+	unsigned int sizeOptSys = surface_vec.size();
+	for (unsigned int i = 0; i < sizeOptSys; ++i)
+	{
+		fillVectorSurfaceAndInteractingData(i, surface_vec[i], interaction_vec[i]);
+	}
+
+}
+
 // fill the vector with the surfaces
 void OpticalSystem_LLT::fillTracingVectorSurfaces(int position, std::shared_ptr<SurfaceIntersectionRay_LLT> interactingSurface)
 {

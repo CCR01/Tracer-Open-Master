@@ -759,18 +759,41 @@ void SequentialRayTracing::clearAllTracedRays()
 std::vector <IntersectInfosAndPosSurfaceAndTotalSteps> SequentialRayTracing::getInterInf_PosSurface_TotalSteps_ofSur_i(unsigned int const surfaceNo)
 {
 	std::vector<IntersectInfosAndPosSurfaceAndTotalSteps> returnInterInfos_PosSur_TotSteps;
+	unsigned int sizeAllInterPoints = mSaveInterInfos_PosSur_TotSteps.size();
+	unsigned int sizeOptSys = mOpticalSystem_LLT.getPosAndInteractingSurface().size();
+	unsigned int interPointsLastSurface = sizeAllInterPoints / sizeOptSys;
+	returnInterInfos_PosSur_TotSteps.resize(interPointsLastSurface);
+
+	unsigned int counter = 0;
 
 	//#pragma omp parallel for
-	for (int i = 0; i < mSaveInterInfos_PosSur_TotSteps.size(); i++)
+	for (int i = 0; i < sizeAllInterPoints; i++)
 	{
 		if (mSaveInterInfos_PosSur_TotSteps.at(i).getPosition() == surfaceNo)
 		{
-			returnInterInfos_PosSur_TotSteps.push_back(mSaveInterInfos_PosSur_TotSteps.at(i));
+			returnInterInfos_PosSur_TotSteps[counter] = mSaveInterInfos_PosSur_TotSteps.at(i);
+			++counter;
 		}
 	}
 
 	return returnInterInfos_PosSur_TotSteps;
 
+}
+
+std::vector<real> SequentialRayTracing::getAllDistancesSurface_i(unsigned int surfaceNo)
+{
+	std::vector <IntersectInfosAndPosSurfaceAndTotalSteps> allInfosAtSurfaceI = getInterInf_PosSurface_TotalSteps_ofSur_i(surfaceNo);
+
+	std::vector<real> allDistances{};
+	unsigned size = allInfosAtSurfaceI.size();
+	allDistances.resize(size);
+
+	for (unsigned int i = 0; i < size; ++i)
+	{
+		allDistances[i] = allInfosAtSurfaceI[i].getTotalSteps();
+	}
+
+	return allDistances;
 }
 
 // get all total optical path lenth to surface i

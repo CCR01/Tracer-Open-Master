@@ -31,28 +31,33 @@
 
 enum class posExitPupil {exitPupil_Left_ImaSurface, exitPupil_Right_ImaSurface};
 
-struct defaultParameterOPD
+struct PX_PY_OPD_MX_MY
 {
 public:
+	void resizeAllvector(unsigned int size);
+	// PX
+	void setPXatPos_i(real px, unsigned int pos);
+	void getPXatPos_i(unsigned int pos);
+	// PY
+	void setPYatPos_i(real py, unsigned int pos);
+	void getPYatPos_i(unsigned int pos);
+	// OPD
+	void setOPDatPos_i(real opd, unsigned int pos);
+	void getOPDatPos_i(unsigned int pos);
+	// MX
+	void setMXatPos_i(real MX, unsigned int pos);
+	void getMXatPos_i(unsigned int pos);
+	// MY
+	void setMYatPos_i(real MY, unsigned int pos);
+	void getMYatPos_i(unsigned int pos);
 
-	// rings
-	unsigned int getRings();
-	void setRings(unsigned int rings);
-	// arms
-	unsigned int getArms();
-	void setArms(unsigned int arms);
-	// size matrix OPD in X and Y
-	unsigned int  getSizeMatrixOPD_XandY();
-	void setSizeMatrixOPD_XandY(unsigned int sizeMatrixOPD_XandY);
-	// tolerance for ray Aiming
-	real getToleranceRayAiming();
-	void setToleranceRayAiming(real toleranceRayAiming);
 
 private:
-	unsigned int mRings{};
-	unsigned int mArms{};
-	unsigned int mSizeMatrixGlobalOPX_X_Y{};
-	real mToleranceRayAiming{};
+	std::vector<real> mPX;
+	std::vector<real> mPY;
+	std::vector<real> mOPD;
+	std::vector<real> mMX;
+	std::vector<real> mMY;
 };
 
 class OPD
@@ -61,7 +66,7 @@ public:
 	static const int  upscaledMatrixSize = 128;
 
 	OPD();
-	OPD(OpticalSystem_LLT optSys, std::vector<LightRayStruct> aimedLightRay, objectPoint_inf_obj inf_obj);
+	OPD(/*optical system*/ OpticalSystem_LLT optSys, /*aimed light ray*/ std::vector<LightRayStruct> aimedLightRay, /*obj inf*/objectPoint_inf_obj inf_obj, /*size matrix with OPDs*/ unsigned int sizeMatrix);
 
 
 	// to calculate the global OPD
@@ -90,11 +95,12 @@ public:
 	/// ***
 	// calculate global OPD
 	void calcGlobalOPD_new();
-	void loadDefaultParameterGlobalOPD();
+
 	
 	void calcGlobalOPD_new_Right_SideOfImaSurface(real positionExitPupil_global);
 	void buildOpticalSystemWithExitPupilPlan(real positionExitPupil_global);
 	void buildOpticalSystemWithReferenceSphereAtExitPupil(real radiusRefSphere, VectorStructR3 pointRefSphere, VectorStructR3 directionRefSphere);
+
 
 	void calcGlobalOPD_new_LEFT_SideOfImaSurface();
 	// ***
@@ -106,9 +112,6 @@ public:
 
 	// calc OPD in Y direction
 	std::vector<cv::Point2d> calcOPD_Y();
-
-	// calc global optical path difference 
-	cv::Mat calcGlobalOPD();
 
 	// calc reference distance for referenc sphere
 	real calcRefDisForRefSphere();
@@ -158,7 +161,7 @@ public:
 
 
 	// export a cv::mat to excel
-	void exportCV_MatToExcel(cv::Mat matToExport, std::string locationAndfilename);
+	void exportCV_MatToExcel(cv::Mat matToExport, std::string location, std::string nameFile);
 
 	// get vector with all calculated global OPD --> just for debugging
 	std::vector<real> getVecWithAllCalcGlobalOPD();
@@ -169,6 +172,12 @@ public:
 	//get the light
 	LightRayStruct getChiefLightRay();
 
+	// calc all OPD
+	void calcAllOPDs(real referenceDistance, const std::vector<real>& allDistances);
+
+	// save all OPDS in matrix
+	void saveAllOPDsInMatrix();
+
 private:
 
 	std::vector<LightRayStruct> mAimedLightRay{};
@@ -176,7 +185,9 @@ private:
 	OpticalSystem_LLT mOptSysWithExitPupilPlan{};
 	OpticalSystem_LLT mOptSysWithReferenceSphere{};
 	objectPoint_inf_obj mInf_obj{};
-	defaultParameterOPD mDefaultParameterGlobalOPD{};
+	std::vector<real> mAllOPDs{};
+	cv::Mat mGlobalOPD{};
+	unsigned int mSizeMatrix{};
 
 	VectorStructR3 mPosObject;
 	std::shared_ptr<SurfaceIntersectionRay_LLT> mExitPupil;
@@ -209,7 +220,7 @@ private:
 
 	std::vector<real> mVecWithAllCalcGlobalOPD;
 	
-	cv::Mat mGlobalOPD;
+	
 
 	int mScaling;
 

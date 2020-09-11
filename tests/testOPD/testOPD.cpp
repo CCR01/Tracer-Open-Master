@@ -16,6 +16,7 @@
 #include "..\..\oftenUseNamespace\oftenUseNamespace.h"
 
 typedef std::shared_ptr< SurfaceIntersectionRay_LLT > surfacePtr_LLT;
+typedef std::shared_ptr< InteractionRay_LLT > interaction_ptr;
 
 
 bool TestOPD::checkOPD_superFct()
@@ -23,26 +24,29 @@ bool TestOPD::checkOPD_superFct()
 
 	std::vector<bool> workOPD;// hier gehts dann weiter
 
-	// E0
-	bool chE0 = checkE0();
-	workOPD.push_back(chE0);
-	
-	// E1
-	bool chE1 = checkE1();
-	workOPD.push_back(chE1);
+	//// E0
+	//bool chE0 = checkE0();
+	//workOPD.push_back(chE0);
+	//
+	//// E1
+	//bool chE1 = checkE1();
+	//workOPD.push_back(chE1);
+	//
+	//// E2
+	//bool chE2 = checkE2();
+	//workOPD.push_back(chE2);
+	//
+	//// E3
+	//bool chE3 = checkE3();
+	//workOPD.push_back(chE3);
+	//
+	//// E4
+	//bool chE4 = checkE4();
+	//workOPD.push_back(chE4);
 
-	// E2
-	bool chE2 = checkE2();
-	workOPD.push_back(chE2);
-
-	// E3
-	bool chE3 = checkE3();
-	workOPD.push_back(chE3);
-
-	// E4
-	bool chE4 = checkE4();
-	workOPD.push_back(chE4);
-
+	// E5
+	bool chE5 = checkE5();
+	workOPD.push_back(chE5);
 
 	bool returnCheckOPD = Math::checkTrueOfVectorElements(workOPD);
 	return returnCheckOPD;
@@ -657,32 +661,32 @@ bool TestOPD::checkE3()
 	OPD testOPDE3;
 	VectorStructR3 startPointRayOptA{ 0.0,0.0,0.0 };
 
-	//real OPD11 = testOPDE3.OPD_singelRay_obj(OptSys_E3, startPointRayOptA, 1.0, 1.0, Light500);
-	//real refOPD11 = -275.229;
-	//bool checkOPD11 = Math::compareTwoNumbers_tolerance(OPD11, refOPD11, 0.1);
-	//checkOPD.push_back(checkOPD11);
+	real OPD11 = testOPDE3.OPD_singelRay_obj(OptSys_E3, startPointRayOptA, 1.0, 1.0, Light500);
+	real refOPD11 = -275.229;
+	bool checkOPD11 = Math::compareTwoNumbers_tolerance(OPD11, refOPD11, 0.1);
+	checkOPD.push_back(checkOPD11);
 
-	//real OPD_05neg002 = testOPDE3.OPD_singelRay_obj(OptSys_E3, startPointRayOptA, 0.5, -0.02, Light500);
-	//real refOPD_05neg002 = -35.462;
-	//bool checkOPD_05neg002 = Math::compareTwoNumbers_tolerance(OPD_05neg002, refOPD_05neg002, 0.1);
-	//checkOPD.push_back(checkOPD_05neg002);
+	real OPD_05neg002 = testOPDE3.OPD_singelRay_obj(OptSys_E3, startPointRayOptA, 0.5, -0.02, Light500);
+	real refOPD_05neg002 = -35.462;
+	bool checkOPD_05neg002 = Math::compareTwoNumbers_tolerance(OPD_05neg002, refOPD_05neg002, 0.1);
+	checkOPD.push_back(checkOPD_05neg002);
 
-	//real OPD_neg0308 = testOPDE3.OPD_singelRay_obj(OptSys_E3, startPointRayOptA, -0.3, 0.8, Light500);
-	//real refOPD_neg0308 = -102.553;
-	//bool checkOPD_neg0308 = Math::compareTwoNumbers_tolerance(OPD_neg0308, refOPD_neg0308, 0.1);
-	//checkOPD.push_back(checkOPD_neg0308);
+	real OPD_neg0308 = testOPDE3.OPD_singelRay_obj(OptSys_E3, startPointRayOptA, -0.3, 0.8, Light500);
+	real refOPD_neg0308 = -102.553;
+	bool checkOPD_neg0308 = Math::compareTwoNumbers_tolerance(OPD_neg0308, refOPD_neg0308, 0.1);
+	checkOPD.push_back(checkOPD_neg0308);
 
-	//VectorStructR3 startPointField0503{ 0.5,0.3,0.0 };
-	//real OPD_0806 = testOPDE3.OPD_singelRay_obj(OptSys_E3, startPointField0503, 0.8, 0.6, Light500);
-	//real refOPD_0806 = -140.813;
-	//bool checkOPD_0806 = Math::compareTwoNumbers_tolerance(OPD_0806, refOPD_0806, 1.0);
-	//checkOPD.push_back(checkOPD_0806);
+	VectorStructR3 startPointField0503{ 0.5,0.3,0.0 };
+	real OPD_0806 = testOPDE3.OPD_singelRay_obj(OptSys_E3, startPointField0503, 0.8, 0.6, Light500);
+	real refOPD_0806 = -140.813;
+	bool checkOPD_0806 = Math::compareTwoNumbers_tolerance(OPD_0806, refOPD_0806, 1.0);
+	checkOPD.push_back(checkOPD_0806);
 
-	//VectorStructR3 startPointField0705{ 0.7,0.5,0.0 };
-	//real OPD_0705 = testOPDE3.OPD_singelRay_obj(OptSys_E3, startPointField0705, 0.7, 0.5, Light500);
-	//real refOPD_0705 = -102.601;
-	//bool checkOPD_0705 = Math::compareTwoNumbers_tolerance(OPD_0705, refOPD_0705, 1.0);
-	//checkOPD.push_back(checkOPD_0705);
+	VectorStructR3 startPointField0705{ 0.7,0.5,0.0 };
+	real OPD_0705 = testOPDE3.OPD_singelRay_obj(OptSys_E3, startPointField0705, 0.7, 0.5, Light500);
+	real refOPD_0705 = -102.601;
+	bool checkOPD_0705 = Math::compareTwoNumbers_tolerance(OPD_0705, refOPD_0705, 1.0);
+	checkOPD.push_back(checkOPD_0705);
 
 	VectorStructR3 startPointField1neg02{ 1.0,-0.2,0.0 };
 	real OPD_neg04neg06 = testOPDE3.OPD_singelRay_obj(OptSys_E3, startPointField1neg02, -0.4, -0.6, Light500);
@@ -823,9 +827,64 @@ bool TestOPD::checkE4()
 	bool checkCalcOPD = Math::compareTwoNumbers_tolerance(calcOPD_1, calcOPD_2, 0.01);
 	checkOPD.push_back(checkCalcOPD);
 
-
-
 	bool output = Math::checkTrueOfVectorElements(checkOPD);
 	return output;
 
+}
+
+// E5
+bool TestOPD::checkE5()
+{
+	// ***
+	std::vector<bool> checkOPD;
+	RefractedRay_LLT refrac;
+	DoNothingInteraction_LLT doNothing;
+	Light_LLT Light550;
+	Light550.setWavelength(550.0);
+	Absorb_LLT absorb;
+	// ***
+
+	SphericalSurface_LLT S0(/*radius*/15.0, /*semiHeight*/7.0, /*Apex of the sphere*/{ 0.0, 0.0, 20.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
+	SphericalSurface_LLT S1(/*radius*/15.0, /*semiHeight*/7.0, /*Apex of the sphere*/{ 0.0, 0.0, 30.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
+	ApertureStop_LLT S2(/*semi height*/ 1.5, /*point*/{ 0.0,0.0,35.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ 1.0);
+	SphericalSurface_LLT S3(/*radius*/100.0, /*semiHeight*/7.0, /*Apex of the sphere*/{ 0.0, 0.0, 40.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.6);
+	SphericalSurface_LLT S4(/*radius*/100.0, /*semiHeight*/7.0, /*Apex of the sphere*/{ 0.0, 0.0, 45.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.6);
+	PlanGeometry_LLT S5(/*semiHeight*/3.0, /*point*/{ 0.0,0.0,65.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
+
+	std::vector<surfacePtr_LLT> surfaces_vec = { S0.clone(), S1.clone(), S2.clone(), S3.clone(), S4.clone(), S5.clone() };
+	std::vector<interaction_ptr> interaction_vec{ refrac.clone(), refrac.clone(),doNothing.clone(), refrac.clone(), refrac.clone(), absorb.clone() };
+
+	// build the optical system
+	OpticalSystem_LLT OptSys;
+	OptSys.fillOptSysWithSurfaceAndInteractions(surfaces_vec, interaction_vec);
+
+	// plot the start system
+	oftenUse::print(OptSys);
+
+	// check the start system
+	bool checkStartSys = oftenUse::checkOptSysLLT_Equal_Better_Zemax(OptSys, { 0.0,0.0,0.0 }, 216.074, 0.01, compareTOM_Zemax::comEqual);
+	checkOPD.push_back(checkStartSys);
+
+	OPD testOPD;
+
+	VectorStructR3 startPointRay_0{ 0.0,0.0,0.0 };
+	real OPD_0= testOPD.OPD_singelRay_obj(OptSys, startPointRay_0, 1.0, 1.0, Light550);
+	real refOPD_0 = -28.142;
+	bool checkOPD_0 = Math::compareTwoNumbers_tolerance(OPD_0, refOPD_0, 0.1);
+	checkOPD.push_back(checkOPD_0);
+
+	VectorStructR3 startPointRay_1{ 0.5,-0.5,0.0 };
+	real OPD_1 = testOPD.OPD_singelRay_obj(OptSys, startPointRay_1, 0.3, -0.2, Light550);
+	real refOPD_1 = -2.019;
+	bool checkOPD_1 = Math::compareTwoNumbers_tolerance(OPD_1, refOPD_1, 0.1);
+	checkOPD.push_back(checkOPD_1);
+
+	VectorStructR3 startPointRay_2{ 0.7, 0.5,0.0 };
+	real OPD_2 = testOPD.OPD_singelRay_obj(OptSys, startPointRay_2, 0.5, -0.5, Light550);
+	real refOPD_2 = -7.680;
+	bool checkOPD_2 = Math::compareTwoNumbers_tolerance(OPD_2, refOPD_2, 0.1);
+	checkOPD.push_back(checkOPD_2);
+
+	bool output = Math::checkTrueOfVectorElements(checkOPD);
+	return output;
 }

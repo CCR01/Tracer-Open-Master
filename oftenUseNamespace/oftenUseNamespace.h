@@ -19,6 +19,7 @@ namespace oftenUse
 	void print(std::vector< std::vector<double> > A);
 	void print(std::vector<real> V);
 	void print(OpticalSystemElement opticalSysElement, real Wavelength);
+	void print(OpticalSystem_LLT optSys);
 
 	// get very height number
 	real getInfReal();
@@ -37,6 +38,7 @@ namespace oftenUse
 
 	// check optical system HLT better / eauel than zemax
 	bool checkOptSysELement_Equal_Better_Zemax(OpticalSystemElement optimizedSystemHLT, std::vector<VectorStructR3> fieldPoints, std::vector<real> wavelength_vec, std::vector<real> rmsValZemax, real tolerance, compareTOM_Zemax compare);
+	bool checkOptSysELement_Equal_Better_Zemax(OpticalSystemElement optimizedSystemHLT, VectorStructR3 fieldPoint, real wavelength, real rmsValZemax, real tolerance, compareTOM_Zemax compare);
 	
 	// check optical system HLT better / eauel than zemax
 	bool checkOptSysELement_Equal_Better_Zemax(OpticalSystemElement optimizedSystemHLT, std::vector<real> anglesX_vec, std::vector<real> anglesY_vec, std::vector<real> wavelength_vec, std::vector<real> rmsValZemax, real tolerance, compareTOM_Zemax compare);
@@ -47,6 +49,7 @@ namespace oftenUse
 
 	// check optical system LLT better / equal than zemax
 	bool checkOptSysLLT_Equal_Better_Zemax(OpticalSystem_LLT optSys_LLT, std::vector<VectorStructR3> fieldPoints, std::vector<real> rmsValZemax, real tolerance, compareTOM_Zemax compare);
+	bool checkOptSysLLT_Equal_Better_Zemax(OpticalSystem_LLT optSys_LLT, VectorStructR3 fieldPoints, real rmsValZemax, real tolerance, compareTOM_Zemax compare);
 
 	// check the thickness between surfaces
 	bool checkThickness(OpticalSystem_LLT optSys_LLT, std::vector<real> thickness_vec, real tolerance);

@@ -485,10 +485,11 @@ LightRayStruct FillApertureStop::changeIntensityByDegree(LightRayStruct lightRay
 
 
 // fill aperture Stop to calculate OPD
-std::vector<VectorStructR3> FillApertureStop::fillApertureStopToCalcGlobalOPD(infosAS infosAS_OptSys, unsigned int sizeMatrixToCalcGlobalOPD)
+std::vector<VectorStructR3> FillApertureStop::fillApertureStopToCalcGlobalOPD_doNoteUsesThat(infosAS infosAS_OptSys, unsigned int sizeMatrixToCalcGlobalOPD)
 {
 
 		VectorStructR3 DirectionApertureStopUnit = Math::unitVector(infosAS_OptSys.getDirAS());
+		DirectionApertureStopUnit.setZ(-1.0 * DirectionApertureStopUnit.getZ());
 		VectorStructR3 PointApertureStop = infosAS_OptSys.getPointAS();
 
 		VectorStructR3 BaseVecor1 = { 1.0,0.0,0.0 };
@@ -502,8 +503,8 @@ std::vector<VectorStructR3> FillApertureStop::fillApertureStopToCalcGlobalOPD(in
 		}
 
 
-		unsigned int rayDensityArray[34] = { 8,16,24,32,40,48,56,64,72,80,88,96,104,112,120,128,136,144,152,160,168,176,184,192,200,208,216,224,232,240,248,256,264,272 };
-		unsigned int numberOfRay[34] = {9,25,49,81,121,169,225,289,361,441,529,625,729,841,961,1089,1225,1369,1521,1681,1849,2025,2209,2401,2601,2890,3025,3249,3481,3721,3969,4225,4489,4761  };
+		unsigned int rayInTheCircle[34] = { 8,16,24,32,40,48,56,64,72,80,88,96,104,112,120,128,136,144,152,160,168,176,184,192,200,208,216,224,232,240,248,256,264,272 };
+		unsigned int numberOfRay[34] = {8,24,48,80,120,168,224,288,260,440,528,624,728,840,960,1088,124,1368,1520,1680,1848,2024,2208,2400,2600,2808,3024,3248,3480,3720,3960,4224,4760  };
 
 		// position in vector
 		unsigned int posInVector = (sizeMatrixToCalcGlobalOPD - 1) / 2;
@@ -514,13 +515,13 @@ std::vector<VectorStructR3> FillApertureStop::fillApertureStopToCalcGlobalOPD(in
 		// Vector in aperture stop
 		VectorStructR3 VectorToFillAS = Math::unitVector(Math::DoCrossProduct(BaseVecor1, DirectionApertureStopUnit));
 
+		
 		// postion in rayDensityArray => number of arms
 		unsigned int posInRayDenArray = 0;
 
 		// the first point is allways the position of the aperture stop 
-		mVectorWithManyPointsInAS.resize(numberOfRay[posInVector]);
-		mVectorWithManyPointsInAS[0] = infosAS_OptSys.getPointAS();
-		unsigned int counter = 1;
+		mVectorWithManyPointsInAS.resize(numberOfRay[posInVector - 1]);
+		unsigned int counter = 0;
 
 		VectorStructR3 tempPoint{};
 		real tempRotationAngleRadian;
@@ -530,12 +531,12 @@ std::vector<VectorStructR3> FillApertureStop::fillApertureStopToCalcGlobalOPD(in
 		for (unsigned int j = 0; j < posInVector; j++)
 		{
 			// rotarion angle starts with 2Pi / 6 because there are 6 arms
-			tempRotationAngleRadian = 2 * PI / rayDensityArray[posInRayDenArray];
+			tempRotationAngleRadian = 2 * PI / rayInTheCircle[posInRayDenArray];
 			// TODO: --> calcRotationMatrixAroundVector with std::vecors
 			tempRotationMatrixAndExist = Math::calcRotationMatrixAroundVector(DirectionApertureStopUnit, tempRotationAngleRadian);
 
 
-			for (unsigned int i = 0; i < rayDensityArray[posInRayDenArray]; i++)
+			for (unsigned int i = 0; i < rayInTheCircle[posInRayDenArray]; i++)
 			{
 				tempPoint = PointApertureStop + scaleValue * VectorToFillAS;
 				mVectorWithManyPointsInAS[counter] = tempPoint;
