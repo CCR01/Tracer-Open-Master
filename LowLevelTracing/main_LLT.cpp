@@ -145,9 +145,9 @@ int main(int argc, char **argv)
 	// ManagementTests managementTest_2(testWhatVec_2);
 	// workTheSystem.push_back(managementTest_2.testSuperFct());
 
-	std::vector<testWhat> testWhatVec_3 = { testWhat::tGlobalOPD };
-	ManagementTests managementTest_3(testWhatVec_3);
-	workTheSystem.push_back(managementTest_3.testSuperFct());
+	//std::vector<testWhat> testWhatVec_3 = { testWhat::tGlobalOPD };
+	//ManagementTests managementTest_3(testWhatVec_3);
+	//workTheSystem.push_back(managementTest_3.testSuperFct());
 
 
 	//***********************************************
@@ -162,8 +162,8 @@ int main(int argc, char **argv)
 	//OpticalSystemAllSurfaces system;
 	//system.testQwtPlotsSytem();
 
-	//Optikkreis OptikkreisSystem;
-	//OptikkreisSystem.systemForOptikkreis();
+	Optikkreis OptikkreisSystem;
+	OptikkreisSystem.systemForOptikkreis();
 
 	//testRayTracingQwtPlot checkRayTracingPlot;
 	//bool checkCardinal_superFct_RayTracing = checkRayTracingPlot.superFuncTestRayTracingQwtPlot();
