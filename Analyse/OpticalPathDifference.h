@@ -34,22 +34,22 @@ enum class posExitPupil {exitPupil_Left_ImaSurface, exitPupil_Right_ImaSurface};
 struct PX_PY_OPD_MX_MY
 {
 public:
-	void resizeAllvector(unsigned int size);
-	// PX
-	void setPXatPos_i(real px, unsigned int pos);
-	void getPXatPos_i(unsigned int pos);
-	// PY
-	void setPYatPos_i(real py, unsigned int pos);
-	void getPYatPos_i(unsigned int pos);
-	// OPD
-	void setOPDatPos_i(real opd, unsigned int pos);
-	void getOPDatPos_i(unsigned int pos);
-	// MX
-	void setMXatPos_i(real MX, unsigned int pos);
-	void getMXatPos_i(unsigned int pos);
-	// MY
-	void setMYatPos_i(real MY, unsigned int pos);
-	void getMYatPos_i(unsigned int pos);
+	//void resizeAllvector(unsigned int size);
+	//// PX
+	//void setPXatPos_i(real px, unsigned int pos);
+	//void getPXatPos_i(unsigned int pos);
+	//// PY
+	//void setPYatPos_i(real py, unsigned int pos);
+	//void getPYatPos_i(unsigned int pos);
+	//// OPD
+	//void setOPDatPos_i(real opd, unsigned int pos);
+	//void getOPDatPos_i(unsigned int pos);
+	//// MX
+	//void setMXatPos_i(real MX, unsigned int pos);
+	//void getMXatPos_i(unsigned int pos);
+	//// MY
+	//void setMYatPos_i(real MY, unsigned int pos);
+	//void getMYatPos_i(unsigned int pos);
 
 
 private:
