@@ -20,12 +20,12 @@
 // often use
 #include "..\..\oftenUseNamespace\oftenUseNamespace.h"
 
-testDLS::testDLS() 
-{ 
-	loadImportantValues(); 
+testDLS::testDLS()
+{
+	loadImportantValues();
 }
 
-testDLS::~testDLS(){}
+testDLS::~testDLS() {}
 
 // typedef
 typedef std::shared_ptr< Element_CR > surfacePtr;
@@ -39,31 +39,31 @@ bool testDLS::testDLS_superFct_optiRMS()
 	////E0
 	bool E0_MD = testE0_DLS_MD();
 	testSuperFct_vec.push_back(E0_MD);
-	
+
 	//E1
 	bool E1_MD = testE1_DLS_MD(); // here we flip the radius for the best result
 	testSuperFct_vec.push_back(E1_MD);
-	
+
 	//E2
 	bool E2_MD = testE2_DLS_MD();
 	testSuperFct_vec.push_back(E2_MD);
-	
+
 	//E3 
 	bool E3_MD = testE3_DLS_MD(); //2 radii are variable
 	testSuperFct_vec.push_back(E3_MD);
-	
+
 	// E4
-	bool E4_MD = testE4_DLS_MD(); 
+	bool E4_MD = testE4_DLS_MD();
 	testSuperFct_vec.push_back(E4_MD);
-	
+
 	// E5
 	bool E5_MD = testE5_DLS_MD();
 	testSuperFct_vec.push_back(E5_MD);
-	
+
 	// E6
 	bool E6_MD = testE6_DLS_MD(); // min thickness is 0.01
 	testSuperFct_vec.push_back(E6_MD);
-	
+
 	// E7
 	bool E7_MD = testE7_DLS_MD();
 	testSuperFct_vec.push_back(E7_MD);
@@ -71,6 +71,8 @@ bool testDLS::testDLS_superFct_optiRMS()
 	// E8
 	bool E8_MD = testE8_DLS_MD();
 	testSuperFct_vec.push_back(E8_MD);
+
+
 
 	bool returnChecker = Math::checkTrueOfVectorElements(testSuperFct_vec);
 	return returnChecker;
@@ -83,22 +85,50 @@ bool testDLS::testDLS_superFct_optiCarPoints()
 {
 	std::vector<bool> testSuperFct_vec_cardinalPoints;
 
-	//// opti efl
-	//bool checkEFL = testDLS_carPoint_EFL();
-	//testSuperFct_vec_cardinalPoints.push_back(checkEFL);
-	// Weitere test Funktionen für einzelne cardinal points
+	// opti efl
+	bool checkEFL = testDLS_carPoint_EFL();
+	testSuperFct_vec_cardinalPoints.push_back(checkEFL);
+	// PP_obj
 	bool checkPP_obj = testDLS_carPoint_PP_obj();
 	testSuperFct_vec_cardinalPoints.push_back(checkPP_obj);
+	// PP_ima
+	bool checkPP_ima = testDLS_carPoint_PP_ima();
+	testSuperFct_vec_cardinalPoints.push_back(checkPP_ima);
+	// EXPP_lastSurface
+	bool checkEXPP_lastSurface = testDLS_carPoint_EXPP_lastSurface();
+	testSuperFct_vec_cardinalPoints.push_back(checkEXPP_lastSurface);
+	// EXPD
+	bool checkEXPD = testDLS_carPoint_EXPD();
+	testSuperFct_vec_cardinalPoints.push_back(checkEXPD);
+	// Magnification
+	bool checkMagnification = testDLS_carPoint_Magnification();
+	testSuperFct_vec_cardinalPoints.push_back(checkMagnification);
+	// NA_objSpace
+	bool checkNA_objSpace = testDLS_carPoint_NA_objSpace();
+	testSuperFct_vec_cardinalPoints.push_back(checkNA_objSpace);
+	// ENPP_firstSurface
+	bool checkENPP_firstSurface = testDLS_carPoint_ENPP_firstSurface();
+	testSuperFct_vec_cardinalPoints.push_back(checkENPP_firstSurface);
+	// ENPP_global
+	bool checkENPP_global = testDLS_carPoint_ENPP_global();
+	testSuperFct_vec_cardinalPoints.push_back(checkENPP_global);
+	// ENPD
+	bool checkENPD = testDLS_carPoint_ENPD();
+	testSuperFct_vec_cardinalPoints.push_back(checkENPD);
+	// f_number_imaSpace
+	bool checkf_number_imaSpace = testDLS_carPoint_f_number_imaSpace();
+	testSuperFct_vec_cardinalPoints.push_back(checkf_number_imaSpace);
+	// NA_imaSpace
+	bool checkNA_imaSpace = testDLS_carPoint_NA_imaSpace();
+	testSuperFct_vec_cardinalPoints.push_back(checkNA_imaSpace);
+	// WFNO
+	bool checkWFNO = testDLS_carPoint_WFNO();
+	testSuperFct_vec_cardinalPoints.push_back(checkWFNO);
 
 
-
-
-
-
-
-	//// E0 multiCarPoints
-	//bool checkE1 = testDLS__E0_MultiCarPoints();
-	//testSuperFct_vec_cardinalPoints.push_back(checkE1);
+	// E0 multiCarPoints
+	bool checkE1 = testDLS__E0_MultiCarPoints();
+	testSuperFct_vec_cardinalPoints.push_back(checkE1);
 
 	bool returnChecker = Math::checkTrueOfVectorElements(testSuperFct_vec_cardinalPoints);
 	return returnChecker;
@@ -183,7 +213,7 @@ void testDLS::loadImportantValues()
 bool testDLS::testE0_DLS_MD()
 {
 	std::vector<bool> testE0_vec;
-	
+
 	// build the optical system
 	ApertureStopElement AperStop0(/* semi height*/2.0, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAir());
 	SphericalElement Sphere1(/*radius*/ 40.0, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,25.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBK7_S1());
@@ -225,9 +255,9 @@ bool testDLS::testE0_DLS_MD()
 	DLS DLS_E0(/*optSysEle*/ optSysEle_E0,/*fields*/ mFields012_obj_vec, /*wavelength*/ mWavelength_vec, /*rings*/ 6, /*arms*/ 8);
 	DLS_E0.setMaxWorstCounter(50);
 	DLS_E0.setMaxInterations(200);
-	
+
 	DLS_E0.optimizeSystem_DLS_multiplicativ_Damping();
-	
+
 	OpticalSystemElement optimizedOptSysEle = DLS_E0.getOptimizedSystem_HLT();
 
 	std::vector<real> rms_Z{ 60.093,79.343,126.244 };
@@ -316,7 +346,7 @@ bool testDLS::testE2_DLS_MD()
 
 	std::vector<bool> testE2_vec;
 
-	
+
 	// build the optical system
 	ApertureStopElement AperStop0(/* semi height*/2.0, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAir());
 	SphericalElement Sphere1(/*radius*/ 20.0, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,25.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBK7_S1());
@@ -357,7 +387,7 @@ bool testDLS::testE2_DLS_MD()
 	//// check changes thickness --> 0
 	DLS DLS_E2_0(/*optSysEle*/ optSysEle_E2,/*fields*/ mFields012_obj_vec, /*wavelength*/ mWavelength_vec, /*rings*/ 6, /*arms*/ 8);
 	DLS_E2_0.changeThickness_Z_SurfaceTo_All(0, 1.0);
-	std::vector<real> thicknessCorrect_0{1.0,10.0,10.0,5.0,10.0,10.0 };
+	std::vector<real> thicknessCorrect_0{ 1.0,10.0,10.0,5.0,10.0,10.0 };
 	OpticalSystem_LLT optSys_0_0 = DLS_E2_0.getOptSys_LLT_vec()[0];
 	bool checkThick_0_0 = oftenUse::checkThickness(optSys_0_0, thicknessCorrect_0, 0.01);
 	testE2_vec.push_back(checkThick_0_0);
@@ -434,7 +464,7 @@ bool testDLS::testE2_DLS_MD()
 	DLS_E2.setMaxInterations(500);
 	DLS_E2.setMaxWorstCounter(250);
 	DLS_E2.optimizeSystem_DLS_multiplicativ_Damping();
-	
+
 	OpticalSystemElement optimizedOptSysEle = DLS_E2.getOptimizedSystem_HLT();
 	oftenUse::print(optimizedOptSysEle, mWave550);
 
@@ -444,8 +474,8 @@ bool testDLS::testE2_DLS_MD()
 	std::vector<real> rms_Z{ 84.098,94.834,126.370 };
 	bool betterZ_E2 = oftenUse::checkOptSysELement_Equal_Better_Zemax(optimizedOptSysEle, mFields012_obj_vec, mWavelength_vec, rms_Z, 10.0, compareTOM_Zemax::comBetter);
 	testE2_vec.push_back(betterZ_E2);
-	
-	
+
+
 	bool returnCheckerE2 = Math::checkTrueOfVectorElements(testE2_vec);
 	return returnCheckerE2;
 
@@ -458,7 +488,7 @@ bool testDLS::testE3_DLS_MD() // 3 radii are variable
 {
 	std::vector<bool> testE3_vec;
 
-	
+
 	// build the optical system
 	ApertureStopElement AperStop0(/* semi height*/2.0, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAir());
 	SphericalElement Sphere1(/*radius*/ 40.0, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,25.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBK7_S1());
@@ -493,7 +523,7 @@ bool testDLS::testE3_DLS_MD() // 3 radii are variable
 
 	//	build optical system
 	OpticalSystemElement optSysEle_E3(opticalSystemE3_ptr, interactionsE3_ptr);
-	
+
 	std::vector<real> rmsZemax{ 81.210, 103.000, 166.007 };
 	bool test_E3 = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSysEle_E3, mFields012_obj_vec, mWavelength_vec, rmsZemax, 1.0, compareTOM_Zemax::comEqual);
 	testE3_vec.push_back(test_E3);
@@ -632,7 +662,7 @@ bool testDLS::testE5_DLS_MD() // 2 radii and 1 thickness is variable
 	DLS_E5.setMaxWorstCounter(100);
 	DLS_E5.setMaxBorderViolations(30);
 	DLS_E5.setMaxInterations(200);
-	
+
 	DLS_E5.setMaxDeltaParameter(100.0);
 	DLS_E5.setFlipOrientationRadius(1000.0);
 	DLS_E5.setMinDeltaParameter(0.00000001);
@@ -744,7 +774,7 @@ bool testDLS::testE7_DLS_MD() // aperture stop is not first surface
 	Sphere0_E7.setParameterPointZ(0.01, 7.0, 0.0, typeModifierVariable);
 	Sphere3_E7.setParameterRadius(-1000.0, 1000.0, 0.0, typeModifierVariable);
 
-	
+
 	surfacePtr Sphere0_E7_ptr = Sphere0_E7.clone();
 	surfacePtr Sphere1_E7_ptr = Sphere1_E7.clone();
 	surfacePtr Sphere2_E7_ptr = Sphere2_E7.clone();
@@ -794,7 +824,7 @@ bool testDLS::testE7_DLS_MD() // aperture stop is not first surface
 
 	real rmsStartSum = Math::sumAllVectorValues(rmsStartSystem_Z);
 	// here we do not get a better result than Zemax, but the algorithm works...
-	std::vector<real> rmsOptiSystem =  oftenUse::getRMSoptSysHLT(optimizedOptSysEle, mField0_05_1_obj_vec, mWavelength_FdV_vec, 6, 8);
+	std::vector<real> rmsOptiSystem = oftenUse::getRMSoptSysHLT(optimizedOptSysEle, mField0_05_1_obj_vec, mWavelength_FdV_vec, 6, 8);
 	real rmsOptiSysSum = Math::sumAllVectorValues(rmsOptiSystem);
 	bool betterThanStartSystem = rmsOptiSysSum < rmsStartSum;
 	test_E7_vec.push_back(betterThanStartSystem);
@@ -942,7 +972,7 @@ bool testDLS::testDLS_carPoint_EFL()
 	DLS_efl.setMinDeltaParameter(0.00000001);
 	DLS_efl.setFactorGettingBetter(0.2);
 	DLS_efl.setFactorGettingWorst(2.1);
-			
+
 	DLS_efl.optimizeSystem_DLS_multiplicativ_Damping();
 	OpticalSystemElement optimizedOptSysEle = DLS_efl.getOptimizedSystem_HLT();
 
@@ -953,7 +983,7 @@ bool testDLS::testDLS_carPoint_EFL()
 	test_efl_vec.push_back(checkRMS_bestMerit_optimizedSystem);
 
 	// check efl
-	CardinalPoints carPoints_efl(optimizedOptSysEle,mWave587d, objectPoint_inf_obj::inf);
+	CardinalPoints carPoints_efl(optimizedOptSysEle, mWave587d, objectPoint_inf_obj::inf);
 	real calcEFL = carPoints_efl.getEFL();
 	bool checkEFL_opti = std::abs(calcEFL - targetEFL) < 0.1;
 	test_efl_vec.push_back(checkEFL_opti);
@@ -975,7 +1005,8 @@ bool testDLS::testDLS_carPoint_PP_obj()
 
 	S1.setParameterRadius(-1000.0, 1000.0, 0.0, typeModifierVariable);
 
-	std::vector<surfacePtr> opticalSystem_efl_ptr = { S0.clone() , S1.clone(), S2.clone(), S3.clone()};
+
+	std::vector<surfacePtr> opticalSystem_efl_ptr = { S0.clone() , S1.clone(), S2.clone(), S3.clone() };
 	std::vector<interaction_ptr> interactions_efl_ptr = { mRefrac.clone(), mRefrac.clone() ,mDoNothing.clone(), mAbsorb.clone() };
 
 	//	build optical system
@@ -1010,7 +1041,610 @@ bool testDLS::testDLS_carPoint_PP_obj()
 	bool isPP_obj_var = DLS_PP_obj.getTargetCardinalPoints().isPP_obj_target();
 	test_vec.push_back(isPP_obj_var);
 
-	bool returnChecker= Math::checkTrueOfVectorElements(test_vec);
+	bool returnChecker = Math::checkTrueOfVectorElements(test_vec);
+	return returnChecker;
+}
+
+bool testDLS::testDLS_carPoint_PP_ima()
+{
+	// save bools in this vector
+	std::vector<bool> test_vec;
+
+	// surfaces PP_ima
+	SphericalElement S0(/*radius*/ 150.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,50.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBK7_S1());
+	SphericalElement S1(/*radius*/ 50.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,60.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getNBK7_S1(), /*refractive index B*/glasses.getNSF6_S1());
+	SphericalElement S2(/*radius*/ 50.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,70.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNSF6_S1());
+	ApertureStopElement S3(/* semi height*/3.0, /*point*/{ 0.0,0.0,120.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAir());
+	PlanElement S4(/*semi height*/ 7.0, /*point*/{ 0.0,0.0,140.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getAir());
+
+	S1.setParameterRadius(-1000.0, 1000.0, 0.0, typeModifierVariable);
+
+	surfacePtr S0_ptr = S0.clone();
+	surfacePtr S1_ptr = S1.clone();
+	surfacePtr S2_ptr = S2.clone();
+	surfacePtr S3_ptr = S3.clone();
+	surfacePtr S4_ptr = S4.clone();
+
+
+	std::vector<surfacePtr> opticalSystem_PP_ima_ptr = { S0.clone() , S1.clone(), S2.clone(), S3.clone() , S4.clone() };
+	std::vector<interaction_ptr> interactions_PP_ima_ptr = { mRefrac.clone(), mRefrac.clone() , mRefrac.clone() ,mDoNothing.clone(), mAbsorb.clone() };
+
+	//	build optical system
+	OpticalSystemElement optSys(opticalSystem_PP_ima_ptr, interactions_PP_ima_ptr);
+
+	// print the start system
+	std::cout << "" << std::endl;
+	std::cout << "start system PP_ima" << std::endl;
+	oftenUse::print(optSys, mWave550);
+
+	// check the start system
+	real rmsStartSystem = 1698.87;
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSys, { 0.0,0.0,0.0 }, mWave550, rmsStartSystem, 0.5, compareTOM_Zemax::comEqual);
+	test_vec.push_back(checkStartSys);
+
+	// load the target cardinal point
+	targetCardinalPointsStruct targetCarPointPP_ima;
+	real targetPP_ima = -73.0;
+	targetCarPointPP_ima.setTargetPP_ima(targetPP_ima);
+
+	// optimization the system
+	std::vector<VectorStructR3> field_vec = { {0.0,0.0,0.0} };
+	std::vector<real> wave550_vec = { mWave550 };
+	DLS DLS_PP_ima(/*optSysEle*/ optSys, field_vec, /*wavelength*/ wave550_vec, /*rings*/ 6, /*arms*/ 8, false, targetCarPointPP_ima);
+	DLS_PP_ima.optimizeSystem_DLS_multiplicativ_Damping();
+
+	// check cardinal point
+	CardinalPoints carPoints_PP_ima(DLS_PP_ima.getOptimizedSystem_HLT(), mWave550, objectPoint_inf_obj::obj);
+	real optimizedPP_ima = carPoints_PP_ima.getPP_ima();
+	bool checkPP_ima = std::abs(optimizedPP_ima - targetPP_ima) < 0.1;
+	test_vec.push_back(checkPP_ima);
+	bool isPP_ima_var = DLS_PP_ima.getTargetCardinalPoints().isPP_ima_target();
+	test_vec.push_back(isPP_ima_var);
+
+	bool returnChecker = Math::checkTrueOfVectorElements(test_vec);
+	return returnChecker;
+}
+
+bool testDLS::testDLS_carPoint_EXPP_lastSurface()
+{
+	// save bools in this vector
+	std::vector<bool> test_vec;
+
+	// surfaces EXPP_lastSurface
+	ApertureStopElement S0(/* semi height*/1.0, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAir());
+	SphericalElement S1(/*radius*/ 30.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,15.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getF5_S1());
+	SphericalElement S2(/*radius*/ 10.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,25.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getF5_S1());
+	PlanElement S3(/*semi height*/ 7.0, /*point*/{ 0.0,0.0,55.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getAir());
+
+	S1.setParameterRadius(-1000.0, 1000.0, 0.0, typeModifierVariable);
+
+
+	std::vector<surfacePtr> opticalSystem_efl_ptr = { S0.clone() , S1.clone(), S2.clone(), S3.clone() };
+	std::vector<interaction_ptr> interactions_efl_ptr = { mDoNothing.clone(),mRefrac.clone(), mRefrac.clone() , mAbsorb.clone() };
+
+	//	build optical system
+	OpticalSystemElement optSys(opticalSystem_efl_ptr, interactions_efl_ptr);
+
+	// print the start system
+	std::cout << "" << std::endl;
+	std::cout << "start system _efl" << std::endl;
+	oftenUse::print(optSys, mWave550);
+
+	// check the start system
+	real rmsStartSystem = 330.308;
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSys, { 0.0,0.0,0.0 }, mWave550, rmsStartSystem, 0.5, compareTOM_Zemax::comEqual);
+	test_vec.push_back(checkStartSys);
+
+	// load the target cardinal point
+	targetCardinalPointsStruct targetCarPointEFL;
+	real targetEXPP_lastSurface = -70.0;
+	targetCarPointEFL.setTargetEXPP_lastSurface(targetEXPP_lastSurface);
+
+	// optimization the system
+	std::vector<VectorStructR3> field_vec = { {0.0,0.0,0.0} };
+	std::vector<real> wave550_vec = { mWave550 };
+	DLS DLS_EXPP_lastSurface(/*optSysEle*/ optSys, field_vec, /*wavelength*/ wave550_vec, /*rings*/ 6, /*arms*/ 8, false, targetCarPointEFL);
+	DLS_EXPP_lastSurface.optimizeSystem_DLS_multiplicativ_Damping();
+
+	// check cardinal point
+	CardinalPoints carPoints_efl(DLS_EXPP_lastSurface.getOptimizedSystem_HLT(), mWave550, objectPoint_inf_obj::obj);
+	real optimizedEXPP_lastSurface = carPoints_efl.getEXPP_lastSurface();
+	bool checkEXPP_lastSurface = std::abs(optimizedEXPP_lastSurface - targetEXPP_lastSurface) < 0.1;
+	test_vec.push_back(checkEXPP_lastSurface);
+	bool isEXPP_lastSurface_var = DLS_EXPP_lastSurface.getTargetCardinalPoints().isEXPP_lastSurface_target();
+	test_vec.push_back(isEXPP_lastSurface_var);
+
+	bool returnChecker = Math::checkTrueOfVectorElements(test_vec);
+	return returnChecker;
+}
+
+bool testDLS::testDLS_carPoint_EXPD()
+{
+	// save bools in this vector
+	std::vector<bool> test_vec;
+
+	// surfaces _efl
+	SphericalElement S0(/*radius*/ 100.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNF2_S1());
+	SphericalElement S1(/*radius*/ 10.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNF2_S1());
+	ApertureStopElement S2(/* semi height*/2.0, /*point*/{ 0.0,0.0,50.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAir());
+	SphericalElement S3(/*radius*/ 100.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,55.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNF2_S1());
+	SphericalElement S4(/*radius*/ 10.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,65.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNF2_S1());
+	PlanElement S5(/*semi height*/ 7.0, /*point*/{ 0.0,0.0,95.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getAir());
+
+	S4.setParameterRadius(0, 1000.0, 0.0, typeModifierVariable);
+
+
+	std::vector<surfacePtr> opticalSystem_efl_ptr = { S0.clone() , S1.clone(), S2.clone(), S3.clone(), S4.clone(), S5.clone() };
+	std::vector<interaction_ptr> interactions_efl_ptr = { mRefrac.clone(), mRefrac.clone() ,mDoNothing.clone(), mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
+
+	//	build optical system
+	OpticalSystemElement optSys(opticalSystem_efl_ptr, interactions_efl_ptr);
+
+	// print the start system
+	std::cout << "" << std::endl;
+	std::cout << "start system _efl" << std::endl;
+	oftenUse::print(optSys, mWave550);
+
+	// check the start system
+	real rmsStartSystem = 1788.10;
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSys, { 0.0,0.0,0.0 }, mWave550, rmsStartSystem, 0.5, compareTOM_Zemax::comEqual);
+	test_vec.push_back(checkStartSys);
+
+	// load the target cardinal point
+	targetCardinalPointsStruct targetCarPointEFL;
+	real targetEXPD = 3.0;
+	targetCarPointEFL.setTargetEXPD(targetEXPD);
+
+	// optimization the system
+	std::vector<VectorStructR3> field_vec = { {0.0,0.0,0.0} };
+	std::vector<real> wave550_vec = { mWave550 };
+	DLS DLS_EXPD(/*optSysEle*/ optSys, field_vec, /*wavelength*/ wave550_vec, /*rings*/ 6, /*arms*/ 8, false, targetCarPointEFL);
+	DLS_EXPD.optimizeSystem_DLS_multiplicativ_Damping();
+
+	// check cardinal point
+	CardinalPoints carPoints_efl(DLS_EXPD.getOptimizedSystem_HLT(), mWave550, objectPoint_inf_obj::obj);
+	real optimizedEXPD = carPoints_efl.getEXPD();
+	bool checkEXPD = std::abs(optimizedEXPD - targetEXPD) < 0.1;
+	test_vec.push_back(checkEXPD);
+	bool isEXPD_var = DLS_EXPD.getTargetCardinalPoints().isEXPD_target();
+	test_vec.push_back(isEXPD_var);
+
+	bool returnChecker = Math::checkTrueOfVectorElements(test_vec);
+	return returnChecker;
+}
+
+bool testDLS::testDLS_carPoint_Magnification()
+{
+	// save bools in this vector
+	std::vector<bool> test_vec;
+
+	// surfaces _efl
+	ApertureStopElement S0(/* semi height*/1.0, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAir());
+	SphericalElement S1(/*radius*/ 30.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,15.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getF5_S1());
+	SphericalElement S2(/*radius*/ 10.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,25.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getF5_S1(), /*refractive index B*/glasses.getNKF9_S1());
+	SphericalElement S3(/*radius*/ 5.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,40.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNKF9_S1());
+	PlanElement S4(/*semi height*/ 7.0, /*point*/{ 0.0,0.0,55.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getAir());
+
+	S3.setParameterRadius(-1000.0, 1000.0, 0.0, typeModifierVariable);
+
+
+	std::vector<surfacePtr> opticalSystem_efl_ptr = { S0.clone() , S1.clone(), S2.clone(), S3.clone() , S4.clone() };
+	std::vector<interaction_ptr> interactions_efl_ptr = { mDoNothing.clone(),mRefrac.clone(), mRefrac.clone() ,mRefrac.clone() , mAbsorb.clone() };
+
+	//	build optical system
+	OpticalSystemElement optSys(opticalSystem_efl_ptr, interactions_efl_ptr);
+
+	// print the start system
+	std::cout << "" << std::endl;
+	std::cout << "start system Mag" << std::endl;
+	oftenUse::print(optSys, mWave550);
+
+	// check the start system
+	real rmsStartSystem = 1163.26;
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSys, { 0.0,0.0,0.0 }, mWave550, rmsStartSystem, 0.5, compareTOM_Zemax::comEqual);
+	test_vec.push_back(checkStartSys);
+
+	// load the target cardinal point
+	targetCardinalPointsStruct targetCarPointEFL;
+	real targetMagnification = -0.5;
+	targetCarPointEFL.setTargetMag(targetMagnification);
+
+	// optimization the system
+	std::vector<VectorStructR3> field_vec = { {0.0,0.0,0.0} };
+	std::vector<real> wave550_vec = { mWave550 };
+	DLS DLS_Magnification(/*optSysEle*/ optSys, field_vec, /*wavelength*/ wave550_vec, /*rings*/ 6, /*arms*/ 8, false, targetCarPointEFL);
+	DLS_Magnification.optimizeSystem_DLS_multiplicativ_Damping();
+
+	// check cardinal point
+	CardinalPoints carPoints_efl(DLS_Magnification.getOptimizedSystem_HLT(), mWave550, objectPoint_inf_obj::obj);
+	real optimizedMagnification = carPoints_efl.getMagnification();
+	bool checkMagnification = std::abs(optimizedMagnification - targetMagnification) < 0.1;
+	test_vec.push_back(checkMagnification);
+	bool isMag_var = DLS_Magnification.getTargetCardinalPoints().isMag_target();
+	test_vec.push_back(isMag_var);
+
+	bool returnChecker = Math::checkTrueOfVectorElements(test_vec);
+	return returnChecker;
+}
+
+bool testDLS::testDLS_carPoint_NA_objSpace()
+{
+	// save bools in this vector
+	std::vector<bool> test_vec;
+
+	// surfaces _efl
+	SphericalElement S0(/*radius*/ 30.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNLAF7_S1());
+	SphericalElement S1(/*radius*/ 40.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getSF10_S1(), /*refractive index B*/glasses.getNLAF7_S1());
+	SphericalElement S2(/*radius*/ 100.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,35.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getSF10_S1());
+	ApertureStopElement S3(/* semi height*/2.0, /*point*/{ 0.0,0.0,50.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAir());
+	PlanElement S4(/*semi height*/ 7.0, /*point*/{ 0.0,0.0,55.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getAir());
+
+	S1.setParameterRadius(-1000.0, 1000.0, 0.0, typeModifierVariable);
+
+
+	std::vector<surfacePtr> opticalSystem_efl_ptr = { S0.clone() , S1.clone(), S2.clone(), S3.clone(), S4.clone() };
+	std::vector<interaction_ptr> interactions_efl_ptr = { mRefrac.clone(), mRefrac.clone() ,mRefrac.clone() ,mDoNothing.clone(), mAbsorb.clone() };
+
+	//	build optical system
+	OpticalSystemElement optSys(opticalSystem_efl_ptr, interactions_efl_ptr);
+
+	// print the start system
+	std::cout << "" << std::endl;
+	std::cout << "start system NA_objSpace" << std::endl;
+	oftenUse::print(optSys, mWave550);
+
+	// check the start system
+	real rmsStartSystem = 1673.22;
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSys, { 0.0,0.0,0.0 }, mWave550, rmsStartSystem, 0.5, compareTOM_Zemax::comEqual);
+	test_vec.push_back(checkStartSys);
+
+	// load the target cardinal point
+	targetCardinalPointsStruct targetCarPointEFL;
+	real targetNA_objSpace = 0.05;
+	targetCarPointEFL.setTargetNA_obj(targetNA_objSpace);
+
+	// optimization the system
+	std::vector<VectorStructR3> field_vec = { {0.0,0.0,0.0} };
+	std::vector<real> wave550_vec = { mWave550 };
+	DLS DLS_NA_objSpace(/*optSysEle*/ optSys, field_vec, /*wavelength*/ wave550_vec, /*rings*/ 6, /*arms*/ 8, false, targetCarPointEFL);
+	DLS_NA_objSpace.optimizeSystem_DLS_multiplicativ_Damping();
+
+	// check cardinal point
+	CardinalPoints carPoints_efl(DLS_NA_objSpace.getOptimizedSystem_HLT(), mWave550, objectPoint_inf_obj::obj);
+	real optimizedNA_objSpace = carPoints_efl.getNA_objSpace();
+	bool checkNA_objSpace = std::abs(optimizedNA_objSpace - targetNA_objSpace) < 0.1;
+	test_vec.push_back(checkNA_objSpace);
+	bool isNA_objSpace_var = DLS_NA_objSpace.getTargetCardinalPoints().isNA_obj_target();
+	test_vec.push_back(isNA_objSpace_var);
+
+	bool returnChecker = Math::checkTrueOfVectorElements(test_vec);
+	return returnChecker;
+}
+
+bool testDLS::testDLS_carPoint_ENPP_firstSurface()
+{
+	// save bools in this vector
+	std::vector<bool> test_vec;
+
+	// surfaces _efl
+	SphericalElement S0(/*radius*/ 100.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBK7_S1());
+	SphericalElement S1(/*radius*/ 100.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBK7_S1());
+	ApertureStopElement S2(/* semi height*/1.5, /*point*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAir());
+	SphericalElement S3(/*radius*/ 30.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,45.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getF5_S1());
+	SphericalElement S4(/*radius*/ 10.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,55.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getK7_S1(), /*refractive index B*/glasses.getF5_S1());
+	SphericalElement S5(/*radius*/ 30.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,70.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getK7_S1());
+	PlanElement S6(/*semi height*/ 7.0, /*point*/{ 0.0,0.0,150.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getAir());
+
+	S1.setParameterRadius(-1000.0, 1000.0, 0.0, typeModifierVariable);
+
+
+	std::vector<surfacePtr> opticalSystem_efl_ptr = { S0.clone() , S1.clone(), S2.clone(), S3.clone() , S4.clone(), S5.clone(), S6.clone() };
+	std::vector<interaction_ptr> interactions_efl_ptr = { mRefrac.clone(), mRefrac.clone(), mDoNothing.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
+
+	//	build optical system
+	OpticalSystemElement optSys(opticalSystem_efl_ptr, interactions_efl_ptr);
+
+	// print the start system
+	std::cout << "" << std::endl;
+	std::cout << "start system ENPP_firstSurface" << std::endl;
+	oftenUse::print(optSys, mWave550);
+
+	// check the start system
+	real rmsStartSystem = 1628.71;
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSys, { 0.0,0.0,0.0 }, mWave550, rmsStartSystem, 0.5, compareTOM_Zemax::comEqual);
+	test_vec.push_back(checkStartSys);
+
+	// load the target cardinal point
+	targetCardinalPointsStruct targetCarPointEFL;
+	real targetENPP_firstSurface = 20.5;
+	targetCarPointEFL.setTargetENPP_firstSurface(targetENPP_firstSurface);
+
+	// optimization the system
+	std::vector<VectorStructR3> field_vec = { {0.0,0.0,0.0} };
+	std::vector<real> wave550_vec = { mWave550 };
+	DLS DLS_ENPP_firstSurface(/*optSysEle*/ optSys, field_vec, /*wavelength*/ wave550_vec, /*rings*/ 6, /*arms*/ 8, false, targetCarPointEFL);
+	DLS_ENPP_firstSurface.optimizeSystem_DLS_multiplicativ_Damping();
+
+	// check cardinal point
+	CardinalPoints carPoints_efl(DLS_ENPP_firstSurface.getOptimizedSystem_HLT(), mWave550, objectPoint_inf_obj::obj);
+	real optimizedENPP_firstSurface = carPoints_efl.getENPP_firstSurface();
+	bool checkENPP_firstSurface = std::abs(optimizedENPP_firstSurface - targetENPP_firstSurface) < 0.1;
+	test_vec.push_back(checkENPP_firstSurface);
+	bool isENPP_firstSurface_var = DLS_ENPP_firstSurface.getTargetCardinalPoints().isENPP_firstSurface_target();
+	test_vec.push_back(isENPP_firstSurface_var);
+
+	bool returnChecker = Math::checkTrueOfVectorElements(test_vec);
+	return returnChecker;
+}
+
+bool testDLS::testDLS_carPoint_ENPP_global()
+{
+	// save bools in this vector
+	std::vector<bool> test_vec;
+
+	// surfaces _efl
+	SphericalElement S0(/*radius*/ 100.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBK7_S1());
+	SphericalElement S1(/*radius*/ 100.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBK7_S1());
+	ApertureStopElement S2(/* semi height*/1.5, /*point*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAir());
+	SphericalElement S3(/*radius*/ 30.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,45.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getF5_S1());
+	SphericalElement S4(/*radius*/ 10.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,55.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getK7_S1(), /*refractive index B*/glasses.getF5_S1());
+	SphericalElement S5(/*radius*/ 30.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,70.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getK7_S1());
+	PlanElement S6(/*semi height*/ 7.0, /*point*/{ 0.0,0.0,150.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getAir());
+
+	S1.setParameterRadius(-1000.0, 1000.0, 0.0, typeModifierVariable);
+
+	std::vector<surfacePtr> opticalSystem_efl_ptr = { S0.clone() , S1.clone(), S2.clone(), S3.clone() , S4.clone(), S5.clone(), S6.clone() };
+	std::vector<interaction_ptr> interactions_efl_ptr = { mRefrac.clone(), mRefrac.clone(), mDoNothing.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
+
+	//	build optical system
+	OpticalSystemElement optSys(opticalSystem_efl_ptr, interactions_efl_ptr);
+
+	// print the start system
+	std::cout << "" << std::endl;
+	std::cout << "start system ENPP_firstSurface" << std::endl;
+	oftenUse::print(optSys, mWave550);
+
+	// check the start system
+	real rmsStartSystem = 1628.71;
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSys, { 0.0,0.0,0.0 }, mWave550, rmsStartSystem, 0.5, compareTOM_Zemax::comEqual);
+	test_vec.push_back(checkStartSys);
+
+	// load the target cardinal point
+	targetCardinalPointsStruct targetCarPointEFL;
+	real targetENPP_global = 50.0;
+	targetCarPointEFL.setTargetENPP_globalCoori(targetENPP_global);
+
+	// optimization the system
+	std::vector<VectorStructR3> field_vec = { {0.0,0.0,0.0} };
+	std::vector<real> wave550_vec = { mWave550 };
+	DLS DLS_ENPP_global(/*optSysEle*/ optSys, field_vec, /*wavelength*/ wave550_vec, /*rings*/ 6, /*arms*/ 8, false, targetCarPointEFL);
+	DLS_ENPP_global.optimizeSystem_DLS_multiplicativ_Damping();
+
+	// check cardinal point
+	CardinalPoints carPoints_efl(DLS_ENPP_global.getOptimizedSystem_HLT(), mWave550, objectPoint_inf_obj::obj);
+	real optimizedENPP_global = carPoints_efl.getENPP_globalCoodi();
+	bool checkENPP_global = std::abs(optimizedENPP_global - targetENPP_global) < 0.1;
+	test_vec.push_back(checkENPP_global);
+	bool isENPP_global_var = DLS_ENPP_global.getTargetCardinalPoints().isENPP_globalCoodi_target();
+	test_vec.push_back(isENPP_global_var);
+
+	bool returnChecker = Math::checkTrueOfVectorElements(test_vec);
+	return returnChecker;
+}
+
+bool testDLS::testDLS_carPoint_ENPD()
+{
+	// save bools in this vector
+	std::vector<bool> test_vec;
+
+	// surfaces _efl
+	SphericalElement S0(/*radius*/ 100.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getNLAF2_S1(), /*refractive index B*/glasses.getAir());
+	SphericalElement S1(/*radius*/ 30.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,15.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getNLAF2_S1(), /*refractive index B*/glasses.getAir());
+	ApertureStopElement S2(/* semi height*/4.0, /*point*/{ 0.0,0.0,25.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAir());
+	SphericalElement S3(/*radius*/ 20.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,35.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBK7_S1());
+	SphericalElement S4(/*radius*/ 20.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,50.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBK7_S1());
+	PlanElement S5(/*semi height*/ 7.0, /*point*/{ 0.0,0.0,80.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getAir());
+
+	S1.setParameterRadius(-1000.0, 1000.0, 0.0, typeModifierVariable);
+
+
+	std::vector<surfacePtr> opticalSystem_efl_ptr = { S0.clone() , S1.clone(), S2.clone(), S3.clone(), S4.clone(), S5.clone() };
+	std::vector<interaction_ptr> interactions_efl_ptr = { mRefrac.clone(), mRefrac.clone() ,mDoNothing.clone(), mRefrac.clone(), mRefrac.clone(),mAbsorb.clone() };
+
+	//	build optical system
+	OpticalSystemElement optSys(opticalSystem_efl_ptr, interactions_efl_ptr);
+
+	// print the start system
+	std::cout << "" << std::endl;
+	std::cout << "start system ENPD" << std::endl;
+	oftenUse::print(optSys, mWave550);
+
+	// check the start system
+	real rmsStartSystem = 1484.76;
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSys, { 0.0,0.0,0.0 }, mWave550, rmsStartSystem, 0.5, compareTOM_Zemax::comEqual);
+	test_vec.push_back(checkStartSys);
+
+	// load the target cardinal point
+	targetCardinalPointsStruct targetCarPointEFL;
+	real targetENPD = 6.0;
+	targetCarPointEFL.setTargetENPD(targetENPD);
+
+	// optimization the system
+	std::vector<VectorStructR3> field_vec = { {0.0,0.0,0.0} };
+	std::vector<real> wave550_vec = { mWave550 };
+	DLS DLS_ENPD(/*optSysEle*/ optSys, field_vec, /*wavelength*/ wave550_vec, /*rings*/ 6, /*arms*/ 8, false, targetCarPointEFL);
+	DLS_ENPD.optimizeSystem_DLS_multiplicativ_Damping();
+
+	// check cardinal point
+	CardinalPoints carPoints_efl(DLS_ENPD.getOptimizedSystem_HLT(), mWave550, objectPoint_inf_obj::obj);
+	real optimizedENPD = carPoints_efl.getENPD();
+	bool checkENPD = std::abs(optimizedENPD - targetENPD) < 0.1;
+	test_vec.push_back(checkENPD);
+	bool isENPD_var = DLS_ENPD.getTargetCardinalPoints().isENPD_target();
+	test_vec.push_back(isENPD_var);
+
+	bool returnChecker = Math::checkTrueOfVectorElements(test_vec);
+	return returnChecker;
+}
+
+bool testDLS::testDLS_carPoint_f_number_imaSpace()
+{
+	// save bools in this vector
+	std::vector<bool> test_vec;
+
+	// surfaces _efl
+	SphericalElement S0(/*radius*/ 100.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getNLAF2_S1(), /*refractive index B*/glasses.getAir());
+	SphericalElement S1(/*radius*/ 30.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,15.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getNLAF2_S1(), /*refractive index B*/glasses.getNSK11_S1());
+	SphericalElement S2(/*radius*/ 20.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,25.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNSK11_S1());
+	ApertureStopElement S3(/* semi height*/1.0, /*point*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAir());
+	PlanElement S4(/*semi height*/ 7.0, /*point*/{ 0.0,0.0,40.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getAir());
+
+	S2.setParameterRadius(-1000.0, 1000.0, 0.0, typeModifierVariable);
+
+
+	std::vector<surfacePtr> opticalSystem_efl_ptr = { S0.clone() , S1.clone(), S2.clone(), S3.clone(), S4.clone() };
+	std::vector<interaction_ptr> interactions_efl_ptr = { mRefrac.clone(), mRefrac.clone() , mRefrac.clone() ,mDoNothing.clone(), mAbsorb.clone() };
+
+	//	build optical system
+	OpticalSystemElement optSys(opticalSystem_efl_ptr, interactions_efl_ptr);
+
+	// print the start system
+	std::cout << "" << std::endl;
+	std::cout << "start system f_number_imaSpace" << std::endl;
+	oftenUse::print(optSys, mWave550);
+
+	// check the start system
+	real rmsStartSystem = 948.487;
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSys, { 0.0,0.0,0.0 }, mWave550, rmsStartSystem, 0.5, compareTOM_Zemax::comEqual);
+	test_vec.push_back(checkStartSys);
+
+	// load the target cardinal point
+	targetCardinalPointsStruct targetCarPointEFL;
+	real targetf_number_imaSpace = 25.0;
+	targetCarPointEFL.setTargetFnum(targetf_number_imaSpace);
+
+	// optimization the system
+	std::vector<VectorStructR3> field_vec = { {0.0,0.0,0.0} };
+	std::vector<real> wave550_vec = { mWave550 };
+	DLS DLS_f_number_imaSpace(/*optSysEle*/ optSys, field_vec, /*wavelength*/ wave550_vec, /*rings*/ 6, /*arms*/ 8, false, targetCarPointEFL);
+	DLS_f_number_imaSpace.optimizeSystem_DLS_multiplicativ_Damping();
+
+	// check cardinal point
+	CardinalPoints carPoints_efl(DLS_f_number_imaSpace.getOptimizedSystem_HLT(), mWave550, objectPoint_inf_obj::obj);
+	real optimizedf_number_imaSpace = carPoints_efl.getF_num_imaSpace();
+	bool checkf_number_imaSpace = std::abs(optimizedf_number_imaSpace - targetf_number_imaSpace) < 0.1;
+	test_vec.push_back(checkf_number_imaSpace);
+	bool isf_number_imaSpace_var = DLS_f_number_imaSpace.getTargetCardinalPoints().isF_num_target();
+	test_vec.push_back(isf_number_imaSpace_var);
+
+	bool returnChecker = Math::checkTrueOfVectorElements(test_vec);
+	return returnChecker;
+}
+
+bool testDLS::testDLS_carPoint_NA_imaSpace()
+{
+	// save bools in this vector
+	std::vector<bool> test_vec;
+
+	// surfaces _efl
+	ApertureStopElement S0(/* semi height*/2.5, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAir());
+	SphericalElement S1(/*radius*/ 100.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,15.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getNLAF2_S1(), /*refractive index B*/glasses.getAir());
+	SphericalElement S2(/*radius*/ 30.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getNLAF2_S1(), /*refractive index B*/glasses.getNSK11_S1());
+	SphericalElement S3(/*radius*/ 20.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNSK11_S1());
+	PlanElement S4(/*semi height*/ 7.0, /*point*/{ 0.0,0.0,35.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getAir());
+
+	S3.setParameterRadius(-1000.0, 1000.0, 0.0, typeModifierVariable);
+
+
+	std::vector<surfacePtr> opticalSystem_efl_ptr = { S0.clone() , S1.clone(), S2.clone(), S3.clone(), S4.clone() };
+	std::vector<interaction_ptr> interactions_efl_ptr = { mDoNothing.clone(), mRefrac.clone(), mRefrac.clone() , mRefrac.clone(),  mAbsorb.clone() };
+
+	//	build optical system
+	OpticalSystemElement optSys(opticalSystem_efl_ptr, interactions_efl_ptr);
+
+	// print the start system
+	std::cout << "" << std::endl;
+	std::cout << "start system NA_imaSpace" << std::endl;
+	oftenUse::print(optSys, mWave550);
+
+	// check the start system
+	real rmsStartSystem = 5342.97;
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSys, { 0.0,0.0,0.0 }, mWave550, rmsStartSystem, 0.5, compareTOM_Zemax::comEqual);
+	test_vec.push_back(checkStartSys);
+
+	// load the target cardinal point
+	targetCardinalPointsStruct targetCarPointEFL;
+	real targetNA_imaSpace = 0.05;
+	targetCarPointEFL.setTargetNA_imaSpace(targetNA_imaSpace);
+
+	// optimization the system
+	std::vector<VectorStructR3> field_vec = { {0.0,0.0,0.0} };
+	std::vector<real> wave550_vec = { mWave550 };
+	DLS DLS_NA_imaSpace(/*optSysEle*/ optSys, field_vec, /*wavelength*/ wave550_vec, /*rings*/ 6, /*arms*/ 8, false, targetCarPointEFL);
+	DLS_NA_imaSpace.optimizeSystem_DLS_multiplicativ_Damping();
+
+	// check cardinal point
+	CardinalPoints carPoints_efl(DLS_NA_imaSpace.getOptimizedSystem_HLT(), mWave550, objectPoint_inf_obj::obj);
+	real optimizedNA_imaSpace = carPoints_efl.getNA_imaSpace();
+	bool checkNA_imaSpace = std::abs(optimizedNA_imaSpace - targetNA_imaSpace) < 0.1;
+	test_vec.push_back(checkNA_imaSpace);
+	bool isNA_imaSpace_var = DLS_NA_imaSpace.getTargetCardinalPoints().isNA_imaSpace();
+	test_vec.push_back(isNA_imaSpace_var);
+
+	bool returnChecker = Math::checkTrueOfVectorElements(test_vec);
+	return returnChecker;
+}
+
+bool testDLS::testDLS_carPoint_WFNO()
+{
+	// save bools in this vector
+	std::vector<bool> test_vec;
+
+	// surfaces _efl
+	ApertureStopElement S0(/* semi height*/2.0, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAir());
+	SphericalElement S1(/*radius*/ 100.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getNSF6_S1(), /*refractive index B*/glasses.getAir());
+	SphericalElement S2(/*radius*/ 20.00, /*semi height*/ 7.0, /*point*/{ 0.0,0.0,25.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNSF6_S1());
+	PlanElement S3(/*semi height*/ 7.0, /*point*/{ 0.0,0.0,30.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getAir());
+
+	S1.setParameterRadius(-1000.0, 1000.0, 0.0, typeModifierVariable);
+
+
+	std::vector<surfacePtr> opticalSystem_efl_ptr = { S0.clone() , S1.clone(), S2.clone(), S3.clone() };
+	std::vector<interaction_ptr> interactions_efl_ptr = { mDoNothing.clone(), mRefrac.clone(), mRefrac.clone() , mAbsorb.clone() };
+
+	//	build optical system
+	OpticalSystemElement optSys(opticalSystem_efl_ptr, interactions_efl_ptr);
+
+	// print the start system
+	std::cout << "" << std::endl;
+	std::cout << "start system _WFNO" << std::endl;
+	oftenUse::print(optSys, mWave550);
+
+	// check the start system
+	real rmsStartSystem = 3658.69;
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSys, { 0.0,0.0,0.0 }, mWave550, rmsStartSystem, 0.5, compareTOM_Zemax::comEqual);
+	test_vec.push_back(checkStartSys);
+
+	// load the target cardinal point
+	targetCardinalPointsStruct targetCarPointEFL;
+	real targetWFNO = 8.0;
+	targetCarPointEFL.setTargetWFNO(targetWFNO);
+
+	// optimization the system
+	std::vector<VectorStructR3> field_vec = { {0.0,0.0,0.0} };
+	std::vector<real> wave550_vec = { mWave550 };
+	DLS DLS_WFNO(/*optSysEle*/ optSys, field_vec, /*wavelength*/ wave550_vec, /*rings*/ 6, /*arms*/ 8, false, targetCarPointEFL);
+	DLS_WFNO.optimizeSystem_DLS_multiplicativ_Damping();
+
+	// check cardinal point
+	CardinalPoints carPoints_efl(DLS_WFNO.getOptimizedSystem_HLT(), mWave550, objectPoint_inf_obj::obj);
+	real optimizedWFNO = carPoints_efl.getWorkingFnumber();
+	bool checkWFNO = std::abs(optimizedWFNO - targetWFNO) < 0.1;
+	test_vec.push_back(checkWFNO);
+	bool isWFNO_var = DLS_WFNO.getTargetCardinalPoints().isTargetWFNO();
+	test_vec.push_back(isWFNO_var);
+
+	bool returnChecker = Math::checkTrueOfVectorElements(test_vec);
 	return returnChecker;
 }
 
@@ -1111,7 +1745,7 @@ bool testDLS::testDLS__E0_MultiCarPoints()
 	// optimization
 	DLS DLS_E1(/*optSysEle*/ optSysEle_E1, /*fields*/ mFields012_obj_vec, /*wavelengths*/ mWavelength_FdV_vec, /*rings*/ 6, /*arms*/ 8, /*target cardinal points*/ targetCarPoints, /*default DLS*/ oftenUse::getDefaultPara_DLS(false));
 
-	
+
 	DLS_E1.optimizeSystem_DLS_multiplicativ_Damping();
 	OpticalSystemElement optimizedOptSysEle = DLS_E1.getOptimizedSystem_HLT();
 

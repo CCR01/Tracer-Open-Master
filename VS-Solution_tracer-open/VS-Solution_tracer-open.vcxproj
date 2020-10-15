@@ -215,6 +215,7 @@
     <ClCompile Include="..\LowLevelTracing\Interaction\InteractionRay_LLT.cpp" />
     <ClCompile Include="..\LowLevelTracing\Interaction\ReflectionRay_LLT.cpp" />
     <ClCompile Include="..\LowLevelTracing\Interaction\RefractedRay_LLT.cpp" />
+    <ClCompile Include="..\LowLevelTracing\Interaction\TraceLightRayBack.cpp" />
     <ClCompile Include="..\LowLevelTracing\JonesVector.cpp" />
     <ClCompile Include="..\LowLevelTracing\OpticalSystem_LLT.cpp" />
     <ClCompile Include="..\LowLevelTracing\SurfaceIntersectionRay_LLT.cpp" />
@@ -355,6 +356,7 @@
     <ClInclude Include="..\LowLevelTracing\Interaction\InteractionRay_LLT.h" />
     <ClInclude Include="..\LowLevelTracing\Interaction\ReflectionRay_LLT.h" />
     <ClInclude Include="..\LowLevelTracing\Interaction\RefractedRay_LLT.h" />
+    <ClInclude Include="..\LowLevelTracing\Interaction\TraceLightRayBack.h" />
     <ClInclude Include="..\LowLevelTracing\LLT_Package.h" />
     <ClInclude Include="..\LowLevelTracing\OpticalSystem_LLT.h" />
     <ClInclude Include="..\LowLevelTracing\Surfaces\ApertureStop_LLT.h" />

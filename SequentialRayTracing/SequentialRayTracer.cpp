@@ -762,17 +762,35 @@ std::vector <IntersectInfosAndPosSurfaceAndTotalSteps> SequentialRayTracing::get
 	unsigned int sizeAllInterPoints = mSaveInterInfos_PosSur_TotSteps.size();
 	unsigned int sizeOptSys = mOpticalSystem_LLT.getPosAndInteractingSurface().size();
 	unsigned int interPointsLastSurface = sizeAllInterPoints / sizeOptSys;
-	returnInterInfos_PosSur_TotSteps.resize(interPointsLastSurface);
+	
 
-	unsigned int counter = 0;
+	
+	// check if you lose rays
+	if (sizeAllInterPoints % sizeOptSys == 0)
+	{ 
+		// here we do not lose rays
+		unsigned int counter = 0;
+		returnInterInfos_PosSur_TotSteps.resize(interPointsLastSurface);
 
-	//#pragma omp parallel for
-	for (int i = 0; i < sizeAllInterPoints; i++)
-	{
-		if (mSaveInterInfos_PosSur_TotSteps.at(i).getPosition() == surfaceNo)
+		for (int i = 0; i < sizeAllInterPoints; i++)
 		{
-			returnInterInfos_PosSur_TotSteps[counter] = mSaveInterInfos_PosSur_TotSteps.at(i);
-			++counter;
+			if (mSaveInterInfos_PosSur_TotSteps.at(i).getPosition() == surfaceNo)
+			{
+				returnInterInfos_PosSur_TotSteps[counter] = mSaveInterInfos_PosSur_TotSteps.at(i);
+				++counter;
+			}
+		}
+	}
+
+	else
+	{
+		// here we lose some ray -> we need a push_back
+		for (int i = 0; i < sizeAllInterPoints; i++)
+		{
+			if (mSaveInterInfos_PosSur_TotSteps.at(i).getPosition() == surfaceNo)
+			{
+				returnInterInfos_PosSur_TotSteps.push_back(mSaveInterInfos_PosSur_TotSteps.at(i));
+			}
 		}
 	}
 

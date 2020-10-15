@@ -136,6 +136,7 @@
     <ClCompile Include="..\benchmark\testImageSimulation\BenchmarkImageSimulationOpenCV.cpp" />
     <ClCompile Include="..\Plot\OpticalSystemPlots.cpp" />
     <ClCompile Include="..\benchmark\testQwtPlots\BenchmarkOpticalSystemAllSurfaces.cpp" />
+    <ClCompile Include="..\LowLevelTracing\Interaction\TraceLightRayBack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Analyse\CardinalPoints.h" />
@@ -277,5 +278,6 @@
     <ClInclude Include="..\benchmark\testImageSimulation\BenchmarkImageSimulationOpenCV.h" />
     <ClInclude Include="..\Plot\OpticalSystemPlots.h" />
     <ClInclude Include="..\benchmark\testQwtPlots\BenchmarkOpticalSystemAllSurfaces.h" />
+    <ClInclude Include="..\LowLevelTracing\Interaction\TraceLightRayBack.h" />
   </ItemGroup>
 </Project>

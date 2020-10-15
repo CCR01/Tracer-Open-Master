@@ -1,14 +1,17 @@
-#include "DoNothingInteraction_LLT.h"
-#include <iostream>
+#include "TraceLightRayBack.h"
 
-std::vector<LightRayStruct> DoNothingInteraction_LLT::calcInteraction(const IntersectInformationStruct& intersectInformation)
+TraceLightRayBack::TraceLightRayBack(){ mReturnLightRay_vec.resize(1); }
+
+TraceLightRayBack::~TraceLightRayBack() {}
+
+std::vector<LightRayStruct> TraceLightRayBack::calcInteraction(const IntersectInformationStruct& intersectInformation)
 {
-		
+
 	mReturnLightRay.setLight_LLT(intersectInformation.getLight());
-	
+
 
 	if (intersectInformation.getSurfaceSide() == N) //there is no intersection point
-	{	
+	{
 		// just for debugging
 		// std::cout << "there is no interaction point! \n";
 		mReturnLightRay.setLightRayAbsorb();
@@ -17,7 +20,8 @@ std::vector<LightRayStruct> DoNothingInteraction_LLT::calcInteraction(const Inte
 	else
 	{
 		mRay.setOriginRay(intersectInformation.getIntersectionPoint());
-		mRay.setDirectionRayUnit(intersectInformation.getDirectionRayUnit());
+		mRay.setDirectionRayUnit(-1.0 * intersectInformation.getDirectionRayUnit());
+
 		if (intersectInformation.getSurfaceSide() == A) //0--> surface side A
 		{
 			mRefIndexSideA = intersectInformation.getRefractiveIndex_A();
@@ -35,16 +39,16 @@ std::vector<LightRayStruct> DoNothingInteraction_LLT::calcInteraction(const Inte
 	return mReturnLightRay_vec;
 }
 
-DoNothingInteraction_LLT::DoNothingInteraction_LLT() { mReturnLightRay_vec.resize(1); };
-DoNothingInteraction_LLT::~DoNothingInteraction_LLT() {};
-DoNothingInteraction_LLT::DoNothingInteraction_LLT(IntersectInformationStruct intersectInformation) :
+
+
+TraceLightRayBack::TraceLightRayBack(IntersectInformationStruct intersectInformation) :
 	mIntersectionInformation(intersectInformation)
 {
 	mReturnLightRay_vec.resize(1);
 }
 
 
-DoNothingInteraction_LLT::DoNothingInteraction_LLT(DoNothingInteraction_LLT &source)
+TraceLightRayBack::TraceLightRayBack(TraceLightRayBack& source)
 {
 	if (this == &source)
 	{
@@ -55,7 +59,7 @@ DoNothingInteraction_LLT::DoNothingInteraction_LLT(DoNothingInteraction_LLT &sou
 	mReturnLightRay_vec = source.mReturnLightRay_vec;
 }
 
-DoNothingInteraction_LLT& DoNothingInteraction_LLT::operator=(DoNothingInteraction_LLT& source)
+TraceLightRayBack& TraceLightRayBack::operator=(TraceLightRayBack& source)
 {
 	if (this == &source)
 	{
@@ -68,14 +72,14 @@ DoNothingInteraction_LLT& DoNothingInteraction_LLT::operator=(DoNothingInteracti
 	return *this;
 }
 
-std::shared_ptr<InteractionRay_LLT> DoNothingInteraction_LLT::clone()
+std::shared_ptr<InteractionRay_LLT> TraceLightRayBack::clone()
 {
-	std::shared_ptr<InteractionRay_LLT> doNothingInteraction_LLT(new DoNothingInteraction_LLT(*this));
+	std::shared_ptr<InteractionRay_LLT> traceLightRayBack(new TraceLightRayBack(*this));
 
-	return doNothingInteraction_LLT;
+	return traceLightRayBack;
 }
 
-RaysRangeStruct DoNothingInteraction_LLT::howManyRays()
+RaysRangeStruct TraceLightRayBack::howManyRays()
 {
 	return RaysRangeStruct{ 1,1 };
 }
