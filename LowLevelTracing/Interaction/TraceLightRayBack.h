@@ -1,22 +1,23 @@
 #pragma once
+
 #include "InteractionRay_LLT.h"
 
-class DoNothingInteraction_LLT : public InteractionRay_LLT 
+class TraceLightRayBack : public InteractionRay_LLT
 {
 public:
-	DoNothingInteraction_LLT();
-	virtual ~DoNothingInteraction_LLT() override;
-	DoNothingInteraction_LLT& operator=(DoNothingInteraction_LLT& source);
-	DoNothingInteraction_LLT(DoNothingInteraction_LLT &source);
+	TraceLightRayBack();
+	virtual ~TraceLightRayBack() override;
+	TraceLightRayBack& operator=(TraceLightRayBack& source);
+	TraceLightRayBack(TraceLightRayBack& source);
 	virtual std::shared_ptr<InteractionRay_LLT> clone() override;
-	DoNothingInteraction_LLT(IntersectInformationStruct intersectInformation);
-	
+	TraceLightRayBack(IntersectInformationStruct intersectInformation);
+
 	virtual RaysRangeStruct howManyRays() override;
 
 	virtual std::vector<LightRayStruct> calcInteraction(const IntersectInformationStruct& intersectInformation) override;
 
-private:
 
+private:
 	IntersectInformationStruct mIntersectionInformation{};
 
 	// infos to calc interaction
@@ -25,6 +26,5 @@ private:
 	Ray_LLT mRay{};
 	real mRefIndexSideA{};
 	real mRefIndexSideB{};
-
 
 };

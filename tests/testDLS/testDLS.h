@@ -46,10 +46,30 @@ public:
 	// EFL
 	bool testDLS_carPoint_EFL();
 	// Weitere test Funktionen für einzelne cardinal points
+	// PP_obj
 	bool testDLS_carPoint_PP_obj();
-
-
-
+	//PP_ima
+	bool testDLS_carPoint_PP_ima();
+	//EXPP_lastSurface
+	bool testDLS_carPoint_EXPP_lastSurface();
+	//EXPD
+	bool testDLS_carPoint_EXPD();
+	//Magnification
+	bool testDLS_carPoint_Magnification();
+	//NA_objSpace
+	bool testDLS_carPoint_NA_objSpace();
+	//ENPP_firstSurface
+	bool testDLS_carPoint_ENPP_firstSurface();
+	//ENPP_global
+	bool testDLS_carPoint_ENPP_global();
+	//ENPD
+	bool testDLS_carPoint_ENPD();
+	//f_number_imaSpace
+	bool testDLS_carPoint_f_number_imaSpace();
+	//NA_imaSpace
+	bool testDLS_carPoint_NA_imaSpace();
+	//WFNO
+	bool testDLS_carPoint_WFNO();
 
 	// E0 multiCarPoints
 	bool testDLS__E0_MultiCarPoints();
@@ -110,7 +130,7 @@ private:
 	real mField_Y_2{};
 	std::vector<real> mFields000_inf_vec{};
 	std::vector<real> mFields012_inf_vec{};
-	
+
 
 	real mDefaultTolerance{};
 
