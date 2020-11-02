@@ -103,7 +103,7 @@
       <OpenMPSupport>true</OpenMPSupport>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opencv_photo320d.lib;opencv_core320d.lib;opencv_imgproc320d.lib;opencv_highgui320d.lib;opencv_imgcodecs320d.lib;opencv_videoio320d.lib;opencv_calib3d320d.lib;..\Qt\lib\Qt5Cored.lib;..\Qt\lib\Qt5Widgetsd.lib;..\Qt\lib\Qt5Guid.lib;..\Qt\lib\Qt5Svgd.lib;..\Qt\qwt-6.1.4\lib\static\qwtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opencv_ml320d.lib;opencv_photo320d.lib;opencv_core320d.lib;opencv_imgproc320d.lib;opencv_highgui320d.lib;opencv_imgcodecs320d.lib;opencv_videoio320d.lib;opencv_calib3d320d.lib;..\Qt\lib\Qt5Cored.lib;..\Qt\lib\Qt5Widgetsd.lib;..\Qt\lib\Qt5Guid.lib;..\Qt\lib\Qt5Svgd.lib;..\Qt\qwt-6.1.4\lib\static\qwtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <StackReserveSize>2000000000</StackReserveSize>
       <StackCommitSize>2000000000</StackCommitSize>
     </Link>
@@ -139,7 +139,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opencv_photo320.lib;opencv_core320.lib;opencv_imgproc320.lib;opencv_highgui320.lib;opencv_imgcodecs320.lib;opencv_videoio320.lib;opencv_calib3d320.lib;..\Qt\lib\Qt5Core.lib;..\Qt\lib\Qt5Widgets.lib;..\Qt\lib\Qt5Gui.lib;..\Qt\lib\Qt5Svg.lib;..\Qt\qwt-6.1.4\lib\static\qwt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opencv_ml320.lib;opencv_photo320.lib;opencv_core320.lib;opencv_imgproc320.lib;opencv_highgui320.lib;opencv_imgcodecs320.lib;opencv_videoio320.lib;opencv_calib3d320.lib;..\Qt\lib\Qt5Core.lib;..\Qt\lib\Qt5Widgets.lib;..\Qt\lib\Qt5Gui.lib;..\Qt\lib\Qt5Svg.lib;..\Qt\qwt-6.1.4\lib\static\qwt.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <StackReserveSize>2000000000</StackReserveSize>
       <StackCommitSize>2000000000</StackCommitSize>
     </Link>
@@ -152,8 +152,6 @@
     <ClCompile Include="..\Analyse\Spot.cpp" />
     <ClCompile Include="..\benchmark\benachRayTracing\benchRayTracing.cpp" />
     <ClCompile Include="..\benchmark\BenchAnalyse\BechmarkExipPupilCalculation.cpp" />
-    <ClCompile Include="..\benchmark\BenchAnalyse\BenchmarkImageSimulation.cpp" />
-    <ClCompile Include="..\benchmark\BenchAnalyse\testPSF.cpp" />
     <ClCompile Include="..\benchmark\benchGeneticAndDLS\benchGeneticAndDLS.cpp" />
     <ClCompile Include="..\benchmark\ComplexOptSys\BenchmarkComplexOptSys.cpp" />
     <ClCompile Include="..\benchmark\Element\OpticalSystemElement\BenchOpticalSystemElement.cpp" />
@@ -177,7 +175,6 @@
     <ClCompile Include="..\benchmark\testCompareTwoImages\testCompareTwoImagesAndImprove.cpp" />
     <ClCompile Include="..\benchmark\testEvaluateManyOptSys_RayTracing\testEvaluateManyOptSys_RayTracing.cpp" />
     <ClCompile Include="..\benchmark\testImageProcessing\TestImageProcessing.cpp" />
-    <ClCompile Include="..\benchmark\testImageSimulation\BenchmarkImageSimulationOpenCV.cpp" />
     <ClCompile Include="..\benchmark\testImages\testImages.cpp" />
     <ClCompile Include="..\benchmark\testImproveImageQuality\testImproveImageQuality.cpp" />
     <ClCompile Include="..\benchmark\testOptimizer_Paper\testOptimizer_Paper_P0.cpp" />
@@ -200,7 +197,6 @@
     <ClCompile Include="..\ImageProcessing\ImageProcessing.cpp" />
     <ClCompile Include="..\Image\Images.cpp" />
     <ClCompile Include="..\Image\ImageSimulation.cpp" />
-    <ClCompile Include="..\Image\ImageSimulationPlot.cpp" />
     <ClCompile Include="..\Image\ImproveImageQuality.cpp" />
     <ClCompile Include="..\Inport_Export_Data\Inport_Export_Data.cpp" />
     <ClCompile Include="..\LensCatalog\EdmundOptics\EdmundOpticsLensCatalog.cpp" />
@@ -246,12 +242,12 @@
     <ClCompile Include="..\Plot\PlotRayFan.cpp" />
     <ClCompile Include="..\Plot\PlotSpotDiagram.cpp" />
     <ClCompile Include="..\Plot\QwtPloItems.cpp" />
-    <ClCompile Include="..\PSFfunction\PSFfunction.cpp" />
     <ClCompile Include="..\LowLevelTracing\ImportantStructures.cpp" />
     <ClCompile Include="..\LowLevelTracing\Light_LLT.cpp" />
     <ClCompile Include="..\LowLevelTracing\main_LLT.cpp" />
     <ClCompile Include="..\LowLevelTracing\Ray_LLT.cpp" />
     <ClCompile Include="..\LowLevelTracing\Math_LLT.cpp" />
+    <ClCompile Include="..\Point-Spread Function\Point-Spread Function.cpp" />
     <ClCompile Include="..\RayAiming\RayAiming.cpp" />
     <ClCompile Include="..\RayAiming\RayAimingSuperFct.cpp" />
     <ClCompile Include="..\SequentialRayTracing\SequentialRayTracer.cpp" />
@@ -270,6 +266,7 @@
     <ClCompile Include="..\tests\TestGenetic\TestGenetic.cpp" />
     <ClCompile Include="..\tests\testGlasses\testGlasses.cpp" />
     <ClCompile Include="..\tests\testGlobalOPD\TestGlobalOPD.cpp" />
+    <ClCompile Include="..\tests\testImageSimulation\testImageSimulation.cpp" />
     <ClCompile Include="..\tests\testLensCatalog\testLensCatalogEO.cpp" />
     <ClCompile Include="..\tests\testLensReplace\testLensReplace.cpp" />
     <ClCompile Include="..\tests\testMath\testMath.cpp" />
@@ -277,6 +274,7 @@
     <ClCompile Include="..\tests\testOptimizeSystemSuperFct_GeneticAndDLS\testOptimizeSystemSuperFct_GeneticAndDLS.cpp" />
     <ClCompile Include="..\tests\testParaxialLens_LLT\testParaxialLens_LLT.cpp" />
     <ClCompile Include="..\tests\testPlanGeometry\testPlanSurface.cpp" />
+    <ClCompile Include="..\tests\testPSF\testPSF.cpp" />
     <ClCompile Include="..\tests\testRayAimingSuperFct\testRayAiming_multiThreads_12.cpp" />
     <ClCompile Include="..\tests\testRayAiming\testRayAiming.cpp" />
     <ClCompile Include="..\tests\testSphericalSurface\testSphericalSurface_LLT.cpp" />
@@ -291,8 +289,6 @@
     <ClInclude Include="..\basicdefinition\basicdefinitions.h" />
     <ClInclude Include="..\benchmark\benachRayTracing\benchRayTracing.h" />
     <ClInclude Include="..\benchmark\BenchAnalyse\BenchmarkExitPupilCalculation.h" />
-    <ClInclude Include="..\benchmark\BenchAnalyse\BenchmarkImageSimulation.h" />
-    <ClInclude Include="..\benchmark\BenchAnalyse\testPSF.h" />
     <ClInclude Include="..\benchmark\benchGeneticAndDLS\benchGeneticAndDLS.h" />
     <ClInclude Include="..\benchmark\ComplexOptSys\BenchmarkComplexOptSys.h" />
     <ClInclude Include="..\benchmark\Element\OpticalSystemElement\BenchOpticalSystemElement.h" />
@@ -316,7 +312,6 @@
     <ClInclude Include="..\benchmark\testCompareTwoImages\testCompareTwoImagesAndImprove.h" />
     <ClInclude Include="..\benchmark\testEvaluateManyOptSys_RayTracing\testEvaluateManyOptSys_RayTracing.h" />
     <ClInclude Include="..\benchmark\testImageProcessing\TestImageProcessing.h" />
-    <ClInclude Include="..\benchmark\testImageSimulation\BenchmarkImageSimulationOpenCV.h" />
     <ClInclude Include="..\benchmark\testImages\testImages.h" />
     <ClInclude Include="..\benchmark\testImproveImageQuality\testImproveImageQuality.h" />
     <ClInclude Include="..\benchmark\testOptimizer_Paper\testOptimizer_Paper_P0.h" />
@@ -339,9 +334,8 @@
     <ClInclude Include="..\Glasses\Glasses.h" />
     <ClInclude Include="..\ImageProcessing\ImageProcessing.h" />
     <ClInclude Include="..\Image\Images.h" />
-    <ClInclude Include="..\Image\ImageSimulation.h" />
     <ClInclude Include="..\Image\ImageSimulationHeader.h" />
-    <ClInclude Include="..\Image\ImageSimulationPlot.h" />
+    <ClInclude Include="..\Image\ImageSimulation.h" />
     <ClInclude Include="..\Image\ImproveImageQuality.h" />
     <ClInclude Include="..\Inport_Export_Data\Inport_Export_Data.h" />
     <ClInclude Include="..\LensCatalog\EdmundOptics\EdmundOpticsLensCatalog.h" />
@@ -387,13 +381,13 @@
     <ClInclude Include="..\Plot\PlotRayFan.h" />
     <ClInclude Include="..\Plot\PlotSpotDiagram.h" />
     <ClInclude Include="..\Plot\QwtPloItems.h" />
-    <ClInclude Include="..\PSFfunction\PSFfunction.h" />
     <ClInclude Include="..\LowLevelTracing\ImportantStructures.h" />
     <ClInclude Include="..\LowLevelTracing\JonesVector.h" />
     <ClInclude Include="..\LowLevelTracing\Light_LLT.h" />
     <ClInclude Include="..\LowLevelTracing\SurfaceIntersectionRay_LLT.h" />
     <ClInclude Include="..\LowLevelTracing\Ray_LLT.h" />
     <ClInclude Include="..\LowLevelTracing\Math_LLT.h" />
+    <ClInclude Include="..\Point-Spread Function\Point-Spread Function.h" />
     <ClInclude Include="..\RayAiming\RayAiming.h" />
     <ClInclude Include="..\RayAiming\RayAimingSuperFct.h" />
     <ClInclude Include="..\SequentialRayTracing\SequentialRayTracer.h" />
@@ -412,6 +406,7 @@
     <ClInclude Include="..\tests\TestGenetic\TestGenetic.h" />
     <ClInclude Include="..\tests\testGlasses\testGlasses.h" />
     <ClInclude Include="..\tests\testGlobalOPD\TestGlobalOPD.h" />
+    <ClInclude Include="..\tests\testImageSimulation\testImageSimulation.h" />
     <ClInclude Include="..\tests\testLensCatalog\testLensCatalogEO.h" />
     <ClInclude Include="..\tests\testLensReplace\testLenseReplace.h" />
     <ClInclude Include="..\tests\testMath\testMath.h" />
@@ -419,6 +414,7 @@
     <ClInclude Include="..\tests\testOptimizeSystemSuperFct_GeneticAndDLS\testOptimizeSystemSuperFct_GeneticAndDLS.h" />
     <ClInclude Include="..\tests\testParaxialLens_LLT\testParaxialLens_LLT.h" />
     <ClInclude Include="..\tests\testPlanGeometry\testPlanSurface.h" />
+    <ClInclude Include="..\tests\testPSF\testPSF.h" />
     <ClInclude Include="..\tests\testRayAimingSuperFct\testRayAiming_multiThreads_12.h" />
     <ClInclude Include="..\tests\testRayAiming\testRayAiming.h" />
     <ClInclude Include="..\tests\testSphericalSurface\testSphericalSurface_LLT.h" />

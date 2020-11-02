@@ -24,7 +24,7 @@ public:
 	bool checkPointsToFillAS_ToCalcGLobalOPD();
 
 	// check fill OPD in Matrix
-	bool checkFillOPDinMatrix();
+	bool checkFillOPDinMatrix_E0();
 
 	//bool checkGlobalOPD_E0();
 	//bool checkGlobalOPD_E1();

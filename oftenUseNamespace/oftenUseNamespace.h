@@ -100,4 +100,8 @@ namespace oftenUse
 	// get default values for genetic optimisation
 	defaultParaGenetic getDafulatPara_Genetic(bool rayTracing);
 
+	std::string replacePointByComma(std::string inputString);
+
+
+
 }

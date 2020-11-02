@@ -116,29 +116,29 @@ QualityAndImageStruct CompareTwoImagesAndImprove::comTwoImaAndImprove_E0_Dis_Med
 	std::cout << "improvement: " << improvementCorrectDistortion << std::endl;
 	std::cout << "___________________________________" << std::endl;
 	std::cout << "" << std::endl;
-	Images::saveImage("../images/", "notDistortedImages_elefant.png", notDestortedImage);
+	Images::saveImage("../image/", "notDistortedImages_elefant", "png", notDestortedImage);
 
 	// median blur filter
 	std::vector<int> kernelSizeMedianBlur{ 3,5,7,9,11,13,15,17,19 };
 	medianBlurStruct sharpImage_medianBlur = ImproveImaQual.improveImageQuality_medianBlur(mSharpImage, notDestortedImage, kernelSizeMedianBlur);
 	sharpImage_medianBlur.printPara_MedianBlur_Struct();
-	Images::saveImage("../images/", "sharpImage_medianBlur.png", sharpImage_medianBlur.getImage());
+	Images::saveImage("../images", "sharpImage_medianBlur" ,"png", sharpImage_medianBlur.getImage());
 
 	// unsharp masking
 	std::vector<cv::Size> kernelSize_unsharpMasking{ {7,7},{9,9} };
 	unsharpMaskStruct sharpImage_unsharpMasking = ImproveImaQual.improveImageQuality_unsharpMask_multiCore(mSharpImage, sharpImage_medianBlur.getImage(), kernelSize_unsharpMasking, 8.0, 11.0, 200, 1.0, 2.0, 200, cv::BORDER_DEFAULT, 0.0, 0.0, 1, 1.0, 1.0, 1);
 	sharpImage_unsharpMasking.printPara_UnsharpMaskinFilter_Struct();
-	Images::saveImage("../images/", "sharpImage_unsharpMasking.png", sharpImage_unsharpMasking.getImage());
+	Images::saveImage("../images", "sharpImage_unsharpMasking", "png", sharpImage_unsharpMasking.getImage());
 
 	// bilateral Filter 
 	bilateralFilterStruct sharpImage_bilateralFilter = ImproveImaQual.improveImageQuality_bilateralFilter_multiCore(mSharpImage, sharpImage_unsharpMasking.getImage(), 7, 8, 1, 6.0, 7.0, 150, 0.3, 0.7, 150, cv::BORDER_DEFAULT);
 	sharpImage_bilateralFilter.printPara_BilateralFilter_Struct();
-	Images::saveImage("../images/", "sharpImage_bilateralFilter.png", sharpImage_bilateralFilter.getImage());
+	Images::saveImage("../images", "sharpImage_bilateralFilter" , "png", sharpImage_bilateralFilter.getImage());
 	
 	// detail enhancement
 	detailEnhanceStruct sharpImage_detailEnhange = ImproveImaQual.improveImageQuality_ditailEnhance_multiCore(mSharpImage, sharpImage_bilateralFilter.getImage(), 0.3, 0.7, 50, 0.9, 1.1, 50);
 	sharpImage_detailEnhange.printPara_DetailEnhance_Struct();
-	Images::saveImage("../images/", "sharpImage_detailEnhange.png", sharpImage_detailEnhange.getImage());
+	Images::saveImage("../images", "sharpImage_detailEnhange", "png", sharpImage_detailEnhange.getImage());
 	
 	real Quality = Images::calcSumMatrix(Images::PerElementAbsDifference(sharpImage_detailEnhange.getImage(), mSharpImage));
 	
@@ -172,23 +172,23 @@ QualityAndImageStruct CompareTwoImagesAndImprove::comTwoImaAndImprove_E0_Dis_Uns
 	std::cout << "improvement: " << improvementCorrectDistortion << std::endl;
 	std::cout << "___________________________________" << std::endl;
 	std::cout << "" << std::endl;
-	Images::saveImage("../images/", "notDistortedImages_elefant.png", notDestortedImage);
+	Images::saveImage("../images", "notDistortedImages_elefant", "png", notDestortedImage);
 
 	// unsharp masking
 	std::vector<cv::Size> kernelSize_unsharpMasking{ {9,9} };
 	unsharpMaskStruct sharpImage_unsharpMasking = ImproveImaQual.improveImageQuality_unsharpMask_multiCore(mSharpImage, notDestortedImage, kernelSize_unsharpMasking, 8.0, 8.0, 1, 1.735, 1.735, 1, cv::BORDER_DEFAULT, 0.0, 0.0, 1, 1.0, 1.0, 1);
 	sharpImage_unsharpMasking.printPara_UnsharpMaskinFilter_Struct();
-	Images::saveImage("../images/", "sharpImage_unsharpMasking.png", sharpImage_unsharpMasking.getImage());
+	Images::saveImage("../images", "sharpImage_unsharpMasking" ,"png", sharpImage_unsharpMasking.getImage());
 
 	// detail enhancement
 	detailEnhanceStruct sharpImage_detailEnhange = ImproveImaQual.improveImageQuality_ditailEnhance_multiCore(mSharpImage, sharpImage_unsharpMasking.getImage(), 0.5, 0.6, 30, 0.8, 1.0, 40);
 	sharpImage_detailEnhange.printPara_DetailEnhance_Struct();
-	Images::saveImage("../images/", "sharpImage_detailEnhange.png", sharpImage_detailEnhange.getImage());
+	Images::saveImage("../images", "sharpImage_detailEnhange", "png", sharpImage_detailEnhange.getImage());
 
 	// Contrast and Gamma
 	ContrastAndGammaStruct sharpImage_ContrastAndGamma = ImproveImaQual.improveImageQuality_contrastAndGamma_multiCore(mSharpImage, sharpImage_detailEnhange.getImage(), 1.0, 5.0, 50, 0.0, 100.0, 100, 0.0, 2.0, 50);
 	sharpImage_ContrastAndGamma.printPara_ContGamma_Struct();
-	Images::saveImage("../images/", "sharpImage_ContrastGamma.png", sharpImage_ContrastAndGamma.getImage());
+	Images::saveImage("../images", "sharpImage_ContrastGamma" ,"png", sharpImage_ContrastAndGamma.getImage());
 
 
 	real Quality = Images::calcSumMatrix(Images::PerElementAbsDifference(sharpImage_ContrastAndGamma.getImage(), mSharpImage));
@@ -224,13 +224,13 @@ QualityAndImageStruct CompareTwoImagesAndImprove::comTwoImaAndImprove_ForHolisti
 	std::cout << "improvement: " << improvementCorrectDistortion << std::endl;
 	std::cout << "___________________________________" << std::endl;
 	std::cout << "" << std::endl;
-	Images::saveImage("../images/", "notDistortedImages_elefant.png", notDestortedImage);
+	Images::saveImage("../images", "notDistortedImages_elefant" , "png", notDestortedImage);
 
 	// unsharp masking
 	std::vector<cv::Size> kernelSize_unsharpMasking{ {3,3}, {5,5}, {7,7}, {9,9}, {11,11} };
 	unsharpMaskStruct sharpImage_unsharpMasking = ImproveImaQual.improveImageQuality_unsharpMask_multiCore(mSharpImage, notDestortedImage, kernelSize_unsharpMasking, 0.01, 1.0, 100, 0.01, 1.0, 100, cv::BORDER_DEFAULT, 0.0, 0.0, 1, 1.0, 1.0, 1);
 	sharpImage_unsharpMasking.printPara_UnsharpMaskinFilter_Struct();
-	Images::saveImage("../images/", "sharpImage_unsharpMasking.png", sharpImage_unsharpMasking.getImage());
+	Images::saveImage("../images", "sharpImage_unsharpMasking" , "png", sharpImage_unsharpMasking.getImage());
 
 	
 	real Quality = Images::calcSumMatrix(Images::PerElementAbsDifference(sharpImage_unsharpMasking.getImage(), mSharpImage));

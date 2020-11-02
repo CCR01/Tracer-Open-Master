@@ -72,7 +72,7 @@ bool testImproveImageQuality::checkImproveImageQuality()
 	unsharpMaskStruct sharpImage_unsharpMasking_elefant_multiCore = improveImaQua.improveImageQuality_unsharpMask_multiCore(elefant_Sharp, elefant_Simulated_resize, kernelSize, 7.5, 10.0, 100.0, 1.0, 2.0, 100.0, cv::BORDER_DEFAULT, 0.0, 0.0, 1.0, 1.0, 1.0, 1);
 	sharpImage_unsharpMasking_elefant_multiCore.printPara_UnsharpMaskinFilter_Struct();
 	Images::showImage("unsharp masking elefant", sharpImage_unsharpMasking_elefant_multiCore.getImage());
-	Images::saveImage("../images/", "unsharpMaskingElefant.png", sharpImage_unsharpMasking_elefant_multiCore.getImage());
+	Images::saveImage("../images", "unsharpMaskingElefant" , "png", sharpImage_unsharpMasking_elefant_multiCore.getImage());
 
 	//// detail enhance --> elefant
 	//cv::Mat elefant_Sharp = Images::loadAnImage_Color("../images/color/useThatImages/useThat/", "elefant_sharp.jpg");

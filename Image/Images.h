@@ -28,12 +28,17 @@ namespace Images
 	// https://stackoverflow.com/questions/21874774/sum-of-elements-in-a-matrix-in-opencv
 
 	// show an image
-	void showImage(std::string nameImage, cv::Mat image);
+	void showImage(const cv::String winname, cv::Mat& ima);
+	cv::Mat convertImage_32FC3_to_CV_8UC3(const cv::Mat& imaToConvert);
+	cv::Mat convertImage_32FC1_to_CV_8UC1(const cv::Mat& imaToConvert);
 
 	// save an image
-	void saveImage(std::string const& fileLocation, std::string const& nameImage, cv::Mat const& image);
+	void saveImage(std::string fileLocation, std::string nameImage, std::string typeIma, const cv::Mat& image);
 
 	// calculate improvement
 	real calcImprovement(cv::Mat const& sharpImage, cv::Mat const& simulatedImage, cv::Mat const& improvetImage);
+
+	// get type of cv::Mat
+	std::string getTypeImageC_VMat(cv::Mat matrix);
 
 }

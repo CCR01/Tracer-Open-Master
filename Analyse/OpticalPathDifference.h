@@ -31,33 +31,39 @@
 
 enum class posExitPupil {exitPupil_Left_ImaSurface, exitPupil_Right_ImaSurface};
 
-struct PX_PY_OPD_MX_MY
+struct PX_PY_MX_MY
 {
 public:
 	void resizeAllvector(unsigned int size);
 	// PX
-	void setPXatPos_i(real px, unsigned int pos);
-	void getPXatPos_i(unsigned int pos);
+	void setPX_ChiefRay_atPos_i(real px, unsigned int pos);
+	real getPX_ChiefRay_atPos_i(unsigned int pos);
+	std::vector<real> getAll_PX_cheifRay() const;
 	// PY
-	void setPYatPos_i(real py, unsigned int pos);
-	void getPYatPos_i(unsigned int pos);
-	// OPD
-	void setOPDatPos_i(real opd, unsigned int pos);
-	void getOPDatPos_i(unsigned int pos);
+	void setPY_ChiefRay_atPos_i(real py, unsigned int pos);
+	real getPY_ChiefRay_atPos_i(unsigned int pos);
+	std::vector<real> getAll_PY_cheifRay() const;
+	//// OPD
+	//void setOPDatPos_i(real opd, unsigned int pos);
+	//real getOPDatPos_i(unsigned int pos);
+	//std::vector<real> getAll_OPD() const;
 	// MX
-	void setMXatPos_i(real MX, unsigned int pos);
-	void getMXatPos_i(unsigned int pos);
+	void setMXatPos_i(unsigned int MX, unsigned int pos);
+	unsigned int getMXatPos_i(unsigned int pos);
+	std::vector<unsigned int> getAll_MX() const;
 	// MY
-	void setMYatPos_i(real MY, unsigned int pos);
-	void getMYatPos_i(unsigned int pos);
+	void setMYatPos_i(unsigned int MY, unsigned int pos);
+	unsigned int getMYatPos_i(unsigned int pos);
+	std::vector<unsigned int> getAll_MY() const;
 
+	void calcAllPositionRegardsToChiefRay(const std::vector<VectorStructR3>& interPointsRefSphere, unsigned int sizeMatrix);
 
 private:
-	std::vector<real> mPX;
-	std::vector<real> mPY;
-	std::vector<real> mOPD;
-	std::vector<real> mMX;
-	std::vector<real> mMY;
+	std::vector<real> mPX_CheifRay;
+	std::vector<real> mPY_CheifRay;
+	//std::vector<real> mOPD;
+	std::vector<unsigned int> mMX;
+	std::vector<unsigned int> mMY;
 };
 
 class OPD
@@ -94,10 +100,10 @@ public:
 
 	/// ***
 	// calculate global OPD
-	void calcGlobalOPD_new();
+	void calcGlobalOPD_new(unsigned int sizeMatrix);
 
 	
-	void calcGlobalOPD_new_Right_SideOfImaSurface(real positionExitPupil_global);
+	void calcGlobalOPD_new_Right_SideOfImaSurface(real positionExitPupil_global, unsigned int sizeMatrix);
 	void buildOpticalSystemWithExitPupilPlan(real positionExitPupil_global);
 	void buildOpticalSystemWithReferenceSphereAtExitPupil(real radiusRefSphere, VectorStructR3 pointRefSphere, VectorStructR3 directionRefSphere);
 
@@ -160,8 +166,7 @@ public:
 	//int OPD::PlotGraph(cv::Mat & data);
 
 
-	// export a cv::mat to excel
-	void exportCV_MatToExcel(cv::Mat matToExport, std::string location, std::string nameFile);
+	
 
 	// get vector with all calculated global OPD --> just for debugging
 	std::vector<real> getVecWithAllCalcGlobalOPD();
@@ -176,7 +181,7 @@ public:
 	void calcAllOPDs(real referenceDistance, const std::vector<real>& allDistances);
 
 	// save all OPDS in matrix
-	void saveAllOPDsInMatrix();
+	void saveAllOPDsInMatrix(std::vector<unsigned int> MX, std::vector<unsigned int> MY, unsigned int size);
 
 private:
 

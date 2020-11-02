@@ -1397,3 +1397,27 @@ defaultParaGenetic oftenUse::getDafulatPara_Genetic(bool rayTracing)
 	return defaultParaGenetic_rayTracing;
 
 }
+
+
+std::string oftenUse::replacePointByComma(std::string inputString)
+{
+
+	unsigned int size = inputString.size();
+	char tempChar{};
+	std::string exportString;
+	exportString.resize(size);
+
+	for (unsigned int i = 0; i < size; ++i)
+	{
+		tempChar = inputString[i];
+
+		if (tempChar == '.')
+		{
+			tempChar = ',' ;
+		}
+
+		exportString[i] = tempChar;
+	}
+
+	return exportString;
+}

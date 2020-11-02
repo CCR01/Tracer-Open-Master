@@ -26,7 +26,7 @@ bool TestImages::checkMethodesNamespaceImages()
 	checkNamespaceImages.push_back(checkResize_Color);
 
 	// save an image
-	Images::saveImage("../images/", "test.png", image1_Color);
+	Images::saveImage("../images", "test", "png", image1_Color);
 
 	cv::Mat imageColorAbsDif = Images::PerElementAbsDifference(image1_Color, resizedImage);
 	real sumMatrix = Images::calcSumMatrix(imageColorAbsDif);

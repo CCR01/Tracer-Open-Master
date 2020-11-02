@@ -13,13 +13,165 @@
 
 #include <cmath>
 #include <limits>
-#include "..\PSFfunction\PSFfunction.h"
+
 #include <fstream>
 #include <stdlib.h>
 
 #include "..\LowLevelTracing\Interaction\RefractedRay_LLT.h"
 #include "..\LowLevelTracing\Interaction\TraceLightRayBack.h"
 
+void PX_PY_MX_MY::resizeAllvector(unsigned int size)
+{
+	mPX_CheifRay.resize(size);
+	mPY_CheifRay.resize(size);
+	//mOPD.resize(size);
+	mMX.resize(size);
+	mMY.resize(size);
+}
+// PX
+void PX_PY_MX_MY::setPX_ChiefRay_atPos_i(real px, unsigned int pos)
+{
+	mPX_CheifRay[pos] = px;
+}
+real PX_PY_MX_MY::getPX_ChiefRay_atPos_i(unsigned int pos)
+{
+	return mPX_CheifRay[pos];
+}
+std::vector<real> PX_PY_MX_MY::getAll_PX_cheifRay() const
+{
+	return mPX_CheifRay;
+}
+// PY
+void PX_PY_MX_MY::setPY_ChiefRay_atPos_i(real py, unsigned int pos)
+{
+	mPY_CheifRay[pos] = py;
+}
+real PX_PY_MX_MY::getPY_ChiefRay_atPos_i(unsigned int pos)
+{
+	return mPY_CheifRay[pos];
+}
+std::vector<real> PX_PY_MX_MY::getAll_PY_cheifRay() const
+{
+	return mPY_CheifRay;
+}
+//// OPD
+//void PX_PY_MX_MY::setOPDatPos_i(real opd, unsigned int pos)
+//{
+//	mOPD[pos] = opd;
+//}
+//real PX_PY_MX_MY::getOPDatPos_i(unsigned int pos)
+//{
+//	return mOPD[pos];
+//}
+//std::vector<real> PX_PY_MX_MY::getAll_OPD() const
+//{
+//	return mOPD;
+//}
+// MX
+void PX_PY_MX_MY::setMXatPos_i(unsigned int MX, unsigned int pos)
+{
+	mMX[pos] = MX;
+}
+unsigned int PX_PY_MX_MY::getMXatPos_i(unsigned int pos)
+{
+	return mMX[pos];
+}
+std::vector<unsigned int> PX_PY_MX_MY::getAll_MX() const
+{
+	return mMX;
+}
+// MY
+void PX_PY_MX_MY::setMYatPos_i(unsigned int MY, unsigned int pos)
+{
+	mMY[pos] = MY;
+}
+unsigned int PX_PY_MX_MY::getMYatPos_i(unsigned int pos)
+{
+	return mMY[pos];
+}
+std::vector<unsigned int> PX_PY_MX_MY::getAll_MY() const
+{
+	return mMY;
+}
+
+void PX_PY_MX_MY::calcAllPositionRegardsToChiefRay(const std::vector<VectorStructR3>& interPointsRefSphere, unsigned int sizeMatrix)
+{
+	unsigned int size = interPointsRefSphere.size();
+
+
+	// resize all vectors
+	resizeAllvector(size);
+
+	// first ray is allways the cheif ray!
+	real refPoint_X = interPointsRefSphere[0].getX();
+	real refPoint_Y = interPointsRefSphere[0].getY();
+
+
+	for (unsigned int i = 0; i < size; ++i)
+	{
+		//mOPD[i] = OPDs[i];
+		mPX_CheifRay[i] = interPointsRefSphere[i].getX() - refPoint_X;
+		mPY_CheifRay[i] = interPointsRefSphere[i].getY() - refPoint_Y;
+	}
+
+	real minX_val = Math::minValueOfVector(mPX_CheifRay);
+	real maxX_val = Math::maxValueOfVactor(mPX_CheifRay);
+	real minY_val = Math::minValueOfVector(mPY_CheifRay);
+	real maxY_val = Math::maxValueOfVactor(mPY_CheifRay);
+
+	// calcualte position in matrix 
+	real tempPX_CheifRay{};
+	real tempPY_ChierRay{};
+	unsigned int tempPosMatrix_X{};
+	unsigned int tempPosMatrix_Y{};
+	unsigned int halfSizeMatrix = (sizeMatrix - 1) / 2;
+	unsigned int middleMatrix_X = halfSizeMatrix;
+	unsigned int middleMatrix_Y = halfSizeMatrix;
+	for (unsigned int i = 0; i < size; ++i)
+	{
+		tempPX_CheifRay = mPX_CheifRay[i];
+		tempPY_ChierRay = mPY_CheifRay[i];
+
+		if (tempPX_CheifRay >= 0.0 && tempPY_ChierRay > 0.0)
+		{
+			tempPosMatrix_X = middleMatrix_X + std::floor((tempPX_CheifRay / maxX_val) * halfSizeMatrix);
+			tempPosMatrix_Y = middleMatrix_Y - std::floor((tempPY_ChierRay / maxY_val) * halfSizeMatrix);
+		}
+
+		else if (tempPX_CheifRay <= 0.0 && tempPY_ChierRay > 0.0)
+		{
+			tempPosMatrix_X = middleMatrix_X - std::floor((tempPX_CheifRay / minX_val) * halfSizeMatrix);
+			tempPosMatrix_Y = middleMatrix_Y - std::floor((tempPY_ChierRay / maxY_val) * halfSizeMatrix);
+		}
+
+		else if (tempPX_CheifRay <= 0.0 && tempPY_ChierRay < 0.0)
+		{
+			tempPosMatrix_X = middleMatrix_X - std::floor((tempPX_CheifRay / minX_val) * halfSizeMatrix);
+			tempPosMatrix_Y = middleMatrix_Y + std::floor((tempPY_ChierRay / minY_val) * halfSizeMatrix);
+		}
+
+		else if (tempPX_CheifRay >= 0.0 && tempPY_ChierRay < 0.0)
+		{
+			tempPosMatrix_X = middleMatrix_X + std::floor((tempPX_CheifRay / maxX_val) * halfSizeMatrix);
+			tempPosMatrix_Y = middleMatrix_Y + std::floor((tempPY_ChierRay / minY_val) * halfSizeMatrix);
+		}
+
+		else if (std::abs(tempPX_CheifRay) < 0.000001 && std::abs(tempPY_ChierRay) < 0.000001)
+		{
+			tempPosMatrix_X = middleMatrix_X;
+			tempPosMatrix_Y = middleMatrix_Y;
+		}
+
+		// just for debugging
+		//std::cout << "temp Pos MX: " << tempPosMatrix_X << std::endl;
+		mMX[i] = tempPosMatrix_X;
+		// just for debugging
+		//std::cout << "temp Pos MY: " << tempPosMatrix_Y << std::endl;
+		mMY[i] = tempPosMatrix_Y;
+		// just for debugging
+		//std::cout << "_____________" << std::endl;
+	}
+}
 
 
 OPD::OPD() {};
@@ -410,7 +562,7 @@ unsigned int OPD::calcPosExPupil_Z()
 
 
 // calculate global OPD
-void OPD::calcGlobalOPD_new()
+void OPD::calcGlobalOPD_new(unsigned int sizeMatrix)
 {
 	// calculate the cardinal points to get psoition of exit pupil
 	CardinalPoints carPoints(mOptSys, mInf_obj);
@@ -422,7 +574,7 @@ void OPD::calcGlobalOPD_new()
 	// position of exit pupil is on the - right side - of the image surface
 	if (positionExitPupil_global > positionZ_lastSurface)
 	{
-		calcGlobalOPD_new_Right_SideOfImaSurface(positionExitPupil_global);
+		calcGlobalOPD_new_Right_SideOfImaSurface(positionExitPupil_global, sizeMatrix);
 	}
 	// position of exit pupil is in the - left side - of the image surface
 	else
@@ -435,7 +587,7 @@ void OPD::calcGlobalOPD_new()
 
 
 
-void OPD::calcGlobalOPD_new_Right_SideOfImaSurface(real positionExitPupil_global)
+void OPD::calcGlobalOPD_new_Right_SideOfImaSurface(real positionExitPupil_global, unsigned int sizeMatrix)
 {
 
 	
@@ -469,13 +621,19 @@ void OPD::calcGlobalOPD_new_Right_SideOfImaSurface(real positionExitPupil_global
 	SequentialRayTracing seqTrace(mOptSysWithReferenceSphere);
 	seqTrace.seqRayTracingWithVectorOfLightRays(mAimedLightRay);
 
-	// save all OPD
+	// save all datas to fill matrix with OPD
 	std::vector<real> allDistances = seqTrace.getAllDistancesSurface_i(positionExitPupil);
+	std::vector<VectorStructR3> allInterpointsAtRefSphere = seqTrace.getAllInterPointsAtSurface_i_filtered(positionExitPupil);
+
 	calcAllOPDs(referenceDistance, allDistances);
 
+	PX_PY_MX_MY saveInfosAboutOPD;
+	saveInfosAboutOPD.calcAllPositionRegardsToChiefRay(allInterpointsAtRefSphere, sizeMatrix);
+
 	// save all OPD in matrix
-	saveAllOPDsInMatrix();
-}
+	saveAllOPDsInMatrix(saveInfosAboutOPD.getAll_MX(), saveInfosAboutOPD.getAll_MY(), sizeMatrix);
+
+ }
 
 
 // calc all OPD
@@ -493,98 +651,14 @@ void OPD::calcAllOPDs(real referenceDistance, const std::vector<real>& allDistan
 }
 
 // save all OPDS in matrix
-void OPD::saveAllOPDsInMatrix()
+void OPD::saveAllOPDsInMatrix(std::vector<unsigned int> MX, std::vector<unsigned int> MY, unsigned int size)
 {
-
-	mGlobalOPD = cv::Mat::zeros(mSizeMatrix, mSizeMatrix, CV_64F);
-
-	unsigned int middlePoint_X = mSizeMatrix / 2;
-	unsigned int middlePoint_Y = mSizeMatrix / 2;
-	unsigned int numberCircles = middlePoint_X;
-
-	unsigned int rayInTheCircle[34] = { 8,16,24,32,40,48,56,64,72,80,88,96,104,112,120,128,136,144,152,160,168,176,184,192,200,208,216,224,232,240,248,256,264,272 };
-	unsigned int numberOfRay[34] = { 8,24,48,80,120,168,224,288,260,440,528,624,728,840,960,1088,124,1368,1520,1680,1848,2024,2208,2400,2600,2808,3024,3248,3480,3720,3960,4224,4760 };
-	unsigned int maxNumberRay = numberOfRay[numberCircles - 1];
-
-	std::vector<unsigned int > startPointY(numberCircles);
-
-	// calculate start points in y direction (x direction is constant)
-	for (unsigned int i = 0; i < numberCircles; ++i)
+	mGlobalOPD = cv::Mat::zeros(size, size, CV_64F);
+	unsigned int numberOfOPD = MX.size();
+	// fill the matrix
+	for (unsigned int i = 0; i < numberOfOPD; ++i)
 	{
-		startPointY[i] = middlePoint_Y - 1 - i;
-	}
-
-	unsigned int tempYpos{};
-	unsigned int tempXpos{};
-
-	unsigned tempMAX_XCounter_pos_start = 1;
-	unsigned tempMAX_XCounter_neg = 2;
-	unsigned tempMAX_XCounter_end = 0;
-	unsigned tempMAX_YCounter_pos = 2;
-	unsigned tempMAX_YCounter_neg = 2;
-
-	unsigned int OPDinMatrixCounter = 0;
-
-	unsigned int startPointCounter = 0;
-	while (OPDinMatrixCounter < maxNumberRay)
-	{
-		tempYpos = startPointY[startPointCounter];
-		tempXpos = middlePoint_X;
-		++startPointCounter;
-
-		mGlobalOPD.at<unsigned int>(tempXpos, tempYpos) = mAllOPDs[0];
-		++OPDinMatrixCounter;
-
-		// first row pos x direction
-		for (unsigned int posX_start = 0; posX_start < tempMAX_XCounter_pos_start; ++posX_start)
-		{
-			++tempXpos;
-			mGlobalOPD.at<real>(tempXpos, tempYpos) = mAllOPDs[OPDinMatrixCounter];
-		
-			++OPDinMatrixCounter;
-		}
-
-		// col pos y direction
-		for (unsigned int posY = 0; posY < tempMAX_YCounter_pos; ++posY)
-		{
-			++tempYpos;
-			mGlobalOPD.at<real>(tempXpos, tempYpos) = mAllOPDs[OPDinMatrixCounter];
-			++OPDinMatrixCounter;
-		}
-
-		// row neg x direction
-		for (unsigned int negX = 0; negX < tempMAX_XCounter_neg; ++negX)
-		{
-			--tempXpos;
-			mGlobalOPD.at<real>(tempXpos, tempYpos) = mAllOPDs[OPDinMatrixCounter];
-			++OPDinMatrixCounter;
-		}
-
-		// col neg y direction
-		for (unsigned int negY = 0; negY < tempMAX_YCounter_neg; ++negY)
-		{
-			--tempYpos;
-			mGlobalOPD.at<real>(tempXpos, tempYpos) = mAllOPDs[OPDinMatrixCounter];
-			++OPDinMatrixCounter;
-		}
-
-		// neg row pos x direction
-		for (unsigned int posX_end = 0; posX_end < tempMAX_XCounter_end; ++posX_end)
-		{
-			++tempXpos;
-			mGlobalOPD.at<real>(tempXpos, tempYpos) = mAllOPDs[OPDinMatrixCounter];
-			++OPDinMatrixCounter;
-		}
-
-
-		++tempMAX_XCounter_pos_start;
-		tempMAX_XCounter_neg = 2 + tempMAX_XCounter_neg;
-		++tempMAX_XCounter_end;
-		tempMAX_YCounter_pos = 2 + tempMAX_YCounter_pos;
-		tempMAX_YCounter_neg = 2 + tempMAX_YCounter_neg;
-
-
-
+		mGlobalOPD.at<double>(MY[i], MX[i]) = mAllOPDs[i];
 	}
 
 }
@@ -1333,16 +1407,7 @@ cv::Mat OPD::getGlobalOPD()
 	return mGlobalOPD;
 }
 
-// export a cv::mat to excel
-void OPD::exportCV_MatToExcel(cv::Mat matToExport, std::string location, std::string nameFile)
-{
-	std::ofstream outData;
 
-	std::string loactionAndFile = location + "/" + nameFile + ".csv";
-
-	outData.open(loactionAndFile, std::ios::app);
-	outData << matToExport << std::endl;
-}
 
 // get vector with all calculated global OPD --> just for debugging
 std::vector<real> OPD::getVecWithAllCalcGlobalOPD()

@@ -1,13 +1,16 @@
 #include "Inport_Export_Data.h"
+#include "..\oftenUseNamespace\oftenUseNamespace.h"
 
-
-#include <string>
 #include <iomanip>
 #include <iostream>
 #include <fstream>
 #include <algorithm>
 #include <chrono>
 #include <ctime> 
+
+#include <cstdlib>
+#include "opencv/cv.h"
+#include "opencv/ml.h"
 
 
 // convert a vector with double to strings
@@ -316,4 +319,112 @@ void inportExportData::exportHistogramToExcel(std::string location, std::string 
 		maxValString = std::to_string(tempMaxValue);
 		name = minValString + " to " + maxValString;
 	}
+}
+
+// export a cv::mat to excel
+void inportExportData::exportCV_MatToExcel(cv::Mat matToExport, std::string location, std::string nameFile)
+{
+	unsigned int hight = matToExport.size().height;
+	unsigned int width = matToExport.size().width;
+
+	unsigned int size = hight;
+	if (width < hight) size = width;
+
+	std::string loactionAndFile = location + "/" + nameFile + ".csv";
+
+	// delete all date in excel file
+	std::ofstream del;
+	del.open(loactionAndFile, std::ofstream::out | std::ofstream::trunc);
+	del.close();
+	
+	std::ofstream write;
+	write.open(loactionAndFile, std::ios::app);
+
+	std::string tempString;
+	for (unsigned int i = 0; i < size; ++i)
+	{
+		// fill matrix date to csv
+		if (write.is_open())
+		{
+
+			tempString = saveOneRowAsString(i, matToExport);
+			tempString = oftenUse::replacePointByComma(tempString);
+
+			write << tempString << std::endl;
+		}
+		
+		
+		
+	}
+
+	write.close();
+
+}
+
+std::string inportExportData::saveOneRowAsString(unsigned int rowNumber, const cv::Mat mat)
+{
+	unsigned int hight = mat.size().height;
+	unsigned int width = mat.size().width;
+
+	unsigned int size = hight;
+	if (width < hight) size = width;
+
+	float tempVal{};
+	std::string tempString{};
+	std::string returnString{};
+
+	std::ostringstream oss;
+	std::string numberAsString = oss.str(); // stores "4.78165e-143" 
+
+	for (unsigned int i = 0; i < size; ++i)
+	{
+		std::ostringstream oss;
+		tempVal = mat.at<float>(rowNumber, i);
+		oss << tempVal; // to save with high precision
+
+		tempString = oss.str();
+		returnString = returnString + tempString + ";";
+
+	}
+
+	return returnString;
+}
+
+// inport CSV to cv::mat
+cv::Mat inportExportData::importTXTtoCVmat(std::string location, std::string name, unsigned int maxRows, unsigned int maxCol)
+{
+
+
+	std::string totalLocaltionAndFile = location + "/" + name + ".txt";
+	std::ifstream infile(totalLocaltionAndFile);
+	std::vector<std::vector<float> > numbers;
+	std::string temp;
+
+	// check for TXT or txt data
+	
+
+	while (std::getline(infile, temp))
+	{
+		std::istringstream buffer(temp);
+		std::vector<float> line((std::istream_iterator<float>(buffer)),
+			std::istream_iterator<float>());
+
+		numbers.push_back(line);
+	}
+
+
+	// Now add all the data into a cv::Mat element
+	cv::Mat Mat = cv::Mat::zeros(maxRows, maxCol, CV_32FC1);
+	// Loop over vectors and add the data
+	for (int rows = 0; rows < maxRows; rows++) {
+		for (int cols = 0; cols < maxCol; cols++)
+		{
+			Mat.at<float>(rows, cols) = numbers[rows][cols];
+
+		}
+	}
+
+
+	return Mat;
+
 }

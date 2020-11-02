@@ -5,7 +5,10 @@ public:
 	TestPSF() {};
 	~TestPSF() {};
 
-	// check methodes
-	bool checkMethodesPSF();
+	// check methodes 
+	bool testPSF_superFct();
+
+	// test 0
+	bool test0();
 
 };

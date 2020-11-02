@@ -1,7 +1,14 @@
 #pragma once
 #include "..\LowLevelTracing/ImportantStructures.h"
-#include <string>
-#include <vector>
+
+#include <opencv2/core/core.hpp>
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/ml/ml.hpp"
+
+
+
+
 
 namespace inportExportData
 {
@@ -20,5 +27,10 @@ namespace inportExportData
 	void exportDataToExcel(std::string locationExcel, std::string nameExcel, std::string nameDouble, real valueToSave);
 	void exportDataToExcel_vector(std::string locationExcel, std::string nameExcel, std::string nameDouble, std::vector<real> valueToSave);
 	void exportHistogramToExcel(std::string location, std::string nameExcel, std::vector<real> histogram, unsigned int sampling, real minVal, real maxVal);
-	
+	// export a cv::mat to excel
+	void exportCV_MatToExcel(cv::Mat matToExport, std::string location, std::string nameFile);
+	std::string saveOneRowAsString(unsigned int rowNumber, const cv::Mat mat);
+
+	// inport CSV to cv::mat
+	cv::Mat importTXTtoCVmat(std::string location, std::string name, unsigned int maxRows, unsigned int maxCol);
 }
