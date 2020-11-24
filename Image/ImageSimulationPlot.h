@@ -64,6 +64,9 @@ public:
 	// Sum simulated image grids
 	Mat SimulatedImg(std::vector < std::vector <Mat>> SimulatedImageGrids);
 
+	//***
+	std::string getTypeCvMat(cv::Mat matrix);
+
 private:
 	Mat mObject;
 	Mat ObjectAdapted;

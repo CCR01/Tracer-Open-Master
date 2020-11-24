@@ -120,9 +120,9 @@ Mat ImageSimulationFunctions::conv2D(const Mat& input, const Mat& kernel)
 {
 	Mat flipped_kernel;
 	flip(kernel, flipped_kernel, -1);
-	Mat padded;
-	int additionalRows = kernel.rows - 1;
-	int additionalCols = kernel.cols - 1;
+	//Mat padded;
+	//int additionalRows = kernel.rows - 1;
+	//int additionalCols = kernel.cols - 1;
 	//copyMakeBorder(input, padded, (additionalRows+1)/2, additionalRows/2,
 		//			(additionalCols + 1) / 2, additionalCols/2, BORDER_CONSTANT, Scalar::all(0));
 	Point anchor(kernel.cols - kernel.cols / 2 - 1, kernel.rows - kernel.rows / 2 - 1);
@@ -131,8 +131,8 @@ Mat ImageSimulationFunctions::conv2D(const Mat& input, const Mat& kernel)
 	Mat result;
 
 	//padded = input;
-	Point2i pad (kernel.cols - 1, kernel.rows - 1);
-	Rect region = Rect(pad.x / 2, pad.y / 2, padded.cols - pad.x, padded.rows - pad.y);
+	//Point2i pad (kernel.cols - 1, kernel.rows - 1);
+	//Rect region = Rect(pad.x / 2, pad.y / 2, padded.cols - pad.x, padded.rows - pad.y);
 	filter2D(input, result, ddepth, flipped_kernel, anchor, delta, BORDER_CONSTANT);
 
 	return result;//; (region);
@@ -212,6 +212,9 @@ std::vector < std::vector <Mat>> ImageSimulationFunctions::ConvolutionGridsFunct
 		for (unsigned int m = 0; m < mGriDFactor; m++)
 		{
 			Mat M =conv2D(ObjectGridsMatrix[n][m], PSF[n][m]);
+
+			showImg("first con", M);
+
 			Column.push_back(M);
 		}
 		SimulatedIMG.push_back(Column);
@@ -556,6 +559,7 @@ std::vector<std::vector<Mat>> ImageSimulationFunctions::ObjectGrids(Mat& ObjectM
 		for (unsigned int j = 0; j < mGriDFactor; j++)
 		{
 			Mat subMatrix = GridMatrix(ObjectAdapted, i*newRow, (i+1)*newRow, j*newCol, (j+1)*newCol);
+			//showImg("test", subMatrix);
 			ObjectGridMatrix[i].push_back(subMatrix);
 		}
 		
@@ -653,4 +657,36 @@ void showColoured(const String& winname, Mat& IMG, float ratio)
 	applyColorMap(display, display, cv::COLORMAP_JET);
 	imshow(winname, display);
 	waitKey(0);
+}
+
+std::string ImageSimulationFunctions::getTypeCvMat(cv::Mat matrix)
+{
+
+	int imgTypeInt = matrix.type();
+
+	int numImgTypes = 35; // 7 base types, with five channel options each (none or C1, ..., C4)
+
+	int enum_ints[] = { CV_8U,  CV_8UC1,  CV_8UC2,  CV_8UC3,  CV_8UC4, // CV_8U is unsigned 8bit/pixel - ie a pixel can have values 0-255
+						CV_8S,  CV_8SC1,  CV_8SC2,  CV_8SC3,  CV_8SC4,
+						CV_16U, CV_16UC1, CV_16UC2, CV_16UC3, CV_16UC4,
+						CV_16S, CV_16SC1, CV_16SC2, CV_16SC3, CV_16SC4,
+						CV_32S, CV_32SC1, CV_32SC2, CV_32SC3, CV_32SC4,
+						CV_32F, CV_32FC1, CV_32FC2, CV_32FC3, CV_32FC4, // CV_32F is float - the pixel can have any value between 0-1.0
+						CV_64F, CV_64FC1, CV_64FC2, CV_64FC3, CV_64FC4 };
+
+	std::string enum_strings[] = { "CV_8U",  "CV_8UC1",  "CV_8UC2",  "CV_8UC3",  "CV_8UC4",
+									"CV_8S",  "CV_8SC1",  "CV_8SC2",  "CV_8SC3",  "CV_8SC4",
+									"CV_16U", "CV_16UC1", "CV_16UC2", "CV_16UC3", "CV_16UC4",
+									"CV_16S", "CV_16SC1", "CV_16SC2", "CV_16SC3", "CV_16SC4",
+									"CV_32S", "CV_32SC1", "CV_32SC2", "CV_32SC3", "CV_32SC4",
+									"CV_32F", "CV_32FC1", "CV_32FC2", "CV_32FC3", "CV_32FC4",
+									"CV_64F", "CV_64FC1", "CV_64FC2", "CV_64FC3", "CV_64FC4" };
+
+	for (int i = 0; i < numImgTypes; i++)
+	{
+		if (imgTypeInt == enum_ints[i]) return enum_strings[i];
+	}
+
+	return "unknown image type";
+
 }

@@ -7,8 +7,6 @@
 #include "..\Plot\PlotParameterQwt.h"
 #include "..\Plot\PlotRayFan.h"
 
-#include <qwt_plot_curve.h>
-
 struct SequentialRayTracingandColorStruct
 {
 	SequentialRayTracingandColorStruct() {};

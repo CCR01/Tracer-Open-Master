@@ -74,7 +74,7 @@ void BenchmarkSimulationOpenCV::test3()
 	double objectSemiHeight = 2;
 	double imgHeight = Mag * objectSemiHeight;
 
-	Mat IMG = imread("3.jpeg", CV_LOAD_IMAGE_COLOR);
+	Mat IMG = imread("elefant_sharp_squared_210x210.png", CV_LOAD_IMAGE_COLOR);
 	ImageSimulationFunctions Functions(IMG, 6);
 	std::cout << "image is loaded" << std::endl;
 
@@ -104,15 +104,15 @@ void BenchmarkSimulationOpenCV::test3()
 	Mat PSF9 = Functions.calcPSF(OPD9);*/
 
 	
-	Mat PSF1 = readCMatFromTxt("D:\PSF(0,0).txt");
-	Mat PSF2 = readCMatFromTxt("D:\PSF(0,1).txt");
-	Mat PSF3 = readCMatFromTxt("D:\PSF(0,-1).txt");
-	Mat PSF4 = readCMatFromTxt("D:\PSF(1,0).txt");
-	Mat PSF5 = readCMatFromTxt("D:\PSF(1,1).txt");
-	Mat PSF6 = readCMatFromTxt("D:\PSF(1,-1).txt");
-	Mat PSF7 = readCMatFromTxt("D:\PSF(-1,0).txt");
-	Mat PSF8 = readCMatFromTxt("D:\PSF(-1,1).txt");
-	Mat PSF9 = readCMatFromTxt("D:\PSF(-1,-1).txt");
+	Mat PSF1 = readCMatFromTxt("D:/PSF(0,0).txt");
+	Mat PSF2 = readCMatFromTxt("D:/PSF(0,1).txt");
+	Mat PSF3 = readCMatFromTxt("D:/PSF(0,-1).txt");
+	Mat PSF4 = readCMatFromTxt("D:/PSF(1,0).txt");
+	Mat PSF5 = readCMatFromTxt("D:/PSF(1,1).txt");
+	Mat PSF6 = readCMatFromTxt("D:/PSF(1,-1).txt");
+	Mat PSF7 = readCMatFromTxt("D:/PSF(-1,0).txt");
+	Mat PSF8 = readCMatFromTxt("D:/PSF(-1,1).txt");
+	Mat PSF9 = readCMatFromTxt("D:/PSF(-1,-1).txt");
 	
 	Mat OTF1 = Functions.calcFFT(PSF1);
 	Mat OTF2 = Functions.calcFFT(PSF2);
@@ -127,13 +127,29 @@ void BenchmarkSimulationOpenCV::test3()
 	std::cout << "end OTF calculation" << std::endl;
 	
 
-	//vector with OTF grids
-	std::vector<std::vector<Mat>> OTF_grids = Functions.OTFGrids(OTF8, OTF2, OTF5, OTF7, OTF1, OTF4, OTF9, OTF3, OTF6);
-	//vector with PSF grids
-	std::cout << "OTF Grids are ready" << std::endl;
-	std::vector<std::vector<Mat>> PSF_grids = Functions.PSFGrids(OTF_grids, imgHeight, rms);
-	std::cout << "PSF Grids are calculated from OTF grids" << std::endl;
-	std::vector<std::vector<Mat>> Convolution = Functions.ConvolutionGridsFunction(PSF_grids);
+	////vector with OTF grids
+	//std::vector<std::vector<Mat>> OTF_grids = Functions.OTFGrids(OTF8, OTF2, OTF5, OTF7, OTF1, OTF4, OTF9, OTF3, OTF6);
+	////vector with PSF grids
+	//std::cout << "OTF Grids are ready" << std::endl;
+	//std::vector<std::vector<Mat>> PSF_grids = Functions.PSFGrids(OTF_grids, imgHeight, rms);
+
+
+	//cv::Mat psf = PSF_grids[0][0];
+	//showImg("test psf", psf);
+	//std::string typePSF = Functions.getTypeCvMat(psf);
+	//std::string typeIma = Functions.getTypeCvMat(IMG);
+	//std::vector<std::vector<Mat>> objectGrid = Functions.getObjectGrids();
+	//std::string typeObjGrid = Functions.getTypeCvMat(objectGrid[0][0]);
+	//
+	//std::cout << "PSF Grids are calculated from OTF grids" << std::endl;
+	//std::vector<std::vector<Mat>> Convolution = Functions.ConvolutionGridsFunction(PSF_grids);
+	//
+	std::vector<std::vector<Mat>> modified_PSF_grids;
+	std::vector<cv::Mat> psf7;
+	psf7.push_back(PSF7);
+	modified_PSF_grids.push_back(psf7);
+	std::vector<std::vector<Mat>> Convolution = Functions.ConvolutionGridsFunction(modified_PSF_grids);
+
 	std::cout << "Convolution between Object and PSF is done" << std::endl;
 	Mat SimulatedIMG = Functions.SimulatedImg(Convolution);
 	std::cout << "Simulated image is ready" << std::endl << std::endl;

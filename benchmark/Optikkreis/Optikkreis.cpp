@@ -28,8 +28,6 @@
 
 #include "..\..\Plot\OpticalSystemPlots.h"
 
-#include <qwt_plot_curve.h>
-
 Optikkreis::Optikkreis() {}
 
 Optikkreis::~Optikkreis() {}
