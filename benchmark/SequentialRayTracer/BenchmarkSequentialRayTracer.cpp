@@ -94,7 +94,7 @@ bool BenchmarkSequentialRayTracing::checkMethodesElement()
 		/*Ray4*/{ 0.0,-4.2902316034,16.088368513 },{ 0.0,-4.1874392392,20.966514459 },{ 0.0,1.2712208903 ,37.0 } 
 	};
 
-	bool checkSRT1 = Math::compareAllVectorElements(seqTrace1.getAllIntersectionPointsSRT(), checkResultSRT, 7);
+	bool checkSRT1 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(seqTrace1.getAllIntersectionPointsSRT(), checkResultSRT, 7);
 	workTheSystem.push_back(checkSRT1);
 	//std::cout << "____________________________\n";
 	//std::cout << "check example1 benchmark Element\n";
@@ -177,7 +177,7 @@ bool BenchmarkSequentialRayTracing::checkMethodesElement()
 		/*Ray13*/{ 0.0,-3.0,0.0 },{ 0.0,3.0,20.0 },{ 0.0,3.0,30.0 },{ 0.0,-3.0,50.0 },{ 0.0,-3.0,60.0 },
 	};
 
-	bool checkSRT2 = Math::compareAllVectorElements(seqTrac2.getAllIntersectionPointsSRT(), checkResultSRTParaxialSurface, 10);
+	bool checkSRT2 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(seqTrac2.getAllIntersectionPointsSRT(), checkResultSRTParaxialSurface, 10);
 	workTheSystem.push_back(checkSRT2);
 //	std::cout << "____________________________\n";
 //	std::cout << "check example2 benchmark Element\n";

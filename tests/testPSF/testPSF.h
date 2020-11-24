@@ -10,5 +10,7 @@ public:
 
 	// test 0
 	bool test0();
+	// test 1
+	bool test1();
 
 };

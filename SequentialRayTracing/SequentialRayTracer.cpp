@@ -6,6 +6,8 @@
 #include "..\LowLevelTracing/Surfaces/ApertureStop_LLT.h"
 #include "..\RayAiming\RayAiming.h"
 #include "..\FillAptertureStop\FillApertureStop.h"
+#include "..\oftenUseNamespace\oftenUseNamespace.h"
+
 
 IntersectInfosAndPosSurfaceAndTotalSteps::IntersectInfosAndPosSurfaceAndTotalSteps() { setNoIntersectionPoint(); };
 IntersectInfosAndPosSurfaceAndTotalSteps::~IntersectInfosAndPosSurfaceAndTotalSteps() {};
@@ -230,6 +232,8 @@ unsigned int SequentialRayTracing::findPosApertureStop(OpticalSystem_LLT optSys_
 // do sequential ray tracing
 void SequentialRayTracing::sequentialRayTracing(LightRayStruct LightRaySt)
 {
+	mLoosingRay = false;
+	mLoosingRayCounter = 0;
 	mSaveTotalSteps = 0.0,
 	mRay = LightRaySt.getRay_LLT();
 	mLight = LightRaySt.getLight_LLT();
@@ -270,12 +274,14 @@ void SequentialRayTracing::sequentialRayTracing(LightRayStruct LightRaySt)
 
 	}
 
-	mSaveInterInfos_PosSur_TotSteps = filterAllRealIntersecPoints(mSaveIntInfos_Pos_totStep_NotFiltered);
+	mSaveInterInfos_PosSur_TotSteps_filtered = filterAllRealIntersecPoints(mSaveIntInfos_Pos_totStep_NotFiltered);
 }
 
 // do sequential ray tracing with an vector of many LightRay
 void SequentialRayTracing::seqRayTracingWithVectorOfLightRays(const std::vector<LightRayStruct>& LightRayStVec)
 {
+	mLoosingRay = false;
+	mLoosingRayCounter = 0;
 	LightRayStruct tempLightRaySt{};
 	unsigned int sizeOptSys = mOpticalSystem_LLT.getPosAndInteractingSurface().size();
 	unsigned int sizeLightRayVec = LightRayStVec.size();
@@ -283,7 +289,7 @@ void SequentialRayTracing::seqRayTracingWithVectorOfLightRays(const std::vector<
 	unsigned int counter = 0;
 
 	mSaveIntInfos_Pos_totStep_NotFiltered.resize(maxNumberOfIntersectionPoints);
-	mSaveInterInfos_PosSur_TotSteps.reserve(maxNumberOfIntersectionPoints);
+	mSaveInterInfos_PosSur_TotSteps_filtered.reserve(maxNumberOfIntersectionPoints);
 	mStartsPointOfLightRays_vec.resize(sizeLightRayVec);
 
 	for (unsigned int i = 0; i < sizeLightRayVec; i++)
@@ -315,8 +321,15 @@ void SequentialRayTracing::seqRayTracingWithVectorOfLightRays(const std::vector<
 
 				if (mTempInterInfos_Pos_totStep.getIntersecInfos().getSurfaceSide() != N)
 				{
-					mSaveInterInfos_PosSur_TotSteps.push_back(mTempInterInfos_Pos_totStep);
+					mSaveInterInfos_PosSur_TotSteps_filtered.push_back(mTempInterInfos_Pos_totStep);
 					mTempLightRay_vec = mOpticalSystem_LLT.getPosAndInteraction()[j].getInteractionAtSur_ptr()->calcInteraction(mTempInterInfos_Pos_totStep.getIntersecInfos());
+				}
+
+				else
+				{
+					//std::cout << "3 - attention - we are loosing rays!" << std::endl;
+					mLoosingRay = true;
+					++mLoosingRayCounter;
 				}
 
 				// TODO: Until now, there is no interaction fuction that delivers more than one light ray!
@@ -332,6 +345,10 @@ void SequentialRayTracing::seqRayTracingWithVectorOfLightRays(const std::vector<
 			{
 				mSaveIntInfos_Pos_totStep_NotFiltered[counter] = mNoInterPointAndPos;
 				tempLightRaySt.setLightRayAbsorb();
+
+				//std::cout << "2 - attention - we are loosing rays!" << std::endl;
+				mLoosingRay = true;
+				++mLoosingRayCounter;
 			}
 
 			++counter;
@@ -521,9 +538,9 @@ std::vector<std::vector<LightRayStruct>> SequentialRayTracing::divVecWithLightRa
 std::vector<VectorStructR3> SequentialRayTracing::getAllIntersectionPointsSRT()
 {
 	std::vector<VectorStructR3> returnVecInterPoints;
-	for (int i = 0; i < mSaveInterInfos_PosSur_TotSteps.size(); i++)
+	for (int i = 0; i < mSaveInterInfos_PosSur_TotSteps_filtered.size(); i++)
 	{
-		VectorStructR3 tempInterpoint = mSaveInterInfos_PosSur_TotSteps.at(i).getIntersecInfos().getIntersectionPoint();
+		VectorStructR3 tempInterpoint = mSaveInterInfos_PosSur_TotSteps_filtered.at(i).getIntersecInfos().getIntersectionPoint();
 		returnVecInterPoints.push_back(tempInterpoint);
 	}
 
@@ -570,12 +587,12 @@ void SequentialRayTracing::printAllIntersectionPoints()
 void SequentialRayTracing::printAllIntersectInfosSRT()
 {
 	//#pragma omp parallel for
-	for (int i = 0; i < mSaveInterInfos_PosSur_TotSteps.size(); i++)
+	for (int i = 0; i < mSaveInterInfos_PosSur_TotSteps_filtered.size(); i++)
 	{
 		std::cout << "____________________________\n";
 		std::cout << "intersection Point infos number " << i << std::endl;
 		std::cout << "____________________________\n";
-		IntersectInformationStruct toPrintIntersectInfos = mSaveInterInfos_PosSur_TotSteps.at(i).getIntersecInfos();
+		IntersectInformationStruct toPrintIntersectInfos = mSaveInterInfos_PosSur_TotSteps_filtered.at(i).getIntersecInfos();
 		toPrintIntersectInfos.printIntersectInformation();
 		std::cout << "____________________________\n";
 	}
@@ -596,12 +613,19 @@ std::vector <IntersectInfosAndPosSurfaceAndTotalSteps>  SequentialRayTracing::fi
 	for (int i = 0; i < sizeOfVector; i++)
 	{
 		isRealIntersectionPoint = SaveIntInfos_Pos_totStep_NotFiltered[i].getIntersecInfos().getSurfaceSide();
-		isNAN = std::isnan(SaveIntInfos_Pos_totStep_NotFiltered[i].getIntersecInfos().getIntersectionPoint().getX());
+		isNAN = oftenUse::checkFor_No_Nan(SaveIntInfos_Pos_totStep_NotFiltered[i].getIntersecInfos().getIntersectionPoint());
 		typeLight = SaveIntInfos_Pos_totStep_NotFiltered[i].getIntersecInfos().getLight().getTypeLight();
 
-		if (isRealIntersectionPoint != N && isNAN == false && typeLight != typeLight::typeDeath)
+		if (isRealIntersectionPoint != N && isNAN && typeLight != typeLight::typeDeath)
 		{
 			returnFilteredInterPointsAndPos.push_back(SaveIntInfos_Pos_totStep_NotFiltered.at(i));
+		}
+
+		else
+		{
+			//std::cout << "1 - attention - we are loosing rays!" << std::endl;
+			mLoosingRay = true;
+			++mLoosingRayCounter;
 		}
 
 	}
@@ -615,12 +639,12 @@ std::vector<IntersectInformationStruct> SequentialRayTracing::getAllInterInfosOf
 {
 	std::vector<IntersectInformationStruct> retunInterInfosSurf_i;
 	//#pragma omp parallel for
-	for (int i = 0; i < mSaveInterInfos_PosSur_TotSteps.size(); i++)
+	for (unsigned int i = 0; i < mSaveInterInfos_PosSur_TotSteps_filtered.size(); i++)
 	{
-		if (mSaveInterInfos_PosSur_TotSteps.at(i).getPosition() == surfaceNo)
+		if (mSaveInterInfos_PosSur_TotSteps_filtered.at(i).getPosition() == surfaceNo)
 		{
 
-			retunInterInfosSurf_i.push_back(mSaveInterInfos_PosSur_TotSteps.at(i).getIntersecInfos());
+			retunInterInfosSurf_i.push_back(mSaveInterInfos_PosSur_TotSteps_filtered.at(i).getIntersecInfos());
 		}
 	}
 
@@ -692,17 +716,17 @@ std::vector<VectorStructR3> SequentialRayTracing::getAllInterPointsAtSurf_i_notF
 std::vector<VectorStructR3> SequentialRayTracing::getAllInterPointsAtSurface_i_filtered(unsigned int const surfaceNo)
 {
 	std::vector<VectorStructR3> intersecPoints;
-	unsigned int lenght = mSaveInterInfos_PosSur_TotSteps.size();
+	unsigned int lenght = mSaveInterInfos_PosSur_TotSteps_filtered.size();
 	unsigned int maxSizeVector = mSaveIntInfos_Pos_totStep_NotFiltered.size() / mOpticalSystem_LLT.getPosAndInteractingSurface().size();
 	intersecPoints.reserve(maxSizeVector);
 
 	for (unsigned int i = 0; i < lenght; ++i)
 	{
-		if (mSaveInterInfos_PosSur_TotSteps[i].getPosition() == surfaceNo)
+		if (mSaveInterInfos_PosSur_TotSteps_filtered[i].getPosition() == surfaceNo)
 		{
-			if (mSaveInterInfos_PosSur_TotSteps[i].getIntersecInfos().getSurfaceSide() != N && (std::isnan(mSaveInterInfos_PosSur_TotSteps[i].getIntersecInfos().getIntersectionPoint().getX()) == false ) && (std::isnan(mSaveInterInfos_PosSur_TotSteps[i].getIntersecInfos().getIntersectionPoint().getY()) == false) && (std::isnan(mSaveInterInfos_PosSur_TotSteps[i].getIntersecInfos().getIntersectionPoint().getZ()) == false))
+			if (mSaveInterInfos_PosSur_TotSteps_filtered[i].getIntersecInfos().getSurfaceSide() != N && oftenUse::checkFor_No_Nan(mSaveInterInfos_PosSur_TotSteps_filtered[i].getIntersecInfos().getIntersectionPoint()))
 			{ 
-					intersecPoints.push_back(mSaveInterInfos_PosSur_TotSteps[i].getIntersecInfos().getIntersectionPoint());
+					intersecPoints.push_back(mSaveInterInfos_PosSur_TotSteps_filtered[i].getIntersecInfos().getIntersectionPoint());
 			}
 		}
 	}
@@ -710,6 +734,30 @@ std::vector<VectorStructR3> SequentialRayTracing::getAllInterPointsAtSurface_i_f
 	return intersecPoints;
 
 }
+
+// get all directions of surface i filtered
+std::vector<VectorStructR3> SequentialRayTracing::getAllDirectionsAtSurface_i_filtered(unsigned int surfaceNo)
+{
+	std::vector<VectorStructR3> directions_vec;
+	unsigned int lenght = mSaveInterInfos_PosSur_TotSteps_filtered.size();
+	unsigned int maxSizeVector = mSaveIntInfos_Pos_totStep_NotFiltered.size() / mOpticalSystem_LLT.getPosAndInteractingSurface().size();
+	directions_vec.reserve(maxSizeVector);
+
+	for (unsigned int i = 0; i < lenght; ++i)
+	{
+		if (mSaveInterInfos_PosSur_TotSteps_filtered[i].getPosition() == surfaceNo)
+		{
+			if (mSaveInterInfos_PosSur_TotSteps_filtered[i].getIntersecInfos().getSurfaceSide() != N && oftenUse::checkFor_No_Nan(mSaveInterInfos_PosSur_TotSteps_filtered[i].getIntersecInfos().getIntersectionPoint())) 
+			{
+				directions_vec.push_back(mSaveInterInfos_PosSur_TotSteps_filtered[i].getIntersecInfos().getDirectionRayUnit());
+			}
+		}
+	}
+	
+	return directions_vec;
+}
+
+
 
 // get intersection point i at Surface i not filtered
 VectorStructR3 SequentialRayTracing::getInterPoint_i_atSurface_i_notFiltered(unsigned int const interPointNo, unsigned int const surfaceNo)
@@ -750,7 +798,7 @@ VectorStructR3 SequentialRayTracing::getDirectionSurface_i(unsigned int i)
 void SequentialRayTracing::clearAllTracedRays()
 {
 	mSaveIntInfos_Pos_totStep_NotFiltered.clear();
-	mSaveInterInfos_PosSur_TotSteps.clear();
+	mSaveInterInfos_PosSur_TotSteps_filtered.clear();
 	mSaveLightRayStructsNotFiltered.clear();
 	mStartsPointOfLightRays_vec.clear();
 }
@@ -759,7 +807,7 @@ void SequentialRayTracing::clearAllTracedRays()
 std::vector <IntersectInfosAndPosSurfaceAndTotalSteps> SequentialRayTracing::getInterInf_PosSurface_TotalSteps_ofSur_i(unsigned int const surfaceNo)
 {
 	std::vector<IntersectInfosAndPosSurfaceAndTotalSteps> returnInterInfos_PosSur_TotSteps;
-	unsigned int sizeAllInterPoints = mSaveInterInfos_PosSur_TotSteps.size();
+	unsigned int sizeAllInterPoints = mSaveInterInfos_PosSur_TotSteps_filtered.size();
 	unsigned int sizeOptSys = mOpticalSystem_LLT.getPosAndInteractingSurface().size();
 	unsigned int interPointsLastSurface = sizeAllInterPoints / sizeOptSys;
 	
@@ -774,9 +822,9 @@ std::vector <IntersectInfosAndPosSurfaceAndTotalSteps> SequentialRayTracing::get
 
 		for (int i = 0; i < sizeAllInterPoints; i++)
 		{
-			if (mSaveInterInfos_PosSur_TotSteps.at(i).getPosition() == surfaceNo)
+			if (mSaveInterInfos_PosSur_TotSteps_filtered.at(i).getPosition() == surfaceNo)
 			{
-				returnInterInfos_PosSur_TotSteps[counter] = mSaveInterInfos_PosSur_TotSteps.at(i);
+				returnInterInfos_PosSur_TotSteps[counter] = mSaveInterInfos_PosSur_TotSteps_filtered.at(i);
 				++counter;
 			}
 		}
@@ -787,9 +835,9 @@ std::vector <IntersectInfosAndPosSurfaceAndTotalSteps> SequentialRayTracing::get
 		// here we lose some ray -> we need a push_back
 		for (int i = 0; i < sizeAllInterPoints; i++)
 		{
-			if (mSaveInterInfos_PosSur_TotSteps.at(i).getPosition() == surfaceNo)
+			if (mSaveInterInfos_PosSur_TotSteps_filtered.at(i).getPosition() == surfaceNo)
 			{
-				returnInterInfos_PosSur_TotSteps.push_back(mSaveInterInfos_PosSur_TotSteps.at(i));
+				returnInterInfos_PosSur_TotSteps.push_back(mSaveInterInfos_PosSur_TotSteps_filtered.at(i));
 			}
 		}
 	}
@@ -820,11 +868,11 @@ std::vector<real> SequentialRayTracing::getTotalOptPathLenthToSurface_i(unsigned
 	std::vector<real> totalOptPath;
 
 	//#pragma omp parallel for
-	for (int i = 0; i < mSaveInterInfos_PosSur_TotSteps.size(); i++)
+	for (int i = 0; i < mSaveInterInfos_PosSur_TotSteps_filtered.size(); i++)
 	{
-		if (mSaveInterInfos_PosSur_TotSteps.at(i).getPosition() == surfaceNo)
+		if (mSaveInterInfos_PosSur_TotSteps_filtered.at(i).getPosition() == surfaceNo)
 		{
-			totalOptPath.push_back(mSaveInterInfos_PosSur_TotSteps.at(i).getTotalSteps());
+			totalOptPath.push_back(mSaveInterInfos_PosSur_TotSteps_filtered.at(i).getTotalSteps());
 		}
 	}
 
@@ -912,4 +960,14 @@ void SequentialRayTracing::resizeAllRelevantVectorsAndSetConst_Element()
 {
 	mTraceToSurface_i = mOptSysEle.getPosAndElement().size() - 1;
 	mNoInterPointAndPos.setNoIntersectionPoint();
+}
+
+bool SequentialRayTracing::getLoosingRays()
+{
+	return mLoosingRay;
+}
+
+unsigned int SequentialRayTracing::getLoosingRaysCounter()
+{
+	return mLoosingRayCounter;
 }

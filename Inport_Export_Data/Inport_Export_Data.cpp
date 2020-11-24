@@ -379,7 +379,7 @@ std::string inportExportData::saveOneRowAsString(unsigned int rowNumber, const c
 	for (unsigned int i = 0; i < size; ++i)
 	{
 		std::ostringstream oss;
-		tempVal = mat.at<float>(rowNumber, i);
+		tempVal = mat.at<real>(rowNumber, i);
 		oss << tempVal; // to save with high precision
 
 		tempString = oss.str();
@@ -390,36 +390,31 @@ std::string inportExportData::saveOneRowAsString(unsigned int rowNumber, const c
 	return returnString;
 }
 
-// inport CSV to cv::mat
+// inport CSV to cv::Mat
 cv::Mat inportExportData::importTXTtoCVmat(std::string location, std::string name, unsigned int maxRows, unsigned int maxCol)
 {
-
-
 	std::string totalLocaltionAndFile = location + "/" + name + ".txt";
 	std::ifstream infile(totalLocaltionAndFile);
-	std::vector<std::vector<float> > numbers;
+	std::vector<std::vector<real> > numbers;
 	std::string temp;
-
-	// check for TXT or txt data
-	
 
 	while (std::getline(infile, temp))
 	{
 		std::istringstream buffer(temp);
-		std::vector<float> line((std::istream_iterator<float>(buffer)),
-			std::istream_iterator<float>());
+		std::vector<real> line((std::istream_iterator<real>(buffer)),
+			std::istream_iterator<real>());
 
 		numbers.push_back(line);
 	}
 
 
-	// Now add all the data into a cv::Mat element
-	cv::Mat Mat = cv::Mat::zeros(maxRows, maxCol, CV_32FC1);
+	// Now add all the data into a cv::Mat
+	cv::Mat Mat = cv::Mat::zeros(maxRows, maxCol, CV_64FC1);
 	// Loop over vectors and add the data
 	for (int rows = 0; rows < maxRows; rows++) {
 		for (int cols = 0; cols < maxCol; cols++)
 		{
-			Mat.at<float>(rows, cols) = numbers[rows][cols];
+			Mat.at<real>(rows, cols) = numbers[rows][cols];
 
 		}
 	}

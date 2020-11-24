@@ -70,7 +70,7 @@ real Images::calcSumMatrix(cv::Mat const& matrix)
 }
 
 // show an image
-void Images::showImage(const cv::String winname, cv::Mat& ima)
+void Images::showImage_inputReal(const cv::String winname, cv::Mat& ima)
 {
 	
 	std::string imaType = getTypeImageC_VMat(ima);
@@ -87,7 +87,25 @@ void Images::showImage(const cv::String winname, cv::Mat& ima)
 	// saveImage("..", "savedIma", "png", imaToShow);
 }
 
-cv::Mat Images::convertImage_32FC3_to_CV_8UC3(const cv::Mat& imaToConvert)
+// show an image
+void Images::showImage_inputUint8(const cv::String winname, cv::Mat& ima)
+{
+
+	std::string imaType = getTypeImageC_VMat(ima);
+
+	// normalize the image to show
+	cv::normalize(ima, ima, 0, 255, cv::NORM_MINMAX);
+
+	namedWindow(winname, CV_WINDOW_FREERATIO);
+	resizeWindow(winname, ima.cols, ima.rows);
+	imshow(winname, ima);
+	cv::waitKey(0);
+
+	//just for debugging
+	// saveImage("..", "savedIma", "png", imaToShow);
+}
+
+cv::Mat Images::convertImage_64FC3_to_CV_8UC3(const cv::Mat& imaToConvert)
 {
 	cv::Mat returnConvertedIma{};
 	real min{};
@@ -103,7 +121,7 @@ cv::Mat Images::convertImage_32FC3_to_CV_8UC3(const cv::Mat& imaToConvert)
 	return returnConvertedIma;
 }
 
-cv::Mat Images::convertImage_32FC1_to_CV_8UC1(const cv::Mat& imaToConvert)
+cv::Mat Images::convertImage_64FC1_to_CV_8UC1(const cv::Mat& imaToConvert)
 {
 	cv::Mat returnConvertedIma{};
 	real min{};
@@ -139,7 +157,7 @@ std::string Images::getTypeImageC_VMat(cv::Mat matrix)
 									"CV_16U", "CV_16UC1", "CV_16UC2", "CV_16UC3", "CV_16UC4",
 									"CV_16S", "CV_16SC1", "CV_16SC2", "CV_16SC3", "CV_16SC4",
 									"CV_32S", "CV_32SC1", "CV_32SC2", "CV_32SC3", "CV_32SC4",
-									"CV_32F", "CV_32FC1", "CV_32FC2", "CV_32FC3", "CV_32FC4",
+									"CV_32F", "CV_32FC1", "CV_32FC2", "CV_32FC3", "CV_32C4",
 									"CV_64F", "CV_64FC1", "CV_64FC2", "CV_64FC3", "CV_64FC4" };
 
 	for (int i = 0; i < numImgTypes; i++)
@@ -159,15 +177,15 @@ void Images::saveImage(std::string fileLocation, std::string nameImage, std::str
 	cv::Mat imaToSave = image;
 	std::string imaType = getTypeImageC_VMat(image);
 
-	// CV_32FC3
-	if (imaType == "CV_32FC3")
+	// CV_64FC3
+	if (imaType == "CV_64FC3")
 	{
-		imaToSave = convertImage_32FC3_to_CV_8UC3(image);
+		imaToSave = convertImage_64FC3_to_CV_8UC3(image);
 	}
-	// CV_32FC or CV_32FC1
-	if (imaType == "CV_32F" || imaType == "CV_32FC")
+	// CV_64FC or CV_64FC1
+	if (imaType == "CV_64F" || imaType == "CV_64FC")
 	{
-		imaToSave = convertImage_32FC1_to_CV_8UC1(image);
+		imaToSave = convertImage_64FC1_to_CV_8UC1(image);
 	}
 
 	cv::imwrite(localtionAndName, imaToSave);

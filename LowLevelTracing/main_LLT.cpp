@@ -133,7 +133,7 @@ int main(int argc, char **argv)
 	std::vector<bool> workTheSystem;
 	// *****************************************************************************************************************
 
-	std::vector<testWhat> testWhatVec_1 = { testWhat::tPSF };
+	std::vector<testWhat> testWhatVec_1 = { testWhat::tImaSim };
 	ManagementTests managementTest_1(testWhatVec_1);
 	workTheSystem.push_back(managementTest_1.testSuperFct());
 	
@@ -176,16 +176,6 @@ int main(int argc, char **argv)
 
 	//***********************************************
 	
-	
-	
-	
-	
-
-
-
-
-
-
 	//// Optikkreis
 	//Optikkreis optKreis;
 	//bool checkOptKreis = optKreis.systemForOptikkreis();

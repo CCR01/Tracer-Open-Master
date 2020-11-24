@@ -41,7 +41,7 @@ bool testPlanSurface::checkMethodesPlanSurface()
 	std::vector<VectorStructR3> checkVector1 = { InterP1, InterP2, InterP3, InterP4, InterP5, InterP6 };
 
 	// *****************************************************************************************************************
-	bool isRight1 = Math::compareAllVectorElements(checkVector1, ReferenzVector1, 9);
+	bool isRight1 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector1, ReferenzVector1, 9);
 	checkPlanSurface.push_back(isRight1);
 	// *****************************************************************************************************************
 
@@ -78,7 +78,7 @@ bool testPlanSurface::checkMethodesPlanSurface()
 	std::vector<VectorStructR3> checkVector2 = { InterP7, InterP8, InterP9, InterP10, InterP11, InterP12 };
 
 	// *****************************************************************************************************************
-	bool isRight2 = Math::compareAllVectorElements(checkVector2, ReferenzVector2, 9);
+	bool isRight2 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector2, ReferenzVector2, 9);
 	checkPlanSurface.push_back(isRight2);
 	// *****************************************************************************************************************
 
@@ -114,7 +114,7 @@ bool testPlanSurface::checkMethodesPlanSurface()
 	std::vector<VectorStructR3> checkVector3 = { InterP13, InterP14, InterP15, InterP16, InterP17, InterP18 };
 
 	// *****************************************************************************************************************
-	bool isRight3 = Math::compareAllVectorElements(checkVector3, ReferenzVector3, 9);
+	bool isRight3 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector3, ReferenzVector3, 9);
 	checkPlanSurface.push_back(isRight3);
 	// *****************************************************************************************************************
 
@@ -150,7 +150,7 @@ bool testPlanSurface::checkMethodesPlanSurface()
 	std::vector<VectorStructR3> checkVector4 = { InterP19, InterP20, InterP21, InterP22, InterP23, InterP24 };
 
 	// *****************************************************************************************************************
-	bool isRight4 = Math::compareAllVectorElements(checkVector4, ReferenzVector4, 9);
+	bool isRight4 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector4, ReferenzVector4, 9);
 	checkPlanSurface.push_back(isRight4);
 	// *****************************************************************************************************************
 
@@ -186,7 +186,7 @@ bool testPlanSurface::checkMethodesPlanSurface()
 	std::vector<VectorStructR3> checkVector5 = { InterP25, InterP26, InterP27, InterP28, InterP29, InterP30 };
 
 	// *****************************************************************************************************************
-	bool isRight5 = Math::compareAllVectorElements(checkVector5, ReferenzVector5, 9);
+	bool isRight5 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector5, ReferenzVector5, 9);
 	checkPlanSurface.push_back(isRight5);
 	// *****************************************************************************************************************
 

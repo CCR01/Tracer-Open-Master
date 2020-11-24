@@ -31,6 +31,29 @@
 
 enum class posExitPupil {exitPupil_Left_ImaSurface, exitPupil_Right_ImaSurface};
 
+struct PosX_PosY_Val_tureVal
+{
+public:
+	// pos X
+	void setPos_X(unsigned int posX);
+	unsigned int getPos_X();
+	// pos Y
+	void setPos_Y(unsigned int posY);
+	unsigned int getPos_Y();
+	// value
+	void setVal(real val);
+	real getVal();
+	// true value
+	void setTrueVal(bool trueVal);
+	bool getTrueVal();
+
+private:
+	unsigned int mPosX{};
+	unsigned int mPosY{};
+	real mVal{};
+	bool mTrueVal{};
+};
+
 struct PX_PY_MX_MY
 {
 public:
@@ -74,16 +97,13 @@ public:
 	OPD();
 	OPD(/*optical system*/ OpticalSystem_LLT optSys, /*aimed light ray*/ std::vector<LightRayStruct> aimedLightRay, /*obj inf*/objectPoint_inf_obj inf_obj, /*size matrix with OPDs*/ unsigned int sizeMatrix);
 
-
-	// to calculate the global OPD
-	OPD(/*exit pupil*/ std::shared_ptr<SurfaceIntersectionRay_LLT> exitPupil,  /*optical system*/ OpticalSystem_LLT optSys,
-		/*fill apertur stop with light ray*/ std::vector<LightRayStruct> lightRayFillAperturStop, /*chief ray*/ LightRayStruct chiefLightRay, /*Scalling*/int scalling);
-
 	// to calculate the OPD in X and Y direction
 	OPD(/*exit pupil*/ std::shared_ptr<SurfaceIntersectionRay_LLT> exitPupil,  /*optical system*/ OpticalSystem_LLT optSys,
 		std::vector<LightRayStruct> lightRayAlong_X, std::vector<LightRayStruct> lightRayAlong_Y, LightRayStruct chiefLightRay);
 	~OPD();
 
+
+	//***
 	// calculate OPD for single Ray
 	real OPD_singelRay_obj(OpticalSystem_LLT optSys, VectorStructR3 startPointRay, real pupilPositionX, real pupilPositionY, Light_LLT light);
 	real calculateOPD_exitPupilBehindOptSys(OpticalSystem_LLT optSys, real posExitPupil_Z_global, VectorStructR3 startPointRay, real pupilPositionX, real pupilPositionY, Light_LLT light);
@@ -100,17 +120,44 @@ public:
 
 	/// ***
 	// calculate global OPD
-	void calcGlobalOPD_new(unsigned int sizeMatrix);
+	void calcGlobalOPD_new();
 
 	
-	void calcGlobalOPD_new_Right_SideOfImaSurface(real positionExitPupil_global, unsigned int sizeMatrix);
-	void buildOpticalSystemWithExitPupilPlan(real positionExitPupil_global);
-	void buildOpticalSystemWithReferenceSphereAtExitPupil(real radiusRefSphere, VectorStructR3 pointRefSphere, VectorStructR3 directionRefSphere);
+	void calcGlobalOPD_new_Right_SideOfImaSurface(real positionExitPupil_global);
+	void buildOpticalSystemWithExitPupilPlan_rightSide(real positionExitPupil_global);
+	void buildOpticalSystemWithReferenceSphereAtExitPupil_rightSide(real radiusRefSphere, VectorStructR3 pointRefSphere, VectorStructR3 directionRefSphere);
 
 
-	void calcGlobalOPD_new_LEFT_SideOfImaSurface();
+	void calcGlobalOPD_new_LEFT_SideOfImaSurface(real positionExitPupil_globa);
+
+
+	LightRayStruct getWantedLightRay();
 	// ***
 
+	// bilinear interpolation to fill holes in OPD matrix
+	void bilinearInterpolToFillHolesInOPDmatrix();
+	void holizontal_bilinear_Interpolation();
+	void horizontalInterpolation_oneStep();
+	void vertical_bilinear_Interpolation();
+	void verticalInterpolation_oneStep();
+
+	// check OPD value in the middle of the matrix
+	void checkOPDValueInTheMiddle();
+	void setMiddlePointToZero();
+	// look negativ x direction
+	void lookNegativ_X_multiSteps(unsigned int posX, unsigned int posY);
+	void lookNegativ_X_oneStep(unsigned int posX, unsigned int posY);
+	// look positiv x direction
+	void lookPositiv_X_multiSteps(unsigned int posX, unsigned int posY);
+	void lookPositive_X_oneStep(unsigned int posX, unsigned int posY);
+	// look negativ y direction
+	void lookNegativ_Y_multiSteps(unsigned int posX, unsigned int posY);
+	void lookNegative_Y_oneStep(unsigned int posX, unsigned int posY);
+	// look positiv y direction
+	void lookPositiv_Y_multiSteps(unsigned int posX, unsigned int posY);
+	void lookPositive_Y_oneStep(unsigned int posX, unsigned int posY);
+
+	void setGlobalOPD(cv::Mat globalOPD);
 
 
 	// calc OPD in X direction
@@ -145,21 +192,10 @@ public:
 
 
 	// get global OPD
-	cv::Mat getGlobalOPD();
+	cv::Mat getGlobalOPD_deepCopy();
 
-	// bilinear interpolator
-	double bilinear_interpolator(double fxfy, double fxcy, double cxfy, double cxcy, int fx, int cx, int fy, int cy, double actualX, double actualY);
-
-	//upsampling OPD
-	cv::Mat calcUpscaledGlobalOPD();
-
-	//dowlnsampling for PSF
-	cv::Mat calcSampledOPDMatrixforPSF();
-
-	//fuction to calculate FFT
-	cv::Mat OPD::calcFFT(cv::Mat Matrix);
-
-
+	// get upsampled global OPD
+	cv::Mat getUpsampledGlobalOPD_deepCopy();
 
 
 	//plot function for MTF
@@ -181,10 +217,28 @@ public:
 	void calcAllOPDs(real referenceDistance, const std::vector<real>& allDistances);
 
 	// save all OPDS in matrix
-	void saveAllOPDsInMatrix(std::vector<unsigned int> MX, std::vector<unsigned int> MY, unsigned int size);
+	void saveAllOPDsInMatrix(std::vector<unsigned int> MX, std::vector<unsigned int> MY);
+
+
+
+	// optical system
+	void setOpticalSystemLLT(OpticalSystem_LLT optSysLLT);
+	OpticalSystem_LLT getOpticalSystemLLT();
+	// aimed light ray
+	void setAimedLightRays(std::vector<LightRayStruct> aimedLightRay);
+	std::vector<LightRayStruct> getAimedLightRays();
+	// obj or inf
+	void setInfOrObj(objectPoint_inf_obj inf_obj);
+	objectPoint_inf_obj getInfOrObj();
+	// size matrix to save
+	void setSizeMatrixToSave(unsigned int sizeMatrixToSave);
+	unsigned int getSizeMatrixToSave();
+
+
 
 private:
 
+	LightRayStruct mWantedLightRay;
 	std::vector<LightRayStruct> mAimedLightRay{};
 	OpticalSystem_LLT mOptSys{};
 	OpticalSystem_LLT mOptSysWithExitPupilPlan{};
@@ -192,6 +246,9 @@ private:
 	objectPoint_inf_obj mInf_obj{};
 	std::vector<real> mAllOPDs{};
 	cv::Mat mGlobalOPD{};
+	cv::Mat mGlobalOPD_upsampled{};
+	unsigned int mFilledPoints_horizontal{};
+	unsigned int mFilledPoints_vertical{};
 	unsigned int mSizeMatrix{};
 
 	VectorStructR3 mPosObject;
@@ -225,11 +282,28 @@ private:
 
 	std::vector<real> mVecWithAllCalcGlobalOPD;
 	
-	
+	unsigned int mMaxStepToLook;
+	real mToleranceToCheckZero;
+	PosX_PosY_Val_tureVal mLook_Pos_X;
+	PosX_PosY_Val_tureVal mLook_Neg_X_multiSteps;
+	PosX_PosY_Val_tureVal mLook_Pos_Y;
+	PosX_PosY_Val_tureVal mLook_Neg_Y;
+
+	// look one step
+	bool mLook_Pos_X_oneStep_trueVal;
+	bool mLook_Neg_X_oneStep_trueVal;
+	bool mLook_Pos_Y_oneStep_trueVal;
+	bool mLook_Neg_Y_oneStep_trueVal;
+
+	real mValOneStep_posX;
+	real mValOneStep_negX;
+	real mValOneStep_posY;
+	real mValOneStep_negY;
 
 	int mScaling;
 
 	cv::Mat mHuygenPSF;
+
 
 };
 

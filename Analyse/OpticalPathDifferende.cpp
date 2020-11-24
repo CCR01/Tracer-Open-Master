@@ -20,6 +20,45 @@
 #include "..\LowLevelTracing\Interaction\RefractedRay_LLT.h"
 #include "..\LowLevelTracing\Interaction\TraceLightRayBack.h"
 
+#include "..\oftenUseNamespace\oftenUseNamespace.h"
+
+	// pos X
+void PosX_PosY_Val_tureVal::setPos_X(unsigned int posX)
+{
+	mPosX = posX;
+}
+unsigned int PosX_PosY_Val_tureVal::getPos_X()
+{
+	return mPosX;
+}
+// pos Y
+void PosX_PosY_Val_tureVal::setPos_Y(unsigned int posY)
+{
+	mPosY = posY;
+}
+unsigned int PosX_PosY_Val_tureVal::getPos_Y()
+{
+	return mPosY;
+}
+// value
+void PosX_PosY_Val_tureVal::setVal(real val)
+{
+	mVal = val;
+}
+real PosX_PosY_Val_tureVal::getVal()
+{
+	return mVal;
+}
+// true value
+void PosX_PosY_Val_tureVal::setTrueVal(bool trueVal)
+{
+	mTrueVal = trueVal;
+}
+bool PosX_PosY_Val_tureVal::getTrueVal()
+{
+	return mTrueVal;
+}
+
 void PX_PY_MX_MY::resizeAllvector(unsigned int size)
 {
 	mPX_CheifRay.resize(size);
@@ -134,26 +173,26 @@ void PX_PY_MX_MY::calcAllPositionRegardsToChiefRay(const std::vector<VectorStruc
 
 		if (tempPX_CheifRay >= 0.0 && tempPY_ChierRay > 0.0)
 		{
-			tempPosMatrix_X = middleMatrix_X + std::floor((tempPX_CheifRay / maxX_val) * halfSizeMatrix);
-			tempPosMatrix_Y = middleMatrix_Y - std::floor((tempPY_ChierRay / maxY_val) * halfSizeMatrix);
+			tempPosMatrix_X = middleMatrix_X - std::floor((tempPX_CheifRay / maxX_val) * halfSizeMatrix);
+			tempPosMatrix_Y = middleMatrix_Y + std::floor((tempPY_ChierRay / maxY_val) * halfSizeMatrix);
 		}
 
 		else if (tempPX_CheifRay <= 0.0 && tempPY_ChierRay > 0.0)
 		{
-			tempPosMatrix_X = middleMatrix_X - std::floor((tempPX_CheifRay / minX_val) * halfSizeMatrix);
-			tempPosMatrix_Y = middleMatrix_Y - std::floor((tempPY_ChierRay / maxY_val) * halfSizeMatrix);
+			tempPosMatrix_X = middleMatrix_X + std::floor((tempPX_CheifRay / minX_val) * halfSizeMatrix);
+			tempPosMatrix_Y = middleMatrix_Y + std::floor((tempPY_ChierRay / maxY_val) * halfSizeMatrix);
 		}
 
 		else if (tempPX_CheifRay <= 0.0 && tempPY_ChierRay < 0.0)
 		{
-			tempPosMatrix_X = middleMatrix_X - std::floor((tempPX_CheifRay / minX_val) * halfSizeMatrix);
-			tempPosMatrix_Y = middleMatrix_Y + std::floor((tempPY_ChierRay / minY_val) * halfSizeMatrix);
+			tempPosMatrix_X = middleMatrix_X + std::floor((tempPX_CheifRay / minX_val) * halfSizeMatrix);
+			tempPosMatrix_Y = middleMatrix_Y - std::floor((tempPY_ChierRay / minY_val) * halfSizeMatrix);
 		}
 
 		else if (tempPX_CheifRay >= 0.0 && tempPY_ChierRay < 0.0)
 		{
-			tempPosMatrix_X = middleMatrix_X + std::floor((tempPX_CheifRay / maxX_val) * halfSizeMatrix);
-			tempPosMatrix_Y = middleMatrix_Y + std::floor((tempPY_ChierRay / minY_val) * halfSizeMatrix);
+			tempPosMatrix_X = middleMatrix_X - std::floor((tempPX_CheifRay / maxX_val) * halfSizeMatrix);
+			tempPosMatrix_Y = middleMatrix_Y - std::floor((tempPY_ChierRay / minY_val) * halfSizeMatrix);
 		}
 
 		else if (std::abs(tempPX_CheifRay) < 0.000001 && std::abs(tempPY_ChierRay) < 0.000001)
@@ -164,10 +203,14 @@ void PX_PY_MX_MY::calcAllPositionRegardsToChiefRay(const std::vector<VectorStruc
 
 		// just for debugging
 		//std::cout << "temp Pos MX: " << tempPosMatrix_X << std::endl;
+
 		mMX[i] = tempPosMatrix_X;
+
 		// just for debugging
 		//std::cout << "temp Pos MY: " << tempPosMatrix_Y << std::endl;
+
 		mMY[i] = tempPosMatrix_Y;
+
 		// just for debugging
 		//std::cout << "_____________" << std::endl;
 	}
@@ -182,32 +225,6 @@ OPD::OPD(OpticalSystem_LLT optSys, std::vector<LightRayStruct> aimedLightRay, ob
 	mSizeMatrix(sizeMatrix)
 	
 {};
-
-// to calculate the global OPD
-OPD::OPD(/*exit pupil*/ std::shared_ptr<SurfaceIntersectionRay_LLT> exitPupil,  /*optical system*/ OpticalSystem_LLT optSys,
-	/*fill apertur stop with light ray*/ std::vector<LightRayStruct> lightRayFillAperturStop, /*chief ray*/ LightRayStruct chiefLightRay, /*Scalling*/int scalling):
-	mExitPupil(exitPupil),
-	mOptSys(optSys),
-	mLightRayFillAperturStop(lightRayFillAperturStop),
-	mChiefLightRay(chiefLightRay),
-	mScaling(scalling)
-{
-
-	mPosObject = mChiefLightRay.getRay_LLT().getOriginRay();
-	mPosImageSurface = mOptSys.getNumberOfSurfaces();
-	mPosExPupilInOptSys = calcPosExPupil_Z();
-	//***
-	mOptSysWithExitPupilPlan = mOptSys;
-	mOptSysWithExitPupilPlan.fillInSurfaceAndInteracAtPos_i(mPosExPupilInOptSys, mExitPupil, mDoNothingInteraction_ptr);
-	//***
-	mRadiusRefSphere = calcRefDisForRefSphere();
-	mRefDistance = calcRefDisForOPD();
-
-	SphericalSurface_LLT refSphere(/*radius*/mRadiusRefSphere, /*semiHeight*/mExitPupil->getSemiHeight() / 2, /*Apex of the sphere*/mChiefRayAtExitPupil,/*Direction*/mChiefRayAtImage - mChiefRayAtExitPupil, /*refIndexSideA*/1.0, /*refIndexSideB*/1.0);
-	mRefSphere = refSphere;
-
-
-};
 
 // to calculate the OPD in X and Y direction
 OPD::OPD(/*exit pupil*/ std::shared_ptr<SurfaceIntersectionRay_LLT> exitPupil,  /*optical system*/ OpticalSystem_LLT optSys,
@@ -303,6 +320,9 @@ real OPD::calculateOPD_exitPupilBehindOptSys(OpticalSystem_LLT optSys, real posE
 	SequentialRayTracing seqTraceToExitPupilPlan(optSys_includingExitPupilPlan);
 	seqTraceToExitPupilPlan.sequentialRayTracing(chiefLightRay);
 
+	// check for lost rays
+	if (seqTraceToExitPupilPlan.getLoosingRays()) oftenUse::errorProtocol_stopSystem("loosing ray", "calculateOPD_exitPupilBehindOptSys - 1", 0, true);
+
 	VectorStructR3 interPointChiefRayImaSurface = seqTraceToExitPupilPlan.getAllInterPointsAtSurface_i_filtered(sizeOptSys - 1)[0];
 	VectorStructR3 interPointChiefRayAtExitPupil = seqTraceToExitPupilPlan.getAllInterPointsAtSurface_i_filtered(sizeOptSys)[0];
 	VectorStructR3 directionRefSphere = interPointChiefRayImaSurface - interPointChiefRayAtExitPupil;
@@ -317,21 +337,25 @@ real OPD::calculateOPD_exitPupilBehindOptSys(OpticalSystem_LLT optSys, real posE
 	optSys_includingRefSphere.setInteractionOfSurface_i(sizeOptSys - 1, refrac.clone());
 	optSys_includingRefSphere.fillInSurfaceAndInteracAtPos_i(sizeOptSys, RefSpherAtExitPupilPlanExP.clone(), refrac.clone());
 
-	SequentialRayTracing seqTrace(optSys_includingRefSphere);
+	//SequentialRayTracing seqTrace(optSys_includingRefSphere);
 	real pos_X_InApertureStop = pupilPositionX * infosApertureStop.getSemiHeightAS();
 	real pos_Y_InApertureStop = pupilPositionY * infosApertureStop.getSemiHeightAS();
 	VectorStructR3 targetPointInApertureStop(pos_X_InApertureStop, pos_Y_InApertureStop, infosApertureStop.getPointAS().getZ());
 
-	LightRayStruct wantedLightRay = rayAiming.rayAiming_obj(startPointRay, targetPointInApertureStop, light, refIndexStartMedia);
-	if (wantedLightRay.getIsAlive() == false)
+	mWantedLightRay = rayAiming.rayAiming_obj(startPointRay, targetPointInApertureStop, light, refIndexStartMedia);
+	if (mWantedLightRay.getIsAlive() == false)
 	{
 		std::cout << "ray aiming not possible -> the light ray is not alive -> OPD is not correct!" << std::endl;
-		return 999999.0;
+		oftenUse::errorProtocol_stopSystem("loosing ray", "calculateOPD_exitPupilBehindOptSys - 2", 0, true);
 	}
 
 
 	SequentialRayTracing seqTraceWantedLighRay(optSys_includingRefSphere);
-	seqTraceWantedLighRay.sequentialRayTracing(wantedLightRay);
+	seqTraceWantedLighRay.sequentialRayTracing(mWantedLightRay);
+	// check for lost rays
+	if (seqTraceWantedLighRay.getLoosingRays()) oftenUse::errorProtocol_stopSystem("loosing ray", "calculateOPD_exitPupilBehindOptSys - 3", 0, true);;
+
+
 	real distanceWantedRay = seqTraceWantedLighRay.getInterInf_PosSurface_TotalSteps_ofSur_i(sizeOptSys)[0].getTotalSteps();
 
 	returnOPD = ((referenceDistance - distanceWantedRay) / light.getWavelength()) * 1000000;
@@ -447,6 +471,9 @@ real OPD::calculateOPD_exitPupilLeftFromImaSurface(OpticalSystem_LLT optSys, rea
 	SequentialRayTracing seqTraceToImaSurface(optSys_includingExitPupilPlan);
 	seqTraceToImaSurface.sequentialRayTracing(chiefLightRay);
 
+	// check for lost ray
+	if (seqTraceToImaSurface.getLoosingRays()) oftenUse::errorProtocol_stopSystem("loosing ray", "calculateOPD_exitPupilLeftFromImaSurface - 1", 0, true);
+
 	VectorStructR3 interPointChiefRayImaSurface = seqTraceToImaSurface.getAllInterPointsAtSurface_i_filtered(sizeOptSys)[0];
 	VectorStructR3 interPointChiefRayAtExitPupil = seqTraceToImaSurface.getAllInterPointsAtSurface_i_filtered(positionExitPupilInOptSys)[0];
 	VectorStructR3 directionRefSphere = interPointChiefRayImaSurface - interPointChiefRayAtExitPupil;
@@ -470,6 +497,9 @@ real OPD::calculateOPD_exitPupilLeftFromImaSurface(OpticalSystem_LLT optSys, rea
 	LightRayStruct chiefLightRay_back(light, chiefRayToTraceBack, true);
 	SequentialRayTracing seqTraceBack(optSys_includingRefSphere);
 	seqTraceBack.sequentialRayTracing(chiefLightRay_back);
+	// check for lost ray
+	if (seqTraceBack.getLoosingRays()) oftenUse::errorProtocol_stopSystem("loosing ray", "calculateOPD_exitPupilLeftFromImaSurface - 2", 0, true);
+
 	real lenght_2_chief = seqTraceBack.getInterInf_PosSurface_TotalSteps_ofSur_i(0)[0].getTotalSteps();
 
 	real referenceLenght = length_1_cheif - lenght_2_chief;
@@ -479,21 +509,27 @@ real OPD::calculateOPD_exitPupilLeftFromImaSurface(OpticalSystem_LLT optSys, rea
 	real pos_X_InApertureStop = pupilPositionX * infosApertureStop.getSemiHeightAS();
 	real pos_Y_InApertureStop = pupilPositionY * infosApertureStop.getSemiHeightAS();
 	VectorStructR3 targetPointInApertureStop(pos_X_InApertureStop, pos_Y_InApertureStop, infosApertureStop.getPointAS().getZ());
-	LightRayStruct wantedLightRay = rayAimingChiefRay.rayAiming_obj(startPointRay, targetPointInApertureStop, light, refIndexStartMedia);
-	if (wantedLightRay.getIsAlive() == false)
+	mWantedLightRay = rayAimingChiefRay.rayAiming_obj(startPointRay, targetPointInApertureStop, light, refIndexStartMedia);
+	if (mWantedLightRay.getIsAlive() == false)
 	{
 		std::cout << "ray aiming not possible -> the light ray is not alive -> OPD is not correct!" << std::endl;
-		return 999999.0;
+		oftenUse::errorProtocol_stopSystem("loosing ray", "calculateOPD_exitPupilLeftFromImaSurface - 3", 0, true);
 	}
 	
 	SequentialRayTracing seqTraceWantedRay(optSys);
-	seqTraceWantedRay.sequentialRayTracing(wantedLightRay);
+	seqTraceWantedRay.sequentialRayTracing(mWantedLightRay);
+	// check for lost ray
+	if (seqTraceWantedRay.getLoosingRays()) oftenUse::errorProtocol_stopSystem("loosing ray", "calculateOPD_exitPupilLeftFromImaSurface - 4", 0, true);;
+
 	real length_wanted_1 = seqTraceWantedRay.getInterInf_PosSurface_TotalSteps_ofSur_i(sizeOptSys - 1)[0].getTotalSteps();
 	VectorStructR3 interPointWanted = seqTraceWantedRay.getAllInterPointsAtSurface_i_filtered(sizeOptSys - 1)[0];
 	VectorStructR3 directionWantedRay_back = -1.0 * seqTraceWantedRay.getAllInterInfosOfSurf_i(sizeOptSys - 1)[0].getDirectionRayUnit();
 	Ray_LLT wantedRayToTraceBack(/*origin*/ interPointWanted,/*direction*/directionWantedRay_back,/*refractive index*/ refIndexBeforeImageSurface);
 	LightRayStruct wantedLightRayToTraceBack(light, wantedRayToTraceBack, true);
 	seqTraceBack.sequentialRayTracing(wantedLightRayToTraceBack);
+	// check for lost ray
+	if (seqTraceBack.getLoosingRays()) oftenUse::errorProtocol_stopSystem("loosing ray", "calculateOPD_exitPupilLeftFromImaSurface - 5", 0, true);;
+
 	real length_wanted_2 = seqTraceBack.getInterInf_PosSurface_TotalSteps_ofSur_i(0)[1].getTotalSteps();
 
 	real wantedLength = length_wanted_1 - length_wanted_2;
@@ -562,7 +598,7 @@ unsigned int OPD::calcPosExPupil_Z()
 
 
 // calculate global OPD
-void OPD::calcGlobalOPD_new(unsigned int sizeMatrix)
+void OPD::calcGlobalOPD_new()
 {
 	// calculate the cardinal points to get psoition of exit pupil
 	CardinalPoints carPoints(mOptSys, mInf_obj);
@@ -574,12 +610,12 @@ void OPD::calcGlobalOPD_new(unsigned int sizeMatrix)
 	// position of exit pupil is on the - right side - of the image surface
 	if (positionExitPupil_global > positionZ_lastSurface)
 	{
-		calcGlobalOPD_new_Right_SideOfImaSurface(positionExitPupil_global, sizeMatrix);
+		calcGlobalOPD_new_Right_SideOfImaSurface(positionExitPupil_global);
 	}
 	// position of exit pupil is in the - left side - of the image surface
 	else
 	{
-		calcGlobalOPD_new_LEFT_SideOfImaSurface();
+		calcGlobalOPD_new_LEFT_SideOfImaSurface(positionExitPupil_global);
 	}
 
 }
@@ -587,12 +623,12 @@ void OPD::calcGlobalOPD_new(unsigned int sizeMatrix)
 
 
 
-void OPD::calcGlobalOPD_new_Right_SideOfImaSurface(real positionExitPupil_global, unsigned int sizeMatrix)
+void OPD::calcGlobalOPD_new_Right_SideOfImaSurface(real positionExitPupil_global)
 {
 
 	
 	// build the optical system with the exit pupil plan
-	buildOpticalSystemWithExitPupilPlan(positionExitPupil_global);
+	buildOpticalSystemWithExitPupilPlan_rightSide(positionExitPupil_global);
 
 	// build chiefLightRay
 	infosAS infosApertureStop = mOptSys.getInforAS();
@@ -603,6 +639,9 @@ void OPD::calcGlobalOPD_new_Right_SideOfImaSurface(real positionExitPupil_global
 	// collect infomrations to build optical system including reference sphere
 	SequentialRayTracing seqTraceToExitPupilPlan(mOptSysWithExitPupilPlan);
 	seqTraceToExitPupilPlan.sequentialRayTracing(chiefLightRay);
+	// check for lost rays
+	if (seqTraceToExitPupilPlan.getLoosingRays()) oftenUse::errorProtocol_stopSystem("loosing ray", "calcGlobalOPD_new_Right_SideOfImaSurface - 1", 0, true);
+
 
 	unsigned int positionExitPupil = mOptSysWithExitPupilPlan.getPosAndInteractingSurface().size() - 1;
 	VectorStructR3 interPointChiefRayImaSurface = seqTraceToExitPupilPlan.getAllInterPointsAtSurface_i_filtered(positionExitPupil - 1)[0];
@@ -615,11 +654,14 @@ void OPD::calcGlobalOPD_new_Right_SideOfImaSurface(real positionExitPupil_global
 	real referenceDistance = seqTraceToExitPupilPlan.getInterInf_PosSurface_TotalSteps_ofSur_i(positionExitPupil)[0].getTotalSteps();
 
 	// build the optical system including reference sphere at exit pupil
-	buildOpticalSystemWithReferenceSphereAtExitPupil(RadiusRefSphere, interPointChiefRayAtExitPupil, directionRefSphere);
+	buildOpticalSystemWithReferenceSphereAtExitPupil_rightSide(RadiusRefSphere, interPointChiefRayAtExitPupil, directionRefSphere);
 
 	// trace many ray to fill matrix with OPDs
 	SequentialRayTracing seqTrace(mOptSysWithReferenceSphere);
 	seqTrace.seqRayTracingWithVectorOfLightRays(mAimedLightRay);
+	// check for lost rays
+	if (seqTrace.getLoosingRays()) oftenUse::errorProtocol_stopSystem("loosing ray", "calcGlobalOPD_new_Right_SideOfImaSurface - 2", 0 , true);
+
 
 	// save all datas to fill matrix with OPD
 	std::vector<real> allDistances = seqTrace.getAllDistancesSurface_i(positionExitPupil);
@@ -628,10 +670,10 @@ void OPD::calcGlobalOPD_new_Right_SideOfImaSurface(real positionExitPupil_global
 	calcAllOPDs(referenceDistance, allDistances);
 
 	PX_PY_MX_MY saveInfosAboutOPD;
-	saveInfosAboutOPD.calcAllPositionRegardsToChiefRay(allInterpointsAtRefSphere, sizeMatrix);
+	saveInfosAboutOPD.calcAllPositionRegardsToChiefRay(allInterpointsAtRefSphere, mSizeMatrix);
 
 	// save all OPD in matrix
-	saveAllOPDsInMatrix(saveInfosAboutOPD.getAll_MX(), saveInfosAboutOPD.getAll_MY(), sizeMatrix);
+	saveAllOPDsInMatrix(saveInfosAboutOPD.getAll_MX(), saveInfosAboutOPD.getAll_MY());
 
  }
 
@@ -651,19 +693,19 @@ void OPD::calcAllOPDs(real referenceDistance, const std::vector<real>& allDistan
 }
 
 // save all OPDS in matrix
-void OPD::saveAllOPDsInMatrix(std::vector<unsigned int> MX, std::vector<unsigned int> MY, unsigned int size)
+void OPD::saveAllOPDsInMatrix(std::vector<unsigned int> MX, std::vector<unsigned int> MY)
 {
-	mGlobalOPD = cv::Mat::zeros(size, size, CV_64F);
+	mGlobalOPD = cv::Mat::zeros(mSizeMatrix, mSizeMatrix, CV_64F);
 	unsigned int numberOfOPD = MX.size();
 	// fill the matrix
 	for (unsigned int i = 0; i < numberOfOPD; ++i)
 	{
-		mGlobalOPD.at<double>(MY[i], MX[i]) = mAllOPDs[i];
+		mGlobalOPD.at<real>(MY[i], MX[i]) = mAllOPDs[i];
 	}
 
 }
 
-void OPD::buildOpticalSystemWithExitPupilPlan(real positionExitPupil_global)
+void OPD::buildOpticalSystemWithExitPupilPlan_rightSide(real positionExitPupil_global)
 {
 	// build the exit pupil plan
 	unsigned int sizeOptSysMinOne = mOptSys.getPosAndInteractingSurface().size() - 1;
@@ -687,7 +729,7 @@ void OPD::buildOpticalSystemWithExitPupilPlan(real positionExitPupil_global)
 }
 
 
-void OPD::buildOpticalSystemWithReferenceSphereAtExitPupil(real radiusRefSphere, VectorStructR3 pointRefSphere, VectorStructR3 directionRefSphere)
+void OPD::buildOpticalSystemWithReferenceSphereAtExitPupil_rightSide(real radiusRefSphere, VectorStructR3 pointRefSphere, VectorStructR3 directionRefSphere)
 {
 	unsigned int posLastSurface_imaPlan = mOptSys.getPosAndInteractingSurface().size() - 1;
 	real directionZ_lastSurface = mOptSys.getPosAndInteractingSurface()[posLastSurface_imaPlan].getSurfaceInterRay_ptr()->getDirection().getZ();
@@ -713,11 +755,201 @@ void OPD::buildOpticalSystemWithReferenceSphereAtExitPupil(real radiusRefSphere,
 	mOptSysWithReferenceSphere.fillInSurfaceAndInteracAtPos_i(posLastSurface_imaPlan + 1, referenceSphere.clone(), absorb.clone());
 }
 
-void OPD::calcGlobalOPD_new_LEFT_SideOfImaSurface()
+void OPD::calcGlobalOPD_new_LEFT_SideOfImaSurface(real positionExitPupil_global)
 {
-	// do it!!!
+	real toleranceForRayAiming = 0.00000000001;
+	real refIndexStartMedia = calcRefractivIndexStartMedia(mOptSys);
+
+	unsigned int sizeOptSys = mOptSys.getPosAndInteractingSurface().size();
+
+	// get refractiv index before exit pupil
+	real refIndexBeforeExitPupil{};
+	unsigned int posSurfaceBeforeExitPupil{};
+	unsigned int positionExitPupilInOptSys = calcPosExPupil_Z(mOptSys, positionExitPupil_global);
+	if (positionExitPupilInOptSys == 0)
+	{
+		posSurfaceBeforeExitPupil = 0;
+	}
+	else
+	{
+		posSurfaceBeforeExitPupil = positionExitPupilInOptSys - 1;
+	}
+
+	real directionSurfaceBeforeExitPupil = mOptSys.getPosAndInteractingSurface()[posSurfaceBeforeExitPupil].getSurfaceInterRay_ptr()->getDirection().getZ();
+
+	if (directionSurfaceBeforeExitPupil > 0)
+	{
+		refIndexBeforeExitPupil = mOptSys.getPosAndInteractingSurface()[posSurfaceBeforeExitPupil].getSurfaceInterRay_ptr()->getRefractiveIndex_B();
+	}
+	else
+	{
+		refIndexBeforeExitPupil = mOptSys.getPosAndInteractingSurface()[posSurfaceBeforeExitPupil].getSurfaceInterRay_ptr()->getRefractiveIndex_A();
+	}
+	// ***
+
+	// get refractiv index before image surface
+
+	real directionImaSurface = mOptSys.getPosAndInteractingSurface()[sizeOptSys - 1].getSurfaceInterRay_ptr()->getDirection().getZ();
+	real refIndexBeforeImageSurface{};
+
+	if (directionImaSurface > 0)
+	{
+		refIndexBeforeImageSurface = mOptSys.getPosAndInteractingSurface()[sizeOptSys - 1].getSurfaceInterRay_ptr()->getRefractiveIndex_B();
+	}
+
+	else
+	{
+		refIndexBeforeImageSurface = mOptSys.getPosAndInteractingSurface()[sizeOptSys - 1].getSurfaceInterRay_ptr()->getRefractiveIndex_B();
+	}
+
+
+
+
+	// get refractiv index after exit pupil
+	real refIndexAfterExitPupil{};
+	real directionSurfaceAfterExitPupil = mOptSys.getPosAndInteractingSurface()[positionExitPupilInOptSys].getSurfaceInterRay_ptr()->getDirection().getZ();
+	if (directionSurfaceAfterExitPupil > 0)
+	{
+		refIndexAfterExitPupil = mOptSys.getPosAndInteractingSurface()[positionExitPupilInOptSys].getSurfaceInterRay_ptr()->getRefractiveIndex_A();
+	}
+	else
+	{
+		refIndexAfterExitPupil = mOptSys.getPosAndInteractingSurface()[positionExitPupilInOptSys].getSurfaceInterRay_ptr()->getRefractiveIndex_B();
+	}
+	// ***
+
+	PlanGeometry_LLT exitPupilPlan(/*semiHeight*/oftenUse::getInfReal(), /*point*/{ 0.0,0.0,positionExitPupil_global }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ refIndexBeforeExitPupil, /*refractiveSideB*/ refIndexAfterExitPupil);
+
+
+	// build chiefLightRay
+	infosAS infosApertureStop = mOptSys.getInforAS();
+	RayAiming rayAimingChiefRay(mOptSys);
+	rayAimingChiefRay.setTolerance_XandY(toleranceForRayAiming);
+	LightRayStruct chiefLightRay = rayAimingChiefRay.rayAiming_obj(mAimedLightRay[0].getRay_LLT().getOriginRay(), infosApertureStop.getPointAS(), mAimedLightRay[0].getLight_LLT(), refIndexStartMedia);
+
+
+	mOptSysWithExitPupilPlan = mOptSys.clone();
+
+	TraceLightRayBack traceBack;
+	DoNothingInteraction_LLT doNothing;
+
+	real prefixForRayTracing = 1.0;
+	if (positionExitPupilInOptSys == 0)
+	{
+		// here first we have to trace back to the exit pupil
+		if (positionExitPupil_global < mAimedLightRay[0].getRay_LLT().getOriginRay().getZ())
+		{
+
+			chiefLightRay.setRayDirectionUni(-1.0 * chiefLightRay.getRay_LLT().getDirectionRayUnit());
+			mOptSysWithExitPupilPlan.fillInSurfaceAndInteracAtPos_i(positionExitPupilInOptSys, exitPupilPlan.clone(), traceBack.clone());
+		}
+
+		else
+		{
+			mOptSysWithExitPupilPlan.fillInSurfaceAndInteracAtPos_i(positionExitPupilInOptSys, exitPupilPlan.clone(), doNothing.clone());
+		}
+	}
+
+	else
+	{
+		mOptSysWithExitPupilPlan.fillInSurfaceAndInteracAtPos_i(positionExitPupilInOptSys, exitPupilPlan.clone(), doNothing.clone());
+	}
+
+
+	SequentialRayTracing seqTraceToImaSurface(mOptSysWithExitPupilPlan);
+	seqTraceToImaSurface.sequentialRayTracing(chiefLightRay);
+	// check for lost rays
+	if (seqTraceToImaSurface.getLoosingRays()) oftenUse::errorProtocol_stopSystem("loosing ray", "calcGlobalOPD_new_LEFT_SideOfImaSurface - 1", 0, true);
+
+	VectorStructR3 interPointChiefRayImaSurface = seqTraceToImaSurface.getAllInterPointsAtSurface_i_filtered(sizeOptSys)[0];
+	VectorStructR3 interPointChiefRayAtExitPupil = seqTraceToImaSurface.getAllInterPointsAtSurface_i_filtered(positionExitPupilInOptSys)[0];
+	VectorStructR3 directionRefSphere = interPointChiefRayImaSurface - interPointChiefRayAtExitPupil;
+
+	real RadiusRefSphere = Math::lengthOfVector(directionRefSphere);
+
+	// building optical system with refSphere at exit pupil
+	SphericalSurface_LLT RefSpherAtExitPupilPlanExP(/*radius*/RadiusRefSphere, /*semiHeight*/oftenUse::getInfReal(), /*Apex of the sphere*/interPointChiefRayAtExitPupil, /*Direction*/ directionRefSphere, /*refIndexSideA*/refIndexBeforeImageSurface, /*refIndexSideB*/refIndexBeforeImageSurface);
+	mOptSysWithReferenceSphere.fillVectorSurfaceAndInteractingData(0, RefSpherAtExitPupilPlanExP.clone(), doNothing.clone());
+
+	// calculate referece distance
+	real length_1_cheif = seqTraceToImaSurface.getInterInf_PosSurface_TotalSteps_ofSur_i(sizeOptSys)[0].getTotalSteps();
+	if (positionExitPupil_global < mAimedLightRay[0].getRay_LLT().getOriginRay().getZ())
+	{
+		real firstLength = seqTraceToImaSurface.getInterInf_PosSurface_TotalSteps_ofSur_i(0)[0].getTotalSteps();
+		length_1_cheif = length_1_cheif - 2.0 * firstLength;
+	}
+
+	// build light ray to trace back
+	Ray_LLT chiefRayToTraceBack(/*origin*/ interPointChiefRayImaSurface,/*direction*/ -1.0 * directionRefSphere,/*refractive index*/ refIndexBeforeImageSurface);
+	LightRayStruct chiefLightRay_back(mAimedLightRay[0].getLight_LLT(), chiefRayToTraceBack, true);
+	SequentialRayTracing seqTraceBack(mOptSysWithReferenceSphere);
+	seqTraceBack.sequentialRayTracing(chiefLightRay_back);
+	// check for lost rays
+	if (seqTraceBack.getLoosingRays()) oftenUse::errorProtocol_stopSystem("loosing ray", "calcGlobalOPD_new_LEFT_SideOfImaSurface - 2", 0, true);;
+
+	real lenght_2_chief = seqTraceBack.getInterInf_PosSurface_TotalSteps_ofSur_i(0)[0].getTotalSteps();
+
+	real referenceLenght = length_1_cheif - lenght_2_chief;
+
+	// seq tracing to ima surface
+	SequentialRayTracing seqTraceWantedRay(mOptSys);
+	seqTraceWantedRay.seqRayTracingWithVectorOfLightRays(mAimedLightRay);
+	// check for lost rays
+	if (seqTraceWantedRay.getLoosingRays()) oftenUse::errorProtocol_stopSystem("loosing ray", "calcGlobalOPD_new_LEFT_SideOfImaSurface - 3", 0, true);;
+
+	std::vector<real> allDistancesTraceForward = seqTraceWantedRay.getAllDistancesSurface_i(sizeOptSys - 1);
+
+	// trace all rays back to ima surface
+	std::vector<VectorStructR3> allInterPointsImaSurface = seqTraceWantedRay.getAllInterPointsAtSurface_i_filtered(sizeOptSys - 1);
+	std::vector<VectorStructR3> allDirectionsImaSurface = seqTraceWantedRay.getAllDirectionsAtSurface_i_filtered(sizeOptSys - 1);
+	std::vector<VectorStructR3> allDirectionsImaSurface_traceBack = -1.0 * allDirectionsImaSurface;
+
+	// build light rays to trace back
+	std::vector<LightRayStruct> lightRayTraceBack_vec{};
+	lightRayTraceBack_vec.resize(allInterPointsImaSurface.size());
+	Light_LLT light = mAimedLightRay[0].getLight_LLT();
+	LightRayStruct tempLightRay;
+	tempLightRay.setIsAlive(true);
+	tempLightRay.setLight_LLT(light);
+
+	tempLightRay.setCurrentRefractivIndex(refIndexBeforeImageSurface);
+	for (unsigned int i = 0; i < allInterPointsImaSurface.size(); ++i)
+	{
+	
+		tempLightRay.setRayOrigin(allInterPointsImaSurface[i]);
+		tempLightRay.setRayDirectionUni(allDirectionsImaSurface_traceBack[i]);
+		lightRayTraceBack_vec[i] = tempLightRay;
+	}
+
+	seqTraceBack.clearAllTracedRays();
+	seqTraceBack.seqRayTracingWithVectorOfLightRays(lightRayTraceBack_vec);
+
+	std::vector<real> allDistancesTraceBack = seqTraceBack.getAllDistancesSurface_i(0);
+	std::vector<VectorStructR3> allInterpointsAtRefSphere = seqTraceBack.getAllInterPointsAtSurface_i_filtered(0);
+
+	std::vector<real> totalDistances(allDistancesTraceBack.size());
+	
+	for (unsigned int i = 0; i < allDistancesTraceBack.size(); ++i)
+	{
+		totalDistances[i] = allDistancesTraceForward[i] - allDistancesTraceBack[i];
+	}
+
+	calcAllOPDs(referenceLenght, totalDistances);
+
+	PX_PY_MX_MY saveInfosAboutOPD;
+	saveInfosAboutOPD.calcAllPositionRegardsToChiefRay(allInterpointsAtRefSphere, mSizeMatrix);
+
+	// save all OPD in matrix
+	saveAllOPDsInMatrix(saveInfosAboutOPD.getAll_MX(), saveInfosAboutOPD.getAll_MY());
 
 }
+
+
+LightRayStruct OPD::getWantedLightRay()
+{
+	return mWantedLightRay;
+}
+
 
 // calc reference distance for OPD
 real OPD::calcRefDisForRefSphere()
@@ -1402,202 +1634,25 @@ std::vector<real> OPD::getOPD_Y_inVec()
 //}
 
 // get global OPD
-cv::Mat OPD::getGlobalOPD()
+cv::Mat OPD::getGlobalOPD_deepCopy()
 {
-	return mGlobalOPD;
+	return mGlobalOPD.clone();
+}
+
+// get upsampled global OPD
+cv::Mat OPD::getUpsampledGlobalOPD_deepCopy()
+{
+	return mGlobalOPD_upsampled.clone();
 }
 
 
-
-// get vector with all calculated global OPD --> just for debugging
+// get vector with all calculated global OPD 
 std::vector<real> OPD::getVecWithAllCalcGlobalOPD()
 {
 	return mVecWithAllCalcGlobalOPD;
 }
 
-double OPD::bilinear_interpolator(double fxfy, double fxcy, double cxfy, double cxcy, int fx, int cx, int fy, int cy, double actualX, double actualY)
-{
 
-	if (((fx - cx) == 0) || ((fy - cy) == 0)) {
-		return (fxfy + fxcy + cxfy + cxcy) / 4;
-	}
-
-	double A0 = (double)(fxfy*cx*cy - fxcy * cx*fy - cxfy * fx*cy + cxcy * fx*fy) / (double)((fx - cx)*(fy - cy));
-	double A1 = (double)((-1)*fxfy*cy + fxcy * fy + cxfy * cy + (-1)*cxcy*fy) / (double)((fx - cx)*(fy - cy));
-	double A2 = (double)(-1 * fxfy*cx + fxcy * cx + cxfy * fx + -1 * cxcy*fx) / (double)((fx - cx)*(fy - cy));
-	double A3 = (double)(fxfy - fxcy - cxfy + cxcy) / (double)((fx - cx)*(fy - cy));
-
-	double sol = A0 + A1 * actualX + A2 * actualY + A3 * actualX*actualY;
-	return sol;
-
-}
-
-
-//upsampling OPD
-cv::Mat OPD::calcUpscaledGlobalOPD()
-{
-	//for MTF calculation
-	int N = upscaledMatrixSize;
-	double ratio = (double)(mGlobalOPD.cols - 1) / (double)(upscaledMatrixSize - 1);
-	//std::cout << mGlobalOPD << std::endl;
-
-
-
-
-
-
-	cv::Mat mUpscaledGlobalOPD = cv::Mat::zeros(N, N, CV_64F);
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < N; j++) {
-			int fx = floor((double)(i)*ratio);
-			int fy = floor((double)(j)*ratio);
-			int cx = ceil((double)(i)*ratio);
-			int cy = ceil((double)(j)*ratio);
-			double actualX = double(i)*ratio;
-			double actualY = double(j)*ratio;
-
-			mUpscaledGlobalOPD.at<double>(i, j) = bilinear_interpolator(mGlobalOPD.at<double>(fx, fy), mGlobalOPD.at<double>(fx, cy),
-				mGlobalOPD.at<double>(cx, fy), mGlobalOPD.at<double>(cx, cy),
-				fx, cx, fy, cy,
-				actualX, actualY);
-		}
-
-	}
-
-
-	return mUpscaledGlobalOPD;
-}
-
-//downsampling matrix size for PSF calculations 
-cv::Mat OPD::calcSampledOPDMatrixforPSF()
-{
-	double a = mGlobalOPD.cols;
-	double b = sqrt(32 / a);
-	double  SampledMatrixSizeforPSF = floor(mGlobalOPD.cols * b); /* effective grid size for PSF calculation*/
-	int N = SampledMatrixSizeforPSF;
-	double ratio = (double)(mGlobalOPD.cols - 1) / (double)(SampledMatrixSizeforPSF - 1);
-
-
-
-	cv::Mat mSampledOPDMatrixforPSF = cv::Mat::zeros(N, N, CV_64F);
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < N; j++) {
-			int fx = floor((double)(i)*ratio);
-			int fy = floor((double)(j)*ratio);
-			int cx = ceil((double)(i)*ratio);
-			int cy = ceil((double)(j)*ratio);
-			double actualX = double(i)*ratio;
-			double actualY = double(j)*ratio;
-
-			mSampledOPDMatrixforPSF.at<double>(i, j) = bilinear_interpolator(mGlobalOPD.at<double>(fx, fy), mGlobalOPD.at<double>(fx, cy),
-				mGlobalOPD.at<double>(cx, fy), mGlobalOPD.at<double>(cx, cy),
-				fx, cx, fy, cy,
-				actualX, actualY);
-			/*std::cout << mUpscaledGlobalOPD.at<double>(i, j)<<" ";*/
-		}
-		/*std::cout << std::endl;*/
-	}
-	return mSampledOPDMatrixforPSF;
-
-}
-
-
-
-//fuction to calculate FFT
-cv::Mat OPD::calcFFT(cv::Mat Matrix)
-{
-
-	//write function to get fft, add padding here it self. Nyquist rule = 2 times the array. that means if matrix is 32x32, the after padding it should be 64x64.
-
-	int N = Matrix.cols;
-	if (N % 2 == 1)
-	{
-		N = N + 1;
-	}
-	cv::Mat I = cv::Mat::zeros(2 * N, 2 * N, CV_64F);
-	cv::Mat E = cv::Mat::zeros(2 * N, 2 * N, CV_64F);
-
-	if (N < 200)
-	{
-		for (int i = 0; i < 2 * N; i++)
-		{
-			for (int j = 0; j < 2 * N; j++)
-			{
-				if (i >= N / 2 && j >= N / 2 && i < 1.5 * N && j < 1.5 * N)
-				{
-					I.at<double>(i, j) = Matrix.at<double>(i - N / 2, j - N / 2);
-				}
-				else
-				{
-					I.at<double>(i, j) = 0;
-				}
-			}
-
-		}
-	}
-	else
-	{
-		I = Matrix;
-	}
-
-	/*
-	cv::Mat display;
-	if (I.empty())
-
-	{
-		std::cout << "image not loaded";
-	}
-	else
-	{
-		I.convertTo(display, CV_8UC1, 255.0 / 1.0, 0);
-		applyColorMap(display, display, cv::COLORMAP_JET);
-		cv::imshow("imagesc", display);
-		cv::waitKey(0);
-	}
-	*/
-
-
-	cv::Mat padded;                            //expand input image to optimal size
-	int m = cv::getOptimalDFTSize(1 * I.rows);
-	int n = cv::getOptimalDFTSize(1 * I.cols); // on the border add zero values
-	cv::copyMakeBorder(I, padded, 0, m - I.rows, 0, n - I.cols, cv::BORDER_CONSTANT, cv::Scalar::all(0));
-	cv::Mat planes[] = { cv::Mat_<float>(padded), cv::Mat::zeros(padded.size(), CV_32F) };
-	cv::Mat complexI;
-	merge(planes, 2, complexI);         // Add to the expanded another plane with zeros
-	dft(complexI, complexI);            // this way the result may fit in the source matrix
-	// compute the magnitude and switch to logarithmic scale
-	// => log(1 + sqrt(Re(DFT(I))^2 + Im(DFT(I))^2))
-	split(complexI, planes);                   // planes[0] = Re(DFT(I), planes[1] = Im(DFT(I))
-	magnitude(planes[0], planes[1], planes[0]);// planes[0] = magnitude
-	cv::Mat magI = planes[0];
-	//magI += cv::Scalar::all(1);                    // switch to logarithmic scale
-	//log(magI, magI);
-	// crop the spectrum, if it has an odd number of rows or columns
-	//magI = magI(cv::Rect(0, 0, magI.cols & -3, magI.rows & -3));
-	// rearrange the quadrants of Fourier image  so that the origin is at the image center
-	int cx = magI.cols / 2;
-	int cy = magI.rows / 2;
-	cv::Mat q0(magI, cv::Rect(0, 0, cx, cy));   // Top-Left - Create a ROI per quadrant
-	cv::Mat q1(magI, cv::Rect(cx, 0, cx, cy));  // Top-Right
-	cv::Mat q2(magI, cv::Rect(0, cy, cx, cy));  // Bottom-Left
-	cv::Mat q3(magI, cv::Rect(cx, cy, cx, cy)); // Bottom-Right
-	cv::Mat tmp;                           // swap quadrants (Top-Left with Bottom-Right)
-	q0.copyTo(tmp);
-	q3.copyTo(q0);
-	tmp.copyTo(q3);
-	q1.copyTo(tmp);                    // swap quadrant (Top-Right with Bottom-Left)
-	q2.copyTo(q1);
-	tmp.copyTo(q2);
-
-	normalize(magI, magI, 0, 1, cv::NORM_MINMAX);
-
-
-
-
-	//std::cout << magI;
-	////
-	return magI;
-}
 
 // get PSF
 cv::Mat OPD::getPSF()
@@ -2187,3 +2242,475 @@ for (int i = s; i < PupilFunction.cols; i++)
 //	return mHuygenIntegral;
 //}
 
+	// bilinear interpolation to fill holes in OPD matrix
+void OPD::bilinearInterpolToFillHolesInOPDmatrix()
+{
+	mToleranceToCheckZero = 0.0000000001;
+	mGlobalOPD_upsampled = mGlobalOPD;
+	// check OPD value in the middle
+	checkOPDValueInTheMiddle();
+
+	bool checker = true;
+	mMaxStepToLook = 2;
+	while (checker)
+	{
+		horizontalInterpolation_oneStep();
+		verticalInterpolation_oneStep();
+
+		if (mFilledPoints_horizontal < mToleranceToCheckZero && mFilledPoints_vertical < mToleranceToCheckZero) // there is no improvement
+		{
+			holizontal_bilinear_Interpolation();
+			vertical_bilinear_Interpolation();
+
+			if (mMaxStepToLook > 4)
+			{
+				checker = false;
+			}
+			++mMaxStepToLook;
+		}
+	} 
+
+	// in the middle there is allways the chief ray -> OPD is zero
+	setMiddlePointToZero();
+}
+
+void OPD::horizontalInterpolation_oneStep()
+{
+	mFilledPoints_horizontal = 0;
+	real tempValue{};
+
+	for (unsigned int verticalPos = 0; verticalPos < mSizeMatrix; ++verticalPos)
+	{
+		for (unsigned int horizontalPos = 0; horizontalPos < mSizeMatrix; ++horizontalPos)
+		{
+			tempValue = mGlobalOPD_upsampled.at<real>(verticalPos, horizontalPos);
+
+			if (std::abs(tempValue) < mToleranceToCheckZero)
+			{
+				lookPositive_X_oneStep(horizontalPos, verticalPos);
+				if (mLook_Pos_X_oneStep_trueVal)
+				{
+					lookNegativ_X_oneStep(horizontalPos, verticalPos);
+				}
+
+				if (mLook_Neg_X_oneStep_trueVal && mLook_Pos_X_oneStep_trueVal) // calculate new value in OPD matrix
+				{
+					tempValue = (mValOneStep_posX + mValOneStep_negX) / 2;
+
+					mGlobalOPD_upsampled.at<real>(verticalPos, horizontalPos) = tempValue;
+					++mFilledPoints_horizontal;
+				}
+
+				if (mLook_Pos_X_oneStep_trueVal)
+				{
+					++horizontalPos;
+				}
+			}
+		}
+	}
+}
+
+void OPD::holizontal_bilinear_Interpolation()
+{
+	mFilledPoints_horizontal = 0;
+	real tempValue{};
+
+
+	for (unsigned int verticalPos = 0; verticalPos < mSizeMatrix; ++verticalPos)
+	{
+		for (unsigned int horizontalPos = 0; horizontalPos < mSizeMatrix; ++horizontalPos)
+		{
+			tempValue = mGlobalOPD_upsampled.at<real>(verticalPos, horizontalPos);
+			// just for debugging 
+			// std::cout << tempValue << std::endl;
+
+			if (std::abs(tempValue) < mToleranceToCheckZero )
+			{
+				lookNegativ_X_multiSteps(horizontalPos, verticalPos);
+				if (mLook_Neg_X_multiSteps.getTrueVal())
+				{
+					lookPositiv_X_multiSteps(horizontalPos, verticalPos);
+				}
+
+				if (mLook_Neg_X_multiSteps.getTrueVal() && mLook_Pos_X.getTrueVal()) // calculate new value in OPD matrix
+				{
+					// see: https://de.wikipedia.org/wiki/Bilineare_Filterung
+
+					tempValue = (real)(mLook_Pos_X.getPos_X() - horizontalPos) / (mLook_Pos_X.getPos_X() - mLook_Neg_X_multiSteps.getPos_X()) * mLook_Neg_X_multiSteps.getVal() + (real)(horizontalPos - mLook_Neg_X_multiSteps.getPos_X()) / (mLook_Pos_X.getPos_X() - mLook_Neg_X_multiSteps.getPos_X()) * mLook_Pos_X.getVal();
+				
+					mGlobalOPD_upsampled.at<real>(verticalPos, horizontalPos) = tempValue;
+					++mFilledPoints_horizontal;
+				}
+			}
+		}
+	}
+
+}
+
+
+
+
+void OPD::vertical_bilinear_Interpolation()
+{
+	mFilledPoints_vertical = 0;
+	real tempValue{};
+
+	for (unsigned int horizontalPos = 0; horizontalPos < mSizeMatrix; ++horizontalPos)
+	{
+		for (unsigned int verticalPos = 0; verticalPos < mSizeMatrix; ++verticalPos)
+		{
+			tempValue = mGlobalOPD_upsampled.at<real>(verticalPos, horizontalPos);
+			// just for debugging
+			//std::cout << tempValue << std::endl;
+
+			if (std::abs(tempValue) < mToleranceToCheckZero)
+			{
+				lookNegativ_Y_multiSteps(horizontalPos, verticalPos);
+				if (mLook_Neg_Y.getTrueVal())
+				{
+					lookPositiv_Y_multiSteps(horizontalPos, verticalPos);
+				}
+
+				if (mLook_Neg_Y.getTrueVal() && mLook_Pos_Y.getTrueVal()) // calculate new value in OPD matrix
+				{
+					// see: https://de.wikipedia.org/wiki/Bilineare_Filterung
+
+					tempValue = (real)(mLook_Pos_Y.getPos_Y() - verticalPos) / (mLook_Pos_Y.getPos_Y() - mLook_Neg_Y.getPos_Y()) * mLook_Neg_Y.getVal() + (real)(verticalPos - mLook_Neg_Y.getPos_Y()) / (mLook_Pos_Y.getPos_Y() - mLook_Neg_Y.getPos_Y()) * mLook_Pos_Y.getVal();
+
+					mGlobalOPD_upsampled.at<real>(verticalPos, horizontalPos) = tempValue;
+					++mFilledPoints_vertical;
+				}
+			}
+		}
+	}
+
+}
+
+void OPD::verticalInterpolation_oneStep()
+{
+	mFilledPoints_vertical = 0;
+	real tempValue{};
+
+	for (unsigned int horizontalPos = 0; horizontalPos < mSizeMatrix; ++horizontalPos)
+	{
+		for (unsigned int verticalPos = 0; verticalPos < mSizeMatrix; ++verticalPos)
+		{
+			tempValue = mGlobalOPD_upsampled.at<real>(verticalPos, horizontalPos);
+
+			if (std::abs(tempValue) < mToleranceToCheckZero)
+			{
+				lookPositive_Y_oneStep(horizontalPos, verticalPos);				
+				if (mLook_Pos_Y_oneStep_trueVal)
+				{
+					lookNegative_Y_oneStep(horizontalPos, verticalPos);
+				}
+
+				if (mLook_Neg_Y_oneStep_trueVal && mLook_Pos_Y_oneStep_trueVal) // calculate new value in OPD matrix
+				{
+					tempValue = (mValOneStep_posY + mValOneStep_negY) / 2;
+
+					mGlobalOPD_upsampled.at<real>(verticalPos, horizontalPos) = tempValue;
+					++mFilledPoints_vertical;
+				}
+
+				if (mLook_Pos_Y_oneStep_trueVal)
+				{
+					++verticalPos;
+				}
+			}
+		}
+	}
+
+}
+
+// check OPD value in the middle of the matrix
+void OPD::checkOPDValueInTheMiddle()
+{
+	unsigned int middlePoint = mGlobalOPD_upsampled.size().height / 2;
+
+	real valMiddlePoint = mGlobalOPD_upsampled.at<real>(middlePoint, middlePoint);
+
+	if (std::abs(valMiddlePoint) > mToleranceToCheckZero) // it is not zero
+	{
+		mGlobalOPD_upsampled.at<real>(middlePoint, middlePoint) = 0.0;
+		oftenUse::errorProtocol_stopSystem("maybe the matrix size of the OPD is too small and you lose data", "OpticalPathDifference.cpp", 0, false);
+	}
+
+
+}
+
+void OPD::setMiddlePointToZero()
+{
+	unsigned int middlePoint = mGlobalOPD_upsampled.size().height / 2 ;
+	mGlobalOPD_upsampled.at<real>(middlePoint, middlePoint) = 0.0;
+}
+
+
+// look negativ x direction
+void OPD::lookNegativ_X_multiSteps(unsigned int posX, unsigned int posY)
+{
+	int tempPosX = posX - 1;
+	real tempVal;
+	mLook_Neg_X_multiSteps.setTrueVal(false);
+
+	if(tempPosX >= 0)
+	{
+		for (unsigned int i = 0; i < mMaxStepToLook; ++i)
+		{
+			tempVal = mGlobalOPD_upsampled.at<real>(posY, tempPosX);
+
+			if (std::abs(tempVal) > mToleranceToCheckZero) // the value is not zero
+			{ 
+				mLook_Neg_X_multiSteps.setTrueVal(true);
+				mLook_Neg_X_multiSteps.setPos_X(tempPosX);
+				mLook_Neg_X_multiSteps.setPos_Y(posY);
+				mLook_Neg_X_multiSteps.setVal(tempVal);
+				i = mMaxStepToLook;
+			}
+
+
+			--tempPosX;
+			if (tempPosX < 0)
+			{
+				i = mMaxStepToLook;
+			}
+
+		}
+		
+
+	}
+
+
+}
+
+void OPD::lookNegativ_X_oneStep(unsigned int posX, unsigned int posY)
+{
+	int tempPosX = posX - 1;
+	real tempVal;
+	mLook_Neg_X_oneStep_trueVal = false;
+
+	if(tempPosX >= 0)
+	{
+		
+		tempVal = mGlobalOPD_upsampled.at<real>(posY, tempPosX);
+
+		if (std::abs(tempVal) > mToleranceToCheckZero) // the value is not zero
+		{
+			mValOneStep_negX = tempVal;
+			mLook_Neg_X_oneStep_trueVal = true;
+		}
+	}
+
+}
+
+void OPD::lookPositive_X_oneStep(unsigned int posX, unsigned int posY)
+{
+	int tempPosX = posX + 1;
+	real tempVal;
+	mLook_Pos_X_oneStep_trueVal = false;
+
+	if (tempPosX < mSizeMatrix)
+	{
+			tempVal = mGlobalOPD_upsampled.at<real>(posY, tempPosX);
+
+			if (std::abs(tempVal) > mToleranceToCheckZero) // the value is not zero
+			{
+				mValOneStep_posX = tempVal;
+				mLook_Pos_X_oneStep_trueVal = true;
+			}
+
+	}
+}
+
+void OPD::lookNegative_Y_oneStep(unsigned int posX, unsigned int posY)
+{
+	int tempPosY = posY - 1;
+	real tempVal;
+	mLook_Neg_Y_oneStep_trueVal = false;
+
+	if (tempPosY >= 0)
+	{
+
+		tempVal = mGlobalOPD_upsampled.at<real>(tempPosY, posX);
+
+		if (std::abs(tempVal) > mToleranceToCheckZero) // the value is not zero
+		{
+			mValOneStep_negY = tempVal;
+			mLook_Neg_Y_oneStep_trueVal = true;
+		}
+	}
+}
+
+void OPD::lookPositive_Y_oneStep(unsigned int posX, unsigned int posY)
+{
+	int tempPosY = posY + 1;
+	real tempVal;
+	mLook_Pos_Y_oneStep_trueVal = false;
+
+	if (tempPosY < mSizeMatrix)
+	{
+		tempVal = mGlobalOPD_upsampled.at<real>(tempPosY, posX);
+
+		if (std::abs(tempVal) > mToleranceToCheckZero) // the value is not zero
+		{
+			mValOneStep_posY = tempVal;
+			mLook_Pos_Y_oneStep_trueVal = true;
+		}
+
+	}
+}
+
+// look positiv x direction
+void OPD::lookPositiv_X_multiSteps(unsigned int posX, unsigned int posY)
+{
+	int tempPosX = posX + 1;
+	real tempVal;
+	mLook_Pos_X.setTrueVal(false);
+	
+	if(tempPosX < mSizeMatrix)
+	{
+		for (unsigned int i = 0; i < mMaxStepToLook; ++i)
+		{
+			tempVal = mGlobalOPD_upsampled.at<real>(posY, tempPosX);
+	
+			if (std::abs(tempVal) > mToleranceToCheckZero) // the value is not zero
+			{
+				mLook_Pos_X.setTrueVal(true);
+				mLook_Pos_X.setPos_X(tempPosX);
+				mLook_Pos_X.setPos_Y(posY);
+				mLook_Pos_X.setVal(tempVal);
+				i = mMaxStepToLook;
+			}
+
+			++tempPosX;
+			if (tempPosX >= mSizeMatrix)
+			{
+				i = mMaxStepToLook;
+			}
+	
+		}
+	
+	
+	}
+}
+
+void OPD::setGlobalOPD(cv::Mat globalOPD)
+{
+	mGlobalOPD = globalOPD;
+	mSizeMatrix = globalOPD.size().height;
+
+	globalOPD.size().width;
+
+	if (globalOPD.size().width != mSizeMatrix)
+	{
+		// matrix size must be symetric
+		oftenUse::errorProtocol_stopSystem("matrix size of OPD must by symetric", "OpticalPathDifference", 0, true);
+	}
+}
+
+// look negativ y direction
+void OPD::lookNegativ_Y_multiSteps(unsigned int posX, unsigned int posY)
+{
+	int tempPosY = posY - 1;
+	real tempVal;
+	mLook_Neg_Y.setTrueVal(false);
+
+	if(tempPosY >= 0)
+	{
+		for (unsigned int i = 0; i < mMaxStepToLook; ++i)
+		{
+			tempVal = mGlobalOPD_upsampled.at<real>(tempPosY, posX);
+			// just for debugging
+			// std::cout << tempVal << std::endl;
+
+			if (std::abs(tempVal) > mToleranceToCheckZero) // the value is not zero
+			{
+				mLook_Neg_Y.setTrueVal(true);
+				mLook_Neg_Y.setPos_X(posX);
+				mLook_Neg_Y.setPos_Y(tempPosY);
+				mLook_Neg_Y.setVal(tempVal);
+				i = mMaxStepToLook;
+			}
+
+			--tempPosY;
+			if (tempPosY < 0)
+			{
+				i = mMaxStepToLook;
+			}
+
+		}
+
+
+	}
+}
+
+// look positiv y direction
+void OPD::lookPositiv_Y_multiSteps(unsigned int posX, unsigned int posY)
+{
+	int tempPosY = posY + 1;
+	real tempVal;
+	mLook_Pos_Y.setTrueVal(false);
+
+	if (tempPosY < mSizeMatrix)
+	{
+		for (unsigned int i = 0; i < mMaxStepToLook; ++i)
+		{
+			tempVal = mGlobalOPD_upsampled.at<real>(tempPosY, posX);
+
+			if (std::abs(tempVal) > mToleranceToCheckZero) // the value is not zero
+			{
+				mLook_Pos_Y.setTrueVal(true);
+				mLook_Pos_Y.setPos_X(posX);
+				mLook_Pos_Y.setPos_Y(tempPosY);
+				mLook_Pos_Y.setVal(tempVal);
+				i = mMaxStepToLook;
+			}
+
+			++tempPosY;
+			if (tempPosY >= mSizeMatrix)
+			{
+				i = mMaxStepToLook;
+			}
+
+		}
+
+
+	}
+}
+
+// optical system
+void OPD::setOpticalSystemLLT(OpticalSystem_LLT optSysLLT)
+{
+	mOptSys = optSysLLT;
+}
+OpticalSystem_LLT OPD::getOpticalSystemLLT()
+{
+	return mOptSys;
+}
+// aimed light ray
+void OPD::setAimedLightRays(std::vector<LightRayStruct> aimedLightRay)
+{
+	mAimedLightRay = aimedLightRay;
+}
+std::vector<LightRayStruct> OPD::getAimedLightRays()
+{
+	return mAimedLightRay;
+}
+// obj or inf
+void OPD::setInfOrObj(objectPoint_inf_obj inf_obj)
+{
+	mInf_obj = inf_obj;
+}
+objectPoint_inf_obj OPD::getInfOrObj()
+{
+	return mInf_obj;
+}
+// size matrix to save
+void OPD::setSizeMatrixToSave(unsigned int sizeMatrixToSave)
+{
+	mSizeMatrix = sizeMatrixToSave;
+}
+unsigned int OPD::getSizeMatrixToSave()
+{
+	return mSizeMatrix;
+}
