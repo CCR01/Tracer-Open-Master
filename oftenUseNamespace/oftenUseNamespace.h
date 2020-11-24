@@ -100,4 +100,14 @@ namespace oftenUse
 	// get default values for genetic optimisation
 	defaultParaGenetic getDafulatPara_Genetic(bool rayTracing);
 
+	std::string replacePointByComma(std::string inputString);
+
+	// check for nan in VectorStructR3
+	bool checkFor_No_Nan(VectorStructR3 vec);
+
+	// error protocol
+	void errorProtocol_stopSystem(/*error*/ std::string error, /*location*/ std::string location, /*error number*/ unsigned int errorNumber, /*stop program*/ bool stopProgram);
+
+	bool checkForEvenNumber(int number);
+	bool checkForOddNumber(int number);
 }

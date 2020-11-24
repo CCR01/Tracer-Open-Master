@@ -61,7 +61,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 
 	
 
-	bool isRight10 = Math::compareAllVectorElements(checkVector10, ReferenzVector10, 8);
+	bool isRight10 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector10, ReferenzVector10, 8);
 	checkMethodesSphericalLens.push_back(isRight10);
 
 	//____________________________________________________________________________________________________________________
@@ -111,7 +111,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	std::vector<VectorStructR3> ReferenzVector23 = { { 0.0, 1.4611975761, 21.917963642 },{ 0.0, 0.69259381472, 20.777814442 },{ 0.0, 0.0, 20.0 } ,{ 0.0, -0.64709617100, 19.412885130 },{ 0.0, -1.2632612082, 18.948918123 },
 	{ 0.0, -5.5556151558E-012, 20.0 },{ 0.0, -0.54880972986, 19.494898842 },{ 0.0, -1.0863414733, 19.073780525 },{ 0.0, -1.6155579662, 18.718526554 },{ 0.0,-2.1390799085, 18.417239725 } };
 
-	bool isRight23 = Math::compareAllVectorElements(checkVector23, ReferenzVector23, 9);
+	bool isRight23 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector23, ReferenzVector23, 9);
 	checkMethodesSphericalLens.push_back(isRight23);
 
 
@@ -162,7 +162,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	std::vector<VectorStructR3> ReferenzVector45 = { { 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0,-1.5777218104e-030, 20.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },
 	{ 0.0, -6.1715247777E-023, 20.0 },{ 0.0, -0.21275516734, 18.054665003 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
 
-	bool isRight45 = Math::compareAllVectorElements(checkVector45, ReferenzVector45, 9);
+	bool isRight45 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector45, ReferenzVector45, 9);
 	checkMethodesSphericalLens.push_back(isRight45);
 
 	//____________________________________________________________________________________________________________________
@@ -212,7 +212,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	std::vector<VectorStructR3> ReferenzVector67 = { { 0.0, 1.2632612082, 18.948918123 },{ 0.0, 0.64709617100, 19.412885130 },{ 0.0, 0.0, 20.0 },{ 0.0, -0.69259381472, 20.777814442 },{ 0.0, -1.4611975761, 21.917963642 },
 	{ 0.0, -8.3327946967E-012, 20.0 },{ 0.0, -0.91726551290, 21.073995055 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
 
-	bool isRight67 = Math::compareAllVectorElements(checkVector67, ReferenzVector67, 9);
+	bool isRight67 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector67, ReferenzVector67, 9);
 	checkMethodesSphericalLens.push_back(isRight67);
 
 	//____________________________________________________________________________________________________________________
@@ -261,7 +261,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	std::vector<VectorStructR3> ReferenzVector89 = { { 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 1.5777218104E-030, 20.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },
 	{ 0.0, 0.0, 20.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
 
-	bool isRight89 = Math::compareAllVectorElements(checkVector89, ReferenzVector89, 9);
+	bool isRight89 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector89, ReferenzVector89, 9);
 	checkMethodesSphericalLens.push_back(isRight89);
 
 	//________________________________________________________________________________________________________________________________________________________________
@@ -316,7 +316,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.66625398250, 20.006190262 },{ 0.0, -0.0056360012139, 20.056360012 },{ 0.0, -0.68796087482, 20.159706561 },{ 0.0, -1.3870548813, 20.322329288 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight100 = Math::compareAllVectorElements(checkVector100, ReferenzVector100, 7);
+	bool isRight100 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector100, ReferenzVector100, 7);
 	checkMethodesSphericalLens.push_back(isRight100);
 
 	//________________________________________________________________________________________________________________________________________________________________
@@ -370,7 +370,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.68657953404, 19.701306989 },{ 0.0, 0.080265578790, 19.197344212 },{ 0.0, -0.50509941741, 18.788245631 },{ 0.0, -1.0752507908, 18.451504745 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight101 = Math::compareAllVectorElements(checkVector101, ReferenzVector101, 9);
+	bool isRight101 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector101, ReferenzVector101, 9);
 	checkMethodesSphericalLens.push_back(isRight101);
 
 	//________________________________________________________________________________________________________________________________________________________________
@@ -424,7 +424,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.64132422416, 20.380136638 },{ 0.0, -0.13941113151, 21.394111315 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight102 = Math::compareAllVectorElements(checkVector102, ReferenzVector102, 9);
+	bool isRight102 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector102, ReferenzVector102, 9);
 	checkMethodesSphericalLens.push_back(isRight102);
 
 
@@ -479,7 +479,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.79423303769, 18.086504435 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight103 = Math::compareAllVectorElements(checkVector103, ReferenzVector103, 9);
+	bool isRight103 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector103, ReferenzVector103, 9);
 	checkMethodesSphericalLens.push_back(isRight103);
 
 	//________________________________________________________________________________________________________________________________________________________________
@@ -533,7 +533,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight104 = Math::compareAllVectorElements(checkVector104, ReferenzVector104, 9);
+	bool isRight104 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector104, ReferenzVector104, 9);
 	checkMethodesSphericalLens.push_back(isRight104);
 
 	//________________________________________________________________________________________________________________________________________________________________
@@ -587,7 +587,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.65641720542, 20.153741919 },{ 0.0, -0.0055113620156, 20.055113620 },{ 0.0, -0.66748595074, 20.006144631 },{ 0.0, -1.3343688997, 20.006213398 },{ 0.0, -2.0114020474, 20.057010237 } };
 
 
-	bool isRight105 = Math::compareAllVectorElements(checkVector105, ReferenzVector105, 9);
+	bool isRight105 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector105, ReferenzVector105, 9);
 	checkMethodesSphericalLens.push_back(isRight105);
 
 
@@ -642,7 +642,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.53051691180, 22.042246323 },{ 0.0, -0.10442656171, 21.044265617 },{ 0.0, -0.70754162548, 20.306562191 },{ 0.0, -1.2874910938, 19.724946563 },{ 0.0, -1.8501485790, 19.250742895 } };
 
 
-	bool isRight106 = Math::compareAllVectorElements(checkVector106, ReferenzVector106, 9);
+	bool isRight106 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector106, ReferenzVector106, 9);
 	checkMethodesSphericalLens.push_back(isRight106);
 
 	//________________________________________________________________________________________________________________________________________________________________
@@ -697,7 +697,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.75786968950, 18.631954657 },{ 0.0, 0.093111580756, 19.068884192 },{ 0.0, -0.61870588404, 19.640294130 },{ 0.0, -1.4055329923, 20.433197954 },{ 0.0, -2.3433246826, 21.716623413 } };
 
 
-	bool isRight107 = Math::compareAllVectorElements(checkVector107, ReferenzVector107, 8);
+	bool isRight107 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector107, ReferenzVector107, 8);
 	checkMethodesSphericalLens.push_back(isRight107);;
 
 
@@ -752,7 +752,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, -1.1049393846, 18.629636308 },{ 0.0, -1.4425213939, 17.212606970 } };
 
 
-	bool isRight108 = Math::compareAllVectorElements(checkVector108, ReferenzVector108, 9);
+	bool isRight108 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector108, ReferenzVector108, 9);
 	checkMethodesSphericalLens.push_back(isRight108);
 
 	//________________________________________________________________________________________________________________________________________________________________
@@ -807,7 +807,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, -0.86993782540169828, 21.524533690512737 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight109 = Math::compareAllVectorElements(checkVector109, ReferenzVector109, 9);
+	bool isRight109 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector109, ReferenzVector109, 9);
 	checkMethodesSphericalLens.push_back(isRight109);
 
 
@@ -864,7 +864,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.66131934484, 20.080209827 },{ 0.0, -0.0055729826237, 20.055729826 },{ 0.0, -0.67752346849, 20.081426014 },{ 0.0, -1.3599535611, 20.159721367 },{ 0.0, -2.0591990429, 20.295995215 } };
 
 
-	bool isRight110 = Math::compareAllVectorElements(checkVector110, ReferenzVector110, 7);
+	bool isRight110 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector110, ReferenzVector110, 7);
 	checkMethodesSphericalLens.push_back(isRight110);
 
 
@@ -919,7 +919,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.61531710528, 20.770243421 },{ 0.0, -0.0071796788928, 20.071796789 },{ 0.0, -0.60294972288, 19.522122922 },{ 0.0, -1.1792795683, 19.075677410 },{ 0.0, -1.7413664712, 18.706832356 } };
 
 
-	bool isRight112 = Math::compareAllVectorElements(checkVector112, ReferenzVector112, 9);
+	bool isRight112 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector112, ReferenzVector112, 9);
 	checkMethodesSphericalLens.push_back(isRight112);
 
 	//________________________________________________________________________________________________________________________________________________________________
@@ -974,7 +974,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.70412017130, 19.438197430 },{ 0.0, -0.0087979606378, 20.087979606 },{ 0.0, -0.80142946372, 21.010720978 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight113 = Math::compareAllVectorElements(checkVector113, ReferenzVector113, 8);
+	bool isRight113 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector113, ReferenzVector113, 8);
 	checkMethodesSphericalLens.push_back(isRight113);
 
 
@@ -1029,7 +1029,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, -0.35883502699, 17.691262702 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight114 = Math::compareAllVectorElements(checkVector114, ReferenzVector114, 9);
+	bool isRight114 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector114, ReferenzVector114, 9);
 	checkMethodesSphericalLens.push_back(isRight114);
 
 	//________________________________________________________________________________________________________________________________________________________________
@@ -1085,7 +1085,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight115 = Math::compareAllVectorElements(checkVector115, ReferenzVector115, 9);
+	bool isRight115 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector115, ReferenzVector115, 9);
 	checkMethodesSphericalLens.push_back(isRight115);
 
 	//________________________________________________________________________________________________________________________________________________________________
@@ -1141,7 +1141,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.66252687357, 20.062096896 },{ 0.0, -0.011308517642, 20.113085176 },{ 0.0, -0.69572581837,  20.217943638 },{ 0.0, -1.3971575097,  20.382945058 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight116 = Math::compareAllVectorElements(checkVector116, ReferenzVector116, 8);
+	bool isRight116 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector116, ReferenzVector116, 8);
 	checkMethodesSphericalLens.push_back(isRight116);
 
 
@@ -1198,7 +1198,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.68183815608, 19.772427659 },{ 0.0, 0.073753596848, 19.262464031 },{ 0.0, -0.51323693619, 18.849277021 },{ 0.0, -1.0849436945, 18.509662167 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight117 = Math::compareAllVectorElements(checkVector117, ReferenzVector117, 8);
+	bool isRight117 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector117, ReferenzVector117, 8);
 	checkMethodesSphericalLens.push_back(isRight117);
 
 	//________________________________________________________________________________________________________________________________________________________________
@@ -1252,7 +1252,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.63525247711, 20.471212843 },{ 0.0, -0.15143383662, 21.514338366 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight118 = Math::compareAllVectorElements(checkVector118, ReferenzVector118, 9);
+	bool isRight118 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector118, ReferenzVector118, 9);
 	checkMethodesSphericalLens.push_back(isRight118);
 
 
@@ -1307,7 +1307,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.78031472599, 18.295279110 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight119 = Math::compareAllVectorElements(checkVector119, ReferenzVector119, 9);
+	bool isRight119 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector119, ReferenzVector119, 9);
 	checkMethodesSphericalLens.push_back(isRight119);
 
 	//________________________________________________________________________________________________________________________________________________________________
@@ -1361,7 +1361,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight120 = Math::compareAllVectorElements(checkVector120, ReferenzVector120, 9);
+	bool isRight120 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector120, ReferenzVector120, 9);
 	checkMethodesSphericalLens.push_back(isRight120);
 
 
@@ -1418,7 +1418,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.65268386790, 20.209741981 },{ 0.0, -0.011056855272, 20.110568553 },{ 0.0, -0.67488517773, 20.061638833 },{ 0.0, -1.3437225076, 20.062335046 },{ 0.0, -2.0228819681, 20.114409841 } };
 
 
-	bool isRight121 = Math::compareAllVectorElements(checkVector121, ReferenzVector121, 9);
+	bool isRight121 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector121, ReferenzVector121, 9);
 	checkMethodesSphericalLens.push_back(isRight121);
 
 
@@ -1473,7 +1473,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.52356616967, 22.146507455 },{ 0.0, -0.11275491095, 21.127549109 },{ 0.0, -0.71719214830, 20.378941112 },{ 0.0, -1.2984300534, 19.790580320 },{ 0.0, -1.8623672261, 19.311836130 } };
 
 
-	bool isRight122 = Math::compareAllVectorElements(checkVector122, ReferenzVector122, 9);
+	bool isRight122 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector122, ReferenzVector122, 9);
 	checkMethodesSphericalLens.push_back(isRight122);
 
 	//________________________________________________________________________________________________________________________________________________________________
@@ -1528,7 +1528,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.75335967435, 18.699604885 },{ 0.0, 0.085682685652, 19.143173143 },{ 0.0, -0.63003850027, 19.725288752 },{ 0.0, -1.4230827549, 20.538496530 },{ 0.0, -2.3764396609, 21.882198304 } };
 
 
-	bool isRight123 = Math::compareAllVectorElements(checkVector123, ReferenzVector123, 9);
+	bool isRight123 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector123, ReferenzVector123, 9);
 	checkMethodesSphericalLens.push_back(isRight123);
 
 
@@ -1584,7 +1584,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, -1.1351351351, 18.810810811 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight124 = Math::compareAllVectorElements(checkVector124, ReferenzVector124, 9);
+	bool isRight124 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector124, ReferenzVector124, 9);
 	checkMethodesSphericalLens.push_back(isRight124);
 
 	//________________________________________________________________________________________________________________________________________________________________
@@ -1641,7 +1641,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, -0.84439202936972979, 21.332940220272974 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight125 = Math::compareAllVectorElements(checkVector125, ReferenzVector125, 9);
+	bool isRight125 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector125, ReferenzVector125, 9);
 	checkMethodesSphericalLens.push_back(isRight125);
 
 
@@ -1698,7 +1698,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.66131934484, 20.080209827 },{ 0.0, -0.0055729826237, 20.055729826 },{ 0.0, -0.67752346849, 20.081426014 },{ 0.0, -1.3599535611, 20.159721367 },{ 0.0, -2.0591990429, 20.295995215 } };
 
 
-	bool isRight126 = Math::compareAllVectorElements(checkVector126, ReferenzVector126, 9);
+	bool isRight126 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector126, ReferenzVector126, 9);
 	checkMethodesSphericalLens.push_back(isRight126);
 
 
@@ -1753,7 +1753,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.61531710528, 20.770243421 },{ 0.0, -0.0071796788928, 20.071796789 },{ 0.0, -0.60294972288, 19.522122922 },{ 0.0, -1.1792795683, 19.075677410 },{ 0.0, -1.7413664712, 18.706832356 } };
 
 
-	bool isRight127 = Math::compareAllVectorElements(checkVector127, ReferenzVector127, 9);
+	bool isRight127 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector127, ReferenzVector127, 9);
 	checkMethodesSphericalLens.push_back(isRight127);
 
 	//________________________________________________________________________________________________________________________________________________________________
@@ -1809,7 +1809,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.70412017130, 19.438197430 },{ 0.0, -0.0087979606378, 20.087979606 },{ 0.0, -0.80142946372, 21.010720978 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight128 = Math::compareAllVectorElements(checkVector128, ReferenzVector128, 8);
+	bool isRight128 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector128, ReferenzVector128, 8);
 	checkMethodesSphericalLens.push_back(isRight128);
 
 
@@ -1864,7 +1864,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, -0.35883502699, 17.691262702 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight129 = Math::compareAllVectorElements(checkVector129, ReferenzVector129, 9);
+	bool isRight129 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector129, ReferenzVector129, 9);
 	checkMethodesSphericalLens.push_back(isRight129);
 
 	//________________________________________________________________________________________________________________________________________________________________
@@ -1918,7 +1918,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight130 = Math::compareAllVectorElements(checkVector130, ReferenzVector130, 9);
+	bool isRight130 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector130, ReferenzVector130, 9);
 	checkMethodesSphericalLens.push_back(isRight130);
 
 	//____________________________________________________________________________________________________________________________________________________
@@ -1975,7 +1975,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.66252687357, 20.062096896 },{ 0.0, -0.011308517642, 20.113085176 },{ 0.0, -0.69572581837, 20.217943638 },{ 0.0, -1.3971575097, 20.382945058 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight131 = Math::compareAllVectorElements(checkVector131, ReferenzVector131, 8);
+	bool isRight131 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector131, ReferenzVector131, 8);
 	checkMethodesSphericalLens.push_back(isRight131);
 
 
@@ -2032,7 +2032,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.68183815608, 19.772427659 },{ 0.0, 0.073753596848, 19.262464031 },{ 0.0, -0.51323693619, 18.849277021 },{ 0.0, -1.0849436945, 18.509662167 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight132 = Math::compareAllVectorElements(checkVector132, ReferenzVector132, 8);
+	bool isRight132 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector132, ReferenzVector132, 8);
 	checkMethodesSphericalLens.push_back(isRight132);
 
 	//________________________________________________________________________________________________________________________________________________________________
@@ -2088,7 +2088,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.63525247711, 20.471212843 },{ 0.0, -0.15143383662, 21.514338366 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight133 = Math::compareAllVectorElements(checkVector133, ReferenzVector133, 9);
+	bool isRight133 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector133, ReferenzVector133, 9);
 	checkMethodesSphericalLens.push_back(isRight133);
 
 
@@ -2143,7 +2143,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.78031472599, 18.295279110 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight134 = Math::compareAllVectorElements(checkVector134, ReferenzVector134, 9);
+	bool isRight134 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector134, ReferenzVector134, 9);
 	checkMethodesSphericalLens.push_back(isRight134);
 
 	//________________________________________________________________________________________________________________________________________________________________
@@ -2197,7 +2197,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight135 = Math::compareAllVectorElements(checkVector135, ReferenzVector135, 9);
+	bool isRight135 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector135, ReferenzVector135, 9);
 	checkMethodesSphericalLens.push_back(isRight135);
 
 
@@ -2255,7 +2255,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.65268386790, 20.209741981 },{ 0.0, -0.011056855272, 20.110568553 },{ 0.0, -0.67488517773, 20.061638833 },{ 0.0, -1.3437225076, 20.062335046 },{ 0.0, -2.0228819681, 20.114409841 } };
 
 
-	bool isRight136 = Math::compareAllVectorElements(checkVector136, ReferenzVector136, 8);
+	bool isRight136 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector136, ReferenzVector136, 8);
 	checkMethodesSphericalLens.push_back(isRight136);
 
 
@@ -2310,7 +2310,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.52356616967, 22.146507455 },{ 0.0, -0.11275491095, 21.127549109 },{ 0.0, -0.71719214830, 20.378941112 },{ 0.0, -1.2984300534, 19.790580320 },{ 0.0, -1.8623672261, 19.311836130 } };
 
 
-	bool isRight137 = Math::compareAllVectorElements(checkVector137, ReferenzVector137, 9);
+	bool isRight137 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector137, ReferenzVector137, 9);
 	checkMethodesSphericalLens.push_back(isRight137);
 
 	//________________________________________________________________________________________________________________________________________________________________
@@ -2367,7 +2367,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.75335967435, 18.699604885 },{ 0.0, 0.085682685652, 19.143173143 },{ 0.0, -0.63003850027, 19.725288752 },{ 0.0, -1.4230827549, 20.538496530 },{ 0.0, -2.3764396609, 21.882198304 } };
 
 
-	bool isRight138 = Math::compareAllVectorElements(checkVector138, ReferenzVector138, 7);
+	bool isRight138 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector138, ReferenzVector138, 7);
 	checkMethodesSphericalLens.push_back(isRight138);
 
 
@@ -2424,7 +2424,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, -1.1351351351, 18.810810811 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight139 = Math::compareAllVectorElements(checkVector139, ReferenzVector139, 9);
+	bool isRight139 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector139, ReferenzVector139, 9);
 	checkMethodesSphericalLens.push_back(isRight139);
 
 	//________________________________________________________________________________________________________________________________________________________________
@@ -2479,7 +2479,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, -0.84439202936972979, 21.332940220272974 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight140 = Math::compareAllVectorElements(checkVector140, ReferenzVector140, 8);
+	bool isRight140 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector140, ReferenzVector140, 8);
 	checkMethodesSphericalLens.push_back(isRight140);
 
 	
@@ -2534,7 +2534,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.66832323479, 19.975151478 },{ 0.0, -3.3331115645E-012, 20.0 },{ 0.0, -0.66340220794, 19.975516560 },{ 0.0, -1.3171818577, 19.903091146 },{ 0.0, -1.9569338072, 19.784669036 } };
 
 
-	bool isRight141 = Math::compareAllVectorElements(checkVector141, ReferenzVector141, 7);
+	bool isRight141 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector141, ReferenzVector141, 7);
 	checkMethodesSphericalLens.push_back(isRight141);
 
 
@@ -2589,7 +2589,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.62854556894, 20.571816466 },{ 0.0, -3.0301014223E-012, 20.0 },{ 0.0, -0.58132487531, 19.359936565 },{ 0.0, -1.1086662705, 18.651997623 },{ 0.0, -1.5750704853, 17.875352427 } };
 
 
-	bool isRight142 = Math::compareAllVectorElements(checkVector142, ReferenzVector142, 7);
+	bool isRight142 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector142, ReferenzVector142, 7);
 	checkMethodesSphericalLens.push_back(isRight142);
 
 	//________________________________________________________________________________________________________________________________________________________________
@@ -2646,7 +2646,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.72091886227, 19.186217066 },{ 0.0, -3.7034572939E-012, 20.0 },{ 0.0, -0.75678616150, 20.675896211 },{ 0.0, -1.5388864007, 21.233318404 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight143 = Math::compareAllVectorElements(checkVector143, ReferenzVector143, 9);
+	bool isRight143 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector143, ReferenzVector143, 9);
 	checkMethodesSphericalLens.push_back(isRight143);
 
 
@@ -2703,7 +2703,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.0, 0.0 },{ 0.0, 0.17821782178218148, 18.217821782178188 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight144 = Math::compareAllVectorElements(checkVector144, ReferenzVector144, 9);
+	bool isRight144 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector144, ReferenzVector144, 9);
 	checkMethodesSphericalLens.push_back(isRight144);
 
 	//________________________________________________________________________________________________________________________________________________________________
@@ -2758,7 +2758,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 20.0 },{ 0.0, -0.33996486167351003, 17.549736462551326 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight145 = Math::compareAllVectorElements(checkVector145, ReferenzVector145, 9);
+	bool isRight145 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector145, ReferenzVector145, 9);
 	checkMethodesSphericalLens.push_back(isRight145);
 
 
@@ -2813,7 +2813,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.66707731650, 19.993840252 },{ 0.0, 0.0055113620090, 19.944886380 },{ 0.0, -0.64641663832, 19.848124787 },{ 0.0, -1.2842176400, 19.705305840 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight146 = Math::compareAllVectorElements(checkVector146, ReferenzVector146, 7);
+	bool isRight146 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector146, ReferenzVector146, 7);
 	checkMethodesSphericalLens.push_back(isRight146);
 
 
@@ -2868,7 +2868,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.68850330041, 19.672450494 },{ 0.0, 0.10442656170, 18.955734383 },{ 0.0, -0.42040943779, 18.153070783 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight147 = Math::compareAllVectorElements(checkVector147, ReferenzVector147, 9);
+	bool isRight147 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector147, ReferenzVector147, 9);
 	checkMethodesSphericalLens.push_back(isRight147);
 
 	//________________________________________________________________________________________________________________________________________________________________
@@ -2922,7 +2922,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.64420464365, 20.336930345 },{ 0.0, -0.093111580763, 20.931115808 },{ 0.0, -0.85681860771, 21.426139558 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight148 = Math::compareAllVectorElements(checkVector148, ReferenzVector148, 9);
+	bool isRight148 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector148, ReferenzVector148, 9);
 	checkMethodesSphericalLens.push_back(isRight148);
 
 	//________________________________________________________________________________________________________________________________________________________________
@@ -2978,7 +2978,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight149 = Math::compareAllVectorElements(checkVector149, ReferenzVector149, 9);
+	bool isRight149 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector149, ReferenzVector149, 9);
 	checkMethodesSphericalLens.push_back(isRight149);
 
 	//________________________________________________________________________________________________________________________________________________________________
@@ -3034,7 +3034,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.79423303769250020, 18.086504434612497 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight150 = Math::compareAllVectorElements(checkVector150, ReferenzVector150, 9);
+	bool isRight150 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector150, ReferenzVector150, 9);
 	checkMethodesSphericalLens.push_back(isRight150);
 
 
@@ -3088,7 +3088,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	std::vector<VectorStructR3> ReferenzVector151 = { { 0.0, 1.3131770364, 19.697655546 },{ 0.0, 0.66151009817, 19.845302945 },{ 0.0, 0.0, 19.944271910 },{ 0.0, -0.66646058005, 19.993817402 },{ 0.0, -1.3329226835, 19.993840252 },
 	{ 0.0, 0.67717695337, 19.842345699 },{ 0.0, 0.0056360012072, 19.943639988 },{ 0.0, -0.66583924503, 19.993794338 },{ 0.0, -1.3323104822, 19.993862893 },{ 0.0, -1.9890968386, 19.945484193 } };
 
-	bool isRight151 = Math::compareAllVectorElements(checkVector151, ReferenzVector151, 9);
+	bool isRight151 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector151, ReferenzVector151, 9);
 	checkMethodesSphericalLens.push_back(isRight151);
 
 
@@ -3143,7 +3143,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.58260605943, 21.260909108 },{ 0.0, -0.080265578796, 20.802655788 },{ 0.0, -0.70433654596, 20.282524095 },{ 0.0, -1.2838195578, 19.702917347 },{ 0.0, -1.8132565541, 19.066282771 } };
 
 
-	bool isRight152 = Math::compareAllVectorElements(checkVector152, ReferenzVector152, 9);
+	bool isRight152 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector152, ReferenzVector152, 9);
 	checkMethodesSphericalLens.push_back(isRight152);
 
 	//________________________________________________________________________________________________________________________________________________________________
@@ -3197,7 +3197,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.0, 0.0 },{ 0.0, 0.13941113150, 18.605888685 },{ 0.0, -0.61149021382, 19.586176604 },{ 0.0, -1.3953668972, 20.372201384 },{ 0.0, -2.2016665517, 21.008332758 } };
 
 
-	bool isRight153 = Math::compareAllVectorElements(checkVector153, ReferenzVector153, 9);
+	bool isRight153 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector153, ReferenzVector153, 9);
 	checkMethodesSphericalLens.push_back(isRight153);
 
 
@@ -3254,7 +3254,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, -0.86993782540, 21.524533691 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 } };
 
 
-	bool isRight154 = Math::compareAllVectorElements(checkVector154, ReferenzVector154, 9);
+	bool isRight154 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector154, ReferenzVector154, 9);
 	checkMethodesSphericalLens.push_back(isRight154);
 
 	//________________________________________________________________________________________________________________________________________________________________
@@ -3310,7 +3310,7 @@ bool  testSphericalSurface_LLT::checkSphericalSurface_LLT()
 	{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, 0.0, 0.0 },{ 0.0, -1.1049393846317908,  18.629636307790744 },{ 0.0, -1.4425213939075419, 17.212606969537710 } };
 
 
-	bool isRight155 = Math::compareAllVectorElements(checkVector155, ReferenzVector155, 9);
+	bool isRight155 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkVector155, ReferenzVector155, 9);
 	checkMethodesSphericalLens.push_back(isRight155);
 
 	// *****************************************************************************************************************

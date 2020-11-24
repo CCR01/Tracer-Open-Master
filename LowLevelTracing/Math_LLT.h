@@ -58,12 +58,13 @@ std::vector<real> operator- (const std::vector<real> l, const std::vector<real> 
 std::vector<real> operator+ (const std::vector<real> l, const std::vector<real> r);
 
 // multiply scalar with matrix (std::vector<std::vectot<real>>)
-std::vector<std::vector<real>> operator* (const real& s, std::vector<std::vector<real>>& matrix);
+std::vector<std::vector<real>> operator* (const real s, const std::vector<std::vector<real>>& matrix);
 
 // multiply scalar with std::vector 
-std::vector<real> operator*(const real& s, std::vector<real>& v);
+std::vector<real> operator*(real s, const std::vector<real>& v);
 
-
+// multiply scalar with std::vector 
+std::vector<VectorStructR3> operator*(real s, std::vector<VectorStructR3> v);
 
 namespace Math {
 
@@ -148,7 +149,8 @@ namespace Math {
 	bool compareRoundedTwoMatrices3x3(std::vector<std::vector<real>> Matrix1, std::vector<std::vector<real>> Matrix, unsigned int decimals);
 
 	// compare all vector elements
-	bool compareAllVectorElements(std::vector<VectorStructR3> V1, std::vector<VectorStructR3> V2, unsigned int decimals);
+	bool compareAllVectorElementsSTDVectorStructR3_decimals(std::vector<VectorStructR3> V1, std::vector<VectorStructR3> V2, unsigned int decimals);
+	bool compareAllVectorElementsSTDVectorStructR3_tolerance(std::vector<VectorStructR3> V1, std::vector<VectorStructR3> V2, real tolerance);
 
 	// calculate "d" of an plane using coordinate form and Point P
 	real calc_D_ofPlane(VectorStructR3 const normalVector, VectorStructR3 const P);

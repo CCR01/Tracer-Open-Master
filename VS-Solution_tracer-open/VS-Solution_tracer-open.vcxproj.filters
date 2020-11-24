@@ -5,7 +5,6 @@
     <ClCompile Include="..\Analyse\OpticalPathDifferende.cpp" />
     <ClCompile Include="..\Analyse\Spot.cpp" />
     <ClCompile Include="..\benchmark\BenchAnalyse\BechmarkExipPupilCalculation.cpp" />
-    <ClCompile Include="..\benchmark\BenchAnalyse\testPSF.cpp" />
     <ClCompile Include="..\benchmark\ComplexOptSys\BenchmarkComplexOptSys.cpp" />
     <ClCompile Include="..\benchmark\Element\OpticalSystemElement\BenchOpticalSystemElement.cpp" />
     <ClCompile Include="..\benchmark\Element\SphericalElement\BechnSpehricalElemtn.cpp" />
@@ -52,7 +51,6 @@
     <ClCompile Include="..\benchmark\testImageProcessing\TestImageProcessing.cpp" />
     <ClCompile Include="..\benchmark\testImproveImageQuality\testImproveImageQuality.cpp" />
     <ClCompile Include="..\benchmark\testCompareTwoImages\testCompareTwoImagesAndImprove.cpp" />
-    <ClCompile Include="..\benchmark\BenchAnalyse\BenchmarkImageSimulation.cpp" />
     <ClCompile Include="..\SurfaceElements\ApertureStopElement.cpp" />
     <ClCompile Include="..\Analyse\SeidelCoefficients.cpp" />
     <ClCompile Include="..\benchmark\testSeidelCoefficients\testSeidelCoefficients.cpp" />
@@ -80,13 +78,11 @@
     <ClCompile Include="..\OptimizeSystem\EvaluateManyOptSys_RayTracing.cpp" />
     <ClCompile Include="..\benchmark\IOC2020_Dresten\IOC2020_Dresden.cpp" />
     <ClCompile Include="..\Image\Images.cpp" />
-    <ClCompile Include="..\Image\ImageSimulation.cpp" />
     <ClCompile Include="..\Image\ImproveImageQuality.cpp" />
     <ClCompile Include="..\Inport_Export_Data\Inport_Export_Data.cpp" />
     <ClCompile Include="..\OpticalSystemElement\OpticalSystemElement.cpp" />
     <ClCompile Include="..\RayAiming\RayAiming.cpp" />
     <ClCompile Include="..\SequentialRayTracing\SequentialRayTracer.cpp" />
-    <ClCompile Include="..\PSFfunction\PSFfunction.cpp" />
     <ClCompile Include="..\Glasses\Glasses.cpp" />
     <ClCompile Include="..\ImageProcessing\ImageProcessing.cpp" />
     <ClCompile Include="..\CompareTwoImagesAndImprove\CompareTwoImagesAndImprove.cpp" />
@@ -132,18 +128,19 @@
     <ClCompile Include="..\tests\testLensReplace\testLensReplace.cpp" />
     <ClCompile Include="..\tests\testOPD\testOPD.cpp" />
     <ClCompile Include="..\tests\testGlobalOPD\TestGlobalOPD.cpp" />
-    <ClCompile Include="..\Image\ImageSimulationPlot.cpp" />
-    <ClCompile Include="..\benchmark\testImageSimulation\BenchmarkImageSimulationOpenCV.cpp" />
     <ClCompile Include="..\Plot\OpticalSystemPlots.cpp" />
     <ClCompile Include="..\benchmark\testQwtPlots\BenchmarkOpticalSystemAllSurfaces.cpp" />
     <ClCompile Include="..\LowLevelTracing\Interaction\TraceLightRayBack.cpp" />
+    <ClCompile Include="..\tests\testImageSimulation\testImageSimulation.cpp" />
+    <ClCompile Include="..\Point-Spread Function\Point-Spread Function.cpp" />
+    <ClCompile Include="..\tests\testPSF\testPSF.cpp" />
+    <ClCompile Include="..\Image\ImageSimulation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Analyse\CardinalPoints.h" />
     <ClInclude Include="..\Analyse\OpticalPathDifference.h" />
     <ClInclude Include="..\Analyse\Spot.h" />
     <ClInclude Include="..\benchmark\BenchAnalyse\BenchmarkExitPupilCalculation.h" />
-    <ClInclude Include="..\benchmark\BenchAnalyse\testPSF.h" />
     <ClInclude Include="..\benchmark\ComplexOptSys\BenchmarkComplexOptSys.h" />
     <ClInclude Include="..\benchmark\Element\OpticalSystemElement\BenchOpticalSystemElement.h" />
     <ClInclude Include="..\benchmark\Element\SphericalElement\BenchSphericalElement.h" />
@@ -191,7 +188,6 @@
     <ClInclude Include="..\benchmark\testImageProcessing\TestImageProcessing.h" />
     <ClInclude Include="..\benchmark\testImproveImageQuality\testImproveImageQuality.h" />
     <ClInclude Include="..\benchmark\testCompareTwoImages\testCompareTwoImagesAndImprove.h" />
-    <ClInclude Include="..\benchmark\BenchAnalyse\BenchmarkImageSimulation.h" />
     <ClInclude Include="..\SurfaceElements\ApertureStopElement.h" />
     <ClInclude Include="..\Analyse\Seidel Coefficients.h" />
     <ClInclude Include="..\benchmark\testSeidelCoefficients\testSeidelCoefficients.h" />
@@ -220,14 +216,12 @@
     <ClInclude Include="..\OptimizeSystem\EvaluateManyOptSystems_RayTracing.h" />
     <ClInclude Include="..\benchmark\IOC2020_Dresten\IOC2020_Dresden.h" />
     <ClInclude Include="..\Image\Images.h" />
-    <ClInclude Include="..\Image\ImageSimulation.h" />
     <ClInclude Include="..\Image\ImproveImageQuality.h" />
     <ClInclude Include="..\Image\ImageSimulationHeader.h" />
     <ClInclude Include="..\Inport_Export_Data\Inport_Export_Data.h" />
     <ClInclude Include="..\OpticalSystemElement\OpticalSystemElement.h" />
     <ClInclude Include="..\RayAiming\RayAiming.h" />
     <ClInclude Include="..\SequentialRayTracing\SequentialRayTracer.h" />
-    <ClInclude Include="..\PSFfunction\PSFfunction.h" />
     <ClInclude Include="..\basicdefinition\basicdefinitions.h" />
     <ClInclude Include="..\Glasses\Glasses.h" />
     <ClInclude Include="..\ImageProcessing\ImageProcessing.h" />
@@ -274,10 +268,12 @@
     <ClInclude Include="..\tests\testLensReplace\testLenseReplace.h" />
     <ClInclude Include="..\tests\testOPD\testOPD.h" />
     <ClInclude Include="..\tests\testGlobalOPD\TestGlobalOPD.h" />
-    <ClInclude Include="..\Image\ImageSimulationPlot.h" />
-    <ClInclude Include="..\benchmark\testImageSimulation\BenchmarkImageSimulationOpenCV.h" />
     <ClInclude Include="..\Plot\OpticalSystemPlots.h" />
     <ClInclude Include="..\benchmark\testQwtPlots\BenchmarkOpticalSystemAllSurfaces.h" />
     <ClInclude Include="..\LowLevelTracing\Interaction\TraceLightRayBack.h" />
+    <ClInclude Include="..\tests\testImageSimulation\testImageSimulation.h" />
+    <ClInclude Include="..\Point-Spread Function\Point-Spread Function.h" />
+    <ClInclude Include="..\tests\testPSF\testPSF.h" />
+    <ClInclude Include="..\Image\ImageSimulation.h" />
   </ItemGroup>
 </Project>

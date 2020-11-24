@@ -16,6 +16,8 @@
 
 #include "..\..\RayAiming\RayAiming.h"
 
+#include "..\..\Inport_Export_Data\Inport_Export_Data.h"
+
 typedef std::shared_ptr<SurfaceIntersectionRay_LLT> surfacePtr;
 typedef std::shared_ptr< InteractionRay_LLT > interaction_ptr;
 
@@ -76,19 +78,17 @@ bool TestGlobalOPD::checkGlobalOPD_superFunction()
 	// work the system
 	std::vector<bool> workTheSystem;
 
-	//bool checkFillASwitPointsToCalcGlobalOPD = checkPointsToFillAS_ToCalcGLobalOPD();
-	//workTheSystem.push_back(checkFillASwitPointsToCalcGlobalOPD);
+	bool checkFillMatrixWithOPDs_E0 = checkFillOPDinMatrix_E0();
+	workTheSystem.push_back(checkFillMatrixWithOPDs_E0);
+	
+	// check fill OPD in Matrix (EP before ima surface)
+	bool checkFillMatrixWithOPDs_E1 = checkFillOPDinMatrix_E1();
+	workTheSystem.push_back(checkFillMatrixWithOPDs_E1);
 
-	bool checkFillMatrixWithOPDs = checkFillOPDinMatrix();
-	workTheSystem.push_back(checkFillMatrixWithOPDs);
+	// test upsamling OPD
+	bool checkUmsamplingOPD = testUpsamplingOPD();
+	workTheSystem.push_back(checkUmsamplingOPD);
 
-	//// E0
-	//bool checkE0 = checkGlobalOPD_E0();
-	//workTheSystem.push_back(checkE0);
-
-	//// E1
-	//bool checkE1 = checkGlobalOPD_E1();
-	//workTheSystem.push_back(checkE1);
 
 	bool checkOPD_superFct = Math::checkTrueOfVectorElements(workTheSystem);
 	return checkOPD_superFct;
@@ -97,91 +97,9 @@ bool TestGlobalOPD::checkGlobalOPD_superFunction()
 
 
 
-bool TestGlobalOPD::checkPointsToFillAS_ToCalcGLobalOPD()
-{
-	// work the system
-	std::vector<bool> workTheSystem;
-
-	//all the surfaces
-	SphericalSurface_LLT S0(/*radius*/30.0, /*semiHeight*/10.0, /*Apex of the sphere*/{ 0.0, 0.0, 10.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
-	SphericalSurface_LLT S1(/*radius*/30.0, /*semiHeight*/10.0, /*Apex of the sphere*/{ 0.0, 0.0, 20.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
-	ApertureStop_LLT S2(/*semi height*/ 2.0, /*point*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index*/ 1.0);
-	PlanGeometry_LLT S3(/*semiHeight*/5.0, /*point*/{ 0.0,0.0,40.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
-
-	surfacePtr S0_ptr = S0.clone();
-	surfacePtr S1_ptr = S1.clone();
-	surfacePtr S2_ptr = S2.clone();
-	surfacePtr S3_ptr = S3.clone();
-
-	std::vector< surfacePtr> surfacePtr_vec = { S0_ptr ,S1_ptr ,S2_ptr ,S3_ptr };
-	std::vector< interaction_ptr > interac_ptr = { mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
-
-	OpticalSystem_LLT optSys;
-	optSys.fillOptSysWithSurfaceAndInteractions(surfacePtr_vec, interac_ptr);
-
-	// test the start system
-	bool testStartSystem = oftenUse::checkOptSysLLT_Equal_Better_Zemax(optSys, { 0.0,0.0,0.0 }, 1930.36, 0.01, compareTOM_Zemax::comEqual);
-	workTheSystem.push_back(testStartSystem);
-
-	FillApertureStop fillAperStop;
-	// fill aperture Stop to calculate OPD
-	unsigned int sizeMatrixToCalcGlobalOP = 9;
-	std::vector<VectorStructR3> pointsInASToCalcGlobalOPD = fillAperStop.fillApertureStopToCalcGlobalOPD_doNoteUsesThat(optSys.getInforAS(),sizeMatrixToCalcGlobalOP);
-
-	// check points in AS
-	VectorStructR3 point_0 = pointsInASToCalcGlobalOPD[0];
-	VectorStructR3 ref_point_0 = { 0.0,0.5,30.0 };
-	bool check_0 = Math::compareTwoVectorStructR3_tolerance(point_0, ref_point_0, 0.01);
-	workTheSystem.push_back(check_0);
-
-	VectorStructR3 point_2 = pointsInASToCalcGlobalOPD[2];
-	VectorStructR3 ref_point_2 = { 0.5,0.0,30.0 };
-	bool check_2 = Math::compareTwoVectorStructR3_tolerance(point_2, ref_point_2, 0.01);
-	workTheSystem.push_back(check_2);
-
-	VectorStructR3 point_4 = pointsInASToCalcGlobalOPD[4];
-	VectorStructR3 ref_roint_4 = { 0.0,-0.5,30.0 };
-	bool check_4 = Math::compareTwoVectorStructR3_tolerance(point_4, ref_roint_4, 0.01);
-	workTheSystem.push_back(check_4);
-
-	VectorStructR3 point_8 = pointsInASToCalcGlobalOPD[8];
-	VectorStructR3 ref_point_8 = { 0.0,1.0,30.0 };
-	bool check_8 = Math::compareTwoVectorStructR3_tolerance(point_8, ref_point_8, 0.01);
-	workTheSystem.push_back(check_8);
-
-	VectorStructR3 point_20 = pointsInASToCalcGlobalOPD[20];
-	VectorStructR3 ref_point_20 = { -1.0,0.0,30.0 };
-	bool check_20 = Math::compareTwoVectorStructR3_tolerance(point_20, ref_point_20, 0.01);
-	workTheSystem.push_back(check_20);
-
-	VectorStructR3 point_24 = pointsInASToCalcGlobalOPD[24];
-	VectorStructR3 ref_point_24 = { 0.0,1.5,30.0 };
-	bool check_24 = Math::compareTwoVectorStructR3_tolerance(point_24, ref_point_24, 0.01);
-	workTheSystem.push_back(check_24);
-
-	VectorStructR3 point_30 = pointsInASToCalcGlobalOPD[30];
-	VectorStructR3 ref_point_30 = { 1.5,0.0,30.0 };
-	bool check_30 = Math::compareTwoVectorStructR3_tolerance(point_30, ref_point_30, 0.01);
-	workTheSystem.push_back(check_30);
-
-	VectorStructR3 point_33 = pointsInASToCalcGlobalOPD[33];
-	VectorStructR3 ref_point_33 = { 1.06066, -1.06066,30.0 };
-	bool check_33 = Math::compareTwoVectorStructR3_tolerance(point_33, ref_point_33, 0.01);
-	workTheSystem.push_back(check_33);
-
-	VectorStructR3 point_45 = pointsInASToCalcGlobalOPD[45];
-	VectorStructR3 ref_point_45 = { -1.06066,1.06066,30.0 };
-	bool check_45 = Math::compareTwoVectorStructR3_tolerance(point_45, ref_point_45, 0.01);
-	workTheSystem.push_back(check_45);
-
-
-	bool workReturn = Math::checkTrueOfVectorElements(workTheSystem);
-	return workReturn;
-
-}
 
 // check fill OPD in Matrix
-bool TestGlobalOPD::checkFillOPDinMatrix()
+bool TestGlobalOPD::checkFillOPDinMatrix_E0()
 {
 	// work the system
 	std::vector<bool> workTheSystem;
@@ -205,7 +123,6 @@ bool TestGlobalOPD::checkFillOPDinMatrix()
 	workTheSystem.push_back(testStartSystem);
 
 	// fill aperture stop with points
-	unsigned int sizeMatrix = 31;
 	FillApertureStop fillAS;
 	infosAS infAS = optSys.getInforAS();
 	std::vector<VectorStructR3> pointsInAS = fillAS.fillAS_withPoints(6, infAS.getPointAS(),infAS.getDirAS(),infAS.getSemiHeightAS());
@@ -214,687 +131,286 @@ bool TestGlobalOPD::checkFillOPDinMatrix()
 	RayAiming rayAiming;
 	std::vector<LightRayStruct> aimedLightRays = rayAiming.rayAimingMany_obj_complete(optSys, pointsInAS, { 0.0,0.0,0.0 }, mLight550, 1.0);
 
-	OPD opd(/*optical system*/ optSys, /*aimed light ray*/ aimedLightRays, /*obj inf*/objectPoint_inf_obj::obj, sizeMatrix);
-	opd.calcGlobalOPD_new();
-
+	unsigned int sizeMatrix31 = 31;
+	OPD opd_31(/*optical system*/ optSys, /*aimed light ray*/ aimedLightRays, /*obj inf*/objectPoint_inf_obj::obj, sizeMatrix31);
+	opd_31.calcGlobalOPD_new();
 	// matrix wit global OPD
-	cv::Mat globalOPD_00 = opd.getGlobalOPD();
+	cv::Mat globalOPD_00_31 = opd_31.getGlobalOPD_deepCopy();
 
-	// save global OPD in csv
-	std::string location = "C:/Tracer-Open-Master/tests/testGlobalOPD/refOPDs/checkFillOPDinMatrix";
-	std::string fileName = "calc00";
-	opd.exportCV_MatToExcel(globalOPD_00, location, fileName);
+	// hier sollst du dann eine Funktion schreiben, die über Bilineare Filterung die innere Matrix auffüllt.
+	// --> Linda
+
+	// save global OPD 31 in csv
+	std::string location31 = "C:/Tracer-Open-Master/tests/testGlobalOPD/refOPDs/checkFillOPDinMatrix";
+	std::string fileName31 = "calc00_31";
+	inportExportData::exportCV_MatToExcel(globalOPD_00_31, location31, fileName31);
 		
+
+	unsigned int sizeMatrix41 = 41;
+	OPD opd_41(/*optical system*/ optSys, /*aimed light ray*/ aimedLightRays, /*obj inf*/objectPoint_inf_obj::obj, sizeMatrix41);
+	opd_41.calcGlobalOPD_new();
+	// matrix wit global OPD
+	cv::Mat globalOPD_00_41 = opd_41.getGlobalOPD_deepCopy();
+
+	// save global OPD 41 in csv
+	std::string location41 = "C:/Tracer-Open-Master/tests/testGlobalOPD/refOPDs/checkFillOPDinMatrix";
+	std::string fileName41 = "calc00_41";
+	inportExportData::exportCV_MatToExcel(globalOPD_00_41, location41, fileName41);
+
+	bool check0 = compareResultsCalcSingleAndGlobalOPDsoptSys(/*opt sys*/ optSys,/*start point ray*/{ 0.0,0.0,0.0 }, /*PX*/ 0.7, /*PY*/ 0.4,/*light*/ mLight550, 0.01);
+	workTheSystem.push_back(check0);
+
+	bool check1 = compareResultsCalcSingleAndGlobalOPDsoptSys(/*opt sys*/ optSys,/*start point ray*/{ 0.5,1.0,0.0 }, /*PX*/ 0.3, /*PY*/ -0.3,/*light*/ mLight550, 0.01);
+	workTheSystem.push_back(check1);
+
+	bool check2 = compareResultsCalcSingleAndGlobalOPDsoptSys(/*opt sys*/ optSys,/*start point ray*/{ -0.2,-1.0,0.0 }, /*PX*/ 0.5, /*PY*/ -0.5,/*light*/ mLight550, 0.01);
+	workTheSystem.push_back(check2);
+
+	bool check3 = compareResultsCalcSingleAndGlobalOPDsoptSys(/*opt sys*/ optSys,/*start point ray*/{ -0.8,-0.5,0.0 }, /*PX*/ 0.3, /*PY*/ 0.4,/*light*/ mLight550, 0.01);
+	workTheSystem.push_back(check3);
+
+	bool check4 = compareResultsCalcSingleAndGlobalOPDsoptSys(/*opt sys*/ optSys,/*start point ray*/{ 0.2, 0.8,0.0 }, /*PX*/ -0.6, /*PY*/ -0.3,/*light*/ mLight550, 0.01);
+	workTheSystem.push_back(check4);
+
 	bool workReturn = Math::checkTrueOfVectorElements(workTheSystem);
 	return workReturn;
 }
 
-//bool TestGlobalOPD::checkGlobalOPD_E0()
-//{
-//	// work the system
-//	std::vector<bool> workTheSystem;
-//
-//	//all the surfaces
-//	ApertureStop_LLT A0(/*semi height*/ 1.0, /*point*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index*/ 1.0);
-//	SphericalSurface_LLT S1(/*radius*/35.63357445153594, /*semiHeight*/4.0, /*Apex of the sphere*/{ 0.0, 0.0, 50.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
-//	SphericalSurface_LLT S2(/*radius*/30.0, /*semiHeight*/4.0, /*Apex of the sphere*/{ 0.0, 0.0, 55.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
-//	SphericalSurface_LLT S3(/*radius*/50.0, /*semiHeight*/4.0, /*Apex of the sphere*/{ 0.0, 0.0, 56.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
-//	SphericalSurface_LLT S4(/*radius*/46.72413691553324, /*semiHeight*/4.0, /*Apex of the sphere*/{ 0.0, 0.0, 61.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
-//	PlanGeometry_LLT S5(/*semiHeight*/5.0, /*point*/{ 0.0,0.0,91.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
-//
-//	// build the optical system
-//	OpticalSystem_LLT optSysE0;
-//	optSysE0.fillVectorSurfaceAndInteractingData(0, A0.clone(), mDoNothing.clone());
-//	optSysE0.fillVectorSurfaceAndInteractingData(1, S1.clone(), mRefrac.clone());
-//	optSysE0.fillVectorSurfaceAndInteractingData(2, S2.clone(), mRefrac.clone());
-//	optSysE0.fillVectorSurfaceAndInteractingData(3, S3.clone(), mRefrac.clone());
-//	optSysE0.fillVectorSurfaceAndInteractingData(4, S4.clone(), mRefrac.clone());
-//	optSysE0.fillVectorSurfaceAndInteractingData(5, S5.clone(), mDoNothing.clone()); // the callculate the ray to the exit pupil
-//																					// the image surface is not allowed so be "absorb"
-//
-//
-//	// single ray tracing
-//	Ray_LLT cheif({ 0.0,0.0,0.0 }, { 0.0,0.0,30.0 }, 1.0);
-//	Ray_LLT rayE0_0({ 0.0,0.0,0.0 }, { 0.0,1.0,30.0 }, 1.0);
-//	Ray_LLT rayE0_1({ 0.0,0.0,0.0 }, { 0.0,-0.5,30.0 }, 1.0);
-//	Ray_LLT rayE0_2({ 0.0,0.0,0.0 }, { -1.0,0.0,30.0 }, 1.0);
-//	Ray_LLT rayE0_3({ 0.0,0.0,0.0 }, { 0.5,0.5,30.0 }, 1.0);
-//	Ray_LLT rayE0_4({ 0.0,0.0,0.0 }, { -0.5,0.5,30.0 }, 1.0);
-//	Ray_LLT rayE0_5({ 0.0,0.0,0.0 }, { 0.3,-0.7,30.0 }, 1.0);
-//
-//	LightRayStruct chiefLightRay(mLight550, cheif, 1);
-//	LightRayStruct lightRayE0_0(mLight550, rayE0_0, 1);
-//	LightRayStruct lightRayE0_1(mLight550, rayE0_1, 1);
-//	LightRayStruct lightRayE0_2(mLight550, rayE0_2, 1);
-//	LightRayStruct lightRayE0_3(mLight550, rayE0_3, 1);
-//	LightRayStruct lightRayE0_4(mLight550, rayE0_4, 1);
-//	LightRayStruct lightRayE0_5(mLight550, rayE0_5, 1);
-//
-//	std::vector<LightRayStruct> vecLightRaysE0{ lightRayE0_0, lightRayE0_1, lightRayE0_2, lightRayE0_3 };
-//	SequentialRayTracing seqTraceE0_single(optSysE0);
-//	seqTraceE0_single.seqRayTracingWithVectorOfLightRays(vecLightRaysE0);
-//
-//	//___
-//	//check if the system works 
-//	IntersectInformationStruct interInfosPoint0 = seqTraceE0_single.getAllInterInfosOfSurf_i(5).at(0);
-//	VectorStructR3 checkInterPoint0 = { 0.0,-3.0317900054E-003,91.0 };
-//	bool checkcheckInterP0 = Math::compareTwoVectorStructR3_decimals(interInfosPoint0.getIntersectionPoint(), checkInterPoint0, 6);
-//	workTheSystem.push_back(checkcheckInterP0);
-//	IntersectInformationStruct interInfosPoint1 = seqTraceE0_single.getAllInterInfosOfSurf_i(5).at(1);
-//	VectorStructR3 checkInterPoint1 = { 0.0,-1.8961760243E-003,91.0 };
-//	bool checkcheckInterP1 = Math::compareTwoVectorStructR3_decimals(interInfosPoint1.getIntersectionPoint(), checkInterPoint1, 6);
-//	workTheSystem.push_back(checkcheckInterP1);
-//	IntersectInformationStruct interInfosPoint2 = seqTraceE0_single.getAllInterInfosOfSurf_i(5).at(2);
-//	VectorStructR3 checkInterPoint2 = { 3.0317900054E-003,0.0,91.0 };
-//	VectorStructR3 interPoint2 = interInfosPoint2.getIntersectionPoint();
-//	bool checkcheckInterP2 = Math::compareTwoVectorStructR3_decimals(interPoint2, checkInterPoint2, 5);
-//	workTheSystem.push_back(checkcheckInterP2);
-//	IntersectInformationStruct interInfosPoint3 = seqTraceE0_single.getAllInterInfosOfSurf_i(5).at(3);
-//	VectorStructR3 checkInterPoint3 = { 7.6245887800E-004,7.6245887800E-004,91.0 };
-//	bool checkcheckInterP3 = Math::compareTwoVectorStructR3_decimals(interInfosPoint3.getIntersectionPoint(), checkInterPoint3, 6);
-//	workTheSystem.push_back(checkcheckInterP3);
-//
-//
-//
-//
-//	//___ test opt achse
-//	// test rays to calculate OPD
-//	std::vector<LightRayStruct> lightRay{ lightRayE0_0, lightRayE0_1, lightRayE0_2 ,lightRayE0_3, lightRayE0_4, lightRayE0_5 };
-//	// calc global OPD optical achse 
-//	OPD OPDglobalE0_optAchse(/*exit pupil*/ mExitPupilE0_ptr,  /*optical system*/ optSysE0,	/*fill apertur stop with light ray*/ lightRay, /*chief ray*/ chiefLightRay, /*scalling*/ 0);
-//	std::vector<real> checkOPD = OPDglobalE0_optAchse.getVecWithAllCalcGlobalOPD();
-//	std::vector<real> zemaxDataOPD = { -0.071713617204,-0.058155102772, -0.071713617204, -0.089671465399, -0.089671465399,-0.094086891382 };
-//	bool checkerOPD = Math::compareTwoSTDVecors_decimals(checkOPD, zemaxDataOPD, 8);
-//	workTheSystem.push_back(checkerOPD);
-//	//___ end test opt achse
-//
-//	//__ start check gloabl OPD on optical axis
-//	// fill aperture stop with many lightrays
-//	FillApertureStop fillAperStopE0_optAxis({ 0.0,0.0,0.0 }, 1, { 0.0,0.0,30.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, mLight550);
-//	// calc global OPD optical field (y=1) for some rays
-//	OPD OPDglobalE0_optAxis(/*exit pupil*/ mExitPupilE0_ptr,  /*optical system*/ optSysE0,
-//		/*fill apertur stop with light ray*/ fillAperStopE0_optAxis.getVectorWithLightRays(), /*chief ray*/ fillAperStopE0_optAxis.getVectorWithLightRays().at(0), /*scalling*/ 0);
-//	OPDglobalE0_optAxis.exportCV_MatToExcel(OPDglobalE0_optAxis.getGlobalOPD(), "D:\OPDglobalE0_optAxis_0.csv");
-//	//__ end check gloabl OPD in the field (y=1) for many ray
-//
-//	// Ray in the field y = 1
-//	// single ray tracing
-//	Ray_LLT cheif_Field({ 0.0,1.0,0.0 }, { 0.0,-1.0,30.0 }, 1.0);
-//	Ray_LLT rayE0_0_Field({ 0.0,1.0,0.0 }, { 0.0,0.0,30.0 }, 1.0);
-//	Ray_LLT rayE0_1_Field({ 0.0,1.0,0.0 }, { 0.0,-2.0,30.0 }, 1.0);
-//	Ray_LLT rayE0_2_Field({ 0.0,1.0,0.0 }, { 0.0,-1.0,30.0 }, 1.0);
-//	Ray_LLT rayE0_3_Field({ 0.0,1.0,0.0 }, { -1.0,-1.0,30.0 }, 1.0);
-//	LightRayStruct chiefLightRay_Field(mLight550, cheif_Field, 1);
-//	LightRayStruct lightRayE0_0_Field(mLight550, rayE0_0_Field, 1);
-//	LightRayStruct lightRayE0_1_Field(mLight550, rayE0_1_Field, 1);
-//	LightRayStruct lightRayE0_2_Field(mLight550, rayE0_2_Field, 1);
-//	LightRayStruct lightRayE0_3_Field(mLight550, rayE0_3_Field, 1);
-//
-//	//__ start check OPD in the field (y=1) for some rays
-//	std::vector<LightRayStruct> vecLightRaysE0_Field_posY1{ lightRayE0_0_Field, lightRayE0_1_Field, lightRayE0_2_Field, lightRayE0_3_Field };
-//	// calc global OPD optical field for many rays
-//	OPD OPDglobalE1_Field_singleRays(/*exit pupil*/ mExitPupilE0_ptr,  /*optical system*/ optSysE0,
-//		/*fill apertur stop with light ray*/ vecLightRaysE0_Field_posY1, /*chief ray*/ chiefLightRay_Field, /*scalling*/ 0);
-//	std::vector<real> checkOPD_Field_ZemaxData = { -0.146699120754,0.4827546459793,0.0, 0.0188381446773 };
-//	std::vector<real> checkOPD_Field = OPDglobalE1_Field_singleRays.getVecWithAllCalcGlobalOPD();
-//	bool checkOPD_Field_work = Math::compareTwoSTDVecors_decimals(checkOPD_Field_ZemaxData, checkOPD_Field, 8);
-//	workTheSystem.push_back(checkOPD_Field_work);
-//	//__ end check OPD in the field for some rays
-//
-//
-//	//__ start check gloabl OPD in the field (y=1) for many ray
-//	// fill aperture stop with many lightrays
-//	FillApertureStop fillAperStopE0_field_posY1({ 0.0,1.0,0.0 }, 1, { 0.0,0.0,30.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, mLight550);
-//	// calc global OPD optical field (y=1) for some rays
-//	OPD OPDglobalE0_Y1_Field(/*exit pupil*/ mExitPupilE0_ptr,  /*optical system*/ optSysE0,
-//		/*fill apertur stop with light ray*/ fillAperStopE0_field_posY1.getVectorWithLightRays(), /*chief ray*/ fillAperStopE0_field_posY1.getVectorWithLightRays().at(0), /*scalling*/ 0);
-//	OPDglobalE0_Y1_Field.exportCV_MatToExcel(OPDglobalE0_Y1_Field.getGlobalOPD(), "D:\OPDglobalE0_Y1_Field_0.csv");
-//	//__ end check gloabl OPD in the field (y=1) for many ray
-//
-//
-//
-//
-//	// calc global OPD optical field for some rays
-//	OPD OPDglobalE1_Field_singleRays_negY1(/*exit pupil*/ mExitPupilE0_ptr,  /*optical system*/ optSysE0,
-//		/*fill apertur stop with light ray*/ mVecLightRaysE0_Field_negY1, /*chief ray*/ mChiefLightRay_Field_negY1, /*scalling*/ 0);
-//	std::vector<real> checkOPD_Field_ZemaxData_negY = { -0.038248433070,0.4827546459849,0.0188381446769, 0.018838144673 };
-//	std::vector<real> checkOPD_Field_negY = OPDglobalE1_Field_singleRays_negY1.getVecWithAllCalcGlobalOPD();
-//	bool checkOPD_Field_work_negY = Math::compareTwoSTDVecors_decimals(checkOPD_Field_ZemaxData_negY, checkOPD_Field_negY, 8);
-//	workTheSystem.push_back(checkOPD_Field_work_negY);
-//	//__ end check OPD in the field for some rays
-//
-//	//__ start check gloabl OPD in the field (y=-1) for many ray
-//	// fill aperture stop with many lightrays
-//	FillApertureStop fillAperStopE0_field_negY1({ 0.0,-1.0,0.0 }, 1, { 0.0,0.0,30.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, mLight550);
-//	// calc global OPD optical field (y=-1) for some rays
-//	OPD OPDglobalE0_negY1_Field(/*exit pupil*/ mExitPupilE0_ptr,  /*optical system*/ optSysE0,
-//		/*fill apertur stop with light ray*/ fillAperStopE0_field_negY1.getVectorWithLightRays(), /*chief ray*/ fillAperStopE0_field_negY1.getVectorWithLightRays().at(0), /*scalling*/ 0);
-//	OPDglobalE0_negY1_Field.exportCV_MatToExcel(OPDglobalE0_negY1_Field.getGlobalOPD(), "D:\OPDglobalE0_negY1_Field_0.csv");
-//	//__ end check gloabl OPD in the field (y=-1) for many ray
-//
-//	// Ray in the field x = 1.0 y = 1.0
-//	// single ray tracing
-//	Ray_LLT cheif_Field_XYpos({ 1.0,1.0,0.0 }, { -1.0,-1.0,30.0 }, 1.0);
-//	Ray_LLT rayE0_0_Field_XYpos({ 1.0,1.0,0.0 }, { -1.0,-1.5,30.0 }, 1.0);
-//	Ray_LLT rayE0_1_Field_XYpos({ 1.0,1.0,0.0 }, { -1.0,-2.0,30.0 }, 1.0);
-//	Ray_LLT rayE0_2_Field_XYpos({ 1.0,1.0,0.0 }, { -1.5,-1.5,30.0 }, 1.0);
-//	Ray_LLT rayE0_3_Field_XYpos({ 1.0,1.0,0.0 }, { -1.5,-1.0,30.0 }, 1.0);
-//	LightRayStruct chiefLightRay_Field_XYpos(mLight550, cheif_Field_XYpos, 1);
-//	LightRayStruct lightRayE0_0_Field_XYpos(mLight550, rayE0_0_Field_XYpos, 1);
-//	LightRayStruct lightRayE0_1_Field_XYpos(mLight550, rayE0_1_Field_XYpos, 1);
-//	LightRayStruct lightRayE0_2_Field_XYpos(mLight550, rayE0_2_Field_XYpos, 1);
-//	LightRayStruct lightRayE0_3_Field_XYpos(mLight550, rayE0_3_Field_XYpos, 1);
-//
-//	//__ start check OPD in the field (x = 1.0, y = 1.0) for some rays
-//	std::vector<LightRayStruct> vecLightRaysE0_Field_XYpos{ lightRayE0_0_Field_XYpos, lightRayE0_1_Field_XYpos, lightRayE0_2_Field_XYpos, lightRayE0_3_Field_XYpos };
-//	// calc global OPD optical field for some rays
-//	OPD OPDglobalE1_Field_singleRays_XYpos(/*exit pupil*/ mExitPupilE0_ptr,  /*optical system*/ optSysE0,
-//		/*fill apertur stop with light ray*/ vecLightRaysE0_Field_XYpos, /*chief ray*/ chiefLightRay_Field_XYpos, /*scalling*/ 0);
-//	std::vector<real> checkOPD_Field_ZemaxData_XYpos = { 0.062100829309,0.5767754231156,0.3052008045207,0.0621008239309 };
-//	std::vector<real> checkOPD_Field_XYpos = OPDglobalE1_Field_singleRays_XYpos.getVecWithAllCalcGlobalOPD();
-//	bool checkOPD_Field_work_XYpos = Math::compareTwoSTDVecors_decimals(checkOPD_Field_ZemaxData_XYpos, checkOPD_Field_XYpos, 7);
-//	workTheSystem.push_back(checkOPD_Field_work_XYpos);
-//	//__ end check OPD in the field for some rays
-//
-//	//__ start check gloabl OPD in the field (x = 1.0, y = 1.0) for many ray
-//	// fill aperture stop with many lightrays
-//	FillApertureStop fillAperStopE0_field_XYpos({ 1.0,1.0,0.0 }, 1, { 0.0,0.0,30.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, mLight550);
-//	// calc global OPD optical field (x=1.0, y=1.0) for some rays
-//	OPD OPDglobalE0_X1Y1_Field(/*exit pupil*/ mExitPupilE0_ptr,  /*optical system*/ optSysE0,
-//		/*fill apertur stop with light ray*/ fillAperStopE0_field_XYpos.getVectorWithLightRays(), /*chief ray*/ fillAperStopE0_field_XYpos.getVectorWithLightRays().at(0), /*scalling*/ 0);
-//	OPDglobalE0_X1Y1_Field.exportCV_MatToExcel(OPDglobalE0_X1Y1_Field.getGlobalOPD(), "D:\OPDglobalE0_X1Y1_Field_0.csv");
-//	//__ end check gloabl OPD in the field (y=-1) for many ray
-//
-//	// Ray in the field x = -0.5 y = -0.5
-//	// single ray tracing
-//	Ray_LLT cheif_Field_XYneg({ -0.5,-0.5,0.0 }, { 0.5, 0.5,30.0 }, 1.0);
-//	Ray_LLT rayE0_0_Field_XYneg({ -0.5,-0.5,0.0 }, { 1.0,0.5,30.0 }, 1.0);
-//	Ray_LLT rayE0_1_Field_XYneg({ -0.5,-0.5,0.0 }, { 0.0,0.0,30.0 }, 1.0);
-//	Ray_LLT rayE0_2_Field_XYneg({ -0.5,-0.5,0.0 }, { -0.5,0.5,30.0 }, 1.0);
-//	Ray_LLT rayE0_3_Field_XYneg({ -0.5,-0.5,0.0 }, { 1.0,1.0,30.0 }, 1.0);
-//	LightRayStruct chiefLightRay_Field_XYneg(mLight550, cheif_Field_XYneg, 1);
-//	LightRayStruct lightRayE0_0_Field_XYneg(mLight550, rayE0_0_Field_XYneg, 1);
-//	LightRayStruct lightRayE0_1_Field_XYneg(mLight550, rayE0_1_Field_XYneg, 1);
-//	LightRayStruct lightRayE0_2_Field_XYneg(mLight550, rayE0_2_Field_XYneg, 1);
-//	LightRayStruct lightRayE0_3_Field_XYneg(mLight550, rayE0_3_Field_XYneg, 1);
-//
-//	//__ start check OPD in the field (x = -0.5, y = -0.5) for some rays
-//	std::vector<LightRayStruct> vecLightRaysE0_Field_XYneg{ lightRayE0_0_Field_XYneg, lightRayE0_1_Field_XYneg, lightRayE0_2_Field_XYneg, lightRayE0_3_Field_XYneg };
-//	// calc global OPD optical field for some rays
-//	OPD OPDglobalE1_Field_singleRays_XYneg(/*exit pupil*/ mExitPupilE0_ptr,  /*optical system*/ optSysE0,
-//		/*fill apertur stop with light ray*/ vecLightRaysE0_Field_XYneg, /*chief ray*/ chiefLightRay_Field_XYneg, /*scalling*/ 0);
-//	std::vector<real> checkOPD_Field_ZemaxData_XYneg = { -0.018726908708, -0.108114901143,-0.145494692733, 0.0466498123334 };
-//	std::vector<real> checkOPD_Field_XYneg = OPDglobalE1_Field_singleRays_XYneg.getVecWithAllCalcGlobalOPD();
-//	bool checkOPD_Field_work_XYneg = Math::compareTwoSTDVecors_decimals(checkOPD_Field_ZemaxData_XYneg, checkOPD_Field_XYneg, 8);
-//	workTheSystem.push_back(checkOPD_Field_work_XYneg);
-//	//__ end check OPD in the field for some rays
-//
-//	//__ start check gloabl OPD in the field (x = -0.5, y = -0.5) for many ray
-//	// fill aperture stop with many lightrays
-//	FillApertureStop fillAperStopE0_field_XYneg({ -0.5,-0.5,0.0 }, 1, { 0.0,0.0,30.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, mLight550);
-//	// calc global OPD optical field (x=-0.5, y=-0.5) for some rays
-//	OPD OPDglobalE0_negX5negY5_Field(/*exit pupil*/ mExitPupilE0_ptr,  /*optical system*/ optSysE0,
-//		/*fill apertur stop with light ray*/ fillAperStopE0_field_XYneg.getVectorWithLightRays(), /*chief ray*/ fillAperStopE0_field_XYneg.getVectorWithLightRays().at(0), /*scalling*/ 0);
-//	OPDglobalE0_negX5negY5_Field.exportCV_MatToExcel(OPDglobalE0_negX5negY5_Field.getGlobalOPD(), "D:\OPDglobalE0_negX5negY5_Field_0.csv");
-//	//__ end check gloabl OPD in the field (y=-1) for many ray
-//
-//
-//	//___ test opt achse
-//	// test rays to calculate OPD
-//	// calc global OPD optical achse 
-//	OPD OPDglobalE0_optAchse_1(/*exit pupil*/ mExitPupilE0_ptr,  /*optical system*/ optSysE0,
-//		/*fill apertur stop with light ray*/ lightRay, /*chief ray*/ chiefLightRay, /*scalling*/ 1);
-//	std::vector<real> checkOPD_1 = OPDglobalE0_optAchse_1.getVecWithAllCalcGlobalOPD();
-//	bool checkerOPD_1 = Math::compareTwoSTDVecors_decimals(checkOPD_1, zemaxDataOPD, 8);
-//	workTheSystem.push_back(checkerOPD_1);
-//	//___ end test opt achse
-//
-//	//__ start check gloabl OPD on optical axis
-//	// calc global OPD optical field (y=1) for some rays
-//	OPD OPDglobalE0_optAxis_1(/*exit pupil*/ mExitPupilE0_ptr,  /*optical system*/ optSysE0,
-//		/*fill apertur stop with light ray*/ fillAperStopE0_optAxis.getVectorWithLightRays(), /*chief ray*/ fillAperStopE0_optAxis.getVectorWithLightRays().at(0), /*scalling*/ 1);
-//	OPDglobalE0_optAxis_1.exportCV_MatToExcel(OPDglobalE0_optAxis_1.getGlobalOPD(), "D:\OPDglobalE0_optAxis_1.csv");
-//	//__ end check gloabl OPD in the field (y=1) for many ray
-//
-//	// calc global OPD optical field for many rays
-//	OPD OPDglobalE1_Field_singleRays_1(/*exit pupil*/ mExitPupilE0_ptr,  /*optical system*/ optSysE0,
-//		/*fill apertur stop with light ray*/ vecLightRaysE0_Field_posY1, /*chief ray*/ chiefLightRay_Field, /*scalling*/ 1);
-//	std::vector<real> checkOPD_Field_1 = OPDglobalE1_Field_singleRays_1.getVecWithAllCalcGlobalOPD();
-//	bool check_singleRays_1 = Math::compareTwoSTDVecors_decimals(checkOPD_Field_ZemaxData, checkOPD_Field_1, 8);
-//	workTheSystem.push_back(check_singleRays_1);
-//	//__ end check OPD in the field for some rays
-//
-//
-//	//__ start check gloabl OPD in the field (y=1) for many ray
-//	// calc global OPD optical field (y=1) for some rays
-//	OPD OPDglobalE0_Y1_Field_1(/*exit pupil*/ mExitPupilE0_ptr,  /*optical system*/ optSysE0,
-//		/*fill apertur stop with light ray*/ fillAperStopE0_field_posY1.getVectorWithLightRays(), /*chief ray*/ fillAperStopE0_field_posY1.getVectorWithLightRays().at(0), /*scalling*/ 1);
-//	OPDglobalE0_Y1_Field_1.exportCV_MatToExcel(OPDglobalE0_Y1_Field_1.getGlobalOPD(), "D:\OPDglobalE0_Y1_Field_1.csv");
-//	//__ end check gloabl OPD in the field (y=1) for many ray
-//
-//	//__ start check OPD in the field (y=-1) for some rays
-//	// calc global OPD optical field for some rays
-//	OPD OPDglobalE1_Field_singleRays_negY1_1(/*exit pupil*/ mExitPupilE0_ptr,  /*optical system*/ optSysE0,
-//		/*fill apertur stop with light ray*/ mVecLightRaysE0_Field_negY1, /*chief ray*/ mChiefLightRay_Field_negY1, /*scalling*/ 1);
-//	std::vector<real> checkOPD_Field_negY_1 = OPDglobalE1_Field_singleRays_negY1_1.getVecWithAllCalcGlobalOPD();
-//	bool checkOPD_Field_work_negY_1 = Math::compareTwoSTDVecors_decimals(checkOPD_Field_ZemaxData_negY, checkOPD_Field_negY_1, 8);
-//	workTheSystem.push_back(checkOPD_Field_work_negY_1);
-//	//__ end check OPD in the field for some rays
-//
-//	//__ start check gloabl OPD in the field (y=-1) for many ray
-//	// calc global OPD optical field (y=-1) for some rays
-//	OPD OPDglobalE0_negY1_Field_1(/*exit pupil*/ mExitPupilE0_ptr,  /*optical system*/ optSysE0,
-//		/*fill apertur stop with light ray*/ fillAperStopE0_field_negY1.getVectorWithLightRays(), /*chief ray*/ fillAperStopE0_field_negY1.getVectorWithLightRays().at(0), /*scalling*/ 1);
-//	OPDglobalE0_negY1_Field_1.exportCV_MatToExcel(OPDglobalE0_negY1_Field_1.getGlobalOPD(), "D:\OPDglobalE0_negY1_Field_1.csv");
-//	//__ end check gloabl OPD in the field (y=-1) for many ray
-//
-//	//__ start check OPD in the field (x = 1.0, y = 1.0) for some rays
-//	// calc global OPD optical field for some rays
-//	OPD OPDglobalE1_Field_singleRays_XYpos_1(/*exit pupil*/ mExitPupilE0_ptr,  /*optical system*/ optSysE0,
-//		/*fill apertur stop with light ray*/ vecLightRaysE0_Field_XYpos, /*chief ray*/ chiefLightRay_Field_XYpos, /*scalling*/ 1);
-//	std::vector<real> checkOPD_Field_XYpos_1 = OPDglobalE1_Field_singleRays_XYpos_1.getVecWithAllCalcGlobalOPD();
-//	bool checkOPD_Field_work_XYpos_1 = Math::compareTwoSTDVecors_decimals(checkOPD_Field_ZemaxData_XYpos, checkOPD_Field_XYpos_1, 7);
-//	workTheSystem.push_back(checkOPD_Field_work_XYpos_1);
-//	//__ end check OPD in the field for some rays
-//
-//	//__ start check gloabl OPD in the field (x = 1.0, y = 1.0) for many ray
-//	// calc global OPD optical field (x=1.0, y=1.0) for some rays
-//	OPD OPDglobalE0_X1Y1_Field_1(/*exit pupil*/ mExitPupilE0_ptr,  /*optical system*/ optSysE0,
-//		/*fill apertur stop with light ray*/ fillAperStopE0_field_XYpos.getVectorWithLightRays(), /*chief ray*/ fillAperStopE0_field_XYpos.getVectorWithLightRays().at(0), /*scalling*/ 1);
-//	OPDglobalE0_X1Y1_Field_1.exportCV_MatToExcel(OPDglobalE0_X1Y1_Field_1.getGlobalOPD(), "D:\OPDglobalE0_X1Y1_Field_1.csv");
-//	//__ end check gloabl OPD in the field (y=-1) for many ray
-//
-//	//__ start check OPD in the field (x = -0.5, y = -0.5) for some rays
-//	// calc global OPD optical field for some rays
-//	OPD OPDglobalE1_Field_singleRays_XYneg_1(/*exit pupil*/ mExitPupilE0_ptr,  /*optical system*/ optSysE0,
-//		/*fill apertur stop with light ray*/ vecLightRaysE0_Field_XYneg, /*chief ray*/ chiefLightRay_Field_XYneg, /*scalling*/ 1);
-//	std::vector<real> checkOPD_Field_XYneg_1 = OPDglobalE1_Field_singleRays_XYneg_1.getVecWithAllCalcGlobalOPD();
-//	bool checkOPD_Field_work_XYneg_1 = Math::compareTwoSTDVecors_decimals(checkOPD_Field_ZemaxData_XYneg, checkOPD_Field_XYneg_1, 8);
-//	workTheSystem.push_back(checkOPD_Field_work_XYneg_1);
-//	//__ end check OPD in the field for some rays
-//
-//	//__ start check gloabl OPD in the field (x = -0.5, y = -0.5) for many ray
-//	// calc global OPD optical field (x=-0.5, y=-0.5) for some rays
-//	OPD OPDglobalE0_negX5negY5_Field_1(/*exit pupil*/ mExitPupilE0_ptr,  /*optical system*/ optSysE0,
-//		/*fill apertur stop with light ray*/ fillAperStopE0_field_XYneg.getVectorWithLightRays(), /*chief ray*/ fillAperStopE0_field_XYneg.getVectorWithLightRays().at(0), /*scalling*/ 1);
-//	OPDglobalE0_negX5negY5_Field_1.exportCV_MatToExcel(OPDglobalE0_negX5negY5_Field_1.getGlobalOPD(), "D:\OPDglobalE0_negX5negY5_Field_1.csv");
-//	//__ end check gloabl OPD in the field (y=-1) for many ray
-//
-//	bool workReturn = Math::checkTrueOfVectorElements(workTheSystem);
-//	return workReturn;
-//}
-//
-//bool TestGlobalOPD::checkGlobalOPD_E1()
-//{
-//	// work the system
-//	std::vector<bool> workTheSystem;
-//
-//	//all the surfaces
-//	ApertureStop_LLT A0_E1(/*semi height*/ 1.0, /*point*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index*/ 1.0);
-//	SphericalSurface_LLT S1_E1(/*radius*/15.0, /*semiHeight*/4.0, /*Apex of the sphere*/{ 0.0, 0.0, 31.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
-//	SphericalSurface_LLT S2_E1(/*radius*/15.0, /*semiHeight*/4.0, /*Apex of the sphere*/{ 0.0, 0.0, 36.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
-//	SphericalSurface_LLT S3_E1(/*radius*/50.0, /*semiHeight*/4.0, /*Apex of the sphere*/{ 0.0, 0.0, 37.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.5, /*refIndexSideB*/1.0);
-//	SphericalSurface_LLT S4_E1(/*radius*/50.0, /*semiHeight*/4.0, /*Apex of the sphere*/{ 0.0, 0.0, 42.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.5, /*refIndexSideB*/1.0);
-//	PlanGeometry_LLT S5_E1(/*semiHeight*/5.0, /*point*/{ 0.0,0.0,96.54836003 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
-//
-//	// build the optical system E1
-//	OpticalSystem_LLT optSysE1;
-//	optSysE1.fillVectorSurfaceAndInteractingData(0, &A0_E1, mDoNothing.clone());
-//	optSysE1.fillVectorSurfaceAndInteractingData(1, &S1_E1, mRefrac.clone());
-//	optSysE1.fillVectorSurfaceAndInteractingData(2, &S2_E1, mRefrac.clone());
-//	optSysE1.fillVectorSurfaceAndInteractingData(3, &S3_E1, mRefrac.clone());
-//	optSysE1.fillVectorSurfaceAndInteractingData(4, &S4_E1, mRefrac.clone());
-//	optSysE1.fillVectorSurfaceAndInteractingData(5, &S5_E1, mDoNothing.clone()); // the callculate the ray to the exit pupil
-//																		// the image surface is not allowed so be "absorb"
-//
-//	//	//exit pupil
-//	PlanGeometry_LLT exitPupilE1(/*semiHeight*/3.0, /*point*/{ 0.0,0.0,33.66459016 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
-//	surfacePtr exitPupilE1_ptr = exitPupilE1.clone();
-//
-//	// ___ test opt achse
-//	// single ray tracing
-//	Ray_LLT cheifE1({ 0.0,0.0,0.0 }, { 0.0,0.0,30.0 }, 1.0);
-//	Ray_LLT rayE1_0({ 0.0,0.0,0.0 }, { 0.0,1.0,30.0 }, 1.0);
-//	Ray_LLT rayE1_1({ 0.0,0.0,0.0 }, { 0.0,-0.5,30.0 }, 1.0);
-//	Ray_LLT rayE1_2({ 0.0,0.0,0.0 }, { -1.0,0.0,30.0 }, 1.0);
-//	Ray_LLT rayE1_3({ 0.0,0.0,0.0 }, { 0.5,0.5,30.0 }, 1.0);
-//	Ray_LLT rayE1_4({ 0.0,0.0,0.0 }, { -0.5,0.5,30.0 }, 1.0);
-//	Ray_LLT rayE1_5({ 0.0,0.0,0.0 }, { 0.3,-0.7,30.0 }, 1.0);
-//
-//	LightRayStruct chiefLightRayE1_optA(mLight550, cheifE1, 1);
-//	LightRayStruct lightRayE1_0(mLight550, rayE1_0, 1);
-//	LightRayStruct lightRayE1_1(mLight550, rayE1_1, 1);
-//	LightRayStruct lightRayE1_2(mLight550, rayE1_2, 1);
-//	LightRayStruct lightRayE1_3(mLight550, rayE1_3, 1);
-//	LightRayStruct lightRayE1_4(mLight550, rayE1_4, 1);
-//	LightRayStruct lightRayE1_5(mLight550, rayE1_5, 1);
-//
-//	// test rays to calculate OPD
-//	std::vector<LightRayStruct> lightRayE1_optAchse{ lightRayE1_0, lightRayE1_1, lightRayE1_2 ,lightRayE1_3, lightRayE1_4, lightRayE1_5 };
-//	// calc global OPD optical achse 
-//	OPD OPDglobalE1_optAchse(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
-//		/*fill apertur stop with light ray*/ lightRayE1_optAchse, /*chief ray*/ chiefLightRayE1_optA, /*scalling*/ 0);
-//	std::vector<real> checkOPDE1_optA = OPDglobalE1_optAchse.getVecWithAllCalcGlobalOPD();
-//	std::vector<real> zemaxDataOPD_E1_optA = { -0.067509415903,-0.046105687280, -0.067509415903,-0.072794092752,-0.072794092752,-0.077216790741 };
-//	bool checkerOPD_E1_optA = Math::compareTwoSTDVecors_decimals(checkOPDE1_optA, zemaxDataOPD_E1_optA, 8);
-//	workTheSystem.push_back(checkerOPD_E1_optA);
-//	//___ end test opt achse
-//
-//	//__ start check gloabl OPD on opt achses
-//	//fill aperture stop with many lightrays
-//	FillApertureStop fillAperStopE1_optAchse({ 0.0,0.0,0.0 }, 1, { 0.0,0.0,30.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, mLight550);
-//	// calc global OPD on optical achse for many rays
-//	OPD OPDglobalE1_optAchse_full(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
-//		/*fill apertur stop with light ray*/ fillAperStopE1_optAchse.getVectorWithLightRays(), /*chief ray*/ fillAperStopE1_optAchse.getVectorWithLightRays().at(0), /*scalling*/ 0);
-//	OPDglobalE1_optAchse_full.exportCV_MatToExcel(OPDglobalE1_optAchse_full.getGlobalOPD(), "D:\OPDglobal_E1_optAchse_0.csv");
-//	//__ end check gloabl OPD in the field (y=-1) for many ray
-//
-//
-//	// ___ test field y=1
-//	// single ray tracing
-//	Ray_LLT cheifE1_Y1({ 0.0,1.0,0.0 }, { 0.0,-1.0,30.0 }, 1.0);
-//	Ray_LLT rayE1_0_Y1({ 0.0,1.0,0.0 }, { 0.0,0.0,30.0 }, 1.0);
-//	Ray_LLT rayE1_1_Y1({ 0.0,1.0,0.0 }, { 0.0,-0.5,30.0 }, 1.0);
-//	Ray_LLT rayE1_2_Y1({ 0.0,1.0,0.0 }, { -1.0,-1.0,30.0 }, 1.0);
-//	Ray_LLT rayE1_3_Y1({ 0.0,1.0,0.0 }, { -0.5,-1.5,30.0 }, 1.0);
-//	Ray_LLT rayE1_4_Y1({ 0.0,1.0,0.0 }, { 1.0,-1.0,30.0 }, 1.0);
-//	Ray_LLT rayE1_5_Y1({ 0.0,1.0,0.0 }, { 0.5,-1.0,30.0 }, 1.0);
-//
-//	LightRayStruct chiefLightRayE1_Y1(mLight550, cheifE1_Y1, 1);
-//	LightRayStruct lightRayE1_0_Y1(mLight550, rayE1_0_Y1, 1);
-//	LightRayStruct lightRayE1_1_Y1(mLight550, rayE1_1_Y1, 1);
-//	LightRayStruct lightRayE1_2_Y1(mLight550, rayE1_2_Y1, 1);
-//	LightRayStruct lightRayE1_3_Y1(mLight550, rayE1_3_Y1, 1);
-//	LightRayStruct lightRayE1_4_Y1(mLight550, rayE1_4_Y1, 1);
-//	LightRayStruct lightRayE1_5_Y1(mLight550, rayE1_5_Y1, 1);
-//
-//	// test rays to calculate OPD
-//	std::vector<LightRayStruct> lightRayE1_Y1{ lightRayE1_0_Y1, lightRayE1_1_Y1, lightRayE1_2_Y1, lightRayE1_3_Y1, lightRayE1_4_Y1, lightRayE1_5_Y1 };
-//	// calc global OPD optical achse for some rays
-//	OPD OPDglobalE1_Y1(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
-//		/*fill apertur stop with light ray*/ lightRayE1_Y1, /*chief ray*/ chiefLightRayE1_Y1, /*scalling*/ 0);
-//	std::vector<real> checkOPDE1_Y1 = OPDglobalE1_Y1.getVecWithAllCalcGlobalOPD();
-//	std::vector<real> zemaxDataOPD_E1_Y1 = { -0.068577489049,-0.035967400776, -0.029568213264,-0.022017747126,-0.029568213264,-0.036648487857 };
-//	bool checkerOPD_E1_Y1 = Math::compareTwoSTDVecors_decimals(checkOPDE1_Y1, zemaxDataOPD_E1_Y1, 7);
-//	workTheSystem.push_back(checkerOPD_E1_Y1);
-//	//___ end test opt achse
-//
-//	//__ start check gloabl OPD on opt axis
-//	//fill aperture stop with many lightrays
-//	FillApertureStop fillAperStopE1_Y1({ 0.0,1.0,0.0 }, 1, { 0.0,0.0,30.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, mLight550);
-//	// calc global OPD on optical achse for many rays
-//	OPD OPDglobalE1_Y1_full(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
-//		/*fill apertur stop with light ray*/ fillAperStopE1_Y1.getVectorWithLightRays(), /*chief ray*/ fillAperStopE1_Y1.getVectorWithLightRays().at(0), /*scalling*/ 0);
-//	OPDglobalE1_Y1_full.exportCV_MatToExcel(OPDglobalE1_Y1_full.getGlobalOPD(), "D:\OPDglobal_E1_Y1_full_0.csv");
-//	//__ end check gloabl OPD in the field  for many ray
-//
-//	// ___ test field x=-1
-//	// single ray tracing
-//	Ray_LLT cheifE1_negX1({ -1.0,0.0,0.0 }, { 1.0,0.0,30.0 }, 1.0);
-//	Ray_LLT rayE1_0_negX1({ -1.0,0.0,0.0 }, { 0.0,0.0,30.0 }, 1.0);
-//	Ray_LLT rayE1_1_negX1({ -1.0,0.0,0.0 }, { 1.0,-0.5,30.0 }, 1.0);
-//	Ray_LLT rayE1_2_negX1({ -1.0,0.0,0.0 }, { 2.0, 0.0,30.0 }, 1.0);
-//	Ray_LLT rayE1_3_negX1({ -1.0,0.0,0.0 }, { 0.5,0.5,30.0 }, 1.0);
-//	Ray_LLT rayE1_4_negX1({ -1.0,0.0,0.0 }, { 1.0,-1.0,30.0 }, 1.0);
-//	Ray_LLT rayE1_5_negX1({ -1.0,0.0,0.0 }, { 0.5,-0.5,30.0 }, 1.0);
-//
-//	LightRayStruct chiefLightRayE1_negX1(mLight550, cheifE1_negX1, 1);
-//	LightRayStruct lightRayE1_0_negX1(mLight550, rayE1_0_negX1, 1);
-//	LightRayStruct lightRayE1_1_negX1(mLight550, rayE1_1_negX1, 1);
-//	LightRayStruct lightRayE1_2_negX1(mLight550, rayE1_2_negX1, 1);
-//	LightRayStruct lightRayE1_3_negX1(mLight550, rayE1_3_negX1, 1);
-//	LightRayStruct lightRayE1_4_negX1(mLight550, rayE1_4_negX1, 1);
-//	LightRayStruct lightRayE1_5_negX1(mLight550, rayE1_5_negX1, 1);
-//
-//	// test rays to calculate OPD
-//	std::vector<LightRayStruct> lightRayE1_negX1{ lightRayE1_0_negX1, lightRayE1_1_negX1, lightRayE1_2_negX1, lightRayE1_3_negX1, lightRayE1_4_negX1, lightRayE1_5_negX1 };
-//	// calc global OPD optical achse for some rays
-//	OPD OPDglobalE1_negX1(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
-//		/*fill apertur stop with light ray*/ lightRayE1_negX1, /*chief ray*/ chiefLightRayE1_negX1, /*scalling*/ 0);
-//	std::vector<real> checkOPDE1_negX1 = OPDglobalE1_negX1.getVecWithAllCalcGlobalOPD();
-//	std::vector<real> zemaxDataOPD_E1_negX1 = { -0.068577489049, -0.036648487857, 0.0982230102171, -0.063571219811, -0.029568213267, -0.063571219811 };
-//	bool checkerOPD_E1_negX1 = Math::compareTwoSTDVecors_decimals(checkOPDE1_negX1, zemaxDataOPD_E1_negX1, 7);
-//	workTheSystem.push_back(checkerOPD_E1_negX1);
-//
-//
-//	//__ start check gloabl OPD on opt axis
-//	//fill aperture stop with many lightrays
-//	FillApertureStop fillAperStopE1_negX1({ -1.0,0.0,0.0 }, 1, { 0.0,0.0,30.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, mLight550);
-//	// calc global OPD on optical achse for many rays
-//	OPD OPDglobalE1_negX1_full(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
-//		/*fill apertur stop with light ray*/ fillAperStopE1_negX1.getVectorWithLightRays(), /*chief ray*/ fillAperStopE1_negX1.getVectorWithLightRays().at(0), /*scalling*/ 0);
-//	OPDglobalE1_negX1_full.exportCV_MatToExcel(OPDglobalE1_negX1_full.getGlobalOPD(), "D:\OPDglobal_E1_negX1_full_0.csv");
-//	//__ end check gloabl OPD in the field (x=-1) for many ray
-//
-//	// ___ test field x=-0.5 y=0.5
-//	// single ray tracing
-//	Ray_LLT cheifE1_negX5posY5({ -0.5,0.5,0.0 }, { 0.5,-0.5,30.0 }, 1.0);
-//	Ray_LLT rayE1_0_negX5posY5({ -0.5,0.5,0.0 }, { 0.0,0.0,30.0 }, 1.0);
-//	Ray_LLT rayE1_1_negX5posY5({ -0.5,0.5,0.0 }, { 1.0,-0.5,30.0 }, 1.0);
-//	Ray_LLT rayE1_2_negX5posY5({ -0.5,0.5,0.0 }, { 1.0, 0.0,30.0 }, 1.0);
-//	Ray_LLT rayE1_3_negX5posY5({ -0.5,0.5,0.0 }, { 0.5,0.5,30.0 }, 1.0);
-//	Ray_LLT rayE1_4_negX5posY5({ -0.5,0.5,0.0 }, { 1.5, -0.5,30.0 }, 1.0);
-//	Ray_LLT rayE1_5_negX5posY5({ -0.5,0.5,0.0 }, { 0.5,-1.5,30.0 }, 1.0);
-//
-//	LightRayStruct chiefLightRayE1_negX5posY5(mLight550, cheifE1_negX5posY5, 1);
-//	LightRayStruct lightRayE1_0_negX5posY5(mLight550, rayE1_0_negX5posY5, 1);
-//	LightRayStruct lightRayE1_1_negX5posY5(mLight550, rayE1_1_negX5posY5, 1);
-//	LightRayStruct lightRayE1_2_negX5posY5(mLight550, rayE1_2_negX5posY5, 1);
-//	LightRayStruct lightRayE1_3_negX5posY5(mLight550, rayE1_3_negX5posY5, 1);
-//	LightRayStruct lightRayE1_4_negX5posY5(mLight550, rayE1_4_negX5posY5, 1);
-//	LightRayStruct lightRayE1_5_negX5posY5(mLight550, rayE1_5_negX5posY5, 1);
-//
-//	// test rays to calculate OPD
-//	std::vector<LightRayStruct> lightRayE1_negX5posY5{ lightRayE1_0_negX5posY5, lightRayE1_1_negX5posY5, lightRayE1_2_negX5posY5, lightRayE1_3_negX5posY5, lightRayE1_4_negX5posY5, lightRayE1_5_negX5posY5 };
-//	// calc global OPD optical achse for some rays
-//	OPD OPDglobalE1_negX5posY5(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
-//		/*fill apertur stop with light ray*/ lightRayE1_negX5posY5, /*chief ray*/ chiefLightRayE1_negX5posY5, /*scalling*/ 0);
-//	std::vector<real> checkOPDE1_negX5posY5 = OPDglobalE1_negX5posY5.getVecWithAllCalcGlobalOPD();
-//	std::vector<real> zemaxDataOPD_E1_negX5posY5 = { -0.073021394003,-0.033426559927, -0.063324279640, -0.079115477159, 4.26228059E-003, 4.26228059E-003 };
-//	bool checkerOPD_E1_negX5posY5 = Math::compareTwoSTDVecors_decimals(checkOPDE1_negX5posY5, zemaxDataOPD_E1_negX5posY5, 6);
-//	workTheSystem.push_back(checkerOPD_E1_negX5posY5);
-//
-//	//__ start check gloabl OPD on opt axis
-//	//fill aperture stop with many lightrays
-//	FillApertureStop fillAperStopE1_negX5posY5({ -0.5,0.5,0.0 }, 1, { 0.0,0.0,30.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, mLight550);
-//	// calc global OPD on optical achse for many rays
-//	OPD OPDglobalE1_negX5posY5_full(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
-//		/*fill apertur stop with light ray*/ fillAperStopE1_negX5posY5.getVectorWithLightRays(), /*chief ray*/ fillAperStopE1_negX5posY5.getVectorWithLightRays().at(0), /*scalling*/ 0);
-//	OPDglobalE1_negX5posY5_full.exportCV_MatToExcel(OPDglobalE1_negX5posY5_full.getGlobalOPD(), "D:\OPDglobal_E1_negX5posY5_full_0.csv");
-//	//__ end check gloabl OPD in the field (x=-1) for many ray
-//
-//
-//	// ___ test field x=0.5 y=0.5
-//	// single ray tracing
-//	Ray_LLT cheifE1_posX5posY5({ 0.5,0.5,0.0 }, { -0.5,-0.5,30.0 }, 1.0);
-//	Ray_LLT rayE1_0_posX5posY5({ 0.5,0.5,0.0 }, { 0.0,0.0,30.0 }, 1.0);
-//	Ray_LLT rayE1_1_posX5posY5({ 0.5,0.5,0.0 }, { -1.0,-0.5,30.0 }, 1.0);
-//	Ray_LLT rayE1_2_posX5posY5({ 0.5,0.5,0.0 }, { -1.0, 0.0,30.0 }, 1.0);
-//	Ray_LLT rayE1_3_posX5posY5({ 0.5,0.5,0.0 }, { -0.5,0.5,30.0 }, 1.0);
-//	Ray_LLT rayE1_4_posX5posY5({ 0.5,0.5,0.0 }, { -1.5, -0.5,30.0 }, 1.0);
-//	Ray_LLT rayE1_5_posX5posY5({ 0.5,0.5,0.0 }, { -0.5,-1.5,30.0 }, 1.0);
-//	Ray_LLT rayE1_6_posX5posY5({ 0.5,0.5,0.0 }, { 0.5,-0.5,30.0 }, 1.0);
-//
-//	LightRayStruct chiefLightRayE1_posX5posY5(mLight550, cheifE1_posX5posY5, 1);
-//	LightRayStruct lightRayE1_0_posX5posY5(mLight550, rayE1_0_posX5posY5, 1);
-//	LightRayStruct lightRayE1_1_posX5posY5(mLight550, rayE1_1_posX5posY5, 1);
-//	LightRayStruct lightRayE1_2_posX5posY5(mLight550, rayE1_2_posX5posY5, 1);
-//	LightRayStruct lightRayE1_3_posX5posY5(mLight550, rayE1_3_posX5posY5, 1);
-//	LightRayStruct lightRayE1_4_posX5posY5(mLight550, rayE1_4_posX5posY5, 1);
-//	LightRayStruct lightRayE1_5_posX5posY5(mLight550, rayE1_5_posX5posY5, 1);
-//	LightRayStruct lightRayE1_6_posX5posY5(mLight550, rayE1_6_posX5posY5, 1);
-//
-//	// test rays to calculate OPD
-//	std::vector<LightRayStruct> lightRayE1_posX5posY5{ lightRayE1_0_posX5posY5, lightRayE1_1_posX5posY5, lightRayE1_2_posX5posY5, lightRayE1_3_posX5posY5, lightRayE1_4_posX5posY5, lightRayE1_5_posX5posY5, lightRayE1_6_posX5posY5 };
-//	// calc global OPD optical achse for some rays
-//	OPD OPDglobalE1_posX5posY5(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
-//		/*fill apertur stop with light ray*/ lightRayE1_posX5posY5, /*chief ray*/ chiefLightRayE1_posX5posY5, /*scalling*/ 0);
-//	std::vector<real> checkOPDE1_posX5posY5 = OPDglobalE1_posX5posY5.getVecWithAllCalcGlobalOPD();
-//	std::vector<real> zemaxDataOPD_E1_posX5posY5 = { -0.073021394003,-0.033426559927, -0.063324279640, -0.079115477159, 4.26228059E-003, 4.26228059E-003, -0.079115477159 };
-//	bool checkerOPD_E1_posX5posY5 = Math::compareTwoSTDVecors_decimals(checkOPDE1_posX5posY5, zemaxDataOPD_E1_posX5posY5, 6);
-//	workTheSystem.push_back(checkerOPD_E1_posX5posY5);
-//
-//	//__ start check gloabl OPD on opt axis
-//	//fill aperture stop with many lightrays
-//	FillApertureStop fillAperStopE1_posX5posY5({ 0.5,0.5,0.0 }, 1, { 0.0,0.0,30.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, mLight550);
-//	// calc global OPD on optical achse for many rays
-//	OPD OPDglobalE1_posX5posY5_full(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
-//		/*fill apertur stop with light ray*/ fillAperStopE1_posX5posY5.getVectorWithLightRays(), /*chief ray*/ fillAperStopE1_posX5posY5.getVectorWithLightRays().at(0), /*scalling*/ 0);
-//	OPDglobalE1_posX5posY5_full.exportCV_MatToExcel(OPDglobalE1_posX5posY5_full.getGlobalOPD(), "D:\OPDglobal_E1_posX5posY5_full_0.csv");
-//	//__ end check gloabl OPD in the field for many ray
-//
-//
-//	// ___ test field x=-1.0 y=-1.0
-//	// single ray tracing
-//	Ray_LLT cheifE1_negX1negY1({ -1.0,-1.0,0.0 }, { 1.0,1.0,30.0 }, 1.0);
-//	Ray_LLT rayE1_0_negX1negY1({ -1.0,-1.0,0.0 }, { 0.0,1.0,30.0 }, 1.0);
-//	Ray_LLT rayE1_1_negX1negY1({ -1.0,-1.0,0.0 }, { 1.0,0.5,30.0 }, 1.0);
-//	Ray_LLT rayE1_2_negX1negY1({ -1.0,-1.0,0.0 }, { 1.0, 0.0,30.0 }, 1.0);
-//	Ray_LLT rayE1_3_negX1negY1({ -1.0,-1.0,0.0 }, { 0.5,0.5,30.0 }, 1.0);
-//	Ray_LLT rayE1_4_negX1negY1({ -1.0,-1.0,0.0 }, { 1.5, 0.5,30.0 }, 1.0);
-//	Ray_LLT rayE1_5_negX1negY1({ -1.0,-1.0,0.0 }, { 0.5,1.5,30.0 }, 1.0);
-//	Ray_LLT rayE1_6_negX1negY1({ -1.0,-1.0,0.0 }, { 1.5, 1.0,30.0 }, 1.0);
-//
-//	LightRayStruct chiefLightRayE1_negX1negY1(mLight550, cheifE1_negX1negY1, 1);
-//	LightRayStruct lightRayE1_0_negX1negY1(mLight550, rayE1_0_negX1negY1, 1);
-//	LightRayStruct lightRayE1_1_negX1negY1(mLight550, rayE1_1_negX1negY1, 1);
-//	LightRayStruct lightRayE1_2_negX1negY1(mLight550, rayE1_2_negX1negY1, 1);
-//	LightRayStruct lightRayE1_3_negX1negY1(mLight550, rayE1_3_negX1negY1, 1);
-//	LightRayStruct lightRayE1_4_negX1negY1(mLight550, rayE1_4_negX1negY1, 1);
-//	LightRayStruct lightRayE1_5_negX1negY1(mLight550, rayE1_5_negX1negY1, 1);
-//	LightRayStruct lightRayE1_6_negX1negY1(mLight550, rayE1_6_negX1negY1, 1);
-//
-//	// test rays to calculate OPD
-//	std::vector<LightRayStruct> lightRayE1_negX1negY1{ lightRayE1_0_negX1negY1, lightRayE1_1_negX1negY1, lightRayE1_2_negX1negY1, lightRayE1_3_negX1negY1, lightRayE1_4_negX1negY1, lightRayE1_5_negX1negY1, lightRayE1_6_negX1negY1 };
-//	// calc global OPD optical achse for some rays
-//	OPD OPDglobalE1_negX1negY1(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
-//		/*fill apertur stop with light ray*/ lightRayE1_negX1negY1, /*chief ray*/ chiefLightRayE1_negX1negY1, /*scalling*/ 0);
-//	std::vector<real> checkOPDE1_negX1negY1 = OPDglobalE1_negX1negY1.getVecWithAllCalcGlobalOPD();
-//	std::vector<real> zemaxDataOPD_E1_negX1negY1 = { -0.030794167181, -0.026544479355,-0.030794167181,  -0.032326281304,-0.034954574372, 0.034954574372, -5.7937563E-003 };
-//	bool checkerOPD_E1_negX1negY1 = Math::compareTwoSTDVecors_decimals(checkOPDE1_negX1negY1, zemaxDataOPD_E1_negX1negY1, 6);
-//	workTheSystem.push_back(checkerOPD_E1_negX1negY1);
-//
-//	//__ start check gloabl OPD on opt axis
-//	//fill aperture stop with many lightrays
-//	FillApertureStop fillAperStopE1_negX1negY1({ -1.0,-1.0,0.0 }, 1, { 0.0,0.0,30.0 }, { 0.0,0.0,1.0 }, /*rings*/6, /*arms*/8, 1.0, mLight550);
-//	// calc global OPD on optical achse for many rays
-//	OPD OPDglobalE1_negX1negY1_full(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
-//		/*fill apertur stop with light ray*/ fillAperStopE1_negX1negY1.getVectorWithLightRays(), /*chief ray*/ fillAperStopE1_negX1negY1.getVectorWithLightRays().at(0), /*scalling*/ 0);
-//	OPDglobalE1_negX1negY1_full.exportCV_MatToExcel(OPDglobalE1_negX1negY1_full.getGlobalOPD(), "D:\OPDglobal_E1_negX1negY1_full_0.csv");
-//	//__ end check gloabl OPD in the field for many rayB
-//
-//	//***************************************************************************************************************************
-//	//*********** next we set the scalling to 1 *********************************************************************************
-//	//***************************************************************************************************************************
-//
-//
-//	
-//
-//	//**********************************************************************************
-//	//**********************************************************************************
-//	//**********************************************************************************
-//	// next optical system
-//	// here is the exitpupil bevor the image surface
-//	//**********************************************************************************
-//	//**********************************************************************************
-//	//**********************************************************************************
-//
-//	// test rays to calculate OPD
-//	// calc global OPD optical achse 
-//	OPD OPDglobalE1_optAchse_1(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
-//		/*fill apertur stop with light ray*/ lightRayE1_optAchse, /*chief ray*/ chiefLightRayE1_optA, /*scalling*/ 1);
-//	std::vector<real> checkOPDE1_optA_1 = OPDglobalE1_optAchse_1.getVecWithAllCalcGlobalOPD();
-//	bool checkerOPD_E1_optA_1 = Math::compareTwoSTDVecors_decimals(checkOPDE1_optA_1, zemaxDataOPD_E1_optA, 8);
-//	workTheSystem.push_back(checkerOPD_E1_optA_1);
-//	//___ end test opt achse
-//
-//	//__ start check gloabl OPD on opt achses
-//	// calc global OPD on optical achse for many rays
-//	OPD OPDglobalE1_optAchse_full_1(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
-//		/*fill apertur stop with light ray*/ fillAperStopE1_optAchse.getVectorWithLightRays(), /*chief ray*/ fillAperStopE1_optAchse.getVectorWithLightRays().at(0), /*scalling*/ 1);
-//	OPDglobalE1_optAchse_full_1.exportCV_MatToExcel(OPDglobalE1_optAchse_full_1.getGlobalOPD(), "D:\OPDglobal_E1_optAchse_1.csv");
-//	//__ end check gloabl OPD in the field (y=-1) for many ray
-//
-//
-//	// test rays to calculate OPD
-//	// calc global OPD optical achse for some rays
-//	OPD OPDglobalE1_Y1_1(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
-//		/*fill apertur stop with light ray*/ lightRayE1_Y1, /*chief ray*/ chiefLightRayE1_Y1, /*scalling*/ 1);
-//	std::vector<real> checkOPDE1_Y1_1 = OPDglobalE1_Y1_1.getVecWithAllCalcGlobalOPD();
-//	bool checkerOPD_E1_Y1_1 = Math::compareTwoSTDVecors_decimals(checkOPDE1_Y1_1, zemaxDataOPD_E1_Y1, 7);
-//	workTheSystem.push_back(checkerOPD_E1_Y1_1);
-//	//___ end test opt achse
-//
-//	//__ start check gloabl OPD on opt axis
-//	// calc global OPD on optical achse for many rays
-//	OPD OPDglobalE1_Y1_full_1(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
-//		/*fill apertur stop with light ray*/ fillAperStopE1_Y1.getVectorWithLightRays(), /*chief ray*/ fillAperStopE1_Y1.getVectorWithLightRays().at(0), /*scalling*/ 1);
-//	OPDglobalE1_Y1_full_1.exportCV_MatToExcel(OPDglobalE1_Y1_full_1.getGlobalOPD(), "D:\OPDglobal_E1_Y1_full_1.csv");
-//	//__ end check gloabl OPD in the field  for many ray
-//
-//	// test rays to calculate OPD
-//	// calc global OPD optical achse for some rays
-//	OPD OPDglobalE1_negX1_1(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
-//		/*fill apertur stop with light ray*/ lightRayE1_negX1, /*chief ray*/ chiefLightRayE1_negX1, /*scalling*/ 1);
-//	std::vector<real> checkOPDE1_negX1_1 = OPDglobalE1_negX1_1.getVecWithAllCalcGlobalOPD();
-//	bool checkerOPD_E1_negX1_1 = Math::compareTwoSTDVecors_decimals(checkOPDE1_negX1_1, zemaxDataOPD_E1_negX1, 7);
-//	workTheSystem.push_back(checkerOPD_E1_negX1_1);
-//
-//	//__ start check gloabl OPD on opt axis
-//	// calc global OPD on optical achse for many rays
-//	OPD OPDglobalE1_negX1_full_1(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
-//		/*fill apertur stop with light ray*/ fillAperStopE1_negX1.getVectorWithLightRays(), /*chief ray*/ fillAperStopE1_negX1.getVectorWithLightRays().at(0), /*scalling*/ 1);
-//	OPDglobalE1_negX1_full_1.exportCV_MatToExcel(OPDglobalE1_negX1_full_1.getGlobalOPD(), "D:\OPDglobal_E1_negX1_full_1.csv");
-//	//__ end check gloabl OPD in the field (x=-1) for many ray
-//
-//
-//	// test rays to calculate OPD
-//	// calc global OPD optical achse for some rays
-//	OPD OPDglobalE1_negX5posY5_1(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
-//		/*fill apertur stop with light ray*/ lightRayE1_negX5posY5, /*chief ray*/ chiefLightRayE1_negX5posY5, /*scalling*/ 1);
-//	std::vector<real> checkOPDE1_negX5posY5_1 = OPDglobalE1_negX5posY5_1.getVecWithAllCalcGlobalOPD();
-//	bool checkerOPD_E1_negX5posY5_1 = Math::compareTwoSTDVecors_decimals(checkOPDE1_negX5posY5_1, zemaxDataOPD_E1_negX5posY5, 6);
-//	workTheSystem.push_back(checkerOPD_E1_negX5posY5_1);
-//
-//	//__ start check gloabl OPD on opt axis
-//	// calc global OPD on optical achse for many rays
-//	OPD OPDglobalE1_negX5posY5_full_1(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
-//		/*fill apertur stop with light ray*/ fillAperStopE1_negX5posY5.getVectorWithLightRays(), /*chief ray*/ fillAperStopE1_negX5posY5.getVectorWithLightRays().at(0), /*scalling*/ 1);
-//	OPDglobalE1_negX5posY5_full_1.exportCV_MatToExcel(OPDglobalE1_negX5posY5_full_1.getGlobalOPD(), "D:\OPDglobal_E1_negX5posY5_full_1.csv");
-//	//__ end check gloabl OPD in the field (x=-1) for many ray
-//
-//	// test rays to calculate OPD
-//	// calc global OPD optical achse for some rays
-//	OPD OPDglobalE1_posX5posY5_1(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
-//		/*fill apertur stop with light ray*/ lightRayE1_posX5posY5, /*chief ray*/ chiefLightRayE1_posX5posY5, /*scalling*/ 1);
-//	std::vector<real> checkOPDE1_posX5posY5_1 = OPDglobalE1_posX5posY5_1.getVecWithAllCalcGlobalOPD();
-//	bool checkerOPD_E1_posX5posY5_1 = Math::compareTwoSTDVecors_decimals(checkOPDE1_posX5posY5_1, zemaxDataOPD_E1_posX5posY5, 6);
-//	workTheSystem.push_back(checkerOPD_E1_posX5posY5_1);
-//
-//	//__ start check gloabl OPD on opt axis
-//	// calc global OPD on optical achse for many rays
-//	OPD OPDglobalE1_posX5posY5_full_1(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
-//		/*fill apertur stop with light ray*/ fillAperStopE1_posX5posY5.getVectorWithLightRays(), /*chief ray*/ fillAperStopE1_posX5posY5.getVectorWithLightRays().at(0), /*scalling*/ 1);
-//	OPDglobalE1_posX5posY5_full_1.exportCV_MatToExcel(OPDglobalE1_posX5posY5_full_1.getGlobalOPD(), "D:\OPDglobal_E1_posX5posY5_full_1.csv");
-//	//__ end check gloabl OPD in the field for many ray
-//
-//
-//	// test rays to calculate OPD
-//	// calc global OPD optical achse for some rays
-//	OPD OPDglobalE1_negX1negY1_1(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
-//		/*fill apertur stop with light ray*/ lightRayE1_negX1negY1, /*chief ray*/ chiefLightRayE1_negX1negY1, /*scalling*/ 1);
-//	std::vector<real> checkOPDE1_negX1negY1_1 = OPDglobalE1_negX1negY1_1.getVecWithAllCalcGlobalOPD();
-//	bool checkerOPD_E1_negX1negY1_1 = Math::compareTwoSTDVecors_decimals(checkOPDE1_negX1negY1_1, zemaxDataOPD_E1_negX1negY1, 6);
-//	workTheSystem.push_back(checkerOPD_E1_negX1negY1_1);
-//
-//	//__ start check gloabl OPD on opt axis
-//	// calc global OPD on optical achse for many rays
-//	OPD OPDglobalE1_negX1negY1_full_1(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
-//		/*fill apertur stop with light ray*/ fillAperStopE1_negX1negY1.getVectorWithLightRays(), /*chief ray*/ fillAperStopE1_negX1negY1.getVectorWithLightRays().at(0), /*scalling*/ 1);
-//	OPDglobalE1_negX1negY1_full_1.exportCV_MatToExcel(OPDglobalE1_negX1negY1_full_1.getGlobalOPD(), "D:\OPDglobal_E1_negX1negY1_full_1.csv");
-//	//__ end check gloabl OPD in the field for many rayB
-//
-//	bool workReturn = Math::checkTrueOfVectorElements(workTheSystem);
-//	return workReturn;
-//
-//}
+// check fill OPD in Matrix (EP before ima surface)
+bool TestGlobalOPD::checkFillOPDinMatrix_E1()
+{
+	// work the system
+	std::vector<bool> workTheSystem;
+
+	//all the surfaces
+	ApertureStop_LLT S0(/*semi height*/ 1.0, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index*/ 1.0);
+	SphericalSurface_LLT S1(/*radius*/100.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 25.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.5, /*refIndexSideB*/1.0);
+	SphericalSurface_LLT S2(/*radius*/100.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 35.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.5, /*refIndexSideB*/1.0);
+	SphericalSurface_LLT S3(/*radius*/30.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 45.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.6);
+	SphericalSurface_LLT S4(/*radius*/30.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 55.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.6);
+	PlanGeometry_LLT S5(/*semiHeight*/5.0, /*point*/{ 0.0,0.0,65.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
+
+	std::vector< surfacePtr> surfacePtr_vec = { S0.clone(),S1.clone(),S2.clone() ,S3.clone(),S4.clone(),S5.clone() };
+	std::vector< interaction_ptr > interac_ptr = { mDoNothing.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(),mRefrac.clone(), mAbsorb.clone() };
+
+	OpticalSystem_LLT optSys;
+	optSys.fillOptSysWithSurfaceAndInteractions(surfacePtr_vec, interac_ptr);
+
+	// test the start system
+	bool testStartSystem = oftenUse::checkOptSysLLT_Equal_Better_Zemax(optSys, { 0.0,0.0,0.0 }, 1592.73, 0.01, compareTOM_Zemax::comEqual);
+	workTheSystem.push_back(testStartSystem);
+
+	// fill aperture stop with points
+	FillApertureStop fillAS;
+	infosAS infAS = optSys.getInforAS();
+	std::vector<VectorStructR3> pointsInAS = fillAS.fillAS_withPoints(6, infAS.getPointAS(), infAS.getDirAS(), infAS.getSemiHeightAS());
+
+
+	OPD testOPDE1;
+
+	real OPD0505 = testOPDE1.OPD_singelRay_obj(optSys, { 0.0,0.0,0.0 }, 0.5, 0.5, mLight550);
+	real refOPD0505 = -34.982;
+	bool checkOPD0505 = Math::compareTwoNumbers_tolerance(OPD0505, refOPD0505, 0.01);
+	workTheSystem.push_back(checkOPD0505);
+	
+	real OPDneg03Neg07 = testOPDE1.OPD_singelRay_obj(optSys, { 0.0,0.0,0.0 }, -0.3, -0.7, mLight550);
+	real refOPDneg03neg07 = -40.653;
+	bool checkOPDneg03neg07 = Math::compareTwoNumbers_tolerance(OPDneg03Neg07, refOPDneg03neg07, 0.01);
+	workTheSystem.push_back(checkOPDneg03neg07);
+
+	// ray aiming
+	RayAiming rayAiming;
+	std::vector<LightRayStruct> aimedLightRays = rayAiming.rayAimingMany_obj_complete(optSys, pointsInAS, { 0.0,0.0,0.0 }, mLight550, 1.0);
+
+	unsigned int sizeMatrix31 = 31;
+	OPD opd_31(/*optical system*/ optSys, /*aimed light ray*/ aimedLightRays, /*obj inf*/objectPoint_inf_obj::obj, sizeMatrix31);
+	opd_31.calcGlobalOPD_new();
+	// matrix wit global OPD
+	cv::Mat globalOPD_00_31 = opd_31.getGlobalOPD_deepCopy();
+
+	// save global OPD 31 in csv
+	std::string location31 = "../tests/testGlobalOPD/refOPDs/checkFillOPDinMatrix";
+	std::string fileName31 = "calc00_E1_31";
+	inportExportData::exportCV_MatToExcel(globalOPD_00_31, location31, fileName31);
+
+	// test 1
+	Ray_LLT ray0({ 0.0,0.0,0.0 }, { 0.707,0.707,20 }, 1);
+	LightRayStruct lightRay0(mLight550, ray0, true);
+	std::vector<LightRayStruct> aimedLightRay0{ lightRay0 };
+	OPD opd_0(/*optical system*/ optSys, /*aimed light ray*/ aimedLightRay0, /*obj inf*/objectPoint_inf_obj::obj, 1);
+	opd_0.calcGlobalOPD_new();
+	cv::Mat testOPD0 = opd_0.getGlobalOPD_deepCopy();
+	real checkOPD0 = testOPD0.at<real>(0, 0);
+
+	real refOPD0 = -70.744;
+	bool checker0 = Math::compareTwoNumbers_tolerance(checkOPD0, refOPD0, 0.01);
+
+
+	bool check0 = compareResultsCalcSingleAndGlobalOPDsoptSys(/*opt sys*/ optSys,/*start point ray*/{ 0.0,0.0,0.0 }, /*PX*/ 0.7, /*PY*/ 0.4,/*light*/ mLight550, 0.01);
+	workTheSystem.push_back(check0);
+
+	bool check1 = compareResultsCalcSingleAndGlobalOPDsoptSys(/*opt sys*/ optSys,/*start point ray*/{ 0.5,1.0,0.0 }, /*PX*/ 0.3, /*PY*/ -0.3,/*light*/ mLight550, 0.01);
+	workTheSystem.push_back(check1);
+
+	bool check2 = compareResultsCalcSingleAndGlobalOPDsoptSys(/*opt sys*/ optSys,/*start point ray*/{ -0.2,-1.0,0.0 }, /*PX*/ 0.5, /*PY*/ -0.5,/*light*/ mLight550, 0.01);
+	workTheSystem.push_back(check2);
+
+	bool check3 = compareResultsCalcSingleAndGlobalOPDsoptSys(/*opt sys*/ optSys,/*start point ray*/{ -1.2,-1.0,0.0 }, /*PX*/ 0.3, /*PY*/ 0.4,/*light*/ mLight550, 0.01);
+	workTheSystem.push_back(check3);
+
+	bool check4 = compareResultsCalcSingleAndGlobalOPDsoptSys(/*opt sys*/ optSys,/*start point ray*/{ 0.2, 0.8,0.0 }, /*PX*/ -0.6, /*PY*/ -0.3,/*light*/ mLight550, 0.01);
+	workTheSystem.push_back(check4);
+
+	bool workReturn = Math::checkTrueOfVectorElements(workTheSystem);
+	return workReturn;
+
+}
+
+// compare results calc single and global OPD
+bool TestGlobalOPD::compareResultsCalcSingleAndGlobalOPDsoptSys(/*opt sys*/OpticalSystem_LLT optSys,/*start point ray*/ VectorStructR3 startPointRay, /*PX*/real PX, /*PY*/real PY,/*light*/ Light_LLT light, real tolerance)
+{
+	bool checker;
+
+	// calculate OPD single ray
+	OPD OPD_SingleRay;
+	real opdSingle = OPD_SingleRay.OPD_singelRay_obj(optSys, startPointRay, PX, PY, light);
+
+	// get the wanted ray
+	LightRayStruct wantedLightRay = OPD_SingleRay.getWantedLightRay();
+	std::vector<LightRayStruct> wantedLightRay_vec{ wantedLightRay };
+
+	// calculate OPD using global OPD function
+	OPD OPD_global(/*optical system*/ optSys, /*aimed light ray*/ wantedLightRay_vec, /*obj inf*/objectPoint_inf_obj::obj, 1);
+	OPD_global.calcGlobalOPD_new();
+	cv::Mat testOPD0 = OPD_global.getGlobalOPD_deepCopy();
+	real checkOPD0 = testOPD0.at<real>(0, 0);
+
+	checker = Math::compareTwoNumbers_tolerance(opdSingle, checkOPD0, tolerance);
+	return checker;
+
+}
+
+
+// test upsamling OPD
+bool TestGlobalOPD::testUpsamplingOPD()
+{
+	std::vector<bool> workTheSystem;
+	std::string location = "../tests/testGlobalOPD/upsamplingOPD";
+	
+	
+	std::string name_0 = "0";
+	cv::Mat loadedOPD_0 = inportExportData::importTXTtoCVmat(location, name_0, 14, 14);
+	
+	OPD test0;
+	test0.setGlobalOPD(loadedOPD_0);
+	
+	test0.bilinearInterpolToFillHolesInOPDmatrix();
+	
+	cv::Mat upsampledOPDmatrix_0 = test0.getUpsampledGlobalOPD_deepCopy();
+	inportExportData::exportCV_MatToExcel(upsampledOPDmatrix_0, location, "0upsampled");
+	
+	// check the matrix 0
+	real ref0 = 1;
+	real calc0 = upsampledOPDmatrix_0.at<real>(0, 0);
+	bool check0 = Math::compareTwoNumbers_tolerance(ref0, calc0, 0.001);
+	workTheSystem.push_back(check0);
+	
+	real ref1 = 37.5;
+	real calc1 = upsampledOPDmatrix_0.at<real>(5, 3);
+	bool check1 = Math::compareTwoNumbers_tolerance(ref1, calc1, 0.001);
+	workTheSystem.push_back(check1);
+	
+	real ref2 = 0.0;
+	real calc2 = upsampledOPDmatrix_0.at<real>(7, 7);
+	bool check2 = Math::compareTwoNumbers_tolerance(ref2, calc2, 0.001);
+	workTheSystem.push_back(check2);
+	
+	real ref3 = 0.0;
+	real calc3 = upsampledOPDmatrix_0.at<real>(12, 13);
+	bool check3 = Math::compareTwoNumbers_tolerance(ref3, calc3, 0.001);
+	workTheSystem.push_back(check3);
+	
+	real ref4 = 47.0;
+	real calc4 = upsampledOPDmatrix_0.at<real>(13, 8);
+	bool check4 = Math::compareTwoNumbers_tolerance(ref4, calc4, 0.001);
+	workTheSystem.push_back(check4);
+	
+	// check the matrix 1
+	std::string name_1 = "1";
+	cv::Mat loadedOPD_1 = inportExportData::importTXTtoCVmat(location, name_1, 14, 14);
+	
+	OPD test1;
+	test1.setGlobalOPD(loadedOPD_1);
+	
+	test1.bilinearInterpolToFillHolesInOPDmatrix();
+	
+	cv::Mat upsampledOPDmatrix_1 = test1.getUpsampledGlobalOPD_deepCopy();
+	inportExportData::exportCV_MatToExcel(upsampledOPDmatrix_1, location, "1upsampled");
+	
+	// check the matrix 1
+	real ref5 = 999.0;
+	real calc5 = upsampledOPDmatrix_1.at<real>(3, 11);
+	bool check5 = Math::compareTwoNumbers_tolerance(ref5, calc5, 0.001);
+	workTheSystem.push_back(check5);
+	
+	real ref6 = 26.5;
+	real calc6 = upsampledOPDmatrix_1.at<real>(7, 2);
+	bool check6 = Math::compareTwoNumbers_tolerance(ref6, calc6, 0.001);
+	workTheSystem.push_back(check6);
+	
+	real ref7 = 32.0;
+	real calc7 = upsampledOPDmatrix_1.at<real>(4, 6);
+	bool check7 = Math::compareTwoNumbers_tolerance(ref7, calc7, 0.001);
+	workTheSystem.push_back(check7);
+	
+	real ref8 = 512.25;
+	real calc8 = upsampledOPDmatrix_1.at<real>(9, 7);
+	bool check8 = Math::compareTwoNumbers_tolerance(ref8, calc8, 0.001);
+	workTheSystem.push_back(check8);
+	
+	real ref9 = 0.0;
+	real calc9 = upsampledOPDmatrix_1.at<real>(13, 12);
+	bool check9 = Math::compareTwoNumbers_tolerance(ref9, calc9, 0.001);
+	workTheSystem.push_back(check9);
+
+	// load a real OPD
+	std::string name_2 = "2";
+	cv::Mat loadedOPD_2 = inportExportData::importTXTtoCVmat(location, name_2, 41, 41);
+
+	OPD test2;
+	test2.setGlobalOPD(loadedOPD_2);
+
+	test2.bilinearInterpolToFillHolesInOPDmatrix();
+
+	cv::Mat upsampledOPDmatrix_2 = test2.getUpsampledGlobalOPD_deepCopy();
+	inportExportData::exportCV_MatToExcel(upsampledOPDmatrix_2, location, "2upsampled");
+
+	//// check the matrix 1
+	real ref10 = 0.0;
+	real calc10 = upsampledOPDmatrix_2.at<real>(8, 2);
+	bool check10 = Math::compareTwoNumbers_tolerance(ref10, calc10, 0.001);
+	workTheSystem.push_back(check10);
+	
+	real ref11 = -144.385;
+	real calc11 = upsampledOPDmatrix_2.at<real>(20, 0);
+	bool check11 = Math::compareTwoNumbers_tolerance(ref11, calc11, 0.001);
+	workTheSystem.push_back(check11);
+	
+	real ref12 = -105.857;
+	real calc12 = upsampledOPDmatrix_2.at<real>(15, 7);
+	bool check12 = Math::compareTwoNumbers_tolerance(ref12, calc12, 0.001);
+	workTheSystem.push_back(check12);
+	
+	real ref13 = -9.90761;
+	real calc13 = upsampledOPDmatrix_2.at<real>(19, 18);
+	bool check13 = Math::compareTwoNumbers_tolerance(ref13, calc13, 0.001);
+	workTheSystem.push_back(check13);
+	
+	real ref14 = -102.524;
+	real calc14 = upsampledOPDmatrix_2.at<real>(29, 30);
+	bool check14 = Math::compareTwoNumbers_tolerance(ref14, calc14, 0.001);
+	workTheSystem.push_back(check14);
+
+	bool workReturn = Math::checkTrueOfVectorElements(workTheSystem);
+	return workReturn;
+}

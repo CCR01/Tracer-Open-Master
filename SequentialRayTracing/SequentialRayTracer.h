@@ -72,7 +72,7 @@ public:
 	SequentialRayTracing(OpticalSystemElement opticalSysElement);
 	SequentialRayTracing(OpticalSystemElement opticalSysElement, LightRayStruct LightRay);
 	SequentialRayTracing(OpticalSystemElement /*optical system element*/ opticalSysElement, VectorStructR3 /*start point lightRay*/ startPointLightRay, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, real /*refractive index*/ refIndex, Light_LLT mLight);
-	SequentialRayTracing(const OpticalSystemElement& /*optical system element*/ opticalSysElement,const VectorStructR3& /*start point lightRay*/ startPointLightRay, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, real /*refractive index*/ refIndex, const std::vector<Light_LLT>& light_vec);
+	SequentialRayTracing(const OpticalSystemElement& /*optical system element*/ opticalSysElement, const VectorStructR3& /*start point lightRay*/ startPointLightRay, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, real /*refractive index*/ refIndex, const std::vector<Light_LLT>& light_vec);
 	~SequentialRayTracing();
 
 	// do sequential ray tracing
@@ -113,6 +113,9 @@ public:
 
 	// get all intersection points of surface i filtered
 	std::vector<VectorStructR3> getAllInterPointsAtSurface_i_filtered(unsigned int const surfaceNo);
+
+	// get all directions of surface i filtered
+	std::vector<VectorStructR3> getAllDirectionsAtSurface_i_filtered(unsigned int surfaceNo);
 
 	// get semi height of surface i
 	double getSemiHeightOfSurface_i(unsigned int i);
@@ -163,8 +166,11 @@ public:
 
 	//std::vector<IntersectInformationStruct> getAllInterInfosOfSurf_i_notFiltered(unsigned int surfaceNo);
 
+	bool getLoosingRays();
+	unsigned int getLoosingRaysCounter();
+
 private:
-	
+
 	OpticalSystemElement mOptSysEle{};
 	OpticalSystem_LLT mOpticalSystem_LLT{};
 	unsigned int mTraceToSurface_i{};
@@ -176,7 +182,7 @@ private:
 	std::vector<LightRayStruct> mStdVecLightRayStruct{};
 
 	std::vector <IntersectInfosAndPosSurfaceAndTotalSteps> mSaveIntInfos_Pos_totStep_NotFiltered{}; //there are all intersection points also them with surface side N
-	std::vector <IntersectInfosAndPosSurfaceAndTotalSteps> mSaveInterInfos_PosSur_TotSteps{};
+	std::vector <IntersectInfosAndPosSurfaceAndTotalSteps> mSaveInterInfos_PosSur_TotSteps_filtered{};
 	std::vector <std::vector<LightRayStruct>> mSaveLightRayStructsNotFiltered{}; //there are all intersection points also them with surface side N
 
 	std::vector<VectorStructR3> mStartsPointOfLightRays_vec{};
@@ -196,6 +202,9 @@ private:
 	IntersectInfosAndPosSurfaceAndTotalSteps mNoInterPointAndPos{};
 	real mSaveTotalSteps{};
 	std::vector<LightRayStruct> mTempLightRay_vec{};
+
+	bool mLoosingRay{};
+	unsigned mLoosingRayCounter{};
 
 };
 

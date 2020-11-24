@@ -56,8 +56,6 @@
 
 #include "..\benchmark\testImproveImageQuality\testImproveImageQuality.h"
 
-#include "..\benchmark\BenchAnalyse\BenchmarkImageSimulation.h"
-
 #include "..\benchmark\testSeidelCoefficients\testSeidelCoefficients.h"
 
 #include "..\benchmark\testOptimizer_Paper\testOptimizer_Paper_P0.h"
@@ -123,8 +121,6 @@
 
 #include "..\tests\testDLS_multiThreads_12\testDLS_multiThreads_12.h"
 
-#include "..\benchmark\testImageSimulation\BenchmarkImageSimulationOpenCV.h"
-
 #include "..\benchmark\testQwtPlots\BenchmarkOpticalSystemAllSurfaces.h"
 
 int main(int argc, char **argv)
@@ -137,11 +133,19 @@ int main(int argc, char **argv)
 	std::vector<bool> workTheSystem;
 	// *****************************************************************************************************************
 
+<<<<<<< HEAD
 		//std::vector<testWhat> testWhatVec_1 = { testWhat::tDLS_optiRMS };
 	//ManagementTests managementTest_1(testWhatVec_1);
 	//workTheSystem.push_back(managementTest_1.testSuperFct());
 	//
 	//std::vector<testWhat> testWhatVec_2 = { testWhat::tALL };
+=======
+	std::vector<testWhat> testWhatVec_1 = { testWhat::tImaSim };
+	ManagementTests managementTest_1(testWhatVec_1);
+	workTheSystem.push_back(managementTest_1.testSuperFct());
+	
+	//std::vector<testWhat> testWhatVec_2 = { testWhat::tGlobalOPD };
+>>>>>>> 155b228c995696b9f233ab15f657ebaefa4fce9c
 	//ManagementTests managementTest_2(testWhatVec_2);
 	//workTheSystem.push_back(managementTest_2.testSuperFct());
 
@@ -156,9 +160,12 @@ int main(int argc, char **argv)
 	//https://answers.opencv.org/question/209189/make-edges-clearer-in-image/
 	//https://docs.opencv.org/master/dd/dd7/tutorial_morph_lines_detection.html 
 
+<<<<<<< HEAD
 	BenchmarkSimulationOpenCV ImgFormula;
 	ImgFormula.test3();
 
+=======
+>>>>>>> 155b228c995696b9f233ab15f657ebaefa4fce9c
 	//OpticalSystemAllSurfaces system;
 	//system.testQwtPlotsSytem();
 
@@ -183,16 +190,6 @@ int main(int argc, char **argv)
 
 	//***********************************************
 	
-	
-	
-	
-	
-
-
-
-
-
-
 	//// Optikkreis
 	//Optikkreis optKreis;
 	//bool checkOptKreis = optKreis.systemForOptikkreis();

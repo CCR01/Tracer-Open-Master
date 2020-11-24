@@ -98,7 +98,7 @@ bool TestImageProcessing::checkImageProcessing()
 	cv::Mat elefant_Simulated_resize = Images::resizeImage(elefeant_Simulated, elefant_Sharp.size(), 0.0, 0.0, cv::INTER_LINEAR);
 	cv::Mat sharpImage_unsharpMasking_elefant = ImageProcessing::unsharpMask(elefant_Simulated_resize, { 11,11 }, 9.502, 9.5, cv::BORDER_DEFAULT, 0.1, 0.6);
 	//Images::showImage("unsharp masking elefant", sharpImage_unsharpMasking_elefant);
-	Images::saveImage("../images/", "unsharp_masking_elefant.png", sharpImage_unsharpMasking_elefant);
+	Images::saveImage("../images", "unsharp_masking_elefant" , "png", sharpImage_unsharpMasking_elefant);
 	real improvement = Images::calcImprovement(elefant_Sharp, elefant_Simulated_resize, sharpImage_unsharpMasking_elefant);
 
 	bool returnTestImaProc = Math::checkTrueOfVectorElements(chekImaProcVec);

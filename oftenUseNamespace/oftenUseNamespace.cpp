@@ -1397,3 +1397,65 @@ defaultParaGenetic oftenUse::getDafulatPara_Genetic(bool rayTracing)
 	return defaultParaGenetic_rayTracing;
 
 }
+
+
+std::string oftenUse::replacePointByComma(std::string inputString)
+{
+
+	unsigned int size = inputString.size();
+	char tempChar{};
+	std::string exportString;
+	exportString.resize(size);
+
+	for (unsigned int i = 0; i < size; ++i)
+	{
+		tempChar = inputString[i];
+
+		if (tempChar == '.')
+		{
+			tempChar = ',' ;
+		}
+
+		exportString[i] = tempChar;
+	}
+
+	return exportString;
+}
+
+// check for nan in VectorStructR3
+bool oftenUse::checkFor_No_Nan(VectorStructR3 vec)
+{
+	return std::isnan(vec.getX()) == false && std::isnan(vec.getY()) == false && std::isnan(vec.getZ()) == false;
+}
+
+// error protocol
+void oftenUse::errorProtocol_stopSystem(/*error*/ std::string error, /*location*/ std::string location, /*error number*/ unsigned int errorNumber, /*stop program*/ bool stopProgram)
+{
+	std::string locationErrorProtocol = "../ErrorProtocol";
+	std::string nameTXT = "errorProtocol";
+
+	std::string errorAndLocation = error + " <--->location of error: " + location;
+
+	inportExportData::saveStringInTXT(locationErrorProtocol, nameTXT, error);
+
+	if (errorNumber == 0)
+	{
+		std::cout << errorAndLocation << std::endl;
+	}
+
+	if (stopProgram) exit(EXIT_SUCCESS);
+}
+
+bool oftenUse::checkForEvenNumber(int number)
+{
+	if (number % 2 == 0) return true;
+		
+	return false;
+}
+
+bool oftenUse::checkForOddNumber(int number)
+{
+	if (number % 2 == 0) return false;
+
+	return true;
+}

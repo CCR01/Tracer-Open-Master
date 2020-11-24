@@ -619,14 +619,14 @@ bool TestOPD::checkE2()
 	OPD testOPDE2;
 	VectorStructR3 startPointRayOptA{ 0.0,0.0,0.0 };
 
-	real OPD11 = testOPDE2.OPD_singelRay_obj(OptSys_E2, startPointRayOptA, 1.0, 1.0, Light500);
-	real refOPD11 = 12.853;
-	bool checkOPD11 = Math::compareTwoNumbers_tolerance(OPD11, refOPD11, 0.01);
+	real OPD0505 = testOPDE2.OPD_singelRay_obj(OptSys_E2, startPointRayOptA, 0.5, 0.5, Light500);
+	real refOPD0505 = 2.682;
+	bool checkOPD11 = Math::compareTwoNumbers_tolerance(OPD0505, refOPD0505, 0.01);
 	checkOPD.push_back(checkOPD11);
 
-	real OPD051 = testOPDE2.OPD_singelRay_obj(OptSys_E2, startPointRayOptA, 0.5, 1.0, Light500);
-	real refOPD051 = 7.358;
-	bool checkOPD051 = Math::compareTwoNumbers_tolerance(OPD051, refOPD051, 0.01);
+	real OPD0501 = testOPDE2.OPD_singelRay_obj(OptSys_E2, startPointRayOptA, 0.5, 0.1, Light500);
+	real refOPD0501 = 1.352;
+	bool checkOPD051 = Math::compareTwoNumbers_tolerance(OPD0501, refOPD0501, 0.01);
 	checkOPD.push_back(checkOPD051);
 
 	real OPDneg0507 = testOPDE2.OPD_singelRay_obj(OptSys_E2, startPointRayOptA, -0.5, 0.7, Light500);

@@ -21,6 +21,8 @@
 #include "..\testLensReplace\testLenseReplace.h"
 #include "..\testOPD\testOPD.h"
 #include "..\testGlobalOPD\TestGlobalOPD.h"
+#include "..\testImageSimulation\testImageSimulation.h"
+#include "..\testPSF\testPSF.h"
 
 ManagementTests::ManagementTests() {};
 ManagementTests::ManagementTests(std::vector<testWhat> testWhat_vec) :
@@ -307,6 +309,24 @@ bool ManagementTests::testSuperFct()
 		bool checkGlobalOPD = checkTestGlobalOPD.checkGlobalOPD_superFunction();
 		workTheSystem_test.push_back(checkGlobalOPD);
 		checkerAndCout(checkGlobalOPD, "test global OPD");
+	}
+
+	// test image simulation
+	if (testWhatInTestWhatVec(testWhat::tImaSim) || testAll)
+	{
+		TestImageSimulation checkImageSimulation;
+		bool checkImaSim = checkImageSimulation.testSuperFct();
+		workTheSystem_test.push_back(checkImaSim);
+		checkerAndCout(checkImaSim, "test Image Simulation");
+	}
+
+	// test calcualte PSF
+	if (testWhatInTestWhatVec(testWhat::tPSF) || testAll)
+	{
+		TestPSF checkPSF;
+		bool checkCalcPSF = checkPSF.testPSF_superFct();
+		workTheSystem_test.push_back(checkCalcPSF);
+		checkerAndCout(checkCalcPSF, "test calculate PSF");
 	}
 
 

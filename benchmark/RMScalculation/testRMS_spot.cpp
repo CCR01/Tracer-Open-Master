@@ -57,7 +57,7 @@ bool testRMS_Spot::checkRMScalculationSpot()
 
 	std::vector<VectorStructR3> checkerSingleRayTrace{ {0.0,1.1008,55.0404},{0.0,1.0454,59.98178},{0.0,1.0037,64.9916 },{0.0,0.3026,95.0} };
 	std::vector<VectorStructR3> compareVector{ interP0, interP1,interP2,interP3 };
-	bool testSingleRayTrace = Math::compareAllVectorElements(checkerSingleRayTrace, compareVector,3);
+	bool testSingleRayTrace = Math::compareAllVectorElementsSTDVectorStructR3_decimals(checkerSingleRayTrace, compareVector,3);
 	checkRMScalcSpot_vec.push_back(testSingleRayTrace);
 
 

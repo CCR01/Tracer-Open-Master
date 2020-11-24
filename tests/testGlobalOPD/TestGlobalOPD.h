@@ -9,6 +9,8 @@
 
 #include "..\..\LowLevelTracing\Surfaces\PlanGeometry_LLT.h"
 
+#include "..\..\LowLevelTracing\OpticalSystem_LLT.h"
+
 class TestGlobalOPD {
 public:
 	TestGlobalOPD();
@@ -20,14 +22,18 @@ public:
 	// check OPD super function
 	bool checkGlobalOPD_superFunction();
 
-	// check points to fill AS
-	bool checkPointsToFillAS_ToCalcGLobalOPD();
+	// check fill OPD in Matrix (EP behind ima surface)
+	bool checkFillOPDinMatrix_E0();
 
-	// check fill OPD in Matrix
-	bool checkFillOPDinMatrix();
+	// check fill OPD in Matrix (EP before ima surface)
+	bool checkFillOPDinMatrix_E1();
 
-	//bool checkGlobalOPD_E0();
-	//bool checkGlobalOPD_E1();
+
+	// compare results calc single and global OPD
+	bool compareResultsCalcSingleAndGlobalOPDsoptSys(OpticalSystem_LLT optSys, VectorStructR3 startPointRay, real PX, real PY, Light_LLT light, real tolerance);
+
+	// test upsamling OPD
+	bool testUpsamplingOPD();
 
 private:
 	RefractedRay_LLT mRefrac{};
@@ -41,11 +47,5 @@ private:
 	PlanGeometry_LLT mExitPupilE0{};
 	std::shared_ptr< SurfaceIntersectionRay_LLT > mExitPupilE0_ptr{};
 
-
-
-	
-
-	//light.setW...
-	//glasCat.loadGlassCatalog_Schott();
 
 };

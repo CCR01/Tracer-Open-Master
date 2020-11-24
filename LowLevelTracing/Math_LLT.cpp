@@ -383,7 +383,7 @@ bool Math::compareRoundedTwoMatrices3x3(std::vector<std::vector<real>> Matrix1, 
 }
 
 // compare all vector elements
-bool Math::compareAllVectorElements(std::vector<VectorStructR3> V1, std::vector<VectorStructR3> V2, unsigned int decimals)
+bool Math::compareAllVectorElementsSTDVectorStructR3_decimals(std::vector<VectorStructR3> V1, std::vector<VectorStructR3> V2, unsigned int decimals)
 {
 
 	bool bEqual = true;
@@ -396,6 +396,20 @@ bool Math::compareAllVectorElements(std::vector<VectorStructR3> V1, std::vector<
 	}
 
 	return bEqual;
+}
+
+bool Math::compareAllVectorElementsSTDVectorStructR3_tolerance(std::vector<VectorStructR3> V1, std::vector<VectorStructR3> V2, real tolerance)
+{
+	std::vector<bool> bEqual_vec(V1.size());
+
+
+
+	for (unsigned int i = 0; i < V1.size(); ++i)
+	{
+		bEqual_vec[i] = compareTwoVectorStructR3_tolerance(V1[i], V2[i], tolerance);
+	}
+
+	return checkTrueOfVectorElements(bEqual_vec);
 }
 
 double  Math::calc_D_ofPlane(VectorStructR3 const normalVector, VectorStructR3 const P)
@@ -1048,7 +1062,7 @@ std::vector<real> operator+ (const std::vector<real> l, const std::vector<real> 
 }
 
 // multiply scalar with matrix (std::vector<std::vectot<real>>)
-std::vector<std::vector<real>> operator* (const real& s, std::vector<std::vector<real>>& matrix)
+std::vector<std::vector<real>> operator* (const real s, const std::vector<std::vector<real>>& matrix)
 {
 	std::vector<std::vector<real>> returnMatrix = matrix;
 
@@ -1071,7 +1085,7 @@ std::vector<std::vector<real>> operator* (const real& s, std::vector<std::vector
 }
 
 // multiply scalar with std::vector 
-std::vector<real> operator*(const real& s, std::vector<real>& v)
+std::vector<real> operator*(real s, const std::vector<real>& v)
 {
 	std::vector<real> returnVector;
 	unsigned int sizeVector = v.size();
@@ -1086,3 +1100,22 @@ std::vector<real> operator*(const real& s, std::vector<real>& v)
 }
 
 
+// multiply scalar with std::vector 
+std::vector<VectorStructR3> operator*(real s, std::vector<VectorStructR3> v)
+{
+	std::vector<VectorStructR3> retrunVec;
+	unsigned int sizeVector = v.size();
+	retrunVec.resize(sizeVector);
+	VectorStructR3 tempVecR3;
+
+	for(unsigned int i=0; i<sizeVector; ++i)
+	{
+		tempVecR3.setX(s * v[i].getX());
+		tempVecR3.setY(s * v[i].getY());
+		tempVecR3.setZ(s * v[i].getZ());
+
+		retrunVec[i] = tempVecR3;
+	}
+
+	return retrunVec;
+}

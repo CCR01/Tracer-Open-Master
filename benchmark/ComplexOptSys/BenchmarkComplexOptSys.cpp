@@ -251,19 +251,6 @@ bool BechmarkComplexOpticalSystem::checkComplexOpticalSystem()
 
 
 
-	// calc global OPD optical achse 
-	OPD OPDglobalE1_optAchse(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
-		/*fill apertur stop with light ray*/ fillAperStopE1_optAchse.getVectorWithLightRays(), /*chief ray*/ fillAperStopE1_optAchse.getVectorWithLightRays().at(0), /*scalling*/ 0);
-	cv::Mat globalOPD_optAchse = OPDglobalE1_optAchse.getGlobalOPD();
-
-	// calc global OPD field y = 1
-	OPD OPDglobalE1_field(/*exit pupil*/ exitPupilE1_ptr,  /*optical system*/ optSysE1,
-		/*fill apertur stop with light ray*/ fillAperStopE1_filed.getVectorWithLightRays(), /*chief ray*/ fillAperStopE1_filed.getVectorWithLightRays().at(0), /*scalling*/ 0);
-	cv::Mat globalOPD_field = OPDglobalE1_field.getGlobalOPD();
-//
-//
-//
-//
 	bool output = Math::checkTrueOfVectorElements(checkComOptSys);
 	return output;
 }

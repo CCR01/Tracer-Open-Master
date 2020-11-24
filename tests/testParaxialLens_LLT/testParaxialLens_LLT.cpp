@@ -149,7 +149,7 @@ bool testParaxialLens::checkParaxialE1()
 	std::vector<VectorStructR3> refInterPoints = { {0.0,-0.1,20.5},{0.0,0.0,20.5},{0.0,0.1,20.5},{ 0.0,-1.1,20.5 },{ 0.0,-1.0,20.5 },{ 0.0,-0.9,20.5 } };
 
 	// compare trace open with Zemax data
-	bool chech1 = Math::compareAllVectorElements(allInterPoints, refInterPoints, 2);
+	bool chech1 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(allInterPoints, refInterPoints, 2);
 	checkParaxialLens.push_back(chech1);
 
 	bool output = Math::checkTrueOfVectorElements(checkParaxialLens);
@@ -238,7 +238,7 @@ bool testParaxialLens::checkParaxialE3()
 	std::vector<VectorStructR3> refInterPoints5 = { { 2.1, 2.0, 20.5 },{ 2.1, 2.1, 20.5 },{ 2.1, 2.2, 20.5 },{ 2.1, 1.0, 20.5 },{ 2.1, 1.1, 20.5 },{ 2.1, 1.2, 20.5 } };
 
 	// compare trace open with Zemax data
-	bool check2 = Math::compareAllVectorElements(allInterPoints5, refInterPoints5, 8);
+	bool check2 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(allInterPoints5, refInterPoints5, 8);
 	checkParaxialLens.push_back(check2);
 
 	bool output = Math::checkTrueOfVectorElements(checkParaxialLens);
@@ -296,7 +296,7 @@ bool testParaxialLens::checkParaxialE4()
 	std::vector<VectorStructR3> refInterPoints6 = { { -1.2188959553, 2.8811040447, 20.5 },{ -1.424842446, 1.4248424456, 20.5 },{ -1.5489916552, 0.54697496574, 20.5 },{ -1.4849242405, 1.0, 20.5 },{ -1.6095128272, 0.11902565449, 20.5 },{ -1.6890872965, -0.4436508139, 20.5 } };
 
 	// compare trace open with Zemax data
-	bool check3 = Math::compareAllVectorElements(allInterPoints6, refInterPoints6, 8);
+	bool check3 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(allInterPoints6, refInterPoints6, 8);
 	checkParaxialLens.push_back(check3);
 
 	bool output = Math::checkTrueOfVectorElements(checkParaxialLens);
@@ -349,7 +349,7 @@ bool testParaxialLens::checkParaxialE5()
 	std::vector<VectorStructR3> refInterPoints9 = { { 0.0, 8.3, 20.5 },{ 0.0, 0.0, 20.5 },{ 0.0, -8.3, 20.5 },{ 0.0, 3.1, 20.5 },{ 0.0, -5.2, 20.5 },{ 0.0, -13.5, 20.5 } };
 
 	// compare trace open with Zemax data
-	bool check6 = Math::compareAllVectorElements(allInterPoints9, refInterPoints9, 8);
+	bool check6 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(allInterPoints9, refInterPoints9, 8);
 	checkParaxialLens.push_back(check6);
 
 	bool output = Math::checkTrueOfVectorElements(checkParaxialLens);
@@ -402,7 +402,7 @@ bool testParaxialLens::checkParaxialE6()
 	std::vector<VectorStructR3> refInterPoints10 = { { -2.1, 10.4, 20.5 },{ -2.1, 2.1, 20.5 },{ -2.1, -6.2, 20.5 },{ -2.1, 5.2, 20.5 },{ -2.1, -3.1, 20.5 },{ -2.1, -11.4, 20.5 } };
 
 	// compare trace open with Zemax data
-	bool check7 = Math::compareAllVectorElements(allInterPoints10, refInterPoints10, 8);
+	bool check7 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(allInterPoints10, refInterPoints10, 8);
 	checkParaxialLens.push_back(check7);
 
 	bool output = Math::checkTrueOfVectorElements(checkParaxialLens);
@@ -455,7 +455,7 @@ bool testParaxialLens::checkParaxialE7()
 	std::vector<VectorStructR3> refInterPoints11 = { { 2.1, 6.2, 20.5 },{ 2.1, -2.1, 20.5 },{ 2.1, -10.4, 20.5 },{ 2.1, 1.0, 20.5 },{ 2.1, -7.3, 20.5 },{ 2.1, -15.6, 20.5 } };
 
 	// compare trace open with Zemax data
-	bool check8 = Math::compareAllVectorElements(allInterPoints11, refInterPoints11, 8);
+	bool check8 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(allInterPoints11, refInterPoints11, 8);
 	checkParaxialLens.push_back(check8);
 
 	bool output = Math::checkTrueOfVectorElements(checkParaxialLens);
@@ -508,7 +508,7 @@ bool testParaxialLens::checkParaxialE8()
 	std::vector<VectorStructR3> refInterPoints16 = { { 0.0, 1.38, 20.5 },{ 0.0, 0.0, 20.5 },{ 0.0, -1.38, 20.5 },{ 0.0, -0.6, 20.5 },{ 0.0, -1.98, 20.5 },{ 0.0, -3.36, 20.5 } };
 
 	// compare trace open with Zemax data
-	bool check13 = Math::compareAllVectorElements(allInterPoints16, refInterPoints16, 8);
+	bool check13 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(allInterPoints16, refInterPoints16, 8);
 	checkParaxialLens.push_back(check13);
 
 	bool output = Math::checkTrueOfVectorElements(checkParaxialLens);
@@ -562,7 +562,7 @@ bool testParaxialLens::checkParaxialE9()
 
 	// compare trace open with Zemax data
 
-	bool check17 = Math::compareAllVectorElements(allInterPoints20, refInterPoints20, 8);
+	bool check17 = Math::compareAllVectorElementsSTDVectorStructR3_decimals(allInterPoints20, refInterPoints20, 8);
 	checkParaxialLens.push_back(check17);
 
 	bool output = Math::checkTrueOfVectorElements(checkParaxialLens);
