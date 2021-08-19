@@ -750,3 +750,8 @@ MaterialSellmeier1 AsphericalElement::getGlassB()
 	return returnAsphericalElement;
 
 }
+
+std::string AsphericalElement::getSurfaceType()
+{
+	return "Aspherical";
+}

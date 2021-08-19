@@ -36,7 +36,8 @@ public:
 	VectorStructR3 getRefPoint();
 	// set referece Pont 
 
-	
+	//check interpoint for nan
+	bool checkValidInterpointNAN(VectorStructR3 interPoint);
 
 
 private:

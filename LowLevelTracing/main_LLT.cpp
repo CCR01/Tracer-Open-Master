@@ -11,7 +11,6 @@
 #include "Light_LLT.h"
 #include "Interaction\InteractionRay_LLT.h"
 #include "..\FillAptertureStop\FillApertureStop.h"
-#include "../benchmark/SequentialRayTracer/BenchmarkSequentialRayTracer.h"
 #include "Surfaces\AsphericalSurface_LLT.h"
 #include "BaseTransformation_LLT.h"
 #include "Surfaces\PlanGeometry_LLT.h"
@@ -54,10 +53,6 @@
 
 #include "..\benchmark\testImageProcessing\TestImageProcessing.h"
 
-#include "..\benchmark\testImproveImageQuality\testImproveImageQuality.h"
-
-#include "..\benchmark\testSeidelCoefficients\testSeidelCoefficients.h"
-
 #include "..\benchmark\testOptimizer_Paper\testOptimizer_Paper_P0.h"
 #include "..\benchmark\testOptimizer_Paper\testOptimizer_Paper_P1.h"
 
@@ -98,8 +93,6 @@
 
 
 
-#include "..\benchmark\benachRayTracing\benchRayTracing.h"
-
 
 // include test systems
 #include "..\tests\TestGenetic\TestGenetic.h"
@@ -133,26 +126,23 @@ int main(int argc, char **argv)
 	std::vector<bool> workTheSystem;
 	// *****************************************************************************************************************
 
-<<<<<<< HEAD
-		//std::vector<testWhat> testWhatVec_1 = { testWhat::tDLS_optiRMS };
+	//std::vector<testWhat> testWhatVec_1 = { testWhat::tDLS_optiRMS };
 	//ManagementTests managementTest_1(testWhatVec_1);
 	//workTheSystem.push_back(managementTest_1.testSuperFct());
-	//
-	//std::vector<testWhat> testWhatVec_2 = { testWhat::tALL };
-=======
-	std::vector<testWhat> testWhatVec_1 = { testWhat::tImaSim };
+	
+	//TestImageProcessing testImaProc;
+	//bool chekImaProc = testImaProc.checkImageProcessing();
+
+	// the the system
+	////std::vector<testWhat> testWhatVec_2 = { testWhat::tALL };
+	std::vector<testWhat> testWhatVec_1 = { testWhat::tCompareTOMandZemaxOptimizer };
 	ManagementTests managementTest_1(testWhatVec_1);
 	workTheSystem.push_back(managementTest_1.testSuperFct());
 	
-	//std::vector<testWhat> testWhatVec_2 = { testWhat::tGlobalOPD };
->>>>>>> 155b228c995696b9f233ab15f657ebaefa4fce9c
-	//ManagementTests managementTest_2(testWhatVec_2);
-	//workTheSystem.push_back(managementTest_2.testSuperFct());
-
-	//std::vector<testWhat> testWhatVec_3 = { testWhat::tGlobalOPD };
-	//ManagementTests managementTest_3(testWhatVec_3);
-	//workTheSystem.push_back(managementTest_3.testSuperFct());
-
+	//// benchmark
+	//std::vector<benchWhat> benchWhat_vec = { benchWhat::bRayTrac };
+	//managementBenchmark manaBench(benchWhat_vec);
+	//workTheSystem.push_back(manaBench.benchSuperFct());
 
 	//***********************************************
 	// test systems Aya
@@ -160,12 +150,7 @@ int main(int argc, char **argv)
 	//https://answers.opencv.org/question/209189/make-edges-clearer-in-image/
 	//https://docs.opencv.org/master/dd/dd7/tutorial_morph_lines_detection.html 
 
-<<<<<<< HEAD
-	BenchmarkSimulationOpenCV ImgFormula;
-	ImgFormula.test3();
 
-=======
->>>>>>> 155b228c995696b9f233ab15f657ebaefa4fce9c
 	//OpticalSystemAllSurfaces system;
 	//system.testQwtPlotsSytem();
 
@@ -189,162 +174,7 @@ int main(int argc, char **argv)
 	//workTheSystem.push_back(checkCardinal_superFct_OPD);
 
 	//***********************************************
-	
-	//// Optikkreis
-	//Optikkreis optKreis;
-	//bool checkOptKreis = optKreis.systemForOptikkreis();
-	//workTheSystem.push_back(checkOptKreis);
-	//
-	//// plot TOM logo
-	//TOM_LOGO tomLogo;
-    //bool checkOlotLogoTOM = tomLogo.plotTOM_Logo();
-	//workTheSystem.push_back(checkOlotLogoTOM);
-	
-	//testRayTracingQwtPlot checkRayTracingPlot;
-	//bool checkCardinal_superFct_RayTracing = checkRayTracingPlot.superFuncTestRayTracingQwtPlot();
-	//workTheSystem.push_back(checkCardinal_superFct_RayTracing);
 
-	//testRayFanQwtPlot checkRayFanPlot;
-	//bool checkCardinal_superFct_RayFan = checkRayFanPlot.superFuncTestRayFanQwtPlot();
-	//workTheSystem.push_back(checkCardinal_superFct_RayFan);
-	//
-	//testSpotDiagramQwtPlot checkSpotDiagramPlot;
-	//bool checkCardinal_superFct_SpotDiagram = checkSpotDiagramPlot.superFuncTestSpotDiagramQwtPlot();
-	//workTheSystem.push_back(checkCardinal_superFct_SpotDiagram);
-	//
-	//testOPDQwtPlot checkOPDPlot;
-	//bool checkCardinal_superFct_OPD = checkOPDPlot.superFuncTestOPDQwtPlot();
-	//workTheSystem.push_back(checkCardinal_superFct_OPD);
-	
-	//// test replace lenses for IOC 2020
-	//IOC2020_Dresden system_IOC2020_Dresden;
-	//bool checkSysIOC2020 = system_IOC2020_Dresden.systemFor_IOC2020_Dresten();
-	//workTheSystem.push_back(checkSysIOC2020);
-	
-
-
-	//// lens replace
-	//testLensReplace testLensRep;
-	//bool chekerLensReplace = testLensRep.testLensReplace_superFct();
-	//workTheSystem.push_back(chekerLensReplace);
-	
-	// ***
-	//// test seidel coeffizients
-	//testSeidelCoefficients testSeidelCoeff;
-	//bool checkSeidelCoeff = testSeidelCoeff.checkCalculationOfSeidelCoefficients();
-	//workTheSystem.push_back(checkSeidelCoeff);
-
-	//// test calculate paraxial distance
-	//testCalcPraxialDistances testCalcParaDis;
-	//bool checkCalcParaDis = testCalcParaDis.checkCalcParaxialDistances();
-	//workTheSystem.push_back(checkCalcParaDis);
-	//
-	//// test build opt sys ele for combinations
-	//testBuildSysForCombination testBuildSysCom;
-	//bool checkBuildSysCom = testBuildSysCom.checkBuiildSysForCom_SUPERFUNCTION();
-	//workTheSystem.push_back(checkBuildSysCom);
-	//
-	//// test calc combination vector seidel
-	//testCalcCombiVector_Seidel testCalcComVec_Seidel;
-	//bool checkCalcComVec_Seidel = testCalcComVec_Seidel.testCalcCombiVec_Seidel_superFct();
-	//workTheSystem.push_back(checkCalcComVec_Seidel);
-	////
-	//// test seidel combinations
-	//testSeidelCombinations testSeidelCom;
-	//bool checkSeidelCom = testSeidelCom.testSeidelCom_superFct();
-	//workTheSystem.push_back(checkSeidelCom);
-	//
-	//// test calc combination vector paraxial
-	//testCalcComVec_Paraxial testCaComVec_Paraxial;
-	//bool checkCalculateCombinationVector_Paraxial = testCaComVec_Paraxial.testCalcComVec_SuperFct_Paraxial();
-	//workTheSystem.push_back(checkCalculateCombinationVector_Paraxial);
-	//
-	//// test evaluate many opt sys ray tracing
-	//testEvaluateManyOptSys_RayTracing testEvaManyOptSys_RayTracing;
-	//bool checkEvaOptSys_RT = testEvaManyOptSys_RayTracing.testEvaManyOptSys_RayTracing_SuperFct();
-	//workTheSystem.push_back(checkEvaOptSys_RT);
-
-	// ***
-
-	////// test compare two images and improve
-	//testCompareTwoImagesAndImprove testCompTwoImaAndImpro;
-	//bool checkCompTwoImaAndImpro = testCompTwoImaAndImpro.testMethodesCompageTwoImagesAndImprove();
-	//workTheSystem.push_back(checkCompTwoImaAndImpro);
-
-	//TestImages testIma;
-	//bool checkImages = testIma.checkMethodesNamespaceImages();
-	//workTheSystem.push_back(checkImages);
-
-	////////test image processing
-	//TestImageProcessing testImaProc;
-	//bool checkImaProc = testImaProc.checkImageProcessing();
-	//workTheSystem.push_back(checkImaProc);
-
-	//// test how to improve the image quality
-	//testImproveImageQuality testImproveImaQua;
-	//bool checkImproveImaQua = testImproveImaQua.checkImproveImageQuality();
-	//workTheSystem.push_back(checkImproveImaQua);
-
-	////Benchmark img simulation
-	//BenchmarkImageSimulation checkImgSim;
-	//bool ImageSimulation = checkImgSim.checkMethodesImgSim();
-	//workTheSystem.push_back(ImageSimulation);
-
-	////// check optimizer
-	//BenchmarkZemaxTest testOpimizer;
-	//bool checkOptimizer = testOpimizer.checkMethodesZemaxTest();
-	//workTheSystem.push_back(checkOptimizer);
-
-	////// check optimizer for paper P0
-	//testOptimizer_Paper_P0 checkOptimizer_paper_P0;
-	//bool checkOptim_paper_P0 = checkOptimizer_paper_P0.checkTestOptimizer_paper_P0();
-	//workTheSystem.push_back(checkOptim_paper_P0);
-
-	////// check optimizer for paper P1
-	//testOptimizer_Paper_P1 checkOptimizer_paper_p1;
-	//bool checkOptim_paper_p1 = checkOptimizer_paper_p1.checkTestOptimizer_paper_p1(25.0,85.0,0.5,0.0,30.0,0.5,25.0,85.0,0.5,0.5);
-	//workTheSystem.push_back(checkOptim_paper_p1);
-
-	////// show non linearity of optical system
-	//nonLinearityRMS_SpotRadius showNonLineE0;
-	//bool checkNonLineE0 = showNonLineE0.showNonLinearityRMS_SpotRadius(15.0, 20.0, 0.01, "nonLinearityRMSspot");
-	//workTheSystem.push_back(checkNonLineE0);
-
-	//// show non linearity of optimization
-	//nonLinearityRMS_SpotRadius showNonLineE1;
-	//bool checkNonLineE1 = showNonLineE1.showNonLinearityRMS_SpotRadius(16.52, 16.54, 0.00001, "nonLinearityRMSspotsSmallerSteps");
-	//workTheSystem.push_back(checkNonLineE1);
-
-	////// check local optimization bisection methode
-	//testLocalOpti_BM checkLocalOpti_BM;
-	//bool checkBM = checkLocalOpti_BM.checkLocalOpti_BM();
-	//workTheSystem.push_back(checkBM);
-	   
-
-	//Optical Path Difference
-	//BenchmarkOpticalPathDifference checkOPD;
-	//bool OPD = checkOPD.checkMethodesOPD();
-	//workTheSystem.push_back(OPD);
-
-	////	//Benchmark complex optical system
-	//BechmarkComplexOpticalSystem BenchComOptSys;
-	//bool checkComOptSys = BenchComOptSys.checkComplexOpticalSystem();
-	//workTheSystem.push_back(checkComOptSys);
-
-
-
-	////optical system element
-	//BenchOpticalSystemElement BenchOptSys;
-	//bool checkOptSysElement = BenchOptSys.checkMethodesOpticalSystemElement();
-	//workTheSystem.push_back(checkOptSysElement);
-
-
-
-
-	////Benchmark Glasses
-	//BenchmarkGlasses BenchGlasses;
-	//bool checkGlasses = BenchGlasses.checkGlasses();
-	//workTheSystem.push_back(checkGlasses);
 
 	// *****************************************************************************************************************
 	bool checker = Math::checkTrueOfVectorElements(workTheSystem);
@@ -361,6 +191,10 @@ int main(int argc, char **argv)
 	return 0;
 	//return a.exec();
 }
+
+
+
+
 
 
 //int main(int argc, char **argv)

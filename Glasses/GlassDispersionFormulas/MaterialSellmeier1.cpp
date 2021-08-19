@@ -75,9 +75,9 @@ double MaterialSellmeier1::calcRefractiveIndexSnellmeier1(double wavelength)
 
 	if (mRealGlass)
 	{
-		double wavelengthInMicrometer = wavelength / 1000;
-		double powWavelength2_Micrometer = pow(wavelengthInMicrometer, 2);
-		RefractiveIndex = std::sqrt(1 + ((mK1*powWavelength2_Micrometer / (powWavelength2_Micrometer - mL1)) + (mK2*powWavelength2_Micrometer) / (powWavelength2_Micrometer - mL2) + (mK3*powWavelength2_Micrometer) / (powWavelength2_Micrometer - mL3)));
+		double wavelengthInMicrometer = wavelength / 1000.0;
+		double powWavelength2_Micrometer = pow(wavelengthInMicrometer, 2.0);
+		RefractiveIndex = std::sqrt(1.0 + ((mK1*powWavelength2_Micrometer / (powWavelength2_Micrometer - mL1)) + (mK2*powWavelength2_Micrometer) / (powWavelength2_Micrometer - mL2) + (mK3*powWavelength2_Micrometer) / (powWavelength2_Micrometer - mL3)));
 	}
 	else
 	{

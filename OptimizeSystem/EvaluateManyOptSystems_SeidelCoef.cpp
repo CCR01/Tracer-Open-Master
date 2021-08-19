@@ -3,6 +3,8 @@
 #include "..\LowLevelTracing\Math_LLT.h"
 #include "..\Analyse\Seidel Coefficients.h"
 
+// often Use
+#include "..\oftenUseNamespace\oftenUseNamespace.h"
 
 real settingsMeritFct_SeidelCoef::getSeidelSum() const
 {
@@ -352,10 +354,10 @@ void EvaluateManyOptSystems_SeidelCoef::calcAllSeidelCoefficients(std::vector<Op
 		tempEFFL = tempCardinal.getEFL();
 
 		// *** calc marginal ray
-		tempMarginalRay = findMarginalRay_obj(tempOptSys_Ele);
+		// tempMarginalRay = findMarginalRay_obj(tempOptSys_Ele);
 
 		// *** calc cheif ray
-		tempChiefRay = findChiefRay_obj(tempOptSys_Ele);
+		// tempChiefRay = findChiefRay_obj(tempOptSys_Ele);
 
 		// *** calc lagrange invariant
 		tempLagrangeInvariant = calcLagrangeInvariant(tempMarginalRay);
@@ -364,7 +366,7 @@ void EvaluateManyOptSystems_SeidelCoef::calcAllSeidelCoefficients(std::vector<Op
 		unsigned int posAperStop = tempOptSys_Ele.getOptSys_LLT_buildSystem().getPosApertureStop();
 
 		// *** calc temp seidel coef
-		tempSeidelCoef.calcSeidelCoef_superFuction(tempOptSys_Ele, tempChiefRay, tempMarginalRay, mWavelenght_vec, posAperStop, tempEFFL, tempLagrangeInvariant, tempAperInlens);
+		tempSeidelCoef.calcSeidelCoef_superFuction(tempOptSys_Ele, mWavelenght_vec, oftenUse::getDefaultLight(), { 0.0,1.0,0.0 });
 
 		mAllSeidelCoefficients[i] = tempSeidelCoef;
 
@@ -474,7 +476,7 @@ real EvaluateManyOptSystems_SeidelCoef::calcMeritValue(SeidelCoefficients seidel
 	// S1
 	if (std::isnan(mSettingMeritFunction.getSum_S1_sphere()))
 	{
-		conSum_S1_sphere = mSettingMeritFunction.getWeight_S1_sphere() * seidelCoef.getS1sum()*comparisonValue;
+		conSum_S1_sphere = mSettingMeritFunction.getWeight_S1_sphere() * seidelCoef.getS1sum() * comparisonValue;
 	}
 	else
 	{
@@ -484,7 +486,7 @@ real EvaluateManyOptSystems_SeidelCoef::calcMeritValue(SeidelCoefficients seidel
 	// S2
 	if (std::isnan(mSettingMeritFunction.getSum_S2_coma()))
 	{
-		conSum_S2_coma = mSettingMeritFunction.getWeight_S2_coma() * seidelCoef.getS2sum()*comparisonValue;
+		conSum_S2_coma = mSettingMeritFunction.getWeight_S2_coma() * seidelCoef.getS2sum() * comparisonValue;
 	}
 	else
 	{
@@ -494,7 +496,7 @@ real EvaluateManyOptSystems_SeidelCoef::calcMeritValue(SeidelCoefficients seidel
 	// S3
 	if (std::isnan(mSettingMeritFunction.getSum_S3_astigmatism()))
 	{
-		conSum_S3_astigmatism = mSettingMeritFunction.getWeight_S3_astigmatism() * seidelCoef.getS3sum()*comparisonValue;
+		conSum_S3_astigmatism = mSettingMeritFunction.getWeight_S3_astigmatism() * seidelCoef.getS3sum() * comparisonValue;
 	}
 	else
 	{
@@ -504,7 +506,7 @@ real EvaluateManyOptSystems_SeidelCoef::calcMeritValue(SeidelCoefficients seidel
 	// S4
 	if (std::isnan(mSettingMeritFunction.getSum_S4_fieldCurvature()))
 	{
-		conSum_S4_fieldCurvature = mSettingMeritFunction.getWeight_S4_fieldCurvature() * seidelCoef.getS4sum()*comparisonValue;
+		conSum_S4_fieldCurvature = mSettingMeritFunction.getWeight_S4_fieldCurvature() * seidelCoef.getS4sum() * comparisonValue;
 	}
 	else
 	{
@@ -514,7 +516,7 @@ real EvaluateManyOptSystems_SeidelCoef::calcMeritValue(SeidelCoefficients seidel
 	// S5
 	if (std::isnan(mSettingMeritFunction.getSum_S5_distortion()))
 	{
-		conSum_S5_distortion = mSettingMeritFunction.getWeight_S5_distortion() * seidelCoef.getS5sum()*comparisonValue;
+		conSum_S5_distortion = mSettingMeritFunction.getWeight_S5_distortion() * seidelCoef.getS5sum() * comparisonValue;
 	}
 	else
 	{
@@ -524,7 +526,7 @@ real EvaluateManyOptSystems_SeidelCoef::calcMeritValue(SeidelCoefficients seidel
 	// S6_C1
 	if (std::isnan(mSettingMeritFunction.getSum_S6_C1_axialColor()))
 	{
-		conSum_S6_C1_axialColor = mSettingMeritFunction.getWeight_S6_C1_axialColor() * seidelCoef.getS6C1sum()*comparisonValue;
+		conSum_S6_C1_axialColor = mSettingMeritFunction.getWeight_S6_C1_axialColor() * seidelCoef.getS6C1sum() * comparisonValue;
 	}
 	else
 	{
@@ -533,7 +535,7 @@ real EvaluateManyOptSystems_SeidelCoef::calcMeritValue(SeidelCoefficients seidel
 	// S7_C2
 	if (std::isnan(mSettingMeritFunction.getSum_S7_C2_lateralColor()))
 	{
-		conSum_S7_C2_lateralColor = mSettingMeritFunction.getWeight_S7_C2_lateralColor() * seidelCoef.getS7C2sum()*comparisonValue;
+		conSum_S7_C2_lateralColor = mSettingMeritFunction.getWeight_S7_C2_lateralColor() * seidelCoef.getS7C2sum() * comparisonValue;
 	}
 	else
 	{
@@ -547,7 +549,7 @@ real EvaluateManyOptSystems_SeidelCoef::calcMeritValue(SeidelCoefficients seidel
 	}
 	else
 	{
-		conSeidelSum = mSettingMeritFunction.getWeightSeidelSUM() * mSettingMeritFunction.getSeidelSum()*comparisonValue;
+		conSeidelSum = mSettingMeritFunction.getWeightSeidelSUM() * mSettingMeritFunction.getSeidelSum() * comparisonValue;
 	}
 
 

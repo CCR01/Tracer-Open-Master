@@ -185,7 +185,7 @@ SequentialRayTracing::SequentialRayTracing(const OpticalSystemElement& /*optical
 	
 		mOpticalSystem_LLT = mOptSysEle.getLLTconversion_doConversion();
 			
-		seqRayTracingWithVectorOfLightRays(rayAiming.rayAimingMany_obj_complete(mOpticalSystem_LLT, fillAperStop.getPointsInAS(), mStartPointLightRay, light_vec.at(i), mRefIndexStartPont));
+		seqRayTracingWithVectorOfLightRays(rayAiming.rayAimingMany_obj_complete(mOpticalSystem_LLT, fillAperStop.getPointsInAS(), mStartPointLightRay, light_vec.at(i)));
 
 	}
 
@@ -251,7 +251,16 @@ void SequentialRayTracing::sequentialRayTracing(LightRayStruct LightRaySt)
 			mSaveTotalSteps = mSaveTotalSteps + mTempInterInfos_Pos_totStep.getIntersecInfos().getStepsToWalk();
 			mTempInterInfos_Pos_totStep.setTotalSteps(mSaveTotalSteps);
 
+		
+
 			mSaveIntInfos_Pos_totStep_NotFiltered.push_back(mTempInterInfos_Pos_totStep);
+			mTempInterInfos_Pos_totStep.getIntersecInfos().getIntersectionPoint();
+
+			//// debug
+			//real X = mTempInterInfos_Pos_totStep.getIntersecInfos().getIntersectionPoint().getX();
+			//real Y = mTempInterInfos_Pos_totStep.getIntersecInfos().getIntersectionPoint().getY();
+			//real Z = mTempInterInfos_Pos_totStep.getIntersecInfos().getIntersectionPoint().getZ();
+			//std::cout << "temp inter Point: " << X << " " << Y << " " << Z << std::endl;
 
 			mTempLightRay_vec = mOpticalSystem_LLT.getPosAndInteraction()[i].getInteractionAtSur_ptr()->calcInteraction(mTempInterInfos_Pos_totStep.getIntersecInfos());
 
@@ -330,6 +339,7 @@ void SequentialRayTracing::seqRayTracingWithVectorOfLightRays(const std::vector<
 					//std::cout << "3 - attention - we are loosing rays!" << std::endl;
 					mLoosingRay = true;
 					++mLoosingRayCounter;
+					j = mTraceToSurface_i;
 				}
 
 				// TODO: Until now, there is no interaction fuction that delivers more than one light ray!
@@ -374,7 +384,8 @@ void SequentialRayTracing::seqRayTracingWithVectorOfLightRays(const std::vector<
 //
 //
 //		#pragma omp parallel
-//		#pragma omp sections
+//		#
+
 //		{
 //		#pragma omp section
 //			
@@ -717,6 +728,18 @@ std::vector<VectorStructR3> SequentialRayTracing::getAllInterPointsAtSurface_i_f
 {
 	std::vector<VectorStructR3> intersecPoints;
 	unsigned int lenght = mSaveInterInfos_PosSur_TotSteps_filtered.size();
+
+	if (lenght < 1) // there is no intersection point
+	{
+		VectorStructR3 vecAbsorbt;
+		vecAbsorbt.setX(NAN);
+		vecAbsorbt.setY(NAN);
+		vecAbsorbt.setZ(NAN);
+
+		intersecPoints.push_back(vecAbsorbt);
+		return intersecPoints;
+	}
+
 	unsigned int maxSizeVector = mSaveIntInfos_Pos_totStep_NotFiltered.size() / mOpticalSystem_LLT.getPosAndInteractingSurface().size();
 	intersecPoints.reserve(maxSizeVector);
 

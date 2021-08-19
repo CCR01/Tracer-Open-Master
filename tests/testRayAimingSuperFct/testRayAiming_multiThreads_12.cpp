@@ -8,7 +8,7 @@
 // often use
 #include "..\..\oftenUseNamespace\oftenUseNamespace.h"
 
-// Ray Aiming
+// ray Aiming super function 12 cores
 #include "..\..\RayAiming\RayAimingSuperFct.h"
 
 testRayAiming_multiThreads_12::testRayAiming_multiThreads_12() 
@@ -108,7 +108,7 @@ bool testRayAiming_multiThreads_12::testRayAiming_multiThreads_12_E0_obj()
 	// start point optical axis { 0.0,0.0,0.0 }
 	VectorStructR3 startPointOptA{ 0.0,0.0,0.0 };
 	std::vector<real> optA_rms_ref{ 622.192 };
-	RayAimingSuperFct rayAimingSuperFct_E0_optA(/*optical system*/ TestSystem00, /*rings*/ mRings,/*arms*/ mArms, /*start point ray*/ startPointOptA, /*light*/ mLight587, /*start ref index*/ mStartRefIndexAir);
+	RayAiming_12Cores rayAimingSuperFct_E0_optA(/*optical system*/ TestSystem00, /*rings*/ mRings,/*arms*/ mArms, /*start point ray*/ startPointOptA, /*light*/ mLight587, /*start ref index*/ mStartRefIndexAir);
 	std::vector<LightRayStruct> aimedLightRays_E0_optA = rayAimingSuperFct_E0_optA.getAimedLightRays();
 	bool checkRayAimingOptA = oftenUse::checkOptSysLLT_Equal_Better_Zemax(TestSystem00, startOptA_vec, optA_rms_ref, mMinTolerance, compareTOM_Zemax::comEqual);
 	checkRayAiming_E0_vec.push_back(checkRayAimingOptA);
@@ -118,7 +118,7 @@ bool testRayAiming_multiThreads_12::testRayAiming_multiThreads_12_E0_obj()
 	VectorStructR3 startPointField1{ 1.0, -0.5, 0.0 };
 	std::vector<VectorStructR3> startPointField1_vec{ startPointField1 };
 	std::vector<real> field1_rms_ref = { 619.310 };
-	RayAimingSuperFct rayAimingSuperFct_E0_field1(/*optical system*/ TestSystem00, /*rings*/ mRings,/*arms*/ mArms, /*start point ray*/ startPointField1, /*light*/ mLight587, /*start ref index*/ mStartRefIndexAir);
+	RayAiming_12Cores rayAimingSuperFct_E0_field1(/*optical system*/ TestSystem00, /*rings*/ mRings,/*arms*/ mArms, /*start point ray*/ startPointField1, /*light*/ mLight587, /*start ref index*/ mStartRefIndexAir);
 	std::vector<LightRayStruct> aimedLightRays_E0_field1 = rayAimingSuperFct_E0_field1.getAimedLightRays();
 	bool checkRayAimingField1 = oftenUse::checkOptSysLLT_Equal_Better_Zemax(TestSystem00, startPointField1_vec, field1_rms_ref, mMinTolerance, compareTOM_Zemax::comEqual);
 	checkRayAiming_E0_vec.push_back(checkRayAimingField1);
@@ -128,7 +128,7 @@ bool testRayAiming_multiThreads_12::testRayAiming_multiThreads_12_E0_obj()
 	VectorStructR3 startPointField2{ 0.5, 0.5, 0.0 };
 	std::vector<VectorStructR3> startPointField2_vec{ startPointField2 };
 	std::vector<real> field2_rms_ref = { 621.051 };
-	RayAimingSuperFct rayAimingSuperFct_E0_field2(/*optical system*/ TestSystem00, /*rings*/ mRings,/*arms*/ mArms, /*start point ray*/ startPointField2, /*light*/ mLight587, /*start ref index*/ mStartRefIndexAir);
+	RayAiming_12Cores rayAimingSuperFct_E0_field2(/*optical system*/ TestSystem00, /*rings*/ mRings,/*arms*/ mArms, /*start point ray*/ startPointField2, /*light*/ mLight587, /*start ref index*/ mStartRefIndexAir);
 	std::vector<LightRayStruct> aimedLightRays_E0_field2 = rayAimingSuperFct_E0_field2.getAimedLightRays();
 	bool checkRayAimingField2 = oftenUse::checkOptSysLLT_Equal_Better_Zemax(TestSystem00, startPointField2_vec, field2_rms_ref, mMinTolerance, compareTOM_Zemax::comEqual);
 	checkRayAiming_E0_vec.push_back(checkRayAimingField2);
@@ -138,7 +138,7 @@ bool testRayAiming_multiThreads_12::testRayAiming_multiThreads_12_E0_obj()
 	VectorStructR3 startPointField3{ 3.0, 3.0, 0.0 };
 	std::vector<VectorStructR3> startPointField3_vec{ startPointField3 };
 	std::vector<real> field3_rms_ref = { 566.528 };
-	RayAimingSuperFct rayAimingSuperFct_E0_field3(/*optical system*/ TestSystem00, /*rings*/ mRings,/*arms*/ mArms, /*start point ray*/ startPointField3, /*light*/ mLight587, /*start ref index*/ mStartRefIndexAir);
+	RayAiming_12Cores rayAimingSuperFct_E0_field3(/*optical system*/ TestSystem00, /*rings*/ mRings,/*arms*/ mArms, /*start point ray*/ startPointField3, /*light*/ mLight587, /*start ref index*/ mStartRefIndexAir);
 	std::vector<LightRayStruct> aimedLightRays_E0_field3 = rayAimingSuperFct_E0_field3.getAimedLightRays();
 	bool checkRayAimingField3 = oftenUse::checkOptSysLLT_Equal_Better_Zemax(TestSystem00, startPointField3_vec, field3_rms_ref, mMinTolerance, compareTOM_Zemax::comEqual);
 	checkRayAiming_E0_vec.push_back(checkRayAimingField3);
@@ -148,7 +148,7 @@ bool testRayAiming_multiThreads_12::testRayAiming_multiThreads_12_E0_obj()
 	VectorStructR3 startPointField4{ 2.0, -3.0, 0.0 };
 	std::vector<VectorStructR3> startPointField4_vec{ startPointField4 };
 	std::vector<real> field4_rms_ref = { 585.943 };
-	RayAimingSuperFct rayAimingSuperFct_E0_field4(/*optical system*/ TestSystem00, /*rings*/ mRings,/*arms*/ mArms, /*start point ray*/ startPointField4, /*light*/ mLight587, /*start ref index*/ mStartRefIndexAir);
+	RayAiming_12Cores rayAimingSuperFct_E0_field4(/*optical system*/ TestSystem00, /*rings*/ mRings,/*arms*/ mArms, /*start point ray*/ startPointField4, /*light*/ mLight587, /*start ref index*/ mStartRefIndexAir);
 	std::vector<LightRayStruct> aimedLightRays_E0_field4 = rayAimingSuperFct_E0_field4.getAimedLightRays();
 	bool checkRayAimingField4 = oftenUse::checkOptSysLLT_Equal_Better_Zemax(TestSystem00, startPointField4_vec, field4_rms_ref, mMinTolerance, compareTOM_Zemax::comEqual);
 	checkRayAiming_E0_vec.push_back(checkRayAimingField4);

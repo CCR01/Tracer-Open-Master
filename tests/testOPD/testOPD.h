@@ -7,8 +7,10 @@ public:
 	TestOPD() {};
 	~TestOPD() {};
 
-	// check methodes of class FillEntrancePupilWithLightRays
-	bool checkOPD_superFct();
+	// check OPD obj super function
+	bool checkOPD_obj_superFct();
+	// check OPD inf super function
+	bool checkOPD_inf_superFct();
 
 	// E0
 	bool checkE0();
@@ -57,5 +59,14 @@ public:
 
 	// E15
 	bool checkE15();
+
+	// E16
+	bool checkE16();
+
+	// E17
+	bool checkE17();
+
+	// E18
+	bool checkE18();
 
 };

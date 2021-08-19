@@ -3,16 +3,21 @@
 #include "..\LowLevelTracing\Interaction\InteractionRay_LLT.h"
 #include "..\LowLevelTracing\OpticalSystem_LLT.h"
 
+// ray aiming
+#include "..\RayAiming\RayAiming.h"
 
-class RayAimingSuperFct
+class RayAiming_12Cores
 {
 public:
-	RayAimingSuperFct();
-	RayAimingSuperFct(const /*optical system*/ OpticalSystem_LLT& optSys_LLT, /*rings*/ unsigned int rings,/*arms*/ unsigned int arms, const /*start point ray*/ VectorStructR3 startPointRay, Light_LLT /*light*/ light, real /*start ref index*/ curRefracIndex);
-	~RayAimingSuperFct();
+	RayAiming_12Cores();
+	RayAiming_12Cores(const /*optical system*/ OpticalSystem_LLT& optSys_LLT, /*rings*/ unsigned int rings,/*arms*/ unsigned int arms, const /*start point ray*/ VectorStructR3 startPointRay, Light_LLT /*light*/ light, real /*start ref index*/ curRefracIndex);
+	~RayAiming_12Cores();
 
 	std::vector<LightRayStruct> calcAimedLightRay_vec_12cores_obj();
 	void splitPointsInAsFor12Cores();
+
+	void loadInput(/*optical system*/ OpticalSystem_LLT optSys_LLT, /*rings*/ unsigned int rings,/*arms*/ unsigned int arms, const /*start point ray*/ VectorStructR3 startPointRay, Light_LLT /*light*/ light, real /*start ref index*/ curRefracIndex);
+	void loadDefaultParameter(defaultRayAimingStruct defaulParaRayAim);
 
 	void loadPointsInAS();
 	std::vector<LightRayStruct> getAimedLightRays();
@@ -20,12 +25,15 @@ public:
 private:
 
 	OpticalSystem_LLT mOptcalSystem_LLT{};
+	defaultRayAimingStruct mDefaulParaRayAiming;
+	bool mSetDefaulParameter;
 	unsigned int mRings{};
 	unsigned int mArms{};
 	VectorStructR3 mStartPointRay{};
 	Light_LLT mLight{};
 	real mCurRefIndex{};
 	unsigned int mNumberPointsInAS{};
+
 	std::vector<VectorStructR3> mPointsInAS{};
 
 	std::vector<LightRayStruct> mAimedLightRays{};
@@ -44,4 +52,6 @@ private:
 	std::vector<VectorStructR3> mPoints_12{};
 
 };
+
+
 

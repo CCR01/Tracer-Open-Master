@@ -98,6 +98,8 @@ public:
 	virtual void setAllParameterFix() = 0;
 	virtual std::shared_ptr<Element_CR> buildElement(std::shared_ptr<SurfaceIntersectionRay_LLT> surface_LLT, MaterialSellmeier1 glassA, MaterialSellmeier1 glassB) = 0;
 
+	virtual std::string getSurfaceType() = 0;
+
 private:
 
 	VectorStructR3 mPosition;

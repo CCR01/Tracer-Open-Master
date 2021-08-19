@@ -4,6 +4,12 @@
 #include "..\..\SequentialRayTracing\SequentialRayTracer.h"
 #include "..\..\LensCatalog\EdmundOptics\EdmundOpticsLensCatalog.h"
 
+// test lens catalog
+#include "testLensCatalogNameSpace.h"
+
+// often use
+#include "..\..\oftenUseNamespace\oftenUseNamespace.h"
+
 TestLensCatalogEO::TestLensCatalogEO() {};
 TestLensCatalogEO::~TestLensCatalogEO() {};
 
@@ -337,7 +343,7 @@ bool TestLensCatalogEO::testCatalogEO_TwoSurfaces_1()
 
 	//EO65291
 	OpticalSystem_LLT EO65291_LLT(edmundLensCatalog.getEO65291().getHLT_TwoSurfaces().getPosAndIntersection_LLT(), edmundLensCatalog.getEO65291().getHLT_TwoSurfaces().getPosAndInteraction_LLT());
-	bool testEO65291 = testOneLensTwoSurfaces(/*test light ray*/ testLightRay1, /*lens two surface opt sys*/ EO65291_LLT, /*position image surface*/{ 0.0,0.0,5.0 }, /*target point*/{ 0.0,-0.54060333421,5.0 });
+	bool testEO65291 = testOneLensTwoSurfaces(/*test light ray*/ testLightRay1, /*lens two surface opt sys*/ EO65291_LLT, /*position image surface*/{ 0.0,0.0,5.0 }, /*target point*/{ 0.0,-0.5438479557,5.0 });
 	workTheLensCatalogEO_TwoSurfaces.push_back(testEO65291);
 
 	//EO65292
@@ -2035,7 +2041,7 @@ bool TestLensCatalogEO::testCatalogEO_ThreeSurfaces()
 
 	//EO49925
 	OpticalSystem_LLT EO49925_LLT(edmundLensCatalog.getEO49925().getHLT_ThreeSurfaces().getPosAndIntersection_LLT(), edmundLensCatalog.getEO49925().getHLT_ThreeSurfaces().getPosAndInteraction_LLT());
-	bool testEO49925 = testOneLensThreeSurfaces(/*test light ray*/ testLightRay0, /*lens three surface opt sys*/ EO49925_LLT, /*position image surface*/{ 0.0,0.0,5.0 }, /*target point*/{ 0.0,0.81355829567,5.0 });
+	bool testEO49925 = testOneLensThreeSurfaces(/*test light ray*/ testLightRay0, /*lens three surface opt sys*/ EO49925_LLT, /*position image surface*/{ 0.0,0.0,5.0 }, /*target point*/{ 0.0,0.81347099352,5.0 });
 	workTheLensCatalogEO_ThreeSurfaces.push_back(testEO49925);
 
 	//EO32303
@@ -2731,6 +2737,249 @@ bool TestLensCatalogEO::testCatalogEO_ThreeSurfaces()
 	//---
 	bool returnCheckTheLensCatalogEO_ThreeSurface = Math::checkTrueOfVectorElements(workTheLensCatalogEO_ThreeSurfaces);
 	return returnCheckTheLensCatalogEO_ThreeSurface;
+	//---
+
+}
+
+// Doppelkonkave Linsen (DCV) mit NIR-I-Beschichtung
+//https://www.edmundoptics.de/f/nir-i-coated-double-concave-dcv-lenses/13500/
+bool TestLensCatalogEO::test_LensCatalogEO_double_concav_lenses_NIR_I()
+{
+	std::vector<bool> workLensCatalogEO;
+
+	real wavelength = 550.0;
+	real tolerance = 0.05;
+
+	EdmundOpticsLensCatalog edmundLensCata;
+	edmundLensCata.loadLensCatalogEO_double_concav_lenses_NIR_I();
+
+	// 49540
+	OpticalSystemElement EO49540 = edmundLensCata.getEO49540().getHLT_TwoSurfaces();
+	bool checkEO49540 = testLensCata::testOneLensTwoSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49540, /*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 1790.56, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49540);
+
+
+
+	//---
+	bool returnChecker = Math::checkTrueOfVectorElements(workLensCatalogEO);
+	return returnChecker;
+	//---
+}
+
+// Achromate mit VIS-NIR-Beschichtung 
+//https://www.edmundoptics.de/f/vis-nir-coated-achromatic-lenses/13536/
+bool TestLensCatalogEO::test_LensCatalogEO_achromat_VIS_NIR_Coating()
+{
+	std::vector<bool> workLensCatalogEO;
+
+	real wavelength = 550.0;
+	real tolerance = 0.05;
+
+	EdmundOpticsLensCatalog edmundLensCata;
+	edmundLensCata.loadLensCatalogEO_achroamticLenses_VIS_NIR_Coating();
+
+	// 84127
+	OpticalSystemElement EO84127 = edmundLensCata.getEO84127().getHLT_ThreeSurfaces();
+	bool checkEO84127 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO84127, /*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO84127);
+
+
+
+	//---
+	bool returnChecker = Math::checkTrueOfVectorElements(workLensCatalogEO);
+	return returnChecker;
+	//---
+}
+
+// Broadband AR Coated Negative Achromatic Lenses
+bool  TestLensCatalogEO::checkLensCatalogEO_Broadband_AR_Coated_Negative_Achromatic_Lenses()
+{
+	// https://www.edmundoptics.de/f/broadband-ar-coated-negative-achromatic-lenses/13623/
+
+	std::vector<bool> workLensCatalogEO;
+
+	real wavelength = 550.0;
+	real tolerance = 0.2;
+
+	EdmundOpticsLensCatalog edmundLensCata;
+	edmundLensCata.loadLensCatalogEO_Broadband_AR_Coated_Negative_Achromatic_Lenses();
+
+	// 62478
+	OpticalSystemElement EO62478 = edmundLensCata.getEO62478().getHLT_ThreeSurfaces();
+	bool checkEO62478 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO62478, /*position image plan*/{ 0.0,0.0,9.5 }, /*rms*/ 1292.89, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO62478);
+
+
+
+
+	//---
+	bool returnChecker = Math::checkTrueOfVectorElements(workLensCatalogEO);
+	return returnChecker;
+	//---
+
+}
+
+
+// Large Precision Achromatic Lenses 
+// *** NO AIRSPACE *** ///
+bool  TestLensCatalogEO::checkLensCatalogEO_Large_Precision_Achromatic_Lenses_NoAirspace()
+{
+	// https://www.edmundoptics.de/f/large-precision-achromatic-lenses/11679/
+
+	std::vector<bool> workLensCatalogEO;
+
+	real wavelength = 550.0;
+	real tolerance = 0.05;
+
+	EdmundOpticsLensCatalog edmundLensCata;
+	edmundLensCata.loadLensCatalogEO_Large_Precision_Achromatic_Lenses_NoAirspace();
+
+	// 31402
+	OpticalSystemElement EO31402 = edmundLensCata.getEO31402().getHLT_ThreeSurfaces();
+	bool checkEO31402 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO31402, /*position image plan*/{ 0.0,0.0,31.8 }, /*rms*/ 717.131, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO31402);
+
+
+
+
+	//---
+	bool returnChecker = Math::checkTrueOfVectorElements(workLensCatalogEO);
+	return returnChecker;
+	//---
+}
+
+// Large Precision Achromatic Lenses
+// *** AIRSPACE 0.1*** ///
+bool  TestLensCatalogEO::checkLensCatalogEO_Large_Precision_Achromatic_Lenses_Airspace01()
+{
+	// https://www.edmundoptics.de/f/large-precision-achromatic-lenses/11679/
+
+	std::vector<bool> workLensCatalogEO;
+
+	real wavelength = 550.0;
+	real tolerance = 0.05;
+
+	EdmundOpticsLensCatalog edmundLensCata;
+	edmundLensCata.loadLensCatalogEO_Large_Precision_Achromatic_Lenses_Airspace01mm();
+
+	// 30976
+	OpticalSystemElement EO30976 = edmundLensCata.getEO30976().getHLT_FourSurfaces();
+	bool checkEO30976 = testLensCata::testOneLensFourSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO30976, /*position image plan*/{ 0.0,0.0,44.34 }, /*rms*/ 732.768, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO30976);
+
+
+
+
+	//---
+	bool returnChecker = Math::checkTrueOfVectorElements(workLensCatalogEO);
+	return returnChecker;
+	//---
+}
+
+// Hastings Triplet Achromatic Lenses 
+bool TestLensCatalogEO::checkLensCatalogEO_Hastings_Triplet_Achromatic_Lenses()
+{
+	// https://www.edmundoptics.de/f/hastings-triplet-achromatic-lenses/11968/
+
+	std::vector<bool> workLensCatalogEO;
+
+	real wavelength = 550.0;
+	real tolerance = 0.05;
+
+	EdmundOpticsLensCatalog edmundLensCata;
+	edmundLensCata.loadLensCatalogEO_Hastings_Triplet_Achromatic_Lenses();
+
+	// 13521
+	OpticalSystemElement EO13521 = edmundLensCata.getEO13521().getHLT_FourSurfaces();
+	bool checkEO13521 = testLensCata::testOneLensFourSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO13521, /*position image plan*/{ 0.0,0.0,18.23 }, /*rms*/ 13.575, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO13521);
+
+
+
+
+	//---
+	bool returnChecker = Math::checkTrueOfVectorElements(workLensCatalogEO);
+	return returnChecker;
+	//---
+}
+
+bool TestLensCatalogEO::checkLensCatalogEO_Steinheil_Triplet_Achromatic_Lenses()
+{
+	// https://www.edmundoptics.de/f/steinheil-triplet-achromatic-lenses/12275/
+
+	std::vector<bool> workLensCatalogEO;
+
+	real wavelength = 550.0;
+	real tolerance = 0.05;
+
+	EdmundOpticsLensCatalog edmundLensCata;
+	edmundLensCata.loadLensCatalogEO_Steinheil_Triplet_Achromatic_Lenses();
+
+	// 47673
+	OpticalSystemElement EO47673 = edmundLensCata.getEO47673().getHLT_FourSurfaces();
+	bool checkEO47673 = testLensCata::testOneLensFourSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO47673, /*position image plan*/{ 0.0,0.0,20.0 }, /*rms*/ 66.980, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO47673);
+
+
+
+
+	//---
+	bool returnChecker = Math::checkTrueOfVectorElements(workLensCatalogEO);
+	return returnChecker;
+	//---
+}
+
+bool TestLensCatalogEO::checkLensCatalogEO_Micro_Plano_Convex_PCX_Lenses()
+{
+	// https://www.edmundoptics.de/f/micro-plano-convex-pcx-lenses/39529/
+
+	std::vector<bool> workLensCatalogEO;
+
+	real wavelength = 550.0;
+	real tolerance = 0.05;
+
+	EdmundOpticsLensCatalog edmundLensCata;
+	edmundLensCata.loadLensCatalogEO_Micro_Plano_Convex_PCX_Lenses();
+
+	// 45951
+	OpticalSystemElement EO45951 = edmundLensCata.getEO45951().getHLT_TwoSurfaces();
+	// here it is possible to adjust the size of the aperture stop
+	bool checkEO45951 = testLensCata::testOneLensTwoSurfaces_startInf_0deg(/*size aperture stop*/ 0.2, /*wavelength*/ wavelength, /*lens*/ EO45951, /*position image plan*/{ 0.0,0.0,3.0 }, /*rms*/ 291.796, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO45951);
+
+
+
+
+	//---
+	bool returnChecker = Math::checkTrueOfVectorElements(workLensCatalogEO);
+	return returnChecker;
+	//---
+}
+
+bool TestLensCatalogEO::checkLensCatalogEO_Large_PCX_Condenser_Lenses()
+{
+	https://www.edmundoptics.de/f/large-pcx-condenser-lenses/13572/
+	
+	std::vector<bool> workLensCatalogEO;
+
+	real wavelength = 550.0;
+	real tolerance = 0.05;
+
+	EdmundOpticsLensCatalog edmundLensCata;
+	edmundLensCata.loadLensCatalogEO_Large_PCX_Condenser_Lenses();
+
+	// 67187
+	OpticalSystemElement EO67187 = edmundLensCata.getEO67187().getHLT_TwoSurfaces();
+	// here it is possible to adjust the size of the aperture stop
+	bool checkEO67187 = testLensCata::testOneLensTwoSurfaces_startInf_0deg(/*size aperture stop*/ 30.0, /*wavelength*/ wavelength, /*lens*/ EO67187, /*position image plan*/{ 0.0,0.0,122.0 }, /*rms*/ 4949.69, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO67187);
+
+
+
+
+	//---
+	bool returnChecker = Math::checkTrueOfVectorElements(workLensCatalogEO);
+	return returnChecker;
 	//---
 
 }

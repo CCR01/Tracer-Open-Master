@@ -114,7 +114,7 @@ bool IOC2020_Dresden::systemFor_IOC2020_Dresten()
 	//// *** *** //
 	//
 	//int numberLens = 0;
-	std::vector<lensTypes> loadLensCatalogEO_vec{ lensTypes::posAchromat };
+	std::vector<lensTypes> loadLensCatalogEO_vec{ lensTypes::EO_PosAchromat_MgF_Coated };
 	//OpticalSystemElement bestFitLens0 = lensReplace_IOC220.checkLensCatalogsForBestFitLens(/*number lens*/ numberLens,/*parameter lens*/ lensReplace_IOC220.getParameterLenses()[numberLens], /*load lens catalog*/ loadLensCatalogEO_vec);
 	//
 	//OpticalSystemElement bestFitLens0_rot = bestFitLens0.reverseOptSysEle(bestFitLens0);

@@ -632,3 +632,8 @@ std::shared_ptr<Element_CR> PlanElement::buildElement(std::shared_ptr<SurfaceInt
 
 	return returnPlanElement;
 }
+
+std::string PlanElement::getSurfaceType()
+{
+	return "Plan     ";
+}

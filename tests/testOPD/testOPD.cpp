@@ -19,10 +19,10 @@ typedef std::shared_ptr< SurfaceIntersectionRay_LLT > surfacePtr_LLT;
 typedef std::shared_ptr< InteractionRay_LLT > interaction_ptr;
 
 
-bool TestOPD::checkOPD_superFct()
+bool TestOPD::checkOPD_obj_superFct()
 {
 
-	std::vector<bool> workOPD;// hier gehts dann weiter
+	std::vector<bool> workOPD;
 
 	// E0
 	bool chE0 = checkE0();
@@ -91,6 +91,28 @@ bool TestOPD::checkOPD_superFct()
 
 	bool returnCheckOPD = Math::checkTrueOfVectorElements(workOPD);
 	return returnCheckOPD;
+}
+
+// check OPD inf super function
+bool TestOPD::checkOPD_inf_superFct()
+{
+	std::vector<bool> workOPD{};
+
+	// E16
+	bool chE16 = checkE16();
+	workOPD.push_back(chE16);
+
+	// E17
+	bool chE17 = checkE17();
+	workOPD.push_back(chE17);
+
+	// E18
+	bool chE18 = checkE18();
+	workOPD.push_back(chE18);
+
+	bool returnCheckOPD = Math::checkTrueOfVectorElements(workOPD);
+	return returnCheckOPD;
+
 }
 
 // E0
@@ -1709,4 +1731,301 @@ bool TestOPD::checkE15()
 
 	bool output = Math::checkTrueOfVectorElements(checkOPD);
 	return output;
+}
+
+// E16
+bool TestOPD::checkE16()
+{
+	// ***
+	std::vector<bool> checkOPD;
+	RefractedRay_LLT refrac;
+	DoNothingInteraction_LLT doNothing;
+	Light_LLT Light550;
+	Light550.setWavelength(550.0);
+	Absorb_LLT absorb;
+	// ***
+
+	ApertureStop_LLT S0(/*semi height*/ 1.5, /*point*/{ 0.0,0.0,0.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ 1.0);
+	SphericalSurface_LLT S1(/*radius*/30.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 10.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
+	SphericalSurface_LLT S2(/*radius*/36.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 20.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
+	SphericalSurface_LLT S3(/*radius*/60.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 30.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.6);
+	SphericalSurface_LLT S4(/*radius*/50.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 40.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.6);
+	PlanGeometry_LLT S5(/*semiHeight*/5.0, /*point*/{ 0.0,0.0,50.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
+
+	std::vector<surfacePtr_LLT> surfaces_vec = { S0.clone(), S1.clone(), S2.clone(), S3.clone(), S4.clone(), S5.clone() };
+	std::vector<interaction_ptr> interaction_vec{ doNothing.clone(), refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(), absorb.clone() };
+
+	// build the optical system
+	OpticalSystem_LLT OptSys;
+	OptSys.fillOptSysWithSurfaceAndInteractions(surfaces_vec, interaction_vec);
+
+	// plot the start system
+	oftenUse::print(OptSys);
+
+	// check the start system
+	std::vector<real> fieldAngle_X{ 0.0, 0.0, 0.0 };
+	std::vector<real> fieldAngle_Y{ 0.0, 2.0, 6.0 };
+	std::vector<real> rms_vec{ 19.891, 20.737, 27.545 };
+
+	bool checkStartSys = oftenUse::checkOptSysLLT_Equal_Better_Zemax(OptSys, fieldAngle_X, fieldAngle_Y, rms_vec, 0.01, compareTOM_Zemax::comEqual);
+	checkOPD.push_back(checkStartSys);
+
+	OPD testOPD;
+
+	real fieldAngle_X_0 = 0.0;
+	real fieldAngle_Y_0 = 0.0;
+	real pupilPosition_X_0 = 0.0;
+	real pupilPosition_Y_0 = 1.0;
+	real OPD_0 = testOPD.OPD_singelRay_inf(OptSys, fieldAngle_X_0, fieldAngle_Y_0, pupilPosition_X_0, pupilPosition_Y_0, Light550);
+	real refOPD_0 = 1.35649471;
+	bool checkOPD_0 = Math::compareTwoNumbers_tolerance(OPD_0, refOPD_0, 0.1);
+	checkOPD.push_back(checkOPD_0);
+
+	real fieldAngle_X_1 = 0.0;
+	real fieldAngle_Y_1 = 2.0;
+	real pupilPosition_X_1 = 0.5;
+	real pupilPosition_Y_1 = 0.5;
+	real OPD_1 = testOPD.OPD_singelRay_inf(OptSys, fieldAngle_X_1, fieldAngle_Y_1, pupilPosition_X_1, pupilPosition_Y_1, Light550);
+	real refOPD_1 = 0.692198;
+	bool checkOPD_1 = Math::compareTwoNumbers_tolerance(OPD_1, refOPD_1, 0.1);
+	checkOPD.push_back(checkOPD_1);
+
+	real fieldAngle_X_2 = 1.0;
+	real fieldAngle_Y_2 = 1.0;
+	real pupilPosition_X_2 = 0.3;
+	real pupilPosition_Y_2 = 0.7;
+	real OPD_2 = testOPD.OPD_singelRay_inf(OptSys, fieldAngle_X_2, fieldAngle_Y_2, pupilPosition_X_2, pupilPosition_Y_2, Light550);
+	real refOPD_2 = 0.7979542;
+	bool checkOPD_2 = Math::compareTwoNumbers_tolerance(OPD_2, refOPD_2, 0.1);
+	checkOPD.push_back(checkOPD_2);
+
+	real fieldAngle_X_3 = -1.0;
+	real fieldAngle_Y_3 = -0.5;
+	real pupilPosition_X_3 = -0.3;
+	real pupilPosition_Y_3 = 0.7;
+	real OPD_3 = testOPD.OPD_singelRay_inf(OptSys, fieldAngle_X_3, fieldAngle_Y_3, pupilPosition_X_3, pupilPosition_Y_3, Light550);
+	real refOPD_3 = 0.77140227;
+	bool checkOPD_3 = Math::compareTwoNumbers_tolerance(OPD_3, refOPD_3, 0.1);
+	checkOPD.push_back(checkOPD_3);
+
+	real fieldAngle_X_4 = 1.0;
+	real fieldAngle_Y_4 = -0.5;
+	real pupilPosition_X_4 = -0.2;
+	real pupilPosition_Y_4 = -0.3;
+	real OPD_4 = testOPD.OPD_singelRay_inf(OptSys, fieldAngle_X_4, fieldAngle_Y_4, pupilPosition_X_4, pupilPosition_Y_4, Light550);
+	real refOPD_4 = 0.1672141687;
+	bool checkOPD_4 = Math::compareTwoNumbers_tolerance(OPD_4, refOPD_4, 0.1);
+	checkOPD.push_back(checkOPD_4);
+
+	real fieldAngle_X_5 = 0.5;
+	real fieldAngle_Y_5 = -1.0;
+	real pupilPosition_X_5 = -0.1;
+	real pupilPosition_Y_5 = 0.9;
+	real OPD_5 = testOPD.OPD_singelRay_inf(OptSys, fieldAngle_X_5, fieldAngle_Y_5, pupilPosition_X_5, pupilPosition_Y_5, Light550);
+	real refOPD_5 = 1.0930475;
+	bool checkOPD_5 = Math::compareTwoNumbers_tolerance(OPD_5, refOPD_5, 0.1);
+	checkOPD.push_back(checkOPD_5);
+
+	bool output = Math::checkTrueOfVectorElements(checkOPD);
+	return output;
+}
+
+// E17
+bool TestOPD::checkE17()
+{
+	// ***
+	std::vector<bool> checkOPD;
+	RefractedRay_LLT refrac;
+	DoNothingInteraction_LLT doNothing;
+	Light_LLT Light550;
+	Light550.setWavelength(550.0);
+	Absorb_LLT absorb;
+	// ***
+
+
+	
+	SphericalSurface_LLT S0(/*radius*/70.0, /*semiHeight*/10.0, /*Apex of the sphere*/{ 0.0, 0.0, 0.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
+	SphericalSurface_LLT S1(/*radius*/70.0, /*semiHeight*/10.0, /*Apex of the sphere*/{ 0.0, 0.0, 10.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
+	ApertureStop_LLT S2(/*semi height*/ 5.0, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ 1.0);
+	PlanGeometry_LLT S3(/*semiHeight*/10.0, /*point*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.6);
+	SphericalSurface_LLT S4(/*radius*/100.0, /*semiHeight*/10.0, /*Apex of the sphere*/{ 0.0, 0.0, 60.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.6, /*refIndexSideB*/1.0);
+	PlanGeometry_LLT S5(/*semiHeight*/10.0, /*point*/{ 0.0,0.0,90.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
+
+	std::vector<surfacePtr_LLT> surfaces_vec = { S0.clone(), S1.clone(), S2.clone(), S3.clone(), S4.clone(), S5.clone() };
+	std::vector<interaction_ptr> interaction_vec{ refrac.clone(), refrac.clone(), doNothing.clone(), refrac.clone(), refrac.clone(), absorb.clone() };
+
+	// build the optical system
+	OpticalSystem_LLT OptSys;
+	OptSys.fillOptSysWithSurfaceAndInteractions(surfaces_vec, interaction_vec);
+
+	// plot the start system
+	oftenUse::print(OptSys);
+
+	// check the start system
+	std::vector<real> fieldAngle_X{ 0.0, 2.0, 2.0 };
+	std::vector<real> fieldAngle_Y{ 0.0, 2.0, -3.0 };
+	std::vector<real> rms_vec{ 276.562, 256.481, 244.304 };
+
+	bool checkStartSys = oftenUse::checkOptSysLLT_Equal_Better_Zemax(OptSys, fieldAngle_X, fieldAngle_Y, rms_vec, 0.01, compareTOM_Zemax::comEqual);
+	checkOPD.push_back(checkStartSys);
+
+	OPD testOPD;
+
+	real fieldAngle_X_0 = 0.0;
+	real fieldAngle_Y_0 = 0.0;
+	real pupilPosition_X_0 = 0.0;
+	real pupilPosition_Y_0 = 1.0;
+	real OPD_0 = testOPD.OPD_singelRay_inf(OptSys, fieldAngle_X_0, fieldAngle_Y_0, pupilPosition_X_0, pupilPosition_Y_0, Light550);
+	real refOPD_0 = -27.06662369952;
+	bool checkOPD_0 = Math::compareTwoNumbers_tolerance(OPD_0, refOPD_0, 0.1);
+	checkOPD.push_back(checkOPD_0);
+	
+	real fieldAngle_X_1 = 1.0;
+	real fieldAngle_Y_1 = 0.5;
+	real pupilPosition_X_1 = 0.5;
+	real pupilPosition_Y_1 = 0.3;
+	real OPD_1 = testOPD.OPD_singelRay_inf(OptSys, fieldAngle_X_1, fieldAngle_Y_1, pupilPosition_X_1, pupilPosition_Y_1, Light550);
+	real refOPD_1 = -9.887218489002;
+	bool checkOPD_1 = Math::compareTwoNumbers_tolerance(OPD_1, refOPD_1, 0.1);
+	checkOPD.push_back(checkOPD_1);
+
+	real fieldAngle_X_2 = -1.0;
+	real fieldAngle_Y_2 = -0.3;
+	real pupilPosition_X_2 = 0.7;
+	real pupilPosition_Y_2 = 0.3;
+	real OPD_2 = testOPD.OPD_singelRay_inf(OptSys, fieldAngle_X_2, fieldAngle_Y_2, pupilPosition_X_2, pupilPosition_Y_2, Light550);
+	real refOPD_2 = -15.53323768;
+	bool checkOPD_2 = Math::compareTwoNumbers_tolerance(OPD_2, refOPD_2, 0.1);
+	checkOPD.push_back(checkOPD_2);
+
+	real fieldAngle_X_3 = -0.5;
+	real fieldAngle_Y_3 = -0.9;
+	real pupilPosition_X_3 = -0.4;
+	real pupilPosition_Y_3 = 0.3;
+	real OPD_3 = testOPD.OPD_singelRay_inf(OptSys, fieldAngle_X_3, fieldAngle_Y_3, pupilPosition_X_3, pupilPosition_Y_3, Light550);
+	real refOPD_3 = -7.190097088;
+	bool checkOPD_3 = Math::compareTwoNumbers_tolerance(OPD_3, refOPD_3, 1.0);
+	checkOPD.push_back(checkOPD_3);
+
+	real fieldAngle_X_4 = -0.1;
+	real fieldAngle_Y_4 = -0.5;
+	real pupilPosition_X_4 = -1.0;
+	real pupilPosition_Y_4 = 0.0;
+	real OPD_4 = testOPD.OPD_singelRay_inf(OptSys, fieldAngle_X_4, fieldAngle_Y_4, pupilPosition_X_4, pupilPosition_Y_4, Light550);
+	real refOPD_4 = -27.1474891;
+	bool checkOPD_4 = Math::compareTwoNumbers_tolerance(OPD_4, refOPD_4, 1.0);
+	checkOPD.push_back(checkOPD_4);
+
+	real fieldAngle_X_5 = 0.7;
+	real fieldAngle_Y_5 = -0.5;
+	real pupilPosition_X_5 = -0.4;
+	real pupilPosition_Y_5 = 0.2;
+	real OPD_5 = testOPD.OPD_singelRay_inf(OptSys, fieldAngle_X_5, fieldAngle_Y_5, pupilPosition_X_5, pupilPosition_Y_5, Light550);
+	real refOPD_5 = -5.753947526;
+	bool checkOPD_5 = Math::compareTwoNumbers_tolerance(OPD_5, refOPD_5, 1.0);
+	checkOPD.push_back(checkOPD_5);
+
+
+	bool output = Math::checkTrueOfVectorElements(checkOPD);
+	return output;
+}
+
+// E18
+bool TestOPD::checkE18()
+{
+
+	// ***
+	std::vector<bool> checkOPD;
+	RefractedRay_LLT refrac;
+	DoNothingInteraction_LLT doNothing;
+	Light_LLT Light550;
+	Light550.setWavelength(550.0);
+	Absorb_LLT absorb;
+	// ***
+
+	SphericalSurface_LLT S0(/*radius*/150.0, /*semiHeight*/10.0, /*Apex of the sphere*/{ 0.0, 0.0, 0.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
+	SphericalSurface_LLT S1(/*radius*/100.0, /*semiHeight*/10.0, /*Apex of the sphere*/{ 0.0, 0.0, 10.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.5, /*refIndexSideB*/1.0);
+	ApertureStop_LLT S2(/*semi height*/ 5.0, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ 1.0);
+	SphericalSurface_LLT S3(/*radius*/20.0, /*semiHeight*/10.0, /*Apex of the sphere*/{ 0.0, 0.0, 120.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.6);
+	SphericalSurface_LLT S4(/*radius*/255.0, /*semiHeight*/10.0, /*Apex of the sphere*/{ 0.0, 0.0, 130.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.6, /*refIndexSideB*/1.0);
+	PlanGeometry_LLT S5(/*semiHeight*/10.0, /*point*/{ 0.0,0.0,160.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
+
+	std::vector<surfacePtr_LLT> surfaces_vec = { S0.clone(), S1.clone(), S2.clone(), S3.clone(), S4.clone(), S5.clone() };
+	std::vector<interaction_ptr> interaction_vec{ refrac.clone(), refrac.clone(), doNothing.clone(), refrac.clone(), refrac.clone(), absorb.clone() };
+
+	// build the optical system
+	OpticalSystem_LLT OptSys;
+	OptSys.fillOptSysWithSurfaceAndInteractions(surfaces_vec, interaction_vec);
+
+	// plot the start system
+	oftenUse::print(OptSys);
+
+	// check the start system
+	std::vector<real> fieldAngle_X{ 0.0, 1.0, -1.0 };
+	std::vector<real> fieldAngle_Y{ 0.0, 1.0, -1.0 };
+	std::vector<real> rms_vec{ 30.484, 131.974, 131.974 };
+
+	bool checkStartSys = oftenUse::checkOptSysLLT_Equal_Better_Zemax(OptSys, fieldAngle_X, fieldAngle_Y, rms_vec, 0.01, compareTOM_Zemax::comEqual);
+	checkOPD.push_back(checkStartSys);
+
+	OPD testOPD;
+
+	real fieldAngle_X_0 = 0.0;
+	real fieldAngle_Y_0 = 0.0;
+	real pupilPosition_X_0 = 0.0;
+	real pupilPosition_Y_0 = 1.0;
+	real OPD_0 = testOPD.OPD_singelRay_inf(OptSys, fieldAngle_X_0, fieldAngle_Y_0, pupilPosition_X_0, pupilPosition_Y_0, Light550);
+	real refOPD_0 = -5.639724248074;
+	bool checkOPD_0 = Math::compareTwoNumbers_tolerance(OPD_0, refOPD_0, 0.1);
+	checkOPD.push_back(checkOPD_0);
+
+	real fieldAngle_X_1 = 0.5;
+	real fieldAngle_Y_1 = -0.3;
+	real pupilPosition_X_1 = 0.1;
+	real pupilPosition_Y_1 = -0.8;
+	real OPD_1 = testOPD.OPD_singelRay_inf(OptSys, fieldAngle_X_1, fieldAngle_Y_1, pupilPosition_X_1, pupilPosition_Y_1, Light550);
+	real refOPD_1 = -2.57495623237;
+	bool checkOPD_1 = Math::compareTwoNumbers_tolerance(OPD_1, refOPD_1, 0.1);
+	checkOPD.push_back(checkOPD_1);
+
+	real fieldAngle_X_2 = -0.9;
+	real fieldAngle_Y_2 = 0.2;
+	real pupilPosition_X_2 = -0.3;
+	real pupilPosition_Y_2 = -0.2;
+	real OPD_2 = testOPD.OPD_singelRay_inf(OptSys, fieldAngle_X_2, fieldAngle_Y_2, pupilPosition_X_2, pupilPosition_Y_2, Light550);
+	real refOPD_2 = -1.026247219080;
+	bool checkOPD_2 = Math::compareTwoNumbers_tolerance(OPD_2, refOPD_2, 0.1);
+	checkOPD.push_back(checkOPD_2);
+
+	real fieldAngle_X_3 = 1.0;
+	real fieldAngle_Y_3 = 1.0;
+	real pupilPosition_X_3 = -0.7;
+	real pupilPosition_Y_3 = -0.2;
+	real OPD_3 = testOPD.OPD_singelRay_inf(OptSys, fieldAngle_X_3, fieldAngle_Y_3, pupilPosition_X_3, pupilPosition_Y_3, Light550);
+	real refOPD_3 = -5.703372172426;
+	bool checkOPD_3 = Math::compareTwoNumbers_tolerance(OPD_3, refOPD_3, 0.1);
+	checkOPD.push_back(checkOPD_3);
+	
+	real fieldAngle_X_4 = -1.0;
+	real fieldAngle_Y_4 = -0.9;
+	real pupilPosition_X_4 = 0.7;
+	real pupilPosition_Y_4 = -0.2;
+	real OPD_4 = testOPD.OPD_singelRay_inf(OptSys, fieldAngle_X_4, fieldAngle_Y_4, pupilPosition_X_4, pupilPosition_Y_4, Light550);
+	real refOPD_4 = -5.791061707022;
+	bool checkOPD_4 = Math::compareTwoNumbers_tolerance(OPD_4, refOPD_4, 0.1);
+	checkOPD.push_back(checkOPD_4);
+
+	real fieldAngle_X_5 = 0.8;
+	real fieldAngle_Y_5 = -0.5;
+	real pupilPosition_X_5 = -0.1;
+	real pupilPosition_Y_5 = 0.3;
+	real OPD_5 = testOPD.OPD_singelRay_inf(OptSys, fieldAngle_X_5, fieldAngle_Y_5, pupilPosition_X_5, pupilPosition_Y_5, Light550);
+	real refOPD_5 = -1.308037969802;
+	bool checkOPD_5 = Math::compareTwoNumbers_tolerance(OPD_5, refOPD_5, 0.1);
+	checkOPD.push_back(checkOPD_5);
+
+	bool output = Math::checkTrueOfVectorElements(checkOPD);
+	return output;
+
+
 }

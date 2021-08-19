@@ -141,6 +141,8 @@ public:
 
 	virtual std::shared_ptr<Element_CR> buildElement(std::shared_ptr<SurfaceIntersectionRay_LLT> surface_LLT, MaterialSellmeier1 glassA, MaterialSellmeier1 glassB) override;
 
+	virtual std::string getSurfaceType() override;
+
 private:
 
 	std::shared_ptr<SurfaceIntersectionRay_LLT> mSphericalSurface_LLT;

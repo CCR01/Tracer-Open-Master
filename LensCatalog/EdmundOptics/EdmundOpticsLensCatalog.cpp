@@ -1,4 +1,4 @@
-#include "EdmundOpticsLensCatalog.h"
+﻿#include "EdmundOpticsLensCatalog.h"
 
 
 EdmundOpticsLensCatalog::EdmundOpticsLensCatalog() { mGlasses.loadGlassCatalog_Schott(); };
@@ -10,133 +10,133 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_plan_concav_lenses_VIS_NIR() //h
 {
 	EO84380.buildLensTwoSurfaces_PCV(/*lens catalog*/ "EO", /*catalog number*/ 84380, /*diameter*/3.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025, /*back focal length*/-6.56,
 		/*max surface quality*/40.0, /*min surface quality*/20.0, /*irregularity*/4.0, /*tolerance center thickness*/0.1, /*design wavelength*/587.6,
-		/*free aperture CA*/2.7, /*radius*/-4.71, /*numerical Aperture*/0.25, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-6.0,
+		/*free aperture CA*/2.7, /*radius*/-4.71, /*numerical Aperture*/0.25, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-6.00219,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getSF11_S1(), /*power (P-V)*/1.5, /*center thickness*/ 1.0,/*tolerance focal lenght*/1.0,
 		/*Centering (arc minutes)*/3.0, /*edge thickness*/1.17, /*price*/ 61.0, /*wavelength to trace through optical system*/550.0);
 
 	EO84381.buildLensTwoSurfaces_PCV(/*lens catalog*/ "EO", /*catalog number*/ 84381, /*diameter*/3.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025, /*back focal length*/-9.56,
 		/*max surface quality*/40.0, /*min surface quality*/20.0, /*irregularity*/4.0, /*tolerance center thickness*/0.1, /*design wavelength*/587.6,
-		/*free aperture CA*/2.7, /*radius*/-7.06, /*numerical Aperture*/0.17, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-9.0,
+		/*free aperture CA*/2.7, /*radius*/-7.06, /*numerical Aperture*/0.17, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-8.99691,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getSF11_S1(), /*power (P-V)*/1.5, /*center thickness*/ 1.0,/*tolerance focal lenght*/1.0,
 		/*Centering (arc minutes)*/3.0, /*edge thickness*/1.11, /*price*/ 61.0, /*wavelength to trace through optical system*/550.0);
 
 	EO45910.buildLensTwoSurfaces_PCV(/*lens catalog*/ "EO", /*catalog number*/ 45910, /*diameter*/6.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025, /*back focal length*/-6.84,
 		/*max surface quality*/40.0, /*min surface quality*/20.0, /*irregularity*/4.0, /*tolerance center thickness*/0.1, /*design wavelength*/587.6,
-		/*free aperture CA*/5.4, /*radius*/-4.71, /*numerical Aperture*/0.5, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-6.0,
+		/*free aperture CA*/5.4, /*radius*/-4.71, /*numerical Aperture*/0.5, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-6.00219,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getSF11_S1(), /*power (P-V)*/1.5, /*center thickness*/ 1.5,/*tolerance focal lenght*/1.0,
 		/*Centering (arc minutes)*/3.0, /*edge thickness*/2.22, /*price*/ 35.5, /*wavelength to trace through optical system*/550.0);
 
 	EO48345.buildLensTwoSurfaces_PCV(/*lens catalog*/ "EO", /*catalog number*/ 48345, /*diameter*/6.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025, /*back focal length*/-9.84,
 		/*max surface quality*/40.0, /*min surface quality*/20.0, /*irregularity*/4.0, /*tolerance center thickness*/0.1, /*design wavelength*/587.6,
-		/*free aperture CA*/5.4, /*radius*/-7.06, /*numerical Aperture*/0.33, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-9.0,
+		/*free aperture CA*/5.4, /*radius*/-7.06, /*numerical Aperture*/0.33, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-8.99691,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getSF11_S1(), /*power (P-V)*/1.5, /*center thickness*/ 1.5,/*tolerance focal lenght*/1.0,
 		/*Centering (arc minutes)*/3.0, /*edge thickness*/2.04, /*price*/ 35.5, /*wavelength to trace through optical system*/550.0);
 
 	EO45911.buildLensTwoSurfaces_PCV(/*lens catalog*/ "EO", /*catalog number*/ 45911, /*diameter*/6.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025, /*back focal length*/-12.99,
 		/*max surface quality*/40.0, /*min surface quality*/20.0, /*irregularity*/4.0, /*tolerance center thickness*/0.1, /*design wavelength*/587.6,
-		/*free aperture CA*/5.4, /*radius*/-6.2, /*numerical Aperture*/0.25, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-12.0,
+		/*free aperture CA*/5.4, /*radius*/-6.2, /*numerical Aperture*/0.25, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-11.9969,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNBK7_S1(), /*power (P-V)*/1.5, /*center thickness*/1.5, /*tolerance focal lenght*/1.0,
 		/*Centering (arc minutes)*/1.0, /*edge thickness*/2.12, /*price*/ 35.5, /*wavelength to trace through optical system*/550.0);
 
 	EO48696.buildLensTwoSurfaces_PCV(/*lens catalog*/ "EO", /*catalog number*/ 48696, /*diameter*/6.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025, /*back focal length*/-16.32,
 		/*max surface quality*/40.0, /*min surface quality*/20.0, /*irregularity*/4.0, /*tolerance center thickness*/0.1, /*design wavelength*/587.6,
-		/*free aperture CA*/5.4, /*radius*/-7.75, /*numerical Aperture*/0.2, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-15.0,
+		/*free aperture CA*/5.4, /*radius*/-7.752, /*numerical Aperture*/0.2, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-15.0,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNBK7_S1(), /*power (P-V)*/1.5, /*center thickness*/2.0, /*tolerance focal lenght*/1.0,
 		/*Centering (arc minutes)*/1.0, /*edge thickness*/2.49, /*price*/ 35.5, /*wavelength to trace through optical system*/550.0);
 
 	EO45912.buildLensTwoSurfaces_PCV(/*lens catalog*/ "EO", /*catalog number*/ 45912, /*diameter*/6.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025, /*back focal length*/-19.32,
 		/*max surface quality*/40.0, /*min surface quality*/20.0, /*irregularity*/4.0, /*tolerance center thickness*/0.1, /*design wavelength*/587.6,
-		/*free aperture CA*/5.4, /*radius*/-9.3, /*numerical Aperture*/0.17, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-18.0,
+		/*free aperture CA*/5.4, /*radius*/-9.3, /*numerical Aperture*/0.17, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-17.9954,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNBK7_S1(), /*power (P-V)*/1.5, /*center thickness*/2.0, /*tolerance focal lenght*/1.0,
 		/*Centering (arc minutes)*/1.0, /*edge thickness*/2.4, /*price*/ 35.5, /*wavelength to trace through optical system*/550.0);
 
 	EO45913.buildLensTwoSurfaces_PCV(/*lens catalog*/ "EO", /*catalog number*/ 45913, /*diameter*/9.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025, /*back focal length*/-10.21,
 		/*max surface quality*/40.0, /*min surface quality*/20.0, /*irregularity*/4.0, /*tolerance center thickness*/0.1, /*design wavelength*/587.6,
-		/*free aperture CA*/8.1, /*radius*/-7.07, /*numerical Aperture*/0.5, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-9.0,
+		/*free aperture CA*/8.1, /*radius*/-7.07, /*numerical Aperture*/0.5, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-9.00965,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNSF11_S1(), /*power (P-V)*/1.5, /*center thickness*/2.25, /*tolerance focal lenght*/1.0,
 		/*Centering (arc minutes)*/3.0, /*edge thickness*/3.63, /*price*/ 36.5, /*wavelength to trace through optical system*/550.0);
 
 	EO48346.buildLensTwoSurfaces_PCV(/*lens catalog*/ "EO", /*catalog number*/ 48346, /*diameter*/9.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025, /*back focal length*/-13.26,
 		/*max surface quality*/40.0, /*min surface quality*/20.0, /*irregularity*/4.0, /*tolerance center thickness*/0.1, /*design wavelength*/587.6,
-		/*free aperture CA*/8.1, /*radius*/-9.42, /*numerical Aperture*/0.38, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-12.0,
+		/*free aperture CA*/8.1, /*radius*/-9.42, /*numerical Aperture*/0.38, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-12.0044,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNSF11_S1(), /*power (P-V)*/1.5, /*center thickness*/2.25, /*tolerance focal lenght*/1.0,
 		/*Centering (arc minutes)*/1.0, /*edge thickness*/3.24, /*price*/ 36.5, /*wavelength to trace through optical system*/550.0);
 
 	EO45914.buildLensTwoSurfaces_PCV(/*lens catalog*/ "EO", /*catalog number*/ 45914, /*diameter*/9.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025, /*back focal length*/-19.26,
 		/*max surface quality*/40.0, /*min surface quality*/20.0, /*irregularity*/4.0, /*tolerance center thickness*/0.1, /*design wavelength*/587.6,
-		/*free aperture CA*/8.1, /*radius*/-14.12, /*numerical Aperture*/0.25, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-18.0,
+		/*free aperture CA*/8.1, /*radius*/-14.12, /*numerical Aperture*/0.25, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-17.9938,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNSF11_S1(), /*power (P-V)*/1.5, /*center thickness*/2.25, /*tolerance focal lenght*/1.0,
 		/*Centering (arc minutes)*/1.0, /*edge thickness*/2.89, /*price*/ 36.5, /*wavelength to trace through optical system*/550.0);
 
 	EO45915.buildLensTwoSurfaces_PCV(/*lens catalog*/ "EO", /*catalog number*/ 45915, /*diameter*/9.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025, /*back focal length*/-28.68,
 		/*max surface quality*/40.0, /*min surface quality*/20.0, /*irregularity*/4.0, /*tolerance center thickness*/0.1, /*design wavelength*/587.6,
-		/*free aperture CA*/8.1, /*radius*/-21.19, /*numerical Aperture*/0.17, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-27.0,
+		/*free aperture CA*/8.1, /*radius*/-21.19, /*numerical Aperture*/0.17, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-27.0035,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNSF11_S1(), /*power (P-V)*/1.5, /*center thickness*/3.0, /*tolerance focal lenght*/1.0,
 		/*Centering (arc minutes)*/1.0, /*edge thickness*/3.42, /*price*/ 36.5, /*wavelength to trace through optical system*/550.0);
 
 	EO45916.buildLensTwoSurfaces_PCV(/*lens catalog*/ "EO", /*catalog number*/ 45916, /*diameter*/12.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025, /*back focal length*/-13.23,
 		/*max surface quality*/40.0, /*min surface quality*/20.0, /*irregularity*/4.0, /*tolerance center thickness*/0.1, /*design wavelength*/587.6,
-		/*free aperture CA*/11.0, /*radius*/-9.42, /*numerical Aperture*/0.5, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-12.0,
+		/*free aperture CA*/11.0, /*radius*/-9.42, /*numerical Aperture*/0.5, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-12.0044,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNSF11_S1(), /*power (P-V)*/1.5, /*center thickness*/2.2, /*tolerance focal lenght*/1.0,
 		/*Centering (arc minutes)*/1.0, /*edge thickness*/4.12, /*price*/ 37.5, /*wavelength to trace through optical system*/550.0);
 
 	EO48697.buildLensTwoSurfaces_PCV(/*lens catalog*/ "EO", /*catalog number*/ 48697, /*diameter*/12.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025, /*back focal length*/-16.68,
 		/*max surface quality*/40.0, /*min surface quality*/20.0, /*irregularity*/4.0, /*tolerance center thickness*/0.1, /*design wavelength*/587.6,
-		/*free aperture CA*/11.0, /*radius*/-11.77, /*numerical Aperture*/0.4, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-15.0,
+		/*free aperture CA*/11.0, /*radius*/-11.771, /*numerical Aperture*/0.4, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-15.0004,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNSF11_S1(), /*power (P-V)*/1.5, /*center thickness*/3.0, /*tolerance focal lenght*/1.0,
 		/*Centering (arc minutes)*/1.0, /*edge thickness*/4.47, /*price*/ 37.5, /*wavelength to trace through optical system*/550.0);
 
 	EO48347.buildLensTwoSurfaces_PCV(/*lens catalog*/ "EO", /*catalog number*/ 48347, /*diameter*/12.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025, /*back focal length*/-19.95,
 		/*max surface quality*/40.0, /*min surface quality*/20.0, /*irregularity*/4.0, /*tolerance center thickness*/0.1, /*design wavelength*/587.6,
-		/*free aperture CA*/11.0, /*radius*/-14.12, /*numerical Aperture*/0.33, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-18.0,
+		/*free aperture CA*/11.0, /*radius*/-14.12, /*numerical Aperture*/0.33, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-17.9938,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNSF11_S1(), /*power (P-V)*/1.5, /*center thickness*/3.5, /*tolerance focal lenght*/1.0,
 		/*Centering (arc minutes)*/1.0, /*edge thickness*/4.7, /*price*/ 37.5, /*wavelength to trace through optical system*/550.0);
 
 	EO45917.buildLensTwoSurfaces_PCV(/*lens catalog*/ "EO", /*catalog number*/ 45917, /*diameter*/12.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025, /*back focal length*/-26.32,
 		/*max surface quality*/40.0, /*min surface quality*/20.0, /*irregularity*/4.0, /*tolerance center thickness*/0.1, /*design wavelength*/587.6,
-		/*free aperture CA*/11.0, /*radius*/-12.4, /*numerical Aperture*/0.25, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-24.0,
+		/*free aperture CA*/11.0, /*radius*/-12.4, /*numerical Aperture*/0.25, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-23.9939,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNBK7_S1(), /*power (P-V)*/1.5, /*center thickness*/3.5, /*tolerance focal lenght*/1.0,
 		/*Centering (arc minutes)*/1.0, /*edge thickness*/4.79, /*price*/ 37.5, /*wavelength to trace through optical system*/550.0);
 
 	EO45918.buildLensTwoSurfaces_PCV(/*lens catalog*/ "EO", /*catalog number*/ 45918, /*diameter*/12.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025, /*back focal length*/-50.31,
 		/*max surface quality*/40.0, /*min surface quality*/20.0, /*irregularity*/4.0, /*tolerance center thickness*/0.1, /*design wavelength*/587.6,
-		/*free aperture CA*/11.0, /*radius*/-24.81, /*numerical Aperture*/0.13, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-48.0,
+		/*free aperture CA*/11.0, /*radius*/-24.81, /*numerical Aperture*/0.13, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-48.0071,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNBK7_S1(), /*power (P-V)*/1.5, /*center thickness*/3.5, /*tolerance focal lenght*/1.0,
 		/*Centering (arc minutes)*/1.0, /*edge thickness*/4.12, /*price*/ 37.5, /*wavelength to trace through optical system*/550.0);
 
 	EO45919.buildLensTwoSurfaces_PCV(/*lens catalog*/ "EO", /*catalog number*/ 45919, /*diameter*/20.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025, /*back focal length*/-31.96,
 		/*max surface quality*/40.0, /*min surface quality*/20.0, /*irregularity*/4.0, /*tolerance center thickness*/0.1, /*design wavelength*/587.6,
-		/*free aperture CA*/19.0, /*radius*/-23.54, /*numerical Aperture*/0.33, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-30.0,
+		/*free aperture CA*/19.0, /*radius*/-23.54, /*numerical Aperture*/0.33, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-29.9982,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNSF11_S1(), /*power (P-V)*/1.5, /*center thickness*/3.5, /*tolerance focal lenght*/1.0,
 		/*Centering (arc minutes)*/1.0, /*edge thickness*/5.39, /*price*/ 37.5, /*wavelength to trace through optical system*/550.0);
 
 	EO45920.buildLensTwoSurfaces_PCV(/*lens catalog*/ "EO", /*catalog number*/ 45920, /*diameter*/20.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025, /*back focal length*/-42.31,
 		/*max surface quality*/40.0, /*min surface quality*/20.0, /*irregularity*/4.0, /*tolerance center thickness*/0.1, /*design wavelength*/587.6,
-		/*free aperture CA*/19.0, /*radius*/-20.67, /*numerical Aperture*/0.25, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-40.0,
+		/*free aperture CA*/19.0, /*radius*/-20.67, /*numerical Aperture*/0.25, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-39.9963,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNBK7_S1(), /*power (P-V)*/1.5, /*center thickness*/3.5, /*tolerance focal lenght*/1.0,
 		/*Centering (arc minutes)*/1.0, /*edge thickness*/5.39, /*price*/ 37.5, /*wavelength to trace through optical system*/550.0);
 
 	EO45921.buildLensTwoSurfaces_PCV(/*lens catalog*/ "EO", /*catalog number*/ 45921, /*diameter*/20.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025, /*back focal length*/-52.31,
 		/*max surface quality*/40.0, /*min surface quality*/20.0, /*irregularity*/4.0, /*tolerance center thickness*/0.1, /*design wavelength*/587.6,
-		/*free aperture CA*/19.0, /*radius*/-25.84, /*numerical Aperture*/0.2, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-50.0,
+		/*free aperture CA*/19.0, /*radius*/-25.84, /*numerical Aperture*/0.2, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-50.0002,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNBK7_S1(), /*power (P-V)*/1.5, /*center thickness*/3.5, /*tolerance focal lenght*/1.0,
 		/*Centering (arc minutes)*/1.0, /*edge thickness*/3.5, /*price*/ 37.5, /*wavelength to trace through optical system*/550.0);
 
 	EO45922.buildLensTwoSurfaces_PCV(/*lens catalog*/ "EO", /*catalog number*/ 45922, /*diameter*/25.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025, /*back focal length*/-26.96,
 		/*max surface quality*/40.0, /*min surface quality*/20.0, /*irregularity*/4.0, /*tolerance center thickness*/0.1, /*design wavelength*/587.6,
-		/*free aperture CA*/24.0, /*radius*/-19.62, /*numerical Aperture*/0.5, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-25.0,
+		/*free aperture CA*/24.0, /*radius*/-19.62, /*numerical Aperture*/0.5, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-25.0027,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNSF11_S1(), /*power (P-V)*/1.5, /*center thickness*/3.5, /*tolerance focal lenght*/1.0,
 		/*Centering (arc minutes)*/1.0, /*edge thickness*/7.41, /*price*/ 42.0, /*wavelength to trace through optical system*/550.0);
 
 	EO48698.buildLensTwoSurfaces_PCV(/*lens catalog*/ "EO", /*catalog number*/ 48698, /*diameter*/25.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025, /*back focal length*/-36.96,
 		/*max surface quality*/40.0, /*min surface quality*/20.0, /*irregularity*/4.0, /*tolerance center thickness*/0.1, /*design wavelength*/587.6,
-		/*free aperture CA*/24.0, /*radius*/-27.47, /*numerical Aperture*/0.36, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-35.0,
+		/*free aperture CA*/24.0, /*radius*/-27.465, /*numerical Aperture*/0.36, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-35.0,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNSF11_S1(), /*power (P-V)*/1.5, /*center thickness*/3.5, /*tolerance focal lenght*/1.0,
 		/*Centering (arc minutes)*/1.0, /*edge thickness*/6.36, /*price*/ 42.0, /*wavelength to trace through optical system*/550.0);
 
 	EO45923.buildLensTwoSurfaces_PCV(/*lens catalog*/ "EO", /*catalog number*/ 45923, /*diameter*/25.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025, /*back focal length*/-52.31,
 		/*max surface quality*/40.0, /*min surface quality*/20.0, /*irregularity*/4.0, /*tolerance center thickness*/0.1, /*design wavelength*/587.6,
-		/*free aperture CA*/24.0, /*radius*/-25.84, /*numerical Aperture*/0.25, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-50.0,
+		/*free aperture CA*/24.0, /*radius*/-25.84, /*numerical Aperture*/0.25, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-50.0002,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNBK7_S1(), /*power (P-V)*/1.5, /*center thickness*/3.5, /*tolerance focal lenght*/1.0,
 		/*Centering (arc minutes)*/1.0, /*edge thickness*/6.33, /*price*/ 42.0, /*wavelength to trace through optical system*/550.0);
 
@@ -154,7 +154,7 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_plan_concav_lenses_VIS_NIR() //h
 
 	EO45926.buildLensTwoSurfaces_PCV(/*lens catalog*/ "EO", /*catalog number*/ 45926, /*diameter*/50.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025, /*back focal length*/-128.3,
 		/*max surface quality*/40.0, /*min surface quality*/20.0, /*irregularity*/4.0, /*tolerance center thickness*/0.1, /*design wavelength*/587.6,
-		/*free aperture CA*/49.0, /*radius*/-64.0, /*numerical Aperture*/0.2, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-125.0,
+		/*free aperture CA*/49.0, /*radius*/-64.6, /*numerical Aperture*/0.2, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-125.0,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNBK7_S1(), /*power (P-V)*/1.5, /*center thickness*/5.0, /*tolerance focal lenght*/1.0,
 		/*Centering (arc minutes)*/1.0, /*edge thickness*/9.87, /*price*/ 64.5, /*wavelength to trace through optical system*/550.0);
 
@@ -171,79 +171,79 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_double_concav_lenses_VIS_NIR()  
 
 	EO45927.buildLensTwoSurfaces_DCV(/*lens catalog*/ "EO", /*catalog number*/ 45927, /*diameter*/6.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025,/*max surface quality*/40.0,
 		/*back focal length*/-6.41,/*min surface quality*/20.0, /*irregularity*/4.0, /*center thickness*/  1.5, /*Centering (arc minutes)*/3.0, /*edge thickness*/2.29,
-		/*design wavelength*/587.6, /*numerical Aperture*/0.5, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-6.0,
+		/*design wavelength*/587.6, /*numerical Aperture*/0.5, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-6.00285,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getSF11_S1(), /*power (P-V)*/1.5, /*free aperture CA*/5.4,/*tolerance center thickness*/0.1,
 		/*tolerance focal lenght*/1.0, /*radius*/-9.74, /*price*/  35.50,/*wavelength to trace through optical system*/550.0);
 
 	EO48941.buildLensTwoSurfaces_DCV(/*lens catalog*/ "EO", /*catalog number*/ 48941, /*diameter*/6.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025,/*max surface quality*/40.0,
 		/*back focal length*/-9.32,/*min surface quality*/20.0, /*irregularity*/4.0, /*center thickness*/  1.0, /*Centering (arc minutes)*/3.0, /*edge thickness*/1.79,
-		/*design wavelength*/587.6, /*numerical Aperture*/0.5, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-6.0,
+		/*design wavelength*/587.6, /*numerical Aperture*/0.5, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-9.00027,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNBK7_S1(), /*power (P-V)*/1.5, /*free aperture CA*/5.4,/*tolerance center thickness*/0.1,
 		/*tolerance focal lenght*/1.0, /*radius*/-9.47, /*price*/  35.50,/*wavelength to trace through optical system*/550.0);
 
 	EO48699.buildLensTwoSurfaces_DCV(/*lens catalog*/ "EO", /*catalog number*/ 48699, /*diameter*/6.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025,/*max surface quality*/40.0,
 		/*back focal length*/-12.33,/*min surface quality*/20.0, /*irregularity*/4.0, /*center thickness*/  1.0, /*Centering (arc minutes)*/1.0, /*edge thickness*/1.59,
-		/*design wavelength*/587.6, /*numerical Aperture*/0.5, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-6.0,
+		/*design wavelength*/587.6, /*numerical Aperture*/0.5, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-11.9998,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNBK7_S1(), /*power (P-V)*/1.5, /*free aperture CA*/5.4,/*tolerance center thickness*/0.1,
-		/*tolerance focal lenght*/1.0, /*radius*/-12.57, /*price*/  35.50,/*wavelength to trace through optical system*/550.0);
+		/*tolerance focal lenght*/1.0, /*radius*/-12.571, /*price*/  35.50,/*wavelength to trace through optical system*/550.0);
 
 	EO48348.buildLensTwoSurfaces_DCV(/*lens catalog*/ "EO", /*catalog number*/ 48348, /*diameter*/9.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025,/*max surface quality*/40.0,
 		/*back focal length*/-9.61,/*min surface quality*/20.0, /*irregularity*/4.0, /*center thickness*/  2.25, /*Centering (arc minutes)*/3.0, /*edge thickness*/3.48,
-		/*design wavelength*/587.6, /*numerical Aperture*/0.5, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-9.0,
+		/*design wavelength*/587.6, /*numerical Aperture*/0.5, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-8.9979,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNSF11_S1(), /*power (P-V)*/1.5, /*free aperture CA*/8.1,/*tolerance center thickness*/0.1,
 		/*tolerance focal lenght*/1.0, /*radius*/-14.6, /*price*/  36.50,/*wavelength to trace through optical system*/550.0);
 
 	EO48942.buildLensTwoSurfaces_DCV(/*lens catalog*/ "EO", /*catalog number*/ 48942, /*diameter*/9.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025,/*max surface quality*/40.0,
 		/*back focal length*/-12.41,/*min surface quality*/20.0, /*irregularity*/4.0, /*center thickness*/  1.5, /*Centering (arc minutes)*/1.0, /*edge thickness*/2.43,
-		/*design wavelength*/587.6, /*numerical Aperture*/0.38, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-12.0,
+		/*design wavelength*/587.6, /*numerical Aperture*/0.38, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-11.9998,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNSF11_S1(), /*power (P-V)*/1.5, /*free aperture CA*/8.1,/*tolerance center thickness*/0.1,
-		/*tolerance focal lenght*/1.0, /*radius*/-19.16, /*price*/  36.50,/*wavelength to trace through optical system*/550.0);
+		/*tolerance focal lenght*/1.0, /*radius*/-19.157, /*price*/  36.50,/*wavelength to trace through optical system*/550.0);
 
 	EO48700.buildLensTwoSurfaces_DCV(/*lens catalog*/ "EO", /*catalog number*/ 48700, /*diameter*/9.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025,/*max surface quality*/40.0,
 		/*back focal length*/-18.49,/*min surface quality*/20.0, /*irregularity*/4.0, /*center thickness*/  1.5, /*Centering (arc minutes)*/1.0, /*edge thickness*/2.45,
-		/*design wavelength*/587.6, /*numerical Aperture*/0.25, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-18.0,
+		/*design wavelength*/587.6, /*numerical Aperture*/0.25, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-18.0001,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNBK7_S1(), /*power (P-V)*/1.5, /*free aperture CA*/8.1,/*tolerance center thickness*/0.1,
-		/*tolerance focal lenght*/1.0, /*radius*/-18.86, /*price*/  36.50,/*wavelength to trace through optical system*/550.0);
+		/*tolerance focal lenght*/1.0, /*radius*/-18.857, /*price*/  36.50,/*wavelength to trace through optical system*/550.0);
 
 	EO45928.buildLensTwoSurfaces_DCV(/*lens catalog*/ "EO", /*catalog number*/ 45928, /*diameter*/12.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025,/*max surface quality*/40.0,
 		/*back focal length*/-12.81,/*min surface quality*/20.0, /*irregularity*/4.0, /*center thickness*/  3.0, /*Centering (arc minutes)*/1.0, /*edge thickness*/4.71,
-		/*design wavelength*/587.6, /*numerical Aperture*/0.5, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-12.0,
+		/*design wavelength*/587.6, /*numerical Aperture*/0.5, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-11.9993,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNSF11_S1(), /*power (P-V)*/1.5, /*free aperture CA*/11.0,/*tolerance center thickness*/0.1,
 		/*tolerance focal lenght*/1.0, /*radius*/-19.47, /*price*/  37.50,/*wavelength to trace through optical system*/550.0);
 
 	EO48943.buildLensTwoSurfaces_DCV(/*lens catalog*/ "EO", /*catalog number*/ 48943, /*diameter*/12.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025,/*max surface quality*/40.0,
 		/*back focal length*/-18.65,/*min surface quality*/20.0, /*irregularity*/4.0, /*center thickness*/  2.0, /*Centering (arc minutes)*/1.0, /*edge thickness*/3.76,
-		/*design wavelength*/587.6, /*numerical Aperture*/0.33, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-18.0,
+		/*design wavelength*/587.6, /*numerical Aperture*/0.33, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-17.9996,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNBK7_S1(), /*power (P-V)*/1.5, /*free aperture CA*/10.8,/*tolerance center thickness*/0.1,
-		/*tolerance focal lenght*/1.0, /*radius*/-18.94, /*price*/  37.50,/*wavelength to trace through optical system*/550.0);
+		/*tolerance focal lenght*/1.0, /*radius*/-18.939, /*price*/  37.50,/*wavelength to trace through optical system*/550.0);
 
 	EO48701.buildLensTwoSurfaces_DCV(/*lens catalog*/ "EO", /*catalog number*/ 48701, /*diameter*/12.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025,/*max surface quality*/40.0,
 		/*back focal length*/-24.65,/*min surface quality*/20.0, /*irregularity*/4.0, /*center thickness*/  2.0, /*Centering (arc minutes)*/1.0, /*edge thickness*/3.31,
-		/*design wavelength*/587.6, /*numerical Aperture*/0.25, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-24.0,
+		/*design wavelength*/587.6, /*numerical Aperture*/0.25, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-23.9995,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNBK7_S1(), /*power (P-V)*/1.5, /*free aperture CA*/11.0, /*tolerance center thickness*/0.1,
-		/*tolerance focal lenght*/1.0, /*radius*/-25.14, /*price*/  37.50,/*wavelength to trace through optical system*/550.0);
+		/*tolerance focal lenght*/1.0, /*radius*/-25.142, /*price*/  37.50,/*wavelength to trace through optical system*/550.0);
 
 	EO45929.buildLensTwoSurfaces_DCV(/*lens catalog*/ "EO", /*catalog number*/ 45929, /*diameter*/20.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025,/*max surface quality*/40.0,
 		/*back focal length*/-20.55,/*min surface quality*/20.0, /*irregularity*/4.0, /*center thickness*/  2.0, /*Centering (arc minutes)*/1.0, /*edge thickness*/5.03,
-		/*design wavelength*/587.6, /*numerical Aperture*/0.5, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-20.0,
+		/*design wavelength*/587.6, /*numerical Aperture*/0.5, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-19.9986,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNSF11_S1(), /*power (P-V)*/1.5, /*free aperture CA*/19.0, /*tolerance center thickness*/0.1,
 		/*tolerance focal lenght*/1.0, /*radius*/-31.82, /*price*/  37.50,/*wavelength to trace through optical system*/550.0);
 
 	EO45930.buildLensTwoSurfaces_DCV(/*lens catalog*/ "EO", /*catalog number*/ 45931, /*diameter*/25.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025,/*max surface quality*/40.0,
 		/*back focal length*/-25.69,/*min surface quality*/20.0, /*irregularity*/4.0, /*center thickness*/  2.5, /*Centering (arc minutes)*/1.0, /*edge thickness*/6.05,
-		/*design wavelength*/587.6, /*numerical Aperture*/0.5, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-25.0,
+		/*design wavelength*/587.6, /*numerical Aperture*/0.5, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-25.0014,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNSF11_S1(), /*power (P-V)*/1.5, /*free aperture CA*/24.0, /*tolerance center thickness*/0.1,
 		/*tolerance focal lenght*/1.0, /*radius*/-39.78, /*price*/  42.0,/*wavelength to trace through optical system*/550.0);
 
 	EO45931.buildLensTwoSurfaces_DCV(/*lens catalog*/ "EO", /*catalog number*/ 45931, /*diameter*/25.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025,/*max surface quality*/40.0,
 		/*back focal length*/-50.82,/*min surface quality*/20.0, /*irregularity*/4.0, /*center thickness*/  2.5, /*Centering (arc minutes)*/1.0, /*edge thickness*/5.4,
-		/*design wavelength*/587.6, /*numerical Aperture*/0.25, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-50.0,
+		/*design wavelength*/587.6, /*numerical Aperture*/0.25, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-49.9978,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNBK7_S1(), /*power (P-V)*/1.5, /*free aperture CA*/24.0, /*tolerance center thickness*/0.1,
 		/*tolerance focal lenght*/1.0, /*radius*/-52.1, /*price*/  42.0,/*wavelength to trace through optical system*/550.0);
 
 	EO45932.buildLensTwoSurfaces_DCV(/*lens catalog*/ "EO", /*catalog number*/ 45932, /*diameter*/25.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025,/*max surface quality*/40.0,
 		/*back focal length*/-101.64,/*min surface quality*/20.0, /*irregularity*/4.0, /*center thickness*/  5.0, /*Centering (arc minutes)*/1.0, /*edge thickness*/6.43,
-		/*design wavelength*/587.6, /*numerical Aperture*/0.13, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-100.0,
+		/*design wavelength*/587.6, /*numerical Aperture*/0.13, /*min wavelength range*/400, /*max wavelength range*/1000, /*focal length*/-99.9956,
 		/*Coating*/"VIS-NIR (400-1000nm)", /*material*/mGlasses.getNBK7_S1(), /*power (P-V)*/1.5, /*free aperture CA*/24.0, /*tolerance center thickness*/0.1,
 		/*tolerance focal lenght*/1.0, /*radius*/-104.2, /*price*/  42.0,/*wavelength to trace through optical system*/550.0);
 
@@ -259,237 +259,237 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_plan_convex_lenses_VIS_NIR() //h
 	EO65289.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 65289, /*diameter*/ 1.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 0.17,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  30.0, /*max centering*/  45.0,
 		/*tolerance center thickness*/  0.05, /*radius first surface*/  0.51, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal lenght*/ 0.60,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal lenght*/ 0.599828,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  0.80,/*edge thickness*/  0.39, /*free aperture CA*/  0.5,/*numerical Aperture*/  0.83,
 		/*price*/  85.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO65290.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 65290, /*diameter*/ 1.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 0.57,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  30.0, /*max centering*/  45.0,
 		/*tolerance center thickness*/  0.05, /*radius first surface*/  0.85, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 1.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 0.999713,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  0.80,/*edge thickness*/  0.64, /*free aperture CA*/  0.5,/*numerical Aperture*/  0.50,
 		/*price*/  85.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO65291.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 65291, /*diameter*/ 1.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 1.07,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  30.0, /*max centering*/  45.0,
-		/*tolerance center thickness*/  0.05, /*radius first surface*/  1.28, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 1.5,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
+		/*tolerance center thickness*/  0.05, /*radius first surface*/  1.275, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
+		/*max wavelength range*/  1000.0, /*focal length*/ 1.49957,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  0.80,/*edge thickness*/  0.7, /*free aperture CA*/  0.5,/*numerical Aperture*/  0.33,
 		/*price*/  85.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO65292.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 65292, /*diameter*/ 1.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 1.57,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  30.0, /*max centering*/  45.0,
 		/*tolerance center thickness*/  0.05, /*radius first surface*/  1.7, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 2.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 1.99943, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  0.80,/*edge thickness*/  0.72, /*free aperture CA*/  0.5,/*numerical Aperture*/  0.25,
 		/*price*/  85.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO65293.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 65293, /*diameter*/ 1.5, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 0.57,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  30.0, /*max centering*/  45.0,
 		/*tolerance center thickness*/  0.05, /*radius first surface*/  0.85, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 1.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 0.999713,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  0.80,/*edge thickness*/  0.35, /*free aperture CA*/  1.0,/*numerical Aperture*/  0.75,
 		/*price*/  85.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO65294.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 65294, /*diameter*/ 1.5, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 1.07,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  30.0, /*max centering*/  45.0,
 		/*tolerance center thickness*/  0.05, /*radius first surface*/  1.28, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 1.5,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 1.50545,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  0.80,/*edge thickness*/  0.56, /*free aperture CA*/  1.0,/*numerical Aperture*/  0.5,
 		/*price*/  85.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO65295.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 65295, /*diameter*/ 1.5, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 1.57,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  30.0, /*max centering*/  45.0,
 		/*tolerance center thickness*/  0.05, /*radius first surface*/  1.7, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal lenth*/ 2.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal lenth*/ 1.99943,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  0.80,/*edge thickness*/  0.63, /*free aperture CA*/  1.0,/*numerical Aperture*/  0.38,
 		/*price*/  85.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO65296.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 65296, /*diameter*/ 2.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 1.07,		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  30.0, /*max centering*/  45.0,
 		/*tolerance center thickness*/  0.05, /*radius first surface*/  1.28, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 1.5,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 1.50545,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  0.80,/*edge thickness*/  0.32, /*free aperture CA*/  1.5,/*numerical Aperture*/  0.67,
 		/*price*/  85.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO65297.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 65297, /*diameter*/ 2.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 1.57,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  30.0, /*max centering*/  45.0,
 		/*tolerance center thickness*/  0.05, /*radius first surface*/  1.7, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 2.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 1.99943,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  0.80,/*edge thickness*/  0.48, /*free aperture CA*/  1.5,/*numerical Aperture*/  0.5,
 		/*price*/  85.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO65298.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 65298, /*diameter*/ 2.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 2.57,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  30.0, /*max centering*/  45.0,
 		/*tolerance center thickness*/  0.05, /*radius first surface*/  2.55, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 3.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 2.99914,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  0.80,/*edge thickness*/  0.60, /*free aperture CA*/  1.5,/*numerical Aperture*/  0.33,
 		/*price*/  85.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO65299.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 65299, /*diameter*/ 2.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 3.57,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  30.0, /*max centering*/  45.0,
 		/*tolerance center thickness*/  0.05, /*radius first surface*/  3.4, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 4.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 3.99885,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  0.80,/*edge thickness*/  0.65, /*free aperture CA*/  1.5,/*numerical Aperture*/  0.25,
 		/*price*/  85.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO65300.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 65300, /*diameter*/ 2.5, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 1.57,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  30.0, /*max centering*/  45.0,
 		/*tolerance center thickness*/  0.05, /*radius first surface*/  1.7, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 2.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 1.99943,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  0.80,/*edge thickness*/  0.63, /*free aperture CA*/  2.0,/*numerical Aperture*/  0.63,
 		/*price*/  85.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO65301.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 65301, /*diameter*/ 2.5, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 2.05,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  30.0, /*max centering*/  45.0,
 		/*tolerance center thickness*/  0.05, /*radius first surface*/  2.12, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 2.5, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 2.4934, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  0.80,/*edge thickness*/  0.39, /*free aperture CA*/  2.0,/*numerical Aperture*/  0.5,
 		/*price*/  85.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO65302.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 65302, /*diameter*/ 2.5, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 2.57,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  30.0, /*max centering*/  45.0,
 		/*tolerance center thickness*/  0.05, /*radius first surface*/  2.55, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 3.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 2.99914,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  0.80,/*edge thickness*/  0.47, /*free aperture CA*/  2.0,/*numerical Aperture*/  0.42,
 		/*price*/  85.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO65303.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 65303, /*diameter*/ 2.5, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 3.57,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  30.0, /*max centering*/  45.0,
-		/*tolerance center thickness*/  0.05, /*radius first surface*/  3.4, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 4.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
+		/*tolerance center thickness*/  0.05, /*radius first surface*/  3.401, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
+		/*max wavelength range*/  1000.0, /*focal length*/ 4.00003,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  0.80,/*edge thickness*/  0.56, /*free aperture CA*/  2.0,/*numerical Aperture*/  0.31,
 		/*price*/  85.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO65304.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 65304, /*diameter*/ 2.5, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 4.57,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  30.0, /*max centering*/  45.0,
-		/*tolerance center thickness*/  0.05, /*radius first surface*/  4.25, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 5.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
+		/*tolerance center thickness*/  0.05, /*radius first surface*/  4.251, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
+		/*max wavelength range*/  1000.0, /*focal length*/ 4.99974,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF9_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  0.80,/*edge thickness*/  0.61, /*free aperture CA*/  2.0,/*numerical Aperture*/  0.25,
 		/*price*/  85.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO49174.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 49174, /*diameter*/ 3.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 1.88,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  30.0, /*max centering*/  45.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/  2.35, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 3.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 2.99472,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  2.0,/*edge thickness*/  1.46, /*free aperture CA*/  2.5,/*numerical Aperture*/  0.5,
 		/*price*/  65.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO49175.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 49175, /*diameter*/ 3.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 3.5,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  30.0, /*max centering*/  45.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 3.62, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*foclal length*/ 4.5, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF44_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*foclal length*/ 4.50139, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF44_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.8,/*edge thickness*/  1.47, /*free aperture CA*/  2.5,/*numerical Aperture*/  0.33,
 		/*price*/  65.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO49176.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 49176, /*diameter*/ 3.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 4.81,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  3.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 3.1, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 6.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 5.99847,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.8,/*edge thickness*/  1.41, /*free aperture CA*/  2.5,/*numerical Aperture*/  0.25,
 		/*price*/  61.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO49177.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 49177, /*diameter*/ 3.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 6.51,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  3.0,
-		/*tolerance center thickness*/  0.1, /*radius first surface*/ 3.88, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 7.5,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*tolerance center thickness*/  0.1, /*radius first surface*/ 3.876, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
+		/*max wavelength range*/  1000.0, /*focal length*/ 7.50002,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.5,/*edge thickness*/  1.2, /*free aperture CA*/  2.5,/*numerical Aperture*/  0.2,
 		/*price*/  61.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO49178.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 49178, /*diameter*/ 3.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 8.01,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  3.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 4.65, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 9.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 8.99771, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.5,/*edge thickness*/  1.25, /*free aperture CA*/  2.5,/*numerical Aperture*/  0.17,
 		/*price*/  61.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO49179.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 49179, /*diameter*/ 3.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 11.29,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 6.2, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 12.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 11.9969,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.08,/*edge thickness*/  0.9, /*free aperture CA*/  2.5,/*numerical Aperture*/  0.13,
 		/*price*/  61.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO49180.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 49180, /*diameter*/ 3.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 14.17,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 7.78, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 15,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 15.0542,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.26,/*edge thickness*/  1.12, /*free aperture CA*/  2.5,/*numerical Aperture*/  0.1,
 		/*price*/  61.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO47850.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 47850, /*diameter*/ 4.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 3.06,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  30.0, /*max centering*/  45.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 3.21, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 4.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF44_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 3.99156,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF44_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.7,/*edge thickness*/  1.0, /*free aperture CA*/  3.6,/*numerical Aperture*/  0.5,
 		/*price*/  62.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO47851.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 47851, /*diameter*/ 4.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 4.51,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  3.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 3.11, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 6.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 6.01782,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  2.26,/*edge thickness*/  1.53, /*free aperture CA*/  3.6,/*numerical Aperture*/  0.33,
 		/*price*/  62.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO47852.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 47852, /*diameter*/ 4.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 7.17,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  3.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 5.36, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 8.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBAF10_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 7.99968,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBAF10_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.39,/*edge thickness*/  1.0, /*free aperture CA*/  3.6,/*numerical Aperture*/  0.25,
 		/*price*/  59.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO47853.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 47853, /*diameter*/ 4.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 8.92,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  3.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 5.19, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 10.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 10.0426,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.64,/*edge thickness*/  1.24, /*free aperture CA*/  3.6,/*numerical Aperture*/  0.2,
 		/*price*/  59.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO47854.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 47854, /*diameter*/ 4.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 11.0,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 6.22, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 12.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 12.0356,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.52,/*edge thickness*/  1.19, /*free aperture CA*/  3.6,/*numerical Aperture*/  0.17,
 		/*price*/  62.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO47855.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 47855, /*diameter*/ 4.5, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 3.05,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  30.0, /*max centering*/  45.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 3.61, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 4.5,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF44_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 4.48895,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF44_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  2.59,/*edge thickness*/  1.8, /*free aperture CA*/  4.05,/*numerical Aperture*/  0.5,
 		/*price*/  59.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO47856.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 47856, /*diameter*/ 4.5, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 7.41,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  3.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 4.65, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 9.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 8.99771,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  2.38,/*edge thickness*/  1.8, /*free aperture CA*/  4.05,/*numerical Aperture*/  0.25,
 		/*price*/  62.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO47857.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 47857, /*diameter*/ 5.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 3.96,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  30.0, /*max centering*/  45.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 4.02, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 5.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF44_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 4.99878,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNLASF44_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.87,/*edge thickness*/  1.0, /*free aperture CA*/  4.5,/*numerical Aperture*/  0.5,
 		/*price*/  59.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO48661.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 48661, /*diameter*/ 5.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 6.43,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  3.0,
-		/*tolerance center thickness*/  0.1, /*radius first surface*/ 5.89, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 7.5,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
+		/*tolerance center thickness*/  0.1, /*radius first surface*/ 5.885, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
+		/*max wavelength range*/  1000.0, /*focal length*/ 7.49955,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.9,/*edge thickness*/  1.34, /*free aperture CA*/  4.5,/*numerical Aperture*/  0.33,
 		/*price*/  44.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO47858.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 47858, /*diameter*/ 5.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 8.91,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  3.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 5.17, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 10.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 10.0039,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.64,/*edge thickness*/  1.0, /*free aperture CA*/  4.5,/*numerical Aperture*/  0.25,
 		/*price*/  44.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO47859.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 47859, /*diameter*/ 5.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 10.83,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 6.22, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 12.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 12.0356,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.77,/*edge thickness*/  1.25, /*free aperture CA*/  4.5,/*numerical Aperture*/  0.21,
 		/*price*/  44.5, /*wavelength to trace through optical system*/  550.0);
 
@@ -497,301 +497,301 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_plan_convex_lenses_VIS_NIR() //h
 	EO47860.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 47860, /*diameter*/ 5.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 13.94,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 7.75, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 15.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 14.9962, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.6,/*edge thickness*/  1.19, /*free aperture CA*/  4.5,/*numerical Aperture*/  0.17,
 		/*price*/  44.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO49913.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 49913, /*diameter*/ 5.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 19.02,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 10.34, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 20.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 20.0078, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.5,/*edge thickness*/  1.19, /*free aperture CA*/  4.5,/*numerical Aperture*/  0.13,
 		/*price*/  44.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO87917.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 87917, /*diameter*/ 5.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 23.95,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 12.92, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 25,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 25.0001,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.6,/*edge thickness*/  1.36, /*free aperture CA*/  4.5,/*numerical Aperture*/  0.1,
 		/*price*/  44.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO87918.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 87918, /*diameter*/ 5.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 28.95,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
-		/*tolerance center thickness*/  0.1, /*radius first surface*/ 15.5, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 30.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*tolerance center thickness*/  0.1, /*radius first surface*/ 15.504, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
+		/*max wavelength range*/  1000.0, /*focal length*/ 30.0001,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.6,/*edge thickness*/  1.4, /*free aperture CA*/  4.5,/*numerical Aperture*/  0.08,
 		/*price*/  44.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45465.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45465, /*diameter*/ 6.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 4.6,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  3.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 4.71, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 6.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 6.00219,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  2.5,/*edge thickness*/  1.42, /*free aperture CA*/  5.4,/*numerical Aperture*/  0.5,
 		/*price*/  44.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO49914.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 49914, /*diameter*/ 6.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 6.1,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  3.0,
-		/*tolerance center thickness*/  0.1, /*radius first surface*/ 5.89, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 7.5,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
+		/*tolerance center thickness*/  0.1, /*radius first surface*/ 5.885, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
+		/*max wavelength range*/  1000.0, /*focal length*/ 7.49955,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  2.5,/*edge thickness*/  1.68, /*free aperture CA*/  5.4,/*numerical Aperture*/  0.4,
 		/*price*/  36.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45466.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45466, /*diameter*/ 6.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 7.95,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  3.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 6.05, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 9.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF5_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 8.99357,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF5_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.75,/*edge thickness*/  0.95, /*free aperture CA*/  5.4,/*numerical Aperture*/  0.33,
 		/*price*/  36.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO38483.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38483, /*diameter*/ 6.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 8.82,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  3.0,
 		/*tolerance center thickness*/  0.05, /*radius first surface*/ 5.17, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 10.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 10.0039, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.8,/*edge thickness*/  0.84, /*free aperture CA*/  5.4,/*numerical Aperture*/  0.3,
 		/*price*/  36.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45467.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45467, /*diameter*/ 6.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 10.94,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 6.2, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 12.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 11.9969, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.6,/*edge thickness*/  0.83, /*free aperture CA*/  5.4,/*numerical Aperture*/  0.25,
 		/*price*/  36.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45468.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45468, /*diameter*/ 6.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 13.68,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 7.75, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 15.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 14.9962, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  2.0,/*edge thickness*/  1.4, /*free aperture CA*/  5.4,/*numerical Aperture*/  0.2,
 		/*price*/  35.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45469.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45469, /*diameter*/ 6.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 17.07,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 9.3, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 18.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 17.9954, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.42,/*edge thickness*/  0.92, /*free aperture CA*/  5.4,/*numerical Aperture*/  0.17,
 		/*price*/  35.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO38484.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38484, /*diameter*/ 6.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 19.04,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
-		/*tolerance center thickness*/  0.05, /*radius first surface*/ 10.34, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 20.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*tolerance center thickness*/  0.05, /*radius first surface*/ 10.335, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
+		/*max wavelength range*/  1000.0, /*focal length*/ 19.9981,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.45,/*edge thickness*/  1.01, /*free aperture CA*/  5.4,/*numerical Aperture*/  0.15,
 		/*price*/  35.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45470.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45470, /*diameter*/ 6.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 20.06,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 10.85, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 21.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 20.9946,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.42,/*edge thickness*/  1.0, /*free aperture CA*/  5.4,/*numerical Aperture*/  0.14,
 		/*price*/  35.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45471.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45471, /*diameter*/ 6.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 23.01,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 12.4, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 24.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 23.9939,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.5,/*edge thickness*/  1.13, /*free aperture CA*/  5.4,/*numerical Aperture*/  0.13,
 		/*price*/  35.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO38485.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38485, /*diameter*/ 6.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 24.04,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.05, /*radius first surface*/ 12.92, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 25.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 25.0001, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.45,/*edge thickness*/  1.1, /*free aperture CA*/  5.4,/*numerical Aperture*/  0.12,
 		/*price*/  35.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45472.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45472, /*diameter*/ 6.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 29.14,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 15.5, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 30.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 29.9924,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.3,/*edge thickness*/  1.01, /*free aperture CA*/  5.4,/*numerical Aperture*/  0.1,
 		/*price*/  35.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45473.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45473, /*diameter*/ 6.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 34.95,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 18.61, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 36.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 36.0102, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.6,/*edge thickness*/  1.36, /*free aperture CA*/  5.4,/*numerical Aperture*/  0.08,
 		/*price*/  35.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO47381.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 47381, /*diameter*/ 6.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 46.95,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 24.81, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 48.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 48.0071,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.6,/*edge thickness*/  1.42, /*free aperture CA*/  5.4,/*numerical Aperture*/  0.06,
 		/*price*/  35.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO67178.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 67178, /*diameter*/ 6.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 58.95,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 31.01, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 60.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 60.0041,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.6,/*edge thickness*/  1.45, /*free aperture CA*/  5.4,/*numerical Aperture*/  0.05,
 		/*price*/  35.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45696.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45696, /*diameter*/ 6.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 70.97,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 37.22, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 72.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 72.0203,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.6,/*edge thickness*/  1.48, /*free aperture CA*/  5.4,/*numerical Aperture*/  0.04,
 		/*price*/  35.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45474.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45474, /*diameter*/ 9.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 7.32,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  3.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 7.06, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 9.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 98.99691,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  3.0,/*edge thickness*/  1.38, /*free aperture CA*/  8.1,/*numerical Aperture*/  0.5,
 		/*price*/  35.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO49915.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 49915, /*diameter*/ 9.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 10.6,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 9.42, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 12.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 12.0044, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  2.5,/*edge thickness*/  1.36, /*free aperture CA*/  8.1,/*numerical Aperture*/  0.38,
 		/*price*/  37.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45475.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45475, /*diameter*/ 9.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 11.94,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 9.09, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 13.5,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF5_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 13.5126,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF5_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  2.6,/*edge thickness*/  1.4, /*free aperture CA*/  8.1,/*numerical Aperture*/  0.33,
 		/*price*/  37.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO49916.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 49916, /*diameter*/ 9.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 13.02,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 7.75, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 15.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 14.9962,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  3.0,/*edge thickness*/  1.56, /*free aperture CA*/  8.1,/*numerical Aperture*/  0.3,
 		/*price*/  37.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45476.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45476, /*diameter*/ 9.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 16.41,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 9.32, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 18.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 18.0341,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  2.41,/*edge thickness*/  1.26, /*free aperture CA*/  8.1,/*numerical Aperture*/  0.25,
 		/*price*/  37.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO38487.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38487, /*diameter*/ 9.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 18.55,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
-		/*tolerance center thickness*/  0.05, /*radius first surface*/ 10.34, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 20.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*tolerance center thickness*/  0.05, /*radius first surface*/ 10.335, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
+		/*max wavelength range*/  1000.0, /*focal length*/ 19.9981,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  2.2,/*edge thickness*/  1.17, /*free aperture CA*/  8.1,/*numerical Aperture*/  0.23,
 		/*price*/  36.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45477.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45477, /*diameter*/ 9.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 20.73,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 11.37, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 22.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 22.0008,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.93,/*edge thickness*/  1.0, /*free aperture CA*/  8.1,/*numerical Aperture*/  0.2,
 		/*price*/  36.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO38488.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38488, /*diameter*/ 9.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 23.68,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.05, /*radius first surface*/ 12.92, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 25, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 25.0001, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  2.0,/*edge thickness*/  1.19, /*free aperture CA*/  8.1,/*numerical Aperture*/  0.18,
 		/*price*/  36.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45478.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45478, /*diameter*/ 9.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 25.35,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 13.95, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 27.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 26.9931, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  2.5,/*edge thickness*/  2.5, /*free aperture CA*/  8.1,/*numerical Aperture*/  0.17,
 		/*price*/  36.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45479.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45479, /*diameter*/ 9.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 34.48,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 18.61, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 36.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 36.0102,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  2.5,/*edge thickness*/  2.3, /*free aperture CA*/  8.1,/*numerical Aperture*/  0.13,
 		/*price*/  36.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45703.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45703, /*diameter*/ 9.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 43.98,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 23.26, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 45.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 45.0079, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/  1.54,/*edge thickness*/  1.1, /*free aperture CA*/  8.1,/*numerical Aperture*/  0.1,
 		/*price*/  36.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO67179.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 67179, /*diameter*/ 9.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 52.69,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 27.91, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 54,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 54.0056,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 2.0,/*edge thickness*/  1.63, /*free aperture CA*/  8.1,/*numerical Aperture*/  0.08,
 		/*price*/  36.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO67180.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 67180, /*diameter*/ 9.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 70.68,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 37.21, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 72.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 72.001,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 2.0,/*edge thickness*/  1.73, /*free aperture CA*/  8.1,/*numerical Aperture*/  0.06,
 		/*price*/  36.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO67181.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 67181, /*diameter*/ 9.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 88.68,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 46.51, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 90.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 89.9964,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 2.0,/*edge thickness*/  1.78, /*free aperture CA*/  8.1,/*numerical Aperture*/  0.05,
 		/*price*/  36.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO38486.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38486, /*diameter*/ 9.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 8.49,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  3.0,
 		/*tolerance center thickness*/  0.05, /*radius first surface*/ 7.85, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 10.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 10.0036, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 2.7,/*edge thickness*/  1.28, /*free aperture CA*/  8.1,/*numerical Aperture*/  0.45,
 		/*price*/  37.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO63519.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 63519, /*diameter*/ 10.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 8.18,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 7.85, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 10.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 10.0036,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.25,/*edge thickness*/  1.45, /*free aperture CA*/  9.0,/*numerical Aperture*/  0.5,
 		/*price*/  36.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO63520.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 63520, /*diameter*/ 10.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 13.32,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 11.77, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 15.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 14.9991,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.0,/*edge thickness*/  1.89, /*free aperture CA*/  9.0,/*numerical Aperture*/  0.33,
 		/*price*/  37.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO63521.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 63521, /*diameter*/ 10.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 18.03,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 10.34, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 20.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 20.0078, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.0,/*edge thickness*/  1.71, /*free aperture CA*/  9.0,/*numerical Aperture*/  0.25,
 		/*price*/  36.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO63522.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 63522, /*diameter*/ 10.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 23.02,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 12.92, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 25.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 25.0001,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.0,/*edge thickness*/  1.99, /*free aperture CA*/  9.0,/*numerical Aperture*/  0.2,
 		/*price*/  36.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO63523.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 63523, /*diameter*/ 10.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 28.01,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 15.5, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 30.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 29.9924,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.0,/*edge thickness*/  2.17, /*free aperture CA*/  9.0,/*numerical Aperture*/  0.17,
 		/*price*/  36.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO63524.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 63524, /*diameter*/ 10.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 38.02,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 20.67, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 40.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 39.9963,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.0,/*edge thickness*/  2.39, /*free aperture CA*/  9.0,/*numerical Aperture*/  0.13,
 		/*price*/  36.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO63525.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 63525, /*diameter*/ 10.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 48.02,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 25.84, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 50.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 50.0002,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.0,/*edge thickness*/  2.51, /*free aperture CA*/  9.0,/*numerical Aperture*/  0.1,
 		/*price*/  36.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO63526.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 63526, /*diameter*/ 10.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 73.02,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 38.76, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 75.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 75.0002,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.0,/*edge thickness*/  2.68, /*free aperture CA*/  9.0,/*numerical Aperture*/  0.07,
 		/*price*/  36.5, /*wavelength to trace through optical system*/  550.0);
 
@@ -805,91 +805,91 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_plan_convex_lenses_VIS_NIR() //h
 	EO45480.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45480, /*diameter*/ 12.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 9.76,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 9.42, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 12.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 12.0044, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 4.0,/*edge thickness*/  1.84, /*free aperture CA*/  11.0,/*numerical Aperture*/  0.5,
 		/*price*/  36.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45481.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45481, /*diameter*/ 12.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 12.03,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 7.75, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 15.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 14.9962,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 4.5,/*edge thickness*/  1.66, /*free aperture CA*/  11.0,/*numerical Aperture*/  0.4,
 		/*price*/  42.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO45482.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45482, /*diameter*/ 12.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 16.22,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 12.11, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 18.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF5_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 18.002, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF5_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.0,/*edge thickness*/  1.41, /*free aperture CA*/  11.0,/*numerical Aperture*/  0.33,
 		/*price*/  42.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO49917.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 49917, /*diameter*/ 12.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 17.69,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
-		/*tolerance center thickness*/  0.1, /*radius first surface*/ 10.34, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 20.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*tolerance center thickness*/  0.1, /*radius first surface*/ 10.335, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
+		/*max wavelength range*/  1000.0, /*focal length*/ 19.9981,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.5,/*edge thickness*/  1.58, /*free aperture CA*/  19.0,/*numerical Aperture*/  0.3,
 		/*price*/  42.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO45483.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45483, /*diameter*/ 12.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 22.15,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 12.42, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 24.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 24.0326, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 2.8,/*edge thickness*/  1.25, /*free aperture CA*/  11.0,/*numerical Aperture*/  0.25,
 		/*price*/  42.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO45484.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45484, /*diameter*/ 12.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 28.02,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 15.5, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 30.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 29.9924, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.0,/*edge thickness*/  1.79, /*free aperture CA*/  11.0,/*numerical Aperture*/  0.2,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO33355.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 33355, /*diameter*/ 12.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 34.02,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
-		/*tolerance center thickness*/  0.1, /*radius first surface*/ 18.61, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 36.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*tolerance center thickness*/  0.1, /*radius first surface*/ 18.605, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 36.0005, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.0,/*edge thickness*/  2.01, /*free aperture CA*/  11.0,/*numerical Aperture*/  0.17,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO45485.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45485, /*diameter*/ 12.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 40.22,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 21.71, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 42,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 42.0086,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 2.7,/*edge thickness*/  1.85, /*free aperture CA*/  11.0,/*numerical Aperture*/  0.14,
 		/*price*/  51.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO45486.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45486, /*diameter*/ 12.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 46.36,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 24.82, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 48.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 48.0265, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 2.5,/*edge thickness*/  1.76, /*free aperture CA*/  11.0,/*numerical Aperture*/  0.13,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO45487.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45487, /*diameter*/ 12.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 52.02,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 27.91, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 54.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 54.0056, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.0,/*edge thickness*/  2.35, /*free aperture CA*/  11.0,/*numerical Aperture*/  0.11,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO45488.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45488, /*diameter*/ 12.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 58.37,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 31.02, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 60.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 60.0234, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 2.5,/*edge thickness*/  1.91, /*free aperture CA*/  11.0,/*numerical Aperture*/  0.1,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO45705.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45705, /*diameter*/ 12.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 70.42,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 37.21, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 72,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 72.001,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 2.4,/*edge thickness*/  1.91, /*free aperture CA*/  11.0,/*numerical Aperture*/  0.08,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO45489.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45489, /*diameter*/ 12.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 82.39,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 43.43, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 84, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 84.0366, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 2.5,/*edge thickness*/  2.08, /*free aperture CA*/  11.0,/*numerical Aperture*/  0.07,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
@@ -902,64 +902,64 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_plan_convex_lenses_VIS_NIR() //h
 
 	EO38501.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38501, /*diameter*/ 12.5, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 15.0,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
-		/*tolerance center thickness*/  0.1, /*radius first surface*/ 9.05, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 17.5, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*tolerance center thickness*/  0.1, /*radius first surface*/ 9.045, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 17.502, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.8,/*edge thickness*/ 1.29, /*free aperture CA*/  11.5,/*numerical Aperture*/  0.36,
 		/*price*/  42.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO38506.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38506, /*diameter*/ 12.5, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 33.42,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 18.09, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 35.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 35.004, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 2.4,/*edge thickness*/ 1.29, /*free aperture CA*/  11.5,/*numerical Aperture*/  0.18,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO62591.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 62591, /*diameter*/ 12.7, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 10.46,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 9.97, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 12.7,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 12.7053,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 4.0,/*edge thickness*/ 1.72, /*free aperture CA*/  11.7,/*numerical Aperture*/  0.5,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO62592.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 62592, /*diameter*/ 12.7, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 11.53,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 7.75, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 15.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 14.9962,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 5.25,/*edge thickness*/ 1.94, /*free aperture CA*/  11.7,/*numerical Aperture*/  0.42,
 		/*price*/  42.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO62593.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 62593, /*diameter*/ 12.7, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 16.46,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 9.87, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 19.1, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 19.0984, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 4.0,/*edge thickness*/ 1.69, /*free aperture CA*/  11.7,/*numerical Aperture*/  0.33,
 		/*price*/  42.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO38515.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38515, /*diameter*/ 12.7, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 17.49,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
-		/*tolerance center thickness*/  0.1, /*radius first surface*/ 10.34, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 20.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*tolerance center thickness*/  0.1, /*radius first surface*/ 10.335, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 19.9981, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.8,/*edge thickness*/ 1.62, /*free aperture CA*/  11.7,/*numerical Aperture*/  0.32,
 		/*price*/  42.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO62594.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 62594, /*diameter*/ 12.7, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 23.43,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 13.13, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 25.4, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 25.4064, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.0,/*edge thickness*/ 1.36, /*free aperture CA*/  11.7,/*numerical Aperture*/  0.25,
 		/*price*/  42.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO38516.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38516, /*diameter*/ 12.7, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 28.22,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
-		/*tolerance center thickness*/  0.1, /*radius first surface*/ 15.51, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 30.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*tolerance center thickness*/  0.1, /*radius first surface*/ 15.505, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
+		/*max wavelength range*/  1000.0, /*focal length*/ 30.002,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 2.7,/*edge thickness*/ 1.34, /*free aperture CA*/  11.7,/*numerical Aperture*/  0.21,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO62595.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 62595, /*diameter*/ 12.7, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 29.81,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 16.43, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 31.8,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 31.7919,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.0,/*edge thickness*/ 1.72, /*free aperture CA*/  11.7,/*numerical Aperture*/  0.2,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
@@ -973,84 +973,84 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_plan_convex_lenses_VIS_NIR() //h
 	EO38517.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38517, /*diameter*/ 12.7, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 38.48,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 20.67, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 40, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 39.9963, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 2.3,/*edge thickness*/ 1.3, /*free aperture CA*/  11.7,/*numerical Aperture*/  0.16,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO62597.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 62597, /*diameter*/ 12.7, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 42.69,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 23.0, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 44.5, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 44.5048, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 2.75,/*edge thickness*/ 1.86, /*free aperture CA*/  11.7,/*numerical Aperture*/  0.14,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO62598.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 62598, /*diameter*/ 12.7, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 49.15,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 26.25, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 50.8,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 50.7935,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 2.5,/*edge thickness*/ 1.72, /*free aperture CA*/  11.7,/*numerical Aperture*/  0.13,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO45491.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45491, /*diameter*/ 15, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 11.71,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 10.09, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 15.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF5_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 14.9992, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF5_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 5.5,/*edge thickness*/ 2.16, /*free aperture CA*/  14.0,/*numerical Aperture*/  0.5,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO49918.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 49918, /*diameter*/ 15, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 15.61,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 12.11, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 18.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF5_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 18.002,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF5_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 4.0,/*edge thickness*/ 1.4, /*free aperture CA*/  14.0,/*numerical Aperture*/  0.42,
 		/*price*/  42.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO63528.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 63528, /*diameter*/ 15, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 17.74,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 13.46, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 20.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF5_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 20.0088, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF5_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.8,/*edge thickness*/ 1.52, /*free aperture CA*/  14.0,/*numerical Aperture*/  0.38,
 		/*price*/  42.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO45492.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45492, /*diameter*/ 15, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 20.5,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 15.12, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 22.5,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF5_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 22.4765,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF5_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.35,/*edge thickness*/ 1.36, /*free aperture CA*/  14.0,/*numerical Aperture*/  0.33,
 		/*price*/  42.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO45493.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45493, /*diameter*/ 15, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 27.9,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 15.52, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 30.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 30.0311, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.18,/*edge thickness*/ 1.25, /*free aperture CA*/  14.0,/*numerical Aperture*/  0.25,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO45494.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45494, /*diameter*/ 15, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 38.02,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 20.67, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 40.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 39.9963,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.0,/*edge thickness*/ 1.59, /*free aperture CA*/  14.0,/*numerical Aperture*/  0.19,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO49919.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 49919, /*diameter*/ 15, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 43.35,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
-		/*tolerance center thickness*/  0.1, /*radius first surface*/ 23.26, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 45, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*tolerance center thickness*/  0.1, /*radius first surface*/ 23.255, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 49.9982, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 2.5,/*edge thickness*/ 1.26, /*free aperture CA*/  14.0,/*numerical Aperture*/  0.17,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO47382.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 47382, /*diameter*/ 15, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 58.65,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 31.11, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 60.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 60.1976,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 2.05,/*edge thickness*/ 1.13, /*free aperture CA*/  14.0,/*numerical Aperture*/  0.13,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO47383.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 47383, /*diameter*/ 15, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 73.79,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 38.76, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 75.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 75.0002, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 1.83,/*edge thickness*/ 1.1, /*free aperture CA*/  14.0,/*numerical Aperture*/  0.1,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
@@ -1064,91 +1064,91 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_plan_convex_lenses_VIS_NIR() //h
 	EO48426.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 48426, /*diameter*/ 18, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 15.2,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 14.13, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 18.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 18.0066, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 5.0,/*edge thickness*/ 1.76, /*free aperture CA*/  17.0,/*numerical Aperture*/  0.5,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO45496.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45496, /*diameter*/ 18, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 33.65,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 18.62, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 36.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 36.0295, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.57,/*edge thickness*/ 1.25, /*free aperture CA*/  17.0,/*numerical Aperture*/  0.25,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO45497.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45497, /*diameter*/ 18, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 52.02,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 27.91, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 54.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 54.0056, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.0,/*edge thickness*/ 1.51, /*free aperture CA*/  17.0,/*numerical Aperture*/  0.17,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO45498.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45498, /*diameter*/ 18, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 70.05,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 37.22, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 72.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 72.0203, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.0,/*edge thickness*/ 1.9, /*free aperture CA*/  17.0,/*numerical Aperture*/  0.13,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO45499.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45499, /*diameter*/ 20, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 17.42,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 15.7, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 20.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 20.0073,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 4.6,/*edge thickness*/ 1.0, /*free aperture CA*/  19.0,/*numerical Aperture*/  0.5,
 		/*price*/  42.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO49921.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 49921, /*diameter*/ 20, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 22.76,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 19.62, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 25.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 25.0027,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 4.0,/*edge thickness*/ 1.26, /*free aperture CA*/  19.0,/*numerical Aperture*/  0.4,
 		/*price*/  42.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO45707.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45707, /*diameter*/ 20, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 27.3,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 20.1, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 30.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBAF10_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 29.9988,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBAF10_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 4.5,/*edge thickness*/ 1.84, /*free aperture CA*/  19.0,/*numerical Aperture*/  0.33,
 		/*price*/  42.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO49922.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 49922, /*diameter*/ 20, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 32.04,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 18.09, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 35.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 35.004, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 4.5,/*edge thickness*/ 1.48, /*free aperture CA*/  19.0,/*numerical Aperture*/  0.29,
 		/*price*/  42.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO45500.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45500, /*diameter*/ 20, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 36.77,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 20.67, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 40.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 39.9963,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 4.9,/*edge thickness*/ 2.32, /*free aperture CA*/  19.0,/*numerical Aperture*/  0.25,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO45501.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45501, /*diameter*/ 20, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 47.87,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 25.84, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 50.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 50.0002,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.23,/*edge thickness*/ 1.22, /*free aperture CA*/  19.0,/*numerical Aperture*/  0.2,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO45502.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45502, /*diameter*/ 20, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 57.03,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 31.01, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 60.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 60.0041, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 4.5,/*edge thickness*/ 2.84, /*free aperture CA*/  19.0,/*numerical Aperture*/  0.17,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO45503.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45503, /*diameter*/ 20, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 68.03,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 36.18, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 70.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 70.008, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.0,/*edge thickness*/ 1.59, /*free aperture CA*/  19.0,/*numerical Aperture*/  0.14,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO47385.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 47385, /*diameter*/ 20, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 78.45,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 41.48, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 80.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 80.2634,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 2.35,/*edge thickness*/ 1.13, /*free aperture CA*/  19.0,/*numerical Aperture*/  0.13,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
@@ -1169,56 +1169,56 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_plan_convex_lenses_VIS_NIR() //h
 	EO45504.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45504, /*diameter*/ 25, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 20.22,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 16.82, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 25.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF5_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 25.0036, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF5_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 8.0,/*edge thickness*/ 2.43, /*free aperture CA*/  24.0,/*numerical Aperture*/  0.5,
 		/*price*/  45.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45505.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45505, /*diameter*/ 25, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 24.69,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 15.5, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 30.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 29.9924,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 8.06,/*edge thickness*/ 1.73, /*free aperture CA*/  24.0,/*numerical Aperture*/  0.42,
 		/*price*/  45.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45506.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45506, /*diameter*/ 25, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 30.42,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 18.11, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 35.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 35.0427,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 7.01,/*edge thickness*/ 2.0, /*free aperture CA*/  24.0,/*numerical Aperture*/  0.36,
 		/*price*/  45.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45507.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45507, /*diameter*/ 25, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 36.31,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 20.67, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 40.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 39.9963,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 5.6,/*edge thickness*/ 1.39, /*free aperture CA*/  24.0,/*numerical Aperture*/  0.31,
 		/*price*/  45.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45508.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45508, /*diameter*/ 25, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 46.75,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 25.84, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal langth*/ 50.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal langth*/ 50.0002, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 4.9,/*edge thickness*/ 1.68, /*free aperture CA*/  24.0,/*numerical Aperture*/  0.25,
 		/*price*/  44.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45509.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45509, /*diameter*/ 25, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 56.9,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 31.01, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 60.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 60.0041, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 4.7,/*edge thickness*/ 2.07, /*free aperture CA*/  24.0,/*numerical Aperture*/  0.21,
 		/*price*/  44.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45510.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45510, /*diameter*/ 25, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 72.0,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 38.76, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 75.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 75.0002, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 4.5,/*edge thickness*/ 2.43, /*free aperture CA*/  24.0,/*numerical Aperture*/  0.17,
 		/*price*/  44.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45511.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45511, /*diameter*/ 25, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 82.17,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 43.93, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 85.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 85.0041, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 4.3,/*edge thickness*/ 2.48, /*free aperture CA*/  24.0,/*numerical Aperture*/  0.15,
 		/*price*/  44.5, /*wavelength to trace through optical system*/  550.0);
 
@@ -1232,70 +1232,70 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_plan_convex_lenses_VIS_NIR() //h
 	EO45513.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45513, /*diameter*/ 25, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025,  /*back focal length*/ 122.7,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 64.62, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 125.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 125.039,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.5,/*edge thickness*/ 2.28, /*free aperture CA*/  24.0,/*numerical Aperture*/  0.1,
 		/*price*/  44.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45514.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45514, /*diameter*/ 25, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 147.81,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 77.55, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 150.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 150.059, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.5,/*edge thickness*/ 2.49, /*free aperture CA*/  24.0,/*numerical Aperture*/  0.08,
 		/*price*/  44.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45515.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45515, /*diameter*/ 25, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 172.85,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 90.47, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 175.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 175.059, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.5,/*edge thickness*/ 2.63, /*free aperture CA*/  24.0,/*numerical Aperture*/  0.07,
 		/*price*/  44.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO33361.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 33361, /*diameter*/ 25, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 197.89,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 103.36, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 200.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 200.001, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.2,/*edge thickness*/ 2.44, /*free aperture CA*/  24.0,/*numerical Aperture*/  0.06,
 		/*price*/  44.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO67182.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 67182, /*diameter*/ 25, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 148.02,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 129.2, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 250.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 250.001, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.0,/*edge thickness*/ 2.39, /*free aperture CA*/  24.0,/*numerical Aperture*/  0.05,
 		/*price*/  44.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO67183.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 67183, /*diameter*/ 25, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 298.02,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 155.04, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 300.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 300.001,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.0,/*edge thickness*/ 2.5, /*free aperture CA*/  24.0,/*numerical Aperture*/  0.04,
 		/*price*/  44.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO33367.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 33367, /*diameter*/ 25, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 397.89,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 206.72, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 400.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 400.001, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.2,/*edge thickness*/ 2.82, /*free aperture CA*/  24.0,/*numerical Aperture*/  0.03,
 		/*price*/  44.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO47387.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 47387, /*diameter*/ 25, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 497.89,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 258.4, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 500.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 500.002,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.2,/*edge thickness*/ 2.9, /*free aperture CA*/  24.0,/*numerical Aperture*/  0.03,
 		/*price*/  44.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO47388.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 47388, /*diameter*/ 25, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 747.89,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 387.6, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 750.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 750.002, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.2,/*edge thickness*/ 3.0, /*free aperture CA*/  24.0,/*numerical Aperture*/  0.02,
 		/*price*/  44.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO62599.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 62599, /*diameter*/ 25.4, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 21.48,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 19.93, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 25.4,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 25.3978,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 7.0,/*edge thickness*/ 2.43, /*free aperture CA*/  24.4,/*numerical Aperture*/  0.5,
 		/*price*/  45.5, /*wavelength to trace through optical system*/  550.0);
 
@@ -1309,70 +1309,70 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_plan_convex_lenses_VIS_NIR() //h
 	EO62601.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 62601, /*diameter*/ 25.4, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 47.5,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 26.25, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 50.8,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 50.7935,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 5.0,/*edge thickness*/ 1.72, /*free aperture CA*/  24.4,/*numerical Aperture*/  0.25,
 		/*price*/  44.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO62602.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 62602, /*diameter*/ 25.4, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 60.37,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 32.82, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 63.5,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 63.5064,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 4.75,/*edge thickness*/ 2.19, /*free aperture CA*/  24.4,/*numerical Aperture*/  0.2,
 		/*price*/  44.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO62603.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 62603, /*diameter*/ 25.4, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 73.56,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 39.38, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 76.2,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 76.1999,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 4.0,/*edge thickness*/ 1.9, /*free aperture CA*/  24.4,/*numerical Aperture*/  0.17,
 		/*price*/  44.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO62604.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 62604, /*diameter*/ 25.4, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 86.26,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 45.94, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 88.9, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 88.8935, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 4.0,/*edge thickness*/ 2.21, /*free aperture CA*/  24.4,/*numerical Aperture*/  0.14,
 		/*price*/  44.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO62605.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 62605, /*diameter*/ 25.4, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 98.97,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 52.51, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 101.6, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 101.606, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 4.0,/*edge thickness*/ 2.44, /*free aperture CA*/  24.4,/*numerical Aperture*/  0.13,
 		/*price*/  44.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO48662.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 48662, /*diameter*/ 30.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 26.13,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
-		/*tolerance center thickness*/  0.1, /*radius first surface*/ 23.54, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 30.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
+		/*tolerance center thickness*/  0.1, /*radius first surface*/ 23.541, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
+		/*max wavelength range*/  1000.0, /*focal length*/ 29.9995,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 6.9,/*edge thickness*/ 15.0, /*free aperture CA*/  29.0,/*numerical Aperture*/  0.5,
 		/*price*/  51.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO67184.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 67184, /*diameter*/ 30.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 37.2,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 31.39, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 40.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 40.0018, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 5.0,/*edge thickness*/ 1.18, /*free aperture CA*/  29.0,/*numerical Aperture*/  0.38,
 		/*price*/  51.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45709.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45709, /*diameter*/ 30.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 46.17,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 33.63, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 50.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF5_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 49.9923,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF5_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 6.35,/*edge thickness*/ 2.82, /*free aperture CA*/  29.0,/*numerical Aperture*/  0.3,
 		/*price*/  51.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO47389.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 47389, /*diameter*/ 30.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 56.03,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 31.01, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 60.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 60.0041,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 6.0,/*edge thickness*/ 2.13, /*free aperture CA*/  29.0,/*numerical Aperture*/  0.25,
 		/*price*/  50.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO45710.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45710, /*diameter*/ 30.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 70.95,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 38.76, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 75.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 75.0002, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 6.1,/*edge thickness*/ 3.08, /*free aperture CA*/  29.0,/*numerical Aperture*/  0.2,
 		/*price*/  50.0, /*wavelength to trace through optical system*/  550.0);
 
@@ -1386,28 +1386,28 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_plan_convex_lenses_VIS_NIR() //h
 	EO47390.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 47390, /*diameter*/ 30.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 116.04,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 62.02, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 120.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 120.008, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 6.0,/*edge thickness*/ 4.16, /*free aperture CA*/  29.0,/*numerical Aperture*/  0.13,
 		/*price*/  50.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO48663.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 48663, /*diameter*/ 40.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 35.13,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
-		/*tolerance center thickness*/  0.1, /*radius first surface*/ 31.39, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 40.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
+		/*tolerance center thickness*/  0.1, /*radius first surface*/ 31.389, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 40.0006, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 8.7,/*edge thickness*/ 1.5, /*free aperture CA*/  39.0,/*numerical Aperture*/  0.5,
 		/*price*/  62.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45712.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45712, /*diameter*/ 40.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 53.9,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 31.03, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 60.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 60.0428, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 9.31,/*edge thickness*/ 2.0, /*free aperture CA*/  39.0,/*numerical Aperture*/  0.33,
 		/*price*/  62.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO33385.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 33385, /*diameter*/ 40.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 74.73,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
-		/*tolerance center thickness*/  0.1, /*radius first surface*/ 41.34, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 80.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*tolerance center thickness*/  0.1, /*radius first surface*/ 41.344, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 80.0002, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 8.0,/*edge thickness*/ 2.84, /*free aperture CA*/  39.0,/*numerical Aperture*/  0.25,
 		/*price*/  61.5, /*wavelength to trace through optical system*/  550.0);
 
@@ -1421,35 +1421,35 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_plan_convex_lenses_VIS_NIR() //h
 	EO33379.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 33379, /*diameter*/ 40.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 196.7,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 103.36, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 200.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 200.001,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 5.0,/*edge thickness*/ 3.05, /*free aperture CA*/  39.0,/*numerical Aperture*/  0.1,
 		/*price*/  61.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO47391.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 47391, /*diameter*/ 40.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 296.7,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 155.04, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 300.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 300.001,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 5.0,/*edge thickness*/ 3.7, /*free aperture CA*/  39.0,/*numerical Aperture*/  0.07,
 		/*price*/  61.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO47392.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 47392, /*diameter*/ 40.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 396.7,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 206.72, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 400.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 400.001,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 5.0,/*edge thickness*/ 4.03, /*free aperture CA*/  39.0,/*numerical Aperture*/  0.05,
 		/*price*/  61.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45715.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45715, /*diameter*/ 50.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 43.28,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 39.24, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 50.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 50.0055,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 12.0,/*edge thickness*/ 3.0, /*free aperture CA*/  49.0,/*numerical Aperture*/  0.5,
 		/*price*/  67.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO45716.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45716, /*diameter*/ 50.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 67.75,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 38.76, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 75.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 75.0002,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 11.0,/*edge thickness*/ 1.86, /*free aperture CA*/  49.0,/*numerical Aperture*/  0.33,
 		/*price*/  67.5, /*wavelength to trace through optical system*/  550.0);
 
@@ -1477,35 +1477,35 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_plan_convex_lenses_VIS_NIR() //h
 	EO47394.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 47394, /*diameter*/ 50.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 169.05,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 90.44, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 175.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 175.001, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 9.0,/*edge thickness*/ 5.48, /*free aperture CA*/  49.0,/*numerical Aperture*/  0.14,
 		/*price*/  64.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO47395.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 47395, /*diameter*/ 50.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 196.66,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 103.36, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 200.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 200.001, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 5.07,/*edge thickness*/ 2.0, /*free aperture CA*/  49.0,/*numerical Aperture*/  0.13,
 		/*price*/  64.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO47396.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 47396, /*diameter*/ 50.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 246.74,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 129.21, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 250.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 250.02,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 4.94,/*edge thickness*/ 2.5, /*free aperture CA*/  49.0,/*numerical Aperture*/  0.1,
 		/*price*/  64.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO47397.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 47397, /*diameter*/ 50.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 496.7,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 258.4, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 500.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 500.002,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 5.0,/*edge thickness*/ 3.79, /*free aperture CA*/  49.0,/*numerical Aperture*/  0.05,
 		/*price*/  64.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO86911.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 86911, /*diameter*/ 75.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 53.49,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 38.76, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 75.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 75.0002,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 32.62,/*edge thickness*/ 3.66, /*free aperture CA*/  73.5,/*numerical Aperture*/  0.5,
 		/*price*/  125.0, /*wavelength to trace through optical system*/  550.0);
 
@@ -1519,112 +1519,112 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_plan_convex_lenses_VIS_NIR() //h
 	EO86913.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 86913, /*diameter*/ 75.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 194.24,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 103.36, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 200.00, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 200.0001, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 8.74,/*edge thickness*/ 1.7, /*free aperture CA*/  73.5,/*numerical Aperture*/  0.19,
 		/*price*/  125.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO86914.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 86914, /*diameter*/ 75.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 244.73,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 129.2, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 250.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 250.001,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 8.0,/*edge thickness*/ 2.44, /*free aperture CA*/  73.5,/*numerical Aperture*/  0.15,
 		/*price*/  125.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO86915.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 86915, /*diameter*/ 75.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 494.73,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 258.4, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 500.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 500.002,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 8.0,/*edge thickness*/ 5.26, /*free aperture CA*/  73.5,/*numerical Aperture*/  0.07,
 		/*price*/  125.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO38489.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38489, /*diameter*/ 10.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 10.99,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.05, /*radius first surface*/ 9.81, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 12.5,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 12.5014,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 2.7,/*edge thickness*/ 1.33, /*free aperture CA*/  9.0,/*numerical Aperture*/  0.4,
 		/*price*/  37.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO38492.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38492, /*diameter*/ 10.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 15.66,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
-		/*tolerance center thickness*/  0.05, /*radius first surface*/ 9.05, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 17.5,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*tolerance center thickness*/  0.05, /*radius first surface*/ 9.045, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
+		/*max wavelength range*/  1000.0, /*focal length*/ 17.502,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 2.8,/*edge thickness*/ 1.29, /*free aperture CA*/  9.0,/*numerical Aperture*/  0.29,
 		/*price*/  37.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO38494.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38494, /*diameter*/ 12.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 32.22,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.05, /*radius first surface*/ 12.92, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 25.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 25.0001, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 2.7,/*edge thickness*/ 1.22, /*free aperture CA*/  11.0,/*numerical Aperture*/  0.24,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO38496.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38496, /*diameter*/ 12.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 48.75,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.05, /*radius first surface*/ 25.84, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 50.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 50.0002, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 1.9,/*edge thickness*/ 1.19, /*free aperture CA*/  11.0,/*numerical Aperture*/  0.12,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO38499.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38499, /*diameter*/ 12.5, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 10.4,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 9.81, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 12.5, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 12.5014, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.75,/*edge thickness*/ 1.5, /*free aperture CA*/  11.5,/*numerical Aperture*/  0.5,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO38500.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38500, /*diameter*/ 12.5, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 13.26,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 11.77, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 15.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 14.9991, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.1,/*edge thickness*/ 1.3, /*free aperture CA*/  11.5,/*numerical Aperture*/  0.42,
 		/*price*/  42.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO38503.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38503, /*diameter*/ 12.5, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 17.69,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
-		/*tolerance center thickness*/  0.1, /*radius first surface*/ 10.34, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 20.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*tolerance center thickness*/  0.1, /*radius first surface*/ 10.335, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
+		/*max wavelength range*/  1000.0, /*focal length*/ 19.9981,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.5,/*edge thickness*/ 1.4, /*free aperture CA*/  11.5,/*numerical Aperture*/  0.36,
 		/*price*/  42.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO38504.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38504, /*diameter*/ 12.5, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 22.96,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 12.92, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 25.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 25.0001, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.1,/*edge thickness*/ 1.49, /*free aperture CA*/  11.5,/*numerical Aperture*/  0.25,
 		/*price*/  42.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO38505.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38505, /*diameter*/ 12.5, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 28.22,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
-		/*tolerance center thickness*/  0.1, /*radius first surface*/ 15.51, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 30.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*tolerance center thickness*/  0.1, /*radius first surface*/ 15.505, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 30.002, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 2.7,/*edge thickness*/ 1.39, /*free aperture CA*/  11.5,/*numerical Aperture*/  0.21,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO38507.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38507, /*diameter*/ 12.5, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 38.55,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 20.67, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 40.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 39.9963, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 2.2,/*edge thickness*/ 1.23, /*free aperture CA*/  11.5,/*numerical Aperture*/  0.16,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO38508.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38508, /*diameter*/ 12.5, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 43.68,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
-		/*tolerance center thickness*/  0.1, /*radius first surface*/ 23.26, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 45.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*tolerance center thickness*/  0.1, /*radius first surface*/ 23.255, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 44.9982, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 2.0,/*edge thickness*/ 1.14, /*free aperture CA*/  11.5,/*numerical Aperture*/  0.14,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO38509.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38509, /*diameter*/ 12.5, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 48.68,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 25.84, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 50.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 50.0002, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 2.0,/*edge thickness*/ 1.23, /*free aperture CA*/  11.5,/*numerical Aperture*/  0.13,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO38510.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38510, /*diameter*/ 12.5, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 73.88,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 38.76, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 75.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 75.0002, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 1.7,/*edge thickness*/ 1.19, /*free aperture CA*/  11.5,/*numerical Aperture*/  0.08,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
@@ -1645,63 +1645,63 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_plan_convex_lenses_VIS_NIR() //h
 	EO38519.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38519, /*diameter*/ 15.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 22.5,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 12.92, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 25.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 25.0001,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.8,/*edge thickness*/ 1.4, /*free aperture CA*/  14.0,/*numerical Aperture*/  0.3,
 		/*price*/  42.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO38520.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38520, /*diameter*/ 15.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 48.35,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 25.84, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 50.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 50.0002, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 2.5,/*edge thickness*/ 1.39, /*free aperture CA*/  14.0,/*numerical Aperture*/  0.15,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO38521.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38521, /*diameter*/ 18.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 17.59,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
-		/*tolerance center thickness*/  0.1, /*radius first surface*/ 15.7, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 20.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
+		/*tolerance center thickness*/  0.1, /*radius first surface*/ 15.695, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
+		/*max wavelength range*/  1000.0, /*focal length*/ 20.0009,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 4.3,/*edge thickness*/ 1.46, /*free aperture CA*/  17.0,/*numerical Aperture*/  0.45,
 		/*price*/  42.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO38522.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38522, /*diameter*/ 18.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 21.51,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
-		/*tolerance center thickness*/  0.1, /*radius first surface*/ 12.95, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 25.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*tolerance center thickness*/  0.1, /*radius first surface*/ 12.92, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
+		/*max wavelength range*/  1000.0, /*focal length*/ 25.0001, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 5.3,/*edge thickness*/ 1.65, /*free aperture CA*/  17.0,/*numerical Aperture*/  0.36,
 		/*price*/  42.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO38523.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38523, /*diameter*/ 18.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 27.1,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
-		/*tolerance center thickness*/  0.1, /*radius first surface*/ 15.51, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 30.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*tolerance center thickness*/  0.1, /*radius first surface*/ 15.505, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
+		/*max wavelength range*/  1000.0, /*focal length*/ 30.002,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 4.4,/*edge thickness*/ 1.52, /*free aperture CA*/  17.0,/*numerical Aperture*/  0.3,
 		/*price*/  42.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO38524.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38524, /*diameter*/ 18.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 48.09,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 25.84, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 50.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 50.0002, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 2.9,/*edge thickness*/ 1.28, /*free aperture CA*/  17.0,/*numerical Aperture*/  0.18,
 		/*price*/  41.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO38525.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38525, /*diameter*/ 25.4, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 30.46,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 18.09, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 35.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 35.004, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 6.9,/*edge thickness*/ 1.69, /*free aperture CA*/  24.4,/*numerical Aperture*/  0.36,
 		/*price*/  45.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO38542.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38542, /*diameter*/ 25.4, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 36.11,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 20.67, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 40.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 39.9963,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 5.9,/*edge thickness*/ 1.54, /*free aperture CA*/  24.4,/*numerical Aperture*/  0.32,
 		/*price*/  45.5, /*wavelength to trace through optical system*/  550.0);
 
 	EO38543.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38543, /*diameter*/ 25.4, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 72.69,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 38.76, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0,	/*focal length*/ 75.0, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0,	/*focal length*/ 75.0002, /*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 3.5,/*edge thickness*/ 1.36, /*free aperture CA*/  24.4,/*numerical Aperture*/  0.17,
 		/*price*/  44.5, /*wavelength to trace through optical system*/  550.0);
 
@@ -1728,7 +1728,7 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_plan_convex_lenses_VIS_NIR() //h
 
 	EO38548.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38548, /*diameter*/ 35.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 30.52,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
-		/*tolerance center thickness*/  0.1, /*radius first surface*/ 27.47, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
+		/*tolerance center thickness*/  0.1, /*radius first surface*/ 27.465, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
 		/*max wavelength range*/  1000.0, /*focal length*/ 35.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNSF11_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 8.0,/*edge thickness*/ 1.7, /*free aperture CA*/  34.0,/*numerical Aperture*/  0.5,
 		/*price*/  52.5, /*wavelength to trace through optical system*/  550.0);
@@ -1736,14 +1736,14 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_plan_convex_lenses_VIS_NIR() //h
 	EO38552.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38552, /*diameter*/ 35.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 44.4,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
 		/*tolerance center thickness*/  0.1, /*radius first surface*/ 25.84, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 50,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*max wavelength range*/  1000.0, /*focal length*/ 50.0002,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 8.5,/*edge thickness*/ 1.67, /*free aperture CA*/  34.0,/*numerical Aperture*/  0.35,
 		/*price*/  51.0, /*wavelength to trace through optical system*/  550.0);
 
 	EO38561.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 38561, /*diameter*/ 35.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025, /*back focal length*/ 66.04,
 		/*max surface quality*/  40.0, /*min surface quality*/  20.0,	/*curvature (P-V)*/  4.0,	/*min centering*/  0.0, /*max centering*/  1.0,
-		/*tolerance center thickness*/  0.1, /*radius first surface*/ 36.18, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
-		/*max wavelength range*/  1000.0, /*focal length*/ 70.0,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
+		/*tolerance center thickness*/  0.1, /*radius first surface*/ 36.175, /*design wavelength*/  587.6,	/*min wavelength range*/  400.0,
+		/*max wavelength range*/  1000.0, /*focal length*/ 69.9983,	/*Coating*/ "VIS-NIR (400-1000nm)",	/*material*/ mGlasses.getNBK7_S1(), /*power (P-V)*/  1.5,
 		/*tolerance focal lenght*/  1.0, /*center thickness*/ 6.0,/*edge thickness*/ 1.49, /*free aperture CA*/  34.0,/*numerical Aperture*/  0.25,
 		/*price*/  51.0, /*wavelength to trace through optical system*/  550.0);
 
@@ -2564,7 +2564,7 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_achroamticLensesMgF() //https://
 	EO45208.buildLensThreeSurfaces(/*lens catalog*/ "EO", /*catalog number*/ 45208, /*diameter*/6.25, /*max diameter tolerance*/ 0.0, /*min diameter tolerance*/ -0.025,/* focallength*/10.0,
 		/* tolerance focal length*/ 2.0, /*back focal length*/7.83, /*design wavelength*/ 587.6, /*free aperture CA*/5.625,	/*min centering*/ 0.0,
 		/*max centering*/3.0,  /*first thickness*/3.06,	/*second thickness*/1.03, /*tolerance center thickness*/ 0.2, /*radius first surface*/ 6.98,
-		/*radius second surface*/ -4.35, /*radius third surface*/ -41 - 01, /*edge thickness*/3.23, /*material first*/ mGlasses.getNBAF10_S1(),
+		/*radius second surface*/ -4.35, /*radius third surface*/ -41.01, /*edge thickness*/3.23, /*material first*/ mGlasses.getNBAF10_S1(),
 		/*material second*/ mGlasses.getNSF10_S1(),/*max surface quality*/ 40.0, /*min surface quality*/ 20.0, /*stop*/1.6, /*numerical aperture*/0.31,
 		/*coating*/ "MgF2",	/*coating specification*/ 1.75,	/*power wavelength*/ 632.8, /*power PV*/ 1.5,/*curvature wavelength*/ 632.8,
 		/*curvature PV*/ 4, /*bevel*/ "Protective bevel as needed",	/*type*/ "achromatic lens",	/*min wavelength*/ 400.0, /*max wavelength*/ 700.0,
@@ -2590,7 +2590,7 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_achroamticLensesMgF() //https://
 
 	EO49925.buildLensThreeSurfaces(/*lens catalog*/ "EO", /*catalog number*/ 49925, /*diameter*/ 6.25, /*max diameter tolerance*/ 0.0, /*min diameter tolerance*/ -0.025,/* focallength*/17.50,
 		/* tolerance focal length*/ 2.0, /*back focal length*/15.46, /*design wavelength*/ 587.6, /*free aperture CA*/5.625,/*min centering*/ 0.0,
-		/*max centering*/1.0,  /*first thickness*/2.75,	/*second thickness*/1.00, /*tolerance center thickness*/ 0.2, /*radius first surface*/ 11.13,
+		/*max centering*/1.0,  /*first thickness*/2.75,	/*second thickness*/1.00, /*tolerance center thickness*/ 0.2, /*radius first surface*/ 11.125,
 		/*radius second surface*/ -9.22, /*radius third surface*/ -38.49, /*edge thickness*/3.18, /*material first*/ mGlasses.getNSSK8_S1(),
 		/*material second*/ mGlasses.getNSF56_S1(),/*max surface quality*/ 40.0, /*min surface quality*/ 20.0, /*stop*/2.8, /*numerical aperture*/0.18,
 		/*coating*/ "MgF2",	/*coating specification*/ 1.75,	/*power wavelength*/ 632.8, /*power PV*/ 1.5,/*curvature wavelength*/ 632.8,
@@ -2735,7 +2735,7 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_achroamticLensesMgF() //https://
 	EO45347.buildLensThreeSurfaces(/*lens catalog*/ "EO", /*catalog number*/ 45347, /*diameter*/9.00, /*max diameter tolerance*/ 0.0, /*min diameter tolerance*/ -0.025,/* focallength*/45.00,
 		/* tolerance focal length*/ 2.0, /*back focal length*/42.97, /*design wavelength*/ 587.6, /*free aperture CA*/8.1,/*min centering*/ 0.0,
 		/*max centering*/1.0,  /*first thickness*/3.00,	/*second thickness*/1.30, /*tolerance center thickness*/ 0.2, /*radius first surface*/27.83,
-		/*radius second surface*/ -19.75, /*radius third surface*/ -57.05, /*edge thickness*/3.76, /*material first*/ mGlasses.getNBK7_S1(),
+		/*radius second surface*/ -19.75, /*radius third surface*/ -57.06, /*edge thickness*/3.76, /*material first*/ mGlasses.getNBK7_S1(),
 		/*material second*/ mGlasses.getNSF5_S1(),/*max surface quality*/ 40.0, /*min surface quality*/ 20.0, /*stop*/5.00, /*numerical aperture*/0.10,
 		/*coating*/ "MgF2",	/*coating specification*/ 1.75,	/*power wavelength*/ 632.8, /*power PV*/ 1.5,/*curvature wavelength*/ 632.8,
 		/*curvature PV*/ 4, /*bevel*/ "Protective bevel as needed",	/*type*/ "achromatic lens",	/*min wavelength*/ 400.0, /*max wavelength*/ 700.0,
@@ -2977,8 +2977,8 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_achroamticLensesMgF() //https://
 
 	EO49759.buildLensThreeSurfaces(/*lens catalog*/ "EO", /*catalog number*/ 49759, /*diameter*/12.70, /*max diameter tolerance*/ 0.0, /*min diameter tolerance*/ -0.025,/* focallength*/19.10,
 		/* tolerance focal length*/ 2.0, /*back focal length*/15.38, /*design wavelength*/ 587.6, /*free aperture CA*/11.70,/*min centering*/ 0.0,
-		/*max centering*/1.0,  /*first thickness*/5.25,	/*second thickness*/1.50, /*tolerance center thickness*/ 0.2, /*radius first surface*/13.19,
-		/*radius second surface*/ -10.22, /*radius third surface*/ -50.88, /*edge thickness*/4.72, /*material first*/ mGlasses.getNBAF10_S1(),
+		/*max centering*/1.0,  /*first thickness*/5.25,	/*second thickness*/1.50, /*tolerance center thickness*/ 0.2, /*radius first surface*/13.185,
+		/*radius second surface*/ -10.215, /*radius third surface*/ -50.875, /*edge thickness*/4.72, /*material first*/ mGlasses.getNBAF10_S1(),
 		/*material second*/ mGlasses.getNSF6_S1(),/*max surface quality*/ 40.0, /*min surface quality*/ 20.0, /*stop*/1.5, /*numerical aperture*/0.33,
 		/*coating*/ "MgF2",	/*coating specification*/ 1.75,	/*power wavelength*/ 632.8, /*power PV*/ 1.5,/*curvature wavelength*/ 632.8,
 		/*curvature PV*/ 4, /*bevel*/ "Protective bevel as needed",	/*type*/ "achromatic lens",	/*min wavelength*/ 400.0, /*max wavelength*/ 700.0,
@@ -3004,7 +3004,7 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_achroamticLensesMgF() //https://
 
 	EO49762.buildLensThreeSurfaces(/*lens catalog*/ "EO", /*catalog number*/ 49762, /*diameter*/12.70, /*max diameter tolerance*/ 0.0, /*min diameter tolerance*/ -0.025,/* focallength*/38.10,
 		/* tolerance focal length*/ 2.0, /*back focal length*/35.57, /*design wavelength*/ 587.6, /*free aperture CA*/11.70,/*min centering*/ 0.0,
-		/*max centering*/1.0,  /*first thickness*/3.50,	/*second thickness*/1.50, /*tolerance center thickness*/ 0.2, /*radius first surface*/25.43,
+		/*max centering*/1.0,  /*first thickness*/3.50,	/*second thickness*/1.50, /*tolerance center thickness*/ 0.2, /*radius first surface*/25.425,
 		/*radius second surface*/ -20.03, /*radius third surface*/ -74.39, /*edge thickness*/3.92, /*material first*/ mGlasses.getNSSK8_S1(),
 		/*material second*/ mGlasses.getNSF56_S1(),/*max surface quality*/ 40.0, /*min surface quality*/ 20.0, /*stop*/3.00, /*numerical aperture*/0.17,
 		/*coating*/ "MgF2",	/*coating specification*/ 1.75,	/*power wavelength*/ 632.8, /*power PV*/ 1.5,/*curvature wavelength*/ 632.8,
@@ -3022,8 +3022,8 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_achroamticLensesMgF() //https://
 
 	EO49764.buildLensThreeSurfaces(/*lens catalog*/ "EO", /*catalog number*/ 49764, /*diameter*/12.70, /*max diameter tolerance*/ 0.0, /*min diameter tolerance*/ -0.025,/* focallength*/50.80,
 		/* tolerance focal length*/ 2.0, /*back focal length*/48.86, /*design wavelength*/ 587.6, /*free aperture CA*/11.70,/*min centering*/ 0.0,
-		/*max centering*/1.0,  /*first thickness*/2.50,	/*second thickness*/1.50, /*tolerance center thickness*/ 0.2, /*radius first surface*/33.17,
-		/*radius second surface*/ -23.98, /*radius third surface*/ -89.03, /*edge thickness*/3.16, /*material first*/ mGlasses.getNBAK1_S1(),
+		/*max centering*/1.0,  /*first thickness*/2.50,	/*second thickness*/1.50, /*tolerance center thickness*/ 0.2, /*radius first surface*/33.165,
+		/*radius second surface*/ -23.975, /*radius third surface*/ -89.025, /*edge thickness*/3.16, /*material first*/ mGlasses.getNBAK1_S1(),
 		/*material second*/ mGlasses.getNSF15_S1(),/*max surface quality*/ 40.0, /*min surface quality*/ 20.0, /*stop*/4.00, /*numerical aperture*/0.13,
 		/*coating*/ "MgF2",	/*coating specification*/ 1.75,	/*power wavelength*/ 632.8, /*power PV*/ 1.5,/*curvature wavelength*/ 632.8,
 		/*curvature PV*/ 4, /*bevel*/ "Protective bevel as needed",	/*type*/ "achromatic lens",	/*min wavelength*/ 400.0, /*max wavelength*/ 700.0,
@@ -3040,8 +3040,8 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_achroamticLensesMgF() //https://
 
 	EO65551.buildLensThreeSurfaces(/*lens catalog*/ "EO", /*catalog number*/ 65551, /*diameter*/15.00, /*max diameter tolerance*/ 0.0, /*min diameter tolerance*/ -0.025,/* focallength*/15.00,
 		/* tolerance focal length*/ 2.0, /*back focal length*/8.57, /*design wavelength*/ 587.6, /*free aperture CA*/14.00,/*min centering*/ 0.0,
-		/*max centering*/1.0,  /*first thickness*/9.86,	/*second thickness*/3.00, /*tolerance center thickness*/ 0.2, /*radius first surface*/11.39,
-		/*radius second surface*/ -8.52, /*radius third surface*/ -24.69, /*edge thickness*/8.88, /*material first*/ mGlasses.getNBASF64_S1(),
+		/*max centering*/1.0,  /*first thickness*/9.86,	/*second thickness*/3.00, /*tolerance center thickness*/ 0.2, /*radius first surface*/11.393,
+		/*radius second surface*/ -8.523, /*radius third surface*/ -24.69, /*edge thickness*/8.88, /*material first*/ mGlasses.getNBASF64_S1(),
 		/*material second*/ mGlasses.getNSF66_S1(),/*max surface quality*/ 40.0, /*min surface quality*/ 20.0, /*stop*/1.00, /*numerical aperture*/0.50,
 		/*coating*/ "MgF2",	/*coating specification*/ 1.75,	/*power wavelength*/ 632.8, /*power PV*/ 1.5,/*curvature wavelength*/ 632.8,
 		/*curvature PV*/ 4, /*bevel*/ "Protective bevel as needed",	/*type*/ "achromatic lens",	/*min wavelength*/ 400.0, /*max wavelength*/ 700.0,
@@ -3202,7 +3202,7 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_achroamticLensesMgF() //https://
 
 	EO65552.buildLensThreeSurfaces(/*lens catalog*/ "EO", /*catalog number*/ 65552, /*diameter*/20.00, /*max diameter tolerance*/ 0.0, /*min diameter tolerance*/ -0.025,/* focallength*/20.00,
 		/* tolerance focal length*/ 2.0, /*back focal length*/11.73, /*design wavelength*/ 587.6, /*free aperture CA*/19.00,/*min centering*/ 0.0,
-		/*max centering*/1.0,  /*first thickness*/12.57,	/*second thickness*/4.00, /*tolerance center thickness*/ 0.2, /*radius first surface*/15.13,
+		/*max centering*/1.0,  /*first thickness*/12.57,	/*second thickness*/4.00, /*tolerance center thickness*/ 0.2, /*radius first surface*/15.134,
 		/*radius second surface*/ -11.18, /*radius third surface*/ -33.15, /*edge thickness*/11.25, /*material first*/ mGlasses.getNBASF64_S1(),
 		/*material second*/ mGlasses.getNSF66_S1(),/*max surface quality*/ 40.0, /*min surface quality*/ 20.0, /*stop*/1.00, /*numerical aperture*/0.50,
 		/*coating*/ "MgF2",	/*coating specification*/ 1.75,	/*power wavelength*/ 632.8, /*power PV*/ 1.5,/*curvature wavelength*/ 632.8,
@@ -3500,7 +3500,7 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_achroamticLensesMgF() //https://
 	EO49768.buildLensThreeSurfaces(/*lens catalog*/ "EO", /*catalog number*/ 49768, /*diameter*/25.40, /*max diameter tolerance*/ 0.0, /*min diameter tolerance*/ -0.025,/* focallength*/76.20,
 		/* tolerance focal length*/ 2.0, /*back focal length*/71.14, /*design wavelength*/ 587.6, /*free aperture CA*/24.40,/*min centering*/ 0.0,
 		/*max centering*/1.0,  /*first thickness*/7.00,	/*second thickness*/3.00, /*tolerance center thickness*/ 0.2, /*radius first surface*/50.85,
-		/*radius second surface*/ -40.06, /*radius third surface*/ -50.85, /*edge thickness*/7.85, /*material first*/ mGlasses.getNSSK8_S1(),
+		/*radius second surface*/ -40.06, /*radius third surface*/ -148.78, /*edge thickness*/7.85, /*material first*/ mGlasses.getNSSK8_S1(),
 		/*material second*/ mGlasses.getNSF56_S1(),/*max surface quality*/ 40.0, /*min surface quality*/ 20.0, /*stop*/3.00, /*numerical aperture*/0.17,
 		/*coating*/ "MgF2",	/*coating specification*/ 1.75,	/*power wavelength*/ 632.8, /*power PV*/ 1.5,/*curvature wavelength*/ 632.8,
 		/*curvature PV*/ 4, /*bevel*/ "Protective bevel as needed",	/*type*/ "achromatic lens",	/*min wavelength*/ 400.0, /*max wavelength*/ 700.0,
@@ -3607,8 +3607,8 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_achroamticLensesMgF() //https://
 
 	EO89681.buildLensThreeSurfaces(/*lens catalog*/ "EO", /*catalog number*/ 89681, /*diameter*/40.00, /*max diameter tolerance*/ 0.0, /*min diameter tolerance*/ -0.025,/* focallength*/50.00,
 		/* tolerance focal length*/ 2.0, /*back focal length*/34.46, /*design wavelength*/ 587.6, /*free aperture CA*/39.00,/*min centering*/ 0.0,
-		/*max centering*/1.0,  /*first thickness*/19.00, /*second thickness*/7.00, /*tolerance center thickness*/ 0.1, /*radius first surface*/28.56,
-		/*radius second surface*/ -29.97, /*radius third surface*/ 153.67, /*edge thickness*/16.52, /*material first*/ mGlasses.getNSK11_S1(),							//R3: positiv
+		/*max centering*/1.0,  /*first thickness*/19.00, /*second thickness*/7.00, /*tolerance center thickness*/ 0.1, /*radius first surface*/28.558,
+		/*radius second surface*/ -29.965, /*radius third surface*/ 153.666, /*edge thickness*/16.52, /*material first*/ mGlasses.getNSK11_S1(),							//R3: positiv
 		/*material second*/ mGlasses.getNSF5_S1(),/*max surface quality*/ 40.0, /*min surface quality*/ 20.0, /*stop*/1.25, /*numerical aperture*/0.40,
 		/*coating*/ "MgF2",	/*coating specification*/ 1.75,	/*power wavelength*/ 632.8, /*power PV*/ 1.5,/*curvature wavelength*/ 632.8,
 		/*curvature PV*/ 4, /*bevel*/ "Protective bevel as needed",	/*type*/ "achromatic lens",	/*min wavelength*/ 400.0, /*max wavelength*/ 700.0,
@@ -3797,7 +3797,7 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_achroamticLensesMgF() //https://
 	EO33918.buildLensThreeSurfaces(/*lens catalog*/ "EO", /*catalog number*/ 33918, /*diameter*/75.00, /*max diameter tolerance*/ 0.0, /*min diameter tolerance*/ -0.025,/* focallength*/100.00,
 		/* tolerance focal length*/ 2.0, /*back focal length*/78.32, /*design wavelength*/ 587.6, /*free aperture CA*/73.50,/*min centering*/ 0.0,
 		/*max centering*/1.0,  /*first thickness*/26.00,	/*second thickness*/12.70, /*tolerance center thickness*/ 0.2, /*radius first surface*/64.67,
-		/*radius second surface*/ -64.67, /*radius third surface*/ -323.59, /*edge thickness*/24.66, /*material first*/ mGlasses.getNBAF10_S1(),				//NBaF10
+		/*radius second surface*/ -64.67, /*radius third surface*/ -343.586, /*edge thickness*/24.66, /*material first*/ mGlasses.getNBAF10_S1(),				//NBaF10
 		/*material second*/ mGlasses.getNSF57_S1(),/*max surface quality*/ 40.0, /*min surface quality*/ 20.0, /*stop*/1.33, /*numerical aperture*/0.38,
 		/*coating*/ "MgF2",	/*coating specification*/ 1.75,	/*power wavelength*/ 632.8, /*power PV*/ 1.5,/*curvature wavelength*/ 632.8,
 		/*curvature PV*/ 4, /*bevel*/ "Protective bevel as needed",	/*type*/ "achromatic lens",	/*min wavelength*/ 400.0, /*max wavelength*/ 700.0,
@@ -3806,7 +3806,7 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_achroamticLensesMgF() //https://
 	EO33919.buildLensThreeSurfaces(/*lens catalog*/ "EO", /*catalog number*/ 33919, /*diameter*/75.00, /*max diameter tolerance*/ 0.0, /*min diameter tolerance*/ -0.025,/* focallength*/150.00,
 		/* tolerance focal length*/ 2.0, /*back focal length*/126.46, /*design wavelength*/ 587.6, /*free aperture CA*/73.50,/*min centering*/ 0.0,
 		/*max centering*/1.0,  /*first thickness*/23.20,	/*second thickness*/23.10, /*tolerance center thickness*/ 0.2, /*radius first surface*/92.05,
-		/*radius second surface*/ -72.85, /*radius third surface*/ -305.87, /*edge thickness*/36.01, /*material first*/ mGlasses.getNBAK1_S1(),				//NBaK1
+		/*radius second surface*/ -72.85, /*radius third surface*/ -305.865, /*edge thickness*/36.01, /*material first*/ mGlasses.getNBAK1_S1(),				//NBaK1
 		/*material second*/ mGlasses.getNSF8_S1(),/*max surface quality*/ 40.0, /*min surface quality*/ 20.0, /*stop*/2.00, /*numerical aperture*/0.25,
 		/*coating*/ "MgF2",	/*coating specification*/ 1.75,	/*power wavelength*/ 632.8, /*power PV*/ 1.5,/*curvature wavelength*/ 632.8,
 		/*curvature PV*/ 4, /*bevel*/ "Protective bevel as needed",	/*type*/ "achromatic lens",	/*min wavelength*/ 400.0, /*max wavelength*/ 700.0,
@@ -3833,7 +3833,7 @@ void EdmundOpticsLensCatalog::loadLensCatalogEO_achroamticLensesMgF() //https://
 	EO45419.buildLensThreeSurfaces(/*lens catalog*/ "EO", /*catalog number*/ 45419, /*diameter*/75.00, /*max diameter tolerance*/ 0.0, /*min diameter tolerance*/ -0.025,/* focallength*/400.00,
 		/* tolerance focal length*/ 2.0, /*back focal length*/392.10, /*design wavelength*/ 587.6, /*free aperture CA*/73.50,/*min centering*/ 0.0,
 		/*max centering*/1.0,  /*first thickness*/11.05,	/*second thickness*/6.00, /*tolerance center thickness*/ 0.2, /*radius first surface*/246.50,
-		/*radius second surface*/ -180.92, /*radius third surface*/ -626.70, /*edge thickness*/12.84, /*material first*/ mGlasses.getNBK7_S1(),
+		/*radius second surface*/ -180.92, /*radius third surface*/ -526.70, /*edge thickness*/12.84, /*material first*/ mGlasses.getNBK7_S1(),
 		/*material second*/ mGlasses.getNSF5_S1(),/*max surface quality*/ 40.0, /*min surface quality*/ 20.0, /*stop*/5.33, /*numerical aperture*/0.09,
 		/*coating*/ "MgF2",	/*coating specification*/ 1.75,	/*power wavelength*/ 632.8, /*power PV*/ 1.5,/*curvature wavelength*/ 632.8,
 		/*curvature PV*/ 4, /*bevel*/ "Protective bevel as needed",	/*type*/ "achromatic lens",	/*min wavelength*/ 400.0, /*max wavelength*/ 700.0,
@@ -5551,45 +5551,45 @@ LensesTwoSurfaces EdmundOpticsLensCatalog::getEO45909()
 
 // achromatic lenses
 
-LensThreeSurfaces EdmundOpticsLensCatalog::getEO65564()
-{
-	return EO65564;
-}
-
-LensThreeSurfaces EdmundOpticsLensCatalog::getEO65565()
-{
-	return EO65565;
-}
-
-LensThreeSurfaces EdmundOpticsLensCatalog::getEO65566()
-{
-	return EO65566;
-}
-
-LensThreeSurfaces EdmundOpticsLensCatalog::getEO65567()
-{
-	return EO65567;
-}
-
-LensThreeSurfaces EdmundOpticsLensCatalog::getEO65568()
-{
-	return EO65568;
-}
-
-LensThreeSurfaces EdmundOpticsLensCatalog::getEO65569()
-{
-	return EO65569;
-}
-
-LensThreeSurfaces EdmundOpticsLensCatalog::getEO83338()
-{
-	return EO83338;
-}
-
-LensThreeSurfaces EdmundOpticsLensCatalog::getEO83339()
-{
-	return EO83339;
-}
+//LensThreeSurfaces EdmundOpticsLensCatalog::getEO65564()
+//{
+//	return EO65564;
+//}
+//
+//LensThreeSurfaces EdmundOpticsLensCatalog::getEO65565()
+//{
+//	return EO65565;
+//}
+//
+//LensThreeSurfaces EdmundOpticsLensCatalog::getEO65566()
+//{
+//	return EO65566;
+//}
+//
+//LensThreeSurfaces EdmundOpticsLensCatalog::getEO65567()
+//{
+//	return EO65567;
+//}
+//
+//LensThreeSurfaces EdmundOpticsLensCatalog::getEO65568()
+//{
+//	return EO65568;
+//}
+//
+//LensThreeSurfaces EdmundOpticsLensCatalog::getEO65569()
+//{
+//	return EO65569;
+//}
+//
+//LensThreeSurfaces EdmundOpticsLensCatalog::getEO83338()
+//{
+//	return EO83338;
+//}
+//
+//LensThreeSurfaces EdmundOpticsLensCatalog::getEO83339()
+//{
+//	return EO83339;
+//}
 
 
 LensThreeSurfaces EdmundOpticsLensCatalog::getEO45262()
@@ -6370,6 +6370,21 @@ LensThreeSurfaces EdmundOpticsLensCatalog::getEO45419()
 	return EO45419;
 }
 
+// Doppelkonkave Linsen (DCV) mit NIR-I-Beschichtung
+//https://www.edmundoptics.de/f/nir-i-coated-double-concave-dcv-lenses/13500/
+LensesTwoSurfaces EdmundOpticsLensCatalog::getEO49540()
+{
+	return EO49540;
+}
+
+// Achromate mit VIS-NIR-Beschichtung 
+//https://www.edmundoptics.de/f/vis-nir-coated-achromatic-lenses/13536/
+LensThreeSurfaces EdmundOpticsLensCatalog::getEO84127()
+{
+	return EO84127;
+}
+
+
 std::vector<LensesTwoSurfaces> EdmundOpticsLensCatalog::getAll_DoubleConvexLenses()
 {
 	std::vector<LensesTwoSurfaces> returnDoubleConvexLenses;
@@ -6470,14 +6485,14 @@ std::vector<LensThreeSurfaces> EdmundOpticsLensCatalog::getAll_achroamticLensesM
 	std::vector<LensThreeSurfaces> returnAchromaticLenses;
 
 	// https://www.edmundoptics.de/f/MgFsub2sub-Coated-Achromatic-Lenses/12006/
-	returnAchromaticLenses.push_back(getEO65564());
-	returnAchromaticLenses.push_back(getEO65565());
-	returnAchromaticLenses.push_back(getEO65566());
-	returnAchromaticLenses.push_back(getEO65567());
-	returnAchromaticLenses.push_back(getEO65568());
-	returnAchromaticLenses.push_back(getEO65569());
-	returnAchromaticLenses.push_back(getEO83338());
-	returnAchromaticLenses.push_back(getEO83339());
+	//returnAchromaticLenses.push_back(getEO65564());
+	//returnAchromaticLenses.push_back(getEO65565());
+	//returnAchromaticLenses.push_back(getEO65566());
+	//returnAchromaticLenses.push_back(getEO65567());
+	//returnAchromaticLenses.push_back(getEO65568());
+	//returnAchromaticLenses.push_back(getEO65569());
+	//returnAchromaticLenses.push_back(getEO83338());
+	//returnAchromaticLenses.push_back(getEO83339());
 	returnAchromaticLenses.push_back(getEO45262());
 	returnAchromaticLenses.push_back(getEO47721());
 	returnAchromaticLenses.push_back(getEO45089());
@@ -6643,7 +6658,7 @@ std::vector<LensesTwoSurfaces> EdmundOpticsLensCatalog::getAll_PlanConvexLenses(
 {
 	std::vector<LensesTwoSurfaces> returnPlanConvexLenses;
 
-	https://www.edmundoptics.de/f/vis-nir-coated-plano-convex-pcx-lenses/12278/
+https://www.edmundoptics.de/f/vis-nir-coated-plano-convex-pcx-lenses/12278/
 	returnPlanConvexLenses.push_back(getEO65289());
 	returnPlanConvexLenses.push_back(getEO65290());
 	returnPlanConvexLenses.push_back(getEO65291());
@@ -6919,3 +6934,304 @@ std::vector<LensesTwoSurfaces> EdmundOpticsLensCatalog::getAll_PlanConcavLenses(
 	return returnPlanConcavLenses;
 }
 
+void EdmundOpticsLensCatalog::loadLensCatalogEO_double_concav_lenses_NIR_I()
+{
+	//https://www.edmundoptics.de/f/nir-i-coated-double-concave-dcv-lenses/13500/
+
+	EO49540.buildLensTwoSurfaces_DCV(/*lens catalog*/ "EO", /*catalog number*/ 49540, /*diameter*/6.0, /*max tolerance diameter*/0.0, /*min tolerance diameter*/-0.025,/*max surface quality*/40.0,
+		/*back focal length*/-6.41,/*min surface quality*/20.0, /*irregularity*/4.0, /*center thickness*/  1.5, /*Centering (arc minutes)*/3.0, /*edge thickness*/2.29,
+		/*design wavelength*/587.6, /*numerical Aperture*/0.5, /*min wavelength range*/600.0, /*max wavelength range*/1050, /*focal length*/-6.0,
+		/*Coating*/"Ravg<_0.5;600-1050nm", /*material*/mGlasses.getSF11_S1(), /*power (P-V)*/1.5, /*free aperture CA*/5.4,/*tolerance center thickness*/0.05,
+		/*tolerance focal lenght*/1.0, /*radius*/-9.74, /*price*/  35.50,/*wavelength to trace through optical system*/587.6);
+}
+
+std::vector<LensesTwoSurfaces> EdmundOpticsLensCatalog::getAll_LensCatalogEO_double_concav_lenses_NIR_I()
+{
+	//https://www.edmundoptics.de/f/nir-i-coated-double-concave-dcv-lenses/13500/
+
+	std::vector<LensesTwoSurfaces> return_double_concav_lenses_NIR_I;
+	return_double_concav_lenses_NIR_I.push_back(getEO49540());
+
+	return return_double_concav_lenses_NIR_I;
+}
+
+// Achromate mit VIS-NIR-Beschichtung 
+void EdmundOpticsLensCatalog::loadLensCatalogEO_achroamticLenses_VIS_NIR_Coating()
+{
+	//https://www.edmundoptics.de/f/vis-nir-coated-achromatic-lenses/13536/
+
+
+	EO84127.buildLensThreeSurfaces(/*lens catalog*/ "EO", /*catalog number*/ 84127, /*diameter*/ 1.5, /*max diameter tolerance*/ 0.0, /*min diameter tolerance*/ -0.025,/* focallength*/ 3.0,
+		/* tolerance focal length*/ 2.0, /*back focal length*/ 1.89, /*design wavelength*/ 587.6, /*free aperture CA*/ 1.6,	/*min centering*/ 30.0,
+		/*max centering*/ 45,  /*first thickness*/ 1.0,	/*second thickness*/ 1.0, /*tolerance center thickness*/ 0.1, /*radius first surface*/ 1.68,
+		/*radius second surface*/ -1.68, /*radisu third surface*/ -7.39, /*edge thickness*/ 1.6, /*material first*/ mGlasses.getNPSK53A_S1(),
+		/*material second*/ mGlasses.getNLASF9_S1(),/*max surface quality*/ 40.0, /*min surface quality*/ 20.0, /*stop*/ 1.5, /*numerical aperture*/ 0.33,
+		/*coating*/ "VIS-NIR(400-1000nm)",	/*coating specification 1*/ "0.25@880nm", /*coating specification 2*/ "1.25@400-870nm", 
+		/*coating specification 3*/ "1.25@890-1000nm", /*power wavelength*/ 632.8, /*power PV*/ 1.5,/*curvature wavelength*/ 632.8, 
+		/*curvature PV*/ 4, /*bevel*/ "Protective bevel as needed",	/*type*/ "achromatic lens",	/*min wavelength*/ 400.0, /*max wavelength*/ 1000.0,
+		/*price*/ 225.0, /*wavelength to trace*/ 550.0);
+}
+
+std::vector<LensThreeSurfaces> EdmundOpticsLensCatalog::getAll_LensCatalogEO_achroamticLenses_VIS_NIR_Coating()
+{
+	//https://www.edmundoptics.de/f/vis-nir-coated-achromatic-lenses/13536/
+
+	std::vector<LensThreeSurfaces> returnAchromaticLenses;
+
+
+	returnAchromaticLenses.push_back(getEO84127());
+
+	return returnAchromaticLenses;
+
+}
+
+// Broadband AR Coated Negative Achromatic Lenses
+void EdmundOpticsLensCatalog::loadLensCatalogEO_Broadband_AR_Coated_Negative_Achromatic_Lenses()
+{
+	// https://www.edmundoptics.de/f/broadband-ar-coated-negative-achromatic-lenses/13623/
+
+	EO62478.buildLensThreeSurfaces(/*lens catalog*/ "EO", /*catalog number*/ 62478, /*diameter*/ 6.25, /*max diameter tolerance*/ 0.0, /*min diameter tolerance*/ -0.025,
+		/*focallength*/ -12.0, /* tolerance focal length*/ 2.0, /*back focal length*/ 11.92, /*design wavelength*/ 587.6, /*free aperture CA*/ 5.625, /*max centering*/ 3.0,  
+		/*first thickness*/ 1.0,	/*second thickness*/ 2.5, /*tolerance center thickness*/ 0.2, /*radius first surface*/ -6.545, /*radius second surface*/ 5.1, 
+		/*radisu third surface*/ 89.1, /*edge thickness*/ 4.19, /*material first*/ mGlasses.getNBAF10_S1(),	/*material second*/ mGlasses.getNSF10_S1(),
+		/*max surface quality*/ 40.0, /*min surface quality*/ 20.0, /*F-Number*/ 1.6, /*numerical aperture*/ 0.31, /*coating*/ "VIS 0°(425 - 675nm)",	
+		/*coating specification*/ 0.4,	/*min wavelength coating*/ 425.0, /*max wavelength coating*/ 675.0, /*power PV*/ 1.5, /*curvature PV*/ 4, 
+		/*bevel*/ "Protective bevel as needed",	/*type*/ "negative achromatic lens",	/*min wavelength*/ 425, /*max wavelength*/ 675.0,
+		/*price*/ 62.50, /*wavelength to trace*/ 550.0);
+}
+
+std::vector<LensThreeSurfaces> EdmundOpticsLensCatalog::getAll_LensCatalogEO_Broadband_AR_Coated_Negative_Achromatic_Lenses()
+{
+	std::vector<LensThreeSurfaces> returnAchromaticLenses;
+
+
+	returnAchromaticLenses.push_back(getEO62478());
+
+	return returnAchromaticLenses;
+
+}
+
+// Broadband AR Coated Negative Achromatic Lenses
+// https://www.edmundoptics.de/f/broadband-ar-coated-negative-achromatic-lenses/13623/
+LensThreeSurfaces EdmundOpticsLensCatalog::getEO62478()
+{
+	return EO62478;
+}
+
+// Large Precision Achromatic Lenses 
+void EdmundOpticsLensCatalog::loadLensCatalogEO_Large_Precision_Achromatic_Lenses_NoAirspace()
+{
+	// https://www.edmundoptics.de/f/large-precision-achromatic-lenses/11679/
+	// *** NO AIRSPACE *** ///
+
+	EO31402.buildLensThreeSurfaces(/*lens catalog*/ "EO", /*catalog number*/ 31402, /*diameter*/ 63.50, /*max diameter tolerance*/ 0.0, /*min diameter tolerance*/ -0.1,
+		/*focallength*/ 354.87, /* tolerance focal length*/ 1.0, /*back focal length*/ 344.52, /*Focal Length Specification Wavelength*/ 587.6, /*free aperture CA*/ 62.70, 
+		/*max centering*/ 5.0, /*first thickness*/ 11.94,	/*second thickness*/ 8.86, /*tolerance center thickness*/ 0.2, /*radius first surface*/ 203.94, 
+		/*radius second surface*/ -156.41, /*radius third surface*/ -569.6, /*edge thickness*/ 17.43, /*material first*/ mGlasses.getNBK7_S1(),	
+		/*material second*/ mGlasses.getNSF2_S1(), /*max surface quality*/ 60.0, /*min surface quality*/ 40.0, /*F-Number*/ 5.6, /*numerical aperture*/ 0.09, 
+		/*coating*/ "MgF2(400 - 700nm)",/*coating specification*/ 1.75,	/*min wavelength coating*/ 400.0, /*max wavelength coating*/ 700.0,
+		/*bevel*/ "Protective bevel as needed",	/*type*/ "negative achromatic lens",	/*min wavelength*/ 425, /*max wavelength*/ 675.0,
+		/*price*/ 300.00, /*wavelength to trace*/ 550.0);
+
+
+}
+std::vector<LensThreeSurfaces> EdmundOpticsLensCatalog::getAll_LensCatalogEO_Large_Precision_Achromatic_Lenses_NoAirspace()
+{
+	// https://www.edmundoptics.de/f/large-precision-achromatic-lenses/11679/
+
+	std::vector<LensThreeSurfaces> returnAchromaticLenses;
+
+	returnAchromaticLenses.push_back(getEO31402());
+
+
+
+
+	return returnAchromaticLenses;
+
+}
+// Large Precision Achromatic Lenses 
+// https://www.edmundoptics.de/f/large-precision-achromatic-lenses/11679/
+LensThreeSurfaces EdmundOpticsLensCatalog::getEO31402()
+{
+	return EO31402;
+}
+
+// Large Precision Achromatic Lenses -> Airspace 0.1mm
+void EdmundOpticsLensCatalog::loadLensCatalogEO_Large_Precision_Achromatic_Lenses_Airspace01mm()
+{
+
+	// https://www.edmundoptics.de/f/large-precision-achromatic-lenses/11679/
+
+	EO30976.buildLensFourSurfaces(/*lens catalog*/ "EO", /*catalog number*/ 30976, /*diameter*/ 76.56, /*max diameter tolerance*/ 0.0, /*min diameter tolerance*/ -0.08,
+		/*focallength*/ 849.96, /* tolerance focal length*/ 1.0, /*back focal length*/ 838.69, /*Focal Length Specification Wavelength*/ 587.6, /*free aperture CA*/ 73.25,
+		/*max centering*/ 5.0, /*first thickness*/ 13.08, /*second thickness*/ 0.1,	/*third thickness*/ 10.16, /*tolerance center thickness*/ 0.86, /*radius first surface*/ 497.21,
+		/*radius second surface*/ -345.82, /*radius third surface*/ -344.2, /*radius fourth surface*/ -1227.86, /*edge thickness*/ 21.27, /*material first*/ mGlasses.getNBK7_S1(), 
+		/*material second*/ mGlasses.getAir(), /*material third*/ mGlasses.getNSF2_S1(), /*max surface quality*/ 60.0, /*min surface quality*/ 40.0, /*F-Number*/ 11.1, 
+		/*numerical aperture*/ 0.05, /*coating*/ "MgF2(400 - 700nm)",/*coating specification*/ 1.75,	/*min wavelength coating*/ 400.0, /*max wavelength coating*/ 700.0,
+		/*bevel*/ "Protective bevel as needed",	/*type*/ "achromatic lens",	/*min wavelength*/ 400, /*max wavelength*/ 700.0, /*price*/ 300.00);
+
+}
+std::vector<LensFourSurfaces> EdmundOpticsLensCatalog::getAll_LensCatalogEO_Large_Precision_Achromatic_Lenses_Airspace01mm()
+{
+	// https://www.edmundoptics.de/f/large-precision-achromatic-lenses/11679/
+
+	std::vector<LensFourSurfaces> returnAchromaticLenses;
+
+	returnAchromaticLenses.push_back(getEO30976());
+
+
+
+
+	return returnAchromaticLenses;
+}
+
+
+// Hastings Triplet Achromatic Lenses 
+void EdmundOpticsLensCatalog::loadLensCatalogEO_Hastings_Triplet_Achromatic_Lenses()
+{
+	// https://www.edmundoptics.de/f/hastings-triplet-achromatic-lenses/11968/
+
+
+	EO13521.buildLensFourSurfaces(/*lens catalog*/ "EO", /*catalog number*/ 13521, /*diameter*/ 8.0, /*max diameter tolerance*/ 0.0, /*min diameter tolerance*/ -0.025,
+		/*focallength*/ 12.5, /* tolerance focal length*/ 2.0, /*back focal length*/ 9.82, /*Focal Length Specification Wavelength*/ 587.6, 
+		/*max centering*/ 3.0, /*first thickness*/ 1.0, /*second thickness*/ 5.23,	/*third thickness*/ 1.0, /*tolerance center thickness*/ 0.3, /*radius first surface*/ 9.395,
+		/*radius second surface*/ 4.805, /*radius third surface*/ -4.805, /*radius fourth surface*/ -9.395, /*edge thickness*/ 5.44, /*material first*/ mGlasses.getNF2_S1(),
+		/*material second*/ mGlasses.getNBK7_S1(), /*material third*/ mGlasses.getNF2_S1(), /*max surface quality*/ 40.0, /*min surface quality*/ 20.0, /*F-Number*/ 1.56,
+		/*numerical aperture*/ 0.32, /*coating*/ "MgF2(400-700nm)",/*coating specification*/ 1.75,	/*min wavelength coating*/ 400.0, /*max wavelength coating*/ 700.0,
+		/*Power(P-V)@632.8nm:*/ 1.5, /*Irregularity(P-V)@632.8nm*/ 4.0, /*bevel*/ "Protective bevel as needed",	/*type*/ "achromatic Triplet Lens ",	/*min wavelength*/ 400, /*max wavelength*/ 700.0, /*price*/ 101.0);
+
+}
+
+std::vector<LensFourSurfaces> EdmundOpticsLensCatalog::getAll_LensCatalogEO_Hastings_Triplet_Achromatic_Lenses()
+{
+	// https://www.edmundoptics.de/f/hastings-triplet-achromatic-lenses/11968/
+
+	std::vector<LensFourSurfaces> returnAchromaticLenses;
+
+	returnAchromaticLenses.push_back(getEO13521());
+
+
+
+
+	return returnAchromaticLenses;
+}
+
+// Hastings Triplet Achromatic Lenses 
+// https://www.edmundoptics.de/f/hastings-triplet-achromatic-lenses/11968/
+LensFourSurfaces EdmundOpticsLensCatalog::getEO13521()
+{
+	return EO13521;
+}
+
+// Large Precision Achromatic Lenses -> Airspace 0.1mm
+// https://www.edmundoptics.de/f/large-precision-achromatic-lenses/11679/
+LensFourSurfaces EdmundOpticsLensCatalog::getEO30976()
+{
+	return EO30976;
+}
+
+// Steinheil Triplet Achromatic Lenses 
+void EdmundOpticsLensCatalog::loadLensCatalogEO_Steinheil_Triplet_Achromatic_Lenses()
+{
+	// https://www.edmundoptics.de/f/steinheil-triplet-achromatic-lenses/12275/
+
+	EO47673.buildLensFourSurfaces(/*lens catalog*/ "EO", /*catalog number*/ 47673, /*diameter*/ 6.25, /*max diameter tolerance*/ 0.0, /*min diameter tolerance*/ -0.025,
+		/*focallength*/ 12.5, /* tolerance focal length*/ 1.0, /*back focal length*/ 8.94, /*Focal Length Specification Wavelength*/ 587.6,
+		/*max centering*/ 3.0, /*first thickness*/ 2.0, /*second thickness*/ 5.0,	/*third thickness*/ 2.0, /*tolerance center thickness*/ 0.3, /*radius first surface*/ 7.81,
+		/*radius second surface*/ 4.09, /*radius third surface*/ -4.09, /*radius fourth surface*/ -7.81, /*edge thickness*/ 7.70, /*material first*/ mGlasses.getNBASF64_S1(),
+		/*material second*/ mGlasses.getNBK7_S1(), /*material third*/ mGlasses.getNBASF64_S1(), /*max surface quality*/ 40.0, /*min surface quality*/ 20.0, /*F-Number*/ 2.0,
+		/*numerical aperture*/ 0.25, /*coating*/ "MgF2(400-700nm)",/*coating specification*/ 1.75,	/*min wavelength coating*/ 400.0, /*max wavelength coating*/ 700.0,
+		/*Power(P-V)@632.8nm:*/ 1.5, /*Irregularity(P-V)@632.8nm*/ 4.0, /*bevel*/ "Protective bevel as needed",	/*type*/ "achromatic Triplet Lens ",	/*min wavelength*/ 400, 
+		/*max wavelength*/ 700.0, /*price*/ 101.50);
+
+
+}
+std::vector<LensFourSurfaces> EdmundOpticsLensCatalog::getAll_LensCatalogEO_Steinheil_Triplet_Achromatic_Lenses()
+{
+	// https://www.edmundoptics.de/f/steinheil-triplet-achromatic-lenses/12275/
+
+	std::vector<LensFourSurfaces> returnAchromaticLenses;
+
+	returnAchromaticLenses.push_back(getEO47673());
+
+
+
+
+	return returnAchromaticLenses;
+}
+
+
+
+// Steinheil Triplet Achromatic Lenses 
+// https://www.edmundoptics.de/f/steinheil-triplet-achromatic-lenses/12275/
+LensFourSurfaces EdmundOpticsLensCatalog::getEO47673()
+{
+	return EO47673;
+}
+
+// Micro Plano-Convex (PCX) Lenses 
+void EdmundOpticsLensCatalog::loadLensCatalogEO_Micro_Plano_Convex_PCX_Lenses()
+{
+	// https://www.edmundoptics.de/f/micro-plano-convex-pcx-lenses/39529/
+
+	EO45951.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 45951, /*diameter*/ 1.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/  -0.025,
+		/*Effective Focal Length EFL(mm)*/ 0.60, /*back focal length*/ 0.17, /*Coating*/ "NIR I (600-1050nm)", /*Coating Specification*/ "Ravg<=0.5% @600-1050nm ", 
+		/*min coating wavelength*/ 600.0, /*max coating wavelength*/ 1050.0, /*material*/ mGlasses.getNLASF9_S1(), /*max surface quality*/  40.0, 
+		/*min surface quality*/  20.0, /*Power(P-V)@632.8nm:*/  1.5, /*Irregularity(P-V)@632.8nm*/ 4.0, /*tolerance focal lenght*/  1.0, /*min centering*/  30.0, 
+		/*max centering*/  45.0, /*center thickness*/  0.80, /*tolerance center thickness*/  0.05,/*edge thickness*/  0.39, /*radius first surface*/  0.51,
+		/*free aperture CA*/  0.5, /*F-Number*/ 0.6,  /*numerical Aperture*/  0.83, /*type*/ "Plano-Convex Lens", /*Bevel*/ "Protective bevel as needed",
+		/*Typical Energy Density Limit*/ "7J/cm2 @ 1064nm, 10ns", /*min wavelength range*/ 600.0,	/*max wavelength range*/  1050.0, 	/*price*/  87.0);
+
+}
+
+std::vector<LensesTwoSurfaces> EdmundOpticsLensCatalog::getAll_Micro_Plano_Convex_PCX_Lenses()
+{
+	std::vector<LensesTwoSurfaces> returnMicroPlanoConvecLenses;
+
+	returnMicroPlanoConvecLenses.push_back(getEO45951());
+
+
+
+
+	return returnMicroPlanoConvecLenses;
+}
+
+// Large PCX Condenser Lenses
+void EdmundOpticsLensCatalog::loadLensCatalogEO_Large_PCX_Condenser_Lenses()
+{
+	// https://www.edmundoptics.de/f/large-pcx-condenser-lenses/13572/
+
+	EO67187.buildLensTwoSurfaces_PCX(/*lens catalog*/ "EO", /*catalog number*/ 67187, /*diameter*/ 100.0, /*max tolerance diameter*/  0.0,	/*min tolerance diameter*/-0.5,
+		/*Effective Focal Length EFL(mm)*/ 150.0, /*back focal length*/ 136.16, /*Coating*/ "Uncoated ", /*material*/ mGlasses.getNBK7_S1(), /*max surface quality*/  120.0,
+		/*min surface quality*/  80.0, /*center thickness*/  21.0, /*edge thickness*/  2.72, /*radius first surface*/  77.57075215478673,
+		/*free aperture CA*/  95.0, /*F-Number*/ 1.5,  /*numerical Aperture*/  0.33, /*type*/ "Condenser Lens", /*Bevel*/ "Protective bevel as needed",
+		/*min wavelength range*/ 350.0,	/*max wavelength range*/  2200.0, /*price*/ 90.0);
+
+}
+std::vector<LensesTwoSurfaces> EdmundOpticsLensCatalog::getAll_Large_PCX_Condenser_Lenses()
+{
+	std::vector<LensesTwoSurfaces> returnLargePCX_CondenserLenses;
+
+	returnLargePCX_CondenserLenses.push_back(getEO67187());
+
+
+
+
+	return returnLargePCX_CondenserLenses;
+}
+
+
+// Large PCX Condenser Lenses
+// https://www.edmundoptics.de/f/large-pcx-condenser-lenses/13572/
+LensesTwoSurfaces EdmundOpticsLensCatalog::getEO67187()
+{
+	return EO67187;
+}
+
+
+// Micro Plano-Convex (PCX) Lenses 
+// https://www.edmundoptics.de/f/micro-plano-convex-pcx-lenses/39529/
+LensesTwoSurfaces EdmundOpticsLensCatalog::getEO45951()
+{
+	return EO45951;
+}

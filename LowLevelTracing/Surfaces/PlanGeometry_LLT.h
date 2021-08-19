@@ -88,6 +88,8 @@ public:
 
 	void calcSphericalSurfaceQwtCoord();
 
+	virtual std::string getSurfaceType() override;
+
 private:
 	double mSemiHeightPlan{};
 	VectorStructR3 mPointPlan{};

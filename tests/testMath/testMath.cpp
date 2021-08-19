@@ -129,7 +129,7 @@ bool testMath::checkMethodesMath()
 	// Print input
 	oftenUse::print(matrix);
 	// Calculate solution
-	std::vector<std::vector<real>> outMatrix = Math::calculateInverse(matrix);
+	std::vector<std::vector<real>> outMatrix = Math::calculateInverse_double(matrix);
 	// Print output
 	oftenUse::print(outMatrix); // result see: https://martin-thoma.com/wie-bestimme-ich-das-inverse-einer-matrix/
 

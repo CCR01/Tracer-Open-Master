@@ -1154,16 +1154,365 @@ bool testRayAiming::checkRayAimingE5_inf()
 
 }
 
+// check ray aiming --> obj --> initial rays
+bool testRayAiming::checkRayAimingSuperFct_obj_initlaRays()
+{
+	std::vector<bool> checkRayAiming_SuperFct_obj_initalRays;
+	
+	// E0
+	bool checkE0 = checkRayAimingE0_obj_initalRays();
+	checkRayAiming_SuperFct_obj_initalRays.push_back(checkE0);
+	
+	// E1
+	bool checkE1 = checkRayAimingE1_obj_initalRays();
+	checkRayAiming_SuperFct_obj_initalRays.push_back(checkE1);
 
+	bool returnChecker = Math::checkTrueOfVectorElements(checkRayAiming_SuperFct_obj_initalRays);
+	return returnChecker;
+
+}
+bool testRayAiming::checkRayAimingE0_obj_initalRays()
+{
+	std::vector<bool> workTheSystem;
+
+	//*** standard ***//
+	RefractedRay_LLT refrac;
+	Absorb_LLT absorb;
+	DoNothingInteraction_LLT doNothing;
+	glass glasses;
+	glasses.loadGlassCatalog_Schott();
+	std::vector<real> wavelenght_vec;
+	wavelenght_vec.push_back(550.0);
+	wavelenght_vec.push_back(400.0);
+	wavelenght_vec.push_back(700.0);
+	std::vector<VectorStructR3> object_vec_1;
+	object_vec_1.push_back({ 0.0,1.0,0.0 });
+	Light_LLT light = oftenUse::getDefaultLight();
+	real tolerance = 0.1;
+	//*** ------  ***//
+	
+
+	// test system
+	// build the optical system
+	SphericalElement S0(/*radius*/ 30.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBK7_S1());
+	SphericalElement S1(/*radius*/ 30.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBK7_S1());
+	SphericalElement S2(/*radius*/ 40.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,40.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBK7_S1());
+	SphericalElement S3(/*radius*/ 40.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,50.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBK7_S1());
+	ApertureStopElement S4(/* semi height*/2.0, /*point*/{ 0.0,0.0,70.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAir());
+	PlanElement S5(/*semi height*/ 10.0, /*point*/{ 0.0,0.0,100.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getAir());
+
+	surfacePtr S0_ptr = S0.clone();
+	surfacePtr S1_ptr = S1.clone();
+	surfacePtr S2_ptr = S2.clone();
+	surfacePtr S3_ptr = S3.clone();
+	surfacePtr S4_ptr = S4.clone();
+	surfacePtr S5_ptr = S5.clone();
+
+
+	std::vector<surfacePtr> opticalSystem_ptr{ S0_ptr, S1_ptr, S2_ptr, S3_ptr, S4_ptr, S5_ptr };
+	std::vector<interaction_ptr> interactions_ptr{ refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(), doNothing.clone(), absorb.clone() };
+
+	//	build optical system
+	OpticalSystemElement optSysEle(opticalSystem_ptr, interactions_ptr);
+	
+	// test the system
+	std::vector<real> rms_Zemax{ 243.965 };
+	bool testStart = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSysEle, object_vec_1, wavelenght_vec, rms_Zemax, tolerance, compareTOM_Zemax::comEqual);
+	workTheSystem.push_back(testStart);
+
+	int defaultRings = 6;
+	int defaultArms = 8;
+	FillApertureStop FillApStop(optSysEle.getOptSys_LLT_buildSystem(), defaultRings, defaultArms);
+
+
+	RayAiming rayAining;
+	std::vector<std::vector<LightRayStruct>> aimedLightRays = rayAining.rayAiming_obj_initalRays_complete(optSysEle, FillApStop.getPointsInAS(), wavelenght_vec, object_vec_1[0], light);
+
+	SequentialRayTracing seqTracWithInitalRays(optSysEle);
+
+	for (unsigned int i = 0; i < aimedLightRays.size(); ++i)
+	{
+		seqTracWithInitalRays.setRefractivIndexOptSys(wavelenght_vec[i]);
+		seqTracWithInitalRays.seqRayTracingWithVectorOfLightRays(aimedLightRays[i]);
+	}
+
+	int posImaSurface = optSysEle.getPosAndInteraction_LLT().size() - 1;
+	std::vector<VectorStructR3> interPointsImaSurface = seqTracWithInitalRays.getAllInterPointsAtSurface_i_filtered(posImaSurface);
+	// calc rms spot
+	Spot spot(interPointsImaSurface, interPointsImaSurface[0]);
+	real rms = spot.getRMS_µm();
+
+	bool checkRMS = Math::compareTwoNumbers_tolerance(rms, rms_Zemax[0], tolerance);
+	workTheSystem.push_back(checkRMS);
+
+	bool returnChecker = Math::checkTrueOfVectorElements(workTheSystem);
+	return returnChecker;
+}
+
+bool testRayAiming::checkRayAimingE1_obj_initalRays()
+{
+	std::vector<bool> workTheSystem;
+
+	//*** standard ***//
+	RefractedRay_LLT refrac;
+	Absorb_LLT absorb;
+	DoNothingInteraction_LLT doNothing;
+	glass glasses;
+	glasses.loadGlassCatalog_Schott();
+	std::vector<real> wavelenght_vec;
+	wavelenght_vec.push_back(550.0);
+	wavelenght_vec.push_back(400.0);
+	wavelenght_vec.push_back(700.0);
+	std::vector<VectorStructR3> object_vec_23;
+	object_vec_23.push_back({ 2.0,3.0,0.0 });
+	Light_LLT light = oftenUse::getDefaultLight();
+	//*** ------  ***//
+
+	real tolerance = 0.2;
+
+	// test system
+	// build the optical system
+	SphericalElement S0(/*radius*/ 30.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBK7_S1());
+	SphericalElement S1(/*radius*/ 30.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getNSF5_S1(), /*refractive index B*/glasses.getNBK7_S1());
+	SphericalElement S2(/*radius*/ 40.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,40.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getNSF5_S1(), /*refractive index B*/glasses.getNBK7_S1());
+	SphericalElement S3(/*radius*/ 40.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,50.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBK7_S1());
+	ApertureStopElement S4(/* semi height*/3.0, /*point*/{ 0.0,0.0,60.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAir());
+	SphericalElement S5(/*radius*/ 30.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,70.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getBAFN10_S1());
+	SphericalElement S6(/*radius*/ 30.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,80.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getNBK7_S1(), /*refractive index B*/glasses.getBAFN10_S1());
+	SphericalElement S7(/*radius*/ 30.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,90.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBK7_S1());
+	PlanElement S8(/*semi height*/ 10.0, /*point*/{ 0.0,0.0,115.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getAir());
+
+	surfacePtr S0_ptr = S0.clone();
+	surfacePtr S1_ptr = S1.clone();
+	surfacePtr S2_ptr = S2.clone();
+	surfacePtr S3_ptr = S3.clone();
+	surfacePtr S4_ptr = S4.clone();
+	surfacePtr S5_ptr = S5.clone();
+	surfacePtr S6_ptr = S6.clone();
+	surfacePtr S7_ptr = S7.clone();
+	surfacePtr S8_ptr = S8.clone();
+
+
+	std::vector<surfacePtr> opticalSystem_ptr{ S0_ptr, S1_ptr, S2_ptr, S3_ptr, S4_ptr, S5_ptr, S6_ptr,S7_ptr,S8_ptr };
+	std::vector<interaction_ptr> interactions_ptr{ refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(), doNothing.clone(), refrac.clone(), refrac.clone(), refrac.clone(), absorb.clone() };
+
+	//	build optical system
+	OpticalSystemElement optSysEle(opticalSystem_ptr, interactions_ptr);
+
+	// test the system
+	std::vector<real> rms_Zemax{ 77.052 };
+	bool testStart = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSysEle, object_vec_23, wavelenght_vec, rms_Zemax, tolerance, compareTOM_Zemax::comEqual);
+	workTheSystem.push_back(testStart);
+
+	int defaultRings = 6;
+	int defaultArms = 8;
+	FillApertureStop FillApStop(optSysEle.getOptSys_LLT_buildSystem(), defaultRings, defaultArms);
+
+	RayAiming rayAining;
+	std::vector<std::vector<LightRayStruct>> aimedLightRays = rayAining.rayAiming_obj_initalRays_complete(optSysEle, FillApStop.getPointsInAS(), wavelenght_vec, object_vec_23[0], light);
+
+	SequentialRayTracing seqTracWithInitalRays(optSysEle);
+
+	for (unsigned int i = 0; i < aimedLightRays.size(); ++i)
+	{
+		seqTracWithInitalRays.setRefractivIndexOptSys(wavelenght_vec[i]);
+		seqTracWithInitalRays.seqRayTracingWithVectorOfLightRays(aimedLightRays[i]);
+	}
+
+	int posImaSurface = optSysEle.getPosAndInteraction_LLT().size() - 1;
+	std::vector<VectorStructR3> interPointsImaSurface = seqTracWithInitalRays.getAllInterPointsAtSurface_i_filtered(posImaSurface);
+	// calc rms spot
+	Spot spot(interPointsImaSurface, interPointsImaSurface[0]);
+	real rms = spot.getRMS_µm();
+
+	bool checkRMS = Math::compareTwoNumbers_tolerance(rms, rms_Zemax[0], tolerance);
+	workTheSystem.push_back(checkRMS);
+
+
+	bool returnChecker = Math::checkTrueOfVectorElements(workTheSystem);
+	return returnChecker;
+}
+	
+
+// check ray aiming --> inf --> inital rays
+bool testRayAiming::checkRayAimingSuperFct_inf_initlaRays()
+{
+	std::vector<bool> checkRayAiming_SuperFct_inf_initalRays;
+
+	// E0
+	bool checkE0 = checkRayAimingE0_inf_initalRays();
+	checkRayAiming_SuperFct_inf_initalRays.push_back(checkE0);
+
+	// E1
+	bool checkE1 = checkRayAimingE1_inf_initalRays();
+	checkRayAiming_SuperFct_inf_initalRays.push_back(checkE1);
+
+	bool returnChecker = Math::checkTrueOfVectorElements(checkRayAiming_SuperFct_inf_initalRays);
+	return returnChecker;
+}
+bool testRayAiming::checkRayAimingE0_inf_initalRays()
+{
+	std::vector<bool> workTheSystem;
+
+	//*** standard ***//
+	RefractedRay_LLT refrac;
+	Absorb_LLT absorb;
+	DoNothingInteraction_LLT doNothing;
+	glass glasses;
+	glasses.loadGlassCatalog_Schott();
+	std::vector<real> wavelenght_vec;
+	wavelenght_vec.push_back(550.0);
+	wavelenght_vec.push_back(400.0);
+	wavelenght_vec.push_back(700.0);
+	real angleX = 1.0;
+	real angleY = 2.0;
+
+	Light_LLT light = oftenUse::getDefaultLight();
+	//*** ------  ***//
+
+	real tolerance = 0.2;
+
+	// test system
+	// build the optical system
+	SphericalElement S0(/*radius*/ 30.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,0.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBK7_S1());
+	SphericalElement S1(/*radius*/ 30.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getNSF5_S1(), /*refractive index B*/glasses.getNBK7_S1());
+	SphericalElement S2(/*radius*/ 40.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getNSF5_S1(), /*refractive index B*/glasses.getNBK7_S1());
+	SphericalElement S3(/*radius*/ 40.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBK7_S1());
+	ApertureStopElement S4(/* semi height*/3.0, /*point*/{ 0.0,0.0,40.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAir());
+	PlanElement S5(/*semi height*/ 10.0, /*point*/{ 0.0,0.0,70.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getAir());
 
 	
 	
+	surfacePtr S0_ptr = S0.clone();
+	surfacePtr S1_ptr = S1.clone();
+	surfacePtr S2_ptr = S2.clone();
+	surfacePtr S3_ptr = S3.clone();
+	surfacePtr S4_ptr = S4.clone();
+	surfacePtr S5_ptr = S5.clone();
+
+	std::vector<surfacePtr> opticalSystem_ptr{ S0_ptr, S1_ptr, S2_ptr, S3_ptr, S4_ptr, S5_ptr };
+	std::vector<interaction_ptr> interactions_ptr{ refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(), doNothing.clone(), absorb.clone() };
+
+	//	build optical system
+	OpticalSystemElement optSysEle(opticalSystem_ptr, interactions_ptr);
+
+	// test the system
+	std::vector<real> rms_Zemax{ 100.892 };
+	bool testStart = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSysEle, angleX, angleY, wavelenght_vec, rms_Zemax, tolerance, compareTOM_Zemax::comEqual);
+	workTheSystem.push_back(testStart);
+
+	int defaultRings = 6;
+	int defaultArms = 8;
+	FillApertureStop FillApStop(optSysEle.getOptSys_LLT_buildSystem(), defaultRings, defaultArms);
+
+	RayAiming rayAining;
+	std::vector<std::vector<LightRayStruct>> aimedLightRays = rayAining.rayAiming_inf_initalRays_complete(optSysEle, FillApStop.getPointsInAS(), wavelenght_vec, angleX, angleY, light);
+
+	SequentialRayTracing seqTracWithInitalRays(optSysEle);
+
+	for (unsigned int i = 0; i < aimedLightRays.size(); ++i)
+	{
+		seqTracWithInitalRays.setRefractivIndexOptSys(wavelenght_vec[i]);
+		seqTracWithInitalRays.seqRayTracingWithVectorOfLightRays(aimedLightRays[i]);
+	}
+
+	int posImaSurface = optSysEle.getPosAndInteraction_LLT().size() - 1;
+	std::vector<VectorStructR3> interPointsImaSurface = seqTracWithInitalRays.getAllInterPointsAtSurface_i_filtered(posImaSurface);
+	// calc rms spot
+	Spot spot(interPointsImaSurface, interPointsImaSurface[0]);
+	real rms = spot.getRMS_µm();
+
+	bool checkRMS = Math::compareTwoNumbers_tolerance(rms, rms_Zemax[0], tolerance);
+	workTheSystem.push_back(checkRMS);
 
 
+	bool returnChecker = Math::checkTrueOfVectorElements(workTheSystem);
+	return returnChecker;
+}
 	
 	
 	
+bool testRayAiming::checkRayAimingE1_inf_initalRays()
+{
+	std::vector<bool> workTheSystem;
 
+	//*** standard ***//
+	RefractedRay_LLT refrac;
+	Absorb_LLT absorb;
+	DoNothingInteraction_LLT doNothing;
+	glass glasses;
+	glasses.loadGlassCatalog_Schott();
+	std::vector<real> wavelenght_vec;
+	wavelenght_vec.push_back(550.0);
+	wavelenght_vec.push_back(400.0);
+	wavelenght_vec.push_back(700.0);
+	real angleX = -2.0;
+	real angleY = 1.0;
+
+	Light_LLT light = oftenUse::getDefaultLight();
+	//*** ------  ***//
+
+	real tolerance = 0.2;
+
+	// test system
+	// build the optical system
+	SphericalElement S0(/*radius*/ 50.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,0.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBK7_S1());
+	SphericalElement S1(/*radius*/ 40.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getNSF5_S1(), /*refractive index B*/glasses.getNBK7_S1());
+	SphericalElement S2(/*radius*/ 30.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getNSF5_S1(), /*refractive index B*/glasses.getNBK7_S1());
+	SphericalElement S3(/*radius*/ 20.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNBK7_S1());
+	ApertureStopElement S4(/* semi height*/ 4.0, /*point*/{ 0.0,0.0,40.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAir());
+	SphericalElement S5(/*radius*/ 100.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,50.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getBAFN10_S1(), /*refractive index B*/glasses.getAir());
+	SphericalElement S6(/*radius*/ 100.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,60.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getBAFN10_S1(), /*refractive index B*/glasses.getAir());
+	PlanElement S7(/*semi height*/ 10.0, /*point*/{ 0.0,0.0,70.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getAir());
+
+	surfacePtr S0_ptr = S0.clone();
+	surfacePtr S1_ptr = S1.clone();
+	surfacePtr S2_ptr = S2.clone();
+	surfacePtr S3_ptr = S3.clone();
+	surfacePtr S4_ptr = S4.clone();
+	surfacePtr S5_ptr = S5.clone();
+	surfacePtr S6_ptr = S6.clone();
+	surfacePtr S7_ptr = S7.clone();
+
+	std::vector<surfacePtr> opticalSystem_ptr{ S0_ptr, S1_ptr, S2_ptr, S3_ptr, S4_ptr, S5_ptr, S6_ptr, S7_ptr };
+	std::vector<interaction_ptr> interactions_ptr{ refrac.clone(), refrac.clone(), refrac.clone(), refrac.clone(), doNothing.clone(), refrac.clone(), refrac.clone(), absorb.clone() };
+
+	//	build optical system
+	OpticalSystemElement optSysEle(opticalSystem_ptr, interactions_ptr);
+
+	// test the system
+	std::vector<real> rms_Zemax{ 438.439 };
+	bool testStart = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSysEle, angleX, angleY, wavelenght_vec, rms_Zemax, tolerance, compareTOM_Zemax::comEqual);
+	workTheSystem.push_back(testStart);
+
+	int defaultRings = 6;
+	int defaultArms = 8;
+	FillApertureStop FillApStop(optSysEle.getOptSys_LLT_buildSystem(), defaultRings, defaultArms);
+
+	RayAiming rayAining;
+	std::vector<std::vector<LightRayStruct>> aimedLightRays = rayAining.rayAiming_inf_initalRays_complete(optSysEle, FillApStop.getPointsInAS(), wavelenght_vec, angleX, angleY, light);
+
+	SequentialRayTracing seqTracWithInitalRays(optSysEle);
+
+	for (unsigned int i = 0; i < aimedLightRays.size(); ++i)
+	{
+		seqTracWithInitalRays.setRefractivIndexOptSys(wavelenght_vec[i]);
+		seqTracWithInitalRays.seqRayTracingWithVectorOfLightRays(aimedLightRays[i]);
+	}
+
+	int posImaSurface = optSysEle.getPosAndInteraction_LLT().size() - 1;
+	std::vector<VectorStructR3> interPointsImaSurface = seqTracWithInitalRays.getAllInterPointsAtSurface_i_filtered(posImaSurface);
+	// calc rms spot
+	Spot spot(interPointsImaSurface, interPointsImaSurface[0]);
+	real rms = spot.getRMS_µm();
+
+	bool checkRMS = Math::compareTwoNumbers_tolerance(rms, rms_Zemax[0], tolerance);
+	workTheSystem.push_back(checkRMS);
+
+
+	bool returnChecker = Math::checkTrueOfVectorElements(workTheSystem);
+	return returnChecker;
+}
 
 
 

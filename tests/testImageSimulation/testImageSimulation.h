@@ -25,8 +25,18 @@ public:
 	bool test5();
 	bool test6();
 	bool test7();
+	bool test8();
+	bool test9();
+	bool test10();
+	bool test11();
+	bool test12();
 
 	void loadImportantStuff();
+
+	bool checkImaSim_test10(ImageSimulationFunctions imaSim, bool shows);
+
+	// show all PSFs in an image
+	void showAllPSFsInAnImageAndSave(const std::vector<cv::Mat>& psf_vec, cv::Size targetSize, std::string location, std::string nameSave, bool show);
 
 private:
 	DoNothingInteraction_LLT mDoNothing{};
@@ -37,6 +47,6 @@ private:
 	std::vector<real> mWavelenght_vec_dFC{};
 	std::vector<VectorStructR3> mObject_vec_012{};
 
-	defautParaImaSim mDefaulParaImaSim;
+	loadParaImaSim mDefaulParaImaSim;
 	
 };

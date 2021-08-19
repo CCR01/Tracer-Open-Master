@@ -6,7 +6,8 @@
 #include "..\OptimizeSystem\calculateParaxialDistances.h"
 #include "..\oftenUseNamespace\oftenUseNamespace.h"
 
-CardinalPoints::CardinalPoints() { loadAndResizeParameters(); };
+CardinalPoints::CardinalPoints() { //loadAndResizeParameters(); 
+};
 CardinalPoints::CardinalPoints(OpticalSystem_LLT OptSys, objectPoint_inf_obj objPoint_inf_obj) :
 	mOpticalSystem_LLT(OptSys),
 	mObjectPoint_inf_obj(objPoint_inf_obj)
@@ -60,6 +61,35 @@ CardinalPoints::CardinalPoints(OpticalSystemElement optSysEle, real primWaveleng
 
 CardinalPoints::~CardinalPoints() {};
 
+// calc all cardinal points super fct
+void CardinalPoints::calcAllCardinalPointsSuperFct(OpticalSystemElement optSysEle, real primWavelength, objectPoint_inf_obj objPoint_inf_obj)
+{
+	mOpticalSystem_Ele = optSysEle.getDeepCopyOptSysEle();
+	mPrimWavelength = primWavelength;
+	mObjectPoint_inf_obj = objPoint_inf_obj;
+
+	mOpticalSystem_Ele.setRefractiveIndexAccordingToWavelength(mPrimWavelength);
+	mOpticalSystem_LLT = mOpticalSystem_Ele.getLLTconversion_doConversion();
+
+	loadAndResizeParameters();
+	calcSystemMatrix();
+
+	mEFL = calcEFL();
+	mPP_obj = calcPP_obj();
+	mPP_ima = calcPP_ima();
+	mEXPP_lastSurface = calcEXPP_lastSurface();
+	mEXPP_inGlobalCoordi = calcEXPP_globalCoordi();
+	mEXPD = calcEXPD();
+	mMag = calcMagnification();
+	mNA_objSpac = calcNA_objSpac();
+	mENPP_firstSurface = calcENPP_firstSurface();
+	mENPP_inGlobalCoodi = calcENPP_globalCoordi();
+	mENPD = calcENPD();
+	mF_number_imaSpace = calcFnumberImaSpace();
+	mNA_imaSpace = calcNA_imaSpace();
+	mWFNO = calcWFNO();
+
+}
 
 // get the EFL
 real CardinalPoints::getEFL()
@@ -135,7 +165,11 @@ void CardinalPoints::loadAndResizeParameters()
 {
 	mSizeOfOpt = mOpticalSystem_LLT.getPosAndInteractingSurface().size();
 	mPosAndInteraSurfaceVector = mOpticalSystem_LLT.getPosAndInteractingSurface();
-	mPositionApertureStop = mOpticalSystem_LLT.getInforAS().getPosAS();
+
+	if (mSizeOfOpt != 0)
+	{
+		mPositionApertureStop = mOpticalSystem_LLT.getInforAS().getPosAS();
+	}
 	mSizeOfOptSysMinOne = mSizeOfOpt - 1;
 	mSizeOfOptSysMinTwo = mSizeOfOpt - 2;
 	mSizeAfterStop = mSizeOfOpt - mPositionApertureStop;
@@ -206,8 +240,8 @@ real CardinalPoints::calcEFL()
 // calculat the global principal plan of the optical system
 real CardinalPoints::calcPP_obj()
 {
-	real PP_obj = (mSystemMatrix_vec[3] - mAllRefractivIndexes[0]) / (mSystemMatrix_vec[2]);
-
+	//real PP_obj = (mSystemMatrix_vec[3] - mAllRefractivIndexes[0]) / (mSystemMatrix_vec[2]);
+	real PP_obj = -(mSystemMatrix_vec[0] * mSystemMatrix_vec[3] - mSystemMatrix_vec[1] * mSystemMatrix_vec[2] - mSystemMatrix_vec[3]) / (mSystemMatrix_vec[2]);
 	if (mPositionApertureStop == 0)
 	{
 		real thicknessAperStopSecondSurface = mPosAndInteraSurfaceVector[1].getSurfaceInterRay_ptr()->getPoint().getZ() - mPosAndInteraSurfaceVector[0].getSurfaceInterRay_ptr()->getPoint().getZ();
@@ -245,7 +279,7 @@ real CardinalPoints::calcEXPP_lastSurface()
 	mS_dash_afterAS.resize(mSizeAfterStop - 1);
 
 	unsigned int posInVec = 0;
-	
+
 	for (unsigned int i = mPositionApertureStop + 1; i < mSizeOfOpt; ++i)
 	{
 		tempSurfacePointer = mPosAndInteraSurfaceVector[i].getSurfaceInterRay_ptr();
@@ -319,7 +353,7 @@ real CardinalPoints::calcMagnification()
 		std::vector<real> s_vec = calcParaDis.getAll_S();
 		std::vector<real> s_dash_vec = calcParaDis.getAll_S_dash();
 		unsigned int size = s_dash_vec.size();
-	
+
 		for (unsigned int i = 0; i < size; ++i)
 		{
 			mag = mag * s_dash_vec[i] / s_vec[i];
@@ -330,7 +364,7 @@ real CardinalPoints::calcMagnification()
 	{
 		return 0.0;
 	}
-	
+
 	return mag;
 }
 
@@ -484,7 +518,7 @@ void CardinalPoints::calcAllRefractivIndexes()
 			{
 				mAllRefractivIndexes[posInVec] = mPosAndInteraSurfaceVector[i].getSurfaceInterRay_ptr()->getRefractiveIndex_A();
 				mAllRefractivIndexes_dash[posInVec] = mPosAndInteraSurfaceVector[i].getSurfaceInterRay_ptr()->getRefractiveIndex_B();
-				
+
 
 			}
 			else if (tempDirectionZ < 0)
@@ -576,12 +610,12 @@ void CardinalPoints::calcAllSystemMatrix()
 	mSystemMatrix_vec[2] = (mAllRefractivIndexes[counter] - mAllRefractivIndexes_dash[counter]) / (mAllRadius[counter] * mAllRefractivIndexes_dash[counter]);
 	mSystemMatrix_vec[3] = mAllRefractivIndexes[counter] / mAllRefractivIndexes_dash[counter];
 
-	for (unsigned int i = 0; i < 2*mSizeOfOptSysMinTwo; i++)
+	for (unsigned int i = 0; i < 2 * mSizeOfOptSysMinTwo; i++)
 	{
 		if (swichPropagatRefract) // propagate
 		{
 			propagate[1] = mAllThickness_vec[counter];
-			mSystemMatrix_vec = calcVecTimesVec(propagate ,mSystemMatrix_vec);
+			mSystemMatrix_vec = calcVecTimesVec(propagate, mSystemMatrix_vec);
 
 			swichPropagatRefract = false;
 			++counter;
@@ -651,7 +685,7 @@ real CardinalPoints::calcENPP_firstSurface()
 	}
 
 
-	
+
 
 
 	return -1.0 * mS_dash_beforeAS_rot.back();
@@ -674,7 +708,7 @@ real CardinalPoints::calcENPD()
 	real magAperStop_left = 1.0;
 	for (unsigned int i = 0; i < mPositionApertureStop; ++i)
 	{
-		magAperStop_left = magAperStop_left * mS_dash_beforeAS_rot[i] / mS_beforeAS_rot[i];			
+		magAperStop_left = magAperStop_left * mS_dash_beforeAS_rot[i] / mS_beforeAS_rot[i];
 	}
 
 	magAperStop_left = mRefIndex_vec_BAS_rot[0] / mRefIndex_vec_dash_BAS_rot.back() * magAperStop_left;

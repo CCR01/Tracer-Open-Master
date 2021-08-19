@@ -815,3 +815,8 @@ void AsphericalSurface_LLT::calcAsphericalSurfaceQwtCoord()
 	pointsofASphericalSurface = AsphericalSurfaceQwt_Ptr->points(mRadiusAsphere, mSemiHeightAsphere, mPointAsphere,
 		mDirectionAsphere, mConic, m_A1, m_A2, m_A3, m_A4, m_A5, m_A6, m_A7, m_A8);
 }
+
+std::string AsphericalSurface_LLT::getSurfaceType()
+{
+	return "Aspherical";
+}

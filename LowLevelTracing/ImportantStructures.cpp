@@ -3,6 +3,42 @@
 #include "Math_LLT.h"
 
 
+// pos X
+void PosX_PosY_Val_tureVal::setPos_X(unsigned int posX)
+{
+	mPosX = posX;
+}
+unsigned int PosX_PosY_Val_tureVal::getPos_X()
+{
+	return mPosX;
+}
+// pos Y
+void PosX_PosY_Val_tureVal::setPos_Y(unsigned int posY)
+{
+	mPosY = posY;
+}
+unsigned int PosX_PosY_Val_tureVal::getPos_Y()
+{
+	return mPosY;
+}
+// value
+void PosX_PosY_Val_tureVal::setVal(real val)
+{
+	mVal = val;
+}
+real PosX_PosY_Val_tureVal::getVal()
+{
+	return mVal;
+}
+// true value
+void PosX_PosY_Val_tureVal::setTrueVal(bool trueVal)
+{
+	mTrueVal = trueVal;
+}
+bool PosX_PosY_Val_tureVal::getTrueVal()
+{
+	return mTrueVal;
+}
 
 pointAndIntensity::pointAndIntensity() {};
 pointAndIntensity::~pointAndIntensity() {};

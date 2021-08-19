@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-enum class benchWhat {bALL, bNothing, bRayTrac, bGeneticAndDLS };
+enum class benchWhat {bALL, bNothing, bRayTrac, bGeneticAndDLS, bRayAiming };
 
 class managementBenchmark
 {

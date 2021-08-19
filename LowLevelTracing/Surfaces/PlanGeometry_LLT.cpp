@@ -372,3 +372,8 @@ void PlanGeometry_LLT::setDirection(VectorStructR3 direction)
 {
 	mDirectionPlan = direction;
 }
+
+std::string PlanGeometry_LLT::getSurfaceType()
+{
+	return "Plan     ";
+}

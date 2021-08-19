@@ -147,6 +147,8 @@ public:
 
 	void calcAsphericalSurfaceQwtCoord();
 
+	virtual std::string getSurfaceType() override;
+
 private:
 	double mRadiusAsphere;
 	double mSemiHeightAsphere;

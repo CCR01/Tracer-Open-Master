@@ -27,7 +27,7 @@
 
 testLensReplace::testLensReplace() { loadDefaulParameter_testLensReplace(); }
 
-testLensReplace::~testLensReplace(){}
+testLensReplace::~testLensReplace() {}
 
 typedef std::shared_ptr< Element_CR > surfacePtr;
 typedef std::shared_ptr< InteractionRay_LLT > interaction_ptr;
@@ -43,7 +43,7 @@ void testLensReplace::loadDefaulParameter_testLensReplace()
 
 	// wavelength
 	mWave550 = 550.0;
-	mWave500_vec.push_back(mWave550);
+	mWave550_vec.push_back(mWave550);
 
 	// tolerance
 	mGlobalTolerance = 1.0;
@@ -54,20 +54,52 @@ bool testLensReplace::testLensReplace_superFct()
 	std::vector<bool> workLensReplace_superFct;
 
 	//// E0
-	//bool checkE0 = testLensReplace_E0();
-	//workLensReplace_superFct.push_back(checkE0);
-	// 
-	//// E1
-	//bool checkE1 = testLensReplace_E1();
-	//workLensReplace_superFct.push_back(checkE1);
-	//
-	//// E2
-	//bool checkE2 = testLensReplace_E2();
-	//workLensReplace_superFct.push_back(checkE2);
+	bool checkE0 = testLensReplace_E0();
+	workLensReplace_superFct.push_back(checkE0);
+
+	// E1
+	bool checkE1 = testLensReplace_E1();
+	workLensReplace_superFct.push_back(checkE1);
+
+	// E2
+	bool checkE2 = testLensReplace_E2();
+	workLensReplace_superFct.push_back(checkE2);
 
 	// E3
 	bool checkE3 = testLensReplace_E3();
 	workLensReplace_superFct.push_back(checkE3);
+
+	// E4
+	bool checkE4 = testLensReplace_E4();
+	workLensReplace_superFct.push_back(checkE4);
+
+	// E5
+	bool checkE5 = testLensReplace_E5();
+	workLensReplace_superFct.push_back(checkE5);
+
+	// E6
+	bool checkE6 = testLensReplace_E6();
+	workLensReplace_superFct.push_back(checkE6);
+
+	//E7
+	bool checkE7 = testLensReplace_E7();
+	workLensReplace_superFct.push_back(checkE7);
+
+	//E8
+	bool checkE8 = testLensReplace_E8();
+	workLensReplace_superFct.push_back(checkE8);
+
+	//E9
+	bool checkE9 = testLensReplace_E9();
+	workLensReplace_superFct.push_back(checkE9);
+
+	//E10
+	bool checkE10 = testLensReplace_E10();
+	workLensReplace_superFct.push_back(checkE10);
+
+	//E11
+	bool checkE11 = testLensReplace_E11();
+	workLensReplace_superFct.push_back(checkE11);
 
 	bool returnChecker_superFct = Math::checkTrueOfVectorElements(workLensReplace_superFct);
 	return returnChecker_superFct;
@@ -81,10 +113,10 @@ bool testLensReplace::testLensReplace_E0()
 	std::vector<bool> workLensReplace_E0;
 
 	SphericalSurface_LLT S0_E0(/*radius*/30.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 25.0 },	/*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.67);
-	SphericalSurface_LLT S1_E0(/*radius*/25.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 30.0}, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.73, /*refIndexSideB*/1.67);
-	SphericalSurface_LLT S2_E0(/*radius*/20.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 32.0}, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.73);
+	SphericalSurface_LLT S1_E0(/*radius*/25.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 30.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.73, /*refIndexSideB*/1.67);
+	SphericalSurface_LLT S2_E0(/*radius*/20.0, /*semiHeight*/5.0, /*Apex of the sphere*/{ 0.0, 0.0, 32.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.73);
 	PlanGeometry_LLT P3_E0(/*semiHeight*/3.0, /*point*/{ 0.0,0.0,47 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
-	   
+
 	// build opitcal system
 	OpticalSystem_LLT OptSysE0;
 	OptSysE0.fillVectorSurfaceAndInteractingData(0, S0_E0.clone(), mRefrac.clone());
@@ -117,7 +149,6 @@ bool testLensReplace::testLensReplace_E0()
 	Achromat_E0.fillVectorSurfaceAndInteractingData(2, S2_E0.clone(), mRefrac.clone());
 
 	// check thickness
-
 	real thicknessTOM = lensReplace.calculateThickness_Z(Achromat_E0);
 	real thicknessZemax = 7.0;
 	bool checkCalcThickness_E0 = Math::compareTwoNumbers_decimals(thicknessTOM, thicknessZemax, 3);
@@ -193,6 +224,7 @@ bool testLensReplace::testLensReplace_E1()
 
 
 	LensReplace lensReplace_E1;
+	lensReplace_E1.setRefIndexSurroundMat(1.0);
 
 	// check focal lenght
 	real focalLengthTOM = lensReplace_E1.calcFocalLenghtOptSys(optSye_LLT_E1);
@@ -201,9 +233,9 @@ bool testLensReplace::testLensReplace_E1()
 	workLensReplace_E1.push_back(checkCalcFocalLength_E1);
 
 	// check find lenses in opt sys
-	std::vector<OpticalSystem_LLT> lensesInOptSys_E1 = lensReplace_E1.findLensesInOptSys_LLT(optSye_LLT_E1);
+	std::vector<OpticalSystem_LLT> lensesInOptSys_E1 = oftenUse::findLensesInOptSys_LLT(optSye_LLT_E1);
 	real numSur0 = lensesInOptSys_E1[0].getPosAndInteractingSurface().size();
-	bool checkNumSur0 = Math::compareTwoNumbers_decimals(numSur0,3,0);
+	bool checkNumSur0 = Math::compareTwoNumbers_decimals(numSur0, 3, 0);
 	workLensReplace_E1.push_back(checkNumSur0);
 	real numSur1 = lensesInOptSys_E1[1].getPosAndInteractingSurface().size();
 	bool checkNumSur1 = Math::compareTwoNumbers_decimals(numSur1, 3, 0);
@@ -217,8 +249,8 @@ bool testLensReplace::testLensReplace_E1()
 
 	// calculate parameter lenses
 	LensReplace lensReplace_E1_calcPara;
-	lensReplace_E1_calcPara.setOptSys_LLT(optSye_LLT_E1);
-	lensReplace_E1_calcPara.replaceSuperFuction();
+	lensReplace_E1_calcPara.setRefIndexSurroundMat(1.0);
+	lensReplace_E1_calcPara.replaceSuperFuction(optSye_LLT_E1);
 	std::vector<parameterLens> parameterLensesVec_E0 = lensReplace_E1_calcPara.getParameterLenses();
 	bool sizeParameterLenses = parameterLensesVec_E0.size() == 4;
 	workLensReplace_E1.push_back(sizeParameterLenses);
@@ -267,8 +299,8 @@ bool testLensReplace::testLensReplace_E2()
 	// *** *** //
 
 	// *** check rotate opt sys ele *** //
-	std::vector<surfacePtr> opticalSystemE0_ptr_toRotate{S1_E2_ptr, S2_E2_ptr, S3_E2_ptr};
-	std::vector<interaction_ptr> interactionsE0_ptr_toRotate{mRefrac.clone(), mRefrac.clone(), mRefrac.clone()};
+	std::vector<surfacePtr> opticalSystemE0_ptr_toRotate{ S1_E2_ptr, S2_E2_ptr, S3_E2_ptr };
+	std::vector<interaction_ptr> interactionsE0_ptr_toRotate{ mRefrac.clone(), mRefrac.clone(), mRefrac.clone() };
 	OpticalSystemElement optSystemElement_E2_toRotate(opticalSystemE0_ptr_toRotate, interactionsE0_ptr_toRotate);
 
 	OpticalSystemElement optSystemElement_E2_rotate = optSystemElement_E2.reverseOptSysEle(optSystemElement_E2_toRotate);
@@ -325,11 +357,12 @@ bool testLensReplace::testLensReplace_E3()
 
 	// check the start system
 	std::vector<real> rms_Zemax{ 54.144 };
-	bool test_E3 = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E3, mStartOptA_vec, mWave500_vec, rms_Zemax, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	bool test_E3 = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E3, mStartOptA_vec, mWave550_vec, rms_Zemax, mGlobalTolerance, compareTOM_Zemax::comEqual);
 	workLensReplace_E3.push_back(test_E3);
 
-	LensReplace lensReplace_E3(optSystemElement_E3);
-	
+	LensReplace lensReplace_E3;
+	lensReplace_E3.setRefIndexSurroundMat(1.0);
+	lensReplace_E3.replaceSuperFuction(optSystemElement_E3);
 
 	// Achromat 1
 	real focalLensAchromat_1 = lensReplace_E3.getParameterLenses()[0].getFocalLengthMinMax().getValue();
@@ -366,18 +399,18 @@ bool testLensReplace::testLensReplace_E3()
 	// ---
 
 	std::vector<lensTypes> loadLensCatalogEO_vec;
-	loadLensCatalogEO_vec.push_back(lensTypes::DConvexL);
-	loadLensCatalogEO_vec.push_back(lensTypes::posAchromat);
-	loadLensCatalogEO_vec.push_back(lensTypes::PConvexL);
-	loadLensCatalogEO_vec.push_back(lensTypes::DConcavL);
-	loadLensCatalogEO_vec.push_back(lensTypes::PConcavL);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_DoubleConvex_VIS_NIR);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_PosAchromat_MgF_Coated);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_PlanConvex_VIS_NIR);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_DoubleConcav_VIS_NIR);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_PlanConcav_VIS_NIR);
 
 	lensReplace_E3.loadLensCata(loadLensCatalogEO_vec);
 
 	// first lens
 	OptSysEle_Merit_LensType bestLensForAchromat_1 = lensReplace_E3.checkLensCatalogsForBestFitLens(/*lens number*/0, /*parameter lens*/ lensReplace_E3.getParameterLenses()[0]);
 	LensReplace replacedAchromat_1(bestLensForAchromat_1.getOptSysEle());
-	
+
 	real replaced_focalLensAchromat_1 = replacedAchromat_1.getParameterLenses()[0].getFocalLengthMinMax().getValue();
 	bool checkReplaceFocallength_1 = std::abs(replaced_focalLensAchromat_1 - focalLensAchromat_1) < 1.0;
 	workLensReplace_E3.push_back(checkReplaceFocallength_1);
@@ -394,7 +427,7 @@ bool testLensReplace::testLensReplace_E3()
 	// second lens
 	OptSysEle_Merit_LensType bestLensForAchromat_2 = lensReplace_E3.checkLensCatalogsForBestFitLens(/*lens number*/1, /*parameter lens*/ lensReplace_E3.getParameterLenses()[1]);
 	LensReplace replacedAchromat_2(bestLensForAchromat_2.getOptSysEle());
-	
+
 	real replaced_focalLensAchromat_2 = replacedAchromat_2.getParameterLenses()[0].getFocalLengthMinMax().getValue();
 	bool checkReplaceFocallength_2 = std::abs(replaced_focalLensAchromat_2 - focalLensAchromat_2) < 1.0;
 	workLensReplace_E3.push_back(checkReplaceFocallength_2);
@@ -410,14 +443,886 @@ bool testLensReplace::testLensReplace_E3()
 
 	// replace lens 0
 	lensReplace_E3.replaceLens(0, bestLensForAchromat_1.getOptSysEle());
-	OpticalSystemElement optSysEle_replacedLens_0 = lensReplace_E3.getOpticalSysEle();
+	OpticalSystemElement optSysEle_replacedLens_0 = lensReplace_E3.getOpticalSysEle_replacedLens();
+	lensReplace_E3.setOpticalSystemEle(optSysEle_replacedLens_0);
 
 	oftenUse::print(optSysEle_replacedLens_0, mWave550);
 
-	std::vector<real> rms_replace0_ref = { 135.087 };
-	bool checkReplace0 = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSysEle_replacedLens_0, mStartOptA_vec, mWave500_vec, rms_replace0_ref, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	std::vector<real> rms_replace0_ref = { 125.229 };
+	bool checkReplace0 = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSysEle_replacedLens_0, mStartOptA_vec, mWave550_vec, rms_replace0_ref, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace_E3.push_back(checkReplace0);
 
+	// replace lens 1
+	lensReplace_E3.replaceLens(1, bestLensForAchromat_2.getOptSysEle());
+	OpticalSystemElement optSysEle_replacedLens_1 = lensReplace_E3.getOpticalSysEle_replacedLens();
+
+	oftenUse::print(optSysEle_replacedLens_1, mWave550);
+
+	std::vector<real> rms_replace1_ref = { 148.927 };
+	bool checkReplace1 = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSysEle_replacedLens_1, mStartOptA_vec, mWave550_vec, rms_replace1_ref, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace_E3.push_back(checkReplace1);
 
 	bool returnChecker_E3 = Math::checkTrueOfVectorElements(workLensReplace_E3);
 	return returnChecker_E3;
 }
+
+bool testLensReplace::testLensReplace_E4()
+{
+	std::vector<bool> workLensReplace;
+
+	ApertureStopElement S0(/* semi height*/1.0, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ mGlasses.getAir());
+	SphericalElement S1(/*radius*/ 40.0, /*semi height*/ 6.0, /*point*/{ 0.0,0.0,15.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getSF5_S1());
+	SphericalElement S2(/*radius*/ 100.0, /*semi height*/ 6.0, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getSF5_S1(), /*refractive index B*/mGlasses.getNBK7_S1());
+	SphericalElement S3(/*radius*/ 200.0, /*semi height*/ 6.0, /*point*/{ 0.0,0.0,23.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNBK7_S1());
+	SphericalElement S4(/*radius*/ 150.0, /*semi height*/ 12.5, /*point*/{ 0.0,0.0,33.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ mGlasses.getNBAF10_S1(), /*refractive index B*/mGlasses.getAir());
+	SphericalElement S5(/*radius*/ 200.0, /*semi height*/ 12.5, /*point*/{ 0.0,0.0,38.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ mGlasses.getNBAF10_S1(), /*refractive index B*/mGlasses.getSF10_S1());
+	SphericalElement S6(/*radius*/ 100.0, /*semi height*/ 12.5, /*point*/{ 0.0,0.0,40.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ mGlasses.getSF10_S1(), /*refractive index B*/mGlasses.getAir());
+	SphericalElement S7(/*radius*/ 25.0, /*semi height*/ 6.0, /*point*/{ 0.0,0.0,50.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNBK7_S1());
+	SphericalElement S8(/*radius*/ 30.0, /*semi height*/ 6.0, /*point*/{ 0.0,0.0,55.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ mGlasses.getSF5_S1(), /*refractive index B*/mGlasses.getNBK7_S1());
+	SphericalElement S9(/*radius*/ 20.0, /*semi height*/ 6.0, /*point*/{ 0.0,0.0,60.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getSF5_S1());
+	PlanElement S10(/*semi height*/ 99.0, /*point*/{ 0.0,0.0,100.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ mGlasses.getAir(), /*refractive index B*/ mGlasses.getAir());
+
+	surfacePtr S0_ptr = S0.clone();
+	surfacePtr S1_ptr = S1.clone();
+	surfacePtr S2_ptr = S2.clone();
+	surfacePtr S3_ptr = S3.clone();
+	surfacePtr S4_ptr = S4.clone();
+	surfacePtr S5_ptr = S5.clone();
+	surfacePtr S6_ptr = S6.clone();
+	surfacePtr S7_ptr = S7.clone();
+	surfacePtr S8_ptr = S8.clone();
+	surfacePtr S9_ptr = S9.clone();
+	surfacePtr S10_ptr = S10.clone();
+
+	std::vector<surfacePtr> opticalSystem_ptr{ S0_ptr, S1_ptr, S2_ptr, S3_ptr, S4_ptr,S5_ptr,S6_ptr, S7_ptr, S8_ptr, S9_ptr, S10_ptr };
+	std::vector<interaction_ptr> interactions_ptr{ mDoNot.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
+
+
+	//	build optical system
+	OpticalSystemElement optSystemElement(opticalSystem_ptr, interactions_ptr);
+
+	oftenUse::print(optSystemElement, 550.0);
+
+	// check the start system
+	std::vector<real> rms_Zemax{ 73.623 };
+	bool test = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement, mStartOptA_vec, mWave550_vec, rms_Zemax, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(test);
+
+
+	// replace lenses
+	LensReplace lensReplace;
+	lensReplace.setRefIndexSurroundMat(1.0);
+	lensReplace.replaceSuperFuction(optSystemElement);
+
+	std::vector<lensTypes> loadLensCatalogEO_vec;
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_DoubleConvex_VIS_NIR);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_PosAchromat_MgF_Coated);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_PlanConvex_VIS_NIR);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_DoubleConcav_VIS_NIR);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_PlanConcav_VIS_NIR);
+
+	lensReplace.loadLensCata(loadLensCatalogEO_vec);
+
+	// zero lens
+	OptSysEle_Merit_LensType bestLensForAchromat_0 = lensReplace.checkLensCatalogsForBestFitLens(/*lens number*/0, /*parameter lens*/ lensReplace.getParameterLenses()[0]);
+	lensReplace.replaceLens(0, bestLensForAchromat_0.getOptSysEle());
+	lensReplace.adjustThicknessesAccordingToFixed();
+	// check lens replace 0
+	real rmsZ_0 = 98.876;
+	bool check0 = oftenUse::checkOptSysELement_Equal_Better_Zemax(lensReplace.getOpticalSysEle_replacedLens(), { 0.0,0.0,0.0 }, 550.0, rmsZ_0, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(check0);
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	OpticalSystemElement tempOptSys = lensReplace.getOpticalSysEle_replacedLens();
+	lensReplace.setOpticalSystemEle(tempOptSys);
+
+	// first lens
+	OptSysEle_Merit_LensType bestLensForAchromat_1 = lensReplace.checkLensCatalogsForBestFitLens(/*lens number*/1, /*parameter lens*/ lensReplace.getParameterLenses()[1]);
+	lensReplace.replaceLens(1, bestLensForAchromat_1.getOptSysEle());
+	lensReplace.adjustThicknessesAccordingToFixed();
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	// check lens replace 1
+	real rmsZ_1 = 66.931;
+	bool check1 = oftenUse::checkOptSysELement_Equal_Better_Zemax(lensReplace.getOpticalSysEle_replacedLens(), { 0.0,0.0,0.0 }, 550.0, rmsZ_1, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(check1);
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	tempOptSys = lensReplace.getOpticalSysEle_replacedLens();
+	lensReplace.setOpticalSystemEle(tempOptSys);
+
+	// second lens
+	OptSysEle_Merit_LensType bestLensForAchromat_2 = lensReplace.checkLensCatalogsForBestFitLens(/*lens number*/2, /*parameter lens*/ lensReplace.getParameterLenses()[2]);
+	lensReplace.replaceLens(2, bestLensForAchromat_2.getOptSysEle());
+	lensReplace.adjustThicknessesAccordingToFixed();
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	// check lens replace 2
+	real rmsZ_2 = 396.284;
+	bool check2 = oftenUse::checkOptSysELement_Equal_Better_Zemax(lensReplace.getOpticalSysEle_replacedLens(), { 0.0,0.0,0.0 }, 550.0, rmsZ_2, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(check2);
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	tempOptSys = lensReplace.getOpticalSysEle_replacedLens();
+	lensReplace.setOpticalSystemEle(tempOptSys);
+	// ***
+
+	bool checker = Math::checkTrueOfVectorElements(workLensReplace);
+	return checker;
+}
+
+
+bool testLensReplace::testLensReplace_E5()
+{
+	std::vector<bool> workLensReplace;
+
+	ApertureStopElement S0(/* semi height*/1.0, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ mGlasses.getAir());
+	SphericalElement S1(/*radius*/ 105.0, /*semi height*/ 6.0, /*point*/{ 0.0,0.0,15.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNBK7_S1());
+	SphericalElement S2(/*radius*/ 100.0, /*semi height*/ 6.0, /*point*/{ 0.0,0.0,19.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNBK7_S1());
+	SphericalElement S3(/*radius*/ 100.0, /*semi height*/ 6.0, /*point*/{ 0.0,0.0,29.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getSF57_S1());
+	SphericalElement S4(/*radius*/ 100.0, /*semi height*/ 12.5, /*point*/{ 0.0,0.0,34.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getSF57_S1());
+	SphericalElement S5(/*radius*/ 10.0, /*semi height*/ 12.5, /*point*/{ 0.0,0.0,39.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNBK7_S1());
+	SphericalElement S6(/*radius*/ 12.0, /*semi height*/ 12.5, /*point*/{ 0.0,0.0,46.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNBK7_S1());
+	PlanElement S7(/*semi height*/ 99.0, /*point*/{ 0.0,0.0,56.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ mGlasses.getAir(), /*refractive index B*/ mGlasses.getAir());
+
+	surfacePtr S0_ptr = S0.clone();
+	surfacePtr S1_ptr = S1.clone();
+	surfacePtr S2_ptr = S2.clone();
+	surfacePtr S3_ptr = S3.clone();
+	surfacePtr S4_ptr = S4.clone();
+	surfacePtr S5_ptr = S5.clone();
+	surfacePtr S6_ptr = S6.clone();
+	surfacePtr S7_ptr = S7.clone();
+
+
+	std::vector<surfacePtr> opticalSystem_ptr{ S0_ptr, S1_ptr, S2_ptr, S3_ptr, S4_ptr,S5_ptr,S6_ptr, S7_ptr };
+	std::vector<interaction_ptr> interactions_ptr{ mDoNot.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
+
+
+	//	build optical system
+	OpticalSystemElement optSystemElement(opticalSystem_ptr, interactions_ptr);
+
+	oftenUse::print(optSystemElement, 550.0);
+
+	// check the start system
+	std::vector<real> rms_Zemax{ 60.184 };
+	bool test = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement, mStartOptA_vec, mWave550_vec, rms_Zemax, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(test);
+
+	// replace lenses
+	LensReplace lensReplace;
+	lensReplace.setRefIndexSurroundMat(1.0);
+	lensReplace.replaceSuperFuction(optSystemElement);
+
+	std::vector<lensTypes> loadLensCatalogEO_vec;
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_DoubleConvex_VIS_NIR);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_PosAchromat_MgF_Coated);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_PlanConvex_VIS_NIR);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_DoubleConcav_VIS_NIR);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_PlanConcav_VIS_NIR);
+
+	lensReplace.loadLensCata(loadLensCatalogEO_vec);
+
+	// zero lens
+	OptSysEle_Merit_LensType bestLens_0 = lensReplace.checkLensCatalogsForBestFitLens(/*lens number*/0, /*parameter lens*/ lensReplace.getParameterLenses()[0]);
+	lensReplace.replaceLens(0, bestLens_0.getOptSysEle());
+	lensReplace.adjustThicknessesAccordingToFixed();
+	// check lens replace 0
+	real rmsZ_0 = 64.998;
+	bool check0 = oftenUse::checkOptSysELement_Equal_Better_Zemax(lensReplace.getOpticalSysEle_replacedLens(), { 0.0,0.0,0.0 }, 550.0, rmsZ_0, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(check0);
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	OpticalSystemElement tempOptSys = lensReplace.getOpticalSysEle_replacedLens();
+	lensReplace.setOpticalSystemEle(tempOptSys);
+
+	// first lens
+	OptSysEle_Merit_LensType bestLens_1 = lensReplace.checkLensCatalogsForBestFitLens(/*lens number*/1, /*parameter lens*/ lensReplace.getParameterLenses()[1]);
+	lensReplace.replaceLens(1, bestLens_1.getOptSysEle());
+	lensReplace.adjustThicknessesAccordingToFixed();
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	// check lens replace 1
+	real rmsZ_1 = 82.527;
+	bool check1 = oftenUse::checkOptSysELement_Equal_Better_Zemax(lensReplace.getOpticalSysEle_replacedLens(), { 0.0,0.0,0.0 }, 550.0, rmsZ_1, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(check1);
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	tempOptSys = lensReplace.getOpticalSysEle_replacedLens();
+	lensReplace.setOpticalSystemEle(tempOptSys);
+
+	// second lens
+	OptSysEle_Merit_LensType bestLens_2 = lensReplace.checkLensCatalogsForBestFitLens(/*lens number*/2, /*parameter lens*/ lensReplace.getParameterLenses()[2]);
+	lensReplace.replaceLens(2, bestLens_2.getOptSysEle());
+	lensReplace.adjustThicknessesAccordingToFixed();
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	// check lens replace 2
+	real rmsZ_2 = 64.281;
+	bool check2 = oftenUse::checkOptSysELement_Equal_Better_Zemax(lensReplace.getOpticalSysEle_replacedLens(), { 0.0,0.0,0.0 }, 550.0, rmsZ_2, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(check2);
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	tempOptSys = lensReplace.getOpticalSysEle_replacedLens();
+	lensReplace.setOpticalSystemEle(tempOptSys);
+
+	bool checker = Math::checkTrueOfVectorElements(workLensReplace);
+	return checker;
+}
+
+bool testLensReplace::testLensReplace_E6()
+{
+	std::vector<bool> workLensReplace;
+
+
+	ApertureStopElement S0(/* semi height*/1.0, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ mGlasses.getAir());
+	SphericalElement S1(/*radius*/ 50.0, /*semi height*/ 6.0, /*point*/{ 0.0,0.0,15.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNBK7_S1());
+	SphericalElement S2(/*radius*/ 70.0, /*semi height*/ 6.0, /*point*/{ 0.0,0.0,18.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getNBK7_S1(), /*refractive index B*/mGlasses.getNSF5_S1());
+	SphericalElement S3(/*radius*/ 60.0, /*semi height*/ 6.0, /*point*/{ 0.0,0.0,21.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getNSF5_S1(), /*refractive index B*/mGlasses.getNBAF10_S1());
+	SphericalElement S4(/*radius*/ 50.0, /*semi height*/ 6.0, /*point*/{ 0.0,0.0,26.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ mGlasses.getNBK7_S1(), /*refractive index B*/mGlasses.getNBAF10_S1());
+	SphericalElement S5(/*radius*/ 200.0, /*semi height*/ 6.0, /*point*/{ 0.0,0.0,28.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getNBK7_S1(), /*refractive index B*/mGlasses.getNLAF2_S1());
+	SphericalElement S6(/*radius*/ 30.0, /*semi height*/ 6.0, /*point*/{ 0.0,0.0,33.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getNLAF2_S1(), /*refractive index B*/mGlasses.getSF66_S1());
+	SphericalElement S7(/*radius*/ 20.0, /*semi height*/ 6.0, /*point*/{ 0.0,0.0,35.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getSF66_S1());
+	PlanElement S8(/*semi height*/ 99.0, /*point*/{ 0.0,0.0,55.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ mGlasses.getAir(), /*refractive index B*/ mGlasses.getAir());
+
+	surfacePtr S0_ptr = S0.clone();
+	surfacePtr S1_ptr = S1.clone();
+	surfacePtr S2_ptr = S2.clone();
+	surfacePtr S3_ptr = S3.clone();
+	surfacePtr S4_ptr = S4.clone();
+	surfacePtr S5_ptr = S5.clone();
+	surfacePtr S6_ptr = S6.clone();
+	surfacePtr S7_ptr = S7.clone();
+	surfacePtr S8_ptr = S8.clone();
+
+
+	std::vector<surfacePtr> opticalSystem_ptr{ S0_ptr, S1_ptr, S2_ptr, S3_ptr, S4_ptr,S5_ptr,S6_ptr, S7_ptr, S8_ptr };
+	std::vector<interaction_ptr> interactions_ptr{ mDoNot.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
+
+
+	//	build optical system
+	OpticalSystemElement optSystemElement(opticalSystem_ptr, interactions_ptr);
+
+	oftenUse::print(optSystemElement, 550.0);
+
+	// check the start system
+	std::vector<real> rms_Zemax{ 974.345 };
+	bool test = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement, mStartOptA_vec, mWave550_vec, rms_Zemax, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(test);
+
+	// replace lenses
+	LensReplace lensReplace;
+	lensReplace.setRefIndexSurroundMat(1.0);
+	lensReplace.replaceSuperFuction(optSystemElement);
+
+	std::vector<lensTypes> loadLensCatalogEO_vec;
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_DoubleConvex_VIS_NIR);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_PosAchromat_MgF_Coated);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_PlanConvex_VIS_NIR);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_DoubleConcav_VIS_NIR);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_PlanConcav_VIS_NIR);
+
+	lensReplace.loadLensCata(loadLensCatalogEO_vec);
+
+
+	// zero lens
+	OptSysEle_Merit_LensType bestLens_0 = lensReplace.checkLensCatalogsForBestFitLens(/*lens number*/0, /*parameter lens*/ lensReplace.getParameterLenses()[0]);
+	lensReplace.replaceLens(0, bestLens_0.getOptSysEle());
+	lensReplace.adjustThicknessesAccordingToFixed();
+	// check lens replace 0
+	real rmsZ_0 = 992.110;
+	bool check0 = oftenUse::checkOptSysELement_Equal_Better_Zemax(lensReplace.getOpticalSysEle_replacedLens(), { 0.0,0.0,0.0 }, 550.0, rmsZ_0, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(check0);
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+
+	bool checker = Math::checkTrueOfVectorElements(workLensReplace);
+	return checker;
+}
+
+bool testLensReplace::testLensReplace_E7()
+{
+	std::vector<bool> workLensReplace;
+
+
+	ApertureStopElement S0(/* semi height*/1.0, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ mGlasses.getAir());
+	SphericalElement S1(/*radius*/ 80.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,15.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNBASF64_S1());
+	SphericalElement S2(/*radius*/ 70.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getNBASF64_S1(), /*refractive index B*/mGlasses.getNSF66_S1());
+	SphericalElement S3(/*radius*/ 60.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,25.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getNBK7_S1(), /*refractive index B*/mGlasses.getNSF66_S1());
+	PlanElement S4(/*semi height*/ 7.5, /*point*/{ 0.0,0.0,30.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ mGlasses.getNBK7_S1(), /*refractive index B*/ mGlasses.getAir());
+	SphericalElement S5(/*radius*/ 50.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,35.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNLAF2_S1());
+	SphericalElement S6(/*radius*/ 50.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,40.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getNLAF2_S1(), /*refractive index B*/mGlasses.getNBK7_S1());
+	SphericalElement S7(/*radius*/ 30.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,45.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNBK7_S1());
+	SphericalElement S8(/*radius*/ 60.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,50.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNPK52A_S1());
+	SphericalElement S9(/*radius*/ 40.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,55.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getNPK52A_S1(), /*refractive index B*/mGlasses.getNF2_S1());
+	SphericalElement S10(/*radius*/ 20.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,60.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNF2_S1());
+	PlanElement S11(/*semi height*/ 99.0, /*point*/{ 0.0,0.0,70.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ mGlasses.getAir(), /*refractive index B*/ mGlasses.getAir());
+
+	surfacePtr S0_ptr = S0.clone();
+	surfacePtr S1_ptr = S1.clone();
+	surfacePtr S2_ptr = S2.clone();
+	surfacePtr S3_ptr = S3.clone();
+	surfacePtr S4_ptr = S4.clone();
+	surfacePtr S5_ptr = S5.clone();
+	surfacePtr S6_ptr = S6.clone();
+	surfacePtr S7_ptr = S7.clone();
+	surfacePtr S8_ptr = S8.clone();
+	surfacePtr S9_ptr = S9.clone();
+	surfacePtr S10_ptr = S10.clone();
+	surfacePtr S11_ptr = S11.clone();
+
+	std::vector<surfacePtr> opticalSystem_ptr{ S0_ptr, S1_ptr, S2_ptr, S3_ptr, S4_ptr,S5_ptr,S6_ptr, S7_ptr, S8_ptr, S9_ptr, S10_ptr, S11_ptr };
+	std::vector<interaction_ptr> interactions_ptr{ mDoNot.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(), mAbsorb.clone() };
+
+
+	//	build optical system
+	OpticalSystemElement optSystemElement(opticalSystem_ptr, interactions_ptr);
+
+	oftenUse::print(optSystemElement, 550.0);
+
+	// check the start system
+	std::vector<real> rms_Zemax{ 1005.75 };
+	bool test = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement, mStartOptA_vec, mWave550_vec, rms_Zemax, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(test);
+
+	// replace lenses
+	LensReplace lensReplace;
+	lensReplace.setRefIndexSurroundMat(1.0);
+	lensReplace.replaceSuperFuction(optSystemElement);
+
+	std::vector<lensTypes> loadLensCatalogEO_vec;
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_DoubleConvex_VIS_NIR);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_PosAchromat_MgF_Coated);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_PlanConvex_VIS_NIR);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_DoubleConcav_VIS_NIR);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_PlanConcav_VIS_NIR);
+
+	lensReplace.loadLensCata(loadLensCatalogEO_vec);
+
+	// zero lens
+	OptSysEle_Merit_LensType bestLens_0 = lensReplace.checkLensCatalogsForBestFitLens(/*lens number*/0, /*parameter lens*/ lensReplace.getParameterLenses()[0]);
+	lensReplace.replaceLens(0, bestLens_0.getOptSysEle());
+	lensReplace.adjustThicknessesAccordingToFixed();
+	// check lens replace 0
+	real rmsZ_0 = 1020.62;
+	bool check0 = oftenUse::checkOptSysELement_Equal_Better_Zemax(lensReplace.getOpticalSysEle_replacedLens(), { 0.0,0.0,0.0 }, 550.0, rmsZ_0, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(check0);
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	OpticalSystemElement tempOptSys = lensReplace.getOpticalSysEle_replacedLens();
+	lensReplace.setOpticalSystemEle(tempOptSys);
+
+	// first lens
+	OptSysEle_Merit_LensType bestLens_1 = lensReplace.checkLensCatalogsForBestFitLens(/*lens number*/1, /*parameter lens*/ lensReplace.getParameterLenses()[1]);
+	lensReplace.replaceLens(1, bestLens_1.getOptSysEle());
+	lensReplace.adjustThicknessesAccordingToFixed();
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	// check lens replace 1
+	real rmsZ_1 = 1068.85;
+	bool check1 = oftenUse::checkOptSysELement_Equal_Better_Zemax(lensReplace.getOpticalSysEle_replacedLens(), { 0.0,0.0,0.0 }, 550.0, rmsZ_1, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(check1);
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	tempOptSys = lensReplace.getOpticalSysEle_replacedLens();
+	lensReplace.setOpticalSystemEle(tempOptSys);
+
+	// second lens
+	OptSysEle_Merit_LensType bestLens_2 = lensReplace.checkLensCatalogsForBestFitLens(/*lens number*/2, /*parameter lens*/ lensReplace.getParameterLenses()[2]);
+	lensReplace.replaceLens(2, bestLens_2.getOptSysEle());
+	lensReplace.adjustThicknessesAccordingToFixed();
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	// check lens replace 2
+	real rmsZ_2 = 622.532;
+	bool check2 = oftenUse::checkOptSysELement_Equal_Better_Zemax(lensReplace.getOpticalSysEle_replacedLens(), { 0.0,0.0,0.0 }, 550.0, rmsZ_2, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(check2);
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	tempOptSys = lensReplace.getOpticalSysEle_replacedLens();
+	lensReplace.setOpticalSystemEle(tempOptSys);
+
+	bool checker = Math::checkTrueOfVectorElements(workLensReplace);
+	return checker;
+}
+
+bool testLensReplace::testLensReplace_E8()
+{
+	std::vector<bool> workLensReplace;
+
+
+	ApertureStopElement S0(/* semi height*/1.0, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ mGlasses.getAir());
+	SphericalElement S1(/*radius*/ 70.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,15.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNSF66_S1());
+	SphericalElement S2(/*radius*/ 60.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getNBK7_S1(), /*refractive index B*/mGlasses.getNSF66_S1());
+	PlanElement S3(/*semi height*/ 7.5, /*point*/{ 0.0,0.0,25.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ mGlasses.getNBK7_S1(), /*refractive index B*/ mGlasses.getAir());
+	SphericalElement S4(/*radius*/ 50.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNLAF2_S1());
+	SphericalElement S5(/*radius*/ 50.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,35.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getNLAF2_S1(), /*refractive index B*/mGlasses.getNBK7_S1());
+	SphericalElement S6(/*radius*/ 30.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,40.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNBK7_S1());
+	SphericalElement S7(/*radius*/ 60.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,45.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNPK52A_S1());
+	SphericalElement S8(/*radius*/ 40.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,50.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getNPK52A_S1(), /*refractive index B*/mGlasses.getNF2_S1());
+	SphericalElement S9(/*radius*/ 20.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,55.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getSF10_S1(), /*refractive index B*/mGlasses.getNF2_S1());
+	SphericalElement S10(/*radius*/ 30.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,60.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getSF6_S1(), /*refractive index B*/mGlasses.getSF10_S1());
+	SphericalElement S11(/*radius*/ 30.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,65.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getSF6_S1());
+	PlanElement S12(/*semi height*/ 99.0, /*point*/{ 0.0,0.0,95.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ mGlasses.getAir(), /*refractive index B*/ mGlasses.getAir());
+
+	surfacePtr S0_ptr = S0.clone();
+	surfacePtr S1_ptr = S1.clone();
+	surfacePtr S2_ptr = S2.clone();
+	surfacePtr S3_ptr = S3.clone();
+	surfacePtr S4_ptr = S4.clone();
+	surfacePtr S5_ptr = S5.clone();
+	surfacePtr S6_ptr = S6.clone();
+	surfacePtr S7_ptr = S7.clone();
+	surfacePtr S8_ptr = S8.clone();
+	surfacePtr S9_ptr = S9.clone();
+	surfacePtr S10_ptr = S10.clone();
+	surfacePtr S11_ptr = S11.clone();
+	surfacePtr S12_ptr = S12.clone();
+
+	std::vector<surfacePtr> opticalSystem_ptr{ S0_ptr, S1_ptr, S2_ptr, S3_ptr, S4_ptr,S5_ptr,S6_ptr, S7_ptr, S8_ptr, S9_ptr, S10_ptr, S11_ptr, S12_ptr };
+	std::vector<interaction_ptr> interactions_ptr{ mDoNot.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
+
+
+	//	build optical system
+	OpticalSystemElement optSystemElement(opticalSystem_ptr, interactions_ptr);
+
+	oftenUse::print(optSystemElement, 550.0);
+
+	// check the start system
+	std::vector<real> rms_Zemax{ 127.294 };
+	bool test = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement, mStartOptA_vec, mWave550_vec, rms_Zemax, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(test);
+
+	// replace lenses
+	LensReplace lensReplace;
+	lensReplace.setRefIndexSurroundMat(1.0);
+	lensReplace.replaceSuperFuction(optSystemElement);
+
+	std::vector<lensTypes> loadLensCatalogEO_vec;
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_DoubleConvex_VIS_NIR);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_PosAchromat_MgF_Coated);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_PlanConvex_VIS_NIR);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_DoubleConcav_VIS_NIR);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_PlanConcav_VIS_NIR);
+
+	lensReplace.loadLensCata(loadLensCatalogEO_vec);
+
+	// zero lens
+	OptSysEle_Merit_LensType bestLens_0 = lensReplace.checkLensCatalogsForBestFitLens(/*lens number*/0, /*parameter lens*/ lensReplace.getParameterLenses()[0]);
+	lensReplace.replaceLens(0, bestLens_0.getOptSysEle());
+	lensReplace.adjustThicknessesAccordingToFixed();
+	// check lens replace 0
+	real rmsZ_0 = 221.086;
+	bool check0 = oftenUse::checkOptSysELement_Equal_Better_Zemax(lensReplace.getOpticalSysEle_replacedLens(), { 0.0,0.0,0.0 }, 550.0, rmsZ_0, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(check0);
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	OpticalSystemElement tempOptSys = lensReplace.getOpticalSysEle_replacedLens();
+	lensReplace.setOpticalSystemEle(tempOptSys);
+
+	// first lens
+	OptSysEle_Merit_LensType bestLens_1 = lensReplace.checkLensCatalogsForBestFitLens(/*lens number*/1, /*parameter lens*/ lensReplace.getParameterLenses()[1]);
+	lensReplace.replaceLens(1, bestLens_1.getOptSysEle());
+	lensReplace.adjustThicknessesAccordingToFixed();
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	// check lens replace 1
+	real rmsZ_1 = 452.305;
+	bool check1 = oftenUse::checkOptSysELement_Equal_Better_Zemax(lensReplace.getOpticalSysEle_replacedLens(), { 0.0,0.0,0.0 }, 550.0, rmsZ_1, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(check1);
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	tempOptSys = lensReplace.getOpticalSysEle_replacedLens();
+	lensReplace.setOpticalSystemEle(tempOptSys);
+
+	// second lens
+	OptSysEle_Merit_LensType bestLens_2 = lensReplace.checkLensCatalogsForBestFitLens(/*lens number*/2, /*parameter lens*/ lensReplace.getParameterLenses()[2]);
+	lensReplace.replaceLens(2, bestLens_2.getOptSysEle());
+	lensReplace.adjustThicknessesAccordingToFixed();
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	// check lens replace 2
+	real rmsZ_2 = 611.078;
+	bool check2 = oftenUse::checkOptSysELement_Equal_Better_Zemax(lensReplace.getOpticalSysEle_replacedLens(), { 0.0,0.0,0.0 }, 550.0, rmsZ_2, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(check2);
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	tempOptSys = lensReplace.getOpticalSysEle_replacedLens();
+	lensReplace.setOpticalSystemEle(tempOptSys);
+
+	bool checker = Math::checkTrueOfVectorElements(workLensReplace);
+	return checker;
+}
+
+bool testLensReplace::testLensReplace_E9()
+{
+	std::vector<bool> workLensReplace;
+
+
+	ApertureStopElement S0(/* semi height*/1.0, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ mGlasses.getAir());
+	SphericalElement S1(/*radius*/ 70.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,15.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNSF66_S1());
+	SphericalElement S2(/*radius*/ 60.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNSF66_S1());
+	SphericalElement S3(/*radius*/ 50.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,25.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getNLAF2_S1(), /*refractive index B*/mGlasses.getAir());
+	SphericalElement S4(/*radius*/ 40.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getNLAF2_S1(), /*refractive index B*/mGlasses.getAir());
+	SphericalElement S5(/*radius*/ 60.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,35.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNPK52A_S1());
+	SphericalElement S6(/*radius*/ 30.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,40.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNPK52A_S1());
+	SphericalElement S7(/*radius*/ 20.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,45.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNBK7_S1());
+	SphericalElement S8(/*radius*/ 20.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,50.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNBK7_S1());
+	PlanElement S9(/*semi height*/ 99.0, /*point*/{ 0.0,0.0,75.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ mGlasses.getAir(), /*refractive index B*/ mGlasses.getAir());
+
+	surfacePtr S0_ptr = S0.clone();
+	surfacePtr S1_ptr = S1.clone();
+	surfacePtr S2_ptr = S2.clone();
+	surfacePtr S3_ptr = S3.clone();
+	surfacePtr S4_ptr = S4.clone();
+	surfacePtr S5_ptr = S5.clone();
+	surfacePtr S6_ptr = S6.clone();
+	surfacePtr S7_ptr = S7.clone();
+	surfacePtr S8_ptr = S8.clone();
+	surfacePtr S9_ptr = S9.clone();
+
+	std::vector<surfacePtr> opticalSystem_ptr{ S0_ptr, S1_ptr, S2_ptr, S3_ptr, S4_ptr,S5_ptr,S6_ptr, S7_ptr, S8_ptr, S9_ptr };
+	std::vector<interaction_ptr> interactions_ptr{ mDoNot.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(),mRefrac.clone(), mAbsorb.clone() };
+
+
+	//	build optical system
+	OpticalSystemElement optSystemElement(opticalSystem_ptr, interactions_ptr);
+
+	oftenUse::print(optSystemElement, 550.0);
+
+	// check the start system
+	std::vector<real> rms_Zemax{ 36.982 };
+	bool test = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement, mStartOptA_vec, mWave550_vec, rms_Zemax, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(test);
+
+	// replace lenses
+	LensReplace lensReplace;
+	lensReplace.setRefIndexSurroundMat(1.0);
+	lensReplace.replaceSuperFuction(optSystemElement);
+
+	std::vector<lensTypes> loadLensCatalogEO_vec;
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_DoubleConvex_VIS_NIR);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_PosAchromat_MgF_Coated);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_PlanConvex_VIS_NIR);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_DoubleConcav_VIS_NIR);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_PlanConcav_VIS_NIR);
+
+	lensReplace.loadLensCata(loadLensCatalogEO_vec);
+
+	// zero lens
+	OptSysEle_Merit_LensType bestLens_0 = lensReplace.checkLensCatalogsForBestFitLens(/*lens number*/0, /*parameter lens*/ lensReplace.getParameterLenses()[0]);
+	lensReplace.replaceLens(0, bestLens_0.getOptSysEle());
+	lensReplace.adjustThicknessesAccordingToFixed();
+	// check lens replace 0
+	real rmsZ_0 = 42.495;
+	bool check0 = oftenUse::checkOptSysELement_Equal_Better_Zemax(lensReplace.getOpticalSysEle_replacedLens(), { 0.0,0.0,0.0 }, 550.0, rmsZ_0, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(check0);
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	OpticalSystemElement tempOptSys = lensReplace.getOpticalSysEle_replacedLens();
+	lensReplace.setOpticalSystemEle(tempOptSys);
+
+	// first lens
+	OptSysEle_Merit_LensType bestLens_1 = lensReplace.checkLensCatalogsForBestFitLens(/*lens number*/1, /*parameter lens*/ lensReplace.getParameterLenses()[1]);
+	lensReplace.replaceLens(1, bestLens_1.getOptSysEle());
+	lensReplace.adjustThicknessesAccordingToFixed();
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	// check lens replace 1
+	real rmsZ_1 = 55.653;
+	bool check1 = oftenUse::checkOptSysELement_Equal_Better_Zemax(lensReplace.getOpticalSysEle_replacedLens(), { 0.0,0.0,0.0 }, 550.0, rmsZ_1, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(check1);
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	tempOptSys = lensReplace.getOpticalSysEle_replacedLens();
+	lensReplace.setOpticalSystemEle(tempOptSys);
+
+	// second lens
+	OptSysEle_Merit_LensType bestLens_2 = lensReplace.checkLensCatalogsForBestFitLens(/*lens number*/2, /*parameter lens*/ lensReplace.getParameterLenses()[2]);
+	lensReplace.replaceLens(2, bestLens_2.getOptSysEle());
+	lensReplace.adjustThicknessesAccordingToFixed();
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	// check lens replace 2
+	real rmsZ_2 = 47.173;
+	bool check2 = oftenUse::checkOptSysELement_Equal_Better_Zemax(lensReplace.getOpticalSysEle_replacedLens(), { 0.0,0.0,0.0 }, 550.0, rmsZ_2, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(check2);
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	tempOptSys = lensReplace.getOpticalSysEle_replacedLens();
+	lensReplace.setOpticalSystemEle(tempOptSys);
+
+	// third lens
+	OptSysEle_Merit_LensType bestLens_3 = lensReplace.checkLensCatalogsForBestFitLens(/*lens number*/3, /*parameter lens*/ lensReplace.getParameterLenses()[3]);
+	lensReplace.replaceLens(3, bestLens_3.getOptSysEle());
+	lensReplace.adjustThicknessesAccordingToFixed();
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	// check lens replace 3
+	real rmsZ_3 = 33.094;
+	bool check3 = oftenUse::checkOptSysELement_Equal_Better_Zemax(lensReplace.getOpticalSysEle_replacedLens(), { 0.0,0.0,0.0 }, 550.0, rmsZ_3, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(check3);
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	tempOptSys = lensReplace.getOpticalSysEle_replacedLens();
+	lensReplace.setOpticalSystemEle(tempOptSys);
+
+	bool checker = Math::checkTrueOfVectorElements(workLensReplace);
+	return checker;
+}
+
+bool testLensReplace::testLensReplace_E10()
+{
+	std::vector<bool> workLensReplace;
+
+
+	ApertureStopElement S0(/* semi height*/1.0, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ mGlasses.getAir());
+	SphericalElement S1(/*radius*/ 70.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,15.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNSF66_S1());
+	SphericalElement S2(/*radius*/ 50.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getNLAF2_S1(), /*refractive index B*/mGlasses.getNSF66_S1());
+	SphericalElement S3(/*radius*/ 40.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,25.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getNLAF2_S1(), /*refractive index B*/mGlasses.getAir());
+	SphericalElement S4(/*radius*/ 60.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNPK52A_S1());
+	SphericalElement S5(/*radius*/ 20.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,35.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getNPK52A_S1(), /*refractive index B*/mGlasses.getNBK7_S1());
+	SphericalElement S6(/*radius*/ 20.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,40.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNBK7_S1());
+	SphericalElement S7(/*radius*/ 80.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,45.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getSF2_S1());
+	SphericalElement S8(/*radius*/ 80.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,50.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getSF2_S1());
+	SphericalElement S9(/*radius*/ 80.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,55.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getSF5_S1(), /*refractive index B*/mGlasses.getAir());
+	SphericalElement S10(/*radius*/ 100.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,60.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getSF5_S1(), /*refractive index B*/mGlasses.getAir());
+	SphericalElement S11(/*radius*/ 60.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,65.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getBAFN10_S1());
+	SphericalElement S12(/*radius*/ 50.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,70.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getBAFN10_S1(), /*refractive index B*/mGlasses.getNLAF32_S1());
+	SphericalElement S13(/*radius*/ 40.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,75.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNLAF32_S1());
+	PlanElement S14(/*semi height*/ 99.0, /*point*/{ 0.0,0.0,90.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ mGlasses.getAir(), /*refractive index B*/ mGlasses.getAir());
+
+	surfacePtr S0_ptr = S0.clone();
+	surfacePtr S1_ptr = S1.clone();
+	surfacePtr S2_ptr = S2.clone();
+	surfacePtr S3_ptr = S3.clone();
+	surfacePtr S4_ptr = S4.clone();
+	surfacePtr S5_ptr = S5.clone();
+	surfacePtr S6_ptr = S6.clone();
+	surfacePtr S7_ptr = S7.clone();
+	surfacePtr S8_ptr = S8.clone();
+	surfacePtr S9_ptr = S9.clone();
+	surfacePtr S10_ptr = S10.clone();
+	surfacePtr S11_ptr = S11.clone();
+	surfacePtr S12_ptr = S12.clone();
+	surfacePtr S13_ptr = S13.clone();
+	surfacePtr S14_ptr = S14.clone();
+
+
+	std::vector<surfacePtr> opticalSystem_ptr{ S0_ptr, S1_ptr, S2_ptr, S3_ptr, S4_ptr,S5_ptr,S6_ptr, S7_ptr, S8_ptr, S9_ptr, S10_ptr, S11_ptr, S12_ptr,S13_ptr, S14_ptr };
+	std::vector<interaction_ptr> interactions_ptr{ mDoNot.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
+
+
+	//	build optical system
+	OpticalSystemElement optSystemElement(opticalSystem_ptr, interactions_ptr);
+
+	oftenUse::print(optSystemElement, 550.0);
+
+	// check the start system
+	std::vector<real> rms_Zemax{ 912.483 };
+	bool test = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement, mStartOptA_vec, mWave550_vec, rms_Zemax, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(test);
+
+	// replace lenses
+	LensReplace lensReplace;
+	lensReplace.setRefIndexSurroundMat(1.0);
+	lensReplace.replaceSuperFuction(optSystemElement);
+
+	std::vector<lensTypes> loadLensCatalogEO_vec;
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_DoubleConvex_VIS_NIR);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_PosAchromat_MgF_Coated);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_PlanConvex_VIS_NIR);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_DoubleConcav_VIS_NIR);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_PlanConcav_VIS_NIR);
+
+	lensReplace.loadLensCata(loadLensCatalogEO_vec);
+
+	// zero lens
+	OptSysEle_Merit_LensType bestLens_0 = lensReplace.checkLensCatalogsForBestFitLens(/*lens number*/0, /*parameter lens*/ lensReplace.getParameterLenses()[0]);
+	lensReplace.replaceLens(0, bestLens_0.getOptSysEle());
+	lensReplace.adjustThicknessesAccordingToFixed();
+	// check lens replace 0
+	real rmsZ_0 = 543.182;
+	bool check0 = oftenUse::checkOptSysELement_Equal_Better_Zemax(lensReplace.getOpticalSysEle_replacedLens(), { 0.0,0.0,0.0 }, 550.0, rmsZ_0, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(check0);
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	OpticalSystemElement tempOptSys = lensReplace.getOpticalSysEle_replacedLens();
+	lensReplace.setOpticalSystemEle(tempOptSys);
+
+	// first lens
+	OptSysEle_Merit_LensType bestLens_1 = lensReplace.checkLensCatalogsForBestFitLens(/*lens number*/1, /*parameter lens*/ lensReplace.getParameterLenses()[1]);
+	lensReplace.replaceLens(1, bestLens_1.getOptSysEle());
+	lensReplace.adjustThicknessesAccordingToFixed();
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	// check lens replace 1
+	real rmsZ_1 = 494.902;
+	bool check1 = oftenUse::checkOptSysELement_Equal_Better_Zemax(lensReplace.getOpticalSysEle_replacedLens(), { 0.0,0.0,0.0 }, 550.0, rmsZ_1, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(check1);
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	tempOptSys = lensReplace.getOpticalSysEle_replacedLens();
+	lensReplace.setOpticalSystemEle(tempOptSys);
+
+	// second lens
+	OptSysEle_Merit_LensType bestLens_2 = lensReplace.checkLensCatalogsForBestFitLens(/*lens number*/2, /*parameter lens*/ lensReplace.getParameterLenses()[2]);
+	lensReplace.replaceLens(2, bestLens_2.getOptSysEle());
+	lensReplace.adjustThicknessesAccordingToFixed();
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	// check lens replace 2
+	real rmsZ_2 = 542.486;
+	bool check2 = oftenUse::checkOptSysELement_Equal_Better_Zemax(lensReplace.getOpticalSysEle_replacedLens(), { 0.0,0.0,0.0 }, 550.0, rmsZ_2, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(check2);
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	tempOptSys = lensReplace.getOpticalSysEle_replacedLens();
+	lensReplace.setOpticalSystemEle(tempOptSys);
+
+	// third lens
+	OptSysEle_Merit_LensType bestLens_3 = lensReplace.checkLensCatalogsForBestFitLens(/*lens number*/3, /*parameter lens*/ lensReplace.getParameterLenses()[3]);
+	lensReplace.replaceLens(3, bestLens_3.getOptSysEle());
+	lensReplace.adjustThicknessesAccordingToFixed();
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	// check lens replace 3
+	real rmsZ_3 = 419.673;
+	bool check3 = oftenUse::checkOptSysELement_Equal_Better_Zemax(lensReplace.getOpticalSysEle_replacedLens(), { 0.0,0.0,0.0 }, 550.0, rmsZ_3, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(check3);
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	tempOptSys = lensReplace.getOpticalSysEle_replacedLens();
+	lensReplace.setOpticalSystemEle(tempOptSys);
+
+	// fourth lens
+	OptSysEle_Merit_LensType bestLens_4 = lensReplace.checkLensCatalogsForBestFitLens(/*lens number*/4, /*parameter lens*/ lensReplace.getParameterLenses()[4]);
+	lensReplace.replaceLens(4, bestLens_4.getOptSysEle());
+	lensReplace.adjustThicknessesAccordingToFixed();
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	// check lens replace4
+	real rmsZ_4 = 472.649;
+	bool check4 = oftenUse::checkOptSysELement_Equal_Better_Zemax(lensReplace.getOpticalSysEle_replacedLens(), { 0.0,0.0,0.0 }, 550.0, rmsZ_4, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(check4);
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	tempOptSys = lensReplace.getOpticalSysEle_replacedLens();
+	lensReplace.setOpticalSystemEle(tempOptSys);
+
+	bool checker = Math::checkTrueOfVectorElements(workLensReplace);
+	return checker;
+}
+
+bool testLensReplace::testLensReplace_E11()
+{
+	std::vector<bool> workLensReplace;
+
+
+	ApertureStopElement S0(/* semi height*/1.0, /*point*/{ 0.0,0.0,15.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ mGlasses.getAir());
+	SphericalElement S1(/*radius*/ 30.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNSF66_S1());
+	SphericalElement S2(/*radius*/ 50.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,25.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getNLAF2_S1(), /*refractive index B*/mGlasses.getNSF66_S1());
+	SphericalElement S3(/*radius*/ 40.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNLAF2_S1());
+	SphericalElement S4(/*radius*/ 30.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,35.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNPK52A_S1());
+	SphericalElement S5(/*radius*/ 20.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,40.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getNPK52A_S1(), /*refractive index B*/mGlasses.getNBK7_S1());
+	SphericalElement S6(/*radius*/ 20.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,45.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNBK7_S1());
+	PlanElement S7(/*semi height*/ 99.0, /*point*/{ 0.0,0.0,60.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ mGlasses.getAir(), /*refractive index B*/ mGlasses.getAir());
+
+	surfacePtr S0_ptr = S0.clone();
+	surfacePtr S1_ptr = S1.clone();
+	surfacePtr S2_ptr = S2.clone();
+	surfacePtr S3_ptr = S3.clone();
+	surfacePtr S4_ptr = S4.clone();
+	surfacePtr S5_ptr = S5.clone();
+	surfacePtr S6_ptr = S6.clone();
+	surfacePtr S7_ptr = S7.clone();
+
+
+	std::vector<surfacePtr> opticalSystem_ptr{ S0_ptr, S1_ptr, S2_ptr, S3_ptr, S4_ptr,S5_ptr,S6_ptr, S7_ptr };
+	std::vector<interaction_ptr> interactions_ptr{ mDoNot.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
+
+
+	//	build optical system
+	OpticalSystemElement optSystemElement(opticalSystem_ptr, interactions_ptr);
+
+	oftenUse::print(optSystemElement, 550.0);
+
+	// check the start system
+	std::vector<real> rms_Zemax{ 178.190, 173.883, 163.802 };
+	std::vector<real> wave_vec{ 550.0, 400.0, 700.0 };
+	std::vector<VectorStructR3> field_vec{ {0.0,0.0,0.0}, {0.0,1.0,0.0}, {0.0,2.0,0.0} };
+	bool test = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement, field_vec, wave_vec, rms_Zemax, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(test);
+
+	// replace lenses
+	LensReplace lensReplace;
+	lensReplace.setRefIndexSurroundMat(1.0);
+	lensReplace.replaceSuperFuction(optSystemElement);
+
+	std::vector<lensTypes> loadLensCatalogEO_vec;
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_DoubleConvex_VIS_NIR);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_PosAchromat_MgF_Coated);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_PlanConvex_VIS_NIR);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_DoubleConcav_VIS_NIR);
+	loadLensCatalogEO_vec.push_back(lensTypes::EO_PlanConcav_VIS_NIR);
+
+	lensReplace.loadLensCata(loadLensCatalogEO_vec);
+
+	// zero lens _0_0
+	std::vector<OptSysEle_Merit_LensType> bestLens_0_vec = lensReplace.checkLensCatalogsForBestFitLenses_many(/*lens number*/0, /*parameter lens*/ lensReplace.getParameterLenses()[0],/*number best fit lenses*/ 3);
+	lensReplace.replaceLens(0, bestLens_0_vec[0].getOptSysEle());
+	lensReplace.adjustThicknessesAccordingToFixed();
+	// check lens replace 0_0
+	real rmsZ_0_0 = 240.814;
+	bool check0_0 = oftenUse::checkOptSysELement_Equal_Better_Zemax(lensReplace.getOpticalSysEle_replacedLens(), { 0.0,0.0,0.0 }, 550.0, rmsZ_0_0, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(check0_0);
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	OpticalSystemElement tempOptSys = lensReplace.getOpticalSysEle_replacedLens();
+	lensReplace.setOpticalSystemEle(tempOptSys);
+
+	// zero lens _0_1
+	lensReplace.replaceLens(0, bestLens_0_vec[1].getOptSysEle());
+	lensReplace.adjustThicknessesAccordingToFixed();
+	// check lens replace 0_1
+	real rmsZ_0_1 = 354.714;
+	bool check0_1 = oftenUse::checkOptSysELement_Equal_Better_Zemax(lensReplace.getOpticalSysEle_replacedLens(), { 0.0,0.0,0.0 }, 550.0, rmsZ_0_1, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(check0_1);
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	tempOptSys = lensReplace.getOpticalSysEle_replacedLens();
+	lensReplace.setOpticalSystemEle(tempOptSys);
+
+	// zero lens _0_2
+	lensReplace.replaceLens(0, bestLens_0_vec[2].getOptSysEle());
+	lensReplace.adjustThicknessesAccordingToFixed();
+	// check lens replace 0_2
+	real rmsZ_0_2 = 197.535;
+	bool check0_2 = oftenUse::checkOptSysELement_Equal_Better_Zemax(lensReplace.getOpticalSysEle_replacedLens(), { 0.0,0.0,0.0 }, 550.0, rmsZ_0_2, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(check0_2);
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	tempOptSys = lensReplace.getOpticalSysEle_replacedLens();
+
+
+
+	// first lens 1_0
+	lensReplace.setOpticalSystemEle(optSystemElement);
+	std::vector<OptSysEle_Merit_LensType> bestLens_1_vec = lensReplace.checkLensCatalogsForBestFitLenses_many(/*lens number*/1, /*parameter lens*/ lensReplace.getParameterLenses()[1],/*number best fit lenses*/ 3);
+	lensReplace.replaceLens(1, bestLens_1_vec[0].getOptSysEle());
+	lensReplace.adjustThicknessesAccordingToFixed();
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	// check lens replace _1_0
+	real rmsZ_1_0 = 94.4;
+	bool check_1_0 = oftenUse::checkOptSysELement_Equal_Better_Zemax(lensReplace.getOpticalSysEle_replacedLens(), { 0.0,0.0,0.0 }, 550.0, rmsZ_1_0, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(check_1_0);
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	tempOptSys = lensReplace.getOpticalSysEle_replacedLens();
+	lensReplace.setOpticalSystemEle(tempOptSys);
+
+	// first lens 1_1
+	lensReplace.replaceLens(1, bestLens_1_vec[1].getOptSysEle());
+	lensReplace.adjustThicknessesAccordingToFixed();
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	// check lens replace _1_0
+	real rmsZ_1_1 = 153.622;
+	bool check_1_1 = oftenUse::checkOptSysELement_Equal_Better_Zemax(lensReplace.getOpticalSysEle_replacedLens(), { 0.0,0.0,0.0 }, 550.0, rmsZ_1_1, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(check_1_1);
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	tempOptSys = lensReplace.getOpticalSysEle_replacedLens();
+	lensReplace.setOpticalSystemEle(tempOptSys);
+
+	// first lens 1_2
+	lensReplace.replaceLens(1, bestLens_1_vec[2].getOptSysEle());
+	lensReplace.adjustThicknessesAccordingToFixed();
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	// check lens replace _1_0
+	real rmsZ_1_2 = 278.495;
+	bool check_1_2 = oftenUse::checkOptSysELement_Equal_Better_Zemax(lensReplace.getOpticalSysEle_replacedLens(), { 0.0,0.0,0.0 }, 550.0, rmsZ_1_2, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(check_1_2);
+	oftenUse::print(lensReplace.getOpticalSysEle_replacedLens(), 550.0);
+	tempOptSys = lensReplace.getOpticalSysEle_replacedLens();
+	lensReplace.setOpticalSystemEle(tempOptSys);
+
+	LensReplace lensReplace_test;
+	lensReplace_test.setRefIndexSurroundMat(1.0);
+	lensReplace_test.replaceSuperFuction(optSystemElement);
+
+	lensReplace_test.loadLensCata(loadLensCatalogEO_vec);
+
+	lensReplace_test.replaceLensesAccordingToLensReplaceSequence_superFct(replaceSequence::leftToRight, 3);
+	std::vector<OpticalSystemElement> replacedOptSysEle_vec = lensReplace_test.getOpticalSysEle_replacedLens_vec();
+
+	std::vector<real> refRMS_vec = { rmsZ_0_0, rmsZ_0_1, rmsZ_0_2, rmsZ_1_0, rmsZ_1_1, rmsZ_1_2 };
+	bool tempChecker{};
+	for (unsigned int i = 0; i < replacedOptSysEle_vec.size(); ++i)
+	{
+		oftenUse::print(replacedOptSysEle_vec[i], 550.0);
+		tempChecker = oftenUse::checkOptSysELement_Equal_Better_Zemax(replacedOptSysEle_vec[i], { 0.0,0.0,0.0 }, 550.0, refRMS_vec[i], mGlobalTolerance, compareTOM_Zemax::comEqual);
+		workLensReplace.push_back(tempChecker);
+	}
+
+	bool checker = Math::checkTrueOfVectorElements(workLensReplace);
+	return checker;
+}
+

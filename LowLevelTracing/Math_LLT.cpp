@@ -762,7 +762,8 @@ VectorStructR3 Math::findMaxDelta_X_Y_Z_inStdV_VectorStructR3(std::vector<Vector
 
 }
 
-std::vector<std::vector<real>> Math::calculateInverse(const std::vector<std::vector<real>>& inpusMatrix)
+
+std::vector<std::vector<real>> Math::calculateInverse_double(const std::vector<std::vector<real>>& inpusMatrix)
 {
 
 
@@ -778,7 +779,7 @@ std::vector<std::vector<real>> Math::calculateInverse(const std::vector<std::vec
 
 	for (int i = 0; i < sizeInputCol; i++) {
 		// Search for maximum in this column
-		double maxEl = abs(workMatrix[i][i]);
+		real maxEl = abs(workMatrix[i][i]);
 		int maxRow = i;
 		for (int k = i + 1; k < sizeInputCol; k++) {
 			if (abs(workMatrix[k][i]) > maxEl) {
@@ -789,14 +790,14 @@ std::vector<std::vector<real>> Math::calculateInverse(const std::vector<std::vec
 
 		// Swap maximum row with current row (column by column)
 		for (int k = i; k < 2 * sizeInputCol; k++) {
-			double tmp = workMatrix[maxRow][k];
+			real tmp = workMatrix[maxRow][k];
 			workMatrix[maxRow][k] = workMatrix[i][k];
 			workMatrix[i][k] = tmp;
 		}
 
 		// Make all rows below this one 0 in current column
 		for (int k = i + 1; k < sizeInputCol; k++) {
-			double c = -workMatrix[k][i] / workMatrix[i][i];
+			real c = -workMatrix[k][i] / workMatrix[i][i];
 			for (int j = i; j < 2 * sizeInputCol; j++) {
 				if (i == j) {
 					workMatrix[k][j] = 0;
@@ -834,6 +835,85 @@ std::vector<std::vector<real>> Math::calculateInverse(const std::vector<std::vec
 		for(unsigned int j = 0; j < sizeInputCol; ++j)
 		
 		outputMatrix[j][i - sizeInputCol] = workMatrix[j][i];
+	}
+
+	//outputMatrix
+	//= inpusMatrix;
+
+	return outputMatrix;
+
+}
+
+std::vector<std::vector<float>> Math::calculateInverse_float(const std::vector<std::vector<float>>& inpusMatrix)
+{
+	std::vector<std::vector<float>> workMatrix = inpusMatrix;
+
+	unsigned int sizeInputCol = inpusMatrix[0].size();
+	oftenUse::resizeAllRowsMatrix(workMatrix, 2 * sizeInputCol);
+
+	for (unsigned int i = 0; i < sizeInputCol; i++)
+	{
+		workMatrix[i][sizeInputCol + i] = 1.0;
+	}
+
+	for (int i = 0; i < sizeInputCol; i++) {
+		// Search for maximum in this column
+		float maxEl = abs(workMatrix[i][i]);
+		int maxRow = i;
+		for (int k = i + 1; k < sizeInputCol; k++) {
+			if (abs(workMatrix[k][i]) > maxEl) {
+				maxEl = workMatrix[k][i];
+				maxRow = k;
+			}
+		}
+
+		// Swap maximum row with current row (column by column)
+		for (int k = i; k < 2 * sizeInputCol; k++) {
+			float tmp = workMatrix[maxRow][k];
+			workMatrix[maxRow][k] = workMatrix[i][k];
+			workMatrix[i][k] = tmp;
+		}
+
+		// Make all rows below this one 0 in current column
+		for (int k = i + 1; k < sizeInputCol; k++) {
+			float c = -workMatrix[k][i] / workMatrix[i][i];
+			for (int j = i; j < 2 * sizeInputCol; j++) {
+				if (i == j) {
+					workMatrix[k][j] = 0;
+				}
+				else {
+					workMatrix[k][j] += c * workMatrix[i][j];
+				}
+			}
+		}
+	}
+
+	// Solve equation Ax=b for an upper triangular matrix A
+	for (int i = sizeInputCol - 1; i >= 0; i--) {
+		for (int k = sizeInputCol; k < 2 * sizeInputCol; k++) {
+			workMatrix[i][k] /= workMatrix[i][i];
+		}
+
+
+		for (int rowModify = i - 1; rowModify >= 0; rowModify--) {
+			for (int columModify = sizeInputCol; columModify < 2 * sizeInputCol; columModify++) {
+				workMatrix[rowModify][columModify] -= workMatrix[i][columModify]
+					* workMatrix[rowModify][i];
+			}
+
+		}
+	}
+
+	// save only the inverted matrix
+	std::vector<std::vector<float>> outputMatrix;
+
+	outputMatrix.resize(sizeInputCol);
+	oftenUse::resizeAllRowsMatrix(outputMatrix, sizeInputCol);
+	for (unsigned int i = sizeInputCol; i < 2 * sizeInputCol; ++i)
+	{
+		for (unsigned int j = 0; j < sizeInputCol; ++j)
+
+			outputMatrix[j][i - sizeInputCol] = workMatrix[j][i];
 	}
 
 	//outputMatrix
@@ -882,6 +962,13 @@ unsigned int Math::addAllValuesInVector_unsignedInt(std::vector<unsigned int> v)
 	for (unsigned int& n : v) 	sum_of_elems += n;
 
 	return sum_of_elems;
+}
+
+// calculate random number between min and max 
+real Math::randomNumberReal(real min, real max)
+{
+	real f = (real)rand() / RAND_MAX;
+	return min + f * (max - min);
 }
 
 //***********************************************************************

@@ -11,7 +11,7 @@ double ApertureStop_LLT::getSemiHeight()
 //get radius
 real ApertureStop_LLT::getRadius()
 {
-	return 999.0;
+	return 999999.0;
 }
 
 //set semi height
@@ -60,13 +60,13 @@ void ApertureStop_LLT::setRefractiveIndexSide_B(real const refractiveIndex)
 real ApertureStop_LLT::getFocalLength()
 {
 	std::cout << "the aperture stop has no focal length! -> there must be a mistake!" << std::endl;
-	return 999;
+	return  999999.0;
 }
 // get focal length side B
 real ApertureStop_LLT::getFocalLength_dash()
 {
 	std::cout << "the aperture stop has no focal length! -> there must be a mistake!" << std::endl;
-	return 999;
+	return  999999.0;
 }
 
 // calc focal length
@@ -420,4 +420,9 @@ void ApertureStop_LLT::setDirection(VectorStructR3 direction)
 void ApertureStop_LLT::setTolerance(real tolerance)
 {
 	mToleranceAS = tolerance;
+}
+
+std::string ApertureStop_LLT::getSurfaceType()
+{
+	return "Stop     ";
 }

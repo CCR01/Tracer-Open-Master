@@ -777,3 +777,8 @@ void SphericalSurface_LLT::setDirection(VectorStructR3 direction)
 	mDirection = direction;
 	calcCenterSphereAfterRotation();
 }
+
+std::string SphericalSurface_LLT::getSurfaceType()
+{
+	return "Spherical";
+}

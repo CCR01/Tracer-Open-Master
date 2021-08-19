@@ -126,6 +126,7 @@ public:
 
 	virtual QPolygonF* getQPolygonFCurve();
 
+	virtual std::string getSurfaceType() override;
 
 private:
 	double mSemiHeightParaxialLens{};

@@ -50,6 +50,7 @@ public:
 	//get QPolygonF of surface
 	virtual QPolygonF* getQPolygonFCurve() = 0;
 
+	virtual std::string getSurfaceType() = 0;
 };
 
 

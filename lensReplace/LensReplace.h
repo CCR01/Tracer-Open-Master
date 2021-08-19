@@ -4,8 +4,43 @@
 
 #include "..\LensCatalog\EdmundOptics\EdmundOpticsLensCatalog.h"
 
-enum class lensTypes { DConvexL, posAchromat, PConvexL, DConcavL, PConcavL };
+enum class lensTypes { /*Edmund*/ EO_DoubleConvex_VIS_NIR, EO_PosAchromat_MgF_Coated, EO_PlanConvex_VIS_NIR, EO_DoubleConcav_VIS_NIR, EO_PlanConcav_VIS_NIR, 
+EO_DoubleConcav_NIR_I, EO_PosAchromat_VIS_NIR,EO_NegAchromat_Broadband_AR_Coated, EO_LargePrecisionAchromat_NoAirSpace, EO_LargePrecisionAchromat_AirSpace, 
+EO_HastingsTripletAchromat, EO_SteinheilTripletAchromat,EO_MicroPlanConvex, EO_LargePlanConvexCondensor, 
+/*Thorlabs*/ Th_AchromatDoublets_AR_Coated, Th_NBK7_PlanConvex_AR_Coated_400_1100, Th_NBK7_BiConvex_AR_Coated_350_700, Th_NBK7_PlanConcav_AR_Coated_350_700,
+Th_NBK7_NSF11_BiConcav_AR_Coated_350_700, Th_NBK7_BestFormSpherical_AR_Coated_350_700, Th_NBK7_PosMeniscus_Uncoated, Th_NBK7_NegMeniscus_Uncoated,
+Th_SteinheilTripletAchromat_Visible, Th_HastingsTripletAchromatVisible,
+/*Qioptic*/ Qi_PlanConvex_ARB2_VIS, Qi_SymmetricConvex_ARB2_VIS, Qi_PlanConcav_ARB2_VIS, Qi_SymmetricConcav_ARB2_VIS, Qi_PosAchromat_VIS_3_31_ARB2_VIS,
+Qi_PosAchromat_VIS_31_40_ARB2_VIS, Qi_NegAchromat_ARB2_VIS
+};
 
+
+
+enum class replaceSequence { leftToRight, RightToLeft, maxSeidelAberLens, minSeidelAberLens, allPossibleSequences, givenSequence };
+
+struct thicknessAndPosition
+{
+public:
+	thicknessAndPosition();
+	~thicknessAndPosition();
+
+	// position
+	void setPosition(unsigned int pos);
+	unsigned int getPosition();
+
+	// thickness Z
+	void setThickness_Z(real thickness__Z);
+	real getThickness_Z();
+
+	// fixed
+	void setFixed(bool fixed);
+	bool getFixed();
+
+private:
+	unsigned int mPosition;
+	real mThickness_Z;
+	bool mFixed;
+};
 
 struct prefLensTypeAndFactro
 {
@@ -42,6 +77,21 @@ public:
 	// catalog number
 	unsigned int getCatalogNumber();
 	void setCatalogNumber(unsigned int catalogNumber);
+	// check parameters focalLength
+	bool getCheckParameters_focalLength();
+	void setCheckParameters_focalLength(bool checkPara);
+	// check parameters thickness
+	bool getCheckParameters_thickness();
+	void setCheckParameters_thickness(bool checkPara);
+	// check parameters semi height
+	bool getCheckParameters_semiHeight();
+	void setCheckParameters_semiHeight(bool checkPara);
+	// fliped by 180 degrees
+	bool getFlipedBy180Degrees();
+	void setFlipedBy180Degrees(bool fliped180Degrees);
+	// position in best match lens vec
+	void setPositionInBestMatchLensVec(unsigned int posInBestMatchVec);
+	unsigned int getPositionInBestMatchLensVec();
 
 private:
 	OpticalSystemElement mOptSysEle{};
@@ -49,6 +99,14 @@ private:
 	lensTypes mLensType{};
 	std::string mNameLens{};
 	unsigned int mCatalogNumber{};
+
+	bool mCheckParameters_focalLength{};
+	bool mCheckParameters_thickness{};
+	bool mCheckParameters_semiHeight{};
+
+	bool mFlipedBy180Degrees{};
+
+	unsigned int mPosInBestMatchVec{};
 };
 
 struct ValueMinMax
@@ -110,71 +168,117 @@ public:
 	void getCatalogToLoad(const std::vector<lensTypes>& catalogToLoad);
 
 	// min default
-	real getMinDefaut_percent();
-	void setMinDefault_percent(real minDefault);
+	real getMinDefaut_percent_focalLength();
+	void setMinDefault_percent_focalLength(real minDefault);
+	real getMinDefaut_percent_thickness();
+	void setMinDefault_percent_thickness(real minDefault);
+	real getMinDefaut_percent_semiHeight();
+	void setMinDefault_percent_semiHeight(real minDefault);
 
 	// max default
-	real getMaxDefaut_percent();
-	void setMaxDefault_percent(real maxDefault);
+	real getMaxDefaut_percent_focalLength();
+	void setMaxDefault_percent_focalLength(real maxDefault);
+	real getMaxDefaut_percent_thickness();
+	void setMaxDefault_percent_thickness(real maxDefault);
+	real getMaxDefaut_percent_semiHeight();
+	void setMaxDefault_percent_semiHeight(real maxDefault);
 
-	// min percent surface
-	void setMinPercent_surface_i(unsigned int surfaceNo, real percentMin);
-	real getMinPercent_surface_i(unsigned int surfaceNo);
-
-	// max percent surface
-	void setMaxPercent_surface_i(unsigned int surfaceNo, real percentMax);
-	real getMaxPercent_surface_i(unsigned int surfaceNo);
-
+	// *** FOCAL LENGTH *** //
+	// min percent surface focal length
+	void setMinPercent_surface_i_focalLength(unsigned int surfaceNo, real percentMin);
+	real getMinPercent_surface_i_focalLength(unsigned int surfaceNo);
+	// max percent surface focal length
+	void setMaxPercent_surface_i_focalLength(unsigned int surfaceNo, real percentMax);
+	real getMaxPercent_surface_i_focalLength(unsigned int surfaceNo);
 	// focal lenght weight
 	void setFocalLenght_weight(real weight);
 	real getFocalLenght_weight();
+	// weight focal length surface
+	void setWeightFocalLengthSurface_i(unsigned int surfaceNo, real weight);
+	real getWeightFocalLengthSurface_i(unsigned int surfaceNo);
+	// *** *** //
+
+	// *** THICKNESS *** //
+	// min percent surface thickness
+	void setMinPercent_surface_i_thickness(unsigned int surfaceNo, real percentMin);
+	real getMinPercent_surface_i_thickness(unsigned int surfaceNo);
+	// max percent surface thickness
+	void setMaxPercent_surface_i_thickness(unsigned int surfaceNo, real percentMax);
+	real getMaxPercent_surface_i_thickness(unsigned int surfaceNo);
+	// weight thickenss surface
+	void setWeightThicknessSurface_i(unsigned int surfaceNo, real weight);
+	real getWeightThicknessSurface_i(unsigned int surfaceNo);
 	// thickness weight
 	void setTickness_weight(real weight);
 	real getThickness_weight();
+
+
+	// *** SEMI HEIGHT *** //
+	// min percent surface semi height
+	void setMinPercent_surface_i_semiHeight(unsigned int surfaceNo, real percentMin);
+	real getMinPercent_surface_i_semiHeight(unsigned int surfaceNo);
+	// max percent surface semi height
+	void setMaxPercent_surface_i_semiHeight(unsigned int surfaceNo, real percentMax);
+	real getMaxPercent_surface_i_semiHeight(unsigned int surfaceNo);
+	// weight semiHeight surface
+	void setWeightSemiHeightSurface_i(unsigned int surfaceNo, real weight);
+	real getWeightSemiHeightSurface_i(unsigned int surfaceNo);
 	// semi height weight
 	void setSemiHeight_weight(real weight);
 	real getSemiHeight_weight();
 
-	// weight focal length surface
-	void setWeightFocalLengthSurface_i(unsigned int surfaceNo, real weight);
-	real getWeightFocalLengthSurface_i(unsigned int surfaceNo);
-	// weight thickenss surface
-	void setWeightThicknessSurface_i(unsigned int surfaceNo, real weight);
-	real getWeightThicknessSurface_i(unsigned int surfaceNo);
-	// weight semiHeight surface
-	void setWeightSemiHeightSurface_i(unsigned int surfaceNo, real weight);
-	real getWeightSemiHeightSurface_i(unsigned int surfaceNo);
 
 	// pref lens type vec
 	void setPrefLensTypeSurfaceAndFactorSurface_i(unsigned int surfaceNo, lensTypes prefType, real factor);
 	prefLensTypeAndFactro getPrefLensTyeAndFactorSurface_i(unsigned int surfaceNo);
 
+	// refrectiv index surrounding material
+	void setRefIndexSurroundMat(real refIndexSurMat);
+	real getRefIndexSurroundMat();
+
 private:
 	std::vector<lensTypes> mCatalotToLoad_default;
-	real mMinDefault;
-	real mMaxDefault;
-	std::vector<real> mMin_default_percent;
-	std::vector<real> mMax_default_percent;
+	real mMinDefault_focalLength;
+	real mMaxDefault_focalLength;
+	real mMinDefault_thickness;
+	real mMaxDefault_thickness;
+	real mMinDefault_semiHeight;
+	real mMaxDefault_semiHeight;
 
+	std::vector<real> mMin_default_percent_focalLength;
+	std::vector<real> mMax_default_percent_focalLength;
 	std::vector<real> mWeightFocalLength_default_vec;
 	real mWeightFocalLengthDefault;
+
+	std::vector<real> mMin_default_percent_thickness;
+	std::vector<real> mMax_default_percent_thickness;
 	std::vector<real> mWeightThickness_default_vec;
 	real mWeightThicknessDefault;
+
+	std::vector<real> mMin_default_percent_semiHeight;
+	std::vector<real> mMax_default_percent_semiHeight;
 	std::vector<real> mWeightSemiHeight_default_vec;
 	real mWeightSemiHeightDefault;
 
 	std::vector<prefLensTypeAndFactro> mPrefLensType_vec;
+
+	real mRefIndexSurMat;
 };
 
 class  LensReplace
 {
 public:
-	 LensReplace();
-	 //LensReplace(OpticalSystem_LLT opticalSystem_LLT);
-	 LensReplace(OpticalSystemElement opticalSystemElement);
-	~ LensReplace();
-	
+	LensReplace();
+	//LensReplace(OpticalSystem_LLT opticalSystem_LLT);
+	LensReplace(OpticalSystemElement opticalSystemElement);
+	~LensReplace();
+
+	void replaceLensesAccordingToLensReplaceSequence_superFct(/*replace sequence*/ replaceSequence lensRepSequence, /*number best fit lenses*/ unsigned numberBestFitLenses);
+
+
+	void saveFixedThicknessesLenses_doNotUseThatFct();
 	void saveFixedThicknessesLenses();
+	void reloadThicknessesAndFixed();
 	void loadLensCata(std::vector<lensTypes> loadLensCatalogEO);
 	bool findCatalog(std::vector<lensTypes> loadLensCatalogEO_vec, lensTypes toLoadCatalog);
 
@@ -185,50 +289,98 @@ public:
 	// calculate semi height
 	real calcMaxSemiHeigh(OpticalSystem_LLT optSys_LLT);
 
-	// find lenses in optical system
-	std::vector<OpticalSystem_LLT> findLensesInOptSys_LLT(OpticalSystem_LLT optSys_LLT);
+
 
 	std::vector<parameterLens> calcParameterLenses(std::vector<OpticalSystem_LLT> lensesInOptSys);
 	std::vector<parameterLens> getParameterLenses();
 
 	void setOptSys_LLT(OpticalSystem_LLT optSys_LLT);
+	void setOpticalSystemEle(OpticalSystemElement optSysEle);
 
-	OptSysEle_Merit_LensType findOptSysEle_lens_inCatalog_TwoSurfaces(parameterLens paraLens, std::vector<LensesTwoSurfaces> AllLensesTwoSurfaces, real weightFocal, real weightThickness, real weightSemiHeight);
-	OptSysEle_Merit_LensType findOptSysEle_lens_inCatalog_ThreeSurfaces(parameterLens paraLens, std::vector<LensThreeSurfaces> AllLensesThreeSurfaces, real weightFocal, real weightThickness, real weightSemiHeight);
+	std::vector<OptSysEle_Merit_LensType> findOptSysEle_lens_inCatalog_TwoSurfaces(parameterLens paraLens, std::vector<LensesTwoSurfaces> AllLensesTwoSurfaces, real weightFocal, real weightThickness, real weightSemiHeight);
+	std::vector<OptSysEle_Merit_LensType>  findOptSysEle_lens_inCatalog_ThreeSurfaces(parameterLens paraLens, std::vector<LensThreeSurfaces> AllLensesThreeSurfaces, real weightFocal, real weightThickness, real weightSemiHeight);
+	std::vector<OptSysEle_Merit_LensType>  findOptSysEle_lens_inCatalog_FourSurfaces(parameterLens paraLens, std::vector<LensFourSurfaces> AllLensesFourSurfaces, real weightFocal, real weightThickness, real weightSemiHeight);
 
 	OptSysEle_Merit_LensType checkLensCatalogsForBestFitLens(/*lens number*/ unsigned int lensNo, /*parameter lens*/ parameterLens paraLens);
-	OptSysEle_Merit_LensType getBestOptSys(std::vector<OptSysEle_Merit_LensType> optSysEle_merit_lensType_vec);
+	std::vector<OptSysEle_Merit_LensType> checkLensCatalogsForBestFitLenses_many(/*lens number*/ unsigned int lensNo, /*parameter lens*/ parameterLens paraLens, /*number best fit lenses*/ unsigned int numberLenses);
+	std::vector<OptSysEle_Merit_LensType>  getBestOptSys(std::vector<OptSysEle_Merit_LensType> optSysEle_merit_lensType_vec, unsigned int numberSystems);
 
 	real calcualteMerit(real target, real is, real weight);
-	real calcualteMerit_lens(real focalParam, real minFocalParam, real maxFocalParam, 
-	real thicknessParam, real minThicknessParam, real maxThicknessParam, real semiHeightParam, real minSemiHeightParam, 
-	real maxSemiHeightParam, real focalTemp, real focalWeight, real thicknessTemp, real thicknessWeight, real semiHeightTemp, real semiHeightWeigh);
+	real calcualteMerit_lens(real focalParam, real thicknessParam, real semiHeightParam, real focalTemp, real focalWeight, real thicknessTemp, real thicknessWeight, real semiHeightTemp, real semiHeightWeight);
 
 	void replaceLens(unsigned int lensNo, OpticalSystemElement fillInOptSysEle);
 
-	void replaceSuperFuction();
+	void replaceSuperFuction(OpticalSystemElement optSysEle);
+	void replaceSuperFuction(OpticalSystem_LLT optSys_LLT);
 
-	OpticalSystemElement getOpticalSysEle();
+	OpticalSystemElement getOpticalSysEle_replacedLens();
+	OpticalSystemElement getOpticalSysEle_startSystem();
+	std::vector<OpticalSystemElement> getOpticalSysEle_replacedLens_vec();
+
+	bool checkValueMinMax(real val, real min, real max);
+
+	void adjustThicknessesAccordingToFixed();
+
+	// *** set default parameters
+	// refrectiv index surrounding material
+	void setRefIndexSurroundMat(real refIndexSurMat);
+	real getRefIndexSurroundMat();
+	// ***
+
+	void checkForThicknessVariablesInSurroundingMaterialAndAdjust();
 
 private:
 	OpticalSystemElement mOpticalSystemEle;
-	OpticalSystem_LLT mOpticalSystem_LLT;
+	OpticalSystemElement mOpticalSystemEle_replaceLens;
+	OpticalSystem_LLT mOpticalSystem_LLT_replaceLens;
 	EdmundOpticsLensCatalog mEOLensCatalog;
 	std::vector<lensTypes> mLoadLensCatalogEO;
 
-	std::vector<LensesTwoSurfaces> mAll_DoubleConvexLenses; //https://www.edmundoptics.de/f/vis-nir-coated-double-convex-dcx-lenses/13504/
-	std::vector<LensThreeSurfaces> mAll_AchromaticLensesMgF; //https://www.edmundoptics.de/f/MgFsub2sub-Coated-Achromatic-Lenses/12006/
-	std::vector<LensesTwoSurfaces> mAll_PlanConvexLenses; //https://www.edmundoptics.de/f/vis-nir-coated-plano-convex-pcx-lenses/12278/
-	std::vector<LensesTwoSurfaces> mAll_DoubleConcavLenses; //https://www.edmundoptics.de/f/vis-nir-coated-double-concave-dcv-lenses/13540/
-	std::vector<LensesTwoSurfaces> mAll_PlanConcavLenses; //https://www.edmundoptics.de/f/vis-nir-coated-plano-concave-pcv-lenses/13512/
+	/*EdmundOptics*/
+	std::vector<LensesTwoSurfaces> mAll_EO_DoubleConvex_VIS_NIR; //https://www.edmundoptics.de/f/vis-nir-coated-double-convex-dcx-lenses/13504/
+	std::vector<LensThreeSurfaces> mAll_EO_PosAchromat_MgF_Coated; //https://www.edmundoptics.de/f/MgFsub2sub-Coated-Achromatic-Lenses/12006/
+	std::vector<LensesTwoSurfaces> mAll_EO_PlanConvex_VIS_NIR; //https://www.edmundoptics.de/f/vis-nir-coated-plano-convex-pcx-lenses/12278/
+	std::vector<LensesTwoSurfaces> mAll_EO_DoubleConcav_VIS_NIR; //https://www.edmundoptics.de/f/vis-nir-coated-double-concave-dcv-lenses/13540/
+	std::vector<LensesTwoSurfaces> mAll_EO_PlanConcav_VIS_NIR; //https://www.edmundoptics.de/f/vis-nir-coated-plano-concave-pcv-lenses/13512/
+	std::vector<LensesTwoSurfaces> mAll_EO_DoubleConcav_NIR_I;
+	std::vector<LensThreeSurfaces> mAll_EO_PosAchromat_VIS_NIR;
+	std::vector<LensThreeSurfaces> mAll_EO_NegAchromat_Broadband_AR_Coated;
+	std::vector<LensThreeSurfaces> mAll_EO_LargePrecisionAchromat_NoAirSpace;
+	std::vector<LensThreeSurfaces> mAll_EO_LargePrecisionAchromat_AirSpace;
+	std::vector<LensFourSurfaces> mAll_EO_HastingsTripletAchromat;
+	std::vector<LensFourSurfaces> mAll_EO_SteinheilTripletAchromat;
+	std::vector<LensesTwoSurfaces> mAll_EO_MicroPlanConvex;
+	std::vector<LensesTwoSurfaces> mAll_EO_LargePlanConvexCondensor;
+	/*Thorlabs*/
+	std::vector<LensThreeSurfaces> mAll_Th_AchromatDoublets_AR_Coated;
+	std::vector<LensesTwoSurfaces> mAll_Th_NBK7_PlanConvex_AR_Coated_400_1100;
+	std::vector<LensesTwoSurfaces> mAll_Th_NBK7_BiConvex_AR_Coated_350_700;
+	std::vector<LensesTwoSurfaces> mAll_Th_NBK7_PlanConcav_AR_Coated_350_700;
+	std::vector<LensesTwoSurfaces> mAll_Th_NBK7_NSF11_BiConcav_AR_Coated_350_700;
+	std::vector<LensesTwoSurfaces> mAll_Th_NBK7_BestFormSpherical_AR_Coated_350_700;
+	std::vector<LensesTwoSurfaces> mAll_Th_NBK7_PosMeniscus_Uncoated;
+	std::vector<LensesTwoSurfaces> mAll_Th_NBK7_NegMeniscus_Uncoated;
+	std::vector<LensFourSurfaces> mAll_Th_SteinheilTripletAchromat_Visible;
+	std::vector<LensFourSurfaces> mAll_Th_HastingsTripletAchromatVisible;
+	/*Qioptiq*/
+	std::vector<LensesTwoSurfaces> mAll_Qi_PlanConvex_ARB2_VIS;
+	std::vector<LensesTwoSurfaces> mAll_Qi_SymmetricConvex_ARB2_VIS;
+	std::vector<LensesTwoSurfaces> mAll_Qi_PlanConcav_ARB2_VIS;
+	std::vector<LensesTwoSurfaces> mAll_Qi_SymmetricConcav_ARB2_VIS;
+	std::vector<LensThreeSurfaces> mAll_Qi_PosAchromat_VIS_3_31_ARB2_VIS;
+	std::vector<LensThreeSurfaces> mAll_Qi_PosAchromat_VIS_31_40_ARB2_VIS;
+	std::vector<LensThreeSurfaces> mAll_Qi_NegAchromat_ARB2_VIS;
+	
 
 	defaultPara_LensReplace_struct mDefaultPara_LensReplace;
 	std::vector<OpticalSystem_LLT> mOptSysLLT_lenses_vec;
 	std::vector<parameterLens> mParameterLenses;
 	unsigned mNoLenses;
 
-	OpticalSystemElement replacedOptSysEle;
 
-	std::vector<real> mThicknessesLenses_vec_Fixed;
+
+	std::vector<thicknessAndPosition> mThicknessesAndPos_vec;
+
+	std::vector<OpticalSystemElement> mReplacedOptSysEle_vec{};
 };
 

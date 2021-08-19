@@ -1,6 +1,7 @@
 #pragma once //https://www.edmundoptics.de/f/vis-nir-coated-double-concave-dcv-lenses/13540/
 #include "..\..\Glasses\Glasses.h"
 #include "..\..\LensElements\LensesThreeSurfaces.h"
+#include "..\..\LensElements\LensesFourSurfaces.h"
 
 class EdmundOpticsLensCatalog
 {
@@ -23,6 +24,81 @@ public:
 
 	void loadLensCatalogEO_plan_concav_lenses_VIS_NIR(); //https://www.edmundoptics.de/f/vis-nir-coated-plano-concave-pcv-lenses/13512/
 	std::vector<LensesTwoSurfaces> getAll_PlanConcavLenses();
+
+	// Doppelkonkave Linsen (DCV) mit NIR-I-Beschichtung
+	void loadLensCatalogEO_double_concav_lenses_NIR_I(); //https://www.edmundoptics.de/f/nir-i-coated-double-concave-dcv-lenses/13500/
+	// *** ACHTUNG: mach das dann lieber am Schluss
+	 // Comment CR: Das sind im eigentlich die Linsen von "double_concav_lenses_VIS_NIR" (https://www.edmundoptics.de/f/vis-nir-coated-double-concave-dcv-lenses/13540/) nur
+	// mit einer anderen Beschichtung. Denke von den Parametern kannst du einige von dort kopieren. Das Coating musst du immer anpassen (siehe Beipiel). Auch die minimale 
+	// und maxiamle Wellenlänge verändert sich hier. 
+	std::vector<LensesTwoSurfaces> getAll_LensCatalogEO_double_concav_lenses_NIR_I();
+
+	// Achromate mit VIS-NIR-Beschichtung 
+	// *** ACHTUNG: mach das dann lieber am Schluss
+	// *** da müsstest du vieles von loadLensCatalogEO_achroamticLensesMgF kopieren können, die Beschichtung ist dann halt immer ne andere (vielleicht hilft dir das) ***//
+	void loadLensCatalogEO_achroamticLenses_VIS_NIR_Coating(); //https://www.edmundoptics.de/f/vis-nir-coated-achromatic-lenses/13536/
+	std::vector<LensThreeSurfaces> getAll_LensCatalogEO_achroamticLenses_VIS_NIR_Coating();
+
+	// Broadband AR Coated Negative Achromatic Lenses
+	void loadLensCatalogEO_Broadband_AR_Coated_Negative_Achromatic_Lenses(); // https://www.edmundoptics.de/f/broadband-ar-coated-negative-achromatic-lenses/13623/
+	std::vector<LensThreeSurfaces> getAll_LensCatalogEO_Broadband_AR_Coated_Negative_Achromatic_Lenses();
+
+	// Large Precision Achromatic Lenses -> No Airspace
+	void loadLensCatalogEO_Large_Precision_Achromatic_Lenses_NoAirspace(); // https://www.edmundoptics.de/f/large-precision-achromatic-lenses/11679/
+	std::vector<LensThreeSurfaces> getAll_LensCatalogEO_Large_Precision_Achromatic_Lenses_NoAirspace();
+
+
+	// Large Precision Achromatic Lenses -> Airspace 0.1mm
+	void loadLensCatalogEO_Large_Precision_Achromatic_Lenses_Airspace01mm(); // https://www.edmundoptics.de/f/large-precision-achromatic-lenses/11679/
+	std::vector<LensFourSurfaces> getAll_LensCatalogEO_Large_Precision_Achromatic_Lenses_Airspace01mm();
+
+	// Hastings Triplet Achromatic Lenses 
+	void loadLensCatalogEO_Hastings_Triplet_Achromatic_Lenses(); // https://www.edmundoptics.de/f/hastings-triplet-achromatic-lenses/11968/
+	std::vector<LensFourSurfaces> getAll_LensCatalogEO_Hastings_Triplet_Achromatic_Lenses();
+
+	// Steinheil Triplet Achromatic Lenses 
+	void loadLensCatalogEO_Steinheil_Triplet_Achromatic_Lenses(); // https://www.edmundoptics.de/f/steinheil-triplet-achromatic-lenses/12275/
+	std::vector<LensFourSurfaces> getAll_LensCatalogEO_Steinheil_Triplet_Achromatic_Lenses();
+
+	// Micro Plano-Convex (PCX) Lenses 
+	void loadLensCatalogEO_Micro_Plano_Convex_PCX_Lenses(); // https://www.edmundoptics.de/f/micro-plano-convex-pcx-lenses/39529/
+	std::vector<LensesTwoSurfaces> getAll_Micro_Plano_Convex_PCX_Lenses();
+
+	// Large PCX Condenser Lenses
+	void loadLensCatalogEO_Large_PCX_Condenser_Lenses(); // https://www.edmundoptics.de/f/large-pcx-condenser-lenses/13572/
+	std::vector<LensesTwoSurfaces> getAll_Large_PCX_Condenser_Lenses();
+
+	// Large PCX Condenser Lenses
+	// https://www.edmundoptics.de/f/large-pcx-condenser-lenses/13572/
+	LensesTwoSurfaces getEO67187();
+
+
+	// Micro Plano-Convex (PCX) Lenses 
+	// https://www.edmundoptics.de/f/micro-plano-convex-pcx-lenses/39529/
+	LensesTwoSurfaces getEO45951();
+
+	// Steinheil Triplet Achromatic Lenses 
+	// https://www.edmundoptics.de/f/steinheil-triplet-achromatic-lenses/12275/
+	LensFourSurfaces getEO47673();
+
+	// Hastings Triplet Achromatic Lenses 
+	// https://www.edmundoptics.de/f/hastings-triplet-achromatic-lenses/11968/
+	LensFourSurfaces getEO13521();
+
+	// Large Precision Achromatic Lenses -> No Airspace
+	// https://www.edmundoptics.de/f/large-precision-achromatic-lenses/11679/
+	LensThreeSurfaces getEO31402();
+
+
+	// Large Precision Achromatic Lenses -> Airspace 0.1mm
+	// https://www.edmundoptics.de/f/large-precision-achromatic-lenses/11679/
+	LensFourSurfaces getEO30976();
+
+
+	// Broadband AR Coated Negative Achromatic Lenses
+	// https://www.edmundoptics.de/f/broadband-ar-coated-negative-achromatic-lenses/13623/
+	LensThreeSurfaces getEO62478();
+
 
 	// get VIS-NIR beschichtete PCV Linsen
 	// https://www.edmundoptics.de/f/vis-nir-coated-plano-concave-pcv-lenses/13512/
@@ -548,15 +624,29 @@ public:
 	LensThreeSurfaces getEO45419();
 
 
+	// Doppelkonkave Linsen (DCV) mit NIR-I-Beschichtung
+	//https://www.edmundoptics.de/f/nir-i-coated-double-concave-dcv-lenses/13500/
+	LensesTwoSurfaces getEO49540();
 
-
-
-
+	// Achromate mit VIS-NIR-Beschichtung 
+	//https://www.edmundoptics.de/f/vis-nir-coated-achromatic-lenses/13536/
+	LensThreeSurfaces getEO84127();
 
 private:
 
 	glass mGlasses{};
+	
+	// Large Precision Achromatic Lenses -> No Airespace
+	// https://www.edmundoptics.de/f/large-precision-achromatic-lenses/11679/
+	LensThreeSurfaces EO31402{};
 
+	// Large Precision Achromatic Lenses -> Airspace 0.1mm
+	// https://www.edmundoptics.de/f/large-precision-achromatic-lenses/11679/
+	LensFourSurfaces EO30976{};
+
+	// Broadband AR Coated Negative Achromatic Lenses
+	// https://www.edmundoptics.de/f/broadband-ar-coated-negative-achromatic-lenses/13623/
+	LensThreeSurfaces EO62478{};
 
 	// get VIS-NIR beschichtete PCV Linsen
 	// https://www.edmundoptics.de/f/vis-nir-coated-plano-concave-pcv-lenses/13512/
@@ -1078,5 +1168,31 @@ private:
 	LensThreeSurfaces EO45417{};
 	LensThreeSurfaces EO45418{};
 	LensThreeSurfaces EO45419{};
+
+
+	// Doppelkonkave Linsen (DCV) mit NIR-I-Beschichtung
+	//https://www.edmundoptics.de/f/nir-i-coated-double-concave-dcv-lenses/13500/
+	LensesTwoSurfaces EO49540{};
+	
+	// Achromate mit VIS-NIR-Beschichtung 
+	//https://www.edmundoptics.de/f/vis-nir-coated-achromatic-lenses/13536/
+	LensThreeSurfaces EO84127{};
+
+	// Hastings Triplet Achromatic Lenses 
+	// https://www.edmundoptics.de/f/hastings-triplet-achromatic-lenses/11968/
+	LensFourSurfaces EO13521{};
+
+	// Steinheil Triplet Achromatic Lenses 
+	// https://www.edmundoptics.de/f/steinheil-triplet-achromatic-lenses/12275/
+	LensFourSurfaces EO47673{};
+
+	// Micro Plano-Convex (PCX) Lenses 
+	// https://www.edmundoptics.de/f/micro-plano-convex-pcx-lenses/39529/
+	LensesTwoSurfaces EO45951{};
+
+	// Large PCX Condenser Lenses
+	// https://www.edmundoptics.de/f/large-pcx-condenser-lenses/13572/
+	LensesTwoSurfaces EO67187{};
+
 };
 

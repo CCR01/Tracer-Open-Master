@@ -184,8 +184,10 @@ OpticalSystem_LLT OpticalSystemElement::getLLTconversion_doConversion()
 	mPosAndIntersecSurface_LLT.clear();
 	//mPosAndInteraction_LLT.clear();
 
+	mPosAndIntersecSurface_LLT.resize(size);
+	//mPosAndInteraction_LLT.resize(size);
 
-	for(unsigned int i = 0; i < size; i++)
+	for (unsigned int i = 0; i < size; i++)
 	{
 
 		mPosAndElement.at(i).getElementInOptSys_ptr()->buildSurface_LLT();
@@ -193,17 +195,19 @@ OpticalSystem_LLT OpticalSystemElement::getLLTconversion_doConversion()
 
 		//SurfaceIntersectionRay_LLT* surfaceInterac_ptr_new = new SurfaceIntersectionRay_LLT(*surfaceInterac_ptr);
 
+
+
 		PosAndIntsectionSurfaceStruct PosAndInteractionSurface;
 		PosAndInteractionSurface.setInteractionSurface_prt(surfaceInterac_ptr);
 		PosAndInteractionSurface.setPosition(i);
-		mPosAndIntersecSurface_LLT.push_back(PosAndInteractionSurface);
+		mPosAndIntersecSurface_LLT[i] =PosAndInteractionSurface;
 
-		
+
 		std::shared_ptr<InteractionRay_LLT> interaction_ptr = mPosAndInteraction_LLT.at(i).getInteractionAtSur_ptr();
-		PosAndInteractionStruct posAndInteractionStruct;
-		posAndInteractionStruct.setInteractionAtSur(interaction_ptr);
-		posAndInteractionStruct.setPosition(i);
-		mPosAndInteraction_LLT.push_back(posAndInteractionStruct);
+		//PosAndInteractionStruct posAndInteractionStruct;
+		//posAndInteractionStruct.setInteractionAtSur(interaction_ptr);
+		//posAndInteractionStruct.setPosition(i);
+		//mPosAndInteraction_LLT[i] = posAndInteractionStruct;
 				
 
 		returnOpticalSystemLLT.fillVectorSurfaceAndInteractingData(i, surfaceInterac_ptr, interaction_ptr);
@@ -258,6 +262,16 @@ void OpticalSystemElement::clear_mPosAndIntersecSurface_LLT()
 	mPosAndIntersecSurface_LLT.clear();
 }
 
+// clear all
+void OpticalSystemElement::clearALL()
+{
+	mPosAndElement.clear();
+	mPosAndInteraction_LLT.clear();
+	mPosAndIntersecSurface_LLT.clear();
+	mOpticalSystem_LLT.clean_optSys_LLT();
+
+}
+
 // get optical system element
 OpticalSystemElement OpticalSystemElement::getOpticalSystemElement()
 {
@@ -293,10 +307,12 @@ OpticalSystemElement OpticalSystemElement::getDeepCopyOptSysEle()
 		tempEle_ptr = mPosAndElement.at(i).getElementInOptSys_ptr();
 		deepCopyEle_ptr = tempEle_ptr->clone();
 
-		tempInteraction_ptr = mPosAndInteraction_LLT.at(i).getInteractionAtSur_ptr();
+		tempInteraction_ptr = mPosAndInteraction_LLT.at(i).getInteractionAtSur_ptr()->clone();
 	
 		returnDeepCopyOptSys.fillPosAndElementAndInteraction(i, deepCopyEle_ptr, tempInteraction_ptr);
 	}
+
+	
 	returnDeepCopyOptSys.convertHLTSurfacesToLLTSurfaces();
 
 	return returnDeepCopyOptSys;

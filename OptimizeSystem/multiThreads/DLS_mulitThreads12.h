@@ -18,6 +18,7 @@ public:
 	OpticalSystemElement DLS_optimisation_multiThreads_12_inf();
 	void loadDefaulParameters();
 	void loadFactorBetterAndWorst();
+	real getBestMeritValue();
 
 private:
 	OpticalSystemElement mOpticalSystemElement_start{};

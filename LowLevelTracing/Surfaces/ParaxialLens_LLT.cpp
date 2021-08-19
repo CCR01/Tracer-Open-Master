@@ -452,3 +452,8 @@ void ParaxialLens_LLT::setDirection(VectorStructR3 direction)
 {
 	mDirectionParaxialLens = direction;
 }
+
+std::string ParaxialLens_LLT::getSurfaceType()
+{
+	return "Paraxial";
+}

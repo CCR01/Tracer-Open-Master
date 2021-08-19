@@ -66,6 +66,76 @@ OptimizeSystemSuperFct_GeneticAndDLS::OptimizeSystemSuperFct_GeneticAndDLS(Optic
 	loadBestFactorBetterFactorWorstCombinations();
 }
 
+// genetic and DLS
+OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_GeneticAndDLS()
+{
+	unsigned int objFieldSize = mFields_vec.size();
+	unsigned int infAngle_X_Size = mAngleX.size();
+	unsigned int infAngle_Y_Size = mAngleY.size();
+
+	if (objFieldSize > 0)
+	{
+		return optimizeSuperFct_GeneticAndDLS_obj();
+	}
+
+	else
+	{
+		if (infAngle_X_Size == infAngle_Y_Size)
+		{
+			return optimizeSuperFct_GeneticAndDLS_inf();
+		}
+
+		else
+		{
+			std::cout << "ATTENTION: size angle X is not size angle Y" << std::endl;
+			OpticalSystemElement optSys{};
+			return optSys;
+		}
+	}
+
+}
+
+OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_GeneticAndDLS_obj()
+{
+	OpticalSystemElement optSysEleGenetic = mOptSysEle.getDeepCopyOptSysEle();
+
+	// GENETIC
+	Genetic geneticClass(/*optSysEle*/ optSysEleGenetic, /*fields*/ mFields_vec,/*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*populatuion*/ mPopulation, /*target cardinal points*/ mTargetCarPoints, /*default parameter*/ mDefaultParameterGenetic);
+	geneticClass.setChooseValueMode(cleverSamplingMode);
+	geneticClass.doTheGeneticProcess();
+	OpticalSystemElement optSysEleOptimizedGenetic = geneticClass.getOptimizedOpticalSystemElement().getDeepCopyOptSysEle();
+	
+	// DLS
+	DLS DLS_Class(/*optSysEle*/ optSysEleOptimizedGenetic, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+	DLS_Class.turnOffImaProc();
+	OpticalSystemElement optSysEleOptimizedDLS = DLS_Class.getOptimizedSystem_HLT();
+
+	return optSysEleOptimizedDLS;
+
+
+}
+OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_GeneticAndDLS_inf()
+{
+	
+	OpticalSystemElement optSysEleGenetic = mOptSysEle.getDeepCopyOptSysEle();
+
+	// GENETIC
+	Genetic geneticClass(/*optSysEle*/ optSysEleGenetic, /*angleX*/ mAngleX, /*angleY*/ mAngleY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*populatuion*/ mPopulation, /*target cardinal points*/ mTargetCarPoints, /*default parameter*/ mDefaultParameterGenetic);
+	geneticClass.setChooseValueMode(cleverSamplingMode);
+	geneticClass.doTheGeneticProcess();
+	OpticalSystemElement optSysEleOptimizedGenetic = geneticClass.getOptimizedOpticalSystemElement().getDeepCopyOptSysEle();
+
+
+	//DLS
+	DLS DLS_Class(/*optSysEle*/ optSysEleOptimizedGenetic, /*angleX*/ mAngleX, /*angleY*/ mAngleY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+	DLS_Class.turnOffImaProc();
+	DLS_Class.optimizeSystem_DLS_multiplicativ_Damping();
+	OpticalSystemElement optSysEleOptimizedDLS = DLS_Class.getOptimizedSystem_HLT();
+
+	return optSysEleOptimizedDLS;
+
+}
+
 OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_GeneticAndDLS_12Cores()
 {
 	unsigned int objFieldSize = mFields_vec.size();
@@ -337,10 +407,12 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 					// optimize the systems using DLS
 					// thread 1
 					DLS DLS1_1(/*optSysEle*/ optSysEleThread1_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+					DLS1_1.turnOffImaProc();
 					DLS1_1.setFactorGettingBetter(mFactorBetter_1);
 					DLS1_1.setFactorGettingWorst(mFactorWorst_1);
 
 					DLS DLS1_2(/*optSysEle*/ optSysEleThread1_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+					DLS1_2.turnOffImaProc();
 					DLS1_2.setFactorGettingBetter(mFactorBetter_2);
 					DLS1_2.setFactorGettingWorst(mFactorWorst_2);
 
@@ -369,10 +441,12 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 					
 					// thread 2
 					DLS DLS2_1(/*optSysEle*/ optSysEleThread2_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+					DLS2_1.turnOffImaProc();
 					DLS2_1.setFactorGettingBetter(mFactorBetter_1);
 					DLS2_1.setFactorGettingWorst(mFactorWorst_1);
 	
 					DLS DLS2_2(/*optSysEle*/ optSysEleThread2_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+					DLS2_2.turnOffImaProc();
 					DLS2_2.setFactorGettingBetter(mFactorBetter_2);
 					DLS2_2.setFactorGettingWorst(mFactorWorst_2);
 	
@@ -392,10 +466,12 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 	
 					// thread 3
 					DLS DLS3_1(/*optSysEle*/ optSysEleThread3_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+					DLS3_1.turnOffImaProc();
 					DLS3_1.setFactorGettingBetter(mFactorBetter_1);
 					DLS3_1.setFactorGettingWorst(mFactorWorst_1);
 	
 					DLS DLS3_2(/*optSysEle*/ optSysEleThread3_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+					DLS3_2.turnOffImaProc();
 					DLS3_2.setFactorGettingBetter(mFactorBetter_2);
 					DLS3_2.setFactorGettingWorst(mFactorWorst_2);
 	
@@ -415,10 +491,12 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 	
 					// thread 4
 					DLS DLS4_1(/*optSysEle*/ optSysEleThread4_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+					DLS4_1.turnOffImaProc();
 					DLS4_1.setFactorGettingBetter(mFactorBetter_1);
 					DLS4_1.setFactorGettingWorst(mFactorWorst_1);
 	
 					DLS DLS4_2(/*optSysEle*/ optSysEleThread4_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+					DLS4_2.turnOffImaProc();
 					DLS4_2.setFactorGettingBetter(mFactorBetter_2);
 					DLS4_2.setFactorGettingWorst(mFactorWorst_2);
 	
@@ -437,10 +515,12 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 	
 					// thread 5
 					DLS DLS5_1(/*optSysEle*/ optSysEleThread5_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+					DLS5_1.turnOffImaProc();
 					DLS5_1.setFactorGettingBetter(mFactorBetter_1);
 					DLS5_1.setFactorGettingWorst(mFactorWorst_1);
 	
 					DLS DLS5_2(/*optSysEle*/ optSysEleThread5_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+					DLS5_2.turnOffImaProc();
 					DLS5_2.setFactorGettingBetter(mFactorBetter_2);
 					DLS5_2.setFactorGettingWorst(mFactorWorst_2);
 	
@@ -459,10 +539,12 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 	
 					// thread 6
 					DLS DLS6_1(/*optSysEle*/ optSysEleThread6_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+					DLS6_1.turnOffImaProc();
 					DLS6_1.setFactorGettingBetter(mFactorBetter_1);
 					DLS6_1.setFactorGettingWorst(mFactorWorst_1);
 	
 					DLS DLS6_2(/*optSysEle*/ optSysEleThread6_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+					DLS6_2.turnOffImaProc();
 					DLS6_2.setFactorGettingBetter(mFactorBetter_2);
 					DLS6_2.setFactorGettingWorst(mFactorWorst_2);
 	
@@ -480,10 +562,12 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 				{
 					// thread 7
 					DLS DLS7_1(/*optSysEle*/ optSysEleThread7_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+					DLS7_1.turnOffImaProc();
 					DLS7_1.setFactorGettingBetter(mFactorBetter_1);
 					DLS7_1.setFactorGettingWorst(mFactorWorst_1);
 	
 					DLS DLS7_2(/*optSysEle*/ optSysEleThread7_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+					DLS7_2.turnOffImaProc();
 					DLS7_2.setFactorGettingBetter(mFactorBetter_2);
 					DLS7_2.setFactorGettingWorst(mFactorWorst_2);
 	
@@ -502,10 +586,12 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 				{
 					// thread 8
 					DLS DLS8_1(/*optSysEle*/ optSysEleThread8_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+					DLS8_1.turnOffImaProc();
 					DLS8_1.setFactorGettingBetter(mFactorBetter_1);
 					DLS8_1.setFactorGettingWorst(mFactorWorst_1);
 	
 					DLS DLS8_2(/*optSysEle*/ optSysEleThread8_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+					DLS8_2.turnOffImaProc();
 					DLS8_2.setFactorGettingBetter(mFactorBetter_2);
 					DLS8_2.setFactorGettingWorst(mFactorWorst_2);
 	
@@ -525,10 +611,12 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 	
 					// thread 9
 					DLS DLS9_1(/*optSysEle*/ optSysEleThread9_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+					DLS9_1.turnOffImaProc();
 					DLS9_1.setFactorGettingBetter(mFactorBetter_1);
 					DLS9_1.setFactorGettingWorst(mFactorWorst_1);
 	
 					DLS DLS9_2(/*optSysEle*/ optSysEleThread9_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+					DLS9_2.turnOffImaProc();
 					DLS9_2.setFactorGettingBetter(mFactorBetter_2);
 					DLS9_2.setFactorGettingWorst(mFactorWorst_2);
 	
@@ -548,10 +636,12 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 	
 					// thread 10
 					DLS DLS10_1(/*optSysEle*/ optSysEleThread10_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+					DLS10_1.turnOffImaProc();
 					DLS10_1.setFactorGettingBetter(mFactorBetter_1);
 					DLS10_1.setFactorGettingWorst(mFactorWorst_1);
 	
 					DLS DLS10_2(/*optSysEle*/ optSysEleThread10_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+					DLS10_2.turnOffImaProc();
 					DLS10_2.setFactorGettingBetter(mFactorBetter_2);
 					DLS10_2.setFactorGettingWorst(mFactorWorst_2);
 	
@@ -562,18 +652,20 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 					DLS10_2.optimizeSystem_DLS_multiplicativ_Damping();
 					mAllMeritVal_vec[19] = DLS10_2.getBestMeritValue();
 	
-					optmizedSystem_vec[18] = DLS10_1.getOptimizedSystem_HLT();;
-					optmizedSystem_vec[19] = DLS10_2.getOptimizedSystem_HLT();;
+					optmizedSystem_vec[18] = DLS10_1.getOptimizedSystem_HLT();
+					optmizedSystem_vec[19] = DLS10_2.getOptimizedSystem_HLT();
 	
 				}
 			#pragma omp section // 11
 				{
 					// thread 11
 					DLS DLS11_1(/*optSysEle*/ optSysEleThread11_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+					DLS11_1.turnOffImaProc();
 					DLS11_1.setFactorGettingBetter(mFactorBetter_1);
 					DLS11_1.setFactorGettingWorst(mFactorWorst_1);
 	
 					DLS DLS11_2(/*optSysEle*/ optSysEleThread11_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+					DLS11_2.turnOffImaProc();
 					DLS11_2.setFactorGettingBetter(mFactorBetter_2);
 					DLS11_2.setFactorGettingWorst(mFactorWorst_2);
 	
@@ -583,9 +675,9 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 					std::cout << "DLS 11_2" << std::endl;
 					DLS11_2.optimizeSystem_DLS_multiplicativ_Damping();
 					mAllMeritVal_vec[21] = DLS11_2.getBestMeritValue();
-	
-					optmizedSystem_vec[20] = DLS11_1.getOptimizedSystem_HLT();;
-					optmizedSystem_vec[21] = DLS11_2.getOptimizedSystem_HLT();;
+
+					optmizedSystem_vec[20] = DLS11_1.getOptimizedSystem_HLT();
+					optmizedSystem_vec[21] = DLS11_2.getOptimizedSystem_HLT();
 	
 				}
 			
@@ -595,10 +687,12 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 	
 					// thread 12
 					DLS DLS12_1(/*optSysEle*/ optSysEleThread12_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+					DLS12_1.turnOffImaProc();
 					DLS12_1.setFactorGettingBetter(mFactorBetter_1);
 					DLS12_1.setFactorGettingWorst(mFactorWorst_1);
 					
 					DLS DLS12_2(/*optSysEle*/ optSysEleThread12_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+					DLS12_2.turnOffImaProc();
 					DLS12_2.setFactorGettingBetter(mFactorBetter_2);
 					DLS12_2.setFactorGettingWorst(mFactorWorst_2);
 	
@@ -610,8 +704,8 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 					mAllMeritVal_vec[23] = DLS12_2.getBestMeritValue();
 	
 					
-					optmizedSystem_vec[22] = DLS12_1.getOptimizedSystem_HLT();;
-					optmizedSystem_vec[23] = DLS12_2.getOptimizedSystem_HLT();;
+					optmizedSystem_vec[22] = DLS12_1.getOptimizedSystem_HLT();
+					optmizedSystem_vec[23] = DLS12_2.getOptimizedSystem_HLT();
 				}
 			}
 
@@ -624,7 +718,7 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 				if (mBestMeritVal > mAllMeritVal_vec[i])
 				{
 					mBestMeritVal = mAllMeritVal_vec[i];
-					mOptimizedOpticalSystemElement_firstIteration = optmizedSystem_vec[i];
+					mOptimizedOpticalSystemElement_firstIteration = optmizedSystem_vec[i].getDeepCopyOptSysEle();
 				}
 			}
 
@@ -632,10 +726,9 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 	
 
 	DLS_multiThreads_12 DLS_mulit_12(mOptimizedOpticalSystemElement_firstIteration, mFields_vec, mWavelength_vec, mRings, mArms, mTargetCarPoints, mDefaultPrameterDLS);
-
-	
+	// do the optimization
 	mOptimizedOpticalSystemElement_secondIteration = DLS_mulit_12.DLS_optimisation_multiThreads_12_obj();
-	
+	mBestMeritVal = DLS_mulit_12.getBestMeritValue();
 	
 	return mOptimizedOpticalSystemElement_secondIteration;
 }
@@ -880,10 +973,12 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 			// optimize the systems using DLS
 			// thread 1
 			DLS DLS1_1(/*optSysEle*/ optSysEleThread1_1_forDLS, /*angleX*/ mAngleX, /*angleY*/ mAngleY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS1_1.turnOffImaProc();
 			DLS1_1.setFactorGettingBetter(mFactorBetter_1);
 			DLS1_1.setFactorGettingWorst(mFactorWorst_1);
 
 			DLS DLS1_2(/*optSysEle*/ optSysEleThread1_2_forDLS,/*angleX*/ mAngleX, /*angleY*/ mAngleY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS1_2.turnOffImaProc();
 			DLS1_2.setFactorGettingBetter(mFactorBetter_2);
 			DLS1_2.setFactorGettingWorst(mFactorWorst_2);
 
@@ -912,10 +1007,12 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 
 			// thread 2
 			DLS DLS2_1(/*optSysEle*/ optSysEleThread2_1_forDLS, /*angleX*/ mAngleX, /*angleY*/ mAngleY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS2_1.turnOffImaProc();
 			DLS2_1.setFactorGettingBetter(mFactorBetter_1);
 			DLS2_1.setFactorGettingWorst(mFactorWorst_1);
 
 			DLS DLS2_2(/*optSysEle*/ optSysEleThread2_2_forDLS, /*angleX*/ mAngleX, /*angleY*/ mAngleY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS2_2.turnOffImaProc();
 			DLS2_2.setFactorGettingBetter(mFactorBetter_2);
 			DLS2_2.setFactorGettingWorst(mFactorWorst_2);
 
@@ -935,10 +1032,12 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 
 			// thread 3
 			DLS DLS3_1(/*optSysEle*/ optSysEleThread3_1_forDLS, /*angleX*/ mAngleX, /*angleY*/ mAngleY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS3_1.turnOffImaProc();
 			DLS3_1.setFactorGettingBetter(mFactorBetter_1);
 			DLS3_1.setFactorGettingWorst(mFactorWorst_1);
 
 			DLS DLS3_2(/*optSysEle*/ optSysEleThread3_2_forDLS, /*angleX*/ mAngleX, /*angleY*/ mAngleY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS3_2.turnOffImaProc();
 			DLS3_2.setFactorGettingBetter(mFactorBetter_2);
 			DLS3_2.setFactorGettingWorst(mFactorWorst_2);
 
@@ -958,10 +1057,12 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 
 			// thread 4
 			DLS DLS4_1(/*optSysEle*/ optSysEleThread4_1_forDLS, /*angleX*/ mAngleX, /*angleY*/ mAngleY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS4_1.turnOffImaProc();
 			DLS4_1.setFactorGettingBetter(mFactorBetter_1);
 			DLS4_1.setFactorGettingWorst(mFactorWorst_1);
 
 			DLS DLS4_2(/*optSysEle*/ optSysEleThread4_2_forDLS, /*angleX*/ mAngleX, /*angleY*/ mAngleY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS4_2.turnOffImaProc();
 			DLS4_2.setFactorGettingBetter(mFactorBetter_2);
 			DLS4_2.setFactorGettingWorst(mFactorWorst_2);
 
@@ -980,10 +1081,12 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 
 			// thread 5
 			DLS DLS5_1(/*optSysEle*/ optSysEleThread5_1_forDLS, /*angleX*/ mAngleX, /*angleY*/ mAngleY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS5_1.turnOffImaProc();
 			DLS5_1.setFactorGettingBetter(mFactorBetter_1);
 			DLS5_1.setFactorGettingWorst(mFactorWorst_1);
 
 			DLS DLS5_2(/*optSysEle*/ optSysEleThread5_2_forDLS, /*angleX*/ mAngleX, /*angleY*/ mAngleY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS5_2.turnOffImaProc();
 			DLS5_2.setFactorGettingBetter(mFactorBetter_2);
 			DLS5_2.setFactorGettingWorst(mFactorWorst_2);
 
@@ -1002,10 +1105,12 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 
 			// thread 6
 			DLS DLS6_1(/*optSysEle*/ optSysEleThread6_1_forDLS, /*angleX*/ mAngleX, /*angleY*/ mAngleY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS6_1.turnOffImaProc();
 			DLS6_1.setFactorGettingBetter(mFactorBetter_1);
 			DLS6_1.setFactorGettingWorst(mFactorWorst_1);
 
 			DLS DLS6_2(/*optSysEle*/ optSysEleThread6_2_forDLS, /*angleX*/ mAngleX, /*angleY*/ mAngleY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS6_2.turnOffImaProc();
 			DLS6_2.setFactorGettingBetter(mFactorBetter_2);
 			DLS6_2.setFactorGettingWorst(mFactorWorst_2);
 
@@ -1023,10 +1128,12 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 		{
 			// thread 7
 			DLS DLS7_1(/*optSysEle*/ optSysEleThread7_1_forDLS, /*angleX*/ mAngleX, /*angleY*/ mAngleY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS7_1.turnOffImaProc();
 			DLS7_1.setFactorGettingBetter(mFactorBetter_1);
 			DLS7_1.setFactorGettingWorst(mFactorWorst_1);
 
 			DLS DLS7_2(/*optSysEle*/ optSysEleThread7_2_forDLS, /*angleX*/ mAngleX, /*angleY*/ mAngleY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS7_2.turnOffImaProc();
 			DLS7_2.setFactorGettingBetter(mFactorBetter_2);
 			DLS7_2.setFactorGettingWorst(mFactorWorst_2);
 
@@ -1045,10 +1152,12 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 		{
 			// thread 8
 			DLS DLS8_1(/*optSysEle*/ optSysEleThread8_1_forDLS, /*angleX*/ mAngleX, /*angleY*/ mAngleY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS8_1.turnOffImaProc();
 			DLS8_1.setFactorGettingBetter(mFactorBetter_1);
 			DLS8_1.setFactorGettingWorst(mFactorWorst_1);
 
 			DLS DLS8_2(/*optSysEle*/ optSysEleThread8_2_forDLS, /*angleX*/ mAngleX, /*angleY*/ mAngleY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS8_2.turnOffImaProc();
 			DLS8_2.setFactorGettingBetter(mFactorBetter_2);
 			DLS8_2.setFactorGettingWorst(mFactorWorst_2);
 
@@ -1068,10 +1177,12 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 
 			// thread 9
 			DLS DLS9_1(/*optSysEle*/ optSysEleThread9_1_forDLS, /*angleX*/ mAngleX, /*angleY*/ mAngleY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS9_1.turnOffImaProc();
 			DLS9_1.setFactorGettingBetter(mFactorBetter_1);
 			DLS9_1.setFactorGettingWorst(mFactorWorst_1);
 
 			DLS DLS9_2(/*optSysEle*/ optSysEleThread9_2_forDLS, /*angleX*/ mAngleX, /*angleY*/ mAngleY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS9_2.turnOffImaProc();
 			DLS9_2.setFactorGettingBetter(mFactorBetter_2);
 			DLS9_2.setFactorGettingWorst(mFactorWorst_2);
 
@@ -1091,10 +1202,12 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 
 			// thread 10
 			DLS DLS10_1(/*optSysEle*/ optSysEleThread10_1_forDLS, /*angleX*/ mAngleX, /*angleY*/ mAngleY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS10_1.turnOffImaProc();
 			DLS10_1.setFactorGettingBetter(mFactorBetter_1);
 			DLS10_1.setFactorGettingWorst(mFactorWorst_1);
 
 			DLS DLS10_2(/*optSysEle*/ optSysEleThread10_2_forDLS, /*angleX*/ mAngleX, /*angleY*/ mAngleY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS10_2.turnOffImaProc();
 			DLS10_2.setFactorGettingBetter(mFactorBetter_2);
 			DLS10_2.setFactorGettingWorst(mFactorWorst_2);
 
@@ -1113,10 +1226,12 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 		{
 			// thread 11
 			DLS DLS11_1(/*optSysEle*/ optSysEleThread11_1_forDLS, /*angleX*/ mAngleX, /*angleY*/ mAngleY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS11_1.turnOffImaProc();
 			DLS11_1.setFactorGettingBetter(mFactorBetter_1);
 			DLS11_1.setFactorGettingWorst(mFactorWorst_1);
 
 			DLS DLS11_2(/*optSysEle*/ optSysEleThread11_2_forDLS, /*angleX*/ mAngleX, /*angleY*/ mAngleY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS11_2.turnOffImaProc();
 			DLS11_2.setFactorGettingBetter(mFactorBetter_2);
 			DLS11_2.setFactorGettingWorst(mFactorWorst_2);
 
@@ -1138,10 +1253,12 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 
 			// thread 12
 			DLS DLS12_1(/*optSysEle*/ optSysEleThread12_1_forDLS, /*angleX*/ mAngleX, /*angleY*/ mAngleY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS12_1.turnOffImaProc();
 			DLS12_1.setFactorGettingBetter(mFactorBetter_1);
 			DLS12_1.setFactorGettingWorst(mFactorWorst_1);
 
 			DLS DLS12_2(/*optSysEle*/ optSysEleThread12_2_forDLS, /*angleX*/ mAngleX, /*angleY*/ mAngleY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS12_2.turnOffImaProc();
 			DLS12_2.setFactorGettingBetter(mFactorBetter_2);
 			DLS12_2.setFactorGettingWorst(mFactorWorst_2);
 
@@ -1235,4 +1352,9 @@ void OptimizeSystemSuperFct_GeneticAndDLS::loadBestFactorBetterFactorWorstCombin
 	factorBetter_vec.push_back(0.4);
 	factorWorst_vec.push_back(1.8);
 
+}
+
+real OptimizeSystemSuperFct_GeneticAndDLS::getBestMeritValue()
+{
+	return mBestMeritVal;
 }

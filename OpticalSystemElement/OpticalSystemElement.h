@@ -146,6 +146,9 @@ public:
 	// clear mPosAndIntersecSurface_LLT
 	void clear_mPosAndIntersecSurface_LLT();
 
+	// clear all
+	void clearALL();
+
 	// get deep copy of the optical system element
 	OpticalSystemElement getDeepCopyOptSysEle();
 

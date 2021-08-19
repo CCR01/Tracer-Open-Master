@@ -209,7 +209,9 @@ namespace Math {
 
 	// calculate the inverse matrix 
 	// we got the code from the internet --> see https://martin-thoma.com/inverting-matrices/
-	std::vector<std::vector<real>> calculateInverse(const std::vector<std::vector<real>>& inpusMatrix);
+	//template<class  T>
+	std::vector<std::vector<real>> calculateInverse_double(const std::vector<std::vector<real>>& inpusMatrix);
+	std::vector<std::vector<float>> calculateInverse_float(const std::vector<std::vector<float>>& inpusMatrix);
 
 	
 	// add all values in std::vector
@@ -218,7 +220,8 @@ namespace Math {
 	int addAllValuesInVector_int(std::vector<int> v);
 	unsigned int addAllValuesInVector_unsignedInt(std::vector<unsigned int> v);
 
-
+	// calculate random number between min and max 
+	real randomNumberReal(real min, real max);
 }
 
 

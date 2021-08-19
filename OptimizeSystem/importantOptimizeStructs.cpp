@@ -666,7 +666,7 @@ void targetCardinalPointsStruct::calcualteMeritVal_targetCardinalPoints_forDLS(c
 	CardinalPoints cardinalPoint(optSys_LLT, inf_obj);
 	real tempMeritVal = 0.0;
 
-	unsigned int sizeAberrationFct = aberrationFct.size();
+	//unsigned int sizeAberrationFct = aberrationFct.size();
 	unsigned int posInAberFct = aberrationFct.size() - mTargetOpti_vec.size();
 
 	if (isTargetInVec(targetOptimization::targetEFL))
@@ -685,84 +685,84 @@ void targetCardinalPointsStruct::calcualteMeritVal_targetCardinalPoints_forDLS(c
 
 	if (isTargetInVec(targetOptimization::targetPP_ima))
 	{
-		tempMeritVal = mWeightPP_ima * std::abs(mTargetPP_ima - cardinalPoint.getPP_ima()) * 1000;
+		tempMeritVal =  mWeightPP_ima * std::abs(mTargetPP_ima - cardinalPoint.getPP_ima()) * 1000;
 		aberrationFct[posInAberFct] = tempMeritVal;
 		++posInAberFct;
 	}
 
 	if (isTargetInVec(targetOptimization::targetEXPP_lastSur))
 	{
-		tempMeritVal = mWeightEXPP_lastSurface * std::abs(mTargetEXPP_lastSurface - cardinalPoint.getEXPP_lastSurface()) * 1000;
+		tempMeritVal =  mWeightEXPP_lastSurface * std::abs(mTargetEXPP_lastSurface - cardinalPoint.getEXPP_lastSurface()) * 1000;
 		aberrationFct[posInAberFct] = tempMeritVal;
 		++posInAberFct;
 	}
 
 	if (isTargetInVec(targetOptimization::targetEXPP_glocalCoodi))
 	{
-		tempMeritVal = mWeightEXPP_inGlobalCoordi * std::abs(mTargetEXPP_inGlobalCoordi - cardinalPoint.getEXPP_globalCoori()) * 1000;
+		tempMeritVal =  mWeightEXPP_inGlobalCoordi * std::abs(mTargetEXPP_inGlobalCoordi - cardinalPoint.getEXPP_globalCoori()) * 1000;
 		aberrationFct[posInAberFct] = tempMeritVal;
 		++posInAberFct;
 	}
 
 	if (isTargetInVec(targetOptimization::targetEXPD))
 	{
-		tempMeritVal = mWeightEXPD * std::abs(mTargetEXPD - cardinalPoint.getEXPD()) * 1000;
+		tempMeritVal =  mWeightEXPD * std::abs(mTargetEXPD - cardinalPoint.getEXPD()) * 1000;
 		aberrationFct[posInAberFct] = tempMeritVal;
 		++posInAberFct;
 	}
 
 	if (isTargetInVec(targetOptimization::targetMag))
 	{
-		tempMeritVal = mWeightMag * std::abs(mTargetMag - cardinalPoint.getMagnification()) * 1000;
+		tempMeritVal =  mWeightMag * std::abs(mTargetMag - cardinalPoint.getMagnification()) * 1000;
 		aberrationFct[posInAberFct] = tempMeritVal;
 		++posInAberFct;
 	}
 
 	if (isTargetInVec(targetOptimization::targetNA_obj))
 	{
-		tempMeritVal = mWeightNA_obj * std::abs(mTargetNA_obj - cardinalPoint.getNA_objSpace()) * 1000;
+		tempMeritVal =  mWeightNA_obj * std::abs(mTargetNA_obj - cardinalPoint.getNA_objSpace()) * 1000;
 		aberrationFct[posInAberFct] = tempMeritVal;
 		++posInAberFct;
 	}
 
 	if (isTargetInVec(targetOptimization::targetENPP_globalCoordi))
 	{
-		tempMeritVal = mWeightENPP_inGlobalCoordi * std::abs(mTargetENPP_inGlobalCoodi - cardinalPoint.getENPP_globalCoodi()) * 1000;
+		tempMeritVal =  mWeightENPP_inGlobalCoordi * std::abs(mTargetENPP_inGlobalCoodi - cardinalPoint.getENPP_globalCoodi()) * 1000;
 		aberrationFct[posInAberFct] = tempMeritVal;
 		++posInAberFct;
 	}
 
 	if (isTargetInVec(targetOptimization::targetENPP_firstSur))
 	{
-		tempMeritVal = mWeightENPP_firstSurface * std::abs(mTargetENPP_firstSurface - cardinalPoint.getENPP_firstSurface()) * 1000;
+		tempMeritVal =  mWeightENPP_firstSurface * std::abs(mTargetENPP_firstSurface - cardinalPoint.getENPP_firstSurface()) * 1000;
 		aberrationFct[posInAberFct] = tempMeritVal;
 		++posInAberFct;
 	}
 
 	if (isTargetInVec(targetOptimization::targetENPD))
 	{
-		tempMeritVal = mWeightENPD * std::abs(mTargetENPD - cardinalPoint.getENPD()) * 1000;
+		tempMeritVal =  mWeightENPD * std::abs(mTargetENPD - cardinalPoint.getENPD()) * 1000;
 		aberrationFct[posInAberFct] = tempMeritVal;
 		++posInAberFct;
 	}
 
 	if (isTargetInVec(targetOptimization::targetFnum))
 	{
-		tempMeritVal = mWeightF_number * std::abs(mTargetF_number - cardinalPoint.getF_num_imaSpace()) * 1000;
+		tempMeritVal =  mWeightF_number * std::abs(mTargetF_number - cardinalPoint.getF_num_imaSpace()) * 1000;
 		aberrationFct[posInAberFct] = tempMeritVal;
 		++posInAberFct;
 	}
 
 	if (isTargetInVec(targetOptimization::targetNA_imaSpace))
 	{
-		tempMeritVal = mWeightNA_imaSpace * std::abs(mTargetNA_imaSpace - cardinalPoint.getNA_imaSpace()) * 1000;
+		tempMeritVal =  mWeightNA_imaSpace * std::abs(mTargetNA_imaSpace - cardinalPoint.getNA_imaSpace()) * 1000;
 		aberrationFct[posInAberFct] = tempMeritVal;
 		++posInAberFct;
 	}
 
 	if (isTargetInVec(targetOptimization::targetWFNO))
 	{
-		tempMeritVal = mWeightWFNO * std::abs(mTargetWFNO - cardinalPoint.getWorkingFnumber()) * 1000;
+		tempMeritVal =  mWeightWFNO * std::abs(mTargetWFNO - cardinalPoint.getWorkingFnumber()) * 1000;
 		aberrationFct[posInAberFct] = tempMeritVal;
 		++posInAberFct;
 	}

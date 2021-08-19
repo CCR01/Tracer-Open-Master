@@ -12,9 +12,588 @@
 #include <stdlib.h>
 
 #include "..\Image\Images.h"
+#include "..\oftenUseNamespace\oftenUseNamespace.h"
+
+// wiener filter
+#include "..\ImageProcessing\WienerDeconvolutioinSuperFuction.h"
+
+// unsharp masking
+#include "..\ImageProcessing\UnsharpMasking.h"
+
+// detail enhancement
+#include "..\ImageProcessing\DetailEnhancement.h"
+
+// remove chromatic aberrations
+#include "..\ImageProcessing\RemoveChromaticAberrations.h"
+
+ImaProcSuperFct::ImaProcSuperFct() {}
+ImaProcSuperFct::~ImaProcSuperFct() {}
+
+
+
+void ImaProcSuperFct::ImageProcessingSuperFunction(cv::Mat& inputIma, cv::Mat& blueredIma, imageProcessing imaProc)
+{
+	mInputIma = inputIma.clone();
+	mBlueredIma = blueredIma.clone();
+	mImaProc = imaProc;
+
+	// *** wiener filter *** //
+	if (mImaProc == imageProcessing::wienerFilter)
+	{
+		WienerDeconvolutionSuperFunction wienerDevon_superFct;
+		wienerDevon_superFct.setParameter_blue(mParaWD_blue);
+		wienerDevon_superFct.setParameter_green(mParaWD_green);
+		wienerDevon_superFct.setParameter_red(mParaWD_red);
+
+		wienerDevon_superFct.improveImaQual_WD_superFct(mInputIma, mBlueredIma);
+
+		mBestParaWD_blue = wienerDevon_superFct.getBestParameter_blue();
+		mBestParaWD_green = wienerDevon_superFct.getBestParameter_green();
+		mBestParaWD_red = wienerDevon_superFct.getBestParameter_red();
+
+		mFilteredIma = wienerDevon_superFct.getFilteredImage();
+	}
+
+	// *** wiener filter parallel *** //
+	else if (mImaProc == imageProcessing::wienerFilter24)
+	{
+		WienerDeconvolutionSF_parallel_BGR wienerDeconParallelBGR;
+		wienerDeconParallelBGR.setParameterWD_Global_blue(mParaWD_blue);
+		wienerDeconParallelBGR.setParameterWD_Global_green(mParaWD_green);
+		wienerDeconParallelBGR.setParameterWD_Global_red(mParaWD_red);
+
+		wienerDeconParallelBGR.improveImaQual_WD_superFct_BGR_parallel(mInputIma, mBlueredIma);
+
+		mBestParaWD_blue = wienerDeconParallelBGR.getBestParameter_blue();
+		mBestParaWD_green = wienerDeconParallelBGR.getBestParameter_green();
+		mBestParaWD_red = wienerDeconParallelBGR.getBestParameter_red();
+
+		mFilteredIma = wienerDeconParallelBGR.getFilteredResults_normedZeroAndMaxUchar();
+	}
+
+	// *** unsharp masking *** //
+	else if (mImaProc == imageProcessing::unsharpMasking)
+	{
+		UnshaprMasking_singleCore_BGR unsharpMasking;
+		unsharpMasking.setParameterUM_blue(mParaUnsMas_gray);
+		unsharpMasking.setParameterUM_green(mParaUnsMas_green);
+		unsharpMasking.setParameterUM_red(mParaUnsMas_red);
+
+		unsharpMasking.improveImaQual_UnsharpMasking_superFct_BGR(mInputIma, mBlueredIma);
+
+		mBestParaUnsMas_blue = unsharpMasking.getBestParameter_blue();
+		mBestParaUnsMas_green = unsharpMasking.getBestParameter_green();
+		mBestParaUnsMas_red = unsharpMasking.getBestParameter_red();
+
+		mFilteredIma = unsharpMasking.getFilteredResults_normedZeroAndMaxUchar();
+	}
+
+	// *** unsharp masking parallel *** //
+	else if (mImaProc == imageProcessing::unsharpMasking24)
+	{
+		unsharpMasking_BGR_parallel unsharpMasking_24;
+		unsharpMasking_24.setParameterUM_blue(mParaUnsMas_blue);
+		unsharpMasking_24.setParameterUM_green(mParaUnsMas_green);
+		unsharpMasking_24.setParameterUM_red(mParaUnsMas_red);
+
+		unsharpMasking_24.improveImaQual_UnsharpMasking_superFct_BGR_parallel(mInputIma, mBlueredIma);
+
+		mBestParaUnsMas_blue = unsharpMasking_24.getBestParameter_blue();
+		mBestParaUnsMas_green = unsharpMasking_24.getBestParameter_green();
+		mBestParaUnsMas_red = unsharpMasking_24.getBestParameter_red();
+
+		mFilteredIma = unsharpMasking_24.getFilteredResults_normedZeroAndMaxUchar();
+
+	}
+
+	// *** unsharp masking gray*** //
+	else if (mImaProc == imageProcessing::unsharpMasking_gray)
+	{
+		UnshaprMasking_singleCore_gray unsharpMasking_gray;
+		unsharpMasking_gray.setParameterUM(mParaUnsMas_gray);
+
+		unsharpMasking_gray.improveImageQuality_unsharpMask_gray(mInputIma, mBlueredIma);
+
+		mBestParaUnsMas_gray = unsharpMasking_gray.getBestParameter();
+
+		mFilteredIma = mBestParaUnsMas_gray.getImage();
+
+	}
+
+	// *** unsharp masking parallel gray*** //
+	else if (mImaProc == imageProcessing::unsharpMasking24_gray)
+	{
+	
+		UnsharpMasking24_gray unsharpMasking24_gray;
+		unsharpMasking24_gray.setParameterUM_gray(mParaUnsMas_gray);
+
+		unsharpMasking24_gray.improveImaQual_UnsharpMasking_superFct_GRAY_parallel(mInputIma, mBlueredIma);
+
+		mBestParaUnsMas_gray = unsharpMasking24_gray.getBestParameter_gray();
+
+		mFilteredIma = mBestParaUnsMas_gray.getImage();
+	}
+	
+	// *** detail enhancement *** ///
+	else if (mImaProc == imageProcessing::detailEnhance)
+	{
+		DetailEnhancement_BGR detailEnhancement;
+		detailEnhancement.setInitialParameter(mParaDetEnh);
+
+		detailEnhancement.improveImageQuality_DetailEnhancement_BGR(mInputIma, mBlueredIma);
+
+		mBestParaDetEnh = detailEnhancement.getBestParameter();
+
+		mFilteredIma = detailEnhancement.getFilteredIma();
+	}
+
+	// *** detail enhancement 24*** ///
+	else if (mImaProc == imageProcessing::detailEnhance24)
+	{
+		DetailEnhancement_BGR_parallel detailEnhancement_BGR_24;
+		detailEnhancement_BGR_24.setParameter_global(mParaDetEnh);
+
+		detailEnhancement_BGR_24.improveImageQuality_DetailEnhancement_BGR_parallel(mInputIma, mBlueredIma);
+
+		mBestParaDetEnh = detailEnhancement_BGR_24.getBestParameter();
+		mFilteredIma = detailEnhancement_BGR_24.getFilteredIma();
+	}
+
+	else if (mImaProc == imageProcessing::removeChromaticAber)
+	{
+		RemoveChromaticAberrations removeChromAber;
+		removeChromAber.setInitialParameter(mParaRemoChroAber);
+
+		removeChromAber.removeChromaticAberrations_superFct(mInputIma, mBlueredIma);
+
+		mBestParaRemoChroAber = removeChromAber.getBestParameter();
+		mFilteredIma = removeChromAber.getFilterdIma();
+	}
+
+	else if (mImaProc == imageProcessing::unshMas_DetailEnh_WienerDec_24)
+	{
+		mAllFilteredImages_UM_DE_WD.resize(3);
+		// unsharp masking
+		// _________________________________________________________
+		unsharpMasking_BGR_parallel unsharpMasking_24;
+		unsharpMasking_24.setParameterUM_blue(mParaUnsMas_blue);
+		unsharpMasking_24.setParameterUM_green(mParaUnsMas_green);
+		unsharpMasking_24.setParameterUM_red(mParaUnsMas_red);
+
+		unsharpMasking_24.improveImaQual_UnsharpMasking_superFct_BGR_parallel(mInputIma, mBlueredIma);
+
+		mBestParaUnsMas_blue = unsharpMasking_24.getBestParameter_blue();
+		mBestParaUnsMas_green = unsharpMasking_24.getBestParameter_green();
+		mBestParaUnsMas_red = unsharpMasking_24.getBestParameter_red();
+		
+		cv::Mat tempFilteredImages = unsharpMasking_24.getFilteredResults_normedZeroAndMaxUchar();
+		// save filtered images UM
+		mAllFilteredImages_UM_DE_WD[0] = tempFilteredImages.clone();
+		// _________________________________________________________
+
+		// detail enhancement
+		// _________________________________________________________
+		DetailEnhancement_BGR_parallel detailEnhancement_BGR_24;
+		detailEnhancement_BGR_24.setParameter_global(mParaDetEnh);
+
+		detailEnhancement_BGR_24.improveImageQuality_DetailEnhancement_BGR_parallel(mInputIma, tempFilteredImages.clone());
+
+		mBestParaDetEnh = detailEnhancement_BGR_24.getBestParameter();
+		tempFilteredImages = detailEnhancement_BGR_24.getFilteredIma();
+		mAllFilteredImages_UM_DE_WD[1] = tempFilteredImages.clone();
+		// _________________________________________________________
+
+		// wiener deconvolution
+		// _________________________________________________________
+		WienerDeconvolutionSF_parallel_BGR wienerDeconParallelBGR;
+		wienerDeconParallelBGR.setParameterWD_Global_blue(mParaWD_blue);
+		wienerDeconParallelBGR.setParameterWD_Global_green(mParaWD_green);
+		wienerDeconParallelBGR.setParameterWD_Global_red(mParaWD_red);
+
+		wienerDeconParallelBGR.improveImaQual_WD_superFct_BGR_parallel(mInputIma, tempFilteredImages);
+
+		mBestParaWD_blue = wienerDeconParallelBGR.getBestParameter_blue();
+		mBestParaWD_green = wienerDeconParallelBGR.getBestParameter_green();
+		mBestParaWD_red = wienerDeconParallelBGR.getBestParameter_red();
+
+		mFilteredIma = wienerDeconParallelBGR.getFilteredResults_normedZeroAndMaxUchar();
+		mAllFilteredImages_UM_DE_WD[2] = mFilteredIma.clone();
+		// _________________________________________________________
+	}
+
+
+}
+
+// reload parameter according to best parameter
+void ImaProcSuperFct::reloadParameterAccordingToBestParameter_WD(real variancePercent)
+{
+	if (mImaProc == imageProcessing::wienerFilter || mImaProc == imageProcessing::wienerFilter24)
+	{
+		// blue
+		real bestSigma_blue = mBestParaWD_blue.getBestSigma();
+		real bestSNR_blue = mBestParaWD_blue.getBestSNR();
+
+		real newMinSigma_blue = (100.0 - variancePercent) * bestSigma_blue / 100.0;
+		real newMaxSigma_blue = (100.0 + variancePercent) * bestSigma_blue / 100.0;
+		real newMinSNR_blue = (100.0 - variancePercent) * bestSNR_blue / 100.0;
+		real newMaxSNR_blue = (100.0 + variancePercent) * bestSNR_blue / 100.0;
+
+		mParaWD_blue.setMinSigmaXY(newMinSigma_blue);
+		mParaWD_blue.setMaxSigmaXY(newMaxSigma_blue);
+		mParaWD_blue.setMinSNR(newMinSNR_blue);
+		mParaWD_blue.setMaxSNR(newMaxSNR_blue);
+
+		// green
+		real bestSigma_green = mBestParaWD_green.getBestSigma();
+		real bestSNR_green = mBestParaWD_green.getBestSNR();
+
+		real newMinSigma_green = (100.0 - variancePercent) * bestSigma_green / 100.0;
+		real newMaxSigma_green = (100.0 + variancePercent) * bestSigma_green / 100.0;
+		real newMinSNR_green = (100.0 - variancePercent) * bestSNR_green / 100.0;
+		real newMaxSNR_green = (100.0 + variancePercent) * bestSNR_green / 100.0;
+
+		mParaWD_green.setMinSigmaXY(newMinSigma_green);
+		mParaWD_green.setMaxSigmaXY(newMaxSigma_green);
+		mParaWD_green.setMinSNR(newMinSNR_green);
+		mParaWD_green.setMaxSNR(newMaxSNR_green);
+
+		// red
+		real bestSigma_red = mBestParaWD_red.getBestSigma();
+		real bestSNR_red = mBestParaWD_red.getBestSNR();
+
+		real newMinSigma_red = (100.0 - variancePercent) * bestSigma_red / 100.0;
+		real newMaxSigma_red = (100.0 + variancePercent) * bestSigma_red / 100.0;
+		real newMinSNR_red = (100.0 - variancePercent) * bestSNR_red / 100.0;
+		real newMaxSNR_red = (100.0 + variancePercent) * bestSNR_red / 100.0;
+
+		mParaWD_red.setMinSigmaXY(newMinSigma_red);
+		mParaWD_red.setMaxSigmaXY(newMaxSigma_red);
+		mParaWD_red.setMinSNR(newMinSNR_red);
+		mParaWD_red.setMaxSNR(newMaxSNR_red);
+	}
+}
+
+cv::Mat ImaProcSuperFct::getInputIma()
+{
+	return mInputIma;
+}
+cv::Mat ImaProcSuperFct::getBlueredIma()
+{
+	return mBlueredIma;
+}
+
+cv::Mat ImaProcSuperFct::getFilteredIma()
+{
+	return mFilteredIma;
+}
+std::vector<cv::Mat> ImaProcSuperFct::getAllFilteredImages_UM_DE_WD()
+{
+	return mAllFilteredImages_UM_DE_WD;
+}
+
+// wiener filter
+void ImaProcSuperFct::setParameterWD_blue(parameterImaImprove_WD paraWD_blue)
+{
+	mParaWD_blue = paraWD_blue;
+}
+void ImaProcSuperFct::setParameterWD_green(parameterImaImprove_WD paraWD_green)
+{
+	mParaWD_green = paraWD_green;
+}
+void ImaProcSuperFct::setParameterWD_red(parameterImaImprove_WD paraWD_red)
+{
+	mParaWD_red = paraWD_red;
+}
+parameterImaImprove_WD ImaProcSuperFct::getParameterWD_blue()
+{
+	return mParaWD_blue;
+}
+parameterImaImprove_WD ImaProcSuperFct::getParameterWD_green()
+{
+	return mParaWD_green;
+}
+parameterImaImprove_WD ImaProcSuperFct::getParameterWD_red()
+{
+	return mParaWD_red;
+}
+saveBestParameterWD ImaProcSuperFct::getBestParaWD_blue()
+{
+	return mBestParaWD_blue;
+}
+saveBestParameterWD ImaProcSuperFct::getBestParaWD_green()
+{
+	return mBestParaWD_green;
+}
+saveBestParameterWD ImaProcSuperFct::getBestParaWD_red()
+{
+	return mBestParaWD_red;
+}
+void ImaProcSuperFct::reinitializeBestParaWD(real percent, real stepsSNR, real stepsSigma)
+{	
+	// *** SNR _blue *** //
+	real tempBestSNR_blue = mBestParaWD_blue.getBestSNR();
+	real minSNR_blue = (tempBestSNR_blue * (100.0 - percent)) / 100.0;
+	real maxSNR_blue = (tempBestSNR_blue * (100.0 + percent)) / 100.0;
+	mParaWD_blue.setMinSNR(minSNR_blue);
+	mParaWD_blue.setMaxSNR(maxSNR_blue);
+	mParaWD_blue.setStepsSNR(stepsSNR);
+
+	// *** SNR _green *** //
+	real tempBestSNR_green = mBestParaWD_green.getBestSNR();
+	real minSNR_green = (tempBestSNR_green * (100.0 - percent)) / 100.0;
+	real maxSNR_green = (tempBestSNR_green * (100.0 + percent)) / 100.0;
+	mParaWD_green.setMinSNR(minSNR_green);
+	mParaWD_green.setMaxSNR(maxSNR_green);
+	mParaWD_green.setStepsSNR(stepsSNR);
+
+	// *** SNR _red *** //
+	real tempBestSNR_red = mBestParaWD_red.getBestSNR();
+	real minSNR_red = (tempBestSNR_red * (100.0 - percent)) / 100.0;
+	real maxSNR_red = (tempBestSNR_red * (100.0 + percent)) / 100.0;
+	mParaWD_red.setMinSNR(minSNR_red);
+	mParaWD_red.setMaxSNR(maxSNR_red);
+	mParaWD_red.setStepsSNR(stepsSNR);
+
+	// *** sigma _blue *** //
+	real tempBestSigma_blue = mBestParaWD_blue.getBestSigma();
+	real minSigma_blue = (tempBestSigma_blue * (100.0 - percent)) / 100.0;
+	real maxSigma_blue = (tempBestSigma_blue * (100.0 + percent)) / 100.0;
+	mParaWD_blue.setMinSigmaXY(minSigma_blue);
+	mParaWD_blue.setMaxSigmaXY(maxSigma_blue);
+	mParaWD_blue.setStepsSigmaXY(stepsSigma);
+
+	// *** sigma _green *** //
+	real tempBestSigma_green = mBestParaWD_green.getBestSigma();
+	real minSigma_green = (tempBestSigma_green * (100.0 - percent)) / 100.0;
+	real maxSigma_green = (tempBestSigma_green * (100.0 + percent)) / 100.0;
+	mParaWD_green.setMinSigmaXY(minSigma_green);
+	mParaWD_green.setMaxSigmaXY(maxSigma_green);
+	mParaWD_green.setStepsSigmaXY(stepsSigma);
+
+	// *** sigma _red *** //
+	real tempBestSigma_red = mBestParaWD_red.getBestSigma();
+	real minSigma_red = (tempBestSigma_red * (100.0 - percent)) / 100.0;
+	real maxSigma_red = (tempBestSigma_red * (100.0 + percent)) / 100.0;
+	mParaWD_red.setMinSigmaXY(minSigma_red);
+	mParaWD_red.setMaxSigmaXY(maxSigma_red);
+	mParaWD_red.setStepsSigmaXY(stepsSigma);
+
+}
+
+
+// *** unsharp masking ***
+void ImaProcSuperFct::setParameterUnsMas_blue(parameterUnsharpMasking paraUnsMas_blue)
+{
+	mParaUnsMas_blue = paraUnsMas_blue;
+}
+void ImaProcSuperFct::setParameterUnsMas_green(parameterUnsharpMasking paraUnsMas_green)
+{
+	mParaUnsMas_green = paraUnsMas_green;
+}
+void ImaProcSuperFct::setParameterUnsMas_red(parameterUnsharpMasking paraUnsMas_red)
+{
+	mParaUnsMas_red = paraUnsMas_red;
+}
+void ImaProcSuperFct::setParameterUnsMas_gray(parameterUnsharpMasking paraUnsMas_gray)
+{
+	mParaUnsMas_gray = paraUnsMas_gray;
+}
+parameterUnsharpMasking ImaProcSuperFct::getParameterUnsMas_blue()
+{
+	return mParaUnsMas_gray;
+}
+parameterUnsharpMasking ImaProcSuperFct::getParameterUnsMas_green()
+{
+	return mParaUnsMas_green;
+}
+parameterUnsharpMasking ImaProcSuperFct::getParameterUnsMas_red()
+{
+	return mParaUnsMas_red;
+}
+parameterUnsharpMasking ImaProcSuperFct::getParameterUnsMas_gray()
+{
+	return mParaUnsMas_gray;
+}
+bestParameterStruct_unsharpMask ImaProcSuperFct::getBestParaUnsMas_blue()
+{
+	return mBestParaUnsMas_blue;
+}
+bestParameterStruct_unsharpMask ImaProcSuperFct::getBestParaUnsMas_green()
+{
+	return mBestParaUnsMas_green;
+}
+bestParameterStruct_unsharpMask ImaProcSuperFct::getBestParaUnsMas_red()
+{
+	return mBestParaUnsMas_red;
+}
+bestParameterStruct_unsharpMask ImaProcSuperFct::getBestParaUnsMas_gray()
+{
+	return mBestParaUnsMas_gray;
+}
+void ImaProcSuperFct::reinitializeBestParaUnsMas(real percent, real stepsSigma, real stepsThreshold, real stepsAmount)
+{
+	// *** sigma _blue ***
+	real temBestSigma_blue = mBestParaUnsMas_blue.getSigma();
+	real minSigma_blue = (temBestSigma_blue * (100.0 - percent)) / 100.0;
+	real maxSigma_blue = (temBestSigma_blue * (100.0 + percent)) / 100.0;
+	mParaUnsMas_gray.setMinSigma(minSigma_blue);
+	mParaUnsMas_gray.setMaxSigma(maxSigma_blue);
+	mParaUnsMas_gray.setStepsSigma(stepsSigma);
+
+	// *** sigma _green ***
+	real temBestSigma_green = mBestParaUnsMas_green.getSigma();
+	real minSigma_green = (temBestSigma_green * (100.0 - percent)) / 100.0;
+	real maxSigma_green = (temBestSigma_green * (100.0 + percent)) / 100.0;
+	mParaUnsMas_green.setMinSigma(minSigma_green);
+	mParaUnsMas_green.setMaxSigma(maxSigma_green);
+	mParaUnsMas_green.setStepsSigma(stepsSigma);
+
+	// *** sigma _red ***
+	real temBestSigma_red = mBestParaUnsMas_red.getSigma();
+	real minSigma_red = (temBestSigma_red * (100.0 - percent)) / 100.0;
+	real maxSigma_red = (temBestSigma_red * (100.0 + percent)) / 100.0;
+	mParaUnsMas_red.setMinSigma(minSigma_red);
+	mParaUnsMas_red.setMaxSigma(maxSigma_red);
+	mParaUnsMas_red.setStepsSigma(stepsSigma);
+
+	// *** threshold _blue ***
+	real tempBestThreshold_blue = mBestParaUnsMas_blue.getThreshold();
+	real minThreshold_blue = (tempBestThreshold_blue * (100.0 - percent)) / 100.0;
+	real maxThreshold_blue = (tempBestThreshold_blue * (100.0 + percent)) / 100.0;
+	mParaUnsMas_gray.setMinThreshold(minThreshold_blue);
+	mParaUnsMas_gray.setMaxThreshold(maxThreshold_blue);
+	mParaUnsMas_gray.setStepsThreshold(stepsThreshold);
+
+	// *** threshold _green ***
+	real tempBestThreshold_green = mBestParaUnsMas_green.getThreshold();
+	real minThreshold_green = (tempBestThreshold_green * (100.0 - percent)) / 100.0;
+	real maxThreshold_green = (tempBestThreshold_green * (100.0 + percent)) / 100.0;
+	mParaUnsMas_green.setMinThreshold(minThreshold_green);
+	mParaUnsMas_green.setMaxThreshold(maxThreshold_green);
+	mParaUnsMas_green.setStepsThreshold(stepsThreshold);
+
+	// *** threshold _red ***
+	real tempBestThreshold_red = mBestParaUnsMas_red.getThreshold();
+	real minThreshold_red = (tempBestThreshold_red * (100.0 - percent)) / 100.0;
+	real maxThreshold_red = (tempBestThreshold_red * (100.0 + percent)) / 100.0;
+	mParaUnsMas_red.setMinThreshold(minThreshold_red);
+	mParaUnsMas_red.setMaxThreshold(maxThreshold_red);
+	mParaUnsMas_red.setStepsThreshold(stepsThreshold);
+
+	// *** amount _blue ***
+	real tempBestAmount_blue = mBestParaUnsMas_blue.getAmount();
+	real minAmount_blue = (tempBestAmount_blue * (100.0 - percent)) / 100.0;
+	real maxAmount_blue = (tempBestAmount_blue * (100.0 + percent)) / 100.0;
+	mParaUnsMas_gray.setMinAmount(minAmount_blue);
+	mParaUnsMas_gray.setMaxAmount(maxAmount_blue);
+	mParaUnsMas_gray.setStepsAmount(stepsAmount);
+
+	// *** amount _green ***
+	real tempBestAmount_green = mBestParaUnsMas_green.getAmount();
+	real minAmount_green = (tempBestAmount_green * (100.0 - percent)) / 100.0;
+	real maxAmount_green = (tempBestAmount_green * (100.0 + percent)) / 100.0;
+	mParaUnsMas_green.setMinAmount(minAmount_green);
+	mParaUnsMas_green.setMaxAmount(maxAmount_green);
+	mParaUnsMas_green.setStepsAmount(stepsAmount);
+
+	// *** amount _red ***
+	real tempBestAmount_red = mBestParaUnsMas_red.getAmount();
+	real minAmount_red = (tempBestAmount_red * (100.0 - percent)) / 100.0;
+	real maxAmount_red = (tempBestAmount_red * (100.0 + percent)) / 100.0;
+	mParaUnsMas_red.setMinAmount(minAmount_red);
+	mParaUnsMas_red.setMaxAmount(maxAmount_red);
+	mParaUnsMas_red.setStepsAmount(stepsAmount);
+}
+// *** ***
+
+void ImaProcSuperFct::reinitializeBestParaUnsMas_gray(real percent, real stepsSigma, real stepsThreshold, real stepsAmount)
+{
+	// *** sigma _gray ***
+	real temBestSigma_gray = mBestParaUnsMas_gray.getSigma();
+	real minSigma_gray = (temBestSigma_gray * (100.0 - percent)) / 100.0;
+	real maxSigma_gray = (temBestSigma_gray * (100.0 + percent)) / 100.0;
+	mParaUnsMas_gray.setMinSigma(minSigma_gray);
+	mParaUnsMas_gray.setMaxSigma(maxSigma_gray);
+	mParaUnsMas_gray.setStepsSigma(stepsSigma);
+
+	// *** threshold _gray ***
+	real tempBestThreshold_gray = mBestParaUnsMas_gray.getThreshold();
+	real minThreshold_gray = (tempBestThreshold_gray * (100.0 - percent)) / 100.0;
+	real maxThreshold_gray = (tempBestThreshold_gray * (100.0 + percent)) / 100.0;
+	mParaUnsMas_gray.setMinThreshold(minThreshold_gray);
+	mParaUnsMas_gray.setMaxThreshold(maxThreshold_gray);
+	mParaUnsMas_gray.setStepsThreshold(stepsThreshold);
+
+	// *** amount _gray ***
+	real tempBestAmount_gray = mBestParaUnsMas_gray.getAmount();
+	real minAmount_gray = (tempBestAmount_gray * (100.0 - percent)) / 100.0;
+	real maxAmount_gray = (tempBestAmount_gray * (100.0 + percent)) / 100.0;
+	mParaUnsMas_gray.setMinAmount(minAmount_gray);
+	mParaUnsMas_gray.setMaxAmount(maxAmount_gray);
+	mParaUnsMas_gray.setStepsAmount(stepsAmount);
+}
+
+// *** detail enhancement ***
+void ImaProcSuperFct::setParameterDetEnh(parameterDetailEnhancement paraDetEnh)
+{
+	mParaDetEnh = paraDetEnh;
+}
+parameterDetailEnhancement ImaProcSuperFct::getParameterDetEnh()
+{
+	return mParaDetEnh;
+}
+bestParameterStruct_detailEnhance ImaProcSuperFct::getBestParaDetEnh()
+{
+	return mBestParaDetEnh;
+}
+void ImaProcSuperFct::reinitializeBestParaDetEng(real percent, real stepsSigma_r, real stepsSigma_s)
+{
+	// *** sigma_r ***
+	real temBestSigma_r = mBestParaDetEnh.getSigmar_r();
+	real minSigma_r = (temBestSigma_r * (100.0 - percent)) / 100.0;
+	real maxSigma_r = (temBestSigma_r * (100.0 + percent)) / 100.0;
+	mParaDetEnh.setMinSigma_r(minSigma_r);
+	mParaDetEnh.setMaxSigma_r(maxSigma_r);
+	mParaDetEnh.setStepsSigma_r(stepsSigma_r);
+
+	// *** sigma_s ***
+	real temBestSigma_s = mBestParaDetEnh.getSigmar_s();
+	real minSigma_s = (temBestSigma_s * (100.0 - percent)) / 100.0;
+	real maxSigma_s = (temBestSigma_s * (100.0 + percent)) / 100.0;
+	mParaDetEnh.setMinSigma_s(minSigma_s);
+	mParaDetEnh.setMaxSigma_s(maxSigma_s);
+	mParaDetEnh.setStepsSigma_s(stepsSigma_s);
+
+}
+// *** ***
+
+// *** remove chromatic aberrations ***
+void ImaProcSuperFct::setParameterRemoveChromAber(initialPararemChromAber parameterRemovChromAber)
+{
+	mParaRemoChroAber = parameterRemovChromAber;
+}
+initialPararemChromAber ImaProcSuperFct::getParameterRemoveChromAber()
+{
+	return mParaRemoChroAber;
+}
+bestParaRemChromAber ImaProcSuperFct::getBestParaRemoveChromAber()
+{
+	return mBestParaRemoChroAber;
+}
+void ImaProcSuperFct::reinitalizeBestParaRemoChromAber(real percent, real stepsThreshold)
+{
+	// *** threshold ***
+	real tempThreshold = mBestParaRemoChroAber.getThreshold();
+	real minThreshold = (tempThreshold * (100.0 - percent)) / 100.0;
+	real maxThreshold = (tempThreshold * (100.0 + percent)) / 100.0;
+	mParaRemoChroAber.setMinThreshold(minThreshold);
+	mParaRemoChroAber.setMaxThreshold(maxThreshold);
+	mParaRemoChroAber.setStepsThreshold(stepsThreshold);
+}
+// *** ***
 
 // Brightness and contrast adjustments
-	// see https://docs.opencv.org/3.4/d3/dc1/tutorial_basic_linear_transform.html
+// see https://docs.opencv.org/3.4/d3/dc1/tutorial_basic_linear_transform.html
 cv::Mat ImageProcessing::brighContrastAdjust(cv::Mat const& image, real const& alpha, int const& beta)
 {
 	cv::Mat new_image = cv::Mat::zeros(image.size(), image.type());
@@ -101,76 +680,54 @@ cv::Mat ImageProcessing::dilation(cv::Mat const& image,/*erosion type*/ int eros
 //correct distortion of an image
 cv::Mat ImageProcessing::correctDistortion(cv::Mat const& image, cv::Mat const& calibrationImage, int const& numCornersHor, int const& numCornersVer) 
 {
-	//Images::showImage("test", calibrationImage);
-
-	//we just load one image
-	int numBoards = 1;
-
-	cv::Mat distortionFreeImage;
-
-
 	int numSquares = numCornersHor * numCornersVer;
 	cv::Size board_sz = cv::Size(numCornersHor, numCornersVer);
-
-	std::vector<std::vector<cv::Point3f>> object_points;
-	std::vector<std::vector<cv::Point2f>> image_points_calibration;
-
-	std::vector<cv::Point2f> corners;
-	int successes = 0;
-
-	cv::Mat gray_image;
-	bool found = false;
+			
 
 	std::vector<cv::Point3f> obj;
 	for (int j = 0; j < numSquares; j++)
 		obj.push_back(cv::Point3f(j / numCornersHor, j%numCornersHor, 0.0f));
 
-	int interation = 0;
+	cv::Mat gray_image;
+	cv::cvtColor(calibrationImage, gray_image, CV_BGR2GRAY);
+	
+	std::vector<cv::Point2f> corners;
+	// looking for chessboard corners
+	bool found = cv::findChessboardCorners(calibrationImage, board_sz, corners, CV_CALIB_CB_ADAPTIVE_THRESH | CV_CALIB_CB_FILTER_QUADS);
 
-
-	while (successes < numBoards && interation < 3)
+	std::vector<std::vector<cv::Point3f>> object_points;
+	std::vector<std::vector<cv::Point2f>> image_points_calibration;
+	if (found == 1)
 	{
-		cv::cvtColor(calibrationImage, gray_image, CV_BGR2GRAY);
+		cv::cornerSubPix(gray_image, corners, cv::Size(11, 11), cv::Size(0, 0), cv::TermCriteria(CV_TERMCRIT_EPS | CV_TERMCRIT_ITER, 30, 0.1));
+		cv::drawChessboardCorners(gray_image, board_sz, corners, found);
 
-		found = cv::findChessboardCorners(calibrationImage, board_sz, corners, CV_CALIB_CB_ADAPTIVE_THRESH | CV_CALIB_CB_FILTER_QUADS);
+		image_points_calibration.push_back(corners);
+		object_points.push_back(obj);
 
-		if (found == 1)
-		{
-			cv::cornerSubPix(gray_image, corners, cv::Size(11, 11), cv::Size(0, 0), cv::TermCriteria(CV_TERMCRIT_EPS | CV_TERMCRIT_ITER, 30, 0.1));
-			cv::drawChessboardCorners(gray_image, board_sz, corners, found);
-
-		}
-
-		if (found != 0)
-		{
-			image_points_calibration.push_back(corners);
-			object_points.push_back(obj);
-			successes++;
-
-		}
-
-		if (interation >= 2)
-		{
-			std::cout << "we did not find the cornders of the chessboard" << std::endl;
-		}
-			
-		interation++;
 	}
+
+	else // we did not find the corners
+	{
+		std::cout << "we did not find the cornders of the chessboard" << std::endl;
+		// error and stop the program
+		oftenUse::errorProtocol_stopSystem("we did not find the cornders of the chessboard", "ImageProcessing.cpp", 0, true);
+	}
+	
 
 	cv::Mat intrinsic = cv::Mat(3, 3, CV_64FC1);
 	cv::Mat distCoeffs;
 	std::vector<cv::Mat> rvecs;
 	std::vector<cv::Mat> tvecs;
-
-
 	intrinsic.ptr<float>(0)[0] = 1;
 	intrinsic.ptr<float>(1)[1] = 1;
 
+
 	cv::calibrateCamera(object_points, image_points_calibration, calibrationImage.size(), intrinsic, distCoeffs, rvecs, tvecs);
 	
-	
+	// undistor the image
+	cv::Mat distortionFreeImage;
 	cv::undistort(image, distortionFreeImage, intrinsic, distCoeffs);
-
 
 	
 	return distortionFreeImage;
@@ -178,14 +735,14 @@ cv::Mat ImageProcessing::correctDistortion(cv::Mat const& image, cv::Mat const& 
 
 
 // Detail Enhancing Filter
-cv::Mat ImageProcessing::detailEnhancin(cv::Mat const& image, float const& sigma_s, float const& sigma_r)
-{
-	cv::Mat new_image = cv::Mat::zeros(image.size(), image.type());
 
-	cv::detailEnhance(image, new_image, sigma_s, sigma_r);
+void ImageProcessing::detailEnhancin(const cv::Mat& image, cv::Mat& detailEnhanceImage, float sigma_s, float sigma_r)
+{	
+	//// debug
+	//int typeIma = image.type();
+	//int typeDetal = detailEnhanceImage.type();
 
-	return new_image;
-
+	cv::detailEnhance(image, detailEnhanceImage, sigma_s, sigma_r);
 }
 
 
@@ -229,23 +786,16 @@ cv::Mat ImageProcessing::sobel(cv::Mat image, int const& ddepth, int const& dx, 
 
 // unsharp mask
 // see: https://docs.opencv.org/master/d1/d10/classcv_1_1MatExpr.html#details
-cv::Mat	ImageProcessing::unsharpMask(cv::Mat const& image, cv::Size kernelSize, double const& sigmaX, double const& sigmaY, int const& borderType, double const& threshold, double const& amount)
+cv::Mat	ImageProcessing::unsharpMask(const cv::Mat& image, cv::Size kernelSize, const double sigmaX, const double sigmaY, int borderType, const double threshold, const double amount)
 {
 
+	cv::Mat blurred;
+	cv::GaussianBlur(image, blurred, kernelSize, sigmaX, sigmaY);
+	cv::Mat lowContrastMask = abs(image - blurred) < threshold;
+	cv::Mat sharpened = image * (1 + amount) + blurred * (-amount);
+	image.copyTo(sharpened, lowContrastMask);
 
-
-	cv::Mat new_image = image;
-	cv::Mat blurredGaussian;
-	cv::GaussianBlur(image, blurredGaussian, kernelSize, sigmaX, sigmaY, borderType);
-	//Images::showImage("GaussianBlur", blurredGaussian);
-	cv::Mat lowContrastMask = cv::abs(image - blurredGaussian) < threshold;
-	//Images::showImage("lowContrastMast", lowContrastMask);
-	cv::Mat sharpenedImage = image * (1 + amount) + blurredGaussian * (-amount);
-	//Images::showImage("sharpenedImage1", sharpenedImage);
-	//new_image.copyTo(sharpenedImage, lowContrastMask);
-	//Images::showImage("return image", new_image);
-
-  	return sharpenedImage;
+  	return sharpened;
 
 }
 
@@ -272,3 +822,5 @@ cv::Mat ImageProcessing::MedianBlurFilter(cv::Mat const& image, int const& ksize
 
 	return new_image;
 }
+
+

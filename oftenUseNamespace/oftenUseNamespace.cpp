@@ -23,8 +23,14 @@ bool oftenUse::checkRayTracing(VectorStructR3 startPoint, VectorStructR3 directi
 	LightRayStruct lightRay(mLight, ray, 1.0);
 	// ray tracing
 	seqTrace.sequentialRayTracing(lightRay);
-	
-	VectorStructR3 intersecPoint = seqTrace.getAllInterPointsAtSurf_i_notFiltered(surfaceNum)[0];
+
+	int sizeOpticalSystem = optSys_LLT.getPosAndInteractingSurface().size() - 1;
+	if (surfaceNum > sizeOpticalSystem)
+	{
+		surfaceNum = sizeOpticalSystem;
+	}
+
+	VectorStructR3 intersecPoint = seqTrace.getAllInterPointsAtSurface_i_filtered(surfaceNum)[0];
 
 	bool checker = Math::compareTwoVectorStructR3_tolerance(intersecPoint, targetPoint, tolerance);
 
@@ -34,7 +40,7 @@ bool oftenUse::checkRayTracing(VectorStructR3 startPoint, VectorStructR3 directi
 
 bool oftenUse::checkIfUnsIntIsInVector(/*search for unsingt int*/ unsigned int target, /*vector with unsigned int*/ std::vector<unsigned int> vectorUnsInt)
 {
-	
+
 
 	std::vector<unsigned int>::iterator it = std::find(vectorUnsInt.begin(), vectorUnsInt.end(), target);
 	if (it != vectorUnsInt.end())
@@ -54,12 +60,21 @@ void oftenUse::resizeAllRowsMatrix(std::vector<std::vector<real>>& matrix, unsig
 	}
 }
 
+void oftenUse::resizeAllRowsMatrix(std::vector<std::vector<float>>& matrix, unsigned int rows)
+{
+	unsigned int numColumnsMatrix = matrix.size();
+	for (unsigned int i = 0; i < numColumnsMatrix; ++i)
+	{
+		matrix[i].resize(rows);
+	}
+}
+
 void oftenUse::print(std::vector< std::vector<double> > A)
 {
 	unsigned int numColumns = A.size();
 	unsigned int numRows = A[0].size();
 
-	for (int i = 0; i < numColumns; i++) 
+	for (int i = 0; i < numColumns; i++)
 	{
 		for (int j = 0; j < numRows; j++)
 		{
@@ -116,7 +131,7 @@ void oftenUse::print(OpticalSystemElement opticalSysElement, real wavelength)
 			nameGlasRightSide = opticalSysElement.getPosAndElement()[i].getElementInOptSys_ptr()->getGlassB().getNameGlas();
 			tempRefIndexRightSide = tempSurface_ptr->getRefractiveIndex_B();
 		}
-		
+
 		else if (tempDirection_Z < 0)
 		{
 			tempRadius = -1 * tempRadius;
@@ -124,10 +139,15 @@ void oftenUse::print(OpticalSystemElement opticalSysElement, real wavelength)
 			tempRefIndexRightSide = tempSurface_ptr->getRefractiveIndex_A();
 		}
 
-		if (std::abs(tempRadius) > 999.0)
-		{
-			tempRadius = 999.0;
-		}
+		//if (tempRadius > 999.0)
+		//{
+		//	tempRadius = 999.0;
+		//}
+		//
+		//else if (tempRadius < -999.0)
+		//{
+		//	tempRadius = -999.0;
+		//}
 
 		// get tempPoint
 		tempTypeMode_Thickness = oftenUse::convertTypeModeToString(opticalSysElement.getPosAndElement()[i].getElementInOptSys_ptr()->getPointTypeModifier_Z());
@@ -146,11 +166,11 @@ void oftenUse::print(OpticalSystemElement opticalSysElement, real wavelength)
 
 		thickness = tempPoint_Z_next - tempPoint_Z;
 
-		
+
 
 		// get semiHeight
 		semiHeight = tempSurface_ptr->getSemiHeight();
-		
+
 		std::cout << "" << std::endl;
 		std::cout << std::fixed;
 		std::cout << std::setprecision(3);
@@ -237,12 +257,21 @@ void oftenUse::print(OpticalSystem_LLT optSys)
 }
 
 // get very height number
-real oftenUse::getInfReal() 
-{ 
-	return 99999999999999999999999999999.0;;
+real oftenUse::getInfReal()
+{
+	real inf = 99999999999999999999999999999.0;
+	return inf;
 };
-float oftenUse::getInfFloat() { return 99999999999999999999999999999.0; };
-int oftenUse::getInfInt() { return 9999999999999999999; };
+float oftenUse::getInfFloat()
+{
+	float inf = 99999999999999999999999999999.0;
+	return inf;
+};
+int oftenUse::getInfInt()
+{
+	int inf = 999999999;
+	return inf;
+};
 //unsigned int oftenUse::getInfUnsignedInt() { return unsignedInt_INF; };
 
 // check if two values have the same prefix
@@ -281,7 +310,7 @@ std::vector<Light_LLT> oftenUse::buildDefaultLight_Vec(std::vector<real> wavelen
 	returnLight_LLT_vec.resize(numberWavelengths);
 	Light_LLT tempLight;
 
-	for(unsigned int i = 0; i<numberWavelengths; ++i)
+	for (unsigned int i = 0; i < numberWavelengths; ++i)
 	{
 		tempLight = oftenUse::buildDefaultLight(wavelength_vec[i]);
 		returnLight_LLT_vec[i] = tempLight;
@@ -290,15 +319,15 @@ std::vector<Light_LLT> oftenUse::buildDefaultLight_Vec(std::vector<real> wavelen
 	return returnLight_LLT_vec;
 }
 
-bool oftenUse::checkOptSysELement_Equal_Better_Zemax(OpticalSystemElement optimizedSystemHLT, std::vector<VectorStructR3> fieldPoints, std::vector<real> wavelength_vec, std::vector<real> rmsValZemax, real tolerance, compareTOM_Zemax compare)
+bool oftenUse::checkOptSysELement_Equal_Better_Zemax(OpticalSystemElement opticalSystemHLT, std::vector<VectorStructR3> fieldPoints, std::vector<real> wavelength_vec, std::vector<real> rmsValZemax, real tolerance, compareTOM_Zemax compare)
 {
 	bool check_Equal_Better_Zemax{};
-	
+
 	unsigned int defaultRings = 6;
 	unsigned int defaultArms = 8;
 	real defaultRefractivIndex = 1.0;
-	
-	unsigned int posLastSurface = optimizedSystemHLT.getPosAndElement().size() - 1;
+
+	unsigned int posLastSurface = opticalSystemHLT.getPosAndElement().size() - 1;
 
 	unsigned int numFieldPoints = fieldPoints.size();
 	unsigned int numRMS_ValZemax = rmsValZemax.size();
@@ -319,12 +348,12 @@ bool oftenUse::checkOptSysELement_Equal_Better_Zemax(OpticalSystemElement optimi
 
 
 	RayAiming tempRayAiming;
-	FillApertureStop FillApertureStop(optimizedSystemHLT.getOptSys_LLT_buildSystem(), defaultRings, defaultArms);
+	FillApertureStop FillApertureStop(opticalSystemHLT.getOptSys_LLT_buildSystem(), defaultRings, defaultArms);
 	std::vector<LightRayStruct> tempLightRay_vec{};
-	
+
 	std::vector<VectorStructR3> tempInterPoints{};
 	std::vector<VectorStructR3> saveAllInterPoints{};
-	
+
 	real tempRMS;
 	std::vector<real> allRMS;
 	allRMS.resize(numFieldPoints);
@@ -336,27 +365,34 @@ bool oftenUse::checkOptSysELement_Equal_Better_Zemax(OpticalSystemElement optimi
 		for (unsigned int j = 0; j < numWavelengths; ++j)
 		{
 			tempWavelength = wavelength_vec[j];
-			optimizedSystemHLT.setRefractiveIndexAccordingToWavelength(tempWavelength);
-			optimizedSystemHLT.convertSurfacesToLLT();
-			
-			tempRayAiming.setOpticalSystem_LLT(optimizedSystemHLT.getOptSys_LLT_buildSystem());
+			opticalSystemHLT.setRefractiveIndexAccordingToWavelength(tempWavelength);
+			opticalSystemHLT.convertSurfacesToLLT();
+
+			tempRayAiming.setOpticalSystem_LLT(opticalSystemHLT.getOptSys_LLT_buildSystem());
 			tempRayAiming.loadImportantInfosForRayAiming();
 			tempRayAiming.turn_On_RobustRayAiming();
+			tempRayAiming.setMaxIterationsRayAiming(200);
+			tempRayAiming.setMaxInterationRobustRayAiming(200);
+
+			// check distance obj first surface
+			real posZ_0 = opticalSystemHLT.getOpticalSystemElement().getPosAndIntersection_LLT()[0].getSurfaceInterRay_ptr()->getPoint().getZ();
+			tempRayAiming.setFactorObj_distanceObjPointToFirstSurface(tempFieldPoint.getZ(), posZ_0);
+
 
 			tempLightRay_vec = tempRayAiming.rayAimingMany_obj(FillApertureStop.getPointsInAS(), tempFieldPoint, lightVec[0], defaultRefractivIndex);
 
-			tempSeqTrace.setOpticalSystem(optimizedSystemHLT);
+			tempSeqTrace.setOpticalSystem(opticalSystemHLT);
 			tempSeqTrace.setTraceToSurface(posLastSurface);
 			tempSeqTrace.seqRayTracingWithVectorOfLightRays(tempLightRay_vec);
 
 			tempInterPoints = tempSeqTrace.getAllInterPointsAtSurf_i_notFiltered(posLastSurface);
 
 			saveAllInterPoints.insert(saveAllInterPoints.end(), tempInterPoints.begin(), tempInterPoints.end());
-		
+
 			tempSeqTrace.clearAllTracedRays();
-		
+
 		}
-		
+
 
 		// calc rms spot
 		Spot tempSpot(saveAllInterPoints, saveAllInterPoints[0]);
@@ -366,7 +402,7 @@ bool oftenUse::checkOptSysELement_Equal_Better_Zemax(OpticalSystemElement optimi
 
 	}
 
-	
+
 	if (compare == compareTOM_Zemax::comEqual)
 	{
 		real tempRMS_TOM;
@@ -402,7 +438,7 @@ bool oftenUse::checkOptSysELement_Equal_Better_Zemax(OpticalSystemElement optimi
 		check_Equal_Better_Zemax = (sumRMS_TOM - sumRMS_Z) < tolerance;
 	}
 
-	
+
 	return check_Equal_Better_Zemax;
 }
 
@@ -414,6 +450,24 @@ bool oftenUse::checkOptSysELement_Equal_Better_Zemax(OpticalSystemElement optimi
 	std::vector<real> ref_rms = { rmsValZemax };
 
 	bool checkTheSystem = checkOptSysELement_Equal_Better_Zemax(optimizedSystemHLT, field_vec, wace_vec, ref_rms, tolerance, compare);
+
+	return checkTheSystem;
+}
+
+bool oftenUse::checkOptSysELement_Equal_Better_Zemax(OpticalSystemElement optimizedSystemHLT, VectorStructR3 fieldPoint, std::vector<real> wavelength_vec, real rmsValZemax, real tolerance, compareTOM_Zemax compare)
+{
+	std::vector<VectorStructR3> field_vec = { fieldPoint };
+	std::vector<real> ref_rms = { rmsValZemax };
+
+	bool checkTheSystem = checkOptSysELement_Equal_Better_Zemax(optimizedSystemHLT, field_vec, wavelength_vec, ref_rms, tolerance, compare);
+
+	return checkTheSystem;
+}
+
+bool oftenUse::checkOptSysELement_Equal_Better_Zemax(OpticalSystemElement optimizedSystemHLT, std::vector<VectorStructR3> fieldPoint_vec, real wavelength, std::vector<real> rmsValZemax_vec, real tolerance, compareTOM_Zemax compare)
+{
+	std::vector<real> wavelength_vec = { wavelength };
+	bool checkTheSystem = checkOptSysELement_Equal_Better_Zemax(optimizedSystemHLT, fieldPoint_vec, wavelength_vec, rmsValZemax_vec, tolerance, compare);
 
 	return checkTheSystem;
 }
@@ -481,7 +535,7 @@ bool oftenUse::checkOptSysELement_Equal_Better_Zemax(OpticalSystemElement optimi
 			tempSeqTrace.setTraceToSurface(posLastSurface);
 			tempSeqTrace.seqRayTracingWithVectorOfLightRays(tempLightRay_vec);
 
-			tempInterPoints = tempSeqTrace.getAllInterPointsAtSurf_i_notFiltered(posLastSurface);
+			tempInterPoints = tempSeqTrace.getAllInterPointsAtSurface_i_filtered(posLastSurface);
 
 			saveAllInterPoints.insert(saveAllInterPoints.end(), tempInterPoints.begin(), tempInterPoints.end());
 
@@ -544,6 +598,29 @@ bool oftenUse::checkOptSysELement_Equal_Better_Zemax(OpticalSystemElement optimi
 
 }
 
+bool oftenUse::checkOptSysELement_Equal_Better_Zemax(OpticalSystemElement optimizedSystemHLT, real anglesX, real anglesY, std::vector<real> wavelength_vec, std::vector<real> rmsValZemax, real tolerance, compareTOM_Zemax compare)
+{
+	std::vector<real> angleX_vec = { anglesX };
+	std::vector<real> angleY_vec = { anglesY };
+
+	bool checker = checkOptSysELement_Equal_Better_Zemax(optimizedSystemHLT, angleX_vec, angleY_vec, wavelength_vec, rmsValZemax, tolerance, compare);
+
+	return checker;
+}
+
+bool oftenUse::checkOptSysELement_Equal_Better_Zemax(OpticalSystemElement optimizedSystemHLT, real anglesX, real anglesY, real wavelength, real rmsValZemax, real tolerance, compareTOM_Zemax compare)
+{
+	std::vector<real> angleX_vec = { anglesX };
+	std::vector<real> angleY_vec = { anglesY };
+	std::vector<real> wave_vec = { wavelength };
+	std::vector<real> rms_vec = { rmsValZemax };
+
+	bool checker = checkOptSysELement_Equal_Better_Zemax(optimizedSystemHLT, angleX_vec, angleY_vec, wave_vec, rms_vec, tolerance, compare);
+
+	return checker;
+
+}
+
 // check the thickness between surfaces
 bool oftenUse::checkThickness(OpticalSystem_LLT optSys_LLT, std::vector<real> thickness_vec, real tolerance)
 {
@@ -575,7 +652,7 @@ bool oftenUse::checkOptSysLLT_Equal_Better_Zemax(OpticalSystem_LLT optSys_LLT, s
 
 	unsigned int defaultRings = 6;
 	unsigned int defaultArms = 8;
-	real defaultRefractivIndex = 1.0;
+	real startRefractivIndex = getStartRefIndex(optSys_LLT);
 
 	unsigned int posLastSurface = optSys_LLT.getPosAndInteractingSurface().size() - 1;
 
@@ -586,7 +663,7 @@ bool oftenUse::checkOptSysLLT_Equal_Better_Zemax(OpticalSystem_LLT optSys_LLT, s
 	if (numFieldPoints != numRMS_ValZemax)
 	{
 		std::cout << "number of evaluated field does not match to the number of evaluated rms values" << std::endl;
-		check_Equal_Better_Zemax = false;
+		return false;
 	}
 
 	SequentialRayTracing tempSeqTrace(optSys_LLT);
@@ -608,8 +685,8 @@ bool oftenUse::checkOptSysLLT_Equal_Better_Zemax(OpticalSystem_LLT optSys_LLT, s
 	for (unsigned int i = 0; i < numFieldPoints; ++i)
 	{
 		tempFieldPoint = fieldPoints[i];
-		
-		tempLightRay_vec = tempRayAiming.rayAimingMany_obj(FillApertureStop.getPointsInAS(), tempFieldPoint, defaultLight, defaultRefractivIndex);
+
+		tempLightRay_vec = tempRayAiming.rayAimingMany_obj(FillApertureStop.getPointsInAS(), tempFieldPoint, defaultLight, startRefractivIndex);
 
 		tempSeqTrace.seqRayTracingWithVectorOfLightRays(tempLightRay_vec);
 
@@ -667,6 +744,105 @@ bool oftenUse::checkOptSysLLT_Equal_Better_Zemax(OpticalSystem_LLT optSys_LLT, V
 	bool checkEqualBetter = checkOptSysLLT_Equal_Better_Zemax(optSys_LLT, field_vec, ref_rms_vec, tolerance, compare);
 
 	return checkEqualBetter;
+}
+
+bool oftenUse::checkOptSysLLT_Equal_Better_Zemax(OpticalSystem_LLT optSys_LLT, std::vector<real> fieldAngle_X, std::vector<real> fieldAngle_Y, std::vector<real> rmsValZemax, real tolerance, compareTOM_Zemax compare)
+{
+	bool check_Equal_Better_Zemax{};
+
+	unsigned int defaultRings = 6;
+	unsigned int defaultArms = 8;
+	real startRefractivIndex = getStartRefIndex(optSys_LLT);
+
+	unsigned int posLastSurface = optSys_LLT.getPosAndInteractingSurface().size() - 1;
+
+	unsigned int numFieldAngle_X = fieldAngle_X.size();
+	unsigned int numFieldAngle_Y = fieldAngle_Y.size();
+
+	if (numFieldAngle_X != numFieldAngle_Y)
+	{
+		std::cout << "numFieldAngle_X is not numFieldAngle_Y" << std::endl;
+		return false;
+	}
+
+
+	unsigned int numRMS_ValZemax = rmsValZemax.size();
+	// check if number field points is equal to rms values from zemax
+	if (numFieldAngle_X != numRMS_ValZemax)
+	{
+		std::cout << "number of evaluated field does not match to the number of evaluated rms values" << std::endl;
+		return false;
+	}
+
+	SequentialRayTracing tempSeqTrace(optSys_LLT);
+	real tempFieldAngle_X{};
+	real tempFieldAngle_Y{};
+
+	RayAiming tempRayAiming(optSys_LLT);
+	FillApertureStop FillApertureStop(optSys_LLT, defaultRings, defaultArms);
+	std::vector<LightRayStruct> tempLightRay_vec{};
+
+	std::vector<VectorStructR3> tempInterPoints{};
+	Light_LLT defaultLight = oftenUse::getDefaultLight();
+
+	real tempRMS;
+	std::vector<real> allRMS;
+	allRMS.resize(numFieldAngle_X);
+
+	Spot tempSpot;
+
+	for (unsigned int i = 0; i < numFieldAngle_X; ++i)
+	{
+		tempFieldAngle_X = fieldAngle_X[i];
+		tempFieldAngle_Y = fieldAngle_Y[i];
+
+		tempLightRay_vec = tempRayAiming.rayAimingMany_inf(FillApertureStop.getPointsInAS(), tempFieldAngle_X, tempFieldAngle_Y, defaultLight, startRefractivIndex);
+
+		tempSeqTrace.seqRayTracingWithVectorOfLightRays(tempLightRay_vec);
+
+		tempInterPoints = tempSeqTrace.getAllInterPointsAtSurf_i_notFiltered(posLastSurface);
+
+		// calc rms spot
+		allRMS[i] = tempSpot.calcRMS(tempInterPoints, tempInterPoints[0]) * 1000;
+
+		tempSeqTrace.clearAllTracedRays();
+
+	}
+
+	if (compare == compareTOM_Zemax::comEqual)
+	{
+		real tempRMS_TOM;
+		real tempRMS_Z;
+		bool tempChecker;
+		std::vector<bool> checker;
+		checker.resize(numFieldAngle_X);
+
+		for (unsigned int i = 0; i < numFieldAngle_X; i++)
+		{
+			tempRMS_TOM = allRMS[i];
+			tempRMS_Z = rmsValZemax[i];
+
+			std::cout << "rms TOM: " << tempRMS_TOM << std::endl;
+			std::cout << "rms referencce: " << tempRMS_Z << std::endl;
+
+			tempChecker = Math::compareTwoNumbers_tolerance(tempRMS_TOM, tempRMS_Z, tolerance);
+			checker[i] = tempChecker;
+
+		}
+
+		check_Equal_Better_Zemax = Math::checkTrueOfVectorElements(checker);
+	}
+
+	else if (compare == compareTOM_Zemax::comBetter)
+	{
+		real sumRMS_TOM = Math::sumAllVectorValues(allRMS);
+		real sumRMS_Z = Math::sumAllVectorValues(rmsValZemax);
+
+		check_Equal_Better_Zemax = (sumRMS_TOM - sumRMS_Z) < tolerance;
+	}
+
+
+	return check_Equal_Better_Zemax;
 }
 
 bool oftenUse::DLSmulticheck(DLS startDLS, std::vector<real> factorBetter_vec, std::vector<real> factorWorst_vec, std::vector<real> rmsZ_vec, unsigned int systemNum)
@@ -971,12 +1147,12 @@ bool oftenUse::checkDeltaVariables(OpticalSystemElement optSysEle, std::vector<r
 	for (unsigned int i = 0; i < sizeOptSys; ++i)
 	{
 		tempElement_ptr = optSysEle.getPosAndElement()[i].getElementInOptSys_ptr();
-		
+
 
 		// check Radius
 		tempTypeMode = tempElement_ptr->getRadiusTypeModifier();
 		if (tempTypeMode == typeModifierVariable)
-		{	
+		{
 			// check Orientation Radius
 			checkerVec.push_back(checkSamePrefixTwoVal(bestValue[variabelCounter], tempElement_ptr->getDirectionElementValue_Z()));
 
@@ -987,7 +1163,7 @@ bool oftenUse::checkDeltaVariables(OpticalSystemElement optSysEle, std::vector<r
 			++variabelCounter;
 		}
 
-		
+
 		// check thickness
 		tempTypeMode = tempElement_ptr->getPointTypeModifier_Z();
 		if (tempTypeMode == typeModifierVariable)
@@ -1160,7 +1336,7 @@ bool oftenUse::checkDLS_resultRMS(DLS dls, real tolerance)
 			sumMeritRMSoptimizedSystem = sum(allRMS_vec);
 		}
 	}
-	
+
 	if (dls.getTargetCardinalPoints().getIsOneTargetCardinalPoint())
 	{
 		optimizedOptSysHLT.setRefractiveIndexAccordingToWavelength(dls.getWavelength_vev()[0]);
@@ -1200,13 +1376,13 @@ std::vector<real> oftenUse::weightingRMS_fields(std::vector<real> rms_vec, std::
 	{
 		std::cout << "ATTENTION: sizeRMS_fields is not sizeWeight" << std::endl;
 	}
-	
+
 	returnWeighedRMS_fields.resize(sizeRMS_fields);
 
 	for (unsigned int i = 0; i < sizeRMS_fields; ++i)
 	{
 		returnWeighedRMS_fields[i] = rms_vec[i] * weightRMS_vec[i];
- 	}
+	}
 
 	return returnWeighedRMS_fields;
 }
@@ -1337,7 +1513,7 @@ std::vector<real> oftenUse::resizeWeightWave_vec(std::vector<real> wave_vec, std
 // get default values for DLS optimization
 defaultParaDLS oftenUse::getDefaultPara_DLS(bool rayTracing)
 {
-	
+
 	defaultParaDLS defaultParamDLS;
 	defaultParamDLS.setDampingFactor(5.0);
 	defaultParamDLS.setFactorRadiusDeviation(0.000001);
@@ -1356,7 +1532,7 @@ defaultParaDLS oftenUse::getDefaultPara_DLS(bool rayTracing)
 	defaultParamDLS.setToleranceWithoutMax(0.0);
 	defaultParamDLS.set_Min_DamNumBefSwitchFactors(0.00001);
 	defaultParamDLS.set_Max_DamNumBefSwitchFactors(9999.0);
-	
+
 	if (rayTracing)
 	{
 		defaultParamDLS.turn_ON_calcRMSusingRayTracing();
@@ -1367,9 +1543,9 @@ defaultParaDLS oftenUse::getDefaultPara_DLS(bool rayTracing)
 	{
 		defaultParamDLS.turn_OFF_caclRMSusingRayTracing();
 	}
-	
+
 	return defaultParamDLS;
-	
+
 }
 
 // get default values for genetic optimisation
@@ -1388,7 +1564,7 @@ defaultParaGenetic oftenUse::getDafulatPara_Genetic(bool rayTracing)
 	{
 		defaultParaGenetic_rayTracing.set_ON_CheckRMS_rayTracing();
 	}
-	
+
 	else
 	{
 		defaultParaGenetic_rayTracing.set_OFF_CheckRMS_rayTracing();
@@ -1413,7 +1589,7 @@ std::string oftenUse::replacePointByComma(std::string inputString)
 
 		if (tempChar == '.')
 		{
-			tempChar = ',' ;
+			tempChar = ',';
 		}
 
 		exportString[i] = tempChar;
@@ -1431,16 +1607,20 @@ bool oftenUse::checkFor_No_Nan(VectorStructR3 vec)
 // error protocol
 void oftenUse::errorProtocol_stopSystem(/*error*/ std::string error, /*location*/ std::string location, /*error number*/ unsigned int errorNumber, /*stop program*/ bool stopProgram)
 {
-	std::string locationErrorProtocol = "../ErrorProtocol";
+	std::string locationErrorProtocol = "../ErrorProtocol/";
 	std::string nameTXT = "errorProtocol";
 
-	std::string errorAndLocation = error + " <--->location of error: " + location;
+	std::string errorAndLocation = error + " <---> location of error: " + location;
 
-	inportExportData::saveStringInTXT(locationErrorProtocol, nameTXT, error);
+	inportExportData::saveStringInTXT_includingTime(locationErrorProtocol, nameTXT, error);
 
 	if (errorNumber == 0)
 	{
 		std::cout << errorAndLocation << std::endl;
+
+		int i;
+		std::cout << "insert a rendom number" << std::endl;
+		std::cin >> i;
 	}
 
 	if (stopProgram) exit(EXIT_SUCCESS);
@@ -1449,7 +1629,7 @@ void oftenUse::errorProtocol_stopSystem(/*error*/ std::string error, /*location*
 bool oftenUse::checkForEvenNumber(int number)
 {
 	if (number % 2 == 0) return true;
-		
+
 	return false;
 }
 
@@ -1458,4 +1638,465 @@ bool oftenUse::checkForOddNumber(int number)
 	if (number % 2 == 0) return false;
 
 	return true;
+}
+
+// get start refractiv index
+real oftenUse::getStartRefIndex(OpticalSystem_LLT optSys_LLT)
+{
+	real curRefracIndex;
+	real directionZFirstSurface = optSys_LLT.getPosAndInteractingSurface()[0].getSurfaceInterRay_ptr()->getDirection().getZ();
+	if (directionZFirstSurface > 0)
+	{
+		curRefracIndex = optSys_LLT.getPosAndInteractingSurface()[0].getSurfaceInterRay_ptr()->getRefractiveIndex_A();
+	}
+	else if (directionZFirstSurface < 0)
+	{
+		curRefracIndex = optSys_LLT.getPosAndInteractingSurface()[0].getSurfaceInterRay_ptr()->getRefractiveIndex_B();
+	}
+	else
+	{
+		oftenUse::errorProtocol_stopSystem("direction first surface is zero", "oftenUseNamespace.cpp", 0, true);
+	}
+
+	return curRefracIndex;
+}
+
+LightRayStruct oftenUse::findMarginalRay_inf(OpticalSystemElement optSysEle, real primWavelength, Light_LLT light)
+{
+	infosAS infosAperStop = optSysEle.getInfoAS();
+	VectorStructR3 targetPointMarginal = infosAperStop.getPointAS();
+	targetPointMarginal.setY(infosAperStop.getSemiHeightAS());
+
+	optSysEle.setRefractiveIndexAccordingToWavelength(primWavelength);
+
+	RayAiming rayAim;
+	LightRayStruct marginalLightRay = rayAim.rayAimingMany_inf_complete(optSysEle.getLLTconversion_doConversion(), targetPointMarginal, 0.0, 0.0, light);
+
+	return marginalLightRay;
+}
+
+
+LightRayStruct oftenUse::findChiefRay_inf(OpticalSystemElement optSysEle, real primWavelength, real maxAngelY, Light_LLT light)
+{
+	infosAS infosAperStop = optSysEle.getInfoAS();
+	optSysEle.setRefractiveIndexAccordingToWavelength(primWavelength);
+
+	RayAiming rayAim;
+	rayAim.loadDefaultParameter();
+	rayAim.setLoadImportantDefaulParameterRayAiming(false);
+	rayAim.setTolerance_XandY(0.0000000001);
+	LightRayStruct chiefLightRay = rayAim.rayAimingMany_inf_complete(optSysEle.getLLTconversion_doConversion(), infosAperStop.getPointAS(), 0.0, maxAngelY, light);
+
+	return chiefLightRay;
+}
+
+LightRayStruct oftenUse::findMarginalRay_obj(OpticalSystemElement optSysEle, real primWavelength, Light_LLT light)
+{
+	infosAS infoAperStop = optSysEle.getInfoAS();
+	VectorStructR3 targetPointMarginal = infoAperStop.getPointAS();
+	targetPointMarginal.setY(infoAperStop.getSemiHeightAS());
+	std::vector<VectorStructR3> targetPointMarginal_vec = { targetPointMarginal };
+
+	optSysEle.setRefractiveIndexAccordingToWavelength(primWavelength);
+
+	RayAiming rayAim;
+	rayAim.loadDefaultParameter();
+	rayAim.setLoadImportantDefaulParameterRayAiming(false);
+	rayAim.setTolerance_XandY(0.0000000001);
+
+	VectorStructR3 startPoint = { 0.0,0.0,0.0 };
+	std::vector<LightRayStruct> marginalLightRay_obj_vec = rayAim.rayAimingMany_obj_complete(optSysEle.getLLTconversion_doConversion(), targetPointMarginal_vec, startPoint, light);
+
+	return marginalLightRay_obj_vec[0];
+}
+
+LightRayStruct oftenUse::findChiefRay_obj(OpticalSystemElement optSysEle, real primWavelength, VectorStructR3 maxStartPoint, Light_LLT light)
+{
+	infosAS infoAperStop = optSysEle.getInfoAS();
+	VectorStructR3 targetPointChief = infoAperStop.getPointAS();
+	std::vector<VectorStructR3> targetPointChief_vec = { targetPointChief };
+
+	optSysEle.setRefractiveIndexAccordingToWavelength(primWavelength);
+
+	RayAiming rayAim;
+	rayAim.loadDefaultParameter();
+	rayAim.setLoadImportantDefaulParameterRayAiming(false);
+	rayAim.setTolerance_XandY(0.0000000001);
+
+	std::vector<LightRayStruct> chiefLightRay_obj_vec = rayAim.rayAimingMany_obj_complete(optSysEle.getLLTconversion_doConversion(), targetPointChief_vec, maxStartPoint, light);
+
+	return chiefLightRay_obj_vec[0];
+}
+
+
+// find lenses in optical system
+std::vector<OpticalSystem_LLT> oftenUse::findLensesInOptSys_LLT(OpticalSystem_LLT optSys_LLT)
+{
+	std::vector<OpticalSystem_LLT> optSys_lenses_LLT_vec;
+	real tolerance = 0.0001;
+
+	OpticalSystem_LLT tempOptSys_lens_LLT;
+
+	unsigned sizeOptSys = optSys_LLT.getPosAndInteractingSurface().size();
+
+	// surfaces before
+	std::shared_ptr<SurfaceIntersectionRay_LLT> Surface_ptr_before = optSys_LLT.getPosAndInteractingSurface()[0].getSurfaceInterRay_ptr();
+	real direction_Z_before = Surface_ptr_before->getDirection().getZ();
+	real refIndex_A_before = Surface_ptr_before->getRefractiveIndex_A();
+	real refIndex_B_before = Surface_ptr_before->getRefractiveIndex_B();
+
+	unsigned int tempPos;
+
+	if (std::abs(refIndex_A_before - 1.0) > tolerance || std::abs(refIndex_B_before - 1.0) > tolerance)
+	{
+		tempPos = optSys_LLT.getPosAndInteractingSurface()[0].getPosition();
+		tempOptSys_lens_LLT.fillVectorSurfaceAndInteractingData(tempPos, Surface_ptr_before, optSys_LLT.getPosAndInteraction()[0].getInteractionAtSur_ptr());
+	}
+
+	// surfaces after
+	std::shared_ptr<SurfaceIntersectionRay_LLT> Surface_ptr_temp;
+	real direction_Z_temp;
+	real refIndex_A_temp;
+	real refIndex_B_temp;
+
+	bool isThereALens = true;
+	unsigned int sizeTempLens;
+	std::shared_ptr<InteractionRay_LLT> Interaction_ptr_temp;
+	real refIndexSurMat = oftenUse::getStartRefIndex(optSys_LLT);
+
+	for (unsigned int i = 1; i < sizeOptSys; ++i)
+	{
+		tempPos = optSys_LLT.getPosAndInteractingSurface()[i].getPosition();
+		Surface_ptr_temp = optSys_LLT.getPosAndInteractingSurface()[i].getSurfaceInterRay_ptr();
+		direction_Z_temp = Surface_ptr_temp->getDirection().getZ();
+		refIndex_A_temp = Surface_ptr_temp->getRefractiveIndex_A();
+		refIndex_B_temp = Surface_ptr_temp->getRefractiveIndex_B();
+
+		Interaction_ptr_temp = optSys_LLT.getPosAndInteraction()[i].getInteractionAtSur_ptr();
+
+		// lens type 0
+		if (direction_Z_before > 0 && direction_Z_temp < 0)
+		{
+			if ((refIndex_B_before - refIndexSurMat) < tolerance && (refIndex_B_temp - refIndexSurMat) < tolerance && tempOptSys_lens_LLT.getPosAndInteractingSurface().size() > 0) // there is no lens
+			{
+				optSys_lenses_LLT_vec.push_back(tempOptSys_lens_LLT);
+				tempOptSys_lens_LLT.clean_optSys_LLT();
+			}
+
+			if (std::abs(refIndex_B_before - refIndex_B_temp) < tolerance) // there is a lens
+			{
+				sizeTempLens = tempOptSys_lens_LLT.getPosAndInteractingSurface().size();
+				tempOptSys_lens_LLT.fillVectorSurfaceAndInteractingData(tempPos, Surface_ptr_temp, Interaction_ptr_temp);
+			}
+		}
+
+		// lens type 1
+		else if (direction_Z_before < 0 && direction_Z_temp < 0)
+		{
+			if ((refIndex_A_before - refIndexSurMat) < tolerance && (refIndex_B_temp - refIndexSurMat) < tolerance && tempOptSys_lens_LLT.getPosAndInteractingSurface().size() > 0) // there is no lens
+			{
+				optSys_lenses_LLT_vec.push_back(tempOptSys_lens_LLT);
+				tempOptSys_lens_LLT.clean_optSys_LLT();
+			}
+
+			if (std::abs(refIndex_A_before - refIndex_B_temp) < tolerance) // there is a lens
+			{
+				sizeTempLens = tempOptSys_lens_LLT.getPosAndInteractingSurface().size();
+				tempOptSys_lens_LLT.fillVectorSurfaceAndInteractingData(tempPos, Surface_ptr_temp, Interaction_ptr_temp);
+			}
+
+		}
+
+		// lens type 2
+		else if (direction_Z_before > 0 && direction_Z_temp > 0)
+		{
+			if ((refIndex_B_before - refIndexSurMat) < tolerance && (refIndex_A_temp - refIndexSurMat) < tolerance && tempOptSys_lens_LLT.getPosAndInteractingSurface().size() > 0) // there is no lens
+			{
+				optSys_lenses_LLT_vec.push_back(tempOptSys_lens_LLT);
+				tempOptSys_lens_LLT.clean_optSys_LLT();
+			}
+
+			if (std::abs(refIndex_B_before - refIndex_A_temp) < tolerance) // there is a lens
+			{
+				sizeTempLens = tempOptSys_lens_LLT.getPosAndInteractingSurface().size();
+				tempOptSys_lens_LLT.fillVectorSurfaceAndInteractingData(tempPos, Surface_ptr_temp, Interaction_ptr_temp);
+			}
+
+		}
+
+		// lens type 3
+		else if (direction_Z_before < 0 && direction_Z_temp > 0)
+		{
+			if ((refIndex_A_before - refIndexSurMat) < tolerance && (refIndex_A_temp - refIndexSurMat) < tolerance && tempOptSys_lens_LLT.getPosAndInteractingSurface().size() > 0) // there is no lens
+			{
+				optSys_lenses_LLT_vec.push_back(tempOptSys_lens_LLT);
+				tempOptSys_lens_LLT.clean_optSys_LLT();
+			}
+
+			if (std::abs(refIndex_A_before - refIndex_A_temp) < tolerance) // there is a lens
+			{
+				sizeTempLens = tempOptSys_lens_LLT.getPosAndInteractingSurface().size();
+				tempOptSys_lens_LLT.fillVectorSurfaceAndInteractingData(tempPos, Surface_ptr_temp, Interaction_ptr_temp);
+			}
+
+		}
+
+		// surfaces before
+		Surface_ptr_before = Surface_ptr_temp;
+		direction_Z_before = direction_Z_temp;
+		refIndex_A_before = refIndex_A_temp;
+		refIndex_B_before = refIndex_B_temp;
+
+	}
+
+	if (optSys_lenses_LLT_vec.size() == 0)
+	{
+		optSys_lenses_LLT_vec.push_back(tempOptSys_lens_LLT);
+	}
+
+	return optSys_lenses_LLT_vec;
+}
+
+std::vector<OpticalSystem_LLT> oftenUse::findLensesInOptSysEle(OpticalSystemElement optSysEle)
+{
+	optSysEle.setRefractiveIndexAccordingToWavelength(550.0);
+	OpticalSystem_LLT optSysLLT = optSysEle.getLLTconversion_doConversion();
+
+	return findLensesInOptSys_LLT(optSysLLT);
+}
+
+// compare two optical systems LLT
+bool oftenUse::compareTwoOpticalSystemsSurfaces(OpticalSystemElement optSysEle1, OpticalSystemElement optSysEle2, real tolerance)
+{
+	real waveLength = 550.0;
+
+	optSysEle1.setRefractiveIndexAccordingToWavelength(waveLength);
+	optSysEle2.setRefractiveIndexAccordingToWavelength(waveLength);
+
+	OpticalSystem_LLT optSys1 = optSysEle1.getLLTconversion_doConversion();
+	OpticalSystem_LLT optSys2 = optSysEle2.getLLTconversion_doConversion();
+
+	std::vector<bool> opticalSystemsSame_vec;
+
+	real tempRadius1;
+	real tempOriginX1;
+	real tempOriginY1;
+	real tempOriginZ1;
+	real tempDirectionX1;
+	real tempDirectionY1;
+	real tempDirectionZ1;
+	real tempRefIndexA1;
+	real tempRefIndexB1;
+
+	real tempRadius2;
+	real tempOriginX2;
+	real tempOriginY2;
+	real tempOriginZ2;
+	real tempDirectionX2;
+	real tempDirectionY2;
+	real tempDirectionZ2;
+	real tempRefIndexA2;
+	real tempRefIndexB2;
+
+	bool checkRadius;
+	bool checkOriginX;
+	bool checkOriginY;
+	bool checkOriginZ;
+	bool checkDirectionX;
+	bool checkDirectionY;
+	bool checkDirectionZ;
+	bool checkRefIndexA;
+	bool checkRefIndexB;
+
+	unsigned int sizeOptSys1 = optSys1.getPosAndInteractingSurface().size();
+	unsigned int sizeOptSys2 = optSys2.getPosAndInteractingSurface().size();
+
+	bool checkSizeOptSys = Math::compareTwoNumbers_tolerance(sizeOptSys1, sizeOptSys2, tolerance);
+	opticalSystemsSame_vec.push_back(checkSizeOptSys);
+
+	if (checkSizeOptSys)
+	{
+		for (unsigned int i = 0; i < sizeOptSys1; ++i)
+		{
+			// data optSys1
+			tempRadius1 = optSys1.getPosAndInteractingSurface()[i].getSurfaceInterRay_ptr()->getRadius();
+			tempOriginX1 = optSys1.getPosAndInteractingSurface()[i].getSurfaceInterRay_ptr()->getPoint().getX();
+			tempOriginY1 = optSys1.getPosAndInteractingSurface()[i].getSurfaceInterRay_ptr()->getPoint().getY();
+			tempOriginZ1 = optSys1.getPosAndInteractingSurface()[i].getSurfaceInterRay_ptr()->getPoint().getZ();
+			tempDirectionX1 = optSys1.getPosAndInteractingSurface()[i].getSurfaceInterRay_ptr()->getDirection().getX();
+			tempDirectionY1 = optSys1.getPosAndInteractingSurface()[i].getSurfaceInterRay_ptr()->getDirection().getY();
+			tempDirectionZ1 = optSys1.getPosAndInteractingSurface()[i].getSurfaceInterRay_ptr()->getDirection().getZ();
+			tempRefIndexA1 = optSys1.getPosAndInteractingSurface()[i].getSurfaceInterRay_ptr()->getRefractiveIndex_A();
+			tempRefIndexB1 = optSys1.getPosAndInteractingSurface()[i].getSurfaceInterRay_ptr()->getRefractiveIndex_B();
+
+			tempRadius2 = optSys2.getPosAndInteractingSurface()[i].getSurfaceInterRay_ptr()->getRadius();
+			tempOriginX2 = optSys2.getPosAndInteractingSurface()[i].getSurfaceInterRay_ptr()->getPoint().getX();
+			tempOriginY2 = optSys2.getPosAndInteractingSurface()[i].getSurfaceInterRay_ptr()->getPoint().getY();
+			tempOriginZ2 = optSys2.getPosAndInteractingSurface()[i].getSurfaceInterRay_ptr()->getPoint().getZ();
+			tempDirectionX2 = optSys2.getPosAndInteractingSurface()[i].getSurfaceInterRay_ptr()->getDirection().getX();
+			tempDirectionY2 = optSys2.getPosAndInteractingSurface()[i].getSurfaceInterRay_ptr()->getDirection().getY();
+			tempDirectionZ2 = optSys2.getPosAndInteractingSurface()[i].getSurfaceInterRay_ptr()->getDirection().getZ();
+			tempRefIndexA2 = optSys2.getPosAndInteractingSurface()[i].getSurfaceInterRay_ptr()->getRefractiveIndex_A();
+			tempRefIndexB2 = optSys2.getPosAndInteractingSurface()[i].getSurfaceInterRay_ptr()->getRefractiveIndex_B();
+
+			checkRadius = Math::compareTwoNumbers_tolerance(tempRadius1, tempRadius2, tolerance);
+			checkOriginX = Math::compareTwoNumbers_tolerance(tempOriginX1, tempOriginX2, tolerance);
+			checkOriginY = Math::compareTwoNumbers_tolerance(tempOriginY1, tempOriginY2, tolerance);
+			checkOriginZ = Math::compareTwoNumbers_tolerance(tempOriginZ1, tempOriginZ2, tolerance);
+			checkDirectionX = Math::compareTwoNumbers_tolerance(tempDirectionX1, tempDirectionX2, tolerance);
+			checkDirectionY = Math::compareTwoNumbers_tolerance(tempDirectionY1, tempDirectionY2, tolerance);
+			checkDirectionZ = Math::compareTwoNumbers_tolerance(tempDirectionZ1, tempDirectionZ2, tolerance);
+			checkRefIndexA = Math::compareTwoNumbers_tolerance(tempRefIndexA1, tempRefIndexA2, tolerance);
+			checkRefIndexB = Math::compareTwoNumbers_tolerance(tempRefIndexB1, tempRefIndexB2, tolerance);
+
+			opticalSystemsSame_vec.push_back(checkRadius);
+			opticalSystemsSame_vec.push_back(checkOriginX);
+			opticalSystemsSame_vec.push_back(checkOriginY);
+			opticalSystemsSame_vec.push_back(checkOriginZ);
+			opticalSystemsSame_vec.push_back(checkDirectionX);
+			opticalSystemsSame_vec.push_back(checkDirectionY);
+			opticalSystemsSame_vec.push_back(checkDirectionZ);
+			opticalSystemsSame_vec.push_back(checkRefIndexA);
+			opticalSystemsSame_vec.push_back(checkRefIndexB);
+	
+		}
+
+	}
+
+	bool returnChecker = Math::checkTrueOfVectorElements(opticalSystemsSame_vec);
+	return returnChecker;
+}
+
+
+// get max start point 
+VectorStructR3 oftenUse::getMaxStartPoint(VectorStructR3 referencePoint, std::vector<VectorStructR3> startPointVec)
+{
+	real tempDistance{};
+	real maxDistance = -1.0 * getInfReal();
+	int posMax = 0;
+	unsigned int sizeVec = startPointVec.size();
+	for (unsigned int i = 0; i < sizeVec; i++)
+	{
+		tempDistance = Math::distanceTwoVectors(referencePoint, startPointVec[i]);
+		if (tempDistance > maxDistance)
+		{
+			maxDistance = tempDistance;
+			posMax = i;
+		}
+	}
+
+	return startPointVec[posMax];
+	
+}
+
+// calculate faculty
+int oftenUse::calcFacultyInt(int value)
+{
+	int factorial = 1.0;
+
+	if (value < 0)
+	{
+		std::cout << "Error! Factorial of a negative number doesn't exist.";
+	}
+	else
+	{
+		for (int i = 1; i <= value; ++i)
+		{
+			factorial *= i;
+		}
+	}
+
+	return factorial;
+}
+
+// calculate all possible sequences int
+std::vector<std::vector<int>> oftenUse::calcAllPossibleSequencesInt(std::vector<int> vec)
+{
+	std::sort(vec.begin(), vec.end());
+	std::vector<std::vector<int>> allPossibleSequencesInt;
+	int factorial = calcFacultyInt(vec.size());
+	allPossibleSequencesInt.resize(factorial);
+
+	for(unsigned int i = 0; i< allPossibleSequencesInt.size(); ++i)
+	{
+		allPossibleSequencesInt[i] = vec;
+		std::next_permutation(vec.begin(), vec.end());
+	}
+
+	return allPossibleSequencesInt;
+}
+
+// check refractiv index 
+bool oftenUse::checkRefractivIndex(OpticalSystem_LLT optSyeLLT)
+{
+	real tolerance = 0.01;
+	unsigned int sizeOptSysMinOne = optSyeLLT.getPosAndInteractingSurface().size() - 1;
+	std::shared_ptr<SurfaceIntersectionRay_LLT> tempSurface_ptr;
+	std::shared_ptr<SurfaceIntersectionRay_LLT> tempSurface_ptr_next;
+
+	real tempDirectionZ{};
+	real tempDirectionZ_Next{};
+	real tempRefIndex{};
+	real tempRefIndexNext{};
+	real tempRefIndex_A{};
+	real tempRefIndex_B{};
+	real tempRefIndexNext_A{};
+	real tempRefIndexNext_B{};
+
+	std::vector<bool> workTheSystem{};
+	workTheSystem.resize(sizeOptSysMinOne);
+	bool tempChecker{};
+	for (unsigned int i = 0; i < sizeOptSysMinOne; ++i)
+	{
+		tempSurface_ptr = optSyeLLT.getPosAndInteractingSurface()[i].getSurfaceInterRay_ptr();
+		tempSurface_ptr_next = optSyeLLT.getPosAndInteractingSurface()[i+1].getSurfaceInterRay_ptr();
+		
+		tempDirectionZ = tempSurface_ptr->getDirection().getZ();
+		tempDirectionZ_Next = tempSurface_ptr_next->getDirection().getZ();
+		
+		tempRefIndex_A = tempSurface_ptr->getRefractiveIndex_A();
+		tempRefIndex_B = tempSurface_ptr->getRefractiveIndex_B();
+		tempRefIndexNext_A = tempSurface_ptr_next->getRefractiveIndex_A();
+		tempRefIndexNext_B = tempSurface_ptr_next->getRefractiveIndex_B();
+
+		if (tempDirectionZ > 0.0 && tempDirectionZ_Next > 0.0)
+		{
+			tempChecker = std::abs(tempRefIndex_B - tempRefIndexNext_A) < tolerance;
+			workTheSystem[i] = tempChecker;
+		}
+
+		else if (tempDirectionZ < 0.0 && tempDirectionZ_Next < 0.0)
+		{
+			tempChecker = std::abs(tempRefIndex_A - tempRefIndexNext_B) < tolerance;
+			workTheSystem[i] = tempChecker;
+		}
+
+		else if (tempDirectionZ > 0.0 && tempDirectionZ_Next < 0.0)
+		{
+			tempChecker = std::abs(tempRefIndex_B - tempRefIndexNext_B) < tolerance;
+			workTheSystem[i] = tempChecker;
+		}
+
+		else if (tempDirectionZ < 0.0 && tempDirectionZ_Next > 0.0)
+		{
+			tempChecker = std::abs(tempRefIndex_A - tempRefIndexNext_A) < tolerance;
+			workTheSystem[i] = tempChecker;
+		}
+
+		else
+		{
+			errorProtocol_stopSystem("The optical system is not possible", "oftenUseNamespace.cpp", 0, true);
+		}
+	}
+
+	bool returnChecker = Math::checkTrueOfVectorElements(workTheSystem);
+	return returnChecker;
+}
+
+bool oftenUse::checkRefractivIndex(OpticalSystemElement optSyeEle)
+{
+	optSyeEle.setRefractiveIndexAccordingToWavelength(550.0);
+	OpticalSystem_LLT optSysLLT = optSyeEle.getLLTconversion_doConversion();
+
+	return checkRefractivIndex(optSysLLT);
 }

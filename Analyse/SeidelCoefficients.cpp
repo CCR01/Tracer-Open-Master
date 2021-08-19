@@ -3,12 +3,13 @@
 #include "..\SurfaceElements\ApertureStopElement.h"
 #include "..\LowLevelTracing\SurfaceIntersectionRay_LLT.h"
 #include "..\LowLevelTracing\Surfaces\ApertureStop_LLT.h"
+#include "..\oftenUseNamespace\oftenUseNamespace.h"
 
 SeidelCoefficients::SeidelCoefficients() {}
 
 SeidelCoefficients::~SeidelCoefficients() {}
 
-SeidelCoefficients::SeidelCoefficients(OpticalSystemElement opticalSys_Ele, LightRayStruct chefLightRay, LightRayStruct marginalLightRay, std::vector<real> wavelenght_vec, unsigned int posAperStop, real focalLength, real lagrangeInvariant, bool aperInlens) :
+SeidelCoefficients::SeidelCoefficients(OpticalSystemElement opticalSys_Ele, LightRayStruct chefLightRay, LightRayStruct marginalLightRay, std::vector<real> wavelenght_vec, unsigned int posAperStop, real focalLength, real lagrangeInvariant, bool aperInlens, objectPoint_inf_obj inf_obj) :
 	mOpticalSys_Ele(opticalSys_Ele),
 	mChiefLightRay(chefLightRay),
 	mMarginalLightRay(marginalLightRay),
@@ -16,7 +17,8 @@ SeidelCoefficients::SeidelCoefficients(OpticalSystemElement opticalSys_Ele, Ligh
 	mPosApertureStop(posAperStop),
 	mFocalLenght(focalLength),
 	mLagrangeInvariant(lagrangeInvariant),
-	mAperInLens(aperInlens)
+	mAperInLens(aperInlens),
+	mInf_obj(inf_obj)
 
 {
 	//calcCardinalPoints();
@@ -26,15 +28,19 @@ SeidelCoefficients::SeidelCoefficients(OpticalSystemElement opticalSys_Ele, Ligh
 	setOpticalSys_Ele();
 
 	setRefractiveIndexesAccordingToPrimWavelength();
+	mCardinalPoints.calcAllCardinalPointsSuperFct(mOpticalSys_Ele, wavelenght_vec[0], mInf_obj);
+	mFocalLenght = mCardinalPoints.getEFL();
 	calcOneByR();
 	calculateD();
+	calculateRefIndexAtSurface();
+
 	calculate_RelevantValuesForSeidel();
 	///calcLagrangeInvariant();
 	calculate_h_bar();
-
+	calculate_u_bar();
 	//calculate_A_bar();
-	calculateRefIndexAtSurface();
-	calcE();
+
+	//calcE();
 	calcA_bar();
 	calcMeanRefIndex();
 	findMinAndMaxRefIndex();
@@ -58,34 +64,40 @@ SeidelCoefficients::SeidelCoefficients(OpticalSystemElement opticalSys_Ele, Ligh
 	calcSumS7_C2();
 }
 
-void SeidelCoefficients::calcSeidelCoef_superFuction(OpticalSystemElement opticalSys_Ele, LightRayStruct chefLightRay, LightRayStruct marginalLightRay, std::vector<real> wavelenght_vec, unsigned int posAperStop, real focalLength, real lagrangeInvariant, bool aperInlens)
+
+
+
+void SeidelCoefficients::calcSeidelCoef_superFuction(OpticalSystemElement opticalSys_Ele, std::vector<real> wavelenght_vec, Light_LLT light, real maxIncidenceAngle)
 {
-
+	mSurroundingMaterial = oftenUse::getStartRefIndex(opticalSys_Ele.getOptSys_LLT_buildSystem());
 	mOpticalSys_Ele = opticalSys_Ele.getDeepCopyOptSysEle();
-	mChiefLightRay = chefLightRay;
-	mMarginalLightRay = marginalLightRay;
-	mWavelength_vec = wavelenght_vec;
-	mPosApertureStop = posAperStop;
-	mFocalLenght = focalLength;
-	mLagrangeInvariant = lagrangeInvariant;
-	mAperInLens = aperInlens;
-
-	//calcCardinalPoints();
-
+	checkApertureInLens();
 	buildOptSysWithoutApertureStop();
-
 	setOpticalSys_Ele();
+
+	mWavelength_vec = wavelenght_vec;
+	mInf_obj = objectPoint_inf_obj::inf;
+
+	mMarginalLightRay = oftenUse::findMarginalRay_inf(mOpticalSys_Ele_USE, mWavelength_vec[0], light);
+	mChiefLightRay = oftenUse::findChiefRay_inf(mOpticalSys_Ele, mWavelength_vec[0], maxIncidenceAngle, light);
+
+
+
+	mCardinalPoints.calcAllCardinalPointsSuperFct(mOpticalSys_Ele, wavelenght_vec[0], mInf_obj);
+	mFocalLenght = mCardinalPoints.getEFL();
 
 	setRefractiveIndexesAccordingToPrimWavelength();
 	calcOneByR();
 	calculateD();
+	calculateRefIndexAtSurface();
 	calculate_RelevantValuesForSeidel();
+	calcLagrangeInvariant(maxIncidenceAngle);
 	///calcLagrangeInvariant();
 	calculate_h_bar();
-
+	calculate_u_bar();
 	//calculate_A_bar();
-	calculateRefIndexAtSurface();
-	calcE();
+
+	//calcE();
 	calcA_bar();
 	calcMeanRefIndex();
 	findMinAndMaxRefIndex();
@@ -108,6 +120,75 @@ void SeidelCoefficients::calcSeidelCoef_superFuction(OpticalSystemElement optica
 	calcSumS6_C1();
 	calcSumS7_C2();
 
+}
+
+void SeidelCoefficients::calcLagrangeInvariant(real maxIncidenceAngle)
+{
+	real u_ = mU_dash_vec.back();
+	real h_ = mFocalLenght * std::tan(maxIncidenceAngle * PI / 180.0);
+	mLagrangeInvariant = -1.0 * mSurroundingMaterial * u_ * h_;
+}
+
+void SeidelCoefficients::calcLagrangeInvariant(VectorStructR3 maxStartPointRay)
+{
+	real u = mU_vec[0];
+	real h = maxStartPointRay.getY();
+	mLagrangeInvariant = -1.0 * mSurroundingMaterial * u * h;
+}
+
+
+void SeidelCoefficients::calcSeidelCoef_superFuction(OpticalSystemElement opticalSys_Ele, std::vector<real> wavelenght_vec, Light_LLT light, VectorStructR3 maxStartPointRay)
+{
+	opticalSys_Ele.setRefractiveIndexAccordingToWavelength(wavelenght_vec[0]);
+	mSurroundingMaterial = oftenUse::getStartRefIndex(opticalSys_Ele.getLLTconversion_doConversion());
+	mOpticalSys_Ele = opticalSys_Ele.getDeepCopyOptSysEle();
+	checkApertureInLens();
+	buildOptSysWithoutApertureStop();
+	setOpticalSys_Ele();
+
+	mWavelength_vec = wavelenght_vec;
+	mInf_obj = objectPoint_inf_obj::obj;
+
+	mMarginalLightRay = oftenUse::findMarginalRay_obj(mOpticalSys_Ele_USE, mWavelength_vec[0], light);
+	mChiefLightRay = oftenUse::findChiefRay_obj(mOpticalSys_Ele, mWavelength_vec[0], maxStartPointRay, light);
+
+
+	mCardinalPoints.calcAllCardinalPointsSuperFct(mOpticalSys_Ele, wavelenght_vec[0], mInf_obj);
+	mFocalLenght = mCardinalPoints.getEFL();
+
+	setRefractiveIndexesAccordingToPrimWavelength();
+	calcOneByR();
+	calculateD();
+	calculateRefIndexAtSurface();
+	calculate_RelevantValuesForSeidel();
+	calcLagrangeInvariant(maxStartPointRay);
+	///calcLagrangeInvariant();
+	calculate_h_bar();
+	calculate_u_bar();
+	//calculate_A_bar();
+
+	//calcE();
+	calcA_bar();
+	calcMeanRefIndex();
+	findMinAndMaxRefIndex();
+	calcDeltaNandU_wavelength();
+	calculateOnebyN();
+	calculateDeltaUandN();
+	calculateS1();
+	calculateS2();
+	calculateS3();
+	calculateS4();
+	calculateS5();
+	calculateS6_C1();
+	calculateS7_C2();
+
+	calcSumS1();
+	calcSumS2();
+	calcSumS3();
+	calcSumS4();
+	calcSumS5();
+	calcSumS6_C1();
+	calcSumS7_C2();
 }
 
 void SeidelCoefficients::setOpticalSys_Ele()
@@ -183,13 +264,16 @@ void SeidelCoefficients::calcE()
 
 void SeidelCoefficients::calcA_bar()
 {
-	unsigned int size = mE.size();
+	unsigned int size = mU_bar_vec.size();
 	real tempA_bar;
 
 	for (unsigned int i = 0; i < size; i++)
 	{
-		tempA_bar = mLagrangeInvariant / mh_vec.at(i) * (mA_vec.at(i) * mh_vec.at(i)*mE.at(i) - 1);
+		tempA_bar = mRefIndex_vec[i][0] * (mh_bar_vec.at(i) * mOneByRadius_C_vec[i] + mU_bar_vec[i]);
 		mA_bar_vec.push_back(tempA_bar);
+
+		// debug
+		std::cout << "A_BAR: " << tempA_bar << std::endl;
 	}
 
 }
@@ -239,7 +323,7 @@ void SeidelCoefficients::buildOptSysWithoutApertureStop()
 
 	}
 
-	mOpticalSys_Ele_WithoutApertureStop.convertHLTtoLLT();
+	mOpticalSys_Ele_WithoutApertureStop.convertHLTSurfacesToLLTSurfaces();
 }
 
 ///void SeidelCoefficients::calcLagrangeInvariant()
@@ -262,11 +346,27 @@ void SeidelCoefficients::calcOneByR()
 {
 	unsigned int lengthOptSys = mOpticalSys_Ele_USE.getPosAndElement().size();
 	real tempOneByR;
+	real tempDirectionSurface;
 
 	for (unsigned int i = 0; i < lengthOptSys; i++)
 	{
 		tempOneByR = 1 / mOpticalSys_Ele_USE.getPosAndIntersection_LLT()[i].getSurfaceInterRay_ptr()->getRadius();
-		mOneByRadius_C_vec.push_back(tempOneByR);
+
+		tempDirectionSurface = mOpticalSys_Ele_USE.getPosAndIntersection_LLT()[i].getSurfaceInterRay_ptr()->getDirection().getZ();
+
+
+		if (0 < tempDirectionSurface)
+		{
+			mOneByRadius_C_vec.push_back(tempOneByR);
+		}
+		else if (0 > tempDirectionSurface)
+		{
+			mOneByRadius_C_vec.push_back(-1.0 * tempOneByR);
+		}
+		else if (0 == tempDirectionSurface)
+		{
+			std::cout << "there is a mistake by the calculation of the seidel coeffizients" << std::endl;
+		}
 	}
 }
 
@@ -286,8 +386,75 @@ void SeidelCoefficients::calculateD()
 		mD.push_back(positionDistance);
 	}
 
+	mD.push_back(oftenUse::getInfReal());
+}
 
+void SeidelCoefficients::checkApertureInLens()
+{
+	int posAperStop = mOpticalSys_Ele.getInfoAS().getPosAS();
+	real tolerance = 0.0001;
+	real directionBeforeZ;
+	real directionAfterZ;
+	mAperInLens = false;
 
+	if (posAperStop == 0)
+	{
+		mAperInLens = false;
+	}
+	else
+	{
+		real refIndexAperStop = mOpticalSys_Ele.getPosAndElement()[posAperStop].getElementInOptSys_ptr()->getRefIndexValue_A();
+		if (std::abs(refIndexAperStop - mSurroundingMaterial) > tolerance)
+		{
+			mAperInLens = true;
+		}
+	}
+	//{
+	//	real pointZ_SurfaceBeforAperStop = mOpticalSys_Ele.getPosAndElement()[posAperStop - 1].getElementInOptSys_ptr()->getPointElementValue_Z();
+	//	real pointZ_AperStop = mOpticalSys_Ele.getPosAndElement()[posAperStop].getElementInOptSys_ptr()->getPointElementValue_Z();
+	//	real pointZ_SurfaceAfterAperStop = mOpticalSys_Ele.getPosAndElement()[posAperStop + 1].getElementInOptSys_ptr()->getPointElementValue_Z();
+	//
+	//	directionBeforeZ = mOpticalSys_Ele.getPosAndElement()[posAperStop - 1].getElementInOptSys_ptr()->getDirectionElementValue_Z();
+	//	directionAfterZ = mOpticalSys_Ele.getPosAndElement()[posAperStop +1 ].getElementInOptSys_ptr()->getDirectionElementValue_Z();
+	//
+	//	real refIndexBeforeA = mOpticalSys_Ele.getPosAndElement()[posAperStop - 1].getElementInOptSys_ptr()->getRefIndexValue_A();
+	//	real refIndexBeforeB = mOpticalSys_Ele.getPosAndElement()[posAperStop - 1].getElementInOptSys_ptr()->getRefIndexValue_B();
+	//
+	//	real refIndexAfterA = mOpticalSys_Ele.getPosAndElement()[posAperStop + 1].getElementInOptSys_ptr()->getRefIndexValue_A();
+	//	real refIndexAfterB = mOpticalSys_Ele.getPosAndElement()[posAperStop + 1].getElementInOptSys_ptr()->getRefIndexValue_B();
+	//
+	//	if (directionBeforeZ > 0 && directionAfterZ < 0)
+	//	{
+	//		if (std::abs(refIndexBeforeB - refIndexAfterB) < tolerance && std::abs(refIndexBeforeB - mSurroundingMaterial) < tolerance)
+	//		{
+	//			mAperInLens = true;
+	//		}
+	//	}
+	//
+	//	if (directionBeforeZ < 0 && directionAfterZ > 0)
+	//	{
+	//		if (std::abs(refIndexBeforeA - refIndexAfterA) < tolerance && std::abs(refIndexBeforeA - mSurroundingMaterial) < tolerance)
+	//		{
+	//			mAperInLens = true;
+	//		}
+	//	}
+	//
+	//	if (directionBeforeZ > 0 && directionAfterZ > 0)
+	//	{
+	//		if (std::abs(refIndexBeforeB - refIndexAfterA) < tolerance && std::abs(refIndexBeforeB - mSurroundingMaterial) < tolerance)
+	//		{
+	//			mAperInLens = true;
+	//		}
+	//	}
+	//
+	//	if (directionBeforeZ < 0 && directionAfterZ < 0)
+	//	{
+	//		if (std::abs(refIndexBeforeA - refIndexAfterB) < tolerance && std::abs(refIndexBeforeA - mSurroundingMaterial) < tolerance)
+	//		{
+	//			mAperInLens = true;
+	//		}
+	//	}
+	//}
 
 }
 
@@ -299,19 +466,18 @@ std::vector<real> SeidelCoefficients::getall_S1()
 // calculate the spherical seidel coefficients
 void SeidelCoefficients::calculate_RelevantValuesForSeidel()
 {
-	SequentialRayTracing seqTracMarginalRay(/*optical system element*/ mOpticalSys_Ele_USE, mMarginalLightRay);
+	SequentialRayTracing seqTracMarginalRay(/*optical system element*/ mOpticalSys_Ele, mMarginalLightRay);
 	unsigned int lengthOptSys = mOpticalSys_Ele_USE.getPosAndElement().size();
 	real tempHeight;
 	real tempRefractiveIndex_N;
 	real tempRefractiveIndex_N_dash;
 	real tempIncidenceAngle;
 	real tempOutAngle_dash;
-	real tempDeltaAngleRefraction;
-	real SeidelCoef1;
+
 	real tempOneByRadius_C;
 
 	IntersectInformationStruct interInfosFirstSurface;
-	real tempDirectionSurface;
+
 	VectorStructR3 tempIncidenceVecFirstSurface;
 	VectorStructR3 tempOutVec_dash;
 
@@ -323,26 +489,21 @@ void SeidelCoefficients::calculate_RelevantValuesForSeidel()
 	tempIncidenceVecFirstSurface = interInfosFirstSurface.getDirectionRayUnit();
 	tempIncidenceAngle = tempIncidenceVecFirstSurface.getY() / tempIncidenceVecFirstSurface.getZ();
 	//tempIncidenceAngle = 0.82;
-	tempHeight = interInfosFirstSurface.getIntersectionPoint().getY();
-	for (unsigned int i = 0; i < lengthOptSys - 1; i++)
+
+	SequentialRayTracing seqTraceFindFirstHeight(mOpticalSys_Ele_USE);
+	seqTraceFindFirstHeight.setTraceToSurface(0);
+	seqTraceFindFirstHeight.sequentialRayTracing(mMarginalLightRay);
+	tempHeight = seqTraceFindFirstHeight.getAllInterPointsAndIntensityAtSurface_i(0)[0].getPoint().getY();
+
+	//tempHeight = mCardinalPoints.getENPD() / 2.0;
+	for (unsigned int i = 0; i < lengthOptSys; i++)
 	{
-		tempDirectionSurface = mOpticalSys_Ele_USE.getPosAndIntersection_LLT()[i].getSurfaceInterRay_ptr()->getDirection().getZ();
 
-		tempRefractiveIndex_N = mOpticalSys_Ele_USE.getPosAndIntersection_LLT()[i].getSurfaceInterRay_ptr()->getRefractiveIndex_A();
-		tempRefractiveIndex_N_dash = mOpticalSys_Ele_USE.getPosAndIntersection_LLT()[i].getSurfaceInterRay_ptr()->getRefractiveIndex_B();
+		tempRefractiveIndex_N = mRefIndex_vec[i][0];
+		tempRefractiveIndex_N_dash = mRefIndex_dash_vec[i][0];
 
-		if (0 < tempDirectionSurface)
-		{
-			tempOneByRadius_C = mOneByRadius_C_vec.at(i);
-		}
-		else if (0 > tempDirectionSurface)
-		{
-			tempOneByRadius_C = -mOneByRadius_C_vec.at(i);
-		}
-		else if (0 == tempDirectionSurface)
-		{
-			std::cout << "there is a mistake by the calculation of the seidel coeffizients" << std::endl;
-		}
+		tempOneByRadius_C = mOneByRadius_C_vec.at(i);
+
 		tempOutAngle_dash = (tempRefractiveIndex_N * tempIncidenceAngle - tempHeight * tempOneByRadius_C * (tempRefractiveIndex_N_dash - tempRefractiveIndex_N)) / tempRefractiveIndex_N_dash;
 
 		tempA = tempRefractiveIndex_N * (tempHeight * tempOneByRadius_C + tempIncidenceAngle);
@@ -353,8 +514,14 @@ void SeidelCoefficients::calculate_RelevantValuesForSeidel()
 		mU_dash_vec.push_back(tempOutAngle_dash);
 		mN_dash_vec.push_back(tempRefractiveIndex_N_dash);
 
+		// debug
+		std::cout << "________: " << std::endl;
+		std::cout << "H: " << tempHeight << std::endl;
+		std::cout << "U: " << tempIncidenceAngle << std::endl;
+		std::cout << "U_: " << tempOutAngle_dash << std::endl;
+		std::cout << "A: " << tempA << std::endl;
+		std::cout << "________: " << std::endl;
 
-		tempDeltaAngleRefraction = ((tempIncidenceAngle / tempRefractiveIndex_N) - (tempOutAngle_dash / tempRefractiveIndex_N_dash));
 		tempIncidenceAngle = tempOutAngle_dash;
 		tempHeight = tempHeight + tempOutAngle_dash * mD.at(i + 1);
 		mOneByRadius_C_direction_vec.push_back(tempOneByRadius_C);
@@ -433,11 +600,68 @@ void  SeidelCoefficients::calculate_h_bar()
 		{
 			temp_h_bar = seqTracChiefRay.getAllInterPointsAtSurf_i_notFiltered(i).at(0).getY();
 			mh_bar_vec.push_back(temp_h_bar);
+
+			// debug
+			std::cout << "______" << std::endl;
+			std::cout << "HBAR: " << temp_h_bar << std::endl;
+			std::cout << "______" << std::endl;
 		}
 	}
 
 }
 
+void SeidelCoefficients::calculate_u_bar()
+{
+	SequentialRayTracing seqTracChiefRay(/*optical system element*/ mOpticalSys_Ele_USE, mChiefLightRay);
+	unsigned int lengthOptSys = mOpticalSys_Ele_USE.getPosAndElement().size();
+	real tempHeight;
+	real tempRefractiveIndex_N;
+	real tempRefractiveIndex_N_dash;
+	real tempIncidenceAngle;
+	real tempOutAngle_dash;
+	real tempOneByRadius_C;
+
+	IntersectInformationStruct interInfosFirstSurface;
+
+	VectorStructR3 tempIncidenceVecFirstSurface;
+	VectorStructR3 tempOutVec_dash;
+
+	real tempA;
+
+
+
+	interInfosFirstSurface = seqTracChiefRay.getAllInterInfosOfSurf_i(0).at(0);
+	tempIncidenceVecFirstSurface = interInfosFirstSurface.getDirectionRayUnit();
+	//tempIncidenceAngle = std::atan(tempIncidenceVecFirstSurface.getY() / tempIncidenceVecFirstSurface.getZ());
+	tempIncidenceAngle = tempIncidenceVecFirstSurface.getY() / tempIncidenceVecFirstSurface.getZ();
+	//tempIncidenceAngle = 0.82;
+	tempHeight = mh_bar_vec[0];
+	for (unsigned int i = 0; i < lengthOptSys - 1; i++)
+	{
+
+		tempHeight = mh_bar_vec[i];
+		tempRefractiveIndex_N = mRefIndex_vec[i][0];
+		tempRefractiveIndex_N_dash = mRefIndex_dash_vec[i][0];
+
+
+		tempOneByRadius_C = mOneByRadius_C_vec.at(i);
+		tempOutAngle_dash = (tempRefractiveIndex_N * tempIncidenceAngle - tempHeight * tempOneByRadius_C * (tempRefractiveIndex_N_dash - tempRefractiveIndex_N)) / tempRefractiveIndex_N_dash;
+
+
+
+		// debug
+		std::cout << "________: " << std::endl;
+		std::cout << "U_BAR: " << tempIncidenceAngle << std::endl;
+		std::cout << "________: " << std::endl;
+		mU_bar_vec.push_back(tempIncidenceAngle);
+
+		tempIncidenceAngle = tempOutAngle_dash;
+
+
+
+	}
+
+}
 
 
 //void SeidelCoefficients::calculate_A_bar()
@@ -559,7 +783,7 @@ void SeidelCoefficients::calcDeltaNandU_wavelength()
 {
 	real tempDeltaNandU_wavelength;
 
-	for (unsigned int i = 0; i < mN_vec.size(); i++)
+	for (unsigned int i = 0; i < mN_vec.size() - 1; i++)
 	{
 		tempDeltaNandU_wavelength = ((mMaxRefIndex_vec.at(i + 1) - mMinRefIndex_vec.at(i + 1)) / mRefIndexMean_vec.at(i + 1)) - ((mMaxRefIndex_vec.at(i) - mMinRefIndex_vec.at(i)) / mRefIndexMean_vec.at(i));
 		mDeltaNandU_wavelength_vec.push_back(tempDeltaNandU_wavelength);
@@ -585,7 +809,7 @@ void SeidelCoefficients::calculateDeltaUandN()
 
 	for (unsigned int i = 0; i < mN_vec.size(); i++)
 	{
-		tempDeltaUandN = (mU_vec.at(i) / mN_vec.at(i)) - (mU_dash_vec.at(i) / mN_dash_vec.at(i));
+		tempDeltaUandN = (mU_dash_vec.at(i) / mN_dash_vec.at(i)) - (mU_vec.at(i) / mN_vec.at(i));
 		mDeltaUandN_vec.push_back(tempDeltaUandN);
 	}
 }
@@ -598,22 +822,21 @@ void SeidelCoefficients::calculateS1()
 
 	for (unsigned int i = 0; i < lengthOptSys - 1; i++)
 	{
-		tempCoef_S1 = pow(mA_vec.at(i), 2)*mh_vec.at(i)*mDeltaUandN_vec.at(i);
+		tempCoef_S1 = -1.0 * pow(mA_vec.at(i), 2) * mh_vec.at(i) * mDeltaUandN_vec.at(i);
 		mS1_vec.push_back(tempCoef_S1);
 	}
 
 
 }
 
-void SeidelCoefficients::calculateS2()
-{
+void SeidelCoefficients::calculateS2() {
 	unsigned int lengthOptSys = mOpticalSys_Ele_USE.getPosAndElement().size();
 	real tempCoef_S2;
 
 
 	for (unsigned int i = 0; i < lengthOptSys - 1; i++)
 	{
-		tempCoef_S2 = mA_vec.at(i)*mA_bar_vec.at(i)*mh_vec.at(i) *mDeltaUandN_vec.at(i);
+		tempCoef_S2 = -1.0 * mA_vec.at(i) * mA_bar_vec.at(i) * mh_vec.at(i) * mDeltaUandN_vec.at(i);
 		mS2_vec.push_back(tempCoef_S2);
 	}
 
@@ -627,7 +850,7 @@ void SeidelCoefficients::calculateS3()
 
 	for (unsigned int i = 0; i < lengthOptSys - 1; i++)
 	{
-		tempCoef_S3 = pow(mA_bar_vec.at(i), 2)*mh_vec.at(i) *mDeltaUandN_vec.at(i);
+		tempCoef_S3 = -1.0 * pow(mA_bar_vec.at(i), 2) * mh_vec.at(i) * mDeltaUandN_vec.at(i);
 		mS3_vec.push_back(tempCoef_S3);
 	}
 }
@@ -640,7 +863,7 @@ void SeidelCoefficients::calculateS4()
 
 	for (unsigned int i = 0; i < lengthOptSys - 1; i++)
 	{
-		tempCoef_S4 = -pow(mLagrangeInvariant, 2)*mOneByRadius_C_direction_vec.at(i)*(mOnebyN_vec.at(i));
+		tempCoef_S4 = -1.0 * pow(mLagrangeInvariant, 2) * mOneByRadius_C_direction_vec.at(i) * (mOnebyN_vec.at(i));
 		mS4_vec.push_back(tempCoef_S4);
 	}
 
@@ -654,7 +877,7 @@ void SeidelCoefficients::calculateS5()
 
 	for (unsigned int i = 0; i < lengthOptSys - 1; i++)
 	{
-		tempCoef_S5 = (mA_bar_vec.at(i) / mA_vec.at(i))*(mS3_vec.at(i) + mS4_vec.at(i));
+		tempCoef_S5 = (mA_bar_vec.at(i) / mA_vec.at(i)) * (mS3_vec.at(i) + mS4_vec.at(i));
 		mS5_vec.push_back(tempCoef_S5);
 	}
 }
@@ -667,7 +890,7 @@ void SeidelCoefficients::calculateS6_C1()
 
 	for (unsigned int i = 0; i < lengthOptSys - 1; i++)
 	{
-		tempCoef_S6_C1 = mA_vec.at(i)*mh_vec.at(i)*mDeltaNandU_wavelength_vec.at(i);
+		tempCoef_S6_C1 = -1.0 * mA_vec.at(i) * mh_vec.at(i) * mDeltaNandU_wavelength_vec.at(i);
 		mS6_C1_vec.push_back(tempCoef_S6_C1);
 	}
 }
@@ -680,7 +903,7 @@ void SeidelCoefficients::calculateS7_C2()
 
 	for (unsigned int i = 0; i < lengthOptSys - 1; i++)
 	{
-		tempCoef_S7_C2 = mA_bar_vec.at(i)*mh_vec.at(i)*mDeltaNandU_wavelength_vec.at(i);
+		tempCoef_S7_C2 = -1.0 * mA_bar_vec.at(i) * mh_vec.at(i) * mDeltaNandU_wavelength_vec.at(i);
 		mS7_C2_vec.push_back(tempCoef_S7_C2);
 	}
 }
@@ -777,9 +1000,113 @@ real SeidelCoefficients::getS7C2sum()
 	return mSum_S7_C2;
 }
 
+real SeidelCoefficients::calcSeidelSumSurface_i(unsigned int surfaceNum)
+{
+	// check
+	unsigned int sizeSeidelAberVec = mS1_vec.size();
+	if (surfaceNum >= sizeSeidelAberVec)
+	{
+		std::cout << "_________________" << std::endl;
+		std::cout << "surface number is to heigh for calculating the seidel sum." << std::endl;
+		std::cout << "_________________" << std::endl;
+		return oftenUse::getInfReal();
+	}
+
+	real S1_i = mS1_vec[surfaceNum];
+	real S2_i = mS2_vec[surfaceNum];
+	real S3_i = mS3_vec[surfaceNum];
+	real S4_i = mS4_vec[surfaceNum];
+	real S5_i = mS5_vec[surfaceNum];
+	real S6_C1_i = mS6_C1_vec[surfaceNum];
+	real S7_C2_i = mS7_C2_vec[surfaceNum];
+
+	real seidelSumSurface_i = std::abs(S1_i) + std::abs(S2_i) + std::abs(S3_i) + std::abs(S4_i) + std::abs(S5_i) + std::abs(S6_C1_i) + std::abs(S7_C2_i);
+
+	return seidelSumSurface_i;
+}
+
+std::vector<real> SeidelCoefficients::calcSeidelSum_allLenses()
+{
+	std::vector<OpticalSystem_LLT> optSys_LLT_lensVec = oftenUse::findLensesInOptSys_LLT(mOpticalSys_Ele.getLLTconversion_doConversion());
 
 
+	int tempLensNumber;
+	int tempSurfaceNum;
+	int numberLenses = optSys_LLT_lensVec.size();
+	std::vector<real> seidelSumAllLenses_vec;
+	seidelSumAllLenses_vec.resize(numberLenses);
+	real tempSeidelSumSurface = 0.0;
+	real tempSeidelSumLens = 0.0;
 
+	for (unsigned int i = 0; i < numberLenses; ++i)
+	{
+		for (unsigned int j = 0; j < optSys_LLT_lensVec[i].getPosAndInteractingSurface().size(); ++j)
+		{
+			tempSurfaceNum = optSys_LLT_lensVec[i].getPosAndInteractingSurface()[j].getPosition();
+			tempSeidelSumSurface = calcSeidelSumSurface_i(tempSurfaceNum);
+			tempSeidelSumLens = tempSeidelSumLens + tempSeidelSumSurface;
+		}
 
+		seidelSumAllLenses_vec[i] = tempSeidelSumLens;
+		tempSeidelSumLens = 0.0;
+	}
 
+	return seidelSumAllLenses_vec;
 
+}
+
+unsigned int SeidelCoefficients::getLensNumber_Max_SeidelAber(std::vector<real> seidelSumAllLenes)
+{
+	real tempSeidelSumLens{};
+	real maxSeidelSum = -1.0 * oftenUse::getInfReal();
+	unsigned int lensNumMaxSeidelSum = 0;
+
+	for (unsigned int i = 0; i < seidelSumAllLenes.size(); ++i)
+	{
+		tempSeidelSumLens = seidelSumAllLenes[i];
+		if (tempSeidelSumLens > maxSeidelSum)
+		{
+			maxSeidelSum = tempSeidelSumLens;
+			lensNumMaxSeidelSum = i;
+		}
+	}
+
+	return lensNumMaxSeidelSum;
+}
+
+unsigned int SeidelCoefficients::getLensNumber_Min_SeidelAber(std::vector<real> seidelSumAllLenes)
+{
+	real tempSeidelSumLens{};
+	real minSeidelSum = oftenUse::getInfReal();
+	unsigned int lensNumMinSeidelSum = 0;
+
+	for (unsigned int i = 0; i < seidelSumAllLenes.size(); ++i)
+	{
+		tempSeidelSumLens = seidelSumAllLenes[i];
+		if (minSeidelSum > tempSeidelSumLens)
+		{
+			minSeidelSum = tempSeidelSumLens;
+			lensNumMinSeidelSum = i;
+		}
+	}
+
+	return lensNumMinSeidelSum;
+}
+
+unsigned int SeidelCoefficients::getLensNumber_Max_SeidelAber_superFct()
+{
+	std::vector<real> seidelSumAllLenses = calcSeidelSum_allLenses();
+	unsigned int lensNumberMax = getLensNumber_Max_SeidelAber(seidelSumAllLenses);
+
+	return lensNumberMax;
+
+}
+
+unsigned int SeidelCoefficients::getLensNumber_Min_SeidelAber_superFct()
+{
+	std::vector<real> seidelSumAllLenses = calcSeidelSum_allLenses();
+	unsigned int lensNumberMin = getLensNumber_Min_SeidelAber(seidelSumAllLenses);
+
+	return lensNumberMin;
+
+}

@@ -1,6 +1,8 @@
 #pragma once
 
-#include "..\LowLevelTracing\OpticalSystem_LLT.h"
+//#include "..\LowLevelTracing\OpticalSystem_LLT.h"
+
+#include "..\OpticalSystemElement\OpticalSystemElement.h"
 
 struct defaultRayAimingStruct
 {
@@ -75,6 +77,14 @@ public:
 	void setMaxRaysThatNotBeAimable(unsigned maxRayNotAimeable);
 	unsigned int getMaxRayThatNotBeAimable();
 
+	// infinity
+	void setInfinity_neg(real inf);
+	real getInfinity_neg();
+
+	// record time inital rays
+	void setRecodTimeInitalRay(bool recordTime);
+	bool getRecodTimeInitalRay();
+
 private:
 	real mTolerance_XandY{};
 	real mStartPointFactor{};
@@ -92,6 +102,9 @@ private:
 	bool mGlobalStopIfOneRayIsNotAimed{};
 	unsigned int mMaxRayThatNotBeAimable{};
 	real mTolerance_XandYforARealLightRay{};
+	real mInfinity_neg{};
+	bool mRecordTimeInitalRays;
+
 };
 
 struct  lightRayAndInterPointAperStop
@@ -165,6 +178,9 @@ struct lightRay_intP_dis_negPos_factor
 	real getVariangeInPercent();
 	void setVariangeInPercent(real varianceInPercent);
 
+	// print
+	void print();
+
 private:
 	LightRayStruct mLightRay{};
 	VectorStructR3 mInterPointAS{};
@@ -191,6 +207,8 @@ public: RayAiming();
 		void setOpticalSystem_LLT(const OpticalSystem_LLT& optSys_LLT);
 		// load important infomation for ray aiming
 		void loadImportantInfosForRayAiming();
+		// load basic stuff
+		void loadBasicStuff();
 		// find aperture stop
 		unsigned int getPositionApertureStop(OpticalSystem_LLT optSys);
 		// calc all distances
@@ -206,21 +224,24 @@ public: RayAiming();
 		// shift start point ray from infinity
 		VectorStructR3 RayAiming::shiftFirstSurface(real radius, real semiHeight, VectorStructR3 apexOfSphere);
 		// check the light ray
-		LightRayStruct checkLightRay(const LightRayStruct& lightRayToCheck, const VectorStructR3& intersecPoint, const VectorStructR3& targetPoint);
+		LightRayStruct checkLightRay(LightRayStruct lightRayToCheck, VectorStructR3 intersecPoint, VectorStructR3 targetPoint);
 		// global stop
 		bool getGlobalStop();
 		void setGlobalStop(bool globalStop);
 		bool checkIfThereIsAtLeastOneValidInterPoint(const std::vector<lightRayAndInterPointAperStop> vecLightRaysAndInterPoints);
+		// get time
+		std::vector<real> getTime_sec();
 		// *** *** //
+
 
 
 		// *** ray aiming from OBJ *** //
 		// Ray Aiming for a ray starting at an object point
-		LightRayStruct rayAiming_obj(VectorStructR3 rayOrigin, VectorStructR3 targetPoint, Light_LLT mLight, real curRefracIndex);
+		LightRayStruct rayAiming_obj(VectorStructR3 rayOrigin, VectorStructR3 targetPoint, Light_LLT light, real curRefracIndex);
 		// trace all rays until all of them comes to the last surface
 		lightRayAndInterPointAperStop getBestLightRayAndInterPoint_obj(LightRayStruct lightRay0, LightRayStruct lightRay1, LightRayStruct lightRay2, LightRayStruct lightRay3, LightRayStruct lightRay4, LightRayStruct lightRay5, LightRayStruct lightRay6, LightRayStruct lightRay7, LightRayStruct lightRay8, VectorStructR3 targetPoint, VectorStructR3 vectorToCalc1, VectorStructR3 vectorRoCalc2, VectorStructR3 vectorRoCalc3, VectorStructR3 vectorRoCalc4);
 		// trace one ray until it comes to the last surface;
-		lightRayAndInterPointAperStop traceOneRayUntilInApertureStop_obj(LightRayStruct lightRay, const VectorStructR3& vectorToCalcDir, unsigned int maxLoop);
+		lightRayAndInterPointAperStop traceOneRayUntilInApertureStop_obj(LightRayStruct lightRay, const VectorStructR3 vectorToCalcDir, unsigned int maxLoop);
 		// check if we have to trace to neg of pos side
 		lightRay_intP_dis_negPos_factor traceNegOrPosSide_andReduce_X_obj(lightRay_intP_dis_negPos_factor& initialInfos);
 		lightRay_intP_dis_negPos_factor traceNegOrPosSide_andReduce_Y_obj(lightRay_intP_dis_negPos_factor& initialInfos);
@@ -231,17 +252,24 @@ public: RayAiming();
 		// calculate new origin variance in percent
 		lightRay_intP_dis_negPos_factor calcNewBestInfos_obj(lightRay_intP_dis_negPos_factor& initialInfos);
 		// ray aiming many obj many
-		std::vector<LightRayStruct> rayAimingMany_obj(const std::vector<VectorStructR3>& pointsInAS,const VectorStructR3& startPointRay, const Light_LLT& mLight, real curRefracIndex);
-		std::vector<LightRayStruct> rayAimingMany_obj_complete(const OpticalSystem_LLT& optSys_LLT, const std::vector<VectorStructR3>& pointsInAS, const VectorStructR3 startPointRay, Light_LLT mLight, real curRefracIndex);
+		std::vector<LightRayStruct> rayAimingMany_obj(const std::vector<VectorStructR3>& pointsInAS,const VectorStructR3& startPointRay, const Light_LLT& light, real curRefracIndex);
+		std::vector<LightRayStruct> rayAimingMany_obj_complete(const OpticalSystem_LLT& optSys_LLT, const std::vector<VectorStructR3>& pointsInAS, const VectorStructR3 startPointRay, Light_LLT light);
+		// set factor obj according to distance object point to first surface
+		void setFactorObj_distanceObjPointToFirstSurface(real startPointRayZ, real pointFirstSurfaceZ);
 		// *** *** //
 
+		// *** ray aiming from OBJ inital rays *** ///
+		std::vector<std::vector<LightRayStruct>> rayAiming_obj_initalRays_complete(const OpticalSystemElement optSysEle, const std::vector<VectorStructR3>& pointsInAS,const std::vector<real>& wavelength_vec,const VectorStructR3 startPointRay,  Light_LLT light);
+		std::vector<LightRayStruct> rayAiming_obj_initalRays(const OpticalSystem_LLT& optSys_LLT, const std::vector<VectorStructR3>& pointsInA, std::vector<LightRayStruct> aimedLightRays_vec, real curRefracIndex, real wavelength);
+		void setDefaultParametersInitalRays_obj_initalRays();
 
 
 		// *** ray aiming from INF *** //
 		// Ray Aiming for a ray starting at infinity
+		LightRayStruct rayAiming_inf(real fieldAngle_X, real fieldAngle_Y, VectorStructR3 targetPoint, Light_LLT mLight, real curRefracIndex);
 		LightRayStruct rayAiming_inf(VectorStructR3 rayDirection, VectorStructR3 targetPoint, Light_LLT mLight, real curRefracIndex);
 		// trace all rays until all of them comes to the last surface
-		lightRayAndInterPointAperStop getBestLightRayAndInterPoint_inf(LightRayStruct lightRay0, LightRayStruct lightRay1, LightRayStruct lightRay2, LightRayStruct lightRay3, LightRayStruct lightRay4, VectorStructR3 targetPoint);
+		lightRayAndInterPointAperStop getBestLightRayAndInterPoint_inf(LightRayStruct lightRay0, LightRayStruct lightRay1, LightRayStruct lightRay2, LightRayStruct lightRay3, LightRayStruct lightRay4, LightRayStruct lightRay5, LightRayStruct lightRay6, LightRayStruct lightRay7, LightRayStruct lightRay8, VectorStructR3 targetPoint);
 		// trace one ray until it comes to the last surface;
 		lightRayAndInterPointAperStop traceOneRayUntilInApertureStop_inf(LightRayStruct lightRay, unsigned int maxLoop);
 		// check if we have to trace to neg of pos side
@@ -254,10 +282,17 @@ public: RayAiming();
 		// calculate new origin variance in percent
 		lightRay_intP_dis_negPos_factor calcNewBestInfos_inf(lightRay_intP_dis_negPos_factor initialInfos);
 		// ray aiming many obj many
-		std::vector<LightRayStruct> rayAimingMany_inf(const std::vector<VectorStructR3>& pointsInAS, real angleX, real angleY, const Light_LLT& mLight, real curRefracIndex);
-		std::vector<LightRayStruct> rayAimingMany_inf_complete(const OpticalSystem_LLT& optSys_LLT, const std::vector<VectorStructR3>& pointsInAS, real angleX, real angleY,  const Light_LLT& mLight, real curRefracIndex);
+		std::vector<LightRayStruct> rayAimingMany_inf(const std::vector<VectorStructR3>& pointsInAS, real angleX, real angleY, const Light_LLT& light, real curRefracIndex);
+		std::vector<LightRayStruct> rayAimingMany_inf_complete(const OpticalSystem_LLT& optSys_LLT, const std::vector<VectorStructR3>& pointsInAS, real angleX, real angleY,  const Light_LLT& light);
+		LightRayStruct rayAimingMany_inf_complete(const OpticalSystem_LLT& optSys_LLT, const VectorStructR3 pointInAS, real angleX, real angleY,  const Light_LLT& light);
+		void setStartPointRayToInf(LightRayStruct& lightRay);
 		// *** *** //
 	
+		// *** ray aiming from OBJ inital rays *** ///
+		std::vector<std::vector<LightRayStruct>> rayAiming_inf_initalRays_complete(const OpticalSystemElement optSysEle, const std::vector<VectorStructR3>& pointsInAS, const std::vector<real>& wavelength_vec, real angleX, real angleY, Light_LLT light);
+		std::vector<LightRayStruct> rayAiming_inf_initalRays(const OpticalSystem_LLT& optSys_LLT, const std::vector<VectorStructR3>& pointsInA, std::vector<LightRayStruct> aimedLightRays_vec, real curRefracIndex, real wavelength);
+		void setDefaultParametersInitalRays_inf_initalRays();
+
 		// ** set and get defaul  parameter ** //
 		// get default parameters
 		defaultRayAimingStruct getDefaultParameters();
@@ -333,12 +368,16 @@ public: RayAiming();
 		unsigned int getMaxRayThatNotBeAimable();
 		// ** ** //
 
+		void setLoadImportantDefaulParameterRayAiming(bool loadPara);
+
 private:
 
 	OpticalSystem_LLT mOpticalSystem_LLT{};
+	OpticalSystemElement mOptSysEle{};
 	unsigned int mPosApertureStop{};
 
 	defaultRayAimingStruct mDefaultParaRayAiming{};
+	defaultRayAimingStruct mDefaultParaRayAiming_initalRays{};
 
 	real mSemiHeightFirstSurface{};
 	real mRadiusFirstSurface{};
@@ -350,5 +389,7 @@ private:
 	bool mGlobalSTOP{};
 	unsigned int mCounter_RaysThatNotBeAimed{};
 
+	bool mLoadImportantDefaulPara = true;
+	std::vector<real> mTime_sec;
 
 };

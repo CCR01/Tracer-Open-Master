@@ -757,3 +757,8 @@ std::shared_ptr<Element_CR> SphericalElement::buildElement(std::shared_ptr<Surfa
 
 	return returnSphereElement;
 }
+
+std::string SphericalElement::getSurfaceType()
+{
+	return "Spherical";
+}

@@ -17,7 +17,7 @@ public:
 	// get Ray_LLT
 	Ray_LLT getRay_LLT() const;
 	// set Ray_LLT
-	void setRay_LLT(Ray_LLT& const raySet);
+	void setRay_LLT(Ray_LLT const raySet);
 	// ray origin
 	void setRayOrigin(VectorStructR3 rayOrigin);
 	// ray direction unit
@@ -28,13 +28,13 @@ public:
 	//get Light_LLT
 	Light_LLT getLight_LLT() const;
 	//set Light_LLT
-	void setLight_LLT(Light_LLT& const lightSet);
+	void setLight_LLT(Light_LLT const lightSet);
 	// wavelength
 	void setLightWavelength(real wavelenght);
 	// get is LightRay alive
 	bool getIsAlive() const;
 	// set is LightRay alive
-	void setIsAlive(const bool& alive);
+	void setIsAlive(const bool alive);
 
 	// set light ray absorb
 	void setLightRayAbsorb();

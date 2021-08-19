@@ -50,6 +50,16 @@ public:
 	bool checkRayAimingE4_inf();
 	bool checkRayAimingE5_inf();
 
+	// check ray aiming --> obj --> initial rays
+	bool checkRayAimingSuperFct_obj_initlaRays();
+	bool checkRayAimingE0_obj_initalRays();
+	bool checkRayAimingE1_obj_initalRays();
+
+	// check ray aiming --> inf --> inital rays
+	bool checkRayAimingSuperFct_inf_initlaRays();
+	bool checkRayAimingE0_inf_initalRays();
+	bool checkRayAimingE1_inf_initalRays();
+
 	// ***obj*** //
 	lightRay_interPoint_onTarget checkRayAimingSingleRay_obj(/*opt sys LLT*/ OpticalSystem_LLT& const optSys_LLT, /*ray origin*/ VectorStructR3& const rayOrigin, /*target point*/ VectorStructR3& const  targetPoint, /*light*/ Light_LLT& const Light, /*accurency*/ real accurency);
 	bool checkRayAimingManyRay_obj(/*opt sys LLT*/ OpticalSystem_LLT& const optSys_LLT, /*ray direction*/ VectorStructR3& const rayOrigin, /*rings*/ unsigned int const ringsAB,/*arms*/ unsigned int const armsAB,/*light*/ Light_LLT& const Light, /*compare rms*/ real checkRMS, real tolerance, real accurancy);

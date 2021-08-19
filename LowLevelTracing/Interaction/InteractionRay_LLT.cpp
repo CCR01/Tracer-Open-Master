@@ -55,7 +55,7 @@ Ray_LLT LightRayStruct::getRay_LLT() const
 	return mRay;
 }
 // set Ray_LLT
-void LightRayStruct::setRay_LLT(Ray_LLT& const raySet)
+void LightRayStruct::setRay_LLT(Ray_LLT const raySet)
 {
 	mRay = raySet;
 }
@@ -80,7 +80,7 @@ Light_LLT LightRayStruct::getLight_LLT() const
 	return mLight;
 }
 //set Light_LLT
-void LightRayStruct::setLight_LLT(Light_LLT& const lightSet)
+void LightRayStruct::setLight_LLT(Light_LLT const lightSet)
 {
 	mLight = lightSet;
 }
@@ -96,7 +96,7 @@ bool LightRayStruct::getIsAlive() const
 }
 
 // set is LightRay alive
-void LightRayStruct::setIsAlive(const bool& alive)
+void LightRayStruct::setIsAlive(const bool alive)
 {
 	mIsAlive = alive;
 }
@@ -106,7 +106,7 @@ void LightRayStruct::setLightRayAbsorb()
 {
 	mRay.setRayAbsorbed();
 	mLight.setLightToAbsorb();
-	mIsAlive = false;
+	setIsAlive(false);
 }
 
 InteractionRay_LLT::InteractionRay_LLT() {};

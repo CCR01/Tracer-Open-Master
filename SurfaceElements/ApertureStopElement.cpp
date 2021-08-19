@@ -600,3 +600,8 @@ void ApertureStopElement::setAllParameterFix()
 
 	mRrefractiveIndex.setModifier(typeModifierFixed);
 }
+
+std::string ApertureStopElement::getSurfaceType()
+{
+	return "Stop     ";
+}

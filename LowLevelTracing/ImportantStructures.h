@@ -4,6 +4,28 @@
 #include "..\LowLevelTracing\Light_LLT.h"
 
 
+struct PosX_PosY_Val_tureVal
+{
+public:
+	// pos X
+	void setPos_X(unsigned int posX);
+	unsigned int getPos_X();
+	// pos Y
+	void setPos_Y(unsigned int posY);
+	unsigned int getPos_Y();
+	// value
+	void setVal(real val);
+	real getVal();
+	// true value
+	void setTrueVal(bool trueVal);
+	bool getTrueVal();
+
+private:
+	unsigned int mPosX{};
+	unsigned int mPosY{};
+	real mVal{};
+	bool mTrueVal{};
+};
 
 
 
@@ -38,7 +60,7 @@ private:
 
 enum surfaceSide { A, B, N };
 enum class objectPoint_inf_obj { inf, obj };
-
+enum class sharpnessEvalMethode { sharpImage, Brenner, Tenengrad, Laplacian, SMD, SMD2, EnergyGradFct, EVA, NRSS, BlurAndNoise};
 
 struct IntersectInformationStruct
 {

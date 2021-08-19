@@ -20,17 +20,29 @@ public:
 	void loadImportantparameter();
 
 	// check OPD super function
-	bool checkGlobalOPD_superFunction();
+	bool checkGlobalOPD_superFunction_obj();
+	bool checkGlobalOPD_superFunction_inf();
 
 	// check fill OPD in Matrix (EP behind ima surface)
-	bool checkFillOPDinMatrix_E0();
+	bool checkFillOPDinMatrix_E0_obj();
 
 	// check fill OPD in Matrix (EP before ima surface)
-	bool checkFillOPDinMatrix_E1();
+	bool checkFillOPDinMatrix_E1_obj();
 
+	// check fill OPD in Matrix (EP behind ima surface)
+	bool checkFillOPDinMatrix_E2_inf();
 
-	// compare results calc single and global OPD
-	bool compareResultsCalcSingleAndGlobalOPDsoptSys(OpticalSystem_LLT optSys, VectorStructR3 startPointRay, real PX, real PY, Light_LLT light, real tolerance);
+	// check fill OPD in Matrix (EP before ima surface)
+	bool checkFillOPDinMatrix_E3_inf();
+
+	// check fill OPD in Matrix (EP before ima surface)
+	bool checkFillOPDinMatrix_E4_inf();
+
+	// compare results calc single and global OPD obj
+	bool compareResultsCalcSingleAndGlobalOPDsoptSys_obj(OpticalSystem_LLT optSys, VectorStructR3 startPointRay, real PX, real PY, Light_LLT light, real tolerance);
+
+	// compare results calc single and global OPD inf
+	bool compareResultsCalcSingleAndGlobalOPDsoptSys_inf(OpticalSystem_LLT optSys, real angle_X, real angle_Y, real PX, real PY, Light_LLT light, real tolerance);
 
 	// test upsamling OPD
 	bool testUpsamplingOPD();

@@ -15,8 +15,12 @@ public:
 	OptimizeSystemSuperFct_GeneticAndDLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<real> /*angleX*/ angleX, std::vector<real> /*angleY*/ angleY, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, unsigned int /*populatuion*/ population, targetCardinalPointsStruct targetCarPoints, defaultParaGenetic defaultGenetic, defaultParaDLS defaultDLS);
 	~OptimizeSystemSuperFct_GeneticAndDLS(); 
 
-	// parallel the optimisation including genetic and DLS on 12 cores
+	// genetic and DLS
+	OpticalSystemElement optimizeSuperFct_GeneticAndDLS();
+	OpticalSystemElement optimizeSuperFct_GeneticAndDLS_obj();
+	OpticalSystemElement optimizeSuperFct_GeneticAndDLS_inf();
 
+	// parallel the optimisation including genetic and DLS on 12 cores
 	OpticalSystemElement optimizeSuperFct_GeneticAndDLS_12Cores();
 	OpticalSystemElement optimizeSuperFct_GeneticAndDLS_12Cores_obj();
 	OpticalSystemElement optimizeSuperFct_GeneticAndDLS_12Cores_inf();
@@ -27,6 +31,7 @@ public:
 	objectPoint_inf_obj getObjPoint_inf_obj();
 
 	void loadBestFactorBetterFactorWorstCombinations();
+	real getBestMeritValue();
 
 private:
 	OpticalSystemElement mOptSysEle{};

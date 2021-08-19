@@ -3,8 +3,12 @@
 
 #include "..\..\LowLevelTracing\Math_LLT.h"
 
-#include "..\..\benchmark\benachRayTracing\benchRayTracing.h"
+// ray tracing
+#include "..\..\benchmark\benchRayTracing\benchRayTracing.h"
+// genetic and DLS
 #include "..\..\benchmark\benchGeneticAndDLS\benchGeneticAndDLS.h"
+// ray aiming
+#include "..\..\benchmark\benchRayAiming\BenchRayAiming.h"
 
 managementBenchmark::managementBenchmark(){}
 managementBenchmark::managementBenchmark(std::vector<benchWhat> benchWhat_vec) :
@@ -26,22 +30,29 @@ bool managementBenchmark::benchWhatInBenchWhatVec(benchWhat checkBenchWhatInVec)
 bool managementBenchmark::benchSuperFct()
 {
 	std::vector<bool> workTheSystem_benchmark;
-	bool testAll = benchWhatInBenchWhatVec(benchWhat::bALL);
+	bool bechmarkAll = benchWhatInBenchWhatVec(benchWhat::bALL);
 
 	// benchmark ray tracing
-	if (benchWhatInBenchWhatVec(benchWhat::bRayTrac) || testAll)
+	if (benchWhatInBenchWhatVec(benchWhat::bRayTrac) || bechmarkAll)
 	{
-		benchRayTracing benchRT;
-		bool checkSpeedRayTraching = benchRT.testSpeedRayTracing();
+		BenchRayTracing benchRT;
+		bool checkSpeedRayTraching = benchRT.benchmarkRayTracing_superFct();
 		workTheSystem_benchmark.push_back(checkSpeedRayTraching);
 	}
 
 	// benchmark genetic and DLS
-	if (benchWhatInBenchWhatVec(benchWhat::bGeneticAndDLS) || testAll)
+	if (benchWhatInBenchWhatVec(benchWhat::bGeneticAndDLS) || bechmarkAll)
 	{
 		benchGeneticAndDLS benchGenAndDLS;
 		bool checkBenchGeneticAndDLS = benchGenAndDLS.testSpeedGeneticAndDLS();
 		workTheSystem_benchmark.push_back(checkBenchGeneticAndDLS);
+	}
+	// benchmark ray aiming
+	if (benchWhatInBenchWhatVec(benchWhat::bRayAiming) || bechmarkAll)
+	{
+		BenchRayAiming benchRayAiming;
+		bool checkBenchRayAiming = benchRayAiming.benchRayAiming_superFct();
+		workTheSystem_benchmark.push_back(checkBenchRayAiming);
 	}
 
 

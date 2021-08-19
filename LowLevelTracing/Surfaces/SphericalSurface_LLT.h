@@ -170,6 +170,8 @@ public:
 	//get QPolygonF of the surface
 	virtual QPolygonF* getQPolygonFCurve();
 
+	virtual std::string getSurfaceType() override;
+
 private:
 	real mRadius{};
 	real mSemiHeight{};

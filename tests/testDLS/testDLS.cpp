@@ -20,6 +20,9 @@
 // often use
 #include "..\..\oftenUseNamespace\oftenUseNamespace.h"
 
+// images
+#include "..\..\Image\Images.h"
+
 testDLS::testDLS()
 {
 	loadImportantValues();
@@ -39,31 +42,31 @@ bool testDLS::testDLS_superFct_optiRMS()
 	////E0
 	bool E0_MD = testE0_DLS_MD();
 	testSuperFct_vec.push_back(E0_MD);
-
+	
 	//E1
 	bool E1_MD = testE1_DLS_MD(); // here we flip the radius for the best result
 	testSuperFct_vec.push_back(E1_MD);
-
+	
 	//E2
 	bool E2_MD = testE2_DLS_MD();
 	testSuperFct_vec.push_back(E2_MD);
-
+	
 	//E3 
 	bool E3_MD = testE3_DLS_MD(); //2 radii are variable
 	testSuperFct_vec.push_back(E3_MD);
-
+	
 	// E4
 	bool E4_MD = testE4_DLS_MD();
 	testSuperFct_vec.push_back(E4_MD);
-
+	
 	// E5
 	bool E5_MD = testE5_DLS_MD();
 	testSuperFct_vec.push_back(E5_MD);
-
+	
 	// E6
 	bool E6_MD = testE6_DLS_MD(); // min thickness is 0.01
 	testSuperFct_vec.push_back(E6_MD);
-
+	
 	// E7
 	bool E7_MD = testE7_DLS_MD();
 	testSuperFct_vec.push_back(E7_MD);
@@ -796,7 +799,7 @@ bool testDLS::testE7_DLS_MD() // aperture stop is not first surface
 
 	// check the start system
 	std::vector<real> rmsStartSystem_Z{ 239.618,236.944,228.762 };
-	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E7, mField0_05_1_obj_vec, mWavelength_FdV_vec, rmsStartSystem_Z, 0.1, compareTOM_Zemax::comEqual);
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement_E7, mField0_05_1_obj_vec, mWavelength_FdV_vec, rmsStartSystem_Z, 1.0, compareTOM_Zemax::comEqual);
 	test_E7_vec.push_back(checkStartSys);
 
 	// optimization
@@ -808,7 +811,7 @@ bool testDLS::testE7_DLS_MD() // aperture stop is not first surface
 	DLS_E7.setMaxInterations(500);
 	DLS_E7.setMaxDeltaParameter(50.0);
 	DLS_E7.setFlipOrientationRadius(1000.0);
-	DLS_E7.setMinDeltaParameter(0.00000001);
+	DLS_E7.setMinDeltaParameter(0.001);
 	DLS_E7.setFactorGettingBetter(0.2);
 	DLS_E7.setFactorGettingWorst(2.1);
 
@@ -2000,4 +2003,167 @@ bool testDLS::testRMSandEFLandPMAG()
 
 	bool returnChecker_rms_carP_E0 = Math::checkTrueOfVectorElements(test_rms_carP_E0_vec);
 	return returnChecker_rms_carP_E0;
+}
+
+// test opti image processing
+bool testDLS::testDLS_superFct_optiImageProcessing()
+{
+	std::vector<bool> workTheSystem;
+
+	// test DLS optimize according to image processing E0
+	bool checkE0 = testDLS_optiImaProc_E0();
+	workTheSystem.push_back(checkE0);
+
+	bool returnChecker = Math::checkTrueOfVectorElements(workTheSystem);
+	return returnChecker;
+}
+// test DLS optimize according to image processing E0
+bool testDLS::testDLS_optiImaProc_E0()
+{
+	std::vector<bool> workTheSystem;
+
+	// build the optical system
+	ApertureStopElement S0(/* semi height*/2.0, /*point*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ glasses.getAir());
+	SphericalElement S1(/*radius*/ 14.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,40.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/ glasses.getNBK7_S1());
+	SphericalElement S2(/*radius*/ 12.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,50.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getNSF5_S1(), /*refractive index B*/ glasses.getNBK7_S1());
+	SphericalElement S3(/*radius*/ 20.0, /*semi height*/ 10.0, /*point*/{ 0.0,0.0,60.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ glasses.getAir(), /*refractive index B*/glasses.getNSF5_S1());
+	PlanElement S4(/*semi height*/ 10.0, /*point*/{ 0.0,0.0,90.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ glasses.getAir(), /*refractive index B*/ glasses.getAir());
+
+	S1.setParameterRadius(-1000.0, 1000.0, 0.0, typeModifierVariable);
+	S2.setParameterRadius(-1000.0, 1000.0, 0.0, typeModifierVariable);
+	S3.setParameterRadius(-1000.0, 1000.0, 0.0, typeModifierVariable);
+
+	surfacePtr S0_ptr = S0.clone();
+	surfacePtr S1_ptr = S1.clone();
+	surfacePtr S2_ptr = S2.clone();
+	surfacePtr S3_ptr = S3.clone();
+	surfacePtr S4_ptr = S4.clone();
+
+
+	std::vector<surfacePtr> optSys_LLT{ S0_ptr, S1_ptr , S2_ptr, S3_ptr, S4_ptr};
+	std::vector<interaction_ptr> interactions_vec{ mDoNothing.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(),mAbsorb.clone() };
+
+	//	build optical system
+	OpticalSystemElement optSysEle(optSys_LLT, interactions_vec);
+	
+	// check the start system
+	real rmsStartSystem{ 91.039 };
+	VectorStructR3 fieldPoint = { 0.0,0.0,0.0 };
+	bool checkStartSys = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSysEle, { 0.0,0.0,0.0 }, mWavelength_FdV_vec, rmsStartSystem, 1.0, compareTOM_Zemax::comEqual);
+	workTheSystem.push_back(checkStartSys);
+
+	// ***
+	// optimization
+	DLS DLS_E0_imaProc;
+	// set parameter for DLS optimisation
+	DLS_E0_imaProc.loadDefaultParameter();
+	DLS_E0_imaProc.setFactorPositionDeviation(0.001);
+	DLS_E0_imaProc.setFactorRadiusDeviation(0.001);
+	DLS_E0_imaProc.setMaxWorstCounter(250);
+	DLS_E0_imaProc.setMaxBorderViolations(5);
+	DLS_E0_imaProc.setMaxInterations(500);
+	DLS_E0_imaProc.setMaxDeltaParameter(50.0);
+	DLS_E0_imaProc.setFlipOrientationRadius(1000.0);
+	DLS_E0_imaProc.setMinDeltaParameter(0.00000001);
+	DLS_E0_imaProc.setFactorGettingBetter(0.4);
+	DLS_E0_imaProc.setFactorGettingWorst(1.9);
+	// ***
+
+	// ***
+	// set parameter for image simulation
+	loadParaImaSim paraImaSim;
+	paraImaSim.setWavelengthBlue(486.1327);
+	paraImaSim.setWavelengthGreen(587.5818);
+	paraImaSim.setWavelengthRed(656.2725);
+	std::vector<real> wave_vec = { 587.5818, 486.1327, 656.2725 };
+	paraImaSim.setRayDensity(6);
+	//light
+	Light_LLT light;
+	light.setWavelength(550.0);
+	light.setIntensity(1.0);
+	light.setJonesVector({ 1.0,1.0,1.0,1.0 });
+	light.setTypeLight(typeLight::typeLightRay);
+	paraImaSim.setLight(light);
+	paraImaSim.setSizeMatrixToSaveOPD(16);
+	paraImaSim.setInfOrObj(objectPoint_inf_obj::obj);
+	paraImaSim.setRowColResizeOPD(32);
+	paraImaSim.setSampling_x(5);
+	paraImaSim.setSampling_y(5);
+	paraImaSim.setSemiHeightObj(2.0);
+	paraImaSim.setPosition_Z_Object(0.0);
+	paraImaSim.setUpSamplePSF(false);
+	paraImaSim.setResizeOPD_linear(true);
+	paraImaSim.setPaddingFactorPSF(1);
+	paraImaSim.setCalcDistortion(false);
+	paraImaSim.setSamplingDistortionHeight(400);
+	paraImaSim.setSamplingDistortionWidth(400);
+
+
+	//// load the target cardinal point
+	//targetCardinalPointsStruct targetCarPoints;
+	//real targetWFNO = 6.0;
+	//targetCarPoints.setTargetWFNO(targetWFNO);
+	//DLS_E0.setTargetCardinalPoints(targetCarPoints);
+
+
+	// ***
+	DLS_E0_imaProc.setParameterImageSimulation(paraImaSim);
+	// ***
+	DLS_E0_imaProc.setOpticalSystemElement(optSysEle);
+	DLS_E0_imaProc.loadSystemsForDifferenceColors(wave_vec);
+	DLS_E0_imaProc.setInfObj(objectPoint_inf_obj::obj);
+	DLS_E0_imaProc.turnOnImaProc();
+	imageProcessing imaProc = imageProcessing::wienerFilter24;
+	DLS_E0_imaProc.setImageProcessing(imaProc);
+	DLS_E0_imaProc.loadSystemParameter();
+	DLS_E0_imaProc.resizeAllRelevantStdVectorsAndCalcConst();
+	DLS_E0_imaProc.loadWithoutMinMaxDefault();
+	DLS_E0_imaProc.loadThicknessParameter();
+	DLS_E0_imaProc.loadBestFactorBetterFactorWorstCombinations();
+	std::string location = "../images/color/useThatImages/useThat";
+	cv::Mat obj = Images::loadAnImage_Color(location, "elefant_640x480");
+	DLS_E0_imaProc.setObject(obj);
+	DLS_E0_imaProc.setCompareImagePercent(0.0);
+	DLS_E0_imaProc.setWeightImaProc(1.0);
+
+	// parameter wiener filter
+	// parameter blue
+	parameterImaImprove_WD paraImaImproveWD_blue{};
+	paraImaImproveWD_blue.setMinSNR(0.1);
+	paraImaImproveWD_blue.setMaxSNR(200.0);
+	paraImaImproveWD_blue.setStepsSNR(40);
+	paraImaImproveWD_blue.setMinSigmaXY(0.1);
+	paraImaImproveWD_blue.setMaxSigmaXY(5.0);
+	paraImaImproveWD_blue.setStepsSigmaXY(30);
+	paraImaImproveWD_blue.setKernelSizeHeightAndWidth(30);
+	paraImaImproveWD_blue.setCompareInPercent(1.0);
+	// parameter green
+	parameterImaImprove_WD paraImaImproveWD_green{};
+	paraImaImproveWD_green = paraImaImproveWD_blue;
+
+	// parameter red
+	parameterImaImprove_WD paraImaImproveWD_red{};
+	paraImaImproveWD_red = paraImaImproveWD_blue;
+
+	// ***
+
+	ImaProcSuperFct imageProcessingSF;
+	imageProcessingSF.setParameterWD_blue(paraImaImproveWD_blue);
+	imageProcessingSF.setParameterWD_green(paraImaImproveWD_green);
+	imageProcessingSF.setParameterWD_red(paraImaImproveWD_red);
+	DLS_E0_imaProc.setImageProcessingSuperFct(imageProcessingSF);
+	DLS_E0_imaProc.setMinWFNO_imaProc(1.5);
+	DLS_E0_imaProc.setPotenzProtectMinWFNO_imaProc(4.0);
+	DLS_E0_imaProc.setReloadParameterChangePercent(10.0);
+
+	// optimize
+	DLS_E0_imaProc.optimizeSystem_DLS_multiplicativ_Damping();
+
+	OpticalSystemElement optSysEle_optimized = DLS_E0_imaProc.getOptimizedSystem_HLT();
+	oftenUse::print(optSysEle_optimized, 550.0);
+
+
+
+	bool returnChecker = Math::checkTrueOfVectorElements(workTheSystem);
+	return returnChecker;
 }

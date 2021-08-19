@@ -85,6 +85,10 @@ public:
 	bool testRMSandEFLandPMAG();
 	//**
 
+	// test opti image processing
+	bool testDLS_superFct_optiImageProcessing();
+	// test DLS optimize according to image processing 
+	bool testDLS_optiImaProc_E0();
 
 private:
 	// load glass catalog

@@ -21,7 +21,15 @@ public:
 	bool testLensReplace_E1();
 	bool testLensReplace_E2();
 	bool testLensReplace_E3();
-	
+	bool testLensReplace_E4();
+	bool testLensReplace_E5();
+	bool testLensReplace_E6();
+	bool testLensReplace_E7();
+	bool testLensReplace_E8();
+	bool testLensReplace_E9();
+	bool testLensReplace_E10();
+	bool testLensReplace_E11();
+
 
 private:
 
@@ -36,7 +44,7 @@ private:
 	std::vector<VectorStructR3> mStartOptA_vec{};
 
 	real mWave550{};
-	std::vector<real> mWave500_vec{};
+	std::vector<real> mWave550_vec{};
 
 	real mGlobalTolerance;
 

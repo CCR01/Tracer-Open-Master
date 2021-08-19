@@ -109,6 +109,11 @@ void DLS_multiThreads_12::loadFactorBetterAndWorst()
 	mFactorWorst_vec.push_back(1.8);
 }
 
+real DLS_multiThreads_12::getBestMeritValue()
+{
+	return mBestMeritVal;
+}
+
 OpticalSystemElement DLS_multiThreads_12::DLS_optimisation_multiThreads_12_obj()
 {
 	unsigned int numberThreads = 12;
@@ -123,6 +128,7 @@ OpticalSystemElement DLS_multiThreads_12::DLS_optimisation_multiThreads_12_obj()
 			
 			OpticalSystemElement optSysEle_1 = mOpticalSystemElement_start.getDeepCopyOptSysEle();
 			DLS DLS_1(/*optSysEle*/ optSysEle_1, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultParameterDLS);
+			DLS_1.turnOffImaProc();
 			DLS_1.setFactorGettingBetter(mFactorBetter_vec[0]);
 			DLS_1.setFactorGettingWorst(mFactorWorst_vec[0]);
 			std::cout << "start DLS core 1" << std::endl;
@@ -137,6 +143,7 @@ OpticalSystemElement DLS_multiThreads_12::DLS_optimisation_multiThreads_12_obj()
 			
 			OpticalSystemElement optSysEle_2 = mOpticalSystemElement_start.getDeepCopyOptSysEle();
 			DLS DLS_2(/*optSysEle*/ optSysEle_2, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultParameterDLS);
+			DLS_2.turnOffImaProc();
 			DLS_2.setFactorGettingBetter(mFactorBetter_vec[1]);
 			DLS_2.setFactorGettingWorst(mFactorWorst_vec[1]);
 			std::cout << "start DLS core 2" << std::endl;
@@ -151,6 +158,7 @@ OpticalSystemElement DLS_multiThreads_12::DLS_optimisation_multiThreads_12_obj()
 			
 			OpticalSystemElement optSysEle_3 = mOpticalSystemElement_start.getDeepCopyOptSysEle();
 			DLS DLS_3(/*optSysEle*/ optSysEle_3, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultParameterDLS);
+			DLS_3.turnOffImaProc();
 			DLS_3.setFactorGettingBetter(mFactorBetter_vec[2]);
 			DLS_3.setFactorGettingWorst(mFactorWorst_vec[2]);
 			std::cout << "start DLS core 3" << std::endl;
@@ -165,6 +173,7 @@ OpticalSystemElement DLS_multiThreads_12::DLS_optimisation_multiThreads_12_obj()
 			
 			OpticalSystemElement optSysEle_4 = mOpticalSystemElement_start.getDeepCopyOptSysEle();
 			DLS DLS_4(/*optSysEle*/ optSysEle_4, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultParameterDLS);
+			DLS_4.turnOffImaProc();
 			DLS_4.setFactorGettingBetter(mFactorBetter_vec[3]);
 			DLS_4.setFactorGettingWorst(mFactorWorst_vec[3]);
 			std::cout << "start DLS core 4" << std::endl;
@@ -179,6 +188,7 @@ OpticalSystemElement DLS_multiThreads_12::DLS_optimisation_multiThreads_12_obj()
 			
 			OpticalSystemElement optSysEle_5 = mOpticalSystemElement_start.getDeepCopyOptSysEle();
 			DLS DLS_5(/*optSysEle*/ optSysEle_5, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultParameterDLS);
+			DLS_5.turnOffImaProc();
 			DLS_5.setFactorGettingBetter(mFactorBetter_vec[4]);
 			DLS_5.setFactorGettingWorst(mFactorWorst_vec[4]);
 			std::cout << "start DLS core 5" << std::endl;
@@ -193,6 +203,7 @@ OpticalSystemElement DLS_multiThreads_12::DLS_optimisation_multiThreads_12_obj()
 			
 			OpticalSystemElement optSysEle_6 = mOpticalSystemElement_start.getDeepCopyOptSysEle();
 			DLS DLS_6(/*optSysEle*/ optSysEle_6, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultParameterDLS);
+			DLS_6.turnOffImaProc();
 			DLS_6.setFactorGettingBetter(mFactorBetter_vec[5]);
 			DLS_6.setFactorGettingWorst(mFactorWorst_vec[5]);
 			std::cout << "start DLS core 6" << std::endl;
@@ -207,6 +218,7 @@ OpticalSystemElement DLS_multiThreads_12::DLS_optimisation_multiThreads_12_obj()
 			
 			OpticalSystemElement optSysEle_7 = mOpticalSystemElement_start.getDeepCopyOptSysEle();
 			DLS DLS_7(/*optSysEle*/ optSysEle_7, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultParameterDLS);
+			DLS_7.turnOffImaProc();
 			DLS_7.setFactorGettingBetter(mFactorBetter_vec[6]);
 			DLS_7.setFactorGettingWorst(mFactorWorst_vec[6]);
 			std::cout << "start DLS core 7" << std::endl;
@@ -221,6 +233,7 @@ OpticalSystemElement DLS_multiThreads_12::DLS_optimisation_multiThreads_12_obj()
 			
 			OpticalSystemElement optSysEle_8 = mOpticalSystemElement_start.getDeepCopyOptSysEle();
 			DLS DLS_8(/*optSysEle*/ optSysEle_8, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultParameterDLS);
+			DLS_8.turnOffImaProc();
 			DLS_8.setFactorGettingBetter(mFactorBetter_vec[7]);
 			DLS_8.setFactorGettingWorst(mFactorWorst_vec[7]);
 			std::cout << "start DLS core 8" << std::endl;
@@ -235,6 +248,7 @@ OpticalSystemElement DLS_multiThreads_12::DLS_optimisation_multiThreads_12_obj()
 			
 			OpticalSystemElement optSysEle_9 = mOpticalSystemElement_start.getDeepCopyOptSysEle();
 			DLS DLS_9(/*optSysEle*/ optSysEle_9, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultParameterDLS);
+			DLS_9.turnOffImaProc();
 			DLS_9.setFactorGettingBetter(mFactorBetter_vec[8]);
 			DLS_9.setFactorGettingWorst(mFactorWorst_vec[8]);
 			std::cout << "start DLS core 9" << std::endl;
@@ -249,6 +263,7 @@ OpticalSystemElement DLS_multiThreads_12::DLS_optimisation_multiThreads_12_obj()
 			
 			OpticalSystemElement optSysEle_10 = mOpticalSystemElement_start.getDeepCopyOptSysEle();
 			DLS DLS_10(/*optSysEle*/ optSysEle_10, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultParameterDLS);
+			DLS_10.turnOffImaProc();
 			DLS_10.setFactorGettingBetter(mFactorBetter_vec[9]);
 			DLS_10.setFactorGettingWorst(mFactorWorst_vec[9]);
 			std::cout << "start DLS core 10" << std::endl;
@@ -263,6 +278,7 @@ OpticalSystemElement DLS_multiThreads_12::DLS_optimisation_multiThreads_12_obj()
 			
 			OpticalSystemElement optSysEle_11 = mOpticalSystemElement_start.getDeepCopyOptSysEle();
 			DLS DLS_11(/*optSysEle*/ optSysEle_11, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultParameterDLS);
+			DLS_11.turnOffImaProc();
 			DLS_11.setFactorGettingBetter(mFactorBetter_vec[10]);
 			DLS_11.setFactorGettingWorst(mFactorWorst_vec[10]);
 			std::cout << "start DLS core 11" << std::endl;
@@ -277,6 +293,7 @@ OpticalSystemElement DLS_multiThreads_12::DLS_optimisation_multiThreads_12_obj()
 			
 			OpticalSystemElement optSysEle_12 = mOpticalSystemElement_start.getDeepCopyOptSysEle();
 			DLS DLS_12(/*optSysEle*/ optSysEle_12, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultParameterDLS);
+			DLS_12.turnOffImaProc();
 			DLS_12.setFactorGettingBetter(mFactorBetter_vec[11]);
 			DLS_12.setFactorGettingWorst(mFactorWorst_vec[11]);
 			std::cout << "start DLS core 12" << std::endl;
@@ -296,7 +313,7 @@ OpticalSystemElement DLS_multiThreads_12::DLS_optimisation_multiThreads_12_obj()
 		if (mBestMeritVal > mAllMeritVal_vec[i])
 		{
 			mBestMeritVal = mAllMeritVal_vec[i];
-			bestOpticalSystem = mBestOptSysEle_vec[i];
+			bestOpticalSystem = mBestOptSysEle_vec[i].getDeepCopyOptSysEle();
 		}
 	}
 

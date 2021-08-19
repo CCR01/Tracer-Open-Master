@@ -31,27 +31,45 @@
 
 enum class posExitPupil {exitPupil_Left_ImaSurface, exitPupil_Right_ImaSurface};
 
-struct PosX_PosY_Val_tureVal
+
+struct loadParaOPD
 {
 public:
-	// pos X
-	void setPos_X(unsigned int posX);
-	unsigned int getPos_X();
-	// pos Y
-	void setPos_Y(unsigned int posY);
-	unsigned int getPos_Y();
-	// value
-	void setVal(real val);
-	real getVal();
-	// true value
-	void setTrueVal(bool trueVal);
-	bool getTrueVal();
+	loadParaOPD();
+	~loadParaOPD();
+
+	// tolerance for ray aiming
+	void setToleranceForRayAiming(real tolerance);
+	real getToleranceForRayAiming();
+
+	// is first aimed ray chief ray
+	void setFirstAimedRayIsChiefRay(bool firstAimedRayIsChiefRay);
+	bool getFirstAimedRayIsChiefRay();
+
+	// max iteration biliniear interpolation
+	void setMaxIterationsBilinInterpol(unsigned int maxStepsBilinInter);
+	unsigned int getMaxIterationsBilinInterpol();
+
+	// factor for ray aiming if object is in inf.
+	void setFactorForRayAimingIfObjInInf(real factorObjInInf);
+	real getFactorForRayAimingIfObjInInf();
+
+	// field angle chief ray
+	void setFieldAngleChiefRay_X(real fieldAngleChiefRay_X);
+	real getFieldAngleChiefRay_X();
+	void setFieldAngleChiefRay_Y(real fieldAngleChiefRay_Y);
+	real getFieldAngleChiefRay_Y();
+
+	// load default parameter
+	void loadDefaultParameter();
 
 private:
-	unsigned int mPosX{};
-	unsigned int mPosY{};
-	real mVal{};
-	bool mTrueVal{};
+	real mToleranceForRayAiming{};
+	bool mFirstAimedRayIsChiefRay{};
+	unsigned int mMaxIterationBilinInterpol{};
+	real mFactorRayAimingForObjInInf{};
+	real mFieldAngleChiefRay_X;
+	real mFieldAngleChiefRay_Y;
 };
 
 struct PX_PY_MX_MY
@@ -61,11 +79,11 @@ public:
 	// PX
 	void setPX_ChiefRay_atPos_i(real px, unsigned int pos);
 	real getPX_ChiefRay_atPos_i(unsigned int pos);
-	std::vector<real> getAll_PX_cheifRay() const;
+	std::vector<real> getAll_PX_chiefRay() const;
 	// PY
 	void setPY_ChiefRay_atPos_i(real py, unsigned int pos);
 	real getPY_ChiefRay_atPos_i(unsigned int pos);
-	std::vector<real> getAll_PY_cheifRay() const;
+	std::vector<real> getAll_PY_chiefRay() const;
 	//// OPD
 	//void setOPDatPos_i(real opd, unsigned int pos);
 	//real getOPDatPos_i(unsigned int pos);
@@ -82,8 +100,8 @@ public:
 	void calcAllPositionRegardsToChiefRay(const std::vector<VectorStructR3>& interPointsRefSphere, unsigned int sizeMatrix);
 
 private:
-	std::vector<real> mPX_CheifRay;
-	std::vector<real> mPY_CheifRay;
+	std::vector<real> mPX_ChiefRay;
+	std::vector<real> mPY_ChiefRay;
 	//std::vector<real> mOPD;
 	std::vector<unsigned int> mMX;
 	std::vector<unsigned int> mMY;
@@ -96,6 +114,8 @@ public:
 
 	OPD();
 	OPD(/*optical system*/ OpticalSystem_LLT optSys, /*aimed light ray*/ std::vector<LightRayStruct> aimedLightRay, /*obj inf*/objectPoint_inf_obj inf_obj, /*size matrix with OPDs*/ unsigned int sizeMatrix);
+	OPD(/*optical system*/ OpticalSystem_LLT optSys, /*points in Aperture Stop*/ std::vector<VectorStructR3> pointsInAS, /*light*/ Light_LLT light,  /*obj inf*/objectPoint_inf_obj inf_obj, /*size matrix with OPDs*/ unsigned int sizeMatrix);
+	
 
 	// to calculate the OPD in X and Y direction
 	OPD(/*exit pupil*/ std::shared_ptr<SurfaceIntersectionRay_LLT> exitPupil,  /*optical system*/ OpticalSystem_LLT optSys,
@@ -106,8 +126,12 @@ public:
 	//***
 	// calculate OPD for single Ray
 	real OPD_singelRay_obj(OpticalSystem_LLT optSys, VectorStructR3 startPointRay, real pupilPositionX, real pupilPositionY, Light_LLT light);
-	real calculateOPD_exitPupilBehindOptSys(OpticalSystem_LLT optSys, real posExitPupil_Z_global, VectorStructR3 startPointRay, real pupilPositionX, real pupilPositionY, Light_LLT light);
-	real calculateOPD_exitPupilLeftFromImaSurface(OpticalSystem_LLT optSys, real posExitPupil_Z_global, VectorStructR3 startPointRay, real pupilPositionX, real pupilPositionY, Light_LLT light);
+	real calculateOPD_exitPupilBehindOptSys_obj(OpticalSystem_LLT optSys, real posExitPupil_Z_global, VectorStructR3 startPointRay, real pupilPositionX, real pupilPositionY, Light_LLT light);
+	real calculateOPD_exitPupilLeftFromImaSurface_obj(OpticalSystem_LLT optSys, real posExitPupil_Z_global, VectorStructR3 startPointRay, real pupilPositionX, real pupilPositionY, Light_LLT light);
+
+	real OPD_singelRay_inf(OpticalSystem_LLT optSys, real fieldAngle_X, real fieldAngle_Y, real pupilPositionX, real pupilPositionY, Light_LLT light);
+	real calculateOPD_exitPupilBehindOptSys_inf(OpticalSystem_LLT optSys, real posExitPupil_Z_global, VectorStructR3 startPointRay, real pupilPositionX, real pupilPositionY,  LightRayStruct chiefLightRay);
+	real calculateOPD_exitPupilLeftFromImaSurface_inf(OpticalSystem_LLT optSys, real posExitPupil_Z_global, VectorStructR3 startPointRay, real pupilPositionX, real pupilPositionY, LightRayStruct chiefLightRay);
 
 	// calculate position of exit pupil in optical system according to z direction
 	unsigned int calcPosExPupil_Z(OpticalSystem_LLT optSys, real position_Z_exitPupil);
@@ -121,17 +145,19 @@ public:
 	/// ***
 	// calculate global OPD
 	void calcGlobalOPD_new();
-
-	
-	void calcGlobalOPD_new_Right_SideOfImaSurface(real positionExitPupil_global);
+		
+	void calcGlobalOPD_new_Right_SideOfImaSurface_obj(real positionExitPupil_global);
+	void calcGlobalOPD_new_Right_SideOfImaSurface_inf(real positionExitPupil_global);
 	void buildOpticalSystemWithExitPupilPlan_rightSide(real positionExitPupil_global);
 	void buildOpticalSystemWithReferenceSphereAtExitPupil_rightSide(real radiusRefSphere, VectorStructR3 pointRefSphere, VectorStructR3 directionRefSphere);
 
 
-	void calcGlobalOPD_new_LEFT_SideOfImaSurface(real positionExitPupil_globa);
-
+	void calcGlobalOPD_new_LEFT_SideOfImaSurface_obj(real positionExitPupil_global);
+	void calcGlobalOPD_new_LEFT_SideOfImaSurface_inf(real positionExitPupil_global);
+	/// ***
 
 	LightRayStruct getWantedLightRay();
+
 	// ***
 
 	// bilinear interpolation to fill holes in OPD matrix
@@ -192,9 +218,11 @@ public:
 
 
 	// get global OPD
+	cv::Mat getGlobalOPD();
 	cv::Mat getGlobalOPD_deepCopy();
 
 	// get upsampled global OPD
+	cv::Mat getUpsampledGlobalOPD();
 	cv::Mat getUpsampledGlobalOPD_deepCopy();
 
 
@@ -206,9 +234,6 @@ public:
 
 	// get vector with all calculated global OPD --> just for debugging
 	std::vector<real> getVecWithAllCalcGlobalOPD();
-
-	// get the PSF
-	cv::Mat getPSF();
 
 	//get the light
 	LightRayStruct getChiefLightRay();
@@ -234,7 +259,37 @@ public:
 	void setSizeMatrixToSave(unsigned int sizeMatrixToSave);
 	unsigned int getSizeMatrixToSave();
 
+	real getPosX_inApStop();
+	real getPosY_inApStop();
+	real getPosZ_inApStop();
 
+	// ***
+	// set and get functions //
+		// tolerance for ray aiming
+	void setToleranceForRayAiming(real tolerance);
+	real getToleranceForRayAiming();
+
+	// is first aimed ray chief ray
+	void setFirstAimedRayIsChiefRay(bool firstAimedRayIsChiefRay);
+	bool getFirstAimedRayIsChiefRay();
+
+	// max iteration biliniear interpolation
+	void setMaxIterationsBilinInterpol(unsigned int maxStepsBilinInter);
+	unsigned int getMaxIterationsBilinInterpol();
+
+	// factor for ray aiming if object is in inf.
+	void setFactorForRayAimingIfObjInInf(real factorObjInInf);
+	real getFactorForRayAimingIfObjInInf();
+
+	// field angle chief ray
+	void setFieldAngleChiefRay_X(real fieldAngleChiefRay_X);
+	real getFieldAngleChiefRay_X();
+	void setFieldAngleChiefRay_Y(real fieldAngleChiefRay_Y);
+	real getFieldAngleChiefRay_Y();
+
+	// load default parameter
+	void loadDefaultParameter();
+	// ***
 
 private:
 
@@ -283,9 +338,10 @@ private:
 	std::vector<real> mVecWithAllCalcGlobalOPD;
 	
 	unsigned int mMaxStepToLook;
+
 	real mToleranceToCheckZero;
 	PosX_PosY_Val_tureVal mLook_Pos_X;
-	PosX_PosY_Val_tureVal mLook_Neg_X_multiSteps;
+	PosX_PosY_Val_tureVal mLook_Neg_X;
 	PosX_PosY_Val_tureVal mLook_Pos_Y;
 	PosX_PosY_Val_tureVal mLook_Neg_Y;
 
@@ -302,8 +358,12 @@ private:
 
 	int mScaling;
 
-	cv::Mat mHuygenPSF;
-
-
+	loadParaOPD mLoadParaOPD;
+	std::vector<VectorStructR3> mPointsInAS;
+	Light_LLT mLight{};
+	
+	real mPos_X_InApertureStop{};
+	real mPos_Y_InApertureStop{};
+	real mPos_Z_InApertureStop{};
 };
 

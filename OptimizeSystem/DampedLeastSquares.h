@@ -1,6 +1,11 @@
 #pragma once
 
 #include "importantOptimizeStructs.h"
+#include "..\Image\ImageSimulation.h"
+
+// image processing
+#include "..\ImageProcessing\ImageProcessing.h"
+
 
 struct defaultParaDLS
 {
@@ -9,7 +14,7 @@ public:
 
 	defaultParaDLS();
 	~defaultParaDLS();
-	
+
 	// damping factor
 	real getDampingFactor();
 	void setDampingFactor(real dampingFactor);
@@ -80,7 +85,7 @@ private:
 	real mMaxDeltaPara{};
 	real mMinDeltaPara{};
 	real mFactorGettingBetter{};
-	real mFactorGettingWorst{}; 
+	real mFactorGettingWorst{};
 	real mToleranceWithout_MIN_radius{};
 	real mToleranceWithout_MAX_radius{};
 	real m_Min_DampingNumberBeforSwitchFactors{};
@@ -109,6 +114,12 @@ public:
 	DLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<real> /*fields X*/ fields_X, std::vector<real> /*fields Y*/ fields_Y, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, targetCardinalPointsStruct targetCardinalPoint, defaultParaDLS defaultParameterDLS);
 	~DLS();
 
+
+	// *** obj
+	void DLS_superFctDLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, targetCardinalPointsStruct targetCardinalPoint, defaultParaDLS defaultParameterDLS);
+	void DLS_superFctDLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, defaultParaDLS defaultParameterDLS);
+	// ***
+
 	void buildAndLoad(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, defaultParaDLS defaultParameterDLS);
 	std::vector<OpticalSystem_LLT> deepCopyOptSysLLT_vec(std::vector<OpticalSystem_LLT> optSys_LLT_vec);
 
@@ -117,10 +128,14 @@ public:
 	void buildOptSys_LLT_wave_vec();
 	void calcJacobiMatrixDeviation_Aij();
 	void changeRadiusSurfaceTo_allWavelength(unsigned int surfaceNo, real newRadius);
+	void changeRadiusSurfaceTo_HLT(unsigned int surfaceNo, real newRadius);
 
 	void changePosition_Z_SurfaceTo(unsigned int surfaceNo, real newPositionZ);
 	void changeThickness_Z_SurfaceTo_All(unsigned int surfaceNo, real newThickness);
 	void changeThickness_Z_SurfaceTo_primWavelength(unsigned int surfaceNo, real newThickness);
+	void changeThickness_Z_SurfaceTo_HLT(unsigned int surfaceNo, real newThickness);
+
+	// ***
 	void optimizeSystem_DLS_multiplicativ_Damping();
 	void NOT_WORKING_optimizeSystem_DLS_additive_Damping();
 
@@ -129,6 +144,7 @@ public:
 
 	std::vector<real> calculateDeviation_rmsRayTrace(real oldVal, real newVal, unsigned surfaceNum, kindParaOptSys tempKindPara);
 	std::vector<real> calculateDeviation_targetCarPoints(real oldVal, real newVal, unsigned surfaceNum, kindParaOptSys tempKindPara);
+	std::vector<real> calculateDeviation_ImageProcessing(real oldVal, real newVal, unsigned surfaceNum, kindParaOptSys tempKindPara);
 
 
 	real checkBounderiesAndReturnNewVal(real val, unsigned int posDeltaVal, real minVal, real maxVal, real withoutMin, real withoutMax, unsigned int tempSurfaceNum, kindParaOptSys kindPar);
@@ -136,6 +152,8 @@ public:
 	//real calculateMeritVal();
 	real calculateMeritVal_RMS_obj(const VectorStructR3& fieldPoint);
 	real calculateMeritVal_RMS_inf(real angleX, real angleY);
+	real calculateMeritVal_imageProcessing();
+	real calculateMeritVal_protectMinWFNO_imaProc();
 
 	void calculateAberrationFct();
 
@@ -157,7 +175,7 @@ public:
 	bool checkMeritBetter();
 
 	void printCurVariables();
-	
+
 	OpticalSystemElement getOptimizedSystem_HLT();
 
 	// *** default parameters *** ///
@@ -215,7 +233,7 @@ public:
 	unsigned int checkImprovementMeritVal(unsigned int iterCounter, const real& impMeritStop);
 
 	void loadThicknessParameter();
-	
+
 	std::vector<OpticalSystem_LLT> getOptSys_LLT_vec();
 	bool checkBorderViolations(unsigned tempBorderViol);
 	void resizeAfterFix();
@@ -226,7 +244,7 @@ public:
 	void calcA_T_A_plusIndDampFac();
 
 	void halfInvertedMatrix(std::vector<std::vector<real>> invertedMatrix);
-	void scaleSystemParameters(std::vector<real>&  tempSysParam, real scale);
+	void scaleSystemParameters(std::vector<real>& tempSysParam, real scale);
 
 	void checkDeltaParameter(std::vector<real>& deltaSysPara_vec);
 
@@ -254,11 +272,58 @@ public:
 
 	void setWeightFields(std::vector<real> weightField_vec);
 	std::vector<real> getWeigthFields();
-	
+
 	void setWeightWavelength(std::vector<unsigned int> weightWavelength_vec);
 	std::vector<unsigned int> getWeightWavelength();
 
 
+	// *** image simulation / processing
+	void turnOFF_imageProcessing();
+	void turnON_imageProcessing();
+
+	void setParameterImageSimulation(loadParaImaSim paraImaSim);
+	loadParaImaSim getParameterImageSimulation();
+
+	void turnOnImaProc();
+	void turnOffImaProc();
+
+	void setImageProcessing(imageProcessing imaProc);
+	imageProcessing getImageProcessing();
+
+	void setObject(cv::Mat obj);
+	cv::Mat getObject();
+
+	void setCompareImagePercent(real comPercent);
+	real getCompateImagePercent();
+
+	void setWeightImaProc(real weight);
+	real getWeightImaProc();
+
+	void setImageProcessingSuperFct(ImaProcSuperFct imaProcSuperFct);
+	ImaProcSuperFct getImaProcessingSuperFct();
+
+	void setMinWFNO_imaProc(real minWFNO);
+	real getMinWFNO_imaProc();
+
+	void setPotenzProtectMinWFNO_imaProc(real potenz);
+	real getPotenzProtectMinWFNO_imaProc();
+
+	real asympoticFuncProtecWFNO(real tempWFNO);
+
+	void setReloadParameterChangePercent(real percent);
+	// ***
+
+	// set optical system element
+	void setOpticalSystemElement(OpticalSystemElement optSysEle);
+	// set inf of obj
+	void setInfObj(objectPoint_inf_obj inf_obj);
+	// load systems for difference color
+	void loadSystemsForDifferenceColors(std::vector<real> wavelength_vec);
+	// load system parameter
+	void loadSystemParameter();
+
+	// check matrix for nan
+	bool checkMatrixForNAN(const std::vector<std::vector<real>>& matrix);
 
 private:
 
@@ -282,17 +347,20 @@ private:
 	parameterVar mParameterVar{};
 	std::vector<std::vector<real>> mJacobi_Aij{};
 	Light_LLT mDefaultLight{};
-	
+
 	std::vector<real> mAberrationFct_F0{};
 	std::vector<real> mNewSystemParameter{};
 	unsigned int mNumFieldPoints_Angles{};
 	unsigned int mNumTargetCarPoints{};
+	unsigned int mNumImaProc{};
 	std::vector<real> mReturnDeviation_RMS_vec{};
 	std::vector<real> mReturnDeviation_targetCarPoints_vec{};
+	std::vector<real> mReturnDeviation_imageProcessing_vec{};
 	std::vector<real> mDeviationAberrationFct_RMS{};
 	std::vector<real> mDeviationAberrationFct_targetCarPoint{};
+	std::vector<real> mDeviationAberrationFct_ImageProcessing{};
 	real mDeviatonVal_targetCarPoint{};
-	
+
 
 	unsigned int mColumns_A_T_A{};
 	unsigned int mRows_A_T_A{};
@@ -331,8 +399,9 @@ private:
 	std::vector<withOutMinMax> mWithoutMinMax{};
 
 	bool mGlobalStop{};
+	bool mThereIsA_NAN{};
 	std::vector<real> mTempDeltaNewSysPara{};
-	
+
 	unsigned int mWorstCounter = 0;
 	unsigned int mIterationCounter = 0;
 
@@ -346,5 +415,23 @@ private:
 	objectPoint_inf_obj mInf_Obj{};
 
 	targetCardinalPointsStruct mTargetCardinalPoints{};
+
+	// image simulation / processing
+	loadParaImaSim mParaImaSim;
+	ImageSimulationFunctions mImaSimSuperFct;
+	bool mTurnOnOffImageProcessing;
+	imageProcessing mImaProc;
+	cv::Mat mObject{};
+	int numberIma{};
+	real mComPercent{};
+	real mWeightImaProcessing{};
+	ImaProcSuperFct mImaProcSuperFct{};
+	real mPotenzProtectMinWFNO_imaProc{};
+	real mMinWFNO_imaProc{};
+	bool mFirstImaProc{};
+	real mReloadParameterChangePercent{};
+
+
+
 
 };

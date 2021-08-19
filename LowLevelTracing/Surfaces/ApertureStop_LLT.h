@@ -95,7 +95,7 @@ public:
 
 	virtual QPolygonF* getQPolygonFCurve() override;
 
-
+	virtual std::string getSurfaceType() override;
 
 private:
 	double mSemiHeightAperture{};

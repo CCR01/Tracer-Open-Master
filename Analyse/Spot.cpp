@@ -51,12 +51,21 @@ real Spot::calcRMS(std::vector<VectorStructR3> intersectionPoints, VectorStructR
 
 	for (unsigned int i = 0; i < denominator; ++i)
 	{
-		distance = Math::distanceTwoVectors(referencePosition, intersectionPoints.at(i));
 
-		pow2distance = std::pow(distance, 2);
-		//just for debugging
-		//std::cout << "distance pow2: " << pow2distance << std::endl;
-		numerator = numerator + pow2distance;
+		if (checkValidInterpointNAN(intersectionPoints.at(i)))
+		{
+			distance = Math::distanceTwoVectors(referencePosition, intersectionPoints.at(i));
+
+			pow2distance = std::pow(distance, 2);
+			//just for debugging
+			//std::cout << "distance pow2: " << pow2distance << std::endl;
+			numerator = numerator + pow2distance;
+		}
+
+		else
+		{
+			--denominator;
+		}
 	}
 
 	real returnRMSradius = std::sqrt(numerator / denominator);
@@ -140,4 +149,16 @@ real Spot::calcRMS_byIntensity(std::vector<VectorStructR3> intersectionPoints, V
 
 	real returnRMSradius = std::sqrt(numerator / denominator);
 	return returnRMSradius;
+}
+
+//check interpoint for nan
+bool Spot::checkValidInterpointNAN(VectorStructR3 interPoint)
+{
+	if (std::isnan(interPoint.getX()) || std::isnan(interPoint.getY()) || std::isnan(interPoint.getZ()))
+	{
+		return false;
+	}
+
+	return true;
+
 }

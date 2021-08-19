@@ -9,8 +9,11 @@ class CardinalPoints
 public:
 	CardinalPoints();
 	CardinalPoints(OpticalSystem_LLT OptSys, objectPoint_inf_obj objPoint_inf_obj);
-	CardinalPoints(OpticalSystemElement optSysEle, real primvelenght, objectPoint_inf_obj objPoint_inf_obj);
+	CardinalPoints(OpticalSystemElement optSysEle, real primWavelenght, objectPoint_inf_obj objPoint_inf_obj);
 	~CardinalPoints();
+
+	// calc all cardinal points super fct
+	void calcAllCardinalPointsSuperFct(OpticalSystemElement optSysEle, real primWavelength, objectPoint_inf_obj objPoint_inf_obj);
 
 	void loadAndResizeParameters();
 	void calcSystemMatrix();
@@ -98,15 +101,15 @@ private:
 	OpticalSystemElement mOpticalSystem_Ele{};
 	real mPrimWavelength{};
 
-	objectPoint_inf_obj mObjectPoint_inf_obj;
+	objectPoint_inf_obj mObjectPoint_inf_obj{};
 
 	std::vector<real> mSystemMatrix_vec{};
 
-	std::vector<real> mS_beforeAS_rot;
-	std::vector<real> mS_dash_beforeAS_rot;
+	std::vector<real> mS_beforeAS_rot{};
+	std::vector<real> mS_dash_beforeAS_rot{};
 
-	std::vector<real> mS_afterAS;
-	std::vector<real> mS_dash_afterAS;
+	std::vector<real> mS_afterAS{};
+	std::vector<real> mS_dash_afterAS{};
 
 	real mSepSurAndImPlane{};
 	real mDiameterOfApertureStop{};
@@ -137,18 +140,18 @@ private:
 
 	// important parameters
 	unsigned int mSizeOfOpt{};
-	unsigned int mSizeOfOptSysMinOne{};
-	unsigned int mSizeOfOptSysMinTwo{};
-	unsigned int mSizeAfterStop{};
+	int mSizeOfOptSysMinOne{};
+	int mSizeOfOptSysMinTwo{};
+	int mSizeAfterStop{};
 	std::vector<PosAndIntsectionSurfaceStruct> mPosAndInteraSurfaceVector{};
 	ApertureStop_LLT mApertureStop{};
 	unsigned int mPositionApertureStop{};
 
 	// parameters before aperture stop
-	std::vector<real> mDistances_vec_BAS_rot;
-	std::vector<real> mRadii_vec_BAS_rot;
-	std::vector<real> mRefIndex_vec_BAS_rot;
-	std::vector<real> mRefIndex_vec_dash_BAS_rot;
-	std::vector<real> mF_dash_vec_BAS_rot;
+	std::vector<real> mDistances_vec_BAS_rot{};
+	std::vector<real> mRadii_vec_BAS_rot{};
+	std::vector<real> mRefIndex_vec_BAS_rot{};
+	std::vector<real> mRefIndex_vec_dash_BAS_rot{};
+	std::vector<real> mF_dash_vec_BAS_rot{};
 };
 
