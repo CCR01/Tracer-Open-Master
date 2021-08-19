@@ -1,0 +1,44 @@
+______________________
+lens number: 	0
+catalog: 	EO
+number: 	45932
+check f: 	0
+check th: 	1
+check sh: 	0
+fliped: 	0
+
+______________________
+
+______________________
+lens number: 	1
+catalog: 	EO
+number: 	49758
+check f: 	1
+check th: 	1
+check sh: 	1
+fliped: 	0
+
+______________________
+
+______________________
+lens number: 	2
+catalog: 	EO
+number: 	83415
+check f: 	0
+check th: 	0
+check sh: 	1
+fliped: 	0
+
+______________________
+
+______________________
+lens number: 	3
+catalog: 	EO
+number: 	49762
+check f: 	1
+check th: 	1
+check sh: 	1
+fliped: 	0
+
+______________________
+

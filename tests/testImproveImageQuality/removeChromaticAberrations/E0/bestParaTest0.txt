@@ -1,0 +1,8 @@
+
+___________________________________
+remove chromatic aberrations parameter
+threshold: -21
+quality: 2.2062e+07
+improvement: 1.85798
+___________________________________
+

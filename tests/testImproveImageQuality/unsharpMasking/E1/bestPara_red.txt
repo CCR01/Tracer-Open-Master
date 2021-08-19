@@ -1,0 +1,30 @@
+
+___________________________________
+unsharp mask parameter
+sigma X: 4.0625
+boarder type: 4
+threshold: 1.875
+amount: 1.43025
+improvement: 1.0687
+___________________________________
+
+
+___________________________________
+unsharp mask parameter
+sigma X: 4.6045
+boarder type: 4
+threshold: 1.875
+amount: 1.25085
+improvement: 1.06966
+___________________________________
+
+
+___________________________________
+unsharp mask parameter
+sigma X: 4.6045
+boarder type: 4
+threshold: 1.875
+amount: 1.25085
+improvement: 1.06966
+___________________________________
+

@@ -1,0 +1,64 @@
+
+___________________________________
+unsharp mask parameter
+sigma X: 15
+sigma Y: 5
+boarder type: 0
+threshold: 6.7
+amount: 0
+improvement: 1.00998
+___________________________________
+
+
+___________________________________
+unsharp mask parameter
+sigma X: 15
+sigma Y: 5
+boarder type: 0
+threshold: 6.7
+amount: 0.1
+improvement: 1.00998
+___________________________________
+
+
+___________________________________
+unsharp mask parameter
+sigma X: 2.9
+sigma Y: 2.9
+boarder type: 0
+threshold: 0.1
+amount: 1.505
+improvement: 1.05665
+___________________________________
+
+
+___________________________________
+unsharp mask parameter
+sigma X: 2.4
+sigma Y: 2.875
+boarder type: 0
+threshold: 0.01
+amount: 1.505
+improvement: 1.07121
+___________________________________
+
+
+___________________________________
+unsharp mask parameter
+sigma X: 2.875
+boarder type: -1106734570
+threshold: 0.01
+amount: 1.505
+improvement: 1.06966
+___________________________________
+
+
+___________________________________
+unsharp mask parameter
+sigma X: 10
+boarder type: 4
+threshold: 0.01
+amount: 0.01
+improvement: 1.00024
+___________________________________
+

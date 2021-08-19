@@ -1,0 +1,24 @@
+
+___________________________________
+detail enhance parameter:
+sigma s: 0
+sigma r: 0
+improvement 0
+___________________________________
+
+
+___________________________________
+detail enhance parameter:
+sigma s: -1.07374e+08
+sigma r: -1.07374e+08
+improvement -9.25596e+61
+___________________________________
+
+
+___________________________________
+detail enhance parameter:
+sigma s: 3.8
+sigma r: 0.9001
+improvement 1.07918
+___________________________________
+

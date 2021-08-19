@@ -1,0 +1,11 @@
+
+___________________________________
+unsharp mask parameter
+sigma: 7.49531
+boarder type: 4
+threshold: 1.71344
+amount: 5.29744
+improvement: 0.293814
+sharpness: 31.7909
+___________________________________
+

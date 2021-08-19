@@ -1,0 +1,39 @@
+﻿12000 # QWC
+
+5.3   # pixelsize [mu]
+
+38    # dark signal LSB @ 10 Bit per second @ 25°C
+
+9.7   # dark signal doubling temp ! muss man noch checken !
+
+21    # DSNU LSB @ 10 Bit per second @ 25°C
+
+9.4   # DSNU doubling temp  ! muss man noch checken !
+
+1.5   # PRNU (kleiner 1,5 laut Datenblatt)
+
+15    # Wert von anderer Cam mit gl. Sensor!!! Read out noise
+
+0.6  # eta 400
+
+0.7   # eta 500
+
+0.7  # eta 600
+
+0.6  # eta 700
+
+0.5   # eta 800
+
+0.3  # eta 900
+
+0.085 # ADC Konversionsfaktor  Elektronen pro LSB
+
+10    # ADC Dynamik
+
+1     # HAB KEINEN WERT nonlinearity
+
+100   # HAB KEINEN WERT ADC Konversionsfaktor untere 10 Proz 
+
+900   # HAB KEINEN WERT ADC Konversionsfaktor obere 10 Proz  
+
+999   # Ende

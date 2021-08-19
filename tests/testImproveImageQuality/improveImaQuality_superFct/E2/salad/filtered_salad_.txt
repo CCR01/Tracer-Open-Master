@@ -1,0 +1,10 @@
+
+___________________________________
+detail enhance parameter:
+sigma r: 0.917208
+sigma s: 5.125
+quality: 2.85842e+07
+improvement 1.08189
+sharpness 9.78513
+___________________________________
+

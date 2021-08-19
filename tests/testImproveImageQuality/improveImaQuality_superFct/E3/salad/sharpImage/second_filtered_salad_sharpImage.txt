@@ -1,0 +1,9 @@
+
+___________________________________
+remove chromatic aberrations parameter
+threshold: 34
+quality: 2.84543e+07
+improvement: 1
+sharpness: 0
+___________________________________
+

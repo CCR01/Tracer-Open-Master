@@ -1,0 +1,4 @@
+best SNR: 50.75
+best Sigma: 1.913
+improvement: 1.04743
+

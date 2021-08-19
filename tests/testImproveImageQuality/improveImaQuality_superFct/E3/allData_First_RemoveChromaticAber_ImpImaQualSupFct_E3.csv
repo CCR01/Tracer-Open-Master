@@ -1,0 +1,110 @@
+sharpImage;0
+threshold, imp_total;36,000000;1,000000
+threshold, imp_total;32,000000;1,000000
+threshold, imp_total;35,000000;1,000000
+threshold, imp_total;38,000000;1,000000
+threshold, imp_total;38,000000;1,000000
+threshold, imp_total;34,000000;1,000012
+threshold, imp_total;36,000000;1,000000
+threshold, imp_total;39,000000;1,000000
+threshold, imp_total;35,000000;1,000000
+threshold, imp_total;34,000000;1,000000
+Brenner;0
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+Tenengrad;0
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+Laplacian;0
+threshold, imp_total;-6,000000;0,737414
+threshold, imp_total;-6,000000;0,737414
+threshold, imp_total;-6,000000;0,737414
+threshold, imp_total;-6,000000;0,737414
+threshold, imp_total;-6,000000;0,737414
+threshold, imp_total;-6,000000;0,737414
+threshold, imp_total;-6,000000;0,737414
+threshold, imp_total;-6,000000;0,737414
+threshold, imp_total;-6,000000;0,737414
+threshold, imp_total;-6,000000;0,737414
+SMD;0
+threshold, imp_total;-6,000000;0,737414
+threshold, imp_total;-6,000000;0,737414
+threshold, imp_total;-6,000000;0,737414
+threshold, imp_total;-6,000000;0,737414
+threshold, imp_total;-6,000000;0,737414
+threshold, imp_total;-6,000000;0,737414
+threshold, imp_total;-6,000000;0,737414
+threshold, imp_total;-6,000000;0,737414
+threshold, imp_total;-6,000000;0,737414
+threshold, imp_total;-6,000000;0,737414
+SMD2;0
+threshold, imp_total;-6,000000;0,737414
+threshold, imp_total;-6,000000;0,737414
+threshold, imp_total;-6,000000;0,737414
+threshold, imp_total;-6,000000;0,737414
+threshold, imp_total;-6,000000;0,737414
+threshold, imp_total;-6,000000;0,737414
+threshold, imp_total;-6,000000;0,737414
+threshold, imp_total;-6,000000;0,737414
+threshold, imp_total;-6,000000;0,737414
+threshold, imp_total;-6,000000;0,737414
+EnergyGradFct;0
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+EVA;0
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+threshold, imp_total;-8,000000;0,693875
+NRSS;0
+threshold, imp_total;-5,000000;0,773917
+threshold, imp_total;-5,000000;0,773917
+threshold, imp_total;-5,000000;0,773917
+threshold, imp_total;-5,000000;0,773917
+threshold, imp_total;-5,000000;0,773917
+threshold, imp_total;-5,000000;0,773917
+threshold, imp_total;-5,000000;0,773917
+threshold, imp_total;-5,000000;0,773917
+threshold, imp_total;-5,000000;0,773917
+threshold, imp_total;-5,000000;0,773917
+BlurAndNoise;0
+threshold, imp_total;-5,000000;0,773917
+threshold, imp_total;-5,000000;0,773917
+threshold, imp_total;-5,000000;0,773917
+threshold, imp_total;-5,000000;0,773917
+threshold, imp_total;-5,000000;0,773917
+threshold, imp_total;-5,000000;0,773917
+threshold, imp_total;-5,000000;0,773917
+threshold, imp_total;-5,000000;0,773917
+threshold, imp_total;-5,000000;0,773917
+threshold, imp_total;-5,000000;0,773917

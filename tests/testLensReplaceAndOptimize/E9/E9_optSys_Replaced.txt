@@ -1,0 +1,12 @@
+surface: 0	Stop     	radius: INF      F	thickness: 5.00000 F	glass: Air	refIndex: 1.00000	semi height: 	1.00000
+surface: 1	Spherical	radius: 44.21000 F	thickness: 2.00000 F	glass: N-SF57	refIndex: 1.85415	semi height: 	7.50000
+surface: 2	Spherical	radius: 11.36000 F	thickness: 6.80000 F	glass: N-BAF10	refIndex: 1.67306	semi height: 	7.50000
+surface: 3	Spherical	radius: -14.01000 F	thickness: 5.00000 F	glass: Air	refIndex: 1.00000	semi height: 	7.50000
+surface: 4	Spherical	radius: 38.76000 F	thickness: 1.83000 F	glass: N-BK7	refIndex: 1.51852	semi height: 	7.50000
+surface: 5	Plan     	radius: INF      F	thickness: 5.00118 F	glass: Air	refIndex: 1.00000	semi height: 	7.50000
+surface: 6	Plan     	radius: -INF      F	thickness: 5.25000 F	glass: N-BK7	refIndex: 1.51852	semi height: 	6.35000
+surface: 7	Spherical	radius: -7.75000 F	thickness: 5.00000 F	glass: Air	refIndex: 1.00000	semi height: 	6.35000
+surface: 8	Spherical	radius: 15.97000 F	thickness: 4.50000 F	glass: N-SSK8	refIndex: 1.62037	semi height: 	6.25000
+surface: 9	Spherical	radius: -15.00000 F	thickness: 1.20000 F	glass: N-SF10	refIndex: 1.73366	semi height: 	6.25000
+surface: 10	Spherical	radius: -528.23000 F	thickness: 0.64533 V	glass: Air	refIndex: 1.00000	semi height: 	6.25000
+surface: 11	Plan     	radius: INF      F	thickness: 0.00000 F	glass: Air	refIndex: 1.00000	semi height: 	99.00000

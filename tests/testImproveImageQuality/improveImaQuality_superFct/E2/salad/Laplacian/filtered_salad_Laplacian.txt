@@ -1,0 +1,11 @@
+
+___________________________________
+detail enhance parameter:
+sigma r: 8.38579
+sigma s: 8.61866
+best core number: 0
+quality: 3.4517e+07
+improvement 0.925906
+sharpness 2.72006
+___________________________________
+

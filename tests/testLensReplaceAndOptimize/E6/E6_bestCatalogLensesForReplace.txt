@@ -1,0 +1,33 @@
+______________________
+lens number: 	0
+catalog: 	EO
+number: 	45412
+check f: 	1
+check th: 	1
+check sh: 	0
+fliped: 	1
+
+______________________
+
+______________________
+lens number: 	1
+catalog: 	EO
+number: 	45103
+check f: 	1
+check th: 	0
+check sh: 	1
+fliped: 	0
+
+______________________
+
+______________________
+lens number: 	2
+catalog: 	EO
+number: 	45412
+check f: 	1
+check th: 	1
+check sh: 	0
+fliped: 	1
+
+______________________
+
