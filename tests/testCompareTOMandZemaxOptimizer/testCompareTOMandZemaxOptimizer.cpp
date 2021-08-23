@@ -330,7 +330,7 @@ bool testCompareTOMandZemaxOptimizer::testCompareTOMandZemaxOptimizer_superFct()
 	// clear txt
 	inportExportData::clearDataInTXT(location, nameWorkCompareTOMandZemax);
 
-	// E0
+	// E0 
 	bool checkE0 = testCompareTOMandZemaxOptimizer_E0();
 	workTheSystem.push_back(checkE0);
 	if (checkE0) { inportExportData::saveStringInTXT_includingTime(location, nameWorkCompareTOMandZemax, "E0 worked"); };
