@@ -20,6 +20,7 @@ struct saveLRaO_statistic
 {
 public:
 	saveLRaO_statistic(unsigned int numberLensesInOptSys);
+	saveLRaO_statistic();
 	~saveLRaO_statistic();
 
 	void setMeritVal_DLS(real meritValDLS);
@@ -46,6 +47,11 @@ public:
 	void setDurationTime_GeneticAndDLS_12(real DurationTimeGeneticAndDLS12);
 	real getDurationTime_GeneticAndDLS_12();
 
+
+	// replace sequence
+	void setReplaceSequence(replaceSequence repSeq_methode, std::vector<unsigned int> repSeq_vec);
+	std::vector<unsigned int> getReplacedSequence();
+
 	std::vector<unsigned int> getReplaceSequence_leftToRight();
 	void setReplaceSequence_leftToRight(std::vector<unsigned int> repSeq_leftToRight);
 
@@ -66,6 +72,7 @@ public:
 
 	std::vector<unsigned int> getBestLensNumberWasTaken();
 	void setBestLensNumberWasTaken(unsigned int lensNumReplaced, unsigned bestLensNumWasTaken);
+	void resizeBestLensNumberWasTaken(unsigned int numberLenses);
 
 	unsigned int getNumberOfLensesInOptSys();
 	void setNumberOfLensesInOptSys(unsigned int numberOfLenses);
@@ -110,17 +117,25 @@ public:
 	~testLensReplaceAndOptimize_statistic_twoLensSystem();
 
 	// do the statistic evaluation
-	saveLRaO_statistic doTheStatisticEvaluation(OpticalSystemElement optSysEle, targetCardinalPointsStruct targetCarPoints, std::string location);
+	std::vector<std::vector<saveLRaO_statistic>> doTheStatisticEvaluation(OpticalSystemElement optSysEle, targetCardinalPointsStruct targetCarPoints, std::string location);
 
 	// load importent parameter
 	void loadImportantParameter();
 	// debug mode
 	void turn_ON_debugMode();
 	void turn_OFF_debugMode();
+	// export all statistic data replace two lenses
+	void exportAllStatisticDataReplaceTwoLenses();
+
 
 	bool testLRaO_stat_twoLensSystem_superFct();
 	// E0
 	bool testLRaO_stat_twoLensSystem_E0();
+	// E1
+	bool testLRaO_stat_twoLensSystem_E1();
+
+
+
 
 private:
 	// load glass catalog
@@ -155,7 +170,7 @@ private:
 	defaultParaGenetic mDefaultParameterGenetic{};
 	real mPopulation{};
 
-	std::vector<saveLRaO_statistic> mSaveAllResults{};
+	std::vector<std::vector<std::vector<saveLRaO_statistic>>> mSaveAllResults{};
 	bool mDebugMode{};
 
 	unsigned int mNumberBestFitLenses{};

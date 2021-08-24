@@ -505,7 +505,7 @@ bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E3()
 	std::string bestCatalogLensesForReplace = "E3_bestCatalogLensesForReplace";
 	std::string E3_replaceSequence = "E3_replaceSequence";
 	
-	std::vector<int> E3_replacedSequence = testLensReplaceAndOptiSuperFct.getReplacedSequence();
+	std::vector<unsigned int> E3_replacedSequence = testLensReplaceAndOptiSuperFct.getReplacedSequence();
 
 
 	inportExportData::saveOpticalSystemAsTXT(optSysEle_lensRepSuperFct, 550.0, location, nameOptSysReplaced);
@@ -611,7 +611,7 @@ bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E4()
 	std::string bestCatalogLensesForReplace = "E4_bestCatalogLensesForReplace";
 	std::string E4_replaceSequence = "E4_replaceSequence";
 
-	std::vector<int> E4_replacedSequence = testLensReplaceAndOptiSuperFct.getReplacedSequence();
+	std::vector<unsigned int> E4_replacedSequence = testLensReplaceAndOptiSuperFct.getReplacedSequence();
 
 
 	inportExportData::saveOpticalSystemAsTXT(optSysEle_lensRepSuperFct, 550.0, location, nameOptSysReplaced);
@@ -719,7 +719,7 @@ bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E5()
 	std::string bestCatalogLensesForReplace = "E5_bestCatalogLensesForReplace";
 	std::string E5_replaceSequence = "E5_replaceSequence";
 
-	std::vector<int> E5_replacedSequence = testLensReplaceAndOptiSuperFct.getReplacedSequence();
+	std::vector<unsigned int> E5_replacedSequence = testLensReplaceAndOptiSuperFct.getReplacedSequence();
 
 
 	inportExportData::saveOpticalSystemAsTXT(optSysEle_lensRepSuperFct, 550.0, location, nameOptSysReplaced);
@@ -832,7 +832,7 @@ bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E6()
 	std::string bestCatalogLensesForReplace = "E6_bestCatalogLensesForReplace";
 	std::string E6_replaceSequence = "E6_replaceSequence";
 
-	std::vector<int> E6_replacedSequence = testLensReplaceAndOptiSuperFct.getReplacedSequence();
+	std::vector<unsigned int> E6_replacedSequence = testLensReplaceAndOptiSuperFct.getReplacedSequence();
 
 
 	inportExportData::saveOpticalSystemAsTXT(optSysEle_lensRepSuperFct, 550.0, location, nameOptSysReplaced);
@@ -947,7 +947,7 @@ bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E7()
 	std::string bestCatalogLensesForReplace = "E7_bestCatalogLensesForReplace";
 	std::string E7_replaceSequence = "E7_replaceSequence";
 
-	std::vector<int> E7_replacedSequence = testLensReplaceAndOptiSuperFct.getReplacedSequence();
+	std::vector<unsigned int> E7_replacedSequence = testLensReplaceAndOptiSuperFct.getReplacedSequence();
 
 
 	inportExportData::saveOpticalSystemAsTXT(optSysEle_lensRepSuperFct, 550.0, location, nameOptSysReplaced);
@@ -1065,7 +1065,7 @@ bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E8()
 	std::string bestCatalogLensesForReplace = "E8_bestCatalogLensesForReplace";
 	std::string E8_replaceSequence = "E8_replaceSequence";
 
-	std::vector<int> E8_replacedSequence = testLensReplaceAndOptiSuperFct.getReplacedSequence();
+	std::vector<unsigned int> E8_replacedSequence = testLensReplaceAndOptiSuperFct.getReplacedSequence();
 
 
 	inportExportData::saveOpticalSystemAsTXT(optSysEle_lensRepSuperFct, 550.0, location, nameOptSysReplaced);
@@ -1181,7 +1181,7 @@ bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E9()
 	std::string bestCatalogLensesForReplace = "E9_bestCatalogLensesForReplace";
 	std::string E9_replaceSequence = "E9_replaceSequence";
 
-	std::vector<int> E9_replacedSequence = testLensReplaceAndOptiSuperFct.getReplacedSequence();
+	std::vector<unsigned int> E9_replacedSequence = testLensReplaceAndOptiSuperFct.getReplacedSequence();
 
 
 	inportExportData::saveOpticalSystemAsTXT(optSysEle_lensRepSuperFct, 550.0, location, nameOptSysReplaced);

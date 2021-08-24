@@ -2,7 +2,10 @@
 
 #include "..\LowLevelTracing\OpticalSystem_LLT.h"
 
+// lens catalogs
 #include "..\LensCatalog\EdmundOptics\EdmundOpticsLensCatalog.h"
+#include "..\LensCatalog\Thorlabs\ThorllabsLensCatalog.h"
+#include "..\LensCatalog\Qioptiq\QioptiqLensCatalog.h"
 
 enum class lensTypes { /*Edmund*/ EO_DoubleConvex_VIS_NIR, EO_PosAchromat_MgF_Coated, EO_PlanConvex_VIS_NIR, EO_DoubleConcav_VIS_NIR, EO_PlanConcav_VIS_NIR, 
 EO_DoubleConcav_NIR_I, EO_PosAchromat_VIS_NIR,EO_NegAchromat_Broadband_AR_Coated, EO_LargePrecisionAchromat_NoAirSpace, EO_LargePrecisionAchromat_AirSpace, 
@@ -279,7 +282,11 @@ public:
 	void saveFixedThicknessesLenses_doNotUseThatFct();
 	void saveFixedThicknessesLenses();
 	void reloadThicknessesAndFixed();
+	
+	// load lens Catalogs
 	void loadLensCata(std::vector<lensTypes> loadLensCatalogEO);
+	void load_ALL_LensCatalogs();
+	
 	bool findCatalog(std::vector<lensTypes> loadLensCatalogEO_vec, lensTypes toLoadCatalog);
 
 	// calculate focal lenght
@@ -333,8 +340,16 @@ private:
 	OpticalSystemElement mOpticalSystemEle;
 	OpticalSystemElement mOpticalSystemEle_replaceLens;
 	OpticalSystem_LLT mOpticalSystem_LLT_replaceLens;
-	EdmundOpticsLensCatalog mEOLensCatalog;
+
+	// lens catalogs
+	EdmundOpticsLensCatalog mEOLensCatalog{};
+	ThorlabsLensCatalog mThorlabsLensCatalog{};
+	QioptiqLensCatalog mQioptiqLensCatalog{};
+
+
 	std::vector<lensTypes> mLoadLensCatalogEO;
+	std::vector<lensTypes> mLoadLensCatalogThorlabs;
+	std::vector<lensTypes> mLoadLensCatalogQioptiq;
 
 	/*EdmundOptics*/
 	std::vector<LensesTwoSurfaces> mAll_EO_DoubleConvex_VIS_NIR; //https://www.edmundoptics.de/f/vis-nir-coated-double-convex-dcx-lenses/13504/
@@ -346,7 +361,7 @@ private:
 	std::vector<LensThreeSurfaces> mAll_EO_PosAchromat_VIS_NIR;
 	std::vector<LensThreeSurfaces> mAll_EO_NegAchromat_Broadband_AR_Coated;
 	std::vector<LensThreeSurfaces> mAll_EO_LargePrecisionAchromat_NoAirSpace;
-	std::vector<LensThreeSurfaces> mAll_EO_LargePrecisionAchromat_AirSpace;
+	std::vector<LensFourSurfaces> mAll_EO_LargePrecisionAchromat_AirSpace;
 	std::vector<LensFourSurfaces> mAll_EO_HastingsTripletAchromat;
 	std::vector<LensFourSurfaces> mAll_EO_SteinheilTripletAchromat;
 	std::vector<LensesTwoSurfaces> mAll_EO_MicroPlanConvex;

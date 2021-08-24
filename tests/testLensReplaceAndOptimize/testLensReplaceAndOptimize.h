@@ -36,12 +36,6 @@ public:
 	bool testLensReplaceAndOptimize_E9();
 
 
-	bool statistic_LensReplaceAndOptimize_superFct();
-	bool statistic_LensReplaceAndOptimize_TwoLensSystem();
-	bool statistic_LensReplaceAndOptimize_ThreeLensSystem();
-	bool statistic_LensReplaceAndOptimize_FourLensSystem();
-	bool statistic_LensReplaceAndOptimize_FiveLensSystem();
-
 private:
 
 	RefractedRay_LLT mRefrac{};

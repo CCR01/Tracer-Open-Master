@@ -1990,7 +1990,7 @@ VectorStructR3 oftenUse::getMaxStartPoint(VectorStructR3 referencePoint, std::ve
 }
 
 // calculate faculty
-int oftenUse::calcFacultyInt(int value)
+int oftenUse::calcFacultyInt(unsigned int value)
 {
 	int factorial = 1.0;
 
@@ -2010,10 +2010,10 @@ int oftenUse::calcFacultyInt(int value)
 }
 
 // calculate all possible sequences int
-std::vector<std::vector<int>> oftenUse::calcAllPossibleSequencesInt(std::vector<int> vec)
+std::vector<std::vector<unsigned int>> oftenUse::calcAllPossibleSequencesInt(std::vector<unsigned int> vec)
 {
 	std::sort(vec.begin(), vec.end());
-	std::vector<std::vector<int>> allPossibleSequencesInt;
+	std::vector<std::vector<unsigned int>> allPossibleSequencesInt;
 	int factorial = calcFacultyInt(vec.size());
 	allPossibleSequencesInt.resize(factorial);
 

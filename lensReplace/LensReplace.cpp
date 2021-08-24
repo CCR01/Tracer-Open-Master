@@ -592,6 +592,122 @@ void LensReplace::loadLensCata(std::vector<lensTypes> loadLensCatalogEO)
 
 }
 
+void LensReplace::load_ALL_LensCatalogs()
+{
+	/*EdmundOptics*/
+	mEOLensCatalog.loadLensCatalogEO_achroamticLensesMgF();
+	mEOLensCatalog.loadLensCatalogEO_achroamticLenses_VIS_NIR_Coating();
+	mEOLensCatalog.loadLensCatalogEO_Broadband_AR_Coated_Negative_Achromatic_Lenses();
+	mEOLensCatalog.loadLensCatalogEO_double_concav_lenses_NIR_I();
+	mEOLensCatalog.loadLensCatalogEO_double_concav_lenses_VIS_NIR();
+	mEOLensCatalog.loadLensCatalogEO_double_convex_lenses();
+	mEOLensCatalog.loadLensCatalogEO_Hastings_Triplet_Achromatic_Lenses();
+	mEOLensCatalog.loadLensCatalogEO_Large_PCX_Condenser_Lenses();
+	mEOLensCatalog.loadLensCatalogEO_Large_Precision_Achromatic_Lenses_Airspace01mm();
+	mEOLensCatalog.loadLensCatalogEO_Large_Precision_Achromatic_Lenses_NoAirspace();
+	mEOLensCatalog.loadLensCatalogEO_Micro_Plano_Convex_PCX_Lenses();
+	mEOLensCatalog.loadLensCatalogEO_plan_concav_lenses_VIS_NIR();
+	mEOLensCatalog.loadLensCatalogEO_plan_convex_lenses_VIS_NIR();
+	mEOLensCatalog.loadLensCatalogEO_Steinheil_Triplet_Achromatic_Lenses();
+
+	/*Thorlabs*/
+	mThorlabsLensCatalog.loadLensCatalogThorlabs_1Zoll_N_BK7_Best_Form_Spherical_Lenses_AR_Coating_350_700_nm();
+	mThorlabsLensCatalog.loadLensCatalogThorlabs_1Zoll_N_BK7_Negative_Meniscus_Lenses_Uncoated();
+	mThorlabsLensCatalog.loadLensCatalogThorlabs_Achromativ_Doublets_AR_Coated_lenses();
+	mThorlabsLensCatalog.loadLensCatalogThorlabs_Hastings_Triplet_Achromatic_Lenses_Visible();
+	mThorlabsLensCatalog.loadLensCatalogThorlabs_N_BK7_and_N_SF11_Bi_Concave_Lenses_AR_Coating_350_700_nm();
+	mThorlabsLensCatalog.loadLensCatalogThorlabs_N_BK7_Bi_Convex_Lenses_AR_Coating_350_700_nm();
+	mThorlabsLensCatalog.loadLensCatalogThorlabs_N_BK7_Plano_Concave_Lenses_AR_Coating_350_700_nm();
+	mThorlabsLensCatalog.loadLensCatalogThorlabs_N_BK7_Plano_Convex_Lenses_AR_Coating_400_1100_nm();
+	mThorlabsLensCatalog.loadLensCatalogThorlabs_N_BK7_Positive_Meniscus_Lenses_Uncoated();
+	mThorlabsLensCatalog.loadLensCatalogThorlabs_Steinheil_Triplet_Achromatic_Lenses_Visible();
+
+	/*Qioptiq*/
+	mQioptiqLensCatalog.loadLensCatalogQioptiq_Achromats_Negative_Unmounted_ARB2_VIS();
+	mQioptiqLensCatalog.loadLensCatalogQioptiq_Achromats_VIS_Positive_dia_3_mm_to_31_5_mm_unmounted_N_BK7_ARB2_VIS();
+	mQioptiqLensCatalog.loadLensCatalogQioptiq_Achromats_VIS_Positive_from_40_mm_diameter_unmounted_N_BK7_ARB2_VIS();
+	mQioptiqLensCatalog.loadLensCatalogQioptiq_PlanoConvex_lenses_unmounted_ARB2_VIS();
+	mQioptiqLensCatalog.loadLensCatalogQioptiq_Plano_concave_lenses_unmounted_N_BK7_ARB2_VIS();
+	mQioptiqLensCatalog.loadLensCatalogQioptiq_Symmetric_concave_lenses_unmounted_N_BK7_ARB2_VIS();
+	mQioptiqLensCatalog.loadLensCatalogQioptiq_Symmetric_convex_lenses_unmounted_ARB2_VIS();
+
+
+	// save lenses from edmund optics in vector
+	mAll_EO_DoubleConvex_VIS_NIR = mEOLensCatalog.getAll_DoubleConvexLenses();
+	mAll_EO_PosAchromat_MgF_Coated = mEOLensCatalog.getAll_achroamticLensesMgF(); 
+	mAll_EO_PlanConvex_VIS_NIR = mEOLensCatalog.getAll_PlanConvexLenses(); 
+	mAll_EO_DoubleConcav_VIS_NIR = mEOLensCatalog.getAll_DoubleConcavLenses(); 
+	mAll_EO_PlanConcav_VIS_NIR = mEOLensCatalog.getAll_PlanConcavLenses(); 
+	mAll_EO_DoubleConcav_NIR_I = mEOLensCatalog.getAll_LensCatalogEO_double_concav_lenses_NIR_I();
+	mAll_EO_PosAchromat_VIS_NIR = mEOLensCatalog.getAll_LensCatalogEO_achroamticLenses_VIS_NIR_Coating();
+	mAll_EO_NegAchromat_Broadband_AR_Coated = mEOLensCatalog.getAll_LensCatalogEO_Broadband_AR_Coated_Negative_Achromatic_Lenses();
+	mAll_EO_LargePrecisionAchromat_NoAirSpace = mEOLensCatalog.getAll_LensCatalogEO_Large_Precision_Achromatic_Lenses_NoAirspace();
+	mAll_EO_LargePrecisionAchromat_AirSpace = mEOLensCatalog.getAll_LensCatalogEO_Large_Precision_Achromatic_Lenses_Airspace01mm();
+	mAll_EO_HastingsTripletAchromat = mEOLensCatalog.getAll_LensCatalogEO_Hastings_Triplet_Achromatic_Lenses();
+	mAll_EO_SteinheilTripletAchromat = mEOLensCatalog.getAll_LensCatalogEO_Steinheil_Triplet_Achromatic_Lenses();
+	mAll_EO_MicroPlanConvex = mEOLensCatalog.getAll_Micro_Plano_Convex_PCX_Lenses();
+	mAll_EO_LargePlanConvexCondensor = mEOLensCatalog.getAll_Large_PCX_Condenser_Lenses();
+
+	// save lenses from thorlabs in vector
+	mAll_Th_AchromatDoublets_AR_Coated = mThorlabsLensCatalog.getAll_Thorlabs_Achromativ_Doublets_AR_Coated_lenses();
+	mAll_Th_NBK7_PlanConvex_AR_Coated_400_1100 = mThorlabsLensCatalog.getAll_Thorlabs_N_BK7_Plano_Convex_Lenses_AR_Coating_400_1100_nm();
+	mAll_Th_NBK7_BiConvex_AR_Coated_350_700 = mThorlabsLensCatalog.getAll_Thorlabs_N_BK7_Bi_Convex_Lenses_AR_Coating_350_700_nm();
+	mAll_Th_NBK7_PlanConcav_AR_Coated_350_700 = mThorlabsLensCatalog.getAll_Thorlabs_N_BK7_Plano_Concave_Lenses_AR_Coating_350_700_nm();
+	mAll_Th_NBK7_NSF11_BiConcav_AR_Coated_350_700 = mThorlabsLensCatalog.getAll_Thorlabs_N_BK7_and_N_SF11_BiSConcave_Lenses_AR_Coating_350_700_nm();
+	mAll_Th_NBK7_BestFormSpherical_AR_Coated_350_700 = mThorlabsLensCatalog.getAll_Thorlabs_1Zoll_N_BK7_Best_Form_Spherical_Lenses_AR_Coating_350_700_nm();
+	mAll_Th_NBK7_PosMeniscus_Uncoated = mThorlabsLensCatalog.getAll_Thorlabs_N_BK7_Positive_Meniscus_Lenses_Uncoated();
+	mAll_Th_NBK7_NegMeniscus_Uncoated = mThorlabsLensCatalog.getAll_1Zoll_N_BK7_Negative_Meniscus_Lenses_Uncoated();
+	mAll_Th_SteinheilTripletAchromat_Visible = mThorlabsLensCatalog.getAll_Steinheil_Triplet_Achromatic_Lenses_Visible();
+	mAll_Th_HastingsTripletAchromatVisible = mThorlabsLensCatalog.getAll_Hastings_Triplet_Achromatic_Lenses_Visible();
+
+	// save lenses from qioptiq in vector
+	mAll_Qi_PlanConvex_ARB2_VIS = mQioptiqLensCatalog.getAll_Qioptiq_PlanoConvex_lenses_unmounted_ARB2_VIS();
+	mAll_Qi_SymmetricConvex_ARB2_VIS = mQioptiqLensCatalog.getAll_Symmetric_convex_lenses_unmounted_ARB2_VIS();
+	mAll_Qi_PlanConcav_ARB2_VIS = mQioptiqLensCatalog.getAll_Plano_concave_lenses_unmounted_N_BK7_ARB2_VIS();
+	mAll_Qi_SymmetricConcav_ARB2_VIS = mQioptiqLensCatalog.getAll_Symmetric_concave_lenses_unmounted_N_BK7_ARB2_VIS();
+	mAll_Qi_PosAchromat_VIS_3_31_ARB2_VIS = mQioptiqLensCatalog.getAll_Achromats_VIS_Positive_dia_3_mm_to_31_5_mm_unmounted_N_BK7_ARB2_VIS();
+	mAll_Qi_PosAchromat_VIS_31_40_ARB2_VIS = mQioptiqLensCatalog.getAll_Achromats_VIS_Positive_from_40_mm_diameter_unmounted_N_BK7_ARB2_VIS();
+	mAll_Qi_NegAchromat_ARB2_VIS = mQioptiqLensCatalog.getAll_Achromats_Negative_Unmounted_ARB2_VIS();
+
+	/*Edmund*/
+	mLoadLensCatalogEO.push_back(lensTypes::EO_DoubleConvex_VIS_NIR);
+	mLoadLensCatalogEO.push_back(lensTypes::EO_PosAchromat_MgF_Coated);
+	mLoadLensCatalogEO.push_back(lensTypes::EO_PlanConvex_VIS_NIR);
+	mLoadLensCatalogEO.push_back(lensTypes::EO_DoubleConcav_VIS_NIR);
+	mLoadLensCatalogEO.push_back(lensTypes::EO_PlanConcav_VIS_NIR);
+	mLoadLensCatalogEO.push_back(lensTypes::EO_DoubleConcav_NIR_I);
+	mLoadLensCatalogEO.push_back(lensTypes::EO_PosAchromat_VIS_NIR);
+	mLoadLensCatalogEO.push_back(lensTypes::EO_NegAchromat_Broadband_AR_Coated);
+	mLoadLensCatalogEO.push_back(lensTypes::EO_LargePrecisionAchromat_NoAirSpace);
+	mLoadLensCatalogEO.push_back(lensTypes::EO_LargePrecisionAchromat_AirSpace);
+	mLoadLensCatalogEO.push_back(lensTypes::EO_HastingsTripletAchromat);
+	mLoadLensCatalogEO.push_back(lensTypes::EO_SteinheilTripletAchromat);
+	mLoadLensCatalogEO.push_back(lensTypes::EO_MicroPlanConvex);
+	mLoadLensCatalogEO.push_back(lensTypes::EO_LargePlanConvexCondensor);
+
+	/*Thorlabs*/
+	mLoadLensCatalogThorlabs.push_back(lensTypes::Th_AchromatDoublets_AR_Coated);
+	mLoadLensCatalogThorlabs.push_back(lensTypes::Th_NBK7_PlanConvex_AR_Coated_400_1100);
+	mLoadLensCatalogThorlabs.push_back(lensTypes::Th_NBK7_BiConvex_AR_Coated_350_700);
+	mLoadLensCatalogThorlabs.push_back(lensTypes::Th_NBK7_PlanConcav_AR_Coated_350_700);
+	mLoadLensCatalogThorlabs.push_back(lensTypes::Th_NBK7_NSF11_BiConcav_AR_Coated_350_700);
+	mLoadLensCatalogThorlabs.push_back(lensTypes::Th_NBK7_BestFormSpherical_AR_Coated_350_700);
+	mLoadLensCatalogThorlabs.push_back(lensTypes::Th_NBK7_PosMeniscus_Uncoated);
+	mLoadLensCatalogThorlabs.push_back(lensTypes::Th_NBK7_NegMeniscus_Uncoated);
+	mLoadLensCatalogThorlabs.push_back(lensTypes::Th_SteinheilTripletAchromat_Visible);
+	mLoadLensCatalogThorlabs.push_back(lensTypes::Th_HastingsTripletAchromatVisible);
+
+	/*Qioptic*/
+	mLoadLensCatalogQioptiq.push_back(lensTypes::Qi_PlanConvex_ARB2_VIS);
+	mLoadLensCatalogQioptiq.push_back(lensTypes::Qi_SymmetricConvex_ARB2_VIS);
+	mLoadLensCatalogQioptiq.push_back(lensTypes::Qi_PlanConcav_ARB2_VIS);
+	mLoadLensCatalogQioptiq.push_back(lensTypes::Qi_SymmetricConcav_ARB2_VIS);
+	mLoadLensCatalogQioptiq.push_back(lensTypes::Qi_PosAchromat_VIS_3_31_ARB2_VIS);
+	mLoadLensCatalogQioptiq.push_back(lensTypes::Qi_PosAchromat_VIS_31_40_ARB2_VIS);
+	mLoadLensCatalogQioptiq.push_back(lensTypes::Qi_NegAchromat_ARB2_VIS);
+
+}
+
 bool LensReplace::findCatalog(std::vector<lensTypes> loadLensCatalogEO_vec, lensTypes toLoadCatalog)
 {
 
@@ -1447,7 +1563,7 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 	bool load_EO_LargePrecisionAchromat_AirSpace = findCatalog(mLoadLensCatalogEO, lensTypes::EO_LargePrecisionAchromat_AirSpace);
 	if (load_EO_LargePrecisionAchromat_AirSpace)
 	{
-		EO_LargePrecisionAchromat_AirSpace_vec = findOptSysEle_lens_inCatalog_ThreeSurfaces(paraLens, mAll_EO_LargePrecisionAchromat_AirSpace, weightFocal, weightThickness, weightSemiHeight);
+		EO_LargePrecisionAchromat_AirSpace_vec = findOptSysEle_lens_inCatalog_FourSurfaces(paraLens, mAll_EO_LargePrecisionAchromat_AirSpace, weightFocal, weightThickness, weightSemiHeight);
 		for (unsigned int i = 0; i < EO_LargePrecisionAchromat_AirSpace_vec.size(); ++i)
 		{
 			EO_LargePrecisionAchromat_AirSpace_vec[i].setLensType(lensTypes::EO_LargePrecisionAchromat_AirSpace);
@@ -1541,7 +1657,7 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 	/*Thorlabs*/
 
 	//Th_AchromatDoublets_AR_Coated
-	bool load_Th_AchromatDoublets_AR_Coated = findCatalog(mLoadLensCatalogEO, lensTypes::Th_AchromatDoublets_AR_Coated);
+	bool load_Th_AchromatDoublets_AR_Coated = findCatalog(mLoadLensCatalogThorlabs , lensTypes::Th_AchromatDoublets_AR_Coated);
 	if (load_Th_AchromatDoublets_AR_Coated)
 	{
 		Th_AchromatDoublets_AR_Coated_vec = findOptSysEle_lens_inCatalog_ThreeSurfaces(paraLens, mAll_Th_AchromatDoublets_AR_Coated, weightFocal, weightThickness, weightSemiHeight);
@@ -1560,7 +1676,7 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 	}
 
 	//Th_NBK7_PlanConvex_AR_Coated_400_1100
-	bool load_Th_NBK7_PlanConvex_AR_Coated_400_1100 = findCatalog(mLoadLensCatalogEO, lensTypes::Th_NBK7_PlanConvex_AR_Coated_400_1100);
+	bool load_Th_NBK7_PlanConvex_AR_Coated_400_1100 = findCatalog(mLoadLensCatalogThorlabs, lensTypes::Th_NBK7_PlanConvex_AR_Coated_400_1100);
 	if (load_Th_NBK7_PlanConvex_AR_Coated_400_1100)
 	{
 		Th_NBK7_PlanConvex_AR_Coated_400_1100_vec = findOptSysEle_lens_inCatalog_TwoSurfaces(paraLens, mAll_Th_NBK7_PlanConvex_AR_Coated_400_1100, weightFocal, weightThickness, weightSemiHeight);
@@ -1579,7 +1695,7 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 	}
 
 	//Th_NBK7_BiConvex_AR_Coated_350_700
-	bool load_Th_NBK7_BiConvex_AR_Coated_350_700 = findCatalog(mLoadLensCatalogEO, lensTypes::Th_NBK7_BiConvex_AR_Coated_350_700);
+	bool load_Th_NBK7_BiConvex_AR_Coated_350_700 = findCatalog(mLoadLensCatalogThorlabs, lensTypes::Th_NBK7_BiConvex_AR_Coated_350_700);
 	if (load_Th_NBK7_BiConvex_AR_Coated_350_700)
 	{
 		Th_NBK7_BiConvex_AR_Coated_350_700_vec = findOptSysEle_lens_inCatalog_TwoSurfaces(paraLens, mAll_Th_NBK7_BiConvex_AR_Coated_350_700, weightFocal, weightThickness, weightSemiHeight);
@@ -1598,7 +1714,7 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 	}
 
 	//Th_NBK7_PlanConcav_AR_Coated_350_700
-	bool load_Th_NBK7_PlanConcav_AR_Coated_350_700 = findCatalog(mLoadLensCatalogEO, lensTypes::Th_NBK7_PlanConcav_AR_Coated_350_700);
+	bool load_Th_NBK7_PlanConcav_AR_Coated_350_700 = findCatalog(mLoadLensCatalogThorlabs, lensTypes::Th_NBK7_PlanConcav_AR_Coated_350_700);
 	if (load_Th_NBK7_PlanConcav_AR_Coated_350_700)
 	{
 		Th_NBK7_PlanConcav_AR_Coated_350_700_vec = findOptSysEle_lens_inCatalog_TwoSurfaces(paraLens, mAll_Th_NBK7_PlanConcav_AR_Coated_350_700, weightFocal, weightThickness, weightSemiHeight);
@@ -1617,7 +1733,7 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 	}
 
 	//Th_NBK7_NSF11_BiConcav_AR_Coated_350_700
-	bool load_Th_NBK7_NSF11_BiConcav_AR_Coated_350_700 = findCatalog(mLoadLensCatalogEO, lensTypes::Th_NBK7_NSF11_BiConcav_AR_Coated_350_700);
+	bool load_Th_NBK7_NSF11_BiConcav_AR_Coated_350_700 = findCatalog(mLoadLensCatalogThorlabs, lensTypes::Th_NBK7_NSF11_BiConcav_AR_Coated_350_700);
 	if (load_Th_NBK7_NSF11_BiConcav_AR_Coated_350_700)
 	{
 		Th_NBK7_NSF11_BiConcav_AR_Coated_350_700_vec = findOptSysEle_lens_inCatalog_TwoSurfaces(paraLens, mAll_Th_NBK7_NSF11_BiConcav_AR_Coated_350_700, weightFocal, weightThickness, weightSemiHeight);
@@ -1636,7 +1752,7 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 	}
 
 	//Th_NBK7_BestFormSpherical_AR_Coated_350_700
-	bool load_Th_NBK7_BestFormSpherical_AR_Coated_350_700 = findCatalog(mLoadLensCatalogEO, lensTypes::Th_NBK7_BestFormSpherical_AR_Coated_350_700);
+	bool load_Th_NBK7_BestFormSpherical_AR_Coated_350_700 = findCatalog(mLoadLensCatalogThorlabs, lensTypes::Th_NBK7_BestFormSpherical_AR_Coated_350_700);
 	if (load_Th_NBK7_BestFormSpherical_AR_Coated_350_700)
 	{
 		Th_NBK7_BestFormSpherical_AR_Coated_350_700_vec = findOptSysEle_lens_inCatalog_TwoSurfaces(paraLens, mAll_Th_NBK7_BestFormSpherical_AR_Coated_350_700, weightFocal, weightThickness, weightSemiHeight);
@@ -1655,7 +1771,7 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 	}
 
 	//Th_NBK7_PosMeniscus_Uncoated
-	bool load_Th_NBK7_PosMeniscus_Uncoated = findCatalog(mLoadLensCatalogEO, lensTypes::Th_NBK7_PosMeniscus_Uncoated);
+	bool load_Th_NBK7_PosMeniscus_Uncoated = findCatalog(mLoadLensCatalogThorlabs, lensTypes::Th_NBK7_PosMeniscus_Uncoated);
 	if (load_Th_NBK7_PosMeniscus_Uncoated)
 	{
 		Th_NBK7_PosMeniscus_Uncoated_vec = findOptSysEle_lens_inCatalog_TwoSurfaces(paraLens, mAll_Th_NBK7_PosMeniscus_Uncoated, weightFocal, weightThickness, weightSemiHeight);
@@ -1674,7 +1790,7 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 	}
 
 	//Th_NBK7_NegMeniscus_Uncoated
-	bool load_Th_NBK7_NegMeniscus_Uncoated = findCatalog(mLoadLensCatalogEO, lensTypes::Th_NBK7_NegMeniscus_Uncoated);
+	bool load_Th_NBK7_NegMeniscus_Uncoated = findCatalog(mLoadLensCatalogThorlabs, lensTypes::Th_NBK7_NegMeniscus_Uncoated);
 	if (load_Th_NBK7_NegMeniscus_Uncoated)
 	{
 		Th_NBK7_NegMeniscus_Uncoated_vec = findOptSysEle_lens_inCatalog_TwoSurfaces(paraLens, mAll_Th_NBK7_NegMeniscus_Uncoated, weightFocal, weightThickness, weightSemiHeight);
@@ -1693,7 +1809,7 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 	}
 
 	//Th_SteinheilTripletAchromat_Visible
-	bool load_Th_SteinheilTripletAchromat_Visible = findCatalog(mLoadLensCatalogEO, lensTypes::Th_SteinheilTripletAchromat_Visible);
+	bool load_Th_SteinheilTripletAchromat_Visible = findCatalog(mLoadLensCatalogThorlabs, lensTypes::Th_SteinheilTripletAchromat_Visible);
 	if (load_Th_SteinheilTripletAchromat_Visible)
 	{
 		Th_SteinheilTripletAchromat_Visible_vec = findOptSysEle_lens_inCatalog_FourSurfaces(paraLens, mAll_Th_SteinheilTripletAchromat_Visible, weightFocal, weightThickness, weightSemiHeight);
@@ -1712,7 +1828,7 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 	}
 
 	//Th_HastingsTripletAchromatVisible
-	bool load_Th_HastingsTripletAchromatVisible = findCatalog(mLoadLensCatalogEO, lensTypes::Th_HastingsTripletAchromatVisible);
+	bool load_Th_HastingsTripletAchromatVisible = findCatalog(mLoadLensCatalogThorlabs, lensTypes::Th_HastingsTripletAchromatVisible);
 	if (load_Th_HastingsTripletAchromatVisible)
 	{
 		Th_HastingsTripletAchromatVisible_vec = findOptSysEle_lens_inCatalog_FourSurfaces(paraLens, mAll_Th_HastingsTripletAchromatVisible, weightFocal, weightThickness, weightSemiHeight);
@@ -1733,7 +1849,7 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 	/*Qioptiq*/
 
 	//Qi_PlanConvex_ARB2_VIS
-	bool load_Qi_PlanConvex_ARB2_VIS = findCatalog(mLoadLensCatalogEO, lensTypes::Qi_PlanConvex_ARB2_VIS);
+	bool load_Qi_PlanConvex_ARB2_VIS = findCatalog(mLoadLensCatalogQioptiq, lensTypes::Qi_PlanConvex_ARB2_VIS);
 	if (load_Qi_PlanConvex_ARB2_VIS)
 	{
 		Qi_PlanConvex_ARB2_VIS_vec = findOptSysEle_lens_inCatalog_TwoSurfaces(paraLens, mAll_Qi_PlanConvex_ARB2_VIS, weightFocal, weightThickness, weightSemiHeight);
@@ -1752,7 +1868,7 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 	}
 
 	//Qi_SymmetricConvex_ARB2_VIS
-	bool load_Qi_SymmetricConvex_ARB2_VIS = findCatalog(mLoadLensCatalogEO, lensTypes::Qi_SymmetricConvex_ARB2_VIS);
+	bool load_Qi_SymmetricConvex_ARB2_VIS = findCatalog(mLoadLensCatalogQioptiq, lensTypes::Qi_SymmetricConvex_ARB2_VIS);
 	if (load_Qi_SymmetricConvex_ARB2_VIS)
 	{
 		Qi_SymmetricConvex_ARB2_VIS_vec = findOptSysEle_lens_inCatalog_TwoSurfaces(paraLens, mAll_Qi_SymmetricConvex_ARB2_VIS, weightFocal, weightThickness, weightSemiHeight);
@@ -1771,7 +1887,7 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 	}
 
 	//Qi_PlanConcav_ARB2_VIS
-	bool load_Qi_PlanConcav_ARB2_VIS = findCatalog(mLoadLensCatalogEO, lensTypes::Qi_PlanConcav_ARB2_VIS);
+	bool load_Qi_PlanConcav_ARB2_VIS = findCatalog(mLoadLensCatalogQioptiq, lensTypes::Qi_PlanConcav_ARB2_VIS);
 	if (load_Qi_PlanConcav_ARB2_VIS)
 	{
 		Qi_PlanConcav_ARB2_VIS_vec = findOptSysEle_lens_inCatalog_TwoSurfaces(paraLens, mAll_Qi_PlanConcav_ARB2_VIS, weightFocal, weightThickness, weightSemiHeight);
@@ -1790,7 +1906,7 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 	}
 
 	//Qi_SymmetricConcav_ARB2_VIS
-	bool load_Qi_SymmetricConcav_ARB2_VIS = findCatalog(mLoadLensCatalogEO, lensTypes::Qi_SymmetricConcav_ARB2_VIS);
+	bool load_Qi_SymmetricConcav_ARB2_VIS = findCatalog(mLoadLensCatalogQioptiq, lensTypes::Qi_SymmetricConcav_ARB2_VIS);
 	if (load_Qi_SymmetricConcav_ARB2_VIS)
 	{
 		Qi_SymmetricConcav_ARB2_VIS_vec = findOptSysEle_lens_inCatalog_TwoSurfaces(paraLens, mAll_Qi_SymmetricConcav_ARB2_VIS, weightFocal, weightThickness, weightSemiHeight);
@@ -1809,7 +1925,7 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 	}
 
 	//Qi_PosAchromat_VIS_3_31_ARB2_VIS
-	bool load_Qi_PosAchromat_VIS_3_31_ARB2_VIS = findCatalog(mLoadLensCatalogEO, lensTypes::Qi_PosAchromat_VIS_3_31_ARB2_VIS);
+	bool load_Qi_PosAchromat_VIS_3_31_ARB2_VIS = findCatalog(mLoadLensCatalogQioptiq, lensTypes::Qi_PosAchromat_VIS_3_31_ARB2_VIS);
 	if (load_Qi_PosAchromat_VIS_3_31_ARB2_VIS)
 	{
 		Qi_PosAchromat_VIS_3_31_ARB2_VIS_vec = findOptSysEle_lens_inCatalog_ThreeSurfaces(paraLens, mAll_Qi_PosAchromat_VIS_3_31_ARB2_VIS, weightFocal, weightThickness, weightSemiHeight);
@@ -1828,7 +1944,7 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 	}
 
 	//Qi_PosAchromat_VIS_31_40_ARB2_VIS
-	bool load_Qi_PosAchromat_VIS_31_40_ARB2_VIS = findCatalog(mLoadLensCatalogEO, lensTypes::Qi_PosAchromat_VIS_31_40_ARB2_VIS);
+	bool load_Qi_PosAchromat_VIS_31_40_ARB2_VIS = findCatalog(mLoadLensCatalogQioptiq, lensTypes::Qi_PosAchromat_VIS_31_40_ARB2_VIS);
 	if (load_Qi_PosAchromat_VIS_31_40_ARB2_VIS)
 	{
 		Qi_PosAchromat_VIS_31_40_ARB2_VIS_vec = findOptSysEle_lens_inCatalog_ThreeSurfaces(paraLens, mAll_Qi_PosAchromat_VIS_31_40_ARB2_VIS, weightFocal, weightThickness, weightSemiHeight);
@@ -1847,7 +1963,7 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 	}
 
 	//Qi_NegAchromat_ARB2_VIS
-	bool load_Qi_NegAchromat_ARB2_VIS = findCatalog(mLoadLensCatalogEO, lensTypes::Qi_NegAchromat_ARB2_VIS);
+	bool load_Qi_NegAchromat_ARB2_VIS = findCatalog(mLoadLensCatalogQioptiq, lensTypes::Qi_NegAchromat_ARB2_VIS);
 	if (load_Qi_NegAchromat_ARB2_VIS)
 	{
 		Qi_NegAchromat_ARB2_VIS_vec = findOptSysEle_lens_inCatalog_ThreeSurfaces(paraLens, mAll_Qi_NegAchromat_ARB2_VIS, weightFocal, weightThickness, weightSemiHeight);

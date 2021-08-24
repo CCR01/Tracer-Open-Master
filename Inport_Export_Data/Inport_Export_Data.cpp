@@ -73,7 +73,7 @@ void inportExportData::saveDoubleInTXT(std::string locationTXT, std::string name
 
 }
 
-void inportExportData::exportIntVecInTXT(std::string locationTXT, std::string nameTXT, std::string nameValues, std::vector<int> value_vec, bool clearTXT)
+void inportExportData::exportIntVecInTXT(std::string locationTXT, std::string nameTXT, std::string nameValues, std::vector<unsigned int> value_vec, bool clearTXT)
 {
 	std::string type = ".txt";
 
@@ -472,6 +472,46 @@ void inportExportData::exportDataToExcel_vector(std::string locationExcel, std::
 						<< stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";"
 						<< stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << ";" << stringToSave.at(12) << ";" << stringToSave.at(13) << ";"
 						<< stringToSave.at(14) << ";" << stringToSave.at(15) << ";" << stringToSave.at(16) << ";" << stringToSave.at(17) << ";" << stringToSave.at(18) << ";" << stringToSave.at(19) << std::endl;
+					break;
+				}
+
+				case 21:
+				{
+					outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";"
+						<< stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";"
+						<< stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << ";" << stringToSave.at(12) << ";" << stringToSave.at(13) << ";"
+						<< stringToSave.at(14) << ";" << stringToSave.at(15) << ";" << stringToSave.at(16) << ";" << stringToSave.at(17) << ";" << stringToSave.at(18) << ";"
+						<< stringToSave.at(19) << ";" << stringToSave.at(20) << std::endl;
+					break;
+				}
+
+				case 22:
+				{
+					outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";"
+						<< stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";"
+						<< stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << ";" << stringToSave.at(12) << ";" << stringToSave.at(13) << ";"
+						<< stringToSave.at(14) << ";" << stringToSave.at(15) << ";" << stringToSave.at(16) << ";" << stringToSave.at(17) << ";" << stringToSave.at(18) << ";"
+						<< stringToSave.at(19) << ";" << stringToSave.at(20) << ";" << stringToSave.at(21) << std::endl;
+					break;
+				}
+
+				case 23:
+				{
+					outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";"
+						<< stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";"
+						<< stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << ";" << stringToSave.at(12) << ";" << stringToSave.at(13) << ";"
+						<< stringToSave.at(14) << ";" << stringToSave.at(15) << ";" << stringToSave.at(16) << ";" << stringToSave.at(17) << ";" << stringToSave.at(18) << ";"
+						<< stringToSave.at(19) << ";" << stringToSave.at(20) << ";" << stringToSave.at(21) << ";" << stringToSave.at(22) << std::endl;
+					break;
+				}
+
+				case 24:
+				{
+					outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";"
+						<< stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";"
+						<< stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << ";" << stringToSave.at(12) << ";" << stringToSave.at(13) << ";"
+						<< stringToSave.at(14) << ";" << stringToSave.at(15) << ";" << stringToSave.at(16) << ";" << stringToSave.at(17) << ";" << stringToSave.at(18) << ";"
+						<< stringToSave.at(19) << ";" << stringToSave.at(20) << ";" << stringToSave.at(21) << ";" << stringToSave.at(22) << ";" << stringToSave.at(23) << std::endl;
 					break;
 				}
 

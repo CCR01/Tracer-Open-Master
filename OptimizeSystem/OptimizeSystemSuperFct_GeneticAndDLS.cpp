@@ -108,7 +108,9 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 	// DLS
 	DLS DLS_Class(/*optSysEle*/ optSysEleOptimizedGenetic, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
 	DLS_Class.turnOffImaProc();
+	DLS_Class.optimizeSystem_DLS_multiplicativ_Damping();
 	OpticalSystemElement optSysEleOptimizedDLS = DLS_Class.getOptimizedSystem_HLT();
+	mBestMeritVal = DLS_Class.getBestMeritValue();
 
 	return optSysEleOptimizedDLS;
 

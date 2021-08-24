@@ -330,10 +330,10 @@ bool testCompareTOMandZemaxOptimizer::testCompareTOMandZemaxOptimizer_superFct()
 	// clear txt
 	inportExportData::clearDataInTXT(location, nameWorkCompareTOMandZemax);
 
-	// E0 
-	bool checkE0 = testCompareTOMandZemaxOptimizer_E0();
-	workTheSystem.push_back(checkE0);
-	if (checkE0) { inportExportData::saveStringInTXT_includingTime(location, nameWorkCompareTOMandZemax, "E0 worked"); };
+	//// E0 
+	//bool checkE0 = testCompareTOMandZemaxOptimizer_E0();
+	//workTheSystem.push_back(checkE0);
+	//if (checkE0) { inportExportData::saveStringInTXT_includingTime(location, nameWorkCompareTOMandZemax, "E0 worked"); };
 
 	//// E1
 	//bool checkE1 = testCompareTOMandZemaxOptimizer_E1();
@@ -359,6 +359,11 @@ bool testCompareTOMandZemaxOptimizer::testCompareTOMandZemaxOptimizer_superFct()
 	//bool checkE5 = testCompareTOMandZemaxOptimizer_E5();
 	//workTheSystem.push_back(checkE5);
 	//if (checkE5) { inportExportData::saveStringInTXT_includingTime(location, nameWorkCompareTOMandZemax, "E5 worked"); };
+
+	// E6
+	bool checkE6 = testCompareTOMandZemaxOptimizer_E6();
+	workTheSystem.push_back(checkE6);
+	if (checkE6) { inportExportData::saveStringInTXT_includingTime(location, nameWorkCompareTOMandZemax, "E6 worked"); };
 
 	// export all results
 	// loaction
@@ -822,6 +827,7 @@ bool testCompareTOMandZemaxOptimizer::testCompareTOMandZemaxOptimizer_E5()
 	
 	SphericalElement S13(/*radius*/ 50.0, /*semi height*/ semiHeight, /*point*/{ 0.0,0.0,90.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNBK7_S1());
 	SphericalElement S14(/*radius*/ 100.0, /*semi height*/ semiHeight, /*point*/{ 0.0,0.0,95.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNBK7_S1());
+	
 
 	PlanElement S15(/*semi height*/ 99.0, /*point*/{ 0.0,0.0,100.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ mGlasses.getAir(), /*refractive index B*/ mGlasses.getAir());
 
@@ -850,8 +856,9 @@ bool testCompareTOMandZemaxOptimizer::testCompareTOMandZemaxOptimizer_E5()
 	surfacePtr S14_ptr = S14.clone();
 	surfacePtr S15_ptr = S15.clone();
 
+
 	std::vector<surfacePtr> opticalSystem_ptr{ S0_ptr, S1_ptr, S2_ptr, S3_ptr, S4_ptr,S5_ptr,S6_ptr, S7_ptr, S8_ptr, S9_ptr, S10_ptr, S11_ptr, S12_ptr, S13_ptr, S14_ptr, S15_ptr };
-	std::vector<interaction_ptr> interactions_ptr{ mDoNot.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(), mAbsorb.clone() };
+	std::vector<interaction_ptr> interactions_ptr{ mDoNot.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
 
 
 	//	build optical system
@@ -891,6 +898,89 @@ bool testCompareTOMandZemaxOptimizer::testCompareTOMandZemaxOptimizer_E5()
 bool testCompareTOMandZemaxOptimizer::testCompareTOMandZemaxOptimizer_E6()
 {
 	std::vector<bool> workTheSystem;
+
+	real semiHeight = 10;
+	ApertureStopElement S0(/* semi height*/1.5, /*point*/{ 0.0,0.0,25.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ mGlasses.getAir());
+
+	SphericalElement S1(/*radius*/ 30.0, /*semi height*/ semiHeight, /*point*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0,-1.0 }, /*refractive index A*/ mGlasses.getNSF66_S1(), /*refractive index B*/mGlasses.getAir());
+	SphericalElement S2(/*radius*/ 60.0, /*semi height*/semiHeight, /*point*/{ 0.0,0.0,35.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getNLAF2_S1(), /*refractive index B*/mGlasses.getNSF66_S1());
+	SphericalElement S3(/*radius*/ 50.0, /*semi height*/semiHeight, /*point*/{ 0.0,0.0,40.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNLAF2_S1());
+
+	SphericalElement S4(/*radius*/ 60.0, /*semi height*/ semiHeight, /*point*/{ 0.0,0.0,45.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNBAF10_S1());
+	SphericalElement S5(/*radius*/ 40.0, /*semi height*/ semiHeight, /*point*/{ 0.0,0.0,50.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getNSF57_S1(), /*refractive index B*/mGlasses.getNBAF10_S1());
+	SphericalElement S6(/*radius*/ 50.0, /*semi height*/ semiHeight, /*point*/{ 0.0,0.0,55.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNSF57_S1());
+
+	SphericalElement S7(/*radius*/ 30.0, /*semi height*/ semiHeight, /*point*/{ 0.0,0.0,60.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNBK7_S1());
+	SphericalElement S8(/*radius*/ 20.0, /*semi height*/ semiHeight, /*point*/{ 0.0,0.0,65.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getNSF5_S1(), /*refractive index B*/mGlasses.getNBK7_S1());
+	SphericalElement S9(/*radius*/ 100.0, /*semi height*/ semiHeight, /*point*/{ 0.0,0.0,70.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getNSF5_S1(), /*refractive index B*/mGlasses.getAir());
+
+	SphericalElement S10(/*radius*/ 20.0, /*semi height*/ semiHeight, /*point*/{ 0.0,0.0,75.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNBK7_S1());
+	SphericalElement S11(/*radius*/ 20.0, /*semi height*/ semiHeight, /*point*/{ 0.0,0.0,80.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getNPSK53_S1(), /*refractive index B*/mGlasses.getNBK7_S1());
+	SphericalElement S12(/*radius*/ 30.0, /*semi height*/ semiHeight, /*point*/{ 0.0,0.0,85.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNPSK53_S1());
+
+	SphericalElement S13(/*radius*/ 50.0, /*semi height*/ semiHeight, /*point*/{ 0.0,0.0,90.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNBK7_S1());
+	SphericalElement S14(/*radius*/ 100.0, /*semi height*/ semiHeight, /*point*/{ 0.0,0.0,95.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getNLAK22_S1(), /*refractive index B*/mGlasses.getNBK7_S1());
+	SphericalElement S15(/*radius*/ 100.0, /*semi height*/ semiHeight, /*point*/{ 0.0,0.0,100.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getNLAK22_S1(), /*refractive index B*/mGlasses.getAir());
+
+	PlanElement S16(/*semi height*/ 99.0, /*point*/{ 0.0,0.0,105.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ mGlasses.getAir(), /*refractive index B*/ mGlasses.getAir());
+
+	// **********************************
+	// set parameter variable
+	S3.setParameterRadius(/*min value*/ -1000.0, /*max value*/ 1000.0, 0.0, typeModifierVariable);
+	S4.setParameterRadius(/*min value*/ -1000.0, /*max value*/ 1000.0, 0.0, typeModifierVariable);
+	S7.setParameterRadius(/*min value*/ -1000.0, /*max value*/ 1000.0, 0.0, typeModifierVariable);
+	S10.setParameterRadius(/*min value*/ -1000.0, /*max value*/ 1000.0, 0.0, typeModifierVariable);
+	// **********************************
+
+	surfacePtr S0_ptr = S0.clone();
+	surfacePtr S1_ptr = S1.clone();
+	surfacePtr S2_ptr = S2.clone();
+	surfacePtr S3_ptr = S3.clone();
+	surfacePtr S4_ptr = S4.clone();
+	surfacePtr S5_ptr = S5.clone();
+	surfacePtr S6_ptr = S6.clone();
+	surfacePtr S7_ptr = S7.clone();
+	surfacePtr S8_ptr = S8.clone();
+	surfacePtr S9_ptr = S9.clone();
+	surfacePtr S10_ptr = S10.clone();
+	surfacePtr S11_ptr = S11.clone();
+	surfacePtr S12_ptr = S12.clone();
+	surfacePtr S13_ptr = S13.clone();
+	surfacePtr S14_ptr = S14.clone();
+	surfacePtr S15_ptr = S15.clone();
+	surfacePtr S16_ptr = S16.clone();
+
+	std::vector<surfacePtr> opticalSystem_ptr{ S0_ptr, S1_ptr, S2_ptr, S3_ptr, S4_ptr,S5_ptr,S6_ptr, S7_ptr, S8_ptr, S9_ptr, S10_ptr, S11_ptr, S12_ptr, S13_ptr, S14_ptr, S15_ptr, S16_ptr };
+	std::vector<interaction_ptr> interactions_ptr{ mDoNot.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
+
+
+	//	build optical system
+	OpticalSystemElement optSystemElement(opticalSystem_ptr, interactions_ptr);
+	oftenUse::print(optSystemElement, 550.0);
+	// save the start system
+	std::string location = "../tests/testCompareTOMandZemaxOptimizer/E6";
+	inportExportData::saveOpticalSystemAsTXT(optSystemElement, 550.0, location, "start_E6");
+
+	// check ref indexes
+	bool checkRefIndexes = oftenUse::checkRefractivIndex(optSystemElement);
+	workTheSystem.push_back(checkRefIndexes);
+	// check the start system
+	std::vector<real> rms_Zemax{ 447.876, 391.857, 337.982 };
+	bool test = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement, mField_vec, mWavelength_FdV_vec, rms_Zemax, mTolerance, compareTOM_Zemax::comEqual);
+	workTheSystem.push_back(test);
+
+	//** results optimize Zemax
+	real field0_RMS_Z = 10.033;
+	real field1_RMS_Z = 10.702;
+	real field2_RMS_Z = 14.893;
+	std::vector<real> rmsZ = { field0_RMS_Z, field1_RMS_Z,field2_RMS_Z };
+
+	// try all optimization methodes
+	saveResultsOptimizationMethodes saveResultsE6 = tryAllOptimizationMethodes(optSystemElement, rmsZ);
+	mSaveAllResults.push_back(saveResultsE6);
+
+	// save optimized optical system
+	exportAllOpticalSystems(location, saveResultsE6);
 
 	bool returnChecker = Math::checkTrueOfVectorElements(workTheSystem);
 	return returnChecker;

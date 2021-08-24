@@ -23,7 +23,7 @@ namespace inportExportData
 
 	// export data to TXT
 	void saveDoubleInTXT(std::string locationTXT, std::string nameTXT, std::string nameDoubel, real valueToSave);
-	void exportIntVecInTXT(std::string locationTXT, std::string nameTXT, std::string nameValues, std::vector<int> value_vec, bool clearTXT);
+	void exportIntVecInTXT(std::string locationTXT, std::string nameTXT, std::string nameValues, std::vector<unsigned int> value_vec, bool clearTXT);
 	void makeLineInTXT(std::string locationTXT, std::string nameTXT);
 	void makeSpaceLineInTXT(std::string locationTXT, std::string nameTXT);
 	// save string in txt

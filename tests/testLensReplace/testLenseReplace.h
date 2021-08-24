@@ -29,6 +29,7 @@ public:
 	bool testLensReplace_E9();
 	bool testLensReplace_E10();
 	bool testLensReplace_E11();
+	bool testLensReplace_E12();
 
 
 private:

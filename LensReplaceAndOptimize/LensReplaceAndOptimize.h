@@ -45,6 +45,7 @@ public:
 	// ***
 
 	void setLoadLensCatalogs(std::vector<lensTypes> lensCataVec);
+	void setLoad_ALL_LensCatalogs();
 	void saveBestReplacedOpticalSystem();
 	std::vector<OptSysEle_Merit_LensType> flipOptSysEleBy180Degrees(std::vector < OptSysEle_Merit_LensType> initialBestOptSysReplace);
 	OpticalSystemElement getBestReplacedOpticalSystem();
@@ -58,7 +59,7 @@ public:
 	// find best replace optical system
 	void findBestReplaceOpticalSystem();
 	// get replaced sequence
-	std::vector<int> getReplacedSequence();
+	std::vector<unsigned int> getReplacedSequence();
 	// get best catalog lenese for replace
 	std::vector<OptSysEle_Merit_LensType> getBestCatalogLensesForreplace();
 	// load sequence
@@ -66,9 +67,13 @@ public:
 	// debug mode
 	void turn_ON_DebugMode();
 	void turn_OFF_DebugMode();
+	// get best merit value
+	real getBestMeritVal();
+
 
 private:
-	std::vector<lensTypes> mLoadLensCatalogEO_vec;
+	std::vector<lensTypes> mLoadLensCatalog_vec{};
+	bool mLoadAllLensCatalogs{};
 	std::vector<OpticalSystemElement> mReplaceOpticalSysEle{};
 	std::vector<OpticalSystemElement> mReplaceOpticalSysEle_opti{};
 	std::vector<real> mReplaceMeritVal_opti{};
@@ -98,8 +103,8 @@ private:
 	std::vector<std::vector<OptSysEle_Merit_LensType>> mSaveAllBestLensToReplace_vec_includingFlipedLenses{};
 	std::vector<OpticalSystemElement> mSaveAllBestReplacedOpticalSystem{};
 	std::vector<real> mSaveAllBestMeritVal{};
-	std::vector<int> mSaveReplacedSequence{};
-	std::vector<std::vector<int>> mAllPossibleSequencesInt{};
+	std::vector<unsigned int> mSaveReplacedSequence{};
+	std::vector<std::vector<unsigned int>> mAllPossibleSequencesInt{};
 
 	bool mDebugMode{};
 };

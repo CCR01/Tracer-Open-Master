@@ -160,10 +160,10 @@ void LensReplaceAndOptimize::lensReplaceAndOptimize_superFct(OpticalSystemElemen
 
 	}
 
-	if (repSequence == replaceSequence::allPossibleSequences)
+	else if (repSequence == replaceSequence::allPossibleSequences)
 	{
 		// sequence lens replace left to right
-		std::vector<int> sequenceLensReplaceLeftToRight;
+		std::vector<unsigned int> sequenceLensReplaceLeftToRight;
 		sequenceLensReplaceLeftToRight.resize(lensesInOptSys);
 		for (unsigned int i = 0; i < lensesInOptSys; ++i)
 		{
@@ -171,7 +171,7 @@ void LensReplaceAndOptimize::lensReplaceAndOptimize_superFct(OpticalSystemElemen
 		}
 
 		// calc all possible sequences
-		std::vector<std::vector<int>> mAllPossibleSequencesInt = oftenUse::calcAllPossibleSequencesInt(sequenceLensReplaceLeftToRight);
+		std::vector<std::vector<unsigned int>> mAllPossibleSequencesInt = oftenUse::calcAllPossibleSequencesInt(sequenceLensReplaceLeftToRight);
 		int counter = 0;
 		int size = mAllPossibleSequencesInt.size();
 
@@ -355,7 +355,15 @@ void LensReplaceAndOptimize::lensReplaceAndOpti_DLS(unsigned int numberLensToRep
 		mOptimizedOpticalSystemEle.setRefractiveIndexAccordingToWavelength(550.0);
 		lensRep.setRefIndexSurroundMat(oftenUse::getStartRefIndex(mOptimizedOpticalSystemEle.getLLTconversion_doConversion()));
 		lensRep.replaceSuperFuction(mOptimizedOpticalSystemEle);
-		lensRep.loadLensCata(mLoadLensCatalogEO_vec);
+		
+		if (mLoadLensCatalog_vec.size() > 0)
+		{
+			lensRep.loadLensCata(mLoadLensCatalog_vec);
+		}
+		else if (mLoadAllLensCatalogs)
+		{
+			lensRep.load_ALL_LensCatalogs();
+		}
 
 		mBestLensToReplace_vec = lensRep.checkLensCatalogsForBestFitLenses_many(/*lens number*/numberLensToReplace, /*parameter lens*/ lensRep.getParameterLenses()[numberLensToReplace],/*number best fit lenses*/ numberBestFitLenses);
 		mBestLensToReplace_vec_includingFlipedLenses = flipOptSysEleBy180Degrees(mBestLensToReplace_vec);
@@ -433,7 +441,15 @@ void LensReplaceAndOptimize::lensReplaceAndOpti_DLS_12(unsigned int numberLensTo
 		mOptimizedOpticalSystemEle.setRefractiveIndexAccordingToWavelength(550.0);
 		lensRep.setRefIndexSurroundMat(oftenUse::getStartRefIndex(mOptimizedOpticalSystemEle.getLLTconversion_doConversion()));
 		lensRep.replaceSuperFuction(mOptimizedOpticalSystemEle);
-		lensRep.loadLensCata(mLoadLensCatalogEO_vec);
+
+		if (mLoadLensCatalog_vec.size() > 0)
+		{
+			lensRep.loadLensCata(mLoadLensCatalog_vec);
+		}
+		else if (mLoadAllLensCatalogs)
+		{
+			lensRep.load_ALL_LensCatalogs();
+		}
 
 		mBestLensToReplace_vec = lensRep.checkLensCatalogsForBestFitLenses_many(/*lens number*/numberLensToReplace, /*parameter lens*/ lensRep.getParameterLenses()[numberLensToReplace],/*number best fit lenses*/ numberBestFitLenses);
 		mBestLensToReplace_vec_includingFlipedLenses = flipOptSysEleBy180Degrees(mBestLensToReplace_vec);
@@ -512,7 +528,15 @@ void LensReplaceAndOptimize::lensReplaceAndOpti_GeneticAndDLS(unsigned int numbe
 		mOptimizedOpticalSystemEle.setRefractiveIndexAccordingToWavelength(550.0);
 		lensRep.setRefIndexSurroundMat(oftenUse::getStartRefIndex(mOptimizedOpticalSystemEle.getLLTconversion_doConversion()));
 		lensRep.replaceSuperFuction(mOptimizedOpticalSystemEle);
-		lensRep.loadLensCata(mLoadLensCatalogEO_vec);
+
+		if (mLoadLensCatalog_vec.size() > 0)
+		{
+			lensRep.loadLensCata(mLoadLensCatalog_vec);
+		}
+		else if (mLoadAllLensCatalogs)
+		{
+			lensRep.load_ALL_LensCatalogs();
+		}
 
 		mBestLensToReplace_vec = lensRep.checkLensCatalogsForBestFitLenses_many(/*lens number*/numberLensToReplace, /*parameter lens*/ lensRep.getParameterLenses()[numberLensToReplace],/*number best fit lenses*/ numberBestFitLenses);
 		mBestLensToReplace_vec_includingFlipedLenses = flipOptSysEleBy180Degrees(mBestLensToReplace_vec);
@@ -593,7 +617,15 @@ void LensReplaceAndOptimize::lensReplaceAndOpti_GeneticAndDLS_12(unsigned int nu
 		mOptimizedOpticalSystemEle.setRefractiveIndexAccordingToWavelength(550.0);
 		lensRep.setRefIndexSurroundMat(oftenUse::getStartRefIndex(mOptimizedOpticalSystemEle.getLLTconversion_doConversion()));
 		lensRep.replaceSuperFuction(mOptimizedOpticalSystemEle);
-		lensRep.loadLensCata(mLoadLensCatalogEO_vec);
+		
+		if (mLoadLensCatalog_vec.size() > 0)
+		{
+			lensRep.loadLensCata(mLoadLensCatalog_vec);
+		}
+		else if (mLoadAllLensCatalogs)
+		{
+			lensRep.load_ALL_LensCatalogs();
+		}
 
 		mBestLensToReplace_vec = lensRep.checkLensCatalogsForBestFitLenses_many(/*lens number*/numberLensToReplace, /*parameter lens*/ lensRep.getParameterLenses()[numberLensToReplace],/*number best fit lenses*/ numberBestFitLenses);
 		mBestLensToReplace_vec_includingFlipedLenses = flipOptSysEleBy180Degrees(mBestLensToReplace_vec);
@@ -677,7 +709,12 @@ unsigned int LensReplaceAndOptimize::getPopulation()
 
 void LensReplaceAndOptimize::setLoadLensCatalogs(std::vector<lensTypes> lensCataVec)
 {
-	mLoadLensCatalogEO_vec = lensCataVec;
+	mLoadLensCatalog_vec = lensCataVec;
+}
+
+void LensReplaceAndOptimize::setLoad_ALL_LensCatalogs()
+{
+	mLoadAllLensCatalogs = true;
 }
 
 void LensReplaceAndOptimize::saveBestReplacedOpticalSystem()
@@ -841,7 +878,7 @@ void LensReplaceAndOptimize::findBestReplaceOpticalSystem()
 
 
 // get replaced sequence
-std::vector<int> LensReplaceAndOptimize::getReplacedSequence()
+std::vector<unsigned int> LensReplaceAndOptimize::getReplacedSequence()
 {
 	return mSaveReplacedSequence;
 }
@@ -866,4 +903,10 @@ void LensReplaceAndOptimize::turn_ON_DebugMode()
 void LensReplaceAndOptimize::turn_OFF_DebugMode()
 {
 	mDebugMode = false;
+}
+
+// get best merit value
+real LensReplaceAndOptimize::getBestMeritVal()
+{
+	return mBestMeritVal;
 }

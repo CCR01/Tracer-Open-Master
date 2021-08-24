@@ -56,50 +56,54 @@ bool testLensReplace::testLensReplace_superFct()
 	//// E0
 	bool checkE0 = testLensReplace_E0();
 	workLensReplace_superFct.push_back(checkE0);
-
+	
 	// E1
 	bool checkE1 = testLensReplace_E1();
 	workLensReplace_superFct.push_back(checkE1);
-
+	
 	// E2
 	bool checkE2 = testLensReplace_E2();
 	workLensReplace_superFct.push_back(checkE2);
-
+	
 	// E3
 	bool checkE3 = testLensReplace_E3();
 	workLensReplace_superFct.push_back(checkE3);
-
+	
 	// E4
 	bool checkE4 = testLensReplace_E4();
 	workLensReplace_superFct.push_back(checkE4);
-
+	
 	// E5
 	bool checkE5 = testLensReplace_E5();
 	workLensReplace_superFct.push_back(checkE5);
-
+	
 	// E6
 	bool checkE6 = testLensReplace_E6();
 	workLensReplace_superFct.push_back(checkE6);
-
+	
 	//E7
 	bool checkE7 = testLensReplace_E7();
 	workLensReplace_superFct.push_back(checkE7);
-
+	
 	//E8
 	bool checkE8 = testLensReplace_E8();
 	workLensReplace_superFct.push_back(checkE8);
-
+	
 	//E9
 	bool checkE9 = testLensReplace_E9();
 	workLensReplace_superFct.push_back(checkE9);
-
+	
 	//E10
 	bool checkE10 = testLensReplace_E10();
 	workLensReplace_superFct.push_back(checkE10);
-
+	
 	//E11
 	bool checkE11 = testLensReplace_E11();
 	workLensReplace_superFct.push_back(checkE11);
+
+	//E12
+	bool checkE12 = testLensReplace_E12();
+	workLensReplace_superFct.push_back(checkE12);
 
 	bool returnChecker_superFct = Math::checkTrueOfVectorElements(workLensReplace_superFct);
 	return returnChecker_superFct;
@@ -1326,3 +1330,59 @@ bool testLensReplace::testLensReplace_E11()
 	return checker;
 }
 
+bool testLensReplace::testLensReplace_E12()
+{
+	std::vector<bool> workLensReplace;
+
+	ApertureStopElement S0(/* semi height*/1.0, /*point*/{ 0.0,0.0,15.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ mGlasses.getAir());
+	SphericalElement S1(/*radius*/ 50.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,20.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNSF66_S1());
+	SphericalElement S2(/*radius*/ 100.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,25.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getNLAF2_S1(), /*refractive index B*/mGlasses.getNSF66_S1());
+	SphericalElement S3(/*radius*/ 40.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,30.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNLAF2_S1());
+	SphericalElement S4(/*radius*/ 50.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,35.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNPK52A_S1());
+	SphericalElement S5(/*radius*/ 20.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,40.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getNPK52A_S1(), /*refractive index B*/mGlasses.getNBK7_S1());
+	SphericalElement S6(/*radius*/ 40.0, /*semi height*/ 7.5, /*point*/{ 0.0,0.0,45.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNBK7_S1());
+	PlanElement S7(/*semi height*/ 99.0, /*point*/{ 0.0,0.0,60.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ mGlasses.getAir(), /*refractive index B*/ mGlasses.getAir());
+
+	surfacePtr S0_ptr = S0.clone();
+	surfacePtr S1_ptr = S1.clone();
+	surfacePtr S2_ptr = S2.clone();
+	surfacePtr S3_ptr = S3.clone();
+	surfacePtr S4_ptr = S4.clone();
+	surfacePtr S5_ptr = S5.clone();
+	surfacePtr S6_ptr = S6.clone();
+	surfacePtr S7_ptr = S7.clone();
+
+
+	std::vector<surfacePtr> opticalSystem_ptr{ S0_ptr, S1_ptr, S2_ptr, S3_ptr, S4_ptr,S5_ptr,S6_ptr, S7_ptr };
+	std::vector<interaction_ptr> interactions_ptr{ mDoNot.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
+
+
+	//	build optical system
+	OpticalSystemElement optSystemElement(opticalSystem_ptr, interactions_ptr);
+
+	oftenUse::print(optSystemElement, 550.0);
+
+	// check the start system
+	std::vector<real> rms_Zemax{ 850.263, 843.856, 825.044 };
+	std::vector<real> wave_vec{ 550.0, 400.0, 700.0 };
+	std::vector<VectorStructR3> field_vec{ {0.0,0.0,0.0}, {0.0,1.0,0.0}, {0.0,2.0,0.0} };
+	bool test = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement, field_vec, wave_vec, rms_Zemax, mGlobalTolerance, compareTOM_Zemax::comEqual);
+	workLensReplace.push_back(test);
+
+	// check refractiv indexes start system
+	bool checkRefInd = oftenUse::checkRefractivIndex(optSystemElement);
+	workLensReplace.push_back(checkRefInd);
+
+	// replace lenses
+	LensReplace lensReplace;
+	lensReplace.setRefIndexSurroundMat(1.0);
+	lensReplace.replaceSuperFuction(optSystemElement);
+
+	lensReplace.load_ALL_LensCatalogs();
+
+	lensReplace.replaceLensesAccordingToLensReplaceSequence_superFct(replaceSequence::leftToRight, 3);
+	std::vector<OpticalSystemElement> replacedOptSysEle_vec = lensReplace.getOpticalSysEle_replacedLens_vec();
+
+	bool checker = Math::checkTrueOfVectorElements(workLensReplace);
+	return checker;
+}

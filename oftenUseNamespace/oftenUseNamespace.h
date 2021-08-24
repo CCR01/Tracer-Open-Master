@@ -137,10 +137,10 @@ namespace oftenUse
 	VectorStructR3 getMaxStartPoint(VectorStructR3 referencePoint, std::vector<VectorStructR3> startPointVec);
 
 	// calculate faculty
-	int calcFacultyInt(int value);
+	int calcFacultyInt(unsigned int value);
 
 	// calculate all possible sequences int
-	std::vector<std::vector<int>> calcAllPossibleSequencesInt(std::vector<int> vec);
+	std::vector<std::vector<unsigned int>> calcAllPossibleSequencesInt(std::vector<unsigned int> vec);
 
 	// check refractiv index 
 	bool checkRefractivIndex(OpticalSystem_LLT optSyeLLT);
