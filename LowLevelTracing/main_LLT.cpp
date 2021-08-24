@@ -135,7 +135,7 @@ int main(int argc, char **argv)
 
 	// the the system
 	////std::vector<testWhat> testWhatVec_2 = { testWhat::tALL };
-	std::vector<testWhat> testWhatVec_1 = { testWhat::tCompareTOMandZemaxOptimizer };
+	std::vector<testWhat> testWhatVec_1 = { testWhat::tDLS_optiRMS };
 	ManagementTests managementTest_1(testWhatVec_1);
 	workTheSystem.push_back(managementTest_1.testSuperFct());
 	
