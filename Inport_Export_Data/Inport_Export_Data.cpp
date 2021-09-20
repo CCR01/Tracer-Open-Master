@@ -20,7 +20,7 @@ std::vector<std::string> inportExportData::convertDoubleToString_vector_withComm
 	std::vector<std::string> outputVecString(size);
 	real tempDouble;
 	std::string tempString;
-	
+
 	for (unsigned int i = 0; i < size; i++)
 	{
 		tempDouble = vectorDouble.at(i);
@@ -36,9 +36,9 @@ std::vector<std::string> inportExportData::convertDoubleToString_vector_withComm
 
 std::string inportExportData::convertDoubleToString_withComma(real value)
 {
-	
+
 	std::string string;
-		
+
 	string = std::to_string(value);
 	std::replace(string.begin(), string.end(), '.', ',');
 
@@ -71,6 +71,29 @@ void inportExportData::saveDoubleInTXT(std::string locationTXT, std::string name
 	file.close();
 
 
+}
+
+void inportExportData::saveDoubleInTXT(std::string locationTXT, std::string nameTXT, std::string nameDoubel, real valueToSave, bool clearTXT)
+{
+	if (clearTXT)
+	{
+		clearDataInTXT(locationTXT, nameTXT);
+	}
+
+	saveDoubleInTXT(locationTXT, nameTXT, nameDoubel, valueToSave);
+}
+
+void inportExportData::saveVecDoubleInTXT(std::string locationTXT, std::string nameTXT, std::vector<std::string> nameDoubel_vec, std::vector<real> valueToSave_vec, bool clearTXT)
+{
+	if (clearTXT)
+	{
+		clearDataInTXT(locationTXT, nameTXT);
+	}
+
+	for (unsigned int i = 0; i < nameDoubel_vec.size(); ++i)
+	{
+		saveDoubleInTXT(locationTXT, nameTXT, nameDoubel_vec[i], valueToSave_vec[i]);
+	}
 }
 
 void inportExportData::exportIntVecInTXT(std::string locationTXT, std::string nameTXT, std::string nameValues, std::vector<unsigned int> value_vec, bool clearTXT)
@@ -109,7 +132,7 @@ void inportExportData::exportIntVecInTXT(std::string locationTXT, std::string na
 			file << tempValue << std::endl;
 		}
 	}
-	
+
 	file.close();
 }
 
@@ -118,7 +141,7 @@ void inportExportData::exportIntVecInTXT(std::string locationTXT, std::string na
 void inportExportData::saveStringInTXT_includingTime(std::string locationTXT, std::string nameTXT, std::string stringToSave)
 {
 	std::string type = ".txt";
-	
+
 	int sizeLocEx = locationTXT.size() - 1;
 	char lastCharLocEx = locationTXT[sizeLocEx];
 	std::string holeFile;
@@ -208,7 +231,7 @@ void inportExportData::makeLineInTXT(std::string locationTXT, std::string nameTX
 void inportExportData::makeSpaceLineInTXT(std::string locationTXT, std::string nameTXT)
 {
 	std::string type = ".txt";
-	
+
 	int sizeLocEx = locationTXT.size() - 1;
 	char lastCharLocEx = locationTXT[sizeLocEx];
 	std::string holeFile;
@@ -281,7 +304,60 @@ void inportExportData::exportDataToExcel(std::string locationExcel, std::string 
 		//outData << "" << std::endl;
 
 	}
-	
+
+}
+
+void inportExportData::exportDataToExcel_name(std::string locationExcel, std::string nameExcel, std::string name)
+{
+	std::string type = ".csv";
+
+	int sizeLocEx = locationExcel.size() - 1;
+	char lastCharLocEx = locationExcel[sizeLocEx];
+	std::string holeFile;
+	if (lastCharLocEx == '/')
+	{
+		holeFile = locationExcel + nameExcel + type;
+	}
+	else
+	{
+		holeFile = locationExcel + "/" + nameExcel + type;
+	}
+
+
+	std::ofstream outData;
+	outData.open(holeFile, std::ios::app);
+	if (outData.is_open())
+	{
+		outData << name << std::endl;
+	}
+}
+
+void inportExportData::exportDataToExcel_makeOneRowSpace(std::string locationExcel, std::string nameExcel)
+{
+	std::string type = ".csv";
+
+	int sizeLocEx = locationExcel.size() - 1;
+	char lastCharLocEx = locationExcel[sizeLocEx];
+	std::string holeFile;
+	if (lastCharLocEx == '/')
+	{
+		holeFile = locationExcel + nameExcel + type;
+	}
+	else
+	{
+		holeFile = locationExcel + "/" + nameExcel + type;
+	}
+
+
+	std::ofstream outData;
+	outData.open(holeFile, std::ios::app);
+	if (outData.is_open())
+	{
+		//outData << "" << std::endl;
+		outData << " " << std::endl;
+		//outData << "" << std::endl;
+
+	}
 }
 
 void inportExportData::removeDateCSV(std::string location, std::string name)
@@ -322,7 +398,7 @@ void inportExportData::exportDataToExcel_vector(std::string locationExcel, std::
 	}
 	else
 	{
-		holeFile = locationExcel  + "/" + nameExcel + type;
+		holeFile = locationExcel + "/" + nameExcel + type;
 	}
 
 	std::ofstream outData;
@@ -334,193 +410,193 @@ void inportExportData::exportDataToExcel_vector(std::string locationExcel, std::
 	if (outData.is_open())
 	{
 		switch (numberOfValues)
-			{
-				case 1:
-				{
-					outData << nameDouble << ";" << stringToSave.at(0) << std::endl;
-					break;
-				}
+		{
+		case 1:
+		{
+			outData << nameDouble << ";" << stringToSave.at(0) << std::endl;
+			break;
+		}
 
-				case 2:
-				{
-					outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << std::endl;
-					break;
-				}
+		case 2:
+		{
+			outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << std::endl;
+			break;
+		}
 
-				case 3:
-				{
-					outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << std::endl;
-					break;
-				}
+		case 3:
+		{
+			outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << std::endl;
+			break;
+		}
 
-				case 4:
-				{
-					outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << std::endl;
-					break;
-				}
+		case 4:
+		{
+			outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << std::endl;
+			break;
+		}
 
-				case 5:
-				{
-					outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";" << stringToSave.at(4) << std::endl;
-					break;
-				}
+		case 5:
+		{
+			outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";" << stringToSave.at(4) << std::endl;
+			break;
+		}
 
-				case 6:
-				{
-					outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";" << stringToSave.at(4) << ";" << stringToSave.at(5) << std::endl;
-					break;
-				}
+		case 6:
+		{
+			outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";" << stringToSave.at(4) << ";" << stringToSave.at(5) << std::endl;
+			break;
+		}
 
-				case 7:
-				{
-					outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";" << stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << std::endl;
-					break;
-				}
+		case 7:
+		{
+			outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";" << stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << std::endl;
+			break;
+		}
 
-				case 8:
-				{
-					outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";" << stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) <<  std::endl;
-					break;
-				}
+		case 8:
+		{
+			outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";" << stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << std::endl;
+			break;
+		}
 
-				case 9:
-				{
-					outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";" << stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << std::endl;
-					break;
-				}
+		case 9:
+		{
+			outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";" << stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << std::endl;
+			break;
+		}
 
-				case 10:
-				{
-					outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";" << stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";" << stringToSave.at(9) << std::endl;
-					break;
-				}
+		case 10:
+		{
+			outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";" << stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";" << stringToSave.at(9) << std::endl;
+			break;
+		}
 
-				case 11:
-				{
-					outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";" << stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";" << stringToSave.at(9) << ";" << stringToSave.at(10) << std::endl;
-					break;
-				}
+		case 11:
+		{
+			outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";" << stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";" << stringToSave.at(9) << ";" << stringToSave.at(10) << std::endl;
+			break;
+		}
 
 
-				case 12:
-				{
-					outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";" << stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";" << stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << std::endl;
-					break;
-				}
+		case 12:
+		{
+			outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";" << stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";" << stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << std::endl;
+			break;
+		}
 
-				case 13:
-				{
-					outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";" << stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";" << stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << ";" << stringToSave.at(12) << std::endl;
-					break;
-				}
+		case 13:
+		{
+			outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";" << stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";" << stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << ";" << stringToSave.at(12) << std::endl;
+			break;
+		}
 
-				case 14:
-				{
-					outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";" 
-						    << stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";"
-						    << stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << ";" << stringToSave.at(12) << ";" << stringToSave.at(13) <<  std::endl;
-					break;
-				}
+		case 14:
+		{
+			outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";"
+				<< stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";"
+				<< stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << ";" << stringToSave.at(12) << ";" << stringToSave.at(13) << std::endl;
+			break;
+		}
 
-				case 15:
-				{
-					outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";"
-						<< stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";"
-						<< stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << ";" << stringToSave.at(12) << ";" << stringToSave.at(13) << ";" << stringToSave.at(14) << std::endl;
-					break;
-				}
+		case 15:
+		{
+			outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";"
+				<< stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";"
+				<< stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << ";" << stringToSave.at(12) << ";" << stringToSave.at(13) << ";" << stringToSave.at(14) << std::endl;
+			break;
+		}
 
-				case 16:
-				{
-					outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";"
-						<< stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";"
-						<< stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << ";" << stringToSave.at(12) << ";" << stringToSave.at(13) << ";"
-						<< stringToSave.at(14) << ";" << stringToSave.at(15) << std::endl;
-					break;
-				}
+		case 16:
+		{
+			outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";"
+				<< stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";"
+				<< stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << ";" << stringToSave.at(12) << ";" << stringToSave.at(13) << ";"
+				<< stringToSave.at(14) << ";" << stringToSave.at(15) << std::endl;
+			break;
+		}
 
-				case 17:
-				{
-					outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";"
-						<< stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";"
-						<< stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << ";" << stringToSave.at(12) << ";" << stringToSave.at(13) << ";"
-						<< stringToSave.at(14) << ";" << stringToSave.at(15) << ";" << stringToSave.at(16) <<  std::endl;
-					break;
-				}
+		case 17:
+		{
+			outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";"
+				<< stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";"
+				<< stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << ";" << stringToSave.at(12) << ";" << stringToSave.at(13) << ";"
+				<< stringToSave.at(14) << ";" << stringToSave.at(15) << ";" << stringToSave.at(16) << std::endl;
+			break;
+		}
 
-				case 18:
-				{
-					outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";"
-						<< stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";"
-						<< stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << ";" << stringToSave.at(12) << ";" << stringToSave.at(13) << ";"
-						<< stringToSave.at(14) << ";" << stringToSave.at(15) << ";" << stringToSave.at(16) << ";" << stringToSave.at(17) << std::endl;
-					break;
-				}
+		case 18:
+		{
+			outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";"
+				<< stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";"
+				<< stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << ";" << stringToSave.at(12) << ";" << stringToSave.at(13) << ";"
+				<< stringToSave.at(14) << ";" << stringToSave.at(15) << ";" << stringToSave.at(16) << ";" << stringToSave.at(17) << std::endl;
+			break;
+		}
 
-				case 19:
-				{
-					outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";"
-						<< stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";"
-						<< stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << ";" << stringToSave.at(12) << ";" << stringToSave.at(13) << ";"
-						<< stringToSave.at(14) << ";" << stringToSave.at(15) << ";" << stringToSave.at(16) << ";" << stringToSave.at(17) << ";" << stringToSave.at(18) << std::endl;
-					break;
-				}
+		case 19:
+		{
+			outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";"
+				<< stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";"
+				<< stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << ";" << stringToSave.at(12) << ";" << stringToSave.at(13) << ";"
+				<< stringToSave.at(14) << ";" << stringToSave.at(15) << ";" << stringToSave.at(16) << ";" << stringToSave.at(17) << ";" << stringToSave.at(18) << std::endl;
+			break;
+		}
 
-				case 20:
-				{
-					outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";"
-						<< stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";"
-						<< stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << ";" << stringToSave.at(12) << ";" << stringToSave.at(13) << ";"
-						<< stringToSave.at(14) << ";" << stringToSave.at(15) << ";" << stringToSave.at(16) << ";" << stringToSave.at(17) << ";" << stringToSave.at(18) << ";" << stringToSave.at(19) << std::endl;
-					break;
-				}
+		case 20:
+		{
+			outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";"
+				<< stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";"
+				<< stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << ";" << stringToSave.at(12) << ";" << stringToSave.at(13) << ";"
+				<< stringToSave.at(14) << ";" << stringToSave.at(15) << ";" << stringToSave.at(16) << ";" << stringToSave.at(17) << ";" << stringToSave.at(18) << ";" << stringToSave.at(19) << std::endl;
+			break;
+		}
 
-				case 21:
-				{
-					outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";"
-						<< stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";"
-						<< stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << ";" << stringToSave.at(12) << ";" << stringToSave.at(13) << ";"
-						<< stringToSave.at(14) << ";" << stringToSave.at(15) << ";" << stringToSave.at(16) << ";" << stringToSave.at(17) << ";" << stringToSave.at(18) << ";"
-						<< stringToSave.at(19) << ";" << stringToSave.at(20) << std::endl;
-					break;
-				}
+		case 21:
+		{
+			outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";"
+				<< stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";"
+				<< stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << ";" << stringToSave.at(12) << ";" << stringToSave.at(13) << ";"
+				<< stringToSave.at(14) << ";" << stringToSave.at(15) << ";" << stringToSave.at(16) << ";" << stringToSave.at(17) << ";" << stringToSave.at(18) << ";"
+				<< stringToSave.at(19) << ";" << stringToSave.at(20) << std::endl;
+			break;
+		}
 
-				case 22:
-				{
-					outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";"
-						<< stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";"
-						<< stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << ";" << stringToSave.at(12) << ";" << stringToSave.at(13) << ";"
-						<< stringToSave.at(14) << ";" << stringToSave.at(15) << ";" << stringToSave.at(16) << ";" << stringToSave.at(17) << ";" << stringToSave.at(18) << ";"
-						<< stringToSave.at(19) << ";" << stringToSave.at(20) << ";" << stringToSave.at(21) << std::endl;
-					break;
-				}
+		case 22:
+		{
+			outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";"
+				<< stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";"
+				<< stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << ";" << stringToSave.at(12) << ";" << stringToSave.at(13) << ";"
+				<< stringToSave.at(14) << ";" << stringToSave.at(15) << ";" << stringToSave.at(16) << ";" << stringToSave.at(17) << ";" << stringToSave.at(18) << ";"
+				<< stringToSave.at(19) << ";" << stringToSave.at(20) << ";" << stringToSave.at(21) << std::endl;
+			break;
+		}
 
-				case 23:
-				{
-					outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";"
-						<< stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";"
-						<< stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << ";" << stringToSave.at(12) << ";" << stringToSave.at(13) << ";"
-						<< stringToSave.at(14) << ";" << stringToSave.at(15) << ";" << stringToSave.at(16) << ";" << stringToSave.at(17) << ";" << stringToSave.at(18) << ";"
-						<< stringToSave.at(19) << ";" << stringToSave.at(20) << ";" << stringToSave.at(21) << ";" << stringToSave.at(22) << std::endl;
-					break;
-				}
+		case 23:
+		{
+			outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";"
+				<< stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";"
+				<< stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << ";" << stringToSave.at(12) << ";" << stringToSave.at(13) << ";"
+				<< stringToSave.at(14) << ";" << stringToSave.at(15) << ";" << stringToSave.at(16) << ";" << stringToSave.at(17) << ";" << stringToSave.at(18) << ";"
+				<< stringToSave.at(19) << ";" << stringToSave.at(20) << ";" << stringToSave.at(21) << ";" << stringToSave.at(22) << std::endl;
+			break;
+		}
 
-				case 24:
-				{
-					outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";"
-						<< stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";"
-						<< stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << ";" << stringToSave.at(12) << ";" << stringToSave.at(13) << ";"
-						<< stringToSave.at(14) << ";" << stringToSave.at(15) << ";" << stringToSave.at(16) << ";" << stringToSave.at(17) << ";" << stringToSave.at(18) << ";"
-						<< stringToSave.at(19) << ";" << stringToSave.at(20) << ";" << stringToSave.at(21) << ";" << stringToSave.at(22) << ";" << stringToSave.at(23) << std::endl;
-					break;
-				}
+		case 24:
+		{
+			outData << nameDouble << ";" << stringToSave.at(0) << ";" << stringToSave.at(1) << ";" << stringToSave.at(2) << ";" << stringToSave.at(3) << ";"
+				<< stringToSave.at(4) << ";" << stringToSave.at(5) << ";" << stringToSave.at(6) << ";" << stringToSave.at(7) << ";" << stringToSave.at(8) << ";"
+				<< stringToSave.at(9) << ";" << stringToSave.at(10) << ";" << stringToSave.at(11) << ";" << stringToSave.at(12) << ";" << stringToSave.at(13) << ";"
+				<< stringToSave.at(14) << ";" << stringToSave.at(15) << ";" << stringToSave.at(16) << ";" << stringToSave.at(17) << ";" << stringToSave.at(18) << ";"
+				<< stringToSave.at(19) << ";" << stringToSave.at(20) << ";" << stringToSave.at(21) << ";" << stringToSave.at(22) << ";" << stringToSave.at(23) << std::endl;
+			break;
+		}
 
-				default:
-				{
-					std::cout << "now it is not possible so save that many datas -> change the function to export to csv" << std::endl;
-					break;
-				}
-			}
+		default:
+		{
+			std::cout << "now it is not possible so save that many datas -> change the function to export to csv" << std::endl;
+			break;
+		}
+		}
 
 	}
 
@@ -565,7 +641,7 @@ void inportExportData::exportCV_MatToExcel(cv::Mat matToExport, std::string loca
 	std::ofstream del;
 	del.open(loactionAndFile, std::ofstream::out | std::ofstream::trunc);
 	del.close();
-	
+
 	std::ofstream write;
 	write.open(loactionAndFile, std::ios::app);
 
@@ -583,9 +659,9 @@ void inportExportData::exportCV_MatToExcel(cv::Mat matToExport, std::string loca
 
 			write << tempString << std::endl;
 		}
-		
-		
-		
+
+
+
 	}
 
 	write.close();
@@ -611,7 +687,7 @@ std::string inportExportData::saveOneRowAsString(unsigned int rowNumber, const c
 		tempVal = mat.at<real>(rowNumber, i);
 		std::ostringstream oss;
 		oss << std::setprecision(20) << tempVal;
- 
+
 		tempString = oss.str();
 		returnString = returnString + tempString + ";";
 
@@ -664,13 +740,13 @@ cv::Mat inportExportData::importCSVtoCVmat(std::string location, std::string nam
 	// vector allows you to add data without knowing the exact size beforehand
 	std::vector< std::vector<real> > all_data;
 	// Start reading lines as long as there are lines in the file
-	while (std::getline(inputfile, current_line)) 
+	while (std::getline(inputfile, current_line))
 	{
 		// Now inside each line we need to seperate the cols
 		std::vector<real> values;
 		std::stringstream temp(current_line);
 		std::string single_value;
-		while (getline(temp, single_value, ';')) 
+		while (getline(temp, single_value, ';'))
 		{
 			// convert the string element to a integer value
 			single_value.c_str();
@@ -684,7 +760,7 @@ cv::Mat inportExportData::importCSVtoCVmat(std::string location, std::string nam
 	// Now add all the data into a Mat element
 	cv::Mat vect = cv::Mat::zeros((int)all_data.size(), (int)all_data[0].size(), CV_64F);
 	// Loop over vectors and add the data
-	for (int rows = 0; rows < (int)all_data.size(); rows++) 
+	for (int rows = 0; rows < (int)all_data.size(); rows++)
 	{
 		for (int cols = 0; cols < (int)all_data[0].size(); cols++) {
 			vect.at<real>(rows, cols) = all_data[rows][cols];
@@ -771,7 +847,7 @@ void inportExportData::saveOpticalSystemAsTXT(OpticalSystemElement opticalSysEle
 		std::string tempRadiusString;
 		if (tempRadius > 999.0)
 		{
-			tempRadiusString  = "INF     ";
+			tempRadiusString = "INF     ";
 		}
 
 		else if (tempRadius < -999.0)
@@ -782,7 +858,7 @@ void inportExportData::saveOpticalSystemAsTXT(OpticalSystemElement opticalSysEle
 		{
 			tempRadiusString = to_string_with_precision_double(tempRadius, precision);
 		}
-				
+
 		std::string tempThicknessString = to_string_with_precision_double(thickness, precision);
 		std::string tempRefIndexRightSideSting = to_string_with_precision_double(tempRefIndexRightSide, precision);
 		std::string tempSemiHeightString = to_string_with_precision_double(semiHeight, precision);
@@ -790,11 +866,117 @@ void inportExportData::saveOpticalSystemAsTXT(OpticalSystemElement opticalSysEle
 		std::string totalStringToSave = "surface: " + tempSurfaceNumString + '\t' + tempSurfaceType + '\t' + "radius: " + tempRadiusString + " " + tempTypeMode_Radius +
 			'\t' + "thickness: " + tempThicknessString + " " + tempTypeMode_Thickness + '\t' + "glass: " + nameGlasRightSide +
 			'\t' + "refIndex: " + tempRefIndexRightSideSting + '\t' + "semi height: " + '\t' + tempSemiHeightString;
-	
+
 		saveStringInTXT(location, name, totalStringToSave);
-	
+
 	}
 
+
+}
+
+void inportExportData::saveOpticalSystemAsTXT(OpticalSystemElement opticalSysEle, real wavelength, std::string location, std::string name, bool clearCurentDataInTXT)
+{
+	unsigned int size = opticalSysEle.getPosAndElement().size();
+	opticalSysEle.setRefractiveIndexAccordingToWavelength(wavelength);
+	std::shared_ptr<SurfaceIntersectionRay_LLT> tempSurface_ptr;
+	std::shared_ptr<SurfaceIntersectionRay_LLT> tempSurface_ptr_next;
+
+	std::string tempTypeMode_Radius;
+	std::string tempTypeMode_Thickness;
+
+	std::string tempSurfaceType{};
+	real tempRadius{};
+	real tempPoint_Z{};
+	real tempPoint_Z_next{};
+	real tempDirection_Z{};
+	real semiHeight{};
+	real tempPointZ = 0;
+	std::string nameGlasRightSide{};
+	real thickness = 0;
+	real tempRefIndexRightSide{};
+
+	if (clearCurentDataInTXT)
+	{
+		clearDataInTXT(location, name);
+	}
+	
+
+	for (unsigned int i = 0; i < size; i++)
+	{
+		tempSurface_ptr = opticalSysEle.getPosAndIntersection_LLT()[i].getSurfaceInterRay_ptr();
+
+		// surface type
+		tempSurfaceType = tempSurface_ptr->getSurfaceType();
+
+		// get radius
+		tempRadius = tempSurface_ptr->getRadius();
+		tempTypeMode_Radius = oftenUse::convertTypeModeToString(opticalSysEle.getPosAndElement()[i].getElementInOptSys_ptr()->getRadiusTypeModifier());
+		tempDirection_Z = tempSurface_ptr->getDirection().getZ();
+		// glass by name
+		if (tempDirection_Z > 0)
+		{
+			nameGlasRightSide = opticalSysEle.getPosAndElement()[i].getElementInOptSys_ptr()->getGlassB().getNameGlas();
+			tempRefIndexRightSide = tempSurface_ptr->getRefractiveIndex_B();
+		}
+
+		else if (tempDirection_Z < 0)
+		{
+			tempRadius = -1 * tempRadius;
+			nameGlasRightSide = opticalSysEle.getPosAndElement()[i].getElementInOptSys_ptr()->getGlassA().getNameGlas();
+			tempRefIndexRightSide = tempSurface_ptr->getRefractiveIndex_A();
+		}
+
+
+		// get tempPoint
+		tempTypeMode_Thickness = oftenUse::convertTypeModeToString(opticalSysEle.getPosAndElement()[i].getElementInOptSys_ptr()->getPointTypeModifier_Z());
+		if (i < size - 1)
+		{
+			tempSurface_ptr_next = opticalSysEle.getPosAndIntersection_LLT()[i + 1].getSurfaceInterRay_ptr();
+			tempPoint_Z = tempSurface_ptr->getPoint().getZ();
+			tempPoint_Z_next = tempSurface_ptr_next->getPoint().getZ();
+		}
+
+		else
+		{
+			tempPoint_Z = 99.0;
+			tempPoint_Z_next = 99.0;
+		}
+
+		thickness = tempPoint_Z_next - tempPoint_Z;
+
+		// get semiHeight
+		semiHeight = tempSurface_ptr->getSemiHeight();
+
+		// convert values to string
+		int precision = 5;
+		std::string tempSurfaceNumString = std::to_string(i);
+
+		std::string tempRadiusString;
+		if (tempRadius > 999.0)
+		{
+			tempRadiusString = "INF     ";
+		}
+
+		else if (tempRadius < -999.0)
+		{
+			tempRadiusString = "-INF     ";
+		}
+		else
+		{
+			tempRadiusString = to_string_with_precision_double(tempRadius, precision);
+		}
+
+		std::string tempThicknessString = to_string_with_precision_double(thickness, precision);
+		std::string tempRefIndexRightSideSting = to_string_with_precision_double(tempRefIndexRightSide, precision);
+		std::string tempSemiHeightString = to_string_with_precision_double(semiHeight, precision);
+
+		std::string totalStringToSave = "surface: " + tempSurfaceNumString + '\t' + tempSurfaceType + '\t' + "radius: " + tempRadiusString + " " + tempTypeMode_Radius +
+			'\t' + "thickness: " + tempThicknessString + " " + tempTypeMode_Thickness + '\t' + "glass: " + nameGlasRightSide +
+			'\t' + "refIndex: " + tempRefIndexRightSideSting + '\t' + "semi height: " + '\t' + tempSemiHeightString;
+
+		saveStringInTXT(location, name, totalStringToSave);
+
+	}
 
 }
 

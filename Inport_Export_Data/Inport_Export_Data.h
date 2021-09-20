@@ -23,6 +23,8 @@ namespace inportExportData
 
 	// export data to TXT
 	void saveDoubleInTXT(std::string locationTXT, std::string nameTXT, std::string nameDoubel, real valueToSave);
+	void saveDoubleInTXT(std::string locationTXT, std::string nameTXT, std::string nameDoubel, real valueToSave, bool clearTXT);
+	void saveVecDoubleInTXT(std::string locationTXT, std::string nameTXT, std::vector<std::string> nameDoubel_vec, std::vector<real> valueToSave_vec, bool clearTXT);
 	void exportIntVecInTXT(std::string locationTXT, std::string nameTXT, std::string nameValues, std::vector<unsigned int> value_vec, bool clearTXT);
 	void makeLineInTXT(std::string locationTXT, std::string nameTXT);
 	void makeSpaceLineInTXT(std::string locationTXT, std::string nameTXT);
@@ -33,6 +35,8 @@ namespace inportExportData
 
 	// export data to excel
 	void exportDataToExcel(std::string locationExcel, std::string nameExcel, std::string nameDouble, real valueToSave);
+	void exportDataToExcel_name(std::string locationExcel, std::string nameExcel, std::string name);
+	void exportDataToExcel_makeOneRowSpace(std::string locationExcel, std::string nameExcel);
 	void exportDataToExcel_vector(std::string locationExcel, std::string nameExcel, std::string nameDouble, std::vector<real> valueToSave);
 	void exportHistogramToExcel(std::string location, std::string nameExcel, std::vector<real> histogram, unsigned int sampling, real minVal, real maxVal);
 	// export a cv::mat to excel
@@ -46,6 +50,7 @@ namespace inportExportData
 
 	// save optical System as txt
 	void saveOpticalSystemAsTXT(OpticalSystemElement opticalSysEle, real wavelength, std::string location, std::string name);
+	void saveOpticalSystemAsTXT(OpticalSystemElement opticalSysEle, real wavelength, std::string location, std::string name, bool clearCurentDataInTXT);
 
 	//// convert to string with precision
 	std::string to_string_with_precision_double(real a_value, const int n);

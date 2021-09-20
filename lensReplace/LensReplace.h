@@ -17,6 +17,15 @@ Th_SteinheilTripletAchromat_Visible, Th_HastingsTripletAchromatVisible,
 Qi_PosAchromat_VIS_31_40_ARB2_VIS, Qi_NegAchromat_ARB2_VIS
 };
 
+//static const char* enum_str_LensCatalog[] ={  /*Edmund*/ "EO_DoubleConvex_VIS_NIR", "EO_PosAchromat_MgF_Coated", "EO_PlanConvex_VIS_NIR", "EO_DoubleConcav_VIS_NIR", "EO_PlanConcav_VIS_NIR",
+//"EO_DoubleConcav_NIR_I", "EO_PosAchromat_VIS_NIR", "EO_NegAchromat_Broadband_AR_Coated", "EO_LargePrecisionAchromat_NoAirSpace", "EO_LargePrecisionAchromat_AirSpace",
+//"EO_HastingsTripletAchromat", "EO_SteinheilTripletAchromat", "EO_MicroPlanConvex", "EO_LargePlanConvexCondensor",
+///*Thorlabs*/ "Th_AchromatDoublets_AR_Coated", "Th_NBK7_PlanConvex_AR_Coated_400_1100", "Th_NBK7_BiConvex_AR_Coated_350_700", "Th_NBK7_PlanConcav_AR_Coated_350_700",
+//"Th_NBK7_NSF11_BiConcav_AR_Coated_350_700", "Th_NBK7_BestFormSpherical_AR_Coated_350_700", "Th_NBK7_PosMeniscus_Uncoated", "Th_NBK7_NegMeniscus_Uncoated",
+//"Th_SteinheilTripletAchromat_Visible", "Th_HastingsTripletAchromatVisible",
+///*Qioptic*/ "Qi_PlanConvex_ARB2_VIS", "Qi_SymmetricConvex_ARB2_VIS", "Qi_PlanConcav_ARB2_VIS", "Qi_SymmetricConcav_ARB2_VIS", "Qi_PosAchromat_VIS_3_31_ARB2_VIS",
+//"Qi_PosAchromat_VIS_31_40_ARB2_VIS", "Qi_NegAchromat_ARB2_VIS"
+//}; 
 
 
 enum class replaceSequence { leftToRight, RightToLeft, maxSeidelAberLens, minSeidelAberLens, allPossibleSequences, givenSequence };
@@ -49,14 +58,14 @@ struct prefLensTypeAndFactro
 {
 public:
 	// prefere lens Type
-	lensTypes getPrefLensType();
-	void setPrefensType(lensTypes lenstype);
+	std::vector<lensTypes> getPrefLensType();
+	void setPrefensType(std::vector<lensTypes> lenstype);
 	// factor
 	real getFactor();
 	void setFactor(real factor);
 
 private:
-	lensTypes mLensType;
+	std::vector<lensTypes> mLensType;
 	real mFactor;
 
 };
@@ -78,8 +87,8 @@ public:
 	std::string getLensCatalog();
 	void setLensCatalog(std::string nameLens);
 	// catalog number
-	unsigned int getCatalogNumber();
-	void setCatalogNumber(unsigned int catalogNumber);
+	std::string getCatalogNumber();
+	void setCatalogNumber(std::string catalogNumber);
 	// check parameters focalLength
 	bool getCheckParameters_focalLength();
 	void setCheckParameters_focalLength(bool checkPara);
@@ -96,12 +105,15 @@ public:
 	void setPositionInBestMatchLensVec(unsigned int posInBestMatchVec);
 	unsigned int getPositionInBestMatchLensVec();
 
+	// export data to txt
+	void exportDataToTXT(std::string location, std::string name);
+
 private:
 	OpticalSystemElement mOptSysEle{};
 	real mMerit{};
 	lensTypes mLensType{};
 	std::string mNameLens{};
-	unsigned int mCatalogNumber{};
+	std::string mCatalogNumber{};
 
 	bool mCheckParameters_focalLength{};
 	bool mCheckParameters_thickness{};
@@ -232,7 +244,7 @@ public:
 
 
 	// pref lens type vec
-	void setPrefLensTypeSurfaceAndFactorSurface_i(unsigned int surfaceNo, lensTypes prefType, real factor);
+	void setPrefLensTypeSurfaceAndFactorSurface_i(unsigned int surfaceNo, std::vector<lensTypes> prefType, real factor);
 	prefLensTypeAndFactro getPrefLensTyeAndFactorSurface_i(unsigned int surfaceNo);
 
 	// refrectiv index surrounding material
@@ -287,7 +299,7 @@ public:
 	void loadLensCata(std::vector<lensTypes> loadLensCatalogEO);
 	void load_ALL_LensCatalogs();
 	
-	bool findCatalog(std::vector<lensTypes> loadLensCatalogEO_vec, lensTypes toLoadCatalog);
+	bool findCatalog(std::vector<lensTypes> loadLensCatalog_vec, lensTypes toLoadCatalog);
 
 	// calculate focal lenght
 	real calcFocalLenghtOptSys(OpticalSystem_LLT optSys_LLT);

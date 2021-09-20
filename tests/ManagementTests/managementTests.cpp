@@ -40,6 +40,11 @@
 #include "..\testLensCatalog\testLensCatalog_Qioptiq.h"
 #include "..\testCompareTOMandZemaxOptimizer\testCompareTOMandZemaxOptimizer.h"
 #include "..\testLensReplaceAndOptimiz_statistic\twoLensSystems\testLensReplaceAndOptimize_statistic_twoLensSystem.h"
+#include "..\testLensReplaceAndOptimiz_statistic\threeLensSystems\testLensReplaceAndOptimize_statistic_threeLensSystem.h"
+#include "..\testLensReplaceAndOptimiz_statistic\fourLensSystems\testLensReplaceAndOptimize_statistic_fourLensSystem.h"
+#include "..\testLensReplaceAndOptimiz_statistic\fiveLensSystems\testLensReplaceAndOptimize_statistic_fiveLensSystem.h"
+#include "..\testDGaO2021\testDGaO2021.h"
+
 
 ManagementTests::ManagementTests() {};
 ManagementTests::ManagementTests(std::vector<testWhat> testWhat_vec) :
@@ -678,11 +683,47 @@ bool ManagementTests::testSuperFct()
 	if (testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_twoLenses) || testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_ALL) || testAll )
 	{
 		testLensReplaceAndOptimize_statistic_twoLensSystem testLRaOstatTwoLensSystem{};
-		bool testLRaO_statistic_twoLensSystem = testLRaOstatTwoLensSystem.testLRaO_stat_twoLensSystem_superFct();
-		workTheSystem_test.push_back(testLRaO_statistic_twoLensSystem);
-		checkerAndCout(testLRaO_statistic_twoLensSystem, "test lens replace and optimize statistic two lens system");
+		bool testLRaO_statistic_TWO_LensSystem = testLRaOstatTwoLensSystem.testLRaO_stat_twoLensSystem_superFct();
+		workTheSystem_test.push_back(testLRaO_statistic_TWO_LensSystem);
+		checkerAndCout(testLRaO_statistic_TWO_LensSystem, "test lens replace and optimize statistic two lens system");
 	}
 
+	// test lens replace and optimize statistic three lens system
+	if (testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_threeLenses) || testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_ALL) || testAll)
+	{
+		testLensReplaceAndOptimize_statistic_THREE_LensSystem testLRaOstat_Three_LensSystem{};
+		bool testLRaO_statistic_THREE_LensSystem = testLRaOstat_Three_LensSystem.testLRaO_stat_THREE_lensSystem_superFct();
+		workTheSystem_test.push_back(testLRaO_statistic_THREE_LensSystem);
+		checkerAndCout(testLRaO_statistic_THREE_LensSystem, "test lens replace and optimize statistic three lens system");
+	}
+
+	// test lens replace and optimize statistic four lens system
+	if (testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_fourLenses) || testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_ALL) || testAll)
+	{
+		testLensReplaceAndOptimize_statistic_FOUR_LensSystem testLRaOstat_FOUR_LensSystem{};
+		bool testLRaO_statistic_FIVE_LensSystem = testLRaOstat_FOUR_LensSystem.testLRaO_stat_FOUR_lensSystem_superFct();
+		workTheSystem_test.push_back(testLRaO_statistic_FIVE_LensSystem);
+		checkerAndCout(testLRaO_statistic_FIVE_LensSystem, "test lens replace and optimize statistic four lens system");
+	}
+
+	// test lens replace and optimize statistic four five system
+	if (testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_fiveLenses) || testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_ALL) || testAll)
+	{
+		testLensReplaceAndOptimize_statistic_FIVE_LensSystem testLRaOstat_FIVE_LensSystem{};
+		bool testLRaO_statistic_FIVE_LensSystem = testLRaOstat_FIVE_LensSystem.testLRaO_stat_FIVE_lensSystem_superFct();
+		workTheSystem_test.push_back(testLRaO_statistic_FIVE_LensSystem);
+		checkerAndCout(testLRaO_statistic_FIVE_LensSystem, "test lens replace and optimize statistic five lens system");
+	}
+
+
+	// systems for DGaO 2021
+	if (testWhatInTestWhatVec(testWhat::tDGaO2021) || testAll)
+	{
+		testDGaO2021 testSystemsForDGaO2021{};
+		bool checkSystemsForDGaO2021 = testSystemsForDGaO2021.testDGaO2021_superFct();
+		workTheSystem_test.push_back(checkSystemsForDGaO2021);
+		checkerAndCout(checkSystemsForDGaO2021, "test systems for DGaO 2021");
+	}
 
 	return Math::checkTrueOfVectorElements(workTheSystem_test);
 }

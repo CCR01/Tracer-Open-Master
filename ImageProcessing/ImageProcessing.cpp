@@ -172,51 +172,88 @@ void ImaProcSuperFct::ImageProcessingSuperFunction(cv::Mat& inputIma, cv::Mat& b
 
 	else if (mImaProc == imageProcessing::unshMas_DetailEnh_WienerDec_24)
 	{
+		real devideStepsByFactorForSecondSearch = 1.0;
+		real reinizializePrecent = 20.0;
+
 		mAllFilteredImages_UM_DE_WD.resize(3);
 		// unsharp masking
 		// _________________________________________________________
-		unsharpMasking_BGR_parallel unsharpMasking_24;
-		unsharpMasking_24.setParameterUM_blue(mParaUnsMas_blue);
-		unsharpMasking_24.setParameterUM_green(mParaUnsMas_green);
-		unsharpMasking_24.setParameterUM_red(mParaUnsMas_red);
+		unsharpMasking_BGR_parallel unsharpMasking_24_First;
+		unsharpMasking_24_First.setParameterUM_blue(mParaUnsMas_blue);
+		unsharpMasking_24_First.setParameterUM_green(mParaUnsMas_green);
+		unsharpMasking_24_First.setParameterUM_red(mParaUnsMas_red);
 
-		unsharpMasking_24.improveImaQual_UnsharpMasking_superFct_BGR_parallel(mInputIma, mBlueredIma);
+		unsharpMasking_24_First.improveImaQual_UnsharpMasking_superFct_BGR_parallel(mInputIma, mBlueredIma);
+		cv::Mat tempFilteredImages = unsharpMasking_24_First.getFilteredResults_normedZeroAndMaxUchar();
+	
+		mBestParaUnsMas_blue = unsharpMasking_24_First.getBestParameter_blue();
+		mBestParaUnsMas_green = unsharpMasking_24_First.getBestParameter_green();
+		mBestParaUnsMas_red = unsharpMasking_24_First.getBestParameter_red();
 
-		mBestParaUnsMas_blue = unsharpMasking_24.getBestParameter_blue();
-		mBestParaUnsMas_green = unsharpMasking_24.getBestParameter_green();
-		mBestParaUnsMas_red = unsharpMasking_24.getBestParameter_red();
+		reinitializeBestParaUnsMas(reinizializePrecent, mParaUnsMas_blue.getStepsSigma() / devideStepsByFactorForSecondSearch, mParaUnsMas_blue.getStepsThreshold() / devideStepsByFactorForSecondSearch, mParaUnsMas_blue.getStepsAmount() / devideStepsByFactorForSecondSearch);
+
+		unsharpMasking_BGR_parallel unsharpMasking_24_Second;
+		unsharpMasking_24_Second.setParameterUM_blue(mParaUnsMas_blue);
+		unsharpMasking_24_Second.setParameterUM_green(mParaUnsMas_green);
+		unsharpMasking_24_Second.setParameterUM_red(mParaUnsMas_red);
+
+		unsharpMasking_24_Second.improveImaQual_UnsharpMasking_superFct_BGR_parallel(mInputIma, tempFilteredImages);
+		tempFilteredImages = unsharpMasking_24_Second.getFilteredResults_normedZeroAndMaxUchar();
+
+		mBestParaUnsMas_blue = unsharpMasking_24_Second.getBestParameter_blue();
+		mBestParaUnsMas_green = unsharpMasking_24_Second.getBestParameter_green();
+		mBestParaUnsMas_red = unsharpMasking_24_Second.getBestParameter_red();
 		
-		cv::Mat tempFilteredImages = unsharpMasking_24.getFilteredResults_normedZeroAndMaxUchar();
 		// save filtered images UM
 		mAllFilteredImages_UM_DE_WD[0] = tempFilteredImages.clone();
 		// _________________________________________________________
 
 		// detail enhancement
 		// _________________________________________________________
-		DetailEnhancement_BGR_parallel detailEnhancement_BGR_24;
-		detailEnhancement_BGR_24.setParameter_global(mParaDetEnh);
+		DetailEnhancement_BGR_parallel detailEnhancement_BGR_24_First;
+		detailEnhancement_BGR_24_First.setParameter_global(mParaDetEnh);
 
-		detailEnhancement_BGR_24.improveImageQuality_DetailEnhancement_BGR_parallel(mInputIma, tempFilteredImages.clone());
+		detailEnhancement_BGR_24_First.improveImageQuality_DetailEnhancement_BGR_parallel(mInputIma, tempFilteredImages.clone());
+		tempFilteredImages = detailEnhancement_BGR_24_First.getFilteredIma();
+		mBestParaDetEnh = detailEnhancement_BGR_24_First.getBestParameter();
 
-		mBestParaDetEnh = detailEnhancement_BGR_24.getBestParameter();
-		tempFilteredImages = detailEnhancement_BGR_24.getFilteredIma();
+		reinitializeBestParaDetEng(reinizializePrecent, mParaDetEnh.getStepsSigma_r() / devideStepsByFactorForSecondSearch, mParaDetEnh.getStepsSigma_s() / devideStepsByFactorForSecondSearch);
+		
+		DetailEnhancement_BGR_parallel detailEnhancement_BGR_24_Second;
+		detailEnhancement_BGR_24_Second.setParameter_global(mParaDetEnh);
+		detailEnhancement_BGR_24_Second.improveImageQuality_DetailEnhancement_BGR_parallel(mInputIma, tempFilteredImages.clone());
+
+		tempFilteredImages = detailEnhancement_BGR_24_Second.getFilteredIma();
+		mBestParaDetEnh = detailEnhancement_BGR_24_Second.getBestParameter();
+		
 		mAllFilteredImages_UM_DE_WD[1] = tempFilteredImages.clone();
 		// _________________________________________________________
 
 		// wiener deconvolution
 		// _________________________________________________________
-		WienerDeconvolutionSF_parallel_BGR wienerDeconParallelBGR;
-		wienerDeconParallelBGR.setParameterWD_Global_blue(mParaWD_blue);
-		wienerDeconParallelBGR.setParameterWD_Global_green(mParaWD_green);
-		wienerDeconParallelBGR.setParameterWD_Global_red(mParaWD_red);
+		WienerDeconvolutionSF_parallel_BGR wienerDeconParallelBGR_First;
+		wienerDeconParallelBGR_First.setParameterWD_Global_blue(mParaWD_blue);
+		wienerDeconParallelBGR_First.setParameterWD_Global_green(mParaWD_green);
+		wienerDeconParallelBGR_First.setParameterWD_Global_red(mParaWD_red);
 
-		wienerDeconParallelBGR.improveImaQual_WD_superFct_BGR_parallel(mInputIma, tempFilteredImages);
+		wienerDeconParallelBGR_First.improveImaQual_WD_superFct_BGR_parallel(mInputIma, tempFilteredImages);
+		tempFilteredImages = wienerDeconParallelBGR_First.getFilteredResults_normedZeroAndMaxUchar();
+		mBestParaWD_blue = wienerDeconParallelBGR_First.getBestParameter_blue();
+		mBestParaWD_green = wienerDeconParallelBGR_First.getBestParameter_green();
+		mBestParaWD_red = wienerDeconParallelBGR_First.getBestParameter_red();
 
-		mBestParaWD_blue = wienerDeconParallelBGR.getBestParameter_blue();
-		mBestParaWD_green = wienerDeconParallelBGR.getBestParameter_green();
-		mBestParaWD_red = wienerDeconParallelBGR.getBestParameter_red();
 
-		mFilteredIma = wienerDeconParallelBGR.getFilteredResults_normedZeroAndMaxUchar();
+		reinitializeBestParaWD(reinizializePrecent, mParaWD_blue.getStepsSNR() / devideStepsByFactorForSecondSearch, mParaWD_blue.getStepsSigmaXY() / devideStepsByFactorForSecondSearch);
+		
+		WienerDeconvolutionSF_parallel_BGR wienerDeconParallelBGR_Second;
+		wienerDeconParallelBGR_Second.improveImaQual_WD_superFct_BGR_parallel(mInputIma, tempFilteredImages);
+		
+		mBestParaWD_blue = wienerDeconParallelBGR_Second.getBestParameter_blue();
+		mBestParaWD_green = wienerDeconParallelBGR_Second.getBestParameter_green();
+		mBestParaWD_red = wienerDeconParallelBGR_Second.getBestParameter_red();
+
+		mFilteredIma = wienerDeconParallelBGR_Second.getFilteredResults_normedZeroAndMaxUchar();
+
 		mAllFilteredImages_UM_DE_WD[2] = mFilteredIma.clone();
 		// _________________________________________________________
 	}
@@ -436,9 +473,9 @@ void ImaProcSuperFct::reinitializeBestParaUnsMas(real percent, real stepsSigma, 
 	real temBestSigma_blue = mBestParaUnsMas_blue.getSigma();
 	real minSigma_blue = (temBestSigma_blue * (100.0 - percent)) / 100.0;
 	real maxSigma_blue = (temBestSigma_blue * (100.0 + percent)) / 100.0;
-	mParaUnsMas_gray.setMinSigma(minSigma_blue);
-	mParaUnsMas_gray.setMaxSigma(maxSigma_blue);
-	mParaUnsMas_gray.setStepsSigma(stepsSigma);
+	mParaUnsMas_blue.setMinSigma(minSigma_blue);
+	mParaUnsMas_blue.setMaxSigma(maxSigma_blue);
+	mParaUnsMas_blue.setStepsSigma(stepsSigma);
 
 	// *** sigma _green ***
 	real temBestSigma_green = mBestParaUnsMas_green.getSigma();
@@ -460,9 +497,9 @@ void ImaProcSuperFct::reinitializeBestParaUnsMas(real percent, real stepsSigma, 
 	real tempBestThreshold_blue = mBestParaUnsMas_blue.getThreshold();
 	real minThreshold_blue = (tempBestThreshold_blue * (100.0 - percent)) / 100.0;
 	real maxThreshold_blue = (tempBestThreshold_blue * (100.0 + percent)) / 100.0;
-	mParaUnsMas_gray.setMinThreshold(minThreshold_blue);
-	mParaUnsMas_gray.setMaxThreshold(maxThreshold_blue);
-	mParaUnsMas_gray.setStepsThreshold(stepsThreshold);
+	mParaUnsMas_blue.setMinThreshold(minThreshold_blue);
+	mParaUnsMas_blue.setMaxThreshold(maxThreshold_blue);
+	mParaUnsMas_blue.setStepsThreshold(stepsThreshold);
 
 	// *** threshold _green ***
 	real tempBestThreshold_green = mBestParaUnsMas_green.getThreshold();
@@ -484,9 +521,9 @@ void ImaProcSuperFct::reinitializeBestParaUnsMas(real percent, real stepsSigma, 
 	real tempBestAmount_blue = mBestParaUnsMas_blue.getAmount();
 	real minAmount_blue = (tempBestAmount_blue * (100.0 - percent)) / 100.0;
 	real maxAmount_blue = (tempBestAmount_blue * (100.0 + percent)) / 100.0;
-	mParaUnsMas_gray.setMinAmount(minAmount_blue);
-	mParaUnsMas_gray.setMaxAmount(maxAmount_blue);
-	mParaUnsMas_gray.setStepsAmount(stepsAmount);
+	mParaUnsMas_blue.setMinAmount(minAmount_blue);
+	mParaUnsMas_blue.setMaxAmount(maxAmount_blue);
+	mParaUnsMas_blue.setStepsAmount(stepsAmount);
 
 	// *** amount _green ***
 	real tempBestAmount_green = mBestParaUnsMas_green.getAmount();
@@ -503,6 +540,7 @@ void ImaProcSuperFct::reinitializeBestParaUnsMas(real percent, real stepsSigma, 
 	mParaUnsMas_red.setMinAmount(minAmount_red);
 	mParaUnsMas_red.setMaxAmount(maxAmount_red);
 	mParaUnsMas_red.setStepsAmount(stepsAmount);
+
 }
 // *** ***
 

@@ -162,6 +162,8 @@ public:
 	void getRefIndexBeforeFirstSurface();
 	// calculate distorted images
 	void calcDistortedImages();
+	// get distorten corrected ima
+	cv::Mat getSimulatedImage_initialSize_distortionCorrected();
 
 	// save that fct
 	void separateTheImageInNtimesMimages_saveThatFct_1();
@@ -420,11 +422,15 @@ private:
 
 
 	cv::Mat mSimulatedIma_blue_initialSize{};
+	cv::Mat mSimulatedIma_blue_initialSize_distortionCorrected{};
 	cv::Mat mSimulatedIma_green_initialSize{};
+	cv::Mat mSimulatedIma_green_initialSize_distortionCorrected{};
 	cv::Mat mSimulatedIma_red_initialSize{};
+	cv::Mat mSimulatedIma_red_initialSize_distortionCorrected{};
 
 	cv::Mat mSimulatedIma_bgr_initialSize{};
 	cv::Mat mSimulatedIma_bgr_final_initialSize{};
+	cv::Mat mSimulatedIma_bgr_final_initialSize_distortionCorrection{};
 	cv::Mat mSimulatedIma_bgr_noDistortion_initialSize{};
 	
 	std::vector<VectorStructR3> mObjectPointsSampling{};

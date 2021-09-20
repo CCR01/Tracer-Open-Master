@@ -13,3 +13,23 @@ The optical system is not possible
 Wed Aug 18 17:19:38 2021
 
 ________________________
+________________________
+check distortion calculation
+Thu Sep  2 23:44:51 2021
+
+________________________
+________________________
+check distortion calculation
+Tue Sep 14 19:54:43 2021
+
+________________________
+________________________
+check distortion calculation
+Tue Sep 14 19:56:04 2021
+
+________________________
+________________________
+SIZE OF YOUR REPLACE SEQUENCE DO NOT MATCH WITH THE NUMBER OF LENSES IN THE OPTICAL SYSTEM!!!
+Wed Sep 15 13:49:28 2021
+
+________________________

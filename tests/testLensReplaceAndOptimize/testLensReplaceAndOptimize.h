@@ -34,7 +34,8 @@ public:
 	bool testLensReplaceAndOptimize_E8();
 	// E9
 	bool testLensReplaceAndOptimize_E9();
-
+	// E10
+	bool testLensReplaceAndOptimize_E10();
 
 private:
 

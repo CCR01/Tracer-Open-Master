@@ -104,8 +104,8 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>opencv_photo320d.lib;opencv_core320d.lib;opencv_imgproc320d.lib;opencv_highgui320d.lib;opencv_imgcodecs320d.lib;opencv_videoio320d.lib;opencv_calib3d320d.lib;..\Qt\lib\Qt5Cored.lib;..\Qt\lib\Qt5Widgetsd.lib;..\Qt\lib\Qt5Guid.lib;..\Qt\lib\Qt5Svgd.lib;..\Qt\qwt-6.1.4\lib\static\qwtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <StackReserveSize>2000000000</StackReserveSize>
-      <StackCommitSize>2000000000</StackCommitSize>
+      <StackReserveSize>9999999999999</StackReserveSize>
+      <StackCommitSize>9999999999999</StackCommitSize>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -140,8 +140,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>opencv_photo320.lib;opencv_core320.lib;opencv_imgproc320.lib;opencv_highgui320.lib;opencv_imgcodecs320.lib;opencv_videoio320.lib;opencv_calib3d320.lib;..\Qt\lib\Qt5Core.lib;..\Qt\lib\Qt5Widgets.lib;..\Qt\lib\Qt5Gui.lib;..\Qt\lib\Qt5Svg.lib;..\Qt\qwt-6.1.4\lib\static\qwt.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <StackReserveSize>2000000000</StackReserveSize>
-      <StackCommitSize>2000000000</StackCommitSize>
+      <StackReserveSize>9999999999999</StackReserveSize>
+      <StackCommitSize>9999999999999</StackCommitSize>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -280,6 +280,7 @@
     <ClCompile Include="..\tests\testCalcMaxSeidelAberrationen\testCalcMaxSeidelAberration.cpp" />
     <ClCompile Include="..\tests\testCardinalPoints\testCardinalPoints.cpp" />
     <ClCompile Include="..\tests\testCompareTOMandZemaxOptimizer\testCompareTOMandZemaxOptimizer.cpp" />
+    <ClCompile Include="..\tests\testDGaO2021\testDGaO2021.cpp" />
     <ClCompile Include="..\tests\testDistortion\testDistortion.cpp" />
     <ClCompile Include="..\tests\testDLS\testDLS.cpp" />
     <ClCompile Include="..\tests\testDLS_multiThreads_12\testDLS_multiThreads_12.cpp" />
@@ -298,6 +299,10 @@
     <ClCompile Include="..\tests\testLensCatalog\testLensCatalogThorlabs.cpp" />
     <ClCompile Include="..\tests\testLensCatalog\testLensCatalog_Qioptiq.cpp" />
     <ClCompile Include="..\tests\testLensReplaceAndOptimize\testLensReplaceAndOptimize.cpp" />
+    <ClCompile Include="..\tests\testLensReplaceAndOptimiz_statistic\fiveLensSystems\testLensReplaceAndOptimize_statistic_fiveLensSystem.cpp" />
+    <ClCompile Include="..\tests\testLensReplaceAndOptimiz_statistic\fourLensSystems\testLensReplaceAndOptimize_statistic_fourLensSystem.cpp" />
+    <ClCompile Include="..\tests\testLensReplaceAndOptimiz_statistic\testLensRepAndOptimize_statisticStruct.cpp" />
+    <ClCompile Include="..\tests\testLensReplaceAndOptimiz_statistic\threeLensSystems\testLensReplaceAndOptimize_statistic_threeLensSystem.cpp" />
     <ClCompile Include="..\tests\testLensReplaceAndOptimiz_statistic\twoLensSystems\testLensReplaceAndOptimize_statistic_twoLensSystem.cpp" />
     <ClCompile Include="..\tests\testLensReplace\testLensReplace.cpp" />
     <ClCompile Include="..\tests\testMath\testMath.cpp" />
@@ -455,6 +460,7 @@
     <ClInclude Include="..\tests\testCalcMaxSeidelAberrationen\testCalcMaxSeidelAberration.h" />
     <ClInclude Include="..\tests\testCardinalPoints\testCardinalPoints.h" />
     <ClInclude Include="..\tests\testCompareTOMandZemaxOptimizer\testCompareTOMandZemaxOptimizer.h" />
+    <ClInclude Include="..\tests\testDGaO2021\testDGaO2021.h" />
     <ClInclude Include="..\tests\testDistortion\testDistortion.h" />
     <ClInclude Include="..\tests\testDLS\testDLS.h" />
     <ClInclude Include="..\tests\testDLS_multiThreads_12\testDLS_multiThreads_12.h" />
@@ -473,6 +479,10 @@
     <ClInclude Include="..\tests\testLensCatalog\testLensCatalogThorlabs.h" />
     <ClInclude Include="..\tests\testLensCatalog\testLensCatalog_Qioptiq.h" />
     <ClInclude Include="..\tests\testLensReplaceAndOptimize\testLensReplaceAndOptimize.h" />
+    <ClInclude Include="..\tests\testLensReplaceAndOptimiz_statistic\fiveLensSystems\testLensReplaceAndOptimize_statistic_fiveLensSystem.h" />
+    <ClInclude Include="..\tests\testLensReplaceAndOptimiz_statistic\fourLensSystems\testLensReplaceAndOptimize_statistic_fourLensSystem.h" />
+    <ClInclude Include="..\tests\testLensReplaceAndOptimiz_statistic\testLensRepAndOptimize_statisticStruct.h" />
+    <ClInclude Include="..\tests\testLensReplaceAndOptimiz_statistic\threeLensSystems\testLensReplaceAndOptimize_statistic_threeLensSystem.h" />
     <ClInclude Include="..\tests\testLensReplaceAndOptimiz_statistic\twoLensSystems\testLensReplaceAndOptimize_statistic_twoLensSystem.h" />
     <ClInclude Include="..\tests\testLensReplace\testLenseReplace.h" />
     <ClInclude Include="..\tests\testMath\testMath.h" />

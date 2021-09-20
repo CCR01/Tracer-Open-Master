@@ -97,9 +97,25 @@ public:
 	bool testCompareTOMandZemaxOptimizer_E5();
 	// E6
 	bool testCompareTOMandZemaxOptimizer_E6();
+	// E7
+	bool testCompareTOMandZemaxOptimizer_E7();
+	// E8
+	bool testCompareTOMandZemaxOptimizer_E8();
+	// E9
+	bool testCompareTOMandZemaxOptimizer_E9();
+	// E10
+	bool testCompareTOMandZemaxOptimizer_E10();
+	// E11
+	bool testCompareTOMandZemaxOptimizer_E11();
+	// E12
+	bool testCompareTOMandZemaxOptimizer_E12();
+	// E13
+	bool testCompareTOMandZemaxOptimizer_E13();
+	// E14
+	bool testCompareTOMandZemaxOptimizer_E14();
 
 	// export all results
-	void exportAllResults(std::string location, std::string name);
+	void exportResults(std::string location, std::string name, std::string example, unsigned);
 	void exportAllOpticalSystems(std::string location, saveResultsOptimizationMethodes saveResOptimizationMethodes);
 	// debug mode
 	void turn_ON_debugMode();

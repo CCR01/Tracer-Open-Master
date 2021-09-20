@@ -89,7 +89,7 @@ public:
 	void LensFourSurfaces::buildLensFourSurfaces
 	(
 		/*lens catalog*/ std::string lensCatalog,
-		/*catalog number*/ real catalogNumber,
+		/*catalog number*/ unsigned int catalogNumber,
 		/*diameter*/ real  diameter,
 		/*max diameter tolerance*/ real maxDiameterTolerance,
 		/*min diameter tolerance*/ real minDiameterTolerance,
@@ -130,7 +130,7 @@ public:
 	void buildLensFourSurfaces
 	(
 		/*lens catalog*/ std::string lensCatalog,
-		/*catalog number*/ real catalogNumber,
+		/*catalog number*/ unsigned int catalogNumber,
 		/*diameter*/ real  diameter,
 		/*max diameter tolerance*/ real maxDiameterTolerance,
 		/*min diameter tolerance*/ real minDiameterTolerance,
@@ -179,6 +179,7 @@ public:
 	void setLensCatalog(std::string lensCatalog);
 	// set number in catalog
 	void setCatalogNumber(unsigned int catalogNumber);
+	void setCatalogNumber(std::string catalogNumber);
 	// set diameter
 	void setDiameter(real const diameter);
 	// set max diameter tolerance
@@ -255,8 +256,6 @@ public:
 	void setPrice(real const price);
 	// set wavelengthToTrace
 	void setWavelenghtToTrace(real const waveToTrace);
-	// set item
-	void setItem(std::string item);
 	// set first design wavelength
 	void setFirstDesignWavelength(real firstDW);
 	// set second design wavelength
@@ -277,7 +276,7 @@ public:
 	// get lens catalog
 	std::string getLensCatalog();
 	// get number in catalog
-	unsigned int getCatalogNumber();
+	std::string getCatalogNumber();
 	// get diameter
 	real getDiameter();
 	// get max diameter tolerance
@@ -354,8 +353,6 @@ public:
 	real getPrice();
 	// get wavelengthToTrace
 	real getWavelenghtToTrace();
-	// get item
-	std::string getItem();
 	// get first design wavelength
 	real getFirstDesignWavelength();
 	// get second design wavelength
@@ -374,7 +371,7 @@ public:
 
 private:
 	std::string mLensCatalog{};
-	unsigned int mCatalogNumber{};
+	std::string mCatalogNumber{};
 	real mDiameter{};
 	real mMaxDiamterTolerance{};
 	real mMinDiamterTolerance{};
@@ -414,7 +411,6 @@ private:
 	real mPrice{};
 	real mWavelengthToTrace{};
 	real mFocalLength{};
-	std::string mItem{};
 
 	real mFirstDesignWavelength{};
 	real mSecondDesignWavelength{};

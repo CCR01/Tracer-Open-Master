@@ -27,10 +27,6 @@ public:
 
 	// Doppelkonkave Linsen (DCV) mit NIR-I-Beschichtung
 	void loadLensCatalogEO_double_concav_lenses_NIR_I(); //https://www.edmundoptics.de/f/nir-i-coated-double-concave-dcv-lenses/13500/
-	// *** ACHTUNG: mach das dann lieber am Schluss
-	 // Comment CR: Das sind im eigentlich die Linsen von "double_concav_lenses_VIS_NIR" (https://www.edmundoptics.de/f/vis-nir-coated-double-concave-dcv-lenses/13540/) nur
-	// mit einer anderen Beschichtung. Denke von den Parametern kannst du einige von dort kopieren. Das Coating musst du immer anpassen (siehe Beipiel). Auch die minimale 
-	// und maxiamle Wellenlänge verändert sich hier. 
 	std::vector<LensesTwoSurfaces> getAll_LensCatalogEO_double_concav_lenses_NIR_I();
 
 	// Achromate mit VIS-NIR-Beschichtung 
@@ -46,7 +42,6 @@ public:
 	// Large Precision Achromatic Lenses -> No Airspace
 	void loadLensCatalogEO_Large_Precision_Achromatic_Lenses_NoAirspace(); // https://www.edmundoptics.de/f/large-precision-achromatic-lenses/11679/
 	std::vector<LensThreeSurfaces> getAll_LensCatalogEO_Large_Precision_Achromatic_Lenses_NoAirspace();
-
 
 	// Large Precision Achromatic Lenses -> Airspace 0.1mm
 	void loadLensCatalogEO_Large_Precision_Achromatic_Lenses_Airspace01mm(); // https://www.edmundoptics.de/f/large-precision-achromatic-lenses/11679/
@@ -68,37 +63,292 @@ public:
 	void loadLensCatalogEO_Large_PCX_Condenser_Lenses(); // https://www.edmundoptics.de/f/large-pcx-condenser-lenses/13572/
 	std::vector<LensesTwoSurfaces> getAll_Large_PCX_Condenser_Lenses();
 
+
+
 	// Large PCX Condenser Lenses
 	// https://www.edmundoptics.de/f/large-pcx-condenser-lenses/13572/
 	LensesTwoSurfaces getEO67187();
-
+	LensesTwoSurfaces getEO27501();
+	LensesTwoSurfaces getEO27502();
+	LensesTwoSurfaces getEO27503();
+	LensesTwoSurfaces getEO27505();
+	LensesTwoSurfaces getEO27506();
+	LensesTwoSurfaces getEO27507();
+	LensesTwoSurfaces getEO67191();
+	LensesTwoSurfaces getEO27509();
+	LensesTwoSurfaces getEO27510();
+	LensesTwoSurfaces getEO27511();
+	LensesTwoSurfaces getEO27513();
+	LensesTwoSurfaces getEO27514();
+	LensesTwoSurfaces getEO27515();
+	LensesTwoSurfaces getEO67199();
+	LensesTwoSurfaces getEO67200();
 
 	// Micro Plano-Convex (PCX) Lenses 
 	// https://www.edmundoptics.de/f/micro-plano-convex-pcx-lenses/39529/
 	LensesTwoSurfaces getEO45951();
+	LensesTwoSurfaces getEO45588();
+	LensesTwoSurfaces getEO45952();
+	LensesTwoSurfaces getEO45589();
+	LensesTwoSurfaces getEO65257();
+	LensesTwoSurfaces getEO67423();
+	LensesTwoSurfaces getEO65273();
+	LensesTwoSurfaces getEO35694();
+	LensesTwoSurfaces getEO35710();
+	LensesTwoSurfaces getEO65258();
+	LensesTwoSurfaces getEO67424();
+	LensesTwoSurfaces getEO65274();
+	LensesTwoSurfaces getEO35695();
+	LensesTwoSurfaces getEO35711();
+	LensesTwoSurfaces getEO65259();
+	LensesTwoSurfaces getEO65305();
+	LensesTwoSurfaces getEO67425();
+	LensesTwoSurfaces getEO65252();
+	LensesTwoSurfaces getEO65275();
+	LensesTwoSurfaces getEO35696();
+	LensesTwoSurfaces getEO35712();
+	LensesTwoSurfaces getEO65260();
+	LensesTwoSurfaces getEO65306();
+	LensesTwoSurfaces getEO67426();
+	LensesTwoSurfaces getEO65253();
+	LensesTwoSurfaces getEO65276();
+	LensesTwoSurfaces getEO35697();
+	LensesTwoSurfaces getEO35713();
+	LensesTwoSurfaces getEO45953();
+	LensesTwoSurfaces getEO45968();
+	LensesTwoSurfaces getEO43394();
+	LensesTwoSurfaces getEO65261();
+	LensesTwoSurfaces getEO67427();
+	LensesTwoSurfaces getEO65277();
+	LensesTwoSurfaces getEO35698();
+	LensesTwoSurfaces getEO35714();
+	LensesTwoSurfaces getEO65262();
+	LensesTwoSurfaces getEO67428();
+	LensesTwoSurfaces getEO45954();
+	LensesTwoSurfaces getEO43395();
+	LensesTwoSurfaces getEO65278();
+	LensesTwoSurfaces getEO35699();
+	LensesTwoSurfaces getEO35715();
+	LensesTwoSurfaces getEO65263();
+	LensesTwoSurfaces getEO65307();
+	LensesTwoSurfaces getEO67429();
+	LensesTwoSurfaces getEO65254();
+	LensesTwoSurfaces getEO65279();
+	LensesTwoSurfaces getEO35700();
+	LensesTwoSurfaces getEO35716();
+	LensesTwoSurfaces getEO45955();
+	LensesTwoSurfaces getEO43396();
+	LensesTwoSurfaces getEO45956();
+	LensesTwoSurfaces getEO43397();
+	LensesTwoSurfaces getEO65264();
+	LensesTwoSurfaces getEO67430();
+	LensesTwoSurfaces getEO65280();
+	LensesTwoSurfaces getEO35701();
+	LensesTwoSurfaces getEO35717();
+	LensesTwoSurfaces getEO65265();
+	LensesTwoSurfaces getEO67431();
+	LensesTwoSurfaces getEO65281();
+	LensesTwoSurfaces getEO35702();
+	LensesTwoSurfaces getEO35718();
+	LensesTwoSurfaces getEO65266();
+	LensesTwoSurfaces getEO65308();
+	LensesTwoSurfaces getEO67432();
+	LensesTwoSurfaces getEO65255();
+	LensesTwoSurfaces getEO65282();
+	LensesTwoSurfaces getEO35703();
+	LensesTwoSurfaces getEO35719();
+	LensesTwoSurfaces getEO65267();
+	LensesTwoSurfaces getEO65309();
+	LensesTwoSurfaces getEO67433();
+	LensesTwoSurfaces getEO65256();
+	LensesTwoSurfaces getEO65283();
+	LensesTwoSurfaces getEO35704();
+	LensesTwoSurfaces getEO35720();
+	LensesTwoSurfaces getEO45957();
+	LensesTwoSurfaces getEO45972();
+	LensesTwoSurfaces getEO43398();
+	LensesTwoSurfaces getEO65268();
+	LensesTwoSurfaces getEO67434();
+	LensesTwoSurfaces getEO65284();
+	LensesTwoSurfaces getEO35705();
+	LensesTwoSurfaces getEO35721();
+	LensesTwoSurfaces getEO65269();
+	LensesTwoSurfaces getEO67435();
+	LensesTwoSurfaces getEO45958();
+	LensesTwoSurfaces getEO43399();
+	LensesTwoSurfaces getEO65285();
+	LensesTwoSurfaces getEO35706();
+	LensesTwoSurfaces getEO35722();
+	LensesTwoSurfaces getEO45590();
+	LensesTwoSurfaces getEO65270();
+	LensesTwoSurfaces getEO45959();
+	LensesTwoSurfaces getEO67436();
+	LensesTwoSurfaces getEO65286();
+	LensesTwoSurfaces getEO35707();
+	LensesTwoSurfaces getEO35723();
+	LensesTwoSurfaces getEO65271();
+	LensesTwoSurfaces getEO48646();
+	LensesTwoSurfaces getEO67437();
+	LensesTwoSurfaces getEO48649();
+	LensesTwoSurfaces getEO48643();
+	LensesTwoSurfaces getEO65287();
+	LensesTwoSurfaces getEO35708();
+	LensesTwoSurfaces getEO35724();
+	LensesTwoSurfaces getEO65272();
+	LensesTwoSurfaces getEO48647();
+	LensesTwoSurfaces getEO67438();
+	LensesTwoSurfaces getEO48644();
+	LensesTwoSurfaces getEO65288();
+	LensesTwoSurfaces getEO35709();
+	LensesTwoSurfaces getEO35725();
+	LensesTwoSurfaces getEO88615();
+	LensesTwoSurfaces getEO88774();
+	LensesTwoSurfaces getEO45273();
+	LensesTwoSurfaces getEO45964();
+	LensesTwoSurfaces getEO45272();
+	LensesTwoSurfaces getEO49172();
+	LensesTwoSurfaces getEO88620();
+	LensesTwoSurfaces getEO88779();
+	LensesTwoSurfaces getEO45426();
+	LensesTwoSurfaces getEO45965();
+	LensesTwoSurfaces getEO45425();
+	LensesTwoSurfaces getEO49173();
+	LensesTwoSurfaces getEO88621();
+	LensesTwoSurfaces getEO88780();
+	LensesTwoSurfaces getEO45118();
+	LensesTwoSurfaces getEO45960();
+	LensesTwoSurfaces getEO45117();
+	LensesTwoSurfaces getEO49167();
+	LensesTwoSurfaces getEO45142();
+	LensesTwoSurfaces getEO45961();
+	LensesTwoSurfaces getEO45141();
+	LensesTwoSurfaces getEO49168();
+	LensesTwoSurfaces getEO32953();
+	LensesTwoSurfaces getEO45962();
+	LensesTwoSurfaces getEO32952();
+	LensesTwoSurfaces getEO49169();
+	LensesTwoSurfaces getEO88617();
+	LensesTwoSurfaces getEO88776();
+	LensesTwoSurfaces getEO48645();
+	LensesTwoSurfaces getEO49170();
+	LensesTwoSurfaces getEO88618();
+	LensesTwoSurfaces getEO88777();
+	LensesTwoSurfaces getEO32955();
+	LensesTwoSurfaces getEO45963();
+	LensesTwoSurfaces getEO45978();
+	LensesTwoSurfaces getEO32954();
+	LensesTwoSurfaces getEO49171();
+	LensesTwoSurfaces getEO88619();
+	LensesTwoSurfaces getEO88778();
+	LensesTwoSurfaces getEO67444();
+	LensesTwoSurfaces getEO67445();
+	LensesTwoSurfaces getEO67439();
+	LensesTwoSurfaces getEO67440();
+	LensesTwoSurfaces getEO88616();
+	LensesTwoSurfaces getEO88775();
+	LensesTwoSurfaces getEO67441();
+	LensesTwoSurfaces getEO48910();
+	LensesTwoSurfaces getEO48648();
+	LensesTwoSurfaces getEO67442();
+	LensesTwoSurfaces getEO67443();
+	LensesTwoSurfaces getEO45430();
+	LensesTwoSurfaces getEO48705();
+	LensesTwoSurfaces getEO45429();
+	LensesTwoSurfaces getEO47864();
+	LensesTwoSurfaces getEO88625();
+	LensesTwoSurfaces getEO88784();
+	LensesTwoSurfaces getEO45432();
+	LensesTwoSurfaces getEO48706();
+	LensesTwoSurfaces getEO45431();
+	LensesTwoSurfaces getEO47865();
+	LensesTwoSurfaces getEO88626();
+	LensesTwoSurfaces getEO88785();
+	LensesTwoSurfaces getEO45224();
+	LensesTwoSurfaces getEO48702();
+	LensesTwoSurfaces getEO45223();
+	LensesTwoSurfaces getEO47861();
+	LensesTwoSurfaces getEO45428();
+	LensesTwoSurfaces getEO48703();
+	LensesTwoSurfaces getEO45427();
+	LensesTwoSurfaces getEO47862();
+	LensesTwoSurfaces getEO88623();
+	LensesTwoSurfaces getEO88782();
+	LensesTwoSurfaces getEO45226();
+	LensesTwoSurfaces getEO48704();
+	LensesTwoSurfaces getEO45225();
+	LensesTwoSurfaces getEO47863();
+	LensesTwoSurfaces getEO67449();
+	LensesTwoSurfaces getEO67450();
+	LensesTwoSurfaces getEO67446();
+	LensesTwoSurfaces getEO88622();
+	LensesTwoSurfaces getEO88781();
+	LensesTwoSurfaces getEO67447();
+	LensesTwoSurfaces getEO67448();
+	LensesTwoSurfaces getEO45144();
+	LensesTwoSurfaces getEO48707();
+	LensesTwoSurfaces getEO67451();
+	LensesTwoSurfaces getEO45143();
+	LensesTwoSurfaces getEO47866();
+	LensesTwoSurfaces getEO88627();
+	LensesTwoSurfaces getEO88786();
+	LensesTwoSurfaces getEO45148();
+	LensesTwoSurfaces getEO48708();
+	LensesTwoSurfaces getEO45147();
+	LensesTwoSurfaces getEO47867();
+	LensesTwoSurfaces getEO88628();
+	LensesTwoSurfaces getEO88787();
+	LensesTwoSurfaces getEO67452();
+
 
 	// Steinheil Triplet Achromatic Lenses 
 	// https://www.edmundoptics.de/f/steinheil-triplet-achromatic-lenses/12275/
 	LensFourSurfaces getEO47673();
+	LensFourSurfaces getEO47674();
+	LensFourSurfaces getEO47675();
+	LensFourSurfaces getEO67422();
 
 	// Hastings Triplet Achromatic Lenses 
 	// https://www.edmundoptics.de/f/hastings-triplet-achromatic-lenses/11968/
 	LensFourSurfaces getEO13521();
+	LensFourSurfaces getEO67418();
+	LensFourSurfaces getEO45251();
+	LensFourSurfaces getEO30120();
+	LensFourSurfaces getEO30229();
+
 
 	// Large Precision Achromatic Lenses -> No Airspace
 	// https://www.edmundoptics.de/f/large-precision-achromatic-lenses/11679/
 	LensThreeSurfaces getEO31402();
+	LensThreeSurfaces getEO42817();
 
 
 	// Large Precision Achromatic Lenses -> Airspace 0.1mm
 	// https://www.edmundoptics.de/f/large-precision-achromatic-lenses/11679/
 	LensFourSurfaces getEO30976();
+	LensFourSurfaces getEO54567();
+	LensFourSurfaces getEO50107();
+	LensFourSurfaces getEO54568();
+	LensFourSurfaces getEO70163();
+	LensFourSurfaces getEO54569();
 
 
 	// Broadband AR Coated Negative Achromatic Lenses
 	// https://www.edmundoptics.de/f/broadband-ar-coated-negative-achromatic-lenses/13623/
 	LensThreeSurfaces getEO62478();
-
+	LensThreeSurfaces getEO85877();
+	LensThreeSurfaces getEO62480();
+	LensThreeSurfaces getEO62481();
+	LensThreeSurfaces getEO62483();
+	LensThreeSurfaces getEO62484();
+	LensThreeSurfaces getEO62485();
+	LensThreeSurfaces getEO62486();
+	LensThreeSurfaces getEO62487();
+	LensThreeSurfaces getEO62488();
+	LensThreeSurfaces getEO62489();
+	LensThreeSurfaces getEO62492();
+	LensThreeSurfaces getEO62493();
+	LensThreeSurfaces getEO62494();
+	LensThreeSurfaces getEO62495();
 
 	// get VIS-NIR beschichtete PCV Linsen
 	// https://www.edmundoptics.de/f/vis-nir-coated-plano-concave-pcv-lenses/13512/
@@ -128,9 +378,6 @@ public:
 	LensesTwoSurfaces getEO45925();
 	LensesTwoSurfaces getEO45926();
 
-
-
-
 	// get Doppelkonkave (DCV) Linsen VIS-NIR AR beschichtet
 	// https://www.edmundoptics.de/f/vis-nir-coated-double-concave-dcv-lenses/13540/
 	LensesTwoSurfaces getEO45927();
@@ -146,7 +393,6 @@ public:
 	LensesTwoSurfaces getEO45930();
 	LensesTwoSurfaces getEO45931();
 	LensesTwoSurfaces getEO45932();
-
 
 	// get VIS-NIR beschichtete PCX Linsen
 	// https://www.edmundoptics.de/f/vis-nir-coated-plano-convex-pcx-lenses/12278/
@@ -364,9 +610,6 @@ public:
 	LensesTwoSurfaces getEO38552();
 	LensesTwoSurfaces getEO38561();
 	LensesTwoSurfaces getEO38567();
-
-
-
 
 	// get double convex lenses from Edmund Optics
 	// Link: https://www.edmundoptics.de/f/VIS-NIR-Coated-Double-Convex-DCX-Lenses/13504/
@@ -623,30 +866,207 @@ public:
 	LensThreeSurfaces getEO45418();
 	LensThreeSurfaces getEO45419();
 
-
 	// Doppelkonkave Linsen (DCV) mit NIR-I-Beschichtung
 	//https://www.edmundoptics.de/f/nir-i-coated-double-concave-dcv-lenses/13500/
 	LensesTwoSurfaces getEO49540();
+	LensesTwoSurfaces getEO49541();
+	LensesTwoSurfaces getEO49542();
+	LensesTwoSurfaces getEO49543();
+	LensesTwoSurfaces getEO49544();
+	LensesTwoSurfaces getEO49545();
+	LensesTwoSurfaces getEO49546();
+	LensesTwoSurfaces getEO49547();
+	LensesTwoSurfaces getEO49548();
+	LensesTwoSurfaces getEO49549();
+	LensesTwoSurfaces getEO49550();
+	LensesTwoSurfaces getEO49551();
+	LensesTwoSurfaces getEO49552();
 
 	// Achromate mit VIS-NIR-Beschichtung 
 	//https://www.edmundoptics.de/f/vis-nir-coated-achromatic-lenses/13536/
 	LensThreeSurfaces getEO84127();
+	LensThreeSurfaces getEO84128();
+	LensThreeSurfaces getEO84129();
+	LensThreeSurfaces getEO83980();
+	LensThreeSurfaces getEO83981();
+	LensThreeSurfaces getEO63714();
+	LensThreeSurfaces getEO49300();
+	LensThreeSurfaces getEO49947();
+	LensThreeSurfaces getEO49301();
+	LensThreeSurfaces getEO49302();
+	LensThreeSurfaces getEO49948();
+	LensThreeSurfaces getEO49303();
+	LensThreeSurfaces getEO49304();
+	LensThreeSurfaces getEO49305();
+	LensThreeSurfaces getEO49949();
+	LensThreeSurfaces getEO49306();
+	LensThreeSurfaces getEO49307();
+	LensThreeSurfaces getEO49308();
+	LensThreeSurfaces getEO49309();
+	LensThreeSurfaces getEO49310();
+	LensThreeSurfaces getEO49311();
+	LensThreeSurfaces getEO49312();
+	LensThreeSurfaces getEO49313();
+	LensThreeSurfaces getEO49950();
+	LensThreeSurfaces getEO49314();
+	LensThreeSurfaces getEO49951();
+	LensThreeSurfaces getEO49315();
+	LensThreeSurfaces getEO49316();
+	LensThreeSurfaces getEO49317();
+	LensThreeSurfaces getEO49318();
+	LensThreeSurfaces getEO49319();
+	LensThreeSurfaces getEO49320();
+	LensThreeSurfaces getEO63717();
+	LensThreeSurfaces getEO63718();
+	LensThreeSurfaces getEO63719();
+	LensThreeSurfaces getEO63720();
+	LensThreeSurfaces getEO63721();
+	LensThreeSurfaces getEO63722();
+	LensThreeSurfaces getEO63723();
+	LensThreeSurfaces getEO49321();
+	LensThreeSurfaces getEO63724();
+	//LensThreeSurfaces getEO49952();
+	LensThreeSurfaces getEO49322();
+	LensThreeSurfaces getEO49323();
+	LensThreeSurfaces getEO49324();
+	LensThreeSurfaces getEO49325();
+	LensThreeSurfaces getEO49326();
+	LensThreeSurfaces getEO49327();
+	LensThreeSurfaces getEO49328();
+	LensThreeSurfaces getEO49329();
+	LensThreeSurfaces getEO49330();
+	LensThreeSurfaces getEO49331();
+	LensThreeSurfaces getEO49332();
+	LensThreeSurfaces getEO49333();
+	LensThreeSurfaces getEO49784();
+	LensThreeSurfaces getEO49785();
+	LensThreeSurfaces getEO49786();
+	LensThreeSurfaces getEO49787();
+	LensThreeSurfaces getEO49788();
+	LensThreeSurfaces getEO49790();
+	LensThreeSurfaces getEO83417();
+	LensThreeSurfaces getEO49953();
+	//LensThreeSurfaces getEO49334();
+	LensThreeSurfaces getEO49335();
+	LensThreeSurfaces getEO49336();
+	LensThreeSurfaces getEO49337();
+	LensThreeSurfaces getEO49954();
+	LensThreeSurfaces getEO49338();
+	LensThreeSurfaces getEO49955();
+	LensThreeSurfaces getEO49339();
+	LensThreeSurfaces getEO49340();
+	LensThreeSurfaces getEO49341();
+	LensThreeSurfaces getEO49342();
+	LensThreeSurfaces getEO49343();
+	LensThreeSurfaces getEO49344();
+	LensThreeSurfaces getEO49345();
+	LensThreeSurfaces getEO49346();
+	LensThreeSurfaces getEO49347();
+	LensThreeSurfaces getEO49956();
+	//LensThreeSurfaces getEO49348();
+	//LensThreeSurfaces getEO49349();
+	LensThreeSurfaces getEO49350();
+	LensThreeSurfaces getEO49957();
+	LensThreeSurfaces getEO49351();
+	LensThreeSurfaces getEO49958();
+	LensThreeSurfaces getEO49352();
+	//LensThreeSurfaces getEO49353();
+	//LensThreeSurfaces getEO49354();
+	LensThreeSurfaces getEO49355();
+	LensThreeSurfaces getEO49356();
+	LensThreeSurfaces getEO49357();
+	LensThreeSurfaces getEO49358();
+	LensThreeSurfaces getEO49359();
+	LensThreeSurfaces getEO49360();
+	LensThreeSurfaces getEO49361();
+	LensThreeSurfaces getEO49362();
+	LensThreeSurfaces getEO67334();
+	LensThreeSurfaces getEO49363();
+	LensThreeSurfaces getEO49364();
+	LensThreeSurfaces getEO49365();
+	LensThreeSurfaces getEO49366();
+	LensThreeSurfaces getEO49367();
+	LensThreeSurfaces getEO49368();
+	LensThreeSurfaces getEO49369();
+	LensThreeSurfaces getEO49370();
+	LensThreeSurfaces getEO67335();
+	LensThreeSurfaces getEO49791();
+	LensThreeSurfaces getEO49792();
+	LensThreeSurfaces getEO49793();
+	LensThreeSurfaces getEO49794();
+	LensThreeSurfaces getEO49795();
+	LensThreeSurfaces getEO49796();
+	LensThreeSurfaces getEO33923();
+	LensThreeSurfaces getEO49371();
+	LensThreeSurfaces getEO49372();
+	LensThreeSurfaces getEO49373();
+	LensThreeSurfaces getEO49374();
+	LensThreeSurfaces getEO49375();
+	LensThreeSurfaces getEO49376();
+	LensThreeSurfaces getEO49377();
+	LensThreeSurfaces getEO49378();
+	LensThreeSurfaces getEO89683();
+	LensThreeSurfaces getEO49379();
+	LensThreeSurfaces getEO49380();
+	LensThreeSurfaces getEO63725();
+	LensThreeSurfaces getEO49381();
+	LensThreeSurfaces getEO49382();
+	LensThreeSurfaces getEO49383();
+	LensThreeSurfaces getEO49384();
+	LensThreeSurfaces getEO49385();
+	LensThreeSurfaces getEO49386();
+	LensThreeSurfaces getEO49387();
+	LensThreeSurfaces getEO49388();
+	LensThreeSurfaces getEO67336();
+	LensThreeSurfaces getEO49389();
+	LensThreeSurfaces getEO49390();
+	LensThreeSurfaces getEO49391();
+	LensThreeSurfaces getEO49392();
+	LensThreeSurfaces getEO49393();
+	LensThreeSurfaces getEO49394();
+	LensThreeSurfaces getEO49395();
+	LensThreeSurfaces getEO49396();
+	LensThreeSurfaces getEO33924();
+	LensThreeSurfaces getEO33925();
+	LensThreeSurfaces getEO88596();
+	LensThreeSurfaces getEO88597();
+	LensThreeSurfaces getEO88598();
 
 private:
 
 	glass mGlasses{};
-	
+
 	// Large Precision Achromatic Lenses -> No Airespace
 	// https://www.edmundoptics.de/f/large-precision-achromatic-lenses/11679/
 	LensThreeSurfaces EO31402{};
+	LensThreeSurfaces EO42817{};
 
 	// Large Precision Achromatic Lenses -> Airspace 0.1mm
 	// https://www.edmundoptics.de/f/large-precision-achromatic-lenses/11679/
 	LensFourSurfaces EO30976{};
+	LensFourSurfaces EO54567{};
+	LensFourSurfaces EO50107{};
+	LensFourSurfaces EO54568{};
+	LensFourSurfaces EO70163{};
+	LensFourSurfaces EO54569{};
 
 	// Broadband AR Coated Negative Achromatic Lenses
 	// https://www.edmundoptics.de/f/broadband-ar-coated-negative-achromatic-lenses/13623/
 	LensThreeSurfaces EO62478{};
+	LensThreeSurfaces EO85877{};
+	LensThreeSurfaces EO62480{};
+	LensThreeSurfaces EO62481{};
+	LensThreeSurfaces EO62483{};
+	LensThreeSurfaces EO62484{};
+	LensThreeSurfaces EO62485{};
+	LensThreeSurfaces EO62486{};
+	LensThreeSurfaces EO62487{};
+	LensThreeSurfaces EO62488{};
+	LensThreeSurfaces EO62489{};
+	LensThreeSurfaces EO62492{};
+	LensThreeSurfaces EO62493{};
+	LensThreeSurfaces EO62494{};
+	LensThreeSurfaces EO62495{};
 
 	// get VIS-NIR beschichtete PCV Linsen
 	// https://www.edmundoptics.de/f/vis-nir-coated-plano-concave-pcv-lenses/13512/
@@ -677,7 +1097,6 @@ private:
 	LensesTwoSurfaces EO45926{};
 
 
-
 	// Doppelkonkave (DCV) Linsen VIS-NIR AR beschichtet 
 	// https://www.edmundoptics.de/f/vis-nir-coated-double-concave-dcv-lenses/13540/
 	LensesTwoSurfaces EO45927{};
@@ -693,8 +1112,6 @@ private:
 	LensesTwoSurfaces EO45930{};
 	LensesTwoSurfaces EO45931{};
 	LensesTwoSurfaces EO45932{};
-
-
 
 
 	// VIS-NIR beschichtete PCX Linsen 
@@ -912,8 +1329,6 @@ private:
 	LensesTwoSurfaces EO38552{};
 	LensesTwoSurfaces EO38561{};
 	LensesTwoSurfaces EO38567{};
-
-
 
 
 	// double convex lenses
@@ -1173,26 +1588,420 @@ private:
 	// Doppelkonkave Linsen (DCV) mit NIR-I-Beschichtung
 	//https://www.edmundoptics.de/f/nir-i-coated-double-concave-dcv-lenses/13500/
 	LensesTwoSurfaces EO49540{};
-	
+	LensesTwoSurfaces EO49541{};
+	LensesTwoSurfaces EO49542{};
+	LensesTwoSurfaces EO49543{};
+	LensesTwoSurfaces EO49544{};
+	LensesTwoSurfaces EO49545{};
+	LensesTwoSurfaces EO49546{};
+	LensesTwoSurfaces EO49547{};
+	LensesTwoSurfaces EO49548{};
+	LensesTwoSurfaces EO49549{};
+	LensesTwoSurfaces EO49550{};
+	LensesTwoSurfaces EO49551{};
+	LensesTwoSurfaces EO49552{};
+
 	// Achromate mit VIS-NIR-Beschichtung 
 	//https://www.edmundoptics.de/f/vis-nir-coated-achromatic-lenses/13536/
 	LensThreeSurfaces EO84127{};
+	LensThreeSurfaces EO84128{};
+	LensThreeSurfaces EO84129{};
+	LensThreeSurfaces EO83980{};
+	LensThreeSurfaces EO83981{};
+	LensThreeSurfaces EO63714{};
+	LensThreeSurfaces EO49300{};
+	LensThreeSurfaces EO49947{};
+	LensThreeSurfaces EO49301{};
+	LensThreeSurfaces EO49302{};
+	LensThreeSurfaces EO49948{};
+	LensThreeSurfaces EO49303{};
+	LensThreeSurfaces EO49304{};
+	LensThreeSurfaces EO49305{};
+	LensThreeSurfaces EO49949{};
+	LensThreeSurfaces EO49306{};
+	LensThreeSurfaces EO49307{};
+	LensThreeSurfaces EO49308{};
+	LensThreeSurfaces EO49309{};
+	LensThreeSurfaces EO49310{};
+	LensThreeSurfaces EO49311{};
+	LensThreeSurfaces EO49312{};
+	LensThreeSurfaces EO49313{};
+	LensThreeSurfaces EO49950{};
+	LensThreeSurfaces EO49314{};
+	LensThreeSurfaces EO49951{};
+	LensThreeSurfaces EO49315{};
+	LensThreeSurfaces EO49316{};
+	LensThreeSurfaces EO49317{};
+	LensThreeSurfaces EO49318{};
+	LensThreeSurfaces EO49319{};
+	LensThreeSurfaces EO49320{};
+	LensThreeSurfaces EO63717{};
+	LensThreeSurfaces EO63718{};
+	LensThreeSurfaces EO63719{};
+	LensThreeSurfaces EO63720{};
+	LensThreeSurfaces EO63721{};
+	LensThreeSurfaces EO63722{};
+	LensThreeSurfaces EO63723{};
+	LensThreeSurfaces EO49321{};
+	LensThreeSurfaces EO63724{};
+	//LensThreeSurfaces EO49952{};
+	LensThreeSurfaces EO49322{};
+	LensThreeSurfaces EO49323{};
+	LensThreeSurfaces EO49324{};
+	LensThreeSurfaces EO49325{};
+	LensThreeSurfaces EO49326{};
+	LensThreeSurfaces EO49327{};
+	LensThreeSurfaces EO49328{};
+	LensThreeSurfaces EO49329{};
+	LensThreeSurfaces EO49330{};
+	LensThreeSurfaces EO49331{};
+	LensThreeSurfaces EO49332{};
+	LensThreeSurfaces EO49333{};
+	LensThreeSurfaces EO49784{};
+	LensThreeSurfaces EO49785{};
+	LensThreeSurfaces EO49786{};
+	LensThreeSurfaces EO49787{};
+	LensThreeSurfaces EO49788{};
+	LensThreeSurfaces EO49790{};
+	LensThreeSurfaces EO83417{};
+	LensThreeSurfaces EO49953{};
+	//LensThreeSurfaces EO49334{};
+	LensThreeSurfaces EO49335{};
+	LensThreeSurfaces EO49336{};
+	LensThreeSurfaces EO49337{};
+	LensThreeSurfaces EO49954{};
+	LensThreeSurfaces EO49338{};
+	LensThreeSurfaces EO49955{};
+	LensThreeSurfaces EO49339{};
+	LensThreeSurfaces EO49340{};
+	LensThreeSurfaces EO49341{};
+	LensThreeSurfaces EO49342{};
+	LensThreeSurfaces EO49343{};
+	LensThreeSurfaces EO49344{};
+	LensThreeSurfaces EO49345{};
+	LensThreeSurfaces EO49346{};
+	LensThreeSurfaces EO49347{};
+	LensThreeSurfaces EO49956{};
+	//LensThreeSurfaces EO49348{};
+	//LensThreeSurfaces EO49349{};
+	LensThreeSurfaces EO49350{};
+	LensThreeSurfaces EO49957{};
+	LensThreeSurfaces EO49351{};
+	LensThreeSurfaces EO49958{};
+	LensThreeSurfaces EO49352{};
+	//LensThreeSurfaces EO49353{};
+	//LensThreeSurfaces EO49354{};
+	LensThreeSurfaces EO49355{};
+	LensThreeSurfaces EO49356{};
+	LensThreeSurfaces EO49357{};
+	LensThreeSurfaces EO49358{};
+	LensThreeSurfaces EO49359{};
+	LensThreeSurfaces EO49360{};
+	LensThreeSurfaces EO49361{};
+	LensThreeSurfaces EO49362{};
+	LensThreeSurfaces EO67334{};
+	LensThreeSurfaces EO49363{};
+	LensThreeSurfaces EO49364{};
+	LensThreeSurfaces EO49365{};
+	LensThreeSurfaces EO49366{};
+	LensThreeSurfaces EO49367{};
+	LensThreeSurfaces EO49368{};
+	LensThreeSurfaces EO49369{};
+	LensThreeSurfaces EO49370{};
+	LensThreeSurfaces EO67335{};
+	LensThreeSurfaces EO49791{};
+	LensThreeSurfaces EO49792{};
+	LensThreeSurfaces EO49793{};
+	LensThreeSurfaces EO49794{};
+	LensThreeSurfaces EO49795{};
+	LensThreeSurfaces EO49796{};
+	LensThreeSurfaces EO33923{};
+	LensThreeSurfaces EO49371{};
+	LensThreeSurfaces EO49372{};
+	LensThreeSurfaces EO49373{};
+	LensThreeSurfaces EO49374{};
+	LensThreeSurfaces EO49375{};
+	LensThreeSurfaces EO49376{};
+	LensThreeSurfaces EO49377{};
+	LensThreeSurfaces EO49378{};
+	LensThreeSurfaces EO89683{};
+	LensThreeSurfaces EO49379{};
+	LensThreeSurfaces EO49380{};
+	LensThreeSurfaces EO63725{};
+	LensThreeSurfaces EO49381{};
+	LensThreeSurfaces EO49382{};
+	LensThreeSurfaces EO49383{};
+	LensThreeSurfaces EO49384{};
+	LensThreeSurfaces EO49385{};
+	LensThreeSurfaces EO49386{};
+	LensThreeSurfaces EO49387{};
+	LensThreeSurfaces EO49388{};
+	LensThreeSurfaces EO67336{};
+	LensThreeSurfaces EO49389{};
+	LensThreeSurfaces EO49390{};
+	LensThreeSurfaces EO49391{};
+	LensThreeSurfaces EO49392{};
+	LensThreeSurfaces EO49393{};
+	LensThreeSurfaces EO49394{};
+	LensThreeSurfaces EO49395{};
+	LensThreeSurfaces EO49396{};
+	LensThreeSurfaces EO33924{};
+	LensThreeSurfaces EO33925{};
+	LensThreeSurfaces EO88596{};
+	LensThreeSurfaces EO88597{};
+	LensThreeSurfaces EO88598{};
+
 
 	// Hastings Triplet Achromatic Lenses 
 	// https://www.edmundoptics.de/f/hastings-triplet-achromatic-lenses/11968/
 	LensFourSurfaces EO13521{};
+	LensFourSurfaces EO67418{};
+	LensFourSurfaces EO45251{};
+	LensFourSurfaces EO30120{};
+	LensFourSurfaces EO30229{};
 
 	// Steinheil Triplet Achromatic Lenses 
 	// https://www.edmundoptics.de/f/steinheil-triplet-achromatic-lenses/12275/
 	LensFourSurfaces EO47673{};
+	LensFourSurfaces EO47674{};
+	LensFourSurfaces EO47675{};
+	LensFourSurfaces EO67422{};
+
 
 	// Micro Plano-Convex (PCX) Lenses 
 	// https://www.edmundoptics.de/f/micro-plano-convex-pcx-lenses/39529/
 	LensesTwoSurfaces EO45951{};
+	LensesTwoSurfaces EO45588{};
+	LensesTwoSurfaces EO45952{};
+	LensesTwoSurfaces EO45589{};
+	LensesTwoSurfaces EO65257{};
+	LensesTwoSurfaces EO67423{};
+	LensesTwoSurfaces EO65273{};
+	LensesTwoSurfaces EO35694{};
+	LensesTwoSurfaces EO35710{};
+	LensesTwoSurfaces EO65258{};
+	LensesTwoSurfaces EO67424{};
+	LensesTwoSurfaces EO65274{};
+	LensesTwoSurfaces EO35695{};
+	LensesTwoSurfaces EO35711{};
+	LensesTwoSurfaces EO65259{};
+	LensesTwoSurfaces EO65305{};
+	LensesTwoSurfaces EO67425{};
+	LensesTwoSurfaces EO65252{};
+	LensesTwoSurfaces EO65275{};
+	LensesTwoSurfaces EO35696{};
+	LensesTwoSurfaces EO35712{};
+	LensesTwoSurfaces EO65260{};
+	LensesTwoSurfaces EO65306{};
+	LensesTwoSurfaces EO67426{};
+	LensesTwoSurfaces EO65253{};
+	LensesTwoSurfaces EO65276{};
+	LensesTwoSurfaces EO35697{};
+	LensesTwoSurfaces EO35713{};
+	LensesTwoSurfaces EO45953{};
+	LensesTwoSurfaces EO45968{};
+	LensesTwoSurfaces EO43394{};
+	LensesTwoSurfaces EO65261{};
+	LensesTwoSurfaces EO67427{};
+	LensesTwoSurfaces EO65277{};
+	LensesTwoSurfaces EO35698{};
+	LensesTwoSurfaces EO35714{};
+	LensesTwoSurfaces EO65262{};
+	LensesTwoSurfaces EO67428{};
+	LensesTwoSurfaces EO45954{};
+	LensesTwoSurfaces EO43395{};
+	LensesTwoSurfaces EO65278{};
+	LensesTwoSurfaces EO35699{};
+	LensesTwoSurfaces EO35715{};
+	LensesTwoSurfaces EO65263{};
+	LensesTwoSurfaces EO65307{};
+	LensesTwoSurfaces EO67429{};
+	LensesTwoSurfaces EO65254{};
+	LensesTwoSurfaces EO65279{};
+	LensesTwoSurfaces EO35700{};
+	LensesTwoSurfaces EO35716{};
+	LensesTwoSurfaces EO45955{};
+	LensesTwoSurfaces EO43396{};
+	LensesTwoSurfaces EO45956{};
+	LensesTwoSurfaces EO43397{};
+	LensesTwoSurfaces EO65264{};
+	LensesTwoSurfaces EO67430{};
+	LensesTwoSurfaces EO65280{};
+	LensesTwoSurfaces EO35701{};
+	LensesTwoSurfaces EO35717{};
+	LensesTwoSurfaces EO65265{};
+	LensesTwoSurfaces EO67431{};
+	LensesTwoSurfaces EO65281{};
+	LensesTwoSurfaces EO35702{};
+	LensesTwoSurfaces EO35718{};
+	LensesTwoSurfaces EO65266{};
+	LensesTwoSurfaces EO65308{};
+	LensesTwoSurfaces EO67432{};
+	LensesTwoSurfaces EO65255{};
+	LensesTwoSurfaces EO65282{};
+	LensesTwoSurfaces EO35703{};
+	LensesTwoSurfaces EO35719{};
+	LensesTwoSurfaces EO65267{};
+	LensesTwoSurfaces EO65309{};
+	LensesTwoSurfaces EO67433{};
+	LensesTwoSurfaces EO65256{};
+	LensesTwoSurfaces EO65283{};
+	LensesTwoSurfaces EO35704{};
+	LensesTwoSurfaces EO35720{};
+	LensesTwoSurfaces EO45957{};
+	LensesTwoSurfaces EO45972{};
+	LensesTwoSurfaces EO43398{};
+	LensesTwoSurfaces EO65268{};
+	LensesTwoSurfaces EO67434{};
+	LensesTwoSurfaces EO65284{};
+	LensesTwoSurfaces EO35705{};
+	LensesTwoSurfaces EO35721{};
+	LensesTwoSurfaces EO65269{};
+	LensesTwoSurfaces EO67435{};
+	LensesTwoSurfaces EO45958{};
+	LensesTwoSurfaces EO43399{};
+	LensesTwoSurfaces EO65285{};
+	LensesTwoSurfaces EO35706{};
+	LensesTwoSurfaces EO35722{};
+	LensesTwoSurfaces EO45590{};
+	LensesTwoSurfaces EO65270{};
+	LensesTwoSurfaces EO45959{};
+	LensesTwoSurfaces EO67436{};
+	LensesTwoSurfaces EO65286{};
+	LensesTwoSurfaces EO35707{};
+	LensesTwoSurfaces EO35723{};
+	LensesTwoSurfaces EO65271{};
+	LensesTwoSurfaces EO48646{};
+	LensesTwoSurfaces EO67437{};
+	LensesTwoSurfaces EO48649{};
+	LensesTwoSurfaces EO48643{};
+	LensesTwoSurfaces EO65287{};
+	LensesTwoSurfaces EO35708{};
+	LensesTwoSurfaces EO35724{};
+	LensesTwoSurfaces EO65272{};
+	LensesTwoSurfaces EO48647{};
+	LensesTwoSurfaces EO67438{};
+	LensesTwoSurfaces EO48644{};
+	LensesTwoSurfaces EO65288{};
+	LensesTwoSurfaces EO35709{};
+	LensesTwoSurfaces EO35725{};
+	LensesTwoSurfaces EO88615{};
+	LensesTwoSurfaces EO88774{};
+	LensesTwoSurfaces EO45273{};
+	LensesTwoSurfaces EO45964{};
+	LensesTwoSurfaces EO45272{};
+	LensesTwoSurfaces EO49172{};
+	LensesTwoSurfaces EO88620{};
+	LensesTwoSurfaces EO88779{};
+	LensesTwoSurfaces EO45426{};
+	LensesTwoSurfaces EO45965{};
+	LensesTwoSurfaces EO45425{};
+	LensesTwoSurfaces EO49173{};
+	LensesTwoSurfaces EO88621{};
+	LensesTwoSurfaces EO88780{};
+	LensesTwoSurfaces EO45118{};
+	LensesTwoSurfaces EO45960{};
+	LensesTwoSurfaces EO45117{};
+	LensesTwoSurfaces EO49167{};
+	LensesTwoSurfaces EO45142{};
+	LensesTwoSurfaces EO45961{};
+	LensesTwoSurfaces EO45141{};
+	LensesTwoSurfaces EO49168{};
+	LensesTwoSurfaces EO32953{};
+	LensesTwoSurfaces EO45962{};
+	LensesTwoSurfaces EO32952{};
+	LensesTwoSurfaces EO49169{};
+	LensesTwoSurfaces EO88617{};
+	LensesTwoSurfaces EO88776{};
+	LensesTwoSurfaces EO48645{};
+	LensesTwoSurfaces EO49170{};
+	LensesTwoSurfaces EO88618{};
+	LensesTwoSurfaces EO88777{};
+	LensesTwoSurfaces EO32955{};
+	LensesTwoSurfaces EO45963{};
+	LensesTwoSurfaces EO45978{};
+	LensesTwoSurfaces EO32954{};
+	LensesTwoSurfaces EO49171{};
+	LensesTwoSurfaces EO88619{};
+	LensesTwoSurfaces EO88778{};
+	LensesTwoSurfaces EO67444{};
+	LensesTwoSurfaces EO67445{};
+	LensesTwoSurfaces EO67439{};
+	LensesTwoSurfaces EO67440{};
+	LensesTwoSurfaces EO88616{};
+	LensesTwoSurfaces EO88775{};
+	LensesTwoSurfaces EO67441{};
+	LensesTwoSurfaces EO48910{};
+	LensesTwoSurfaces EO48648{};
+	LensesTwoSurfaces EO67442{};
+	LensesTwoSurfaces EO67443{};
+	LensesTwoSurfaces EO45430{};
+	LensesTwoSurfaces EO48705{};
+	LensesTwoSurfaces EO45429{};
+	LensesTwoSurfaces EO47864{};
+	LensesTwoSurfaces EO88625{};
+	LensesTwoSurfaces EO88784{};
+	LensesTwoSurfaces EO45432{};
+	LensesTwoSurfaces EO48706{};
+	LensesTwoSurfaces EO45431{};
+	LensesTwoSurfaces EO47865{};
+	LensesTwoSurfaces EO88626{};
+	LensesTwoSurfaces EO88785{};
+	LensesTwoSurfaces EO45224{};
+	LensesTwoSurfaces EO48702{};
+	LensesTwoSurfaces EO45223{};
+	LensesTwoSurfaces EO47861{};
+	LensesTwoSurfaces EO45428{};
+	LensesTwoSurfaces EO48703{};
+	LensesTwoSurfaces EO45427{};
+	LensesTwoSurfaces EO47862{};
+	LensesTwoSurfaces EO88623{};
+	LensesTwoSurfaces EO88782{};
+	LensesTwoSurfaces EO45226{};
+	LensesTwoSurfaces EO48704{};
+	LensesTwoSurfaces EO45225{};
+	LensesTwoSurfaces EO47863{};
+	LensesTwoSurfaces EO67449{};
+	LensesTwoSurfaces EO67450{};
+	LensesTwoSurfaces EO67446{};
+	LensesTwoSurfaces EO88622{};
+	LensesTwoSurfaces EO88781{};
+	LensesTwoSurfaces EO67447{};
+	LensesTwoSurfaces EO67448{};
+	LensesTwoSurfaces EO45144{};
+	LensesTwoSurfaces EO48707{};
+	LensesTwoSurfaces EO67451{};
+	LensesTwoSurfaces EO45143{};
+	LensesTwoSurfaces EO47866{};
+	LensesTwoSurfaces EO88627{};
+	LensesTwoSurfaces EO88786{};
+	LensesTwoSurfaces EO45148{};
+	LensesTwoSurfaces EO48708{};
+	LensesTwoSurfaces EO45147{};
+	LensesTwoSurfaces EO47867{};
+	LensesTwoSurfaces EO88628{};
+	LensesTwoSurfaces EO88787{};
+	LensesTwoSurfaces EO67452{};
+
 
 	// Large PCX Condenser Lenses
 	// https://www.edmundoptics.de/f/large-pcx-condenser-lenses/13572/
 	LensesTwoSurfaces EO67187{};
+	LensesTwoSurfaces EO27501{};
+	LensesTwoSurfaces EO27502{};
+	LensesTwoSurfaces EO27503{};
+	LensesTwoSurfaces EO27505{};
+	LensesTwoSurfaces EO27506{};
+	LensesTwoSurfaces EO27507{};
+	LensesTwoSurfaces EO67191{};
+	LensesTwoSurfaces EO27509{};
+	LensesTwoSurfaces EO27510{};
+	LensesTwoSurfaces EO27511{};
+	LensesTwoSurfaces EO27513{};
+	LensesTwoSurfaces EO27514{};
+	LensesTwoSurfaces EO27515{};
+	LensesTwoSurfaces EO67199{};
+	LensesTwoSurfaces EO67200{};
 
 };
 

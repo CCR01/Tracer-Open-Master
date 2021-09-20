@@ -213,7 +213,8 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 	OpticalSystemElement optSysEleThread12_1_forDLS;
 	OpticalSystemElement optSysEleThread12_2_forDLS;
 
-	#pragma omp parallel sections
+//omp_set_num_threads(12);
+#pragma omp parallel sections
 		{
 		#pragma omp section // 1
 			{
@@ -401,328 +402,328 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 	std::vector<OpticalSystemElement> optmizedSystem_vec;
 	optmizedSystem_vec.resize(numberDLS_optimizations);
 
-	#pragma omp parallel sections
-			{
-			#pragma omp section // 1
-				{
+#pragma omp parallel sections
+{
+	#pragma omp section // 1
+		{
 
-					// optimize the systems using DLS
-					// thread 1
-					DLS DLS1_1(/*optSysEle*/ optSysEleThread1_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
-					DLS1_1.turnOffImaProc();
-					DLS1_1.setFactorGettingBetter(mFactorBetter_1);
-					DLS1_1.setFactorGettingWorst(mFactorWorst_1);
+			// optimize the systems using DLS
+			// thread 1
+			DLS DLS1_1(/*optSysEle*/ optSysEleThread1_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS1_1.turnOffImaProc();
+			DLS1_1.setFactorGettingBetter(mFactorBetter_1);
+			DLS1_1.setFactorGettingWorst(mFactorWorst_1);
 
-					DLS DLS1_2(/*optSysEle*/ optSysEleThread1_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
-					DLS1_2.turnOffImaProc();
-					DLS1_2.setFactorGettingBetter(mFactorBetter_2);
-					DLS1_2.setFactorGettingWorst(mFactorWorst_2);
+			DLS DLS1_2(/*optSysEle*/ optSysEleThread1_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS1_2.turnOffImaProc();
+			DLS1_2.setFactorGettingBetter(mFactorBetter_2);
+			DLS1_2.setFactorGettingWorst(mFactorWorst_2);
 
-					std::cout << "DLS 1_1" << std::endl;
-					DLS1_1.optimizeSystem_DLS_multiplicativ_Damping();
-					mAllMeritVal_vec[0] = DLS1_1.getBestMeritValue();
-					std::cout << "DLS 1_2" << std::endl;
-					DLS1_2.optimizeSystem_DLS_multiplicativ_Damping();
-					mAllMeritVal_vec[1] = DLS1_2.getBestMeritValue();
+			std::cout << "DLS 1_1" << std::endl;
+			DLS1_1.optimizeSystem_DLS_multiplicativ_Damping();
+			mAllMeritVal_vec[0] = DLS1_1.getBestMeritValue();
+			std::cout << "DLS 1_2" << std::endl;
+			DLS1_2.optimizeSystem_DLS_multiplicativ_Damping();
+			mAllMeritVal_vec[1] = DLS1_2.getBestMeritValue();
 
-					optmizedSystem_vec[0] = DLS1_1.getOptimizedSystem_HLT();
-					optmizedSystem_vec[1] = DLS1_2.getOptimizedSystem_HLT();
+			optmizedSystem_vec[0] = DLS1_1.getOptimizedSystem_HLT();
+			optmizedSystem_vec[1] = DLS1_2.getOptimizedSystem_HLT();
 
-					// just for debugging
-					// std::cout << "DLS 1_1" << std::endl;
-					// oftenUse::print(DLS1_1.getOptimizedSystem_HLT(), mWavelength_vec[0]);
+			// just for debugging
+			// std::cout << "DLS 1_1" << std::endl;
+			// oftenUse::print(DLS1_1.getOptimizedSystem_HLT(), mWavelength_vec[0]);
 
 
-				}
-			#pragma omp section // 2
-				{
-	
-					//// just for debugging
-					//std::cout << "optical system thread 2" << std::endl;
-					//oftenUse::print(optSysEleThread2_1_forDLS, mWavelength_vec[0]);
-					
-					// thread 2
-					DLS DLS2_1(/*optSysEle*/ optSysEleThread2_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
-					DLS2_1.turnOffImaProc();
-					DLS2_1.setFactorGettingBetter(mFactorBetter_1);
-					DLS2_1.setFactorGettingWorst(mFactorWorst_1);
-	
-					DLS DLS2_2(/*optSysEle*/ optSysEleThread2_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
-					DLS2_2.turnOffImaProc();
-					DLS2_2.setFactorGettingBetter(mFactorBetter_2);
-					DLS2_2.setFactorGettingWorst(mFactorWorst_2);
-	
-					std::cout << "DLS 2_1" << std::endl;
-					DLS2_1.optimizeSystem_DLS_multiplicativ_Damping();
-					mAllMeritVal_vec[2] = DLS2_1.getBestMeritValue();
-					std::cout << "DLS 2_2" << std::endl;
-					DLS2_2.optimizeSystem_DLS_multiplicativ_Damping();
-					mAllMeritVal_vec[3] = DLS2_2.getBestMeritValue();
-	
-					optmizedSystem_vec[2] = DLS2_1.getOptimizedSystem_HLT();
-					optmizedSystem_vec[3] = DLS2_2.getOptimizedSystem_HLT();
-	
-				}
-			#pragma omp section // 3
-				{
-	
-					// thread 3
-					DLS DLS3_1(/*optSysEle*/ optSysEleThread3_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
-					DLS3_1.turnOffImaProc();
-					DLS3_1.setFactorGettingBetter(mFactorBetter_1);
-					DLS3_1.setFactorGettingWorst(mFactorWorst_1);
-	
-					DLS DLS3_2(/*optSysEle*/ optSysEleThread3_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
-					DLS3_2.turnOffImaProc();
-					DLS3_2.setFactorGettingBetter(mFactorBetter_2);
-					DLS3_2.setFactorGettingWorst(mFactorWorst_2);
-	
-					std::cout << "DLS 3_1" << std::endl;
-					DLS3_1.optimizeSystem_DLS_multiplicativ_Damping();
-					mAllMeritVal_vec[4] = DLS3_1.getBestMeritValue();
-					std::cout << "DLS 3_2" << std::endl;
-					DLS3_2.optimizeSystem_DLS_multiplicativ_Damping();
-					mAllMeritVal_vec[5] = DLS3_2.getBestMeritValue();
-	
-					optmizedSystem_vec[4] = DLS3_1.getOptimizedSystem_HLT();;
-					optmizedSystem_vec[5] = DLS3_2.getOptimizedSystem_HLT();;
-	
-				}
-			#pragma omp section // 4
-				{
-	
-					// thread 4
-					DLS DLS4_1(/*optSysEle*/ optSysEleThread4_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
-					DLS4_1.turnOffImaProc();
-					DLS4_1.setFactorGettingBetter(mFactorBetter_1);
-					DLS4_1.setFactorGettingWorst(mFactorWorst_1);
-	
-					DLS DLS4_2(/*optSysEle*/ optSysEleThread4_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
-					DLS4_2.turnOffImaProc();
-					DLS4_2.setFactorGettingBetter(mFactorBetter_2);
-					DLS4_2.setFactorGettingWorst(mFactorWorst_2);
-	
-					std::cout << "DLS 4_1" << std::endl;
-					DLS4_1.optimizeSystem_DLS_multiplicativ_Damping();
-					mAllMeritVal_vec[6] = DLS4_1.getBestMeritValue();
-					std::cout << "DLS 4_2" << std::endl;
-					DLS4_2.optimizeSystem_DLS_multiplicativ_Damping();
-					mAllMeritVal_vec[7] = DLS4_2.getBestMeritValue();
-	
-					optmizedSystem_vec[6] = DLS4_1.getOptimizedSystem_HLT();;
-					optmizedSystem_vec[7] = DLS4_2.getOptimizedSystem_HLT();;
-				}
-			#pragma omp section // 5
-				{
-	
-					// thread 5
-					DLS DLS5_1(/*optSysEle*/ optSysEleThread5_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
-					DLS5_1.turnOffImaProc();
-					DLS5_1.setFactorGettingBetter(mFactorBetter_1);
-					DLS5_1.setFactorGettingWorst(mFactorWorst_1);
-	
-					DLS DLS5_2(/*optSysEle*/ optSysEleThread5_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
-					DLS5_2.turnOffImaProc();
-					DLS5_2.setFactorGettingBetter(mFactorBetter_2);
-					DLS5_2.setFactorGettingWorst(mFactorWorst_2);
-	
-					std::cout << "DLS 5_1" << std::endl;
-					DLS5_1.optimizeSystem_DLS_multiplicativ_Damping();
-					mAllMeritVal_vec[8] = DLS5_1.getBestMeritValue();
-					std::cout << "DLS 5_2" << std::endl;
-					DLS5_2.optimizeSystem_DLS_multiplicativ_Damping();
-					mAllMeritVal_vec[9] = DLS5_2.getBestMeritValue();
-	
-					optmizedSystem_vec[8] = DLS5_1.getOptimizedSystem_HLT();
-					optmizedSystem_vec[9] = DLS5_2.getOptimizedSystem_HLT();
-				}
-			#pragma omp section // 6
-				{
-	
-					// thread 6
-					DLS DLS6_1(/*optSysEle*/ optSysEleThread6_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
-					DLS6_1.turnOffImaProc();
-					DLS6_1.setFactorGettingBetter(mFactorBetter_1);
-					DLS6_1.setFactorGettingWorst(mFactorWorst_1);
-	
-					DLS DLS6_2(/*optSysEle*/ optSysEleThread6_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
-					DLS6_2.turnOffImaProc();
-					DLS6_2.setFactorGettingBetter(mFactorBetter_2);
-					DLS6_2.setFactorGettingWorst(mFactorWorst_2);
-	
-					std::cout << "DLS 6_1" << std::endl;
-					DLS6_1.optimizeSystem_DLS_multiplicativ_Damping();
-					mAllMeritVal_vec[10] = DLS6_1.getBestMeritValue();
-					std::cout << "DLS 6_2" << std::endl;
-					DLS6_2.optimizeSystem_DLS_multiplicativ_Damping();
-					mAllMeritVal_vec[11] = DLS6_2.getBestMeritValue();
-	
-					optmizedSystem_vec[10] = DLS6_1.getOptimizedSystem_HLT();;
-					optmizedSystem_vec[11] = DLS6_2.getOptimizedSystem_HLT();;
-				}
-			#pragma omp section // 7
-				{
-					// thread 7
-					DLS DLS7_1(/*optSysEle*/ optSysEleThread7_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
-					DLS7_1.turnOffImaProc();
-					DLS7_1.setFactorGettingBetter(mFactorBetter_1);
-					DLS7_1.setFactorGettingWorst(mFactorWorst_1);
-	
-					DLS DLS7_2(/*optSysEle*/ optSysEleThread7_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
-					DLS7_2.turnOffImaProc();
-					DLS7_2.setFactorGettingBetter(mFactorBetter_2);
-					DLS7_2.setFactorGettingWorst(mFactorWorst_2);
-	
-					std::cout << "DLS 7_1" << std::endl;
-					DLS7_1.optimizeSystem_DLS_multiplicativ_Damping();
-					mAllMeritVal_vec[12] = DLS7_1.getBestMeritValue();
-					std::cout << "DLS 7_2" << std::endl;
-					DLS7_2.optimizeSystem_DLS_multiplicativ_Damping();
-					mAllMeritVal_vec[13] = DLS7_2.getBestMeritValue();
-	
-					optmizedSystem_vec[12] = DLS7_1.getOptimizedSystem_HLT();
-					optmizedSystem_vec[13] = DLS7_2.getOptimizedSystem_HLT();
-	
-				}
-			#pragma omp section // 8
-				{
-					// thread 8
-					DLS DLS8_1(/*optSysEle*/ optSysEleThread8_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
-					DLS8_1.turnOffImaProc();
-					DLS8_1.setFactorGettingBetter(mFactorBetter_1);
-					DLS8_1.setFactorGettingWorst(mFactorWorst_1);
-	
-					DLS DLS8_2(/*optSysEle*/ optSysEleThread8_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
-					DLS8_2.turnOffImaProc();
-					DLS8_2.setFactorGettingBetter(mFactorBetter_2);
-					DLS8_2.setFactorGettingWorst(mFactorWorst_2);
-	
-					std::cout << "DLS 8_1" << std::endl;
-					DLS8_1.optimizeSystem_DLS_multiplicativ_Damping();
-					mAllMeritVal_vec[14] = DLS8_1.getBestMeritValue();
-					std::cout << "DLS 8_2" << std::endl;
-					DLS8_2.optimizeSystem_DLS_multiplicativ_Damping();
-					mAllMeritVal_vec[15] = DLS8_2.getBestMeritValue();
-	
-					optmizedSystem_vec[14] = DLS8_1.getOptimizedSystem_HLT();;
-					optmizedSystem_vec[15] = DLS8_2.getOptimizedSystem_HLT();;
-	
-				}
-			#pragma omp section // 9
-				{
-	
-					// thread 9
-					DLS DLS9_1(/*optSysEle*/ optSysEleThread9_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
-					DLS9_1.turnOffImaProc();
-					DLS9_1.setFactorGettingBetter(mFactorBetter_1);
-					DLS9_1.setFactorGettingWorst(mFactorWorst_1);
-	
-					DLS DLS9_2(/*optSysEle*/ optSysEleThread9_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
-					DLS9_2.turnOffImaProc();
-					DLS9_2.setFactorGettingBetter(mFactorBetter_2);
-					DLS9_2.setFactorGettingWorst(mFactorWorst_2);
-	
-					std::cout << "DLS 9_1" << std::endl;
-					DLS9_1.optimizeSystem_DLS_multiplicativ_Damping();
-					mAllMeritVal_vec[16] = DLS9_1.getBestMeritValue();
-					std::cout << "DLS 9_2" << std::endl;
-					DLS9_2.optimizeSystem_DLS_multiplicativ_Damping();
-					mAllMeritVal_vec[17] = DLS9_2.getBestMeritValue();
-	
-					optmizedSystem_vec[16] = DLS9_1.getOptimizedSystem_HLT();;
-					optmizedSystem_vec[17] = DLS9_2.getOptimizedSystem_HLT();;
-	
-				}
-			#pragma omp section // 10
-				{
-	
-					// thread 10
-					DLS DLS10_1(/*optSysEle*/ optSysEleThread10_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
-					DLS10_1.turnOffImaProc();
-					DLS10_1.setFactorGettingBetter(mFactorBetter_1);
-					DLS10_1.setFactorGettingWorst(mFactorWorst_1);
-	
-					DLS DLS10_2(/*optSysEle*/ optSysEleThread10_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
-					DLS10_2.turnOffImaProc();
-					DLS10_2.setFactorGettingBetter(mFactorBetter_2);
-					DLS10_2.setFactorGettingWorst(mFactorWorst_2);
-	
-					std::cout << "DLS 10_1" << std::endl;
-					DLS10_1.optimizeSystem_DLS_multiplicativ_Damping();
-					mAllMeritVal_vec[18] = DLS10_1.getBestMeritValue();
-					std::cout << "DLS 10_2" << std::endl;
-					DLS10_2.optimizeSystem_DLS_multiplicativ_Damping();
-					mAllMeritVal_vec[19] = DLS10_2.getBestMeritValue();
-	
-					optmizedSystem_vec[18] = DLS10_1.getOptimizedSystem_HLT();
-					optmizedSystem_vec[19] = DLS10_2.getOptimizedSystem_HLT();
-	
-				}
-			#pragma omp section // 11
-				{
-					// thread 11
-					DLS DLS11_1(/*optSysEle*/ optSysEleThread11_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
-					DLS11_1.turnOffImaProc();
-					DLS11_1.setFactorGettingBetter(mFactorBetter_1);
-					DLS11_1.setFactorGettingWorst(mFactorWorst_1);
-	
-					DLS DLS11_2(/*optSysEle*/ optSysEleThread11_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
-					DLS11_2.turnOffImaProc();
-					DLS11_2.setFactorGettingBetter(mFactorBetter_2);
-					DLS11_2.setFactorGettingWorst(mFactorWorst_2);
-	
-					std::cout << "DLS 11_1" << std::endl;
-					DLS11_1.optimizeSystem_DLS_multiplicativ_Damping();
-					mAllMeritVal_vec[20] = DLS11_1.getBestMeritValue();
-					std::cout << "DLS 11_2" << std::endl;
-					DLS11_2.optimizeSystem_DLS_multiplicativ_Damping();
-					mAllMeritVal_vec[21] = DLS11_2.getBestMeritValue();
+		}
+	#pragma omp section // 2
+		{
 
-					optmizedSystem_vec[20] = DLS11_1.getOptimizedSystem_HLT();
-					optmizedSystem_vec[21] = DLS11_2.getOptimizedSystem_HLT();
-	
-				}
+			//// just for debugging
+			//std::cout << "optical system thread 2" << std::endl;
+			//oftenUse::print(optSysEleThread2_1_forDLS, mWavelength_vec[0]);
 			
-				
-			#pragma omp section // 12
-				{
+			// thread 2
+			DLS DLS2_1(/*optSysEle*/ optSysEleThread2_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS2_1.turnOffImaProc();
+			DLS2_1.setFactorGettingBetter(mFactorBetter_1);
+			DLS2_1.setFactorGettingWorst(mFactorWorst_1);
+
+			DLS DLS2_2(/*optSysEle*/ optSysEleThread2_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS2_2.turnOffImaProc();
+			DLS2_2.setFactorGettingBetter(mFactorBetter_2);
+			DLS2_2.setFactorGettingWorst(mFactorWorst_2);
+
+			std::cout << "DLS 2_1" << std::endl;
+			DLS2_1.optimizeSystem_DLS_multiplicativ_Damping();
+			mAllMeritVal_vec[2] = DLS2_1.getBestMeritValue();
+			std::cout << "DLS 2_2" << std::endl;
+			DLS2_2.optimizeSystem_DLS_multiplicativ_Damping();
+			mAllMeritVal_vec[3] = DLS2_2.getBestMeritValue();
+
+			optmizedSystem_vec[2] = DLS2_1.getOptimizedSystem_HLT();
+			optmizedSystem_vec[3] = DLS2_2.getOptimizedSystem_HLT();
+
+		}
+	#pragma omp section // 3
+		{
+
+			// thread 3
+			DLS DLS3_1(/*optSysEle*/ optSysEleThread3_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS3_1.turnOffImaProc();
+			DLS3_1.setFactorGettingBetter(mFactorBetter_1);
+			DLS3_1.setFactorGettingWorst(mFactorWorst_1);
+
+			DLS DLS3_2(/*optSysEle*/ optSysEleThread3_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS3_2.turnOffImaProc();
+			DLS3_2.setFactorGettingBetter(mFactorBetter_2);
+			DLS3_2.setFactorGettingWorst(mFactorWorst_2);
+
+			std::cout << "DLS 3_1" << std::endl;
+			DLS3_1.optimizeSystem_DLS_multiplicativ_Damping();
+			mAllMeritVal_vec[4] = DLS3_1.getBestMeritValue();
+			std::cout << "DLS 3_2" << std::endl;
+			DLS3_2.optimizeSystem_DLS_multiplicativ_Damping();
+			mAllMeritVal_vec[5] = DLS3_2.getBestMeritValue();
+
+			optmizedSystem_vec[4] = DLS3_1.getOptimizedSystem_HLT();;
+			optmizedSystem_vec[5] = DLS3_2.getOptimizedSystem_HLT();;
+
+		}
+	#pragma omp section // 4
+		{
+
+			// thread 4
+			DLS DLS4_1(/*optSysEle*/ optSysEleThread4_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS4_1.turnOffImaProc();
+			DLS4_1.setFactorGettingBetter(mFactorBetter_1);
+			DLS4_1.setFactorGettingWorst(mFactorWorst_1);
+
+			DLS DLS4_2(/*optSysEle*/ optSysEleThread4_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS4_2.turnOffImaProc();
+			DLS4_2.setFactorGettingBetter(mFactorBetter_2);
+			DLS4_2.setFactorGettingWorst(mFactorWorst_2);
+
+			std::cout << "DLS 4_1" << std::endl;
+			DLS4_1.optimizeSystem_DLS_multiplicativ_Damping();
+			mAllMeritVal_vec[6] = DLS4_1.getBestMeritValue();
+			std::cout << "DLS 4_2" << std::endl;
+			DLS4_2.optimizeSystem_DLS_multiplicativ_Damping();
+			mAllMeritVal_vec[7] = DLS4_2.getBestMeritValue();
+
+			optmizedSystem_vec[6] = DLS4_1.getOptimizedSystem_HLT();;
+			optmizedSystem_vec[7] = DLS4_2.getOptimizedSystem_HLT();;
+		}
+	#pragma omp section // 5
+		{
+
+			// thread 5
+			DLS DLS5_1(/*optSysEle*/ optSysEleThread5_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS5_1.turnOffImaProc();
+			DLS5_1.setFactorGettingBetter(mFactorBetter_1);
+			DLS5_1.setFactorGettingWorst(mFactorWorst_1);
+
+			DLS DLS5_2(/*optSysEle*/ optSysEleThread5_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS5_2.turnOffImaProc();
+			DLS5_2.setFactorGettingBetter(mFactorBetter_2);
+			DLS5_2.setFactorGettingWorst(mFactorWorst_2);
+
+			std::cout << "DLS 5_1" << std::endl;
+			DLS5_1.optimizeSystem_DLS_multiplicativ_Damping();
+			mAllMeritVal_vec[8] = DLS5_1.getBestMeritValue();
+			std::cout << "DLS 5_2" << std::endl;
+			DLS5_2.optimizeSystem_DLS_multiplicativ_Damping();
+			mAllMeritVal_vec[9] = DLS5_2.getBestMeritValue();
+
+			optmizedSystem_vec[8] = DLS5_1.getOptimizedSystem_HLT();
+			optmizedSystem_vec[9] = DLS5_2.getOptimizedSystem_HLT();
+		}
+	#pragma omp section // 6
+		{
+
+			// thread 6
+			DLS DLS6_1(/*optSysEle*/ optSysEleThread6_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS6_1.turnOffImaProc();
+			DLS6_1.setFactorGettingBetter(mFactorBetter_1);
+			DLS6_1.setFactorGettingWorst(mFactorWorst_1);
+
+			DLS DLS6_2(/*optSysEle*/ optSysEleThread6_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS6_2.turnOffImaProc();
+			DLS6_2.setFactorGettingBetter(mFactorBetter_2);
+			DLS6_2.setFactorGettingWorst(mFactorWorst_2);
+
+			std::cout << "DLS 6_1" << std::endl;
+			DLS6_1.optimizeSystem_DLS_multiplicativ_Damping();
+			mAllMeritVal_vec[10] = DLS6_1.getBestMeritValue();
+			std::cout << "DLS 6_2" << std::endl;
+			DLS6_2.optimizeSystem_DLS_multiplicativ_Damping();
+			mAllMeritVal_vec[11] = DLS6_2.getBestMeritValue();
+
+			optmizedSystem_vec[10] = DLS6_1.getOptimizedSystem_HLT();;
+			optmizedSystem_vec[11] = DLS6_2.getOptimizedSystem_HLT();;
+		}
+	#pragma omp section // 7
+		{
+			// thread 7
+			DLS DLS7_1(/*optSysEle*/ optSysEleThread7_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS7_1.turnOffImaProc();
+			DLS7_1.setFactorGettingBetter(mFactorBetter_1);
+			DLS7_1.setFactorGettingWorst(mFactorWorst_1);
+
+			DLS DLS7_2(/*optSysEle*/ optSysEleThread7_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS7_2.turnOffImaProc();
+			DLS7_2.setFactorGettingBetter(mFactorBetter_2);
+			DLS7_2.setFactorGettingWorst(mFactorWorst_2);
+
+			std::cout << "DLS 7_1" << std::endl;
+			DLS7_1.optimizeSystem_DLS_multiplicativ_Damping();
+			mAllMeritVal_vec[12] = DLS7_1.getBestMeritValue();
+			std::cout << "DLS 7_2" << std::endl;
+			DLS7_2.optimizeSystem_DLS_multiplicativ_Damping();
+			mAllMeritVal_vec[13] = DLS7_2.getBestMeritValue();
+
+			optmizedSystem_vec[12] = DLS7_1.getOptimizedSystem_HLT();
+			optmizedSystem_vec[13] = DLS7_2.getOptimizedSystem_HLT();
+
+		}
+	#pragma omp section // 8
+		{
+			// thread 8
+			DLS DLS8_1(/*optSysEle*/ optSysEleThread8_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS8_1.turnOffImaProc();
+			DLS8_1.setFactorGettingBetter(mFactorBetter_1);
+			DLS8_1.setFactorGettingWorst(mFactorWorst_1);
+
+			DLS DLS8_2(/*optSysEle*/ optSysEleThread8_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS8_2.turnOffImaProc();
+			DLS8_2.setFactorGettingBetter(mFactorBetter_2);
+			DLS8_2.setFactorGettingWorst(mFactorWorst_2);
+
+			std::cout << "DLS 8_1" << std::endl;
+			DLS8_1.optimizeSystem_DLS_multiplicativ_Damping();
+			mAllMeritVal_vec[14] = DLS8_1.getBestMeritValue();
+			std::cout << "DLS 8_2" << std::endl;
+			DLS8_2.optimizeSystem_DLS_multiplicativ_Damping();
+			mAllMeritVal_vec[15] = DLS8_2.getBestMeritValue();
+
+			optmizedSystem_vec[14] = DLS8_1.getOptimizedSystem_HLT();;
+			optmizedSystem_vec[15] = DLS8_2.getOptimizedSystem_HLT();;
+
+		}
+	#pragma omp section // 9
+		{
+
+			// thread 9
+			DLS DLS9_1(/*optSysEle*/ optSysEleThread9_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS9_1.turnOffImaProc();
+			DLS9_1.setFactorGettingBetter(mFactorBetter_1);
+			DLS9_1.setFactorGettingWorst(mFactorWorst_1);
+
+			DLS DLS9_2(/*optSysEle*/ optSysEleThread9_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS9_2.turnOffImaProc();
+			DLS9_2.setFactorGettingBetter(mFactorBetter_2);
+			DLS9_2.setFactorGettingWorst(mFactorWorst_2);
+
+			std::cout << "DLS 9_1" << std::endl;
+			DLS9_1.optimizeSystem_DLS_multiplicativ_Damping();
+			mAllMeritVal_vec[16] = DLS9_1.getBestMeritValue();
+			std::cout << "DLS 9_2" << std::endl;
+			DLS9_2.optimizeSystem_DLS_multiplicativ_Damping();
+			mAllMeritVal_vec[17] = DLS9_2.getBestMeritValue();
+
+			optmizedSystem_vec[16] = DLS9_1.getOptimizedSystem_HLT();;
+			optmizedSystem_vec[17] = DLS9_2.getOptimizedSystem_HLT();;
+
+		}
+	#pragma omp section // 10
+		{
+
+			// thread 10
+			DLS DLS10_1(/*optSysEle*/ optSysEleThread10_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS10_1.turnOffImaProc();
+			DLS10_1.setFactorGettingBetter(mFactorBetter_1);
+			DLS10_1.setFactorGettingWorst(mFactorWorst_1);
+
+			DLS DLS10_2(/*optSysEle*/ optSysEleThread10_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS10_2.turnOffImaProc();
+			DLS10_2.setFactorGettingBetter(mFactorBetter_2);
+			DLS10_2.setFactorGettingWorst(mFactorWorst_2);
+
+			std::cout << "DLS 10_1" << std::endl;
+			DLS10_1.optimizeSystem_DLS_multiplicativ_Damping();
+			mAllMeritVal_vec[18] = DLS10_1.getBestMeritValue();
+			std::cout << "DLS 10_2" << std::endl;
+			DLS10_2.optimizeSystem_DLS_multiplicativ_Damping();
+			mAllMeritVal_vec[19] = DLS10_2.getBestMeritValue();
+
+			optmizedSystem_vec[18] = DLS10_1.getOptimizedSystem_HLT();
+			optmizedSystem_vec[19] = DLS10_2.getOptimizedSystem_HLT();
+
+		}
+	#pragma omp section // 11
+		{
+			// thread 11
+			DLS DLS11_1(/*optSysEle*/ optSysEleThread11_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS11_1.turnOffImaProc();
+			DLS11_1.setFactorGettingBetter(mFactorBetter_1);
+			DLS11_1.setFactorGettingWorst(mFactorWorst_1);
+
+			DLS DLS11_2(/*optSysEle*/ optSysEleThread11_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS11_2.turnOffImaProc();
+			DLS11_2.setFactorGettingBetter(mFactorBetter_2);
+			DLS11_2.setFactorGettingWorst(mFactorWorst_2);
+
+			std::cout << "DLS 11_1" << std::endl;
+			DLS11_1.optimizeSystem_DLS_multiplicativ_Damping();
+			mAllMeritVal_vec[20] = DLS11_1.getBestMeritValue();
+			std::cout << "DLS 11_2" << std::endl;
+			DLS11_2.optimizeSystem_DLS_multiplicativ_Damping();
+			mAllMeritVal_vec[21] = DLS11_2.getBestMeritValue();
+
+			optmizedSystem_vec[20] = DLS11_1.getOptimizedSystem_HLT();
+			optmizedSystem_vec[21] = DLS11_2.getOptimizedSystem_HLT();
+
+		}
 	
-					// thread 12
-					DLS DLS12_1(/*optSysEle*/ optSysEleThread12_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
-					DLS12_1.turnOffImaProc();
-					DLS12_1.setFactorGettingBetter(mFactorBetter_1);
-					DLS12_1.setFactorGettingWorst(mFactorWorst_1);
-					
-					DLS DLS12_2(/*optSysEle*/ optSysEleThread12_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
-					DLS12_2.turnOffImaProc();
-					DLS12_2.setFactorGettingBetter(mFactorBetter_2);
-					DLS12_2.setFactorGettingWorst(mFactorWorst_2);
-	
-					std::cout << "DLS 12_1" << std::endl;
-					DLS12_1.optimizeSystem_DLS_multiplicativ_Damping();
-					mAllMeritVal_vec[22] = DLS12_1.getBestMeritValue();
-					std::cout << "DLS 12_2" << std::endl;
-					DLS12_2.optimizeSystem_DLS_multiplicativ_Damping();
-					mAllMeritVal_vec[23] = DLS12_2.getBestMeritValue();
-	
-					
-					optmizedSystem_vec[22] = DLS12_1.getOptimizedSystem_HLT();
-					optmizedSystem_vec[23] = DLS12_2.getOptimizedSystem_HLT();
-				}
-			}
+		
+	#pragma omp section // 12
+		{
+
+			// thread 12
+			DLS DLS12_1(/*optSysEle*/ optSysEleThread12_1_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS12_1.turnOffImaProc();
+			DLS12_1.setFactorGettingBetter(mFactorBetter_1);
+			DLS12_1.setFactorGettingWorst(mFactorWorst_1);
+			
+			DLS DLS12_2(/*optSysEle*/ optSysEleThread12_2_forDLS, /*fields*/ mFields_vec, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultPrameterDLS);
+			DLS12_2.turnOffImaProc();
+			DLS12_2.setFactorGettingBetter(mFactorBetter_2);
+			DLS12_2.setFactorGettingWorst(mFactorWorst_2);
+
+			std::cout << "DLS 12_1" << std::endl;
+			DLS12_1.optimizeSystem_DLS_multiplicativ_Damping();
+			mAllMeritVal_vec[22] = DLS12_1.getBestMeritValue();
+			std::cout << "DLS 12_2" << std::endl;
+			DLS12_2.optimizeSystem_DLS_multiplicativ_Damping();
+			mAllMeritVal_vec[23] = DLS12_2.getBestMeritValue();
+
+			
+			optmizedSystem_vec[22] = DLS12_1.getOptimizedSystem_HLT();
+			optmizedSystem_vec[23] = DLS12_2.getOptimizedSystem_HLT();
+		}
+}
 
 
- 			mBestMeritVal = mAllMeritVal_vec[0];
-			mOptimizedOpticalSystemElement_firstIteration = optmizedSystem_vec[0];
+			mBestMeritVal = mAllMeritVal_vec[0];
+		mOptimizedOpticalSystemElement_firstIteration = optmizedSystem_vec[0];
 
-			for (unsigned int i = 1; i < numberDLS_optimizations; ++i)
+		for (unsigned int i = 1; i < numberDLS_optimizations; ++i)
+		{
+			if (mBestMeritVal > mAllMeritVal_vec[i])
 			{
-				if (mBestMeritVal > mAllMeritVal_vec[i])
-				{
-					mBestMeritVal = mAllMeritVal_vec[i];
-					mOptimizedOpticalSystemElement_firstIteration = optmizedSystem_vec[i].getDeepCopyOptSysEle();
-				}
+				mBestMeritVal = mAllMeritVal_vec[i];
+				mOptimizedOpticalSystemElement_firstIteration = optmizedSystem_vec[i].getDeepCopyOptSysEle();
 			}
+		}
 
 	mOptimizedOpticalSystemElement_firstIteration.convertHLTSurfacesToLLTSurfaces();
 	

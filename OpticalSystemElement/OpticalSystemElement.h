@@ -105,6 +105,7 @@ public:
 
 	// fill the optical system with elements
 	void fillPosAndElementAndInteraction(unsigned int position, std::shared_ptr<Element_CR> element, std::shared_ptr<InteractionRay_LLT> interaction);
+	void fillPosAndElementAndInteraction(std::vector<std::shared_ptr<Element_CR>> elements, std::vector<std::shared_ptr<InteractionRay_LLT>> interactions);
 
 	// get the size of the optical system
 	unsigned int getSizeOptSys();

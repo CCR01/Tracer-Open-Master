@@ -388,7 +388,7 @@ void Genetic::resizeAllRelevantStdVectorsAndCalcConst()
 	mNewPosition.setX(0.0);
 	mNewPosition.setY(0.0);
 	mNewPosition.setZ(0.0);
-
+	
 	mNormalDistribution.setMeanToCalcND(0.0);
 	mNormalDistribution.setStddevToCalcND(300.0);
 

@@ -13,101 +13,9 @@
 // genetic and DLS 12
 #include "..\..\OptimizeSystem\Genetic.h"
 
-// lens replace and optimize
-#include "..\..\..\LensReplaceAndOptimize\LensReplaceAndOptimize.h"
+// structs for statistic evaluation
+#include "..\testLensRepAndOptimize_statisticStruct.h"
 
-struct saveLRaO_statistic
-{
-public:
-	saveLRaO_statistic(unsigned int numberLensesInOptSys);
-	saveLRaO_statistic();
-	~saveLRaO_statistic();
-
-	void setMeritVal_DLS(real meritValDLS);
-	real getMeritVaL_DLS();
-
-	void setMeritVal_DLS_12(real meritValDLS12);
-	real getMeritVal_DLS_12();
-
-	void setMeritVal_GeneticAndDLS(real meritValGeneticAndDLS);
-	real getMeritVaL_GeneticAndDLS();
-
-	void setMeritVal_GeneticAndDLS_12(real meritValGeneticAndDLS12);
-	real getMeritVaL_GeneticAndDLS_12();
-
-	void setDurationTime_DLS(real DurationTimeDLS);
-	real getDurationTime_DLS();
-
-	void setDurationTime_DLS_12(real DurationTimeDLS12);
-	real getDurationTime_DLS_12();
-
-	void setDurationTime_GeneticAndDLS(real DurationTimeGeneticAndDLS);
-	real getDurationTime_GeneticAndDLS();
-
-	void setDurationTime_GeneticAndDLS_12(real DurationTimeGeneticAndDLS12);
-	real getDurationTime_GeneticAndDLS_12();
-
-
-	// replace sequence
-	void setReplaceSequence(replaceSequence repSeq_methode, std::vector<unsigned int> repSeq_vec);
-	std::vector<unsigned int> getReplacedSequence();
-
-	std::vector<unsigned int> getReplaceSequence_leftToRight();
-	void setReplaceSequence_leftToRight(std::vector<unsigned int> repSeq_leftToRight);
-
-	std::vector<unsigned int> getReplaceSequence_rightToLeft();
-	void setReplaceSequence_rightToLeft(std::vector<unsigned int> repSeq_rightToLeft);
-
-	std::vector<unsigned int> getReplaceSequence_maxSeidel();
-	void setReplaceSequence_maxSeidel(std::vector<unsigned int> repSeq_maxSeidel);
-
-	std::vector<unsigned int> getReplaceSequence_minSeidel();
-	void setReplaceSequence_minSeidel(std::vector<unsigned int> repSeq_minSeidel);
-
-	std::vector<unsigned int> getReplaceSequence_best();
-	void setReplaceSequence_best(std::vector<unsigned int> repSeq_best);
-
-	void calcBestOptimizationMethode();
-	std::vector<optimizeMethode> getOptiMethode_sorted();
-
-	std::vector<unsigned int> getBestLensNumberWasTaken();
-	void setBestLensNumberWasTaken(unsigned int lensNumReplaced, unsigned bestLensNumWasTaken);
-	void resizeBestLensNumberWasTaken(unsigned int numberLenses);
-
-	unsigned int getNumberOfLensesInOptSys();
-	void setNumberOfLensesInOptSys(unsigned int numberOfLenses);
-	
-
-private:
-	std::vector<optimizeMethode> mOptiMethode_sorted{};
-	replaceSequence mBestReplaceSequence{};
-
-	// merit values
-	real mMeritVal_DLS{};
-	real mMeritVal_DLS_12{};
-	real mMeritVal_GeneticAndDLS{};
-	real mMeritVal_GeneticAndDLS_12{};
-
-	// duration times
-	real mDurationTime_DLS{};
-	real mDurationTime_DLS_12{};
-	real mDurationTime_GeneticAndDLS{};
-	real mDurationTime_GeneticAndDLS_12{};
-
-	// replace sequences
-	std::vector<unsigned int> mReplaceSequence_leftToRight;
-	std::vector<unsigned int> mReplaceSequence_rightToLeft;
-	std::vector<unsigned int> mReplaceSequence_maxSeidel;
-	std::vector<unsigned int> mReplaceSequence_minSeidel;
-	std::vector<unsigned int> mReplaceSequence_best;
-
-	// number of best lens was taken
-	std::vector<unsigned int> mNumBestLensWasTaken{};
-
-	// number of lenses in optical system
-	unsigned int mNumberOfLensesInOptSys{};
-
-};
 
 
 class testLensReplaceAndOptimize_statistic_twoLensSystem
@@ -117,7 +25,7 @@ public:
 	~testLensReplaceAndOptimize_statistic_twoLensSystem();
 
 	// do the statistic evaluation
-	std::vector<std::vector<saveLRaO_statistic>> doTheStatisticEvaluation(OpticalSystemElement optSysEle, targetCardinalPointsStruct targetCarPoints, std::string location);
+	std::vector<saveLRaO_statistic> doTheStatisticEvaluation(OpticalSystemElement optSysEle, targetCardinalPointsStruct targetCarPoints, std::string location, std::string example);
 
 	// load importent parameter
 	void loadImportantParameter();
@@ -127,14 +35,48 @@ public:
 	// export all statistic data replace two lenses
 	void exportAllStatisticDataReplaceTwoLenses();
 
-
+	// super fct
 	bool testLRaO_stat_twoLensSystem_superFct();
 	// E0
-	bool testLRaO_stat_twoLensSystem_E0();
+	bool testLRaO_stat_twoLensSystem_E0(std::string example);
 	// E1
-	bool testLRaO_stat_twoLensSystem_E1();
-
-
+	bool testLRaO_stat_twoLensSystem_E1(std::string example);
+	//E2
+	bool testLRaO_stat_twoLensSystem_E2(std::string example);
+	//E3
+	bool testLRaO_stat_twoLensSystem_E3(std::string example);
+	//E4
+	bool testLRaO_stat_twoLensSystem_E4(std::string example);
+	//E5
+	bool testLRaO_stat_twoLensSystem_E5(std::string example);
+	//E6
+	bool testLRaO_stat_twoLensSystem_E6(std::string example);
+	//E7
+	bool testLRaO_stat_twoLensSystem_E7(std::string example);
+	//E8
+	bool testLRaO_stat_twoLensSystem_E8(std::string example);
+	////E9
+	//bool testLRaO_stat_twoLensSystem_E9(std::string example);
+	////E10
+	//bool testLRaO_stat_twoLensSystem_E10(std::string example);
+	//// E11
+	//bool testLRaO_stat_twoLensSystem_E11(std::string example);
+	//// E12
+	//bool testLRaO_stat_twoLensSystem_E12(std::string example);
+	//// E13
+	//bool testLRaO_stat_twoLensSystem_E13(std::string example);
+	//// E14
+	//bool testLRaO_stat_twoLensSystem_E14(std::string example);
+	//// E15
+	//bool testLRaO_stat_twoLensSystem_E15(std::string example);
+	//// E16
+	//bool testLRaO_stat_twoLensSystem_E16(std::string example);
+	//// E17
+	//bool testLRaO_stat_twoLensSystem_E17(std::string example);
+	//// E18
+	//bool testLRaO_stat_twoLensSystem_E18(std::string example);
+	//// E19
+	//bool testLRaO_stat_twoLensSystem_E19(std::string example);
 
 
 private:
@@ -170,7 +112,7 @@ private:
 	defaultParaGenetic mDefaultParameterGenetic{};
 	real mPopulation{};
 
-	std::vector<std::vector<std::vector<saveLRaO_statistic>>> mSaveAllResults{};
+	std::vector<std::vector<saveLRaO_statistic>> mSaveAllResults{};
 	bool mDebugMode{};
 
 	unsigned int mNumberBestFitLenses{};

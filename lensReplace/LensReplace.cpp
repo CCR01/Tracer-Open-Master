@@ -1,6 +1,6 @@
 #include "LensReplace.h"
 #include "..\oftenUseNamespace\oftenUseNamespace.h"
-
+#include "..\Inport_Export_Data\Inport_Export_Data.h"
 
 thicknessAndPosition::thicknessAndPosition() {};
 thicknessAndPosition::~thicknessAndPosition() {};
@@ -36,11 +36,11 @@ bool thicknessAndPosition::getFixed()
 }
 
 // prefere lens Type
-lensTypes prefLensTypeAndFactro::getPrefLensType()
+std::vector<lensTypes> prefLensTypeAndFactro::getPrefLensType()
 {
 	return mLensType;
 }
-void prefLensTypeAndFactro::setPrefensType(lensTypes lenstype)
+void prefLensTypeAndFactro::setPrefensType(std::vector<lensTypes> lenstype)
 {
 	mLensType = lenstype;
 }
@@ -91,11 +91,11 @@ void OptSysEle_Merit_LensType::setLensCatalog(std::string nameLens)
 	mNameLens = nameLens;
 }
 // catalog number
-unsigned int OptSysEle_Merit_LensType::getCatalogNumber()
+std::string OptSysEle_Merit_LensType::getCatalogNumber()
 {
 	return mCatalogNumber;
 }
-void OptSysEle_Merit_LensType::setCatalogNumber(unsigned int catalogNumber)
+void OptSysEle_Merit_LensType::setCatalogNumber(std::string catalogNumber)
 {
 	mCatalogNumber = catalogNumber;
 }
@@ -143,6 +143,30 @@ void OptSysEle_Merit_LensType::setPositionInBestMatchLensVec(unsigned int posInB
 unsigned int OptSysEle_Merit_LensType::getPositionInBestMatchLensVec()
 {
 	return mPosInBestMatchVec;
+}
+
+// export data to txt
+void OptSysEle_Merit_LensType::exportDataToTXT(std::string location, std::string name)
+{
+	
+
+	// export optical system
+	real wavelength = 550.0;
+	inportExportData::saveOpticalSystemAsTXT(mOptSysEle, wavelength, location, name, false);
+
+	inportExportData::saveStringInTXT(location, name, mNameLens);
+	inportExportData::saveStringInTXT(location, name, mCatalogNumber);
+	
+	std::string flipBy180Degree = "flip by 180° : ";
+	std::string flipBy180Degree_total = flipBy180Degree + std::to_string(mFlipedBy180Degrees);
+
+	inportExportData::saveStringInTXT(location, name, flipBy180Degree_total);
+
+	std::string posInBestMeritVec = "pos in best merit vec: ";
+	std::string posInBestMeritVec_total = posInBestMeritVec + std::to_string(mPosInBestMatchVec);
+	inportExportData::saveStringInTXT(location, name, posInBestMeritVec_total);
+	
+	inportExportData::saveStringInTXT(location, name, "_________________");
 }
 
 // value
@@ -289,7 +313,26 @@ void defaultPara_LensReplace_struct::loadDefaultPara(unsigned int NoLenses)
 	mPrefLensType_vec.resize(NoLenses);
 	for (unsigned int i = 0; i < NoLenses; ++i)
 	{
-		mPrefLensType_vec[i].setPrefensType(lensTypes::EO_PosAchromat_MgF_Coated);
+
+		std::vector<lensTypes> prefereLensType_vec;
+
+		// Edmund Optics
+		prefereLensType_vec.push_back(lensTypes::EO_PosAchromat_MgF_Coated);
+		prefereLensType_vec.push_back(lensTypes::EO_PosAchromat_VIS_NIR);
+		prefereLensType_vec.push_back(lensTypes::EO_NegAchromat_Broadband_AR_Coated);
+		prefereLensType_vec.push_back(lensTypes::EO_LargePrecisionAchromat_AirSpace);
+		prefereLensType_vec.push_back(lensTypes::EO_LargePrecisionAchromat_NoAirSpace);
+
+		// Thorlabs
+		prefereLensType_vec.push_back(lensTypes::Th_AchromatDoublets_AR_Coated);
+				
+		// Qioptiq
+		prefereLensType_vec.push_back(lensTypes::Qi_PosAchromat_VIS_3_31_ARB2_VIS);
+		prefereLensType_vec.push_back(lensTypes::Qi_PosAchromat_VIS_31_40_ARB2_VIS);
+		prefereLensType_vec.push_back(lensTypes::Qi_NegAchromat_ARB2_VIS);
+
+
+		mPrefLensType_vec[i].setPrefensType(prefereLensType_vec);
 		mPrefLensType_vec[i].setFactor(1.5);
 	}
 
@@ -423,7 +466,7 @@ real  defaultPara_LensReplace_struct::getMaxPercent_surface_i_semiHeight(unsigne
 }
 
 // pref lens type vec
-void defaultPara_LensReplace_struct::setPrefLensTypeSurfaceAndFactorSurface_i(unsigned int surfaceNo, lensTypes prefType, real factor)
+void defaultPara_LensReplace_struct::setPrefLensTypeSurfaceAndFactorSurface_i(unsigned int surfaceNo, std::vector<lensTypes> prefType, real factor)
 {
 	mPrefLensType_vec[surfaceNo].setPrefensType(prefType);
 	mPrefLensType_vec[surfaceNo].setFactor(factor);
@@ -708,11 +751,11 @@ void LensReplace::load_ALL_LensCatalogs()
 
 }
 
-bool LensReplace::findCatalog(std::vector<lensTypes> loadLensCatalogEO_vec, lensTypes toLoadCatalog)
+bool LensReplace::findCatalog(std::vector<lensTypes> loadLensCatalog_vec, lensTypes toLoadCatalog)
 {
 
 	bool checker = false;
-	if (std::find(loadLensCatalogEO_vec.begin(), loadLensCatalogEO_vec.end(), toLoadCatalog) != loadLensCatalogEO_vec.end())
+	if (std::find(loadLensCatalog_vec.begin(), loadLensCatalog_vec.end(), toLoadCatalog) != loadLensCatalog_vec.end())
 	{
 		checker = true;
 	}
@@ -931,7 +974,7 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::findOptSysEle_lens_inCatalog_
 	OptSysEle_Merit_LensType tempOptSysEle_Merit{};
 	OpticalSystemElement tempOptSysEle{};
 	std::string tempCatalog{};
-	unsigned int tempCatalogNumer{};
+	std::string tempCatalogNumer{};
 
 	// focal lenght
 	real focaLengthParam = paraLens.getFocalLengthMinMax().getValue();
@@ -1011,7 +1054,7 @@ std::vector<OptSysEle_Merit_LensType>  LensReplace::findOptSysEle_lens_inCatalog
 	OptSysEle_Merit_LensType tempOptSysEle_Merit{};
 	OpticalSystemElement tempOptSysEle{};
 	std::string tempLensCatalog{};
-	unsigned int tempLensNumber{};
+	std::string tempLensNumber{};
 
 	// focal lenght
 	real focaLengthParam = paraLens.getFocalLengthMinMax().getValue();
@@ -1089,7 +1132,7 @@ std::vector<OptSysEle_Merit_LensType>  LensReplace::findOptSysEle_lens_inCatalog
 	OptSysEle_Merit_LensType tempOptSysEle_Merit{};
 	OpticalSystemElement tempOptSysEle{};
 	std::string tempLensCatalog{};
-	unsigned int tempLensNumber{};
+	std::string tempLensNumber{};
 
 	// focal lenght
 	real focaLengthParam = paraLens.getFocalLengthMinMax().getValue();
@@ -1160,7 +1203,16 @@ std::vector<OptSysEle_Merit_LensType>  LensReplace::findOptSysEle_lens_inCatalog
 
 real LensReplace::calcualteMerit(real target, real is, real weight)
 {
-	return 1.0/weight * std::abs((target - is) / target);
+	real meritVal = 1.0/weight * std::abs((target - is) / target);
+
+	bool checkSign = (target >= 0) ^ (is < 0);
+
+		if (checkSign == false)
+		{
+			meritVal = oftenUse::getInfReal();
+		}
+
+	return meritVal;
 }
 
 
@@ -1199,7 +1251,7 @@ OptSysEle_Merit_LensType LensReplace::checkLensCatalogsForBestFitLens(/*number l
 	real weightThickness = mDefaultPara_LensReplace.getWeightThicknessSurface_i(lensNo);
 	real weightSemiHeight = mDefaultPara_LensReplace.getWeightSemiHeightSurface_i(lensNo);
 
-	lensTypes prefLensType = mDefaultPara_LensReplace.getPrefLensTyeAndFactorSurface_i(lensNo).getPrefLensType();
+	std::vector<lensTypes> prefLensType_vec = mDefaultPara_LensReplace.getPrefLensTyeAndFactorSurface_i(lensNo).getPrefLensType();
 	real prefFactor = mDefaultPara_LensReplace.getPrefLensTyeAndFactorSurface_i(lensNo).getFactor();
 
 	//DConvexL
@@ -1213,7 +1265,7 @@ OptSysEle_Merit_LensType LensReplace::checkLensCatalogsForBestFitLens(/*number l
 			DConvexL_opt_merit_type_vec[i].setLensType(lensTypes::EO_DoubleConvex_VIS_NIR);
 		}
 
-		if (prefLensType == lensTypes::EO_DoubleConvex_VIS_NIR)
+		if (findCatalog(prefLensType_vec, lensTypes::EO_DoubleConvex_VIS_NIR))
 		{
 			for (unsigned int i = 0; i < DConvexL_opt_merit_type_vec.size(); ++i)
 			{
@@ -1235,7 +1287,7 @@ OptSysEle_Merit_LensType LensReplace::checkLensCatalogsForBestFitLens(/*number l
 			PosAchromat_opt_merit_type_vec[i].setLensType(lensTypes::EO_PosAchromat_MgF_Coated);
 		}
 
-		if (prefLensType == lensTypes::EO_PosAchromat_MgF_Coated)
+		if (findCatalog(prefLensType_vec, lensTypes::EO_PosAchromat_MgF_Coated))
 		{
 			for (unsigned int i = 0; i < PosAchromat_opt_merit_type_vec.size(); ++i)
 			{
@@ -1256,7 +1308,7 @@ OptSysEle_Merit_LensType LensReplace::checkLensCatalogsForBestFitLens(/*number l
 			PConvexL_opt_merit_type_vec[i].setLensType(lensTypes::EO_PlanConvex_VIS_NIR);
 		}
 
-		if (prefLensType == lensTypes::EO_PlanConvex_VIS_NIR)
+		if (findCatalog(prefLensType_vec, lensTypes::EO_PlanConvex_VIS_NIR))
 		{
 			for (unsigned int i = 0; i < PConvexL_opt_merit_type_vec.size(); ++i)
 			{
@@ -1277,7 +1329,7 @@ OptSysEle_Merit_LensType LensReplace::checkLensCatalogsForBestFitLens(/*number l
 			DConcavL_opt_merit_type_vec[i].setLensType(lensTypes::EO_DoubleConcav_VIS_NIR);
 		}
 
-		if (prefLensType == lensTypes::EO_DoubleConcav_VIS_NIR)
+		if (findCatalog(prefLensType_vec, lensTypes::EO_DoubleConcav_VIS_NIR))
 		{
 			for (unsigned int i = 0; i < DConcavL_opt_merit_type_vec.size(); ++i)
 			{
@@ -1297,7 +1349,8 @@ OptSysEle_Merit_LensType LensReplace::checkLensCatalogsForBestFitLens(/*number l
 		{
 			PConcavL_opt_merit_type_vec[i].setLensType(lensTypes::EO_PlanConcav_VIS_NIR);
 		}
-		if (prefLensType == lensTypes::EO_DoubleConcav_VIS_NIR)
+
+		if (findCatalog(prefLensType_vec, lensTypes::EO_PlanConcav_VIS_NIR))
 		{
 			for (unsigned int i = 0; i < PConcavL_opt_merit_type_vec.size(); ++i)
 			{
@@ -1371,7 +1424,7 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 	real weightThickness = mDefaultPara_LensReplace.getWeightThicknessSurface_i(lensNo);
 	real weightSemiHeight = mDefaultPara_LensReplace.getWeightSemiHeightSurface_i(lensNo);
 
-	lensTypes prefLensType = mDefaultPara_LensReplace.getPrefLensTyeAndFactorSurface_i(lensNo).getPrefLensType();
+	std::vector<lensTypes> prefLensType_vec = mDefaultPara_LensReplace.getPrefLensTyeAndFactorSurface_i(lensNo).getPrefLensType();
 	real prefFactor = mDefaultPara_LensReplace.getPrefLensTyeAndFactorSurface_i(lensNo).getFactor();
 
 	/*EdmundOptics*/
@@ -1387,7 +1440,7 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 			EO_DoubleConvex_VIS_NIR_vec[i].setLensType(lensTypes::EO_DoubleConvex_VIS_NIR);
 		}
 
-		if (prefLensType == lensTypes::EO_DoubleConvex_VIS_NIR)
+		if (findCatalog(prefLensType_vec, lensTypes::EO_DoubleConvex_VIS_NIR))
 		{
 			for (unsigned int i = 0; i < EO_DoubleConvex_VIS_NIR_vec.size(); ++i)
 			{
@@ -1409,7 +1462,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 			EO_PosAchromat_MgF_Coated_vec[i].setLensType(lensTypes::EO_PosAchromat_MgF_Coated);
 		}
 
-		if (prefLensType == lensTypes::EO_PosAchromat_MgF_Coated)
+
+		if (findCatalog(prefLensType_vec, lensTypes::EO_PosAchromat_MgF_Coated))
 		{
 			for (unsigned int i = 0; i < EO_PosAchromat_MgF_Coated_vec.size(); ++i)
 			{
@@ -1430,7 +1484,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 			EO_PlanConvex_VIS_NIR_vec[i].setLensType(lensTypes::EO_PlanConvex_VIS_NIR);
 		}
 
-		if (prefLensType == lensTypes::EO_PlanConvex_VIS_NIR)
+
+		if (findCatalog(prefLensType_vec, lensTypes::EO_PlanConvex_VIS_NIR))
 		{
 			for (unsigned int i = 0; i < EO_PlanConvex_VIS_NIR_vec.size(); ++i)
 			{
@@ -1452,7 +1507,7 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 			EO_DoubleConcav_VIS_NIR_vec[i].setLensType(lensTypes::EO_DoubleConcav_VIS_NIR);
 		}
 
-		if (prefLensType == lensTypes::EO_DoubleConcav_VIS_NIR)
+		if (findCatalog(prefLensType_vec, lensTypes::EO_DoubleConcav_VIS_NIR))
 		{
 			for (unsigned int i = 0; i < EO_DoubleConcav_VIS_NIR_vec.size(); ++i)
 			{
@@ -1473,7 +1528,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 		{
 			EO_PlanConcav_VIS_NIR_vec[i].setLensType(lensTypes::EO_PlanConcav_VIS_NIR);
 		}
-		if (prefLensType == lensTypes::EO_DoubleConcav_VIS_NIR)
+
+		if (findCatalog(prefLensType_vec, lensTypes::EO_PlanConcav_VIS_NIR))
 		{
 			for (unsigned int i = 0; i < EO_PlanConcav_VIS_NIR_vec.size(); ++i)
 			{
@@ -1492,7 +1548,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 		{
 			EO_DoubleConcav_NIR_I_vec[i].setLensType(lensTypes::EO_DoubleConcav_NIR_I);
 		}
-		if (prefLensType == lensTypes::EO_DoubleConcav_NIR_I)
+
+		if (findCatalog(prefLensType_vec, lensTypes::EO_DoubleConcav_NIR_I))
 		{
 			for (unsigned int i = 0; i < EO_DoubleConcav_NIR_I_vec.size(); ++i)
 			{
@@ -1511,7 +1568,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 		{
 			EO_PosAchromat_VIS_NIR_vec[i].setLensType(lensTypes::EO_PosAchromat_VIS_NIR);
 		}
-		if (prefLensType == lensTypes::EO_PosAchromat_VIS_NIR)
+
+		if (findCatalog(prefLensType_vec, lensTypes::EO_PosAchromat_VIS_NIR))
 		{
 			for (unsigned int i = 0; i < EO_PosAchromat_VIS_NIR_vec.size(); ++i)
 			{
@@ -1530,7 +1588,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 		{
 			EO_NegAchromat_Broadband_AR_Coated_vec[i].setLensType(lensTypes::EO_NegAchromat_Broadband_AR_Coated);
 		}
-		if (prefLensType == lensTypes::EO_NegAchromat_Broadband_AR_Coated)
+
+		if (findCatalog(prefLensType_vec, lensTypes::EO_NegAchromat_Broadband_AR_Coated))
 		{
 			for (unsigned int i = 0; i < EO_NegAchromat_Broadband_AR_Coated_vec.size(); ++i)
 			{
@@ -1549,7 +1608,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 		{
 			EO_LargePrecisionAchromat_NoAirSpace_vec[i].setLensType(lensTypes::EO_LargePrecisionAchromat_NoAirSpace);
 		}
-		if (prefLensType == lensTypes::EO_LargePrecisionAchromat_NoAirSpace)
+
+		if (findCatalog(prefLensType_vec, lensTypes::EO_LargePrecisionAchromat_NoAirSpace))
 		{
 			for (unsigned int i = 0; i < EO_LargePrecisionAchromat_NoAirSpace_vec.size(); ++i)
 			{
@@ -1568,7 +1628,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 		{
 			EO_LargePrecisionAchromat_AirSpace_vec[i].setLensType(lensTypes::EO_LargePrecisionAchromat_AirSpace);
 		}
-		if (prefLensType == lensTypes::EO_LargePrecisionAchromat_AirSpace)
+
+		if (findCatalog(prefLensType_vec, lensTypes::EO_LargePrecisionAchromat_AirSpace))
 		{
 			for (unsigned int i = 0; i < EO_LargePrecisionAchromat_AirSpace_vec.size(); ++i)
 			{
@@ -1587,7 +1648,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 		{
 			EO_HastingsTripletAchromat_vec[i].setLensType(lensTypes::EO_HastingsTripletAchromat);
 		}
-		if (prefLensType == lensTypes::EO_HastingsTripletAchromat)
+
+		if (findCatalog(prefLensType_vec, lensTypes::EO_HastingsTripletAchromat))
 		{
 			for (unsigned int i = 0; i < EO_HastingsTripletAchromat_vec.size(); ++i)
 			{
@@ -1606,7 +1668,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 		{
 			EO_SteinheilTripletAchromat_vec[i].setLensType(lensTypes::EO_SteinheilTripletAchromat);
 		}
-		if (prefLensType == lensTypes::EO_SteinheilTripletAchromat)
+
+		if (findCatalog(prefLensType_vec, lensTypes::EO_SteinheilTripletAchromat))
 		{
 			for (unsigned int i = 0; i < EO_SteinheilTripletAchromat_vec.size(); ++i)
 			{
@@ -1625,7 +1688,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 		{
 			EO_MicroPlanConvex_vec[i].setLensType(lensTypes::EO_MicroPlanConvex);
 		}
-		if (prefLensType == lensTypes::EO_MicroPlanConvex)
+
+		if (findCatalog(prefLensType_vec, lensTypes::EO_MicroPlanConvex))
 		{
 			for (unsigned int i = 0; i < EO_MicroPlanConvex_vec.size(); ++i)
 			{
@@ -1644,7 +1708,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 		{
 			EO_LargePlanConvexCondensor_vec[i].setLensType(lensTypes::EO_LargePlanConvexCondensor);
 		}
-		if (prefLensType == lensTypes::EO_LargePlanConvexCondensor)
+
+		if (findCatalog(prefLensType_vec, lensTypes::EO_LargePlanConvexCondensor))
 		{
 			for (unsigned int i = 0; i < EO_LargePlanConvexCondensor_vec.size(); ++i)
 			{
@@ -1665,7 +1730,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 		{
 			Th_AchromatDoublets_AR_Coated_vec[i].setLensType(lensTypes::Th_AchromatDoublets_AR_Coated);
 		}
-		if (prefLensType == lensTypes::Th_AchromatDoublets_AR_Coated)
+
+		if (findCatalog(prefLensType_vec, lensTypes::Th_AchromatDoublets_AR_Coated))
 		{
 			for (unsigned int i = 0; i < Th_AchromatDoublets_AR_Coated_vec.size(); ++i)
 			{
@@ -1684,7 +1750,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 		{
 			Th_NBK7_PlanConvex_AR_Coated_400_1100_vec[i].setLensType(lensTypes::Th_NBK7_PlanConvex_AR_Coated_400_1100);
 		}
-		if (prefLensType == lensTypes::Th_NBK7_PlanConvex_AR_Coated_400_1100)
+
+		if (findCatalog(prefLensType_vec, lensTypes::Th_NBK7_PlanConvex_AR_Coated_400_1100))
 		{
 			for (unsigned int i = 0; i < Th_NBK7_PlanConvex_AR_Coated_400_1100_vec.size(); ++i)
 			{
@@ -1703,7 +1770,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 		{
 			Th_NBK7_BiConvex_AR_Coated_350_700_vec[i].setLensType(lensTypes::Th_NBK7_BiConvex_AR_Coated_350_700);
 		}
-		if (prefLensType == lensTypes::Th_NBK7_BiConvex_AR_Coated_350_700)
+
+		if (findCatalog(prefLensType_vec, lensTypes::Th_NBK7_BiConvex_AR_Coated_350_700))
 		{
 			for (unsigned int i = 0; i < Th_NBK7_BiConvex_AR_Coated_350_700_vec.size(); ++i)
 			{
@@ -1722,7 +1790,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 		{
 			Th_NBK7_PlanConcav_AR_Coated_350_700_vec[i].setLensType(lensTypes::Th_NBK7_PlanConcav_AR_Coated_350_700);
 		}
-		if (prefLensType == lensTypes::Th_NBK7_PlanConcav_AR_Coated_350_700)
+
+		if (findCatalog(prefLensType_vec, lensTypes::Th_NBK7_PlanConcav_AR_Coated_350_700))
 		{
 			for (unsigned int i = 0; i < Th_NBK7_PlanConcav_AR_Coated_350_700_vec.size(); ++i)
 			{
@@ -1741,7 +1810,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 		{
 			Th_NBK7_NSF11_BiConcav_AR_Coated_350_700_vec[i].setLensType(lensTypes::Th_NBK7_NSF11_BiConcav_AR_Coated_350_700);
 		}
-		if (prefLensType == lensTypes::Th_NBK7_NSF11_BiConcav_AR_Coated_350_700)
+
+		if (findCatalog(prefLensType_vec, lensTypes::Th_NBK7_NSF11_BiConcav_AR_Coated_350_700))
 		{
 			for (unsigned int i = 0; i < Th_NBK7_NSF11_BiConcav_AR_Coated_350_700_vec.size(); ++i)
 			{
@@ -1760,7 +1830,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 		{
 			Th_NBK7_BestFormSpherical_AR_Coated_350_700_vec[i].setLensType(lensTypes::Th_NBK7_BestFormSpherical_AR_Coated_350_700);
 		}
-		if (prefLensType == lensTypes::Th_NBK7_BestFormSpherical_AR_Coated_350_700)
+
+		if (findCatalog(prefLensType_vec, lensTypes::Th_NBK7_BestFormSpherical_AR_Coated_350_700))
 		{
 			for (unsigned int i = 0; i < Th_NBK7_BestFormSpherical_AR_Coated_350_700_vec.size(); ++i)
 			{
@@ -1779,7 +1850,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 		{
 			Th_NBK7_PosMeniscus_Uncoated_vec[i].setLensType(lensTypes::Th_NBK7_PosMeniscus_Uncoated);
 		}
-		if (prefLensType == lensTypes::Th_NBK7_PosMeniscus_Uncoated)
+
+		if (findCatalog(prefLensType_vec, lensTypes::Th_NBK7_PosMeniscus_Uncoated))
 		{
 			for (unsigned int i = 0; i < Th_NBK7_PosMeniscus_Uncoated_vec.size(); ++i)
 			{
@@ -1798,7 +1870,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 		{
 			Th_NBK7_NegMeniscus_Uncoated_vec[i].setLensType(lensTypes::Th_NBK7_NegMeniscus_Uncoated);
 		}
-		if (prefLensType == lensTypes::Th_NBK7_NegMeniscus_Uncoated)
+
+		if (findCatalog(prefLensType_vec, lensTypes::Th_NBK7_NegMeniscus_Uncoated))
 		{
 			for (unsigned int i = 0; i < Th_NBK7_NegMeniscus_Uncoated_vec.size(); ++i)
 			{
@@ -1817,7 +1890,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 		{
 			Th_SteinheilTripletAchromat_Visible_vec[i].setLensType(lensTypes::Th_SteinheilTripletAchromat_Visible);
 		}
-		if (prefLensType == lensTypes::Th_SteinheilTripletAchromat_Visible)
+
+		if (findCatalog(prefLensType_vec, lensTypes::Th_SteinheilTripletAchromat_Visible))
 		{
 			for (unsigned int i = 0; i < Th_SteinheilTripletAchromat_Visible_vec.size(); ++i)
 			{
@@ -1836,7 +1910,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 		{
 			Th_HastingsTripletAchromatVisible_vec[i].setLensType(lensTypes::Th_HastingsTripletAchromatVisible);
 		}
-		if (prefLensType == lensTypes::Th_HastingsTripletAchromatVisible)
+
+		if (findCatalog(prefLensType_vec, lensTypes::Th_HastingsTripletAchromatVisible))
 		{
 			for (unsigned int i = 0; i < Th_HastingsTripletAchromatVisible_vec.size(); ++i)
 			{
@@ -1857,7 +1932,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 		{
 			Qi_PlanConvex_ARB2_VIS_vec[i].setLensType(lensTypes::Qi_PlanConvex_ARB2_VIS);
 		}
-		if (prefLensType == lensTypes::Qi_PlanConvex_ARB2_VIS)
+
+		if (findCatalog(prefLensType_vec, lensTypes::Qi_PlanConvex_ARB2_VIS))
 		{
 			for (unsigned int i = 0; i < Qi_PlanConvex_ARB2_VIS_vec.size(); ++i)
 			{
@@ -1876,7 +1952,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 		{
 			Qi_SymmetricConvex_ARB2_VIS_vec[i].setLensType(lensTypes::Qi_SymmetricConvex_ARB2_VIS);
 		}
-		if (prefLensType == lensTypes::Qi_SymmetricConvex_ARB2_VIS)
+
+		if (findCatalog(prefLensType_vec, lensTypes::Qi_SymmetricConvex_ARB2_VIS))
 		{
 			for (unsigned int i = 0; i < Qi_SymmetricConvex_ARB2_VIS_vec.size(); ++i)
 			{
@@ -1895,7 +1972,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 		{
 			Qi_PlanConcav_ARB2_VIS_vec[i].setLensType(lensTypes::Qi_PlanConcav_ARB2_VIS);
 		}
-		if (prefLensType == lensTypes::Qi_PlanConcav_ARB2_VIS)
+
+		if (findCatalog(prefLensType_vec, lensTypes::Qi_PlanConcav_ARB2_VIS))
 		{
 			for (unsigned int i = 0; i < Qi_PlanConcav_ARB2_VIS_vec.size(); ++i)
 			{
@@ -1914,7 +1992,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 		{
 			Qi_SymmetricConcav_ARB2_VIS_vec[i].setLensType(lensTypes::Qi_SymmetricConcav_ARB2_VIS);
 		}
-		if (prefLensType == lensTypes::Qi_SymmetricConcav_ARB2_VIS)
+
+		if (findCatalog(prefLensType_vec, lensTypes::Qi_SymmetricConcav_ARB2_VIS))
 		{
 			for (unsigned int i = 0; i < Qi_SymmetricConcav_ARB2_VIS_vec.size(); ++i)
 			{
@@ -1933,7 +2012,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 		{
 			Qi_PosAchromat_VIS_3_31_ARB2_VIS_vec[i].setLensType(lensTypes::Qi_PosAchromat_VIS_3_31_ARB2_VIS);
 		}
-		if (prefLensType == lensTypes::Qi_PosAchromat_VIS_3_31_ARB2_VIS)
+
+		if (findCatalog(prefLensType_vec, lensTypes::Qi_PosAchromat_VIS_3_31_ARB2_VIS))
 		{
 			for (unsigned int i = 0; i < Qi_PosAchromat_VIS_3_31_ARB2_VIS_vec.size(); ++i)
 			{
@@ -1952,7 +2032,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 		{
 			Qi_PosAchromat_VIS_31_40_ARB2_VIS_vec[i].setLensType(lensTypes::Qi_PosAchromat_VIS_31_40_ARB2_VIS);
 		}
-		if (prefLensType == lensTypes::Qi_PosAchromat_VIS_31_40_ARB2_VIS)
+
+		if (findCatalog(prefLensType_vec, lensTypes::Qi_PosAchromat_VIS_31_40_ARB2_VIS))
 		{
 			for (unsigned int i = 0; i < Qi_PosAchromat_VIS_31_40_ARB2_VIS_vec.size(); ++i)
 			{
@@ -1971,7 +2052,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::checkLensCatalogsForBestFitLe
 		{
 			Qi_NegAchromat_ARB2_VIS_vec[i].setLensType(lensTypes::Qi_NegAchromat_ARB2_VIS);
 		}
-		if (prefLensType == lensTypes::Qi_NegAchromat_ARB2_VIS)
+
+		if (findCatalog(prefLensType_vec, lensTypes::Qi_NegAchromat_ARB2_VIS))
 		{
 			for (unsigned int i = 0; i < Qi_NegAchromat_ARB2_VIS_vec.size(); ++i)
 			{

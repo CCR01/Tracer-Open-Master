@@ -265,6 +265,336 @@ void LensesTwoSurfaces::buildLensTwoSurfaces_PCX //https://www.edmundoptics.de/f
 	buildOpticalSystemTwoSurfaces_OneSurfacePlan();
 }
 
+void LensesTwoSurfaces::buildLensTwoSurfaces_PCX //https://www.edmundoptics.de/f/micro-plano-convex-pcx-lenses/39529/
+(
+	/*lens catalog*/ std::string lensCatalog,
+	/*catalog number*/ unsigned int catalogNumber,
+	/*diameter*/ real const diameter,
+	/*max tolerance diameter*/ real const maxDiamterTolerance,
+	/*min tolerance diameter*/ real const minDiamterTolerance,
+	/*Effective Focal Length EFL(mm)*/ real focalLength,
+	/*back focal length*/ real const backFocalLength,
+	/*Coating*/ std::string const coating,
+	/*Coating Specification*/ std::string coatingSpecification,
+	/*Coating min wavelength*/ real coatingMinWavelength,
+	/*Coating max wavelength*/ real coatingMaxWavelength,
+	/*material*/ MaterialSellmeier1 const material,
+	/*max surface quality*/ real const maxSurfaceQuality,
+	/*min surface quality*/ real const minSurfaceQuality,
+	/*Power(P-V)@632.8nm:*/ real powerPV,
+	/*Irregularity(P-V)@632.8nm*/ real irregularity,
+	/*tolerance focal lenght*/ real const toleranceFocalLenght,
+	/*max centering*/ real const maxCenter,
+	/*center thickness*/ real const thickness,
+	/*tolerance center thickness*/ real const toleraceCenterThickness,
+	/*edge thickness*/ real const edgeThickness,
+	/*radius first surface*/ real const radiusFirstSurface,
+	/*free aperture CA*/ real freeAperture,
+	/*F-Number*/ real F_Number,
+	/*numerical Aperture*/ real const numericalAperture,
+	/*type*/ std::string type,
+	/*Bevel*/ std::string bevel,
+	/*Typical Energy Density Limit*/ std::string typicalEnergyDensityLimit,
+	/*min wavelength range*/ real const minWavelength,
+	/*max wavelength range*/ real const maxWavelength,
+	/*price*/ real const price
+)
+{
+	/*lens catalog*/ setLensCatalog(lensCatalog);
+	/*catalog number*/ setCatalogNumber(catalogNumber);
+	/*diameter*/ setDiameter(diameter);
+	/*max tolerance diameter*/ setMaxDiaTolerance(maxDiamterTolerance);
+	/*min tolerance diameter*/ setMinDiaTolerance(minDiamterTolerance);
+	/*Effective Focal Length EFL(mm)*/ setFocalLength(focalLength);
+	/*back focal length*/setBackFocalLength(backFocalLength);
+	/*Coating*/ setCoating(coating);
+	/*Coating Specification*/ setCoatingSpec(coatingSpecification);
+	/*Coating min wavelength*/ setMinCoatinWavelength(coatingMinWavelength);
+	/*Coating max wavelength*/ setMaxCoatinWavelength(coatingMaxWavelength);
+	/*material*/ setMaterial(material);
+	/*max surface quality*/ setMaxSurfaceQuality(maxSurfaceQuality);
+	/*min surface quality*/ setMinSurfaceQuality(minSurfaceQuality);
+	/*Power(P-V)@632.8nm:*/ setPowerPV(powerPV);
+	/*Irregularity(P-V)@632.8nm*/ setIrregilarity(irregularity);
+	/*tolerance focal lenght*/ setToleranceFocallength(toleranceFocalLenght);
+	/*max centering*/setMaxCenter(maxCenter);
+	/*center thickness*/ setThickness(thickness);
+	/*tolerance center thickness*/ setToleranceCenterThickness(toleraceCenterThickness);
+	/*edge thickness*/ setEdgeThickness(edgeThickness);
+	/*radius first surface*/ setRadiusFirstSurface(radiusFirstSurface);
+	/*free aperture CA*/ setFreeAperture(freeAperture);
+	/*F-Number*/ setF_Number(F_Number);
+	/*numerical Aperture*/ setNumericalAperture(numericalAperture);
+	/*type*/ setType(type);
+	/*Bevel*/ setBevel(bevel);
+	/*Typical Energy Density Limit*/ setTypicalEnergyDensityLimit(typicalEnergyDensityLimit);
+	/*min wavelength range*/ setMinWavelength(minWavelength);
+	/*max wavelength range*/ setMaxWavelength(maxWavelength);
+	/*price*/ setPrice(price);
+
+	buildOpticalSystemTwoSurfaces_OneSurfacePlan();
+}
+
+void LensesTwoSurfaces::buildLensTwoSurfaces_PCX //https://www.edmundoptics.de/f/micro-plano-convex-pcx-lenses/39529/
+(
+	/*lens catalog*/ std::string lensCatalog,
+	/*catalog number*/ unsigned int catalogNumber,
+	/*diameter*/ real const diameter,
+	/*max tolerance diameter*/ real const maxDiamterTolerance,
+	/*min tolerance diameter*/ real const minDiamterTolerance,
+	/*Effective Focal Length EFL(mm)*/ real focalLength,
+	/*back focal length*/ real const backFocalLength,
+	/*Coating*/ std::string const coating,
+	/*Coating Specification*/ std::string coatingSpecification,
+	/*Coating min wavelength*/ real coatingMinWavelength,
+	/*Coating max wavelength*/ real coatingMaxWavelength,
+	/*material*/ MaterialSellmeier1 const material,
+	/*max surface quality*/ real const maxSurfaceQuality,
+	/*min surface quality*/ real const minSurfaceQuality,
+	/*Power(P-V)@632.8nm:*/ real powerPV,
+	/*Irregularity(P-V)@632.8nm*/ real irregularity,
+	/*tolerance focal lenght*/ real const toleranceFocalLenght,
+	/*max centering*/ real const maxCenter,
+	/*center thickness*/ real const thickness,
+	/*tolerance center thickness*/ real const toleraceCenterThickness,
+	/*edge thickness*/ real const edgeThickness,
+	/*radius first surface*/ real const radiusFirstSurface,
+	/*free aperture CA*/ real freeAperture,
+	/*F-Number*/ real F_Number,
+	/*numerical Aperture*/ real const numericalAperture,
+	/*type*/ std::string type,
+	/*Bevel*/ std::string bevel,
+	/*min wavelength range*/ real const minWavelength,
+	/*max wavelength range*/ real const maxWavelength,
+	/*price*/ real const price
+)
+{
+	/*lens catalog*/ setLensCatalog(lensCatalog);
+	/*catalog number*/ setCatalogNumber(catalogNumber);
+	/*diameter*/ setDiameter(diameter);
+	/*max tolerance diameter*/ setMaxDiaTolerance(maxDiamterTolerance);
+	/*min tolerance diameter*/ setMinDiaTolerance(minDiamterTolerance);
+	/*Effective Focal Length EFL(mm)*/ setFocalLength(focalLength);
+	/*back focal length*/setBackFocalLength(backFocalLength);
+	/*Coating*/ setCoating(coating);
+	/*Coating Specification*/ setCoatingSpec(coatingSpecification);
+	/*Coating min wavelength*/ setMinCoatinWavelength(coatingMinWavelength);
+	/*Coating max wavelength*/ setMaxCoatinWavelength(coatingMaxWavelength);
+	/*material*/ setMaterial(material);
+	/*max surface quality*/ setMaxSurfaceQuality(maxSurfaceQuality);
+	/*min surface quality*/ setMinSurfaceQuality(minSurfaceQuality);
+	/*Power(P-V)@632.8nm:*/ setPowerPV(powerPV);
+	/*Irregularity(P-V)@632.8nm*/ setIrregilarity(irregularity);
+	/*tolerance focal lenght*/ setToleranceFocallength(toleranceFocalLenght);
+	/*max centering*/setMaxCenter(maxCenter);
+	/*center thickness*/ setThickness(thickness);
+	/*tolerance center thickness*/ setToleranceCenterThickness(toleraceCenterThickness);
+	/*edge thickness*/ setEdgeThickness(edgeThickness);
+	/*radius first surface*/ setRadiusFirstSurface(radiusFirstSurface);
+	/*free aperture CA*/ setFreeAperture(freeAperture);
+	/*F-Number*/ setF_Number(F_Number);
+	/*numerical Aperture*/ setNumericalAperture(numericalAperture);
+	/*type*/ setType(type);
+	/*Bevel*/ setBevel(bevel);
+	/*min wavelength range*/ setMinWavelength(minWavelength);
+	/*max wavelength range*/ setMaxWavelength(maxWavelength);
+	/*price*/ setPrice(price);
+
+	buildOpticalSystemTwoSurfaces_OneSurfacePlan();
+}
+
+void LensesTwoSurfaces::buildLensTwoSurfaces_PCX_uncoated //https://www.edmundoptics.de/f/micro-plano-convex-pcx-lenses/39529/
+(
+	/*lens catalog*/ std::string lensCatalog,
+	/*catalog number*/ unsigned int catalogNumber,
+	/*diameter*/ real const diameter,
+	/*max tolerance diameter*/ real const maxDiamterTolerance,
+	/*min tolerance diameter*/ real const minDiamterTolerance,
+	/*Effective Focal Length EFL(mm)*/ real focalLength,
+	/*back focal length*/ real const backFocalLength,
+	/*material*/ MaterialSellmeier1 const material,
+	/*max surface quality*/ real const maxSurfaceQuality,
+	/*min surface quality*/ real const minSurfaceQuality,
+	/*Power(P-V)@632.8nm:*/ real powerPV,
+	/*Irregularity(P-V)@632.8nm*/ real irregularity,
+	/*tolerance focal lenght*/ real const toleranceFocalLenght,
+	/*max centering*/ real const maxCenter,
+	/*center thickness*/ real const thickness,
+	/*tolerance center thickness*/ real const toleraceCenterThickness,
+	/*edge thickness*/ real const edgeThickness,
+	/*radius first surface*/ real const radiusFirstSurface,
+	/*free aperture CA*/ real freeAperture,
+	/*F-Number*/ real F_Number,
+	/*numerical Aperture*/ real const numericalAperture,
+	/*type*/ std::string type,
+	/*Bevel*/ std::string bevel,
+	/*min wavelength range*/ real const minWavelength,
+	/*max wavelength range*/ real const maxWavelength,
+	/*price*/ real const price
+)
+{
+	/*lens catalog*/ setLensCatalog(lensCatalog);
+	/*catalog number*/ setCatalogNumber(catalogNumber);
+	/*diameter*/ setDiameter(diameter);
+	/*max tolerance diameter*/ setMaxDiaTolerance(maxDiamterTolerance);
+	/*min tolerance diameter*/ setMinDiaTolerance(minDiamterTolerance);
+	/*Effective Focal Length EFL(mm)*/ setFocalLength(focalLength);
+	/*back focal length*/setBackFocalLength(backFocalLength);
+	/*material*/ setMaterial(material);
+	/*max surface quality*/ setMaxSurfaceQuality(maxSurfaceQuality);
+	/*min surface quality*/ setMinSurfaceQuality(minSurfaceQuality);
+	/*Power(P-V)@632.8nm:*/ setPowerPV(powerPV);
+	/*Irregularity(P-V)@632.8nm*/ setIrregilarity(irregularity);
+	/*tolerance focal lenght*/ setToleranceFocallength(toleranceFocalLenght);
+	/*max centering*/setMaxCenter(maxCenter);
+	/*center thickness*/ setThickness(thickness);
+	/*tolerance center thickness*/ setToleranceCenterThickness(toleraceCenterThickness);
+	/*edge thickness*/ setEdgeThickness(edgeThickness);
+	/*radius first surface*/ setRadiusFirstSurface(radiusFirstSurface);
+	/*free aperture CA*/ setFreeAperture(freeAperture);
+	/*F-Number*/ setF_Number(F_Number);
+	/*numerical Aperture*/ setNumericalAperture(numericalAperture);
+	/*type*/ setType(type);
+	/*Bevel*/ setBevel(bevel);
+	/*min wavelength range*/ setMinWavelength(minWavelength);
+	/*max wavelength range*/ setMaxWavelength(maxWavelength);
+	/*price*/ setPrice(price);
+
+	buildOpticalSystemTwoSurfaces_OneSurfacePlan();
+}
+
+void LensesTwoSurfaces::buildLensTwoSurfaces_PCX //https://www.edmundoptics.de/f/micro-plano-convex-pcx-lenses/39529/
+(
+	/*lens catalog*/ std::string lensCatalog,
+	/*catalog number*/ unsigned int catalogNumber,
+	/*diameter*/ real const diameter,
+	/*max tolerance diameter*/ real const maxDiamterTolerance,
+	/*min tolerance diameter*/ real const minDiamterTolerance,
+	/*Effective Focal Length EFL(mm)*/ real focalLength,
+	/*back focal length*/ real const backFocalLength,
+	/*Coating*/ std::string const coating,
+	/*Coating Specification*/ std::string coatingSpecification,
+	/*Coating min wavelength*/ real coatingMinWavelength,
+	/*Coating max wavelength*/ real coatingMaxWavelength,
+	/*material*/ MaterialSellmeier1 const material,
+	/*max surface quality*/ real const maxSurfaceQuality,
+	/*min surface quality*/ real const minSurfaceQuality,
+	/*Power(P-V)@632.8nm:*/ real powerPV,
+	/*Irregularity(P-V)@632.8nm*/ real irregularity,
+	/*tolerance focal lenght*/ real const toleranceFocalLenght,
+	/*min centering*/ real const minCenter,
+	/*max centering*/ real const maxCenter,
+	/*center thickness*/ real const thickness,
+	/*tolerance center thickness*/ real const toleraceCenterThickness,
+	/*edge thickness*/ real const edgeThickness,
+	/*radius first surface*/ real const radiusFirstSurface,
+	/*free aperture CA*/ real freeAperture,
+	/*F-Number*/ real F_Number,
+	/*numerical Aperture*/ real const numericalAperture,
+	/*type*/ std::string type,
+	/*Bevel*/ std::string bevel,
+	/*min wavelength range*/ real const minWavelength,
+	/*max wavelength range*/ real const maxWavelength,
+	/*price*/ real const price
+)
+{
+	/*lens catalog*/ setLensCatalog(lensCatalog);
+	/*catalog number*/ setCatalogNumber(catalogNumber);
+	/*diameter*/ setDiameter(diameter);
+	/*max tolerance diameter*/ setMaxDiaTolerance(maxDiamterTolerance);
+	/*min tolerance diameter*/ setMinDiaTolerance(minDiamterTolerance);
+	/*Effective Focal Length EFL(mm)*/ setFocalLength(focalLength);
+	/*back focal length*/setBackFocalLength(backFocalLength);
+	/*Coating*/ setCoating(coating);
+	/*Coating Specification*/ setCoatingSpec(coatingSpecification);
+	/*Coating min wavelength*/ setMinCoatinWavelength(coatingMinWavelength);
+	/*Coating max wavelength*/ setMaxCoatinWavelength(coatingMaxWavelength);
+	/*material*/ setMaterial(material);
+	/*max surface quality*/ setMaxSurfaceQuality(maxSurfaceQuality);
+	/*min surface quality*/ setMinSurfaceQuality(minSurfaceQuality);
+	/*Power(P-V)@632.8nm:*/ setPowerPV(powerPV);
+	/*Irregularity(P-V)@632.8nm*/ setIrregilarity(irregularity);
+	/*tolerance focal lenght*/ setToleranceFocallength(toleranceFocalLenght);
+	/*min centering*/ setMinCenter(minCenter);
+	/*max centering*/setMaxCenter(maxCenter);
+	/*center thickness*/ setThickness(thickness);
+	/*tolerance center thickness*/ setToleranceCenterThickness(toleraceCenterThickness);
+	/*edge thickness*/ setEdgeThickness(edgeThickness);
+	/*radius first surface*/ setRadiusFirstSurface(radiusFirstSurface);
+	/*free aperture CA*/ setFreeAperture(freeAperture);
+	/*F-Number*/ setF_Number(F_Number);
+	/*numerical Aperture*/ setNumericalAperture(numericalAperture);
+	/*type*/ setType(type);
+	/*Bevel*/ setBevel(bevel);
+	/*min wavelength range*/ setMinWavelength(minWavelength);
+	/*max wavelength range*/ setMaxWavelength(maxWavelength);
+	/*price*/ setPrice(price);
+
+	buildOpticalSystemTwoSurfaces_OneSurfacePlan();
+}
+
+void LensesTwoSurfaces::buildLensTwoSurfaces_PCX_uncoated //https://www.edmundoptics.de/f/micro-plano-convex-pcx-lenses/39529/
+(
+	/*lens catalog*/ std::string lensCatalog,
+	/*catalog number*/ unsigned int catalogNumber,
+	/*diameter*/ real const diameter,
+	/*max tolerance diameter*/ real const maxDiamterTolerance,
+	/*min tolerance diameter*/ real const minDiamterTolerance,
+	/*Effective Focal Length EFL(mm)*/ real focalLength,
+	/*back focal length*/ real const backFocalLength,
+	/*material*/ MaterialSellmeier1 const material,
+	/*max surface quality*/ real const maxSurfaceQuality,
+	/*min surface quality*/ real const minSurfaceQuality,
+	/*Power(P-V)@632.8nm:*/ real powerPV,
+	/*Irregularity(P-V)@632.8nm*/ real irregularity,
+	/*tolerance focal lenght*/ real const toleranceFocalLenght,
+	/*min centering*/ real const minCenter,
+	/*max centering*/ real const maxCenter,
+	/*center thickness*/ real const thickness,
+	/*tolerance center thickness*/ real const toleraceCenterThickness,
+	/*edge thickness*/ real const edgeThickness,
+	/*radius first surface*/ real const radiusFirstSurface,
+	/*free aperture CA*/ real freeAperture,
+	/*F-Number*/ real F_Number,
+	/*numerical Aperture*/ real const numericalAperture,
+	/*type*/ std::string type,
+	/*Bevel*/ std::string bevel,
+	/*min wavelength range*/ real const minWavelength,
+	/*max wavelength range*/ real const maxWavelength,
+	/*price*/ real const price
+)
+{
+	/*lens catalog*/ setLensCatalog(lensCatalog);
+	/*catalog number*/ setCatalogNumber(catalogNumber);
+	/*diameter*/ setDiameter(diameter);
+	/*max tolerance diameter*/ setMaxDiaTolerance(maxDiamterTolerance);
+	/*min tolerance diameter*/ setMinDiaTolerance(minDiamterTolerance);
+	/*Effective Focal Length EFL(mm)*/ setFocalLength(focalLength);
+	/*back focal length*/setBackFocalLength(backFocalLength);
+	/*material*/ setMaterial(material);
+	/*max surface quality*/ setMaxSurfaceQuality(maxSurfaceQuality);
+	/*min surface quality*/ setMinSurfaceQuality(minSurfaceQuality);
+	/*Power(P-V)@632.8nm:*/ setPowerPV(powerPV);
+	/*Irregularity(P-V)@632.8nm*/ setIrregilarity(irregularity);
+	/*tolerance focal lenght*/ setToleranceFocallength(toleranceFocalLenght);
+	/*min centering*/ setMinCenter(minCenter);
+	/*max centering*/setMaxCenter(maxCenter);
+	/*center thickness*/ setThickness(thickness);
+	/*tolerance center thickness*/ setToleranceCenterThickness(toleraceCenterThickness);
+	/*edge thickness*/ setEdgeThickness(edgeThickness);
+	/*radius first surface*/ setRadiusFirstSurface(radiusFirstSurface);
+	/*free aperture CA*/ setFreeAperture(freeAperture);
+	/*F-Number*/ setF_Number(F_Number);
+	/*numerical Aperture*/ setNumericalAperture(numericalAperture);
+	/*type*/ setType(type);
+	/*Bevel*/ setBevel(bevel);
+	/*min wavelength range*/ setMinWavelength(minWavelength);
+	/*max wavelength range*/ setMaxWavelength(maxWavelength);
+	/*price*/ setPrice(price);
+
+	buildOpticalSystemTwoSurfaces_OneSurfacePlan();
+}
+
 void LensesTwoSurfaces::buildLensTwoSurfaces_PCX //https://www.edmundoptics.de/f/large-pcx-condenser-lenses/13572/
 (
 	/*lens catalog*/ std::string lensCatalog,
@@ -345,7 +675,7 @@ void LensesTwoSurfaces::buildLensTwoSurfaces_Thorlabs_oneSurfacePlan
 )
 {
 	setLensCatalog(lensCatalog);
-	setItem(item);
+	setCatalogNumber(item);
 	setDiameter(diameter);
 	setFocalLength(focalLenght);
 	setBackFocalLength(backFocalLength);
@@ -395,7 +725,7 @@ void LensesTwoSurfaces::buildLensTwoSurfaces_Qioptiq_oneSurfacePlan
 )
 {
 	setLensCatalog(lensCatalog);
-	setItem(partNumber);
+	setCatalogNumber(partNumber);
 	setDiameter(diameter);
 	setFocalLength(focalLenght);
 	setToleranceFocallength(toleranceFocalLength);
@@ -444,7 +774,7 @@ void LensesTwoSurfaces::buildLensTwoSurfaces_Qioptiq_lenses
 )
 {
 	setLensCatalog(lensCatalog);
-	setItem(partNumber);
+	setCatalogNumber(partNumber);
 	setDiameter(diameter);
 	setFocalLength(focalLenght);
 	setToleranceFocallength(toleranceFocalLength);
@@ -585,7 +915,7 @@ void LensesTwoSurfaces::buildLensTwoSurfaces_thorlabs
 )
 {
 	setLensCatalog(lensCatalog);
-	setItem(item);
+	setCatalogNumber(item);
 	setDiameter(diameter);
 	setFocalLength(focalLenght);
 	setBackFocalLength(backFocalLength);
@@ -635,7 +965,7 @@ void LensesTwoSurfaces::buildLensTwoSurfaces_thorlabs_Uncoated
 )
 {
 	setLensCatalog(lensCatalog);
-	setItem(item);
+	setCatalogNumber(item);
 	setDiameter(diameter);
 	setFocalLength(focalLenght);
 	setBackFocalLength(backFocalLength);
@@ -685,7 +1015,7 @@ void LensesTwoSurfaces::buildLensTwoSurfaces_thorlabs_coated
 )
 {
 	setLensCatalog(lensCatalog);
-	setItem(item);
+	setCatalogNumber(item);
 	setDiameter(diameter);
 	setFocalLength(focalLenght);
 	setBackFocalLength(backFocalLength);
@@ -1002,6 +1332,12 @@ void LensesTwoSurfaces::setLensCatalog(std::string lensCatalog)
 // set number in catalog
 void LensesTwoSurfaces::setCatalogNumber(unsigned int catalogNumber)
 {
+	std::string catalogNumber_str = std::to_string(catalogNumber);
+
+	mCatalogNumber = catalogNumber_str;
+}
+void LensesTwoSurfaces::setCatalogNumber(std::string catalogNumber)
+{
 	mCatalogNumber = catalogNumber;
 }
 
@@ -1044,11 +1380,6 @@ void LensesTwoSurfaces::setMaterial(MaterialSellmeier1 const material)
 void LensesTwoSurfaces::setBackFocalLength(real const backFocalLength)
 {
 	mBackFocalLength = backFocalLength;
-}
-// set item
-void LensesTwoSurfaces::setItem(std::string item)
-{
-	mItem = item;
 }
 // set centration
 void LensesTwoSurfaces::setCentration(real centration)
@@ -1218,7 +1549,7 @@ std::string LensesTwoSurfaces::getLensCatalog()
 	return mLensCatalog;
 }
 // get number in catalog
-unsigned int LensesTwoSurfaces::getCatalogNumber()
+std::string LensesTwoSurfaces::getCatalogNumber()
 {
 	return mCatalogNumber;
 }
@@ -1367,11 +1698,6 @@ real LensesTwoSurfaces::getFreeAperture()
 real LensesTwoSurfaces::getBackFocalLength()
 {
 	return mBackFocalLength;
-}
-// get item
-std::string LensesTwoSurfaces::getItem()
-{
-	return mItem;
 }
 // get centration
 real LensesTwoSurfaces::getCentration()

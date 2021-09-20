@@ -44,7 +44,7 @@ void LensFourSurfaces::buildLensFourSurfaces
 )
 {
 	setLensCatalog(lensCatalog);
-	setItem(Item);
+	setCatalogNumber(Item);
 	setDiameter(diameter);
 	setFocalLength(focalLenght);
 	setToleranceFocalLength(toleranceFocalLength);
@@ -122,7 +122,7 @@ void LensFourSurfaces::buildLensFourSurfaces
 )
 {
 	setLensCatalog(lensCatalog);
-	setItem(Item);
+	setCatalogNumber(Item);
 	setDiameter(diameter);
 	setFocalLength(focalLenght);
 	setToleranceFocalLength(toleranceFocalLength);
@@ -165,7 +165,7 @@ void LensFourSurfaces::buildLensFourSurfaces
 void LensFourSurfaces::buildLensFourSurfaces
 (
 	/*lens catalog*/ std::string lensCatalog,
-	/*catalog number*/ real catalogNumber,
+	/*catalog number*/ unsigned int catalogNumber,
 	/*diameter*/ real  diameter,
 	/*max diameter tolerance*/ real maxDiameterTolerance,
 	/*min diameter tolerance*/ real minDiameterTolerance,
@@ -246,7 +246,7 @@ void LensFourSurfaces::buildLensFourSurfaces
 void LensFourSurfaces::buildLensFourSurfaces
 (
 	/*lens catalog*/ std::string lensCatalog,
-	/*catalog number*/ real catalogNumber,
+	/*catalog number*/ unsigned int catalogNumber,
 	/*diameter*/ real  diameter,
 	/*max diameter tolerance*/ real maxDiameterTolerance,
 	/*min diameter tolerance*/ real minDiameterTolerance,
@@ -528,8 +528,15 @@ void LensFourSurfaces::setLensCatalog(std::string lensCatalog)
 // set number in catalog
 void LensFourSurfaces::setCatalogNumber(unsigned int catalogNumber)
 {
+	std::string catalogNumber_str = std::to_string(catalogNumber);
+
+	mCatalogNumber = catalogNumber_str;
+}
+void LensFourSurfaces::setCatalogNumber(std::string catalogNumber)
+{
 	mCatalogNumber = catalogNumber;
 }
+
 // set diameter
 void LensFourSurfaces::setDiameter(real const diameter)
 {
@@ -720,11 +727,6 @@ void LensFourSurfaces::setWavelenghtToTrace(real const waveToTrace)
 {
 	mWavelengthToTrace = waveToTrace;
 }
-// set item
-void LensFourSurfaces::setItem(std::string item)
-{
-	mItem = item;
-}
 // set first design wavelength
 void LensFourSurfaces::setFirstDesignWavelength(real firstDW)
 {
@@ -779,7 +781,7 @@ std::string LensFourSurfaces::getLensCatalog()
 	return mLensCatalog;
 }
 // get number in catalog
-unsigned int LensFourSurfaces::getCatalogNumber()
+std::string LensFourSurfaces::getCatalogNumber()
 {
 	return mCatalogNumber;
 }
@@ -972,11 +974,6 @@ real LensFourSurfaces::getPrice()
 real LensFourSurfaces::getWavelenghtToTrace()
 {
 	return mWavelengthToTrace;
-}
-// get item
-std::string LensFourSurfaces::getItem()
-{
-	return mItem;
 }
 
 // get first design wavelength

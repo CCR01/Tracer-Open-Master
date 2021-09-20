@@ -16,7 +16,13 @@ void LensThreeSurfaces::setLensCatalog(std::string lensCatalog)
 // set number in catalog
 void LensThreeSurfaces::setCatalogNumber(unsigned int catalogNumber)
 {
-	mCatalogNumber = catalogNumber;
+	std::string catalogNumber_str = std::to_string(catalogNumber);
+
+	mCatalogNumber = catalogNumber_str;
+}
+void LensThreeSurfaces::setCatalogNumber(std::string lensCatalog)
+{
+	mCatalogNumber = lensCatalog;
 }
 // set diameter
 void LensThreeSurfaces::setDiameter(real const diameter)
@@ -219,11 +225,6 @@ void LensThreeSurfaces::setPrice(real const price)
 void LensThreeSurfaces::setWavelenghtToTrace(real const waveToTrace)
 {
 	mWavelengthToTrace = waveToTrace;
-}
-// set item
-void LensThreeSurfaces::setItem(std::string item)
-{
-	mItem = item;
 }
 // set first design wavelength
 void LensThreeSurfaces::setFirstDesignWavelength(real firstDW)
@@ -475,6 +476,248 @@ void LensThreeSurfaces::buildLensThreeSurfaces
 	setMinSurfaceQuality(minSurfaceQuality);
 	// set stop
 	setStop(stop);
+	// set numerical aperture
+	setNumericalAperture(numericalAperture);
+	// set coating
+	setCoating(coating);
+	//set coating specification
+	setCoatingSpecification1(coatingtionSpecification1);
+	setCoatingSpecification2(coatingtionSpecification2);
+	setCoatingSpecification3(coatingtionSpecification3);
+	// set power wavelength
+	setPowerWavelength(powerWavelength);
+	// set power PV
+	setPowerPV(powerPV);
+	// set curvature wavelength
+	setCurvatureWave(curvatureWavelength);
+	// set curvature PV
+	setCurvaturePV(curvaturePV);
+	// set bevel
+	setBevel(bevel);
+	// set type
+	setType(type);
+	// set minimal wavelength
+	setMinimalWavelength(minWavelength);
+	// set maximum wavelength
+	setMaximumWavelength(maxWavelenght);
+	// set price
+	setPrice(price);
+	// set wavelengthToTrace
+	setWavelenghtToTrace(wavelengthToTrace);
+
+	// build the optical system with three surfaces
+	buildOpticalSystemThreeSurfaces();
+
+}
+
+
+void LensThreeSurfaces::buildLensThreeSurfaces
+(
+	/*lens catalog*/ std::string lensCatalog,
+	/*catalog number*/ unsigned int catalogNumber,
+	/*diameter*/ real  diameter,
+	/*max diameter tolerance*/ real maxDiamterTolerance,
+	/*min diameter tolerance*/ real minDiamterTolerance,
+	/*focallength*/ real focalLenght,
+	/*tolerance focal length*/ real toleranceFocalLength,
+	/*back focal length*/ real backFocalLength,
+	/*design wavelength*/ real designWavelength,
+	/*free aperture CA*/ real freeApertureCA,
+	/*max centering*/ real maxCentering,
+	/*first thickness*/ real firstThicknessCT1,
+	/*second thickness*/ real secondThicknessCT2,
+	/*tolerance center thickness*/ real toleraceCenterThickness,
+	/*radius first surface*/ real radiusFirstSurface,
+	/*radius second surface*/ real radiusSecondSurface,
+	/*radius third surface*/ real radiusThirdSurface,
+	/*edge thickness*/ real edgeThickness,
+	/*material first*/ MaterialSellmeier1 materialFirst,
+	/*material second*/ MaterialSellmeier1 materialSecond,
+	/*max surface quality*/ real maxSurfaceQuality,
+	/*min surface quality*/ real minSurfaceQuality,
+	/*stop*/ real stop,
+	/*numerical aperture*/ real numericalAperture,
+	/*coating*/ std::string coating,
+	/*coating specification 1*/ std::string coatingtionSpecification1,
+	/*coating specification 2*/ std::string coatingtionSpecification2,
+	/*coating specification 3*/ std::string coatingtionSpecification3,
+	/*power wavelength*/ real powerWavelength,
+	/*power PV*/ real powerPV,
+	/*vurvature wavelength*/ real curvatureWavelength,
+	/*curvature PV*/ real curvaturePV,
+	/*bevel*/ std::string bevel,
+	/*type*/ std::string type,
+	/*min wavelength*/ real minWavelength,
+	/*max wavelength*/ real maxWavelenght,
+	/*price*/ real price,
+	/*wavelength to trace*/ real wavelengthToTrace
+)
+{
+	// set lens catalog
+	setLensCatalog(lensCatalog);
+	// set catalog number
+	setCatalogNumber(catalogNumber);
+	// set diameter
+	setDiameter(diameter);
+	// set max diameter tolerance
+	setMaxDiameterTolerance(maxDiamterTolerance);
+	// set min diameter tolerance
+	setMinDiameterTolerance(minDiamterTolerance);
+	// set focal lenght
+	setFocalLength(focalLenght);
+	// set tolerance focal length
+	setToleranceFocalLength(toleranceFocalLength);
+	// set back focal lenght
+	setBackFocalLength(backFocalLength);
+	// set design wavelength
+	setDesignWavelength(designWavelength);
+	// set free aperture
+	setFreeApertureCA(freeApertureCA);
+	// set max centering
+	setMaxCentering(maxCentering);
+	// set first thickness
+	setFirstThickness(firstThicknessCT1);
+	// set second thickness
+	setSecondThickness(secondThicknessCT2);
+	// set tolerance center Thickness
+	setToleranceCenterThickness(toleraceCenterThickness);
+	// set radius first surface
+	setRadiusFirstSurface(radiusFirstSurface);
+	// set radius second surface
+	setRadiusSecondSurface(radiusSecondSurface);
+	// set radius third surface
+	setRadiusThirdSurface(radiusThirdSurface);
+	// set edge thickness 
+	setEdgeThickness(edgeThickness);
+	// set material first
+	setMaterialFirst(materialFirst);
+	// set material second
+	setMaterialSecond(materialSecond);
+	// set max surface quality
+	setMaxSurfaceQuality(maxSurfaceQuality);
+	// set min surface quality
+	setMinSurfaceQuality(minSurfaceQuality);
+	// set stop
+	setStop(stop);
+	// set numerical aperture
+	setNumericalAperture(numericalAperture);
+	// set coating
+	setCoating(coating);
+	//set coating specification
+	setCoatingSpecification1(coatingtionSpecification1);
+	setCoatingSpecification2(coatingtionSpecification2);
+	setCoatingSpecification3(coatingtionSpecification3);
+	// set power wavelength
+	setPowerWavelength(powerWavelength);
+	// set power PV
+	setPowerPV(powerPV);
+	// set curvature wavelength
+	setCurvatureWave(curvatureWavelength);
+	// set curvature PV
+	setCurvaturePV(curvaturePV);
+	// set bevel
+	setBevel(bevel);
+	// set type
+	setType(type);
+	// set minimal wavelength
+	setMinimalWavelength(minWavelength);
+	// set maximum wavelength
+	setMaximumWavelength(maxWavelenght);
+	// set price
+	setPrice(price);
+	// set wavelengthToTrace
+	setWavelenghtToTrace(wavelengthToTrace);
+
+	// build the optical system with three surfaces
+	buildOpticalSystemThreeSurfaces();
+
+}
+
+void LensThreeSurfaces::buildLensThreeSurfaces
+(
+	/*lens catalog*/ std::string lensCatalog,
+	/*catalog number*/ unsigned int catalogNumber,
+	/*diameter*/ real  diameter,
+	/*max diameter tolerance*/ real maxDiamterTolerance,
+	/*min diameter tolerance*/ real minDiamterTolerance,
+	/*focallength*/ real focalLenght,
+	/*tolerance focal length*/ real toleranceFocalLength,
+	/*back focal length*/ real backFocalLength,
+	/*design wavelength*/ real designWavelength,
+	/*free aperture CA*/ real freeApertureCA,
+	/*max centering*/ real maxCentering,
+	/*first thickness*/ real firstThicknessCT1,
+	/*second thickness*/ real secondThicknessCT2,
+	/*tolerance center thickness*/ real toleraceCenterThickness,
+	/*radius first surface*/ real radiusFirstSurface,
+	/*radius second surface*/ real radiusSecondSurface,
+	/*radius third surface*/ real radiusThirdSurface,
+	/*edge thickness*/ real edgeThickness,
+	/*material first*/ MaterialSellmeier1 materialFirst,
+	/*material second*/ MaterialSellmeier1 materialSecond,
+	/*max surface quality*/ real maxSurfaceQuality,
+	/*min surface quality*/ real minSurfaceQuality,
+	/*numerical aperture*/ real numericalAperture,
+	/*coating*/ std::string coating,
+	/*coating specification 1*/ std::string coatingtionSpecification1,
+	/*coating specification 2*/ std::string coatingtionSpecification2,
+	/*coating specification 3*/ std::string coatingtionSpecification3,
+	/*power wavelength*/ real powerWavelength,
+	/*power PV*/ real powerPV,
+	/*vurvature wavelength*/ real curvatureWavelength,
+	/*curvature PV*/ real curvaturePV,
+	/*bevel*/ std::string bevel,
+	/*type*/ std::string type,
+	/*min wavelength*/ real minWavelength,
+	/*max wavelength*/ real maxWavelenght,
+	/*price*/ real price,
+	/*wavelength to trace*/ real wavelengthToTrace
+)
+{
+	// set lens catalog
+	setLensCatalog(lensCatalog);
+	// set catalog number
+	setCatalogNumber(catalogNumber);
+	// set diameter
+	setDiameter(diameter);
+	// set max diameter tolerance
+	setMaxDiameterTolerance(maxDiamterTolerance);
+	// set min diameter tolerance
+	setMinDiameterTolerance(minDiamterTolerance);
+	// set focal lenght
+	setFocalLength(focalLenght);
+	// set tolerance focal length
+	setToleranceFocalLength(toleranceFocalLength);
+	// set back focal lenght
+	setBackFocalLength(backFocalLength);
+	// set design wavelength
+	setDesignWavelength(designWavelength);
+	// set free aperture
+	setFreeApertureCA(freeApertureCA);
+	// set max centering
+	setMaxCentering(maxCentering);
+	// set first thickness
+	setFirstThickness(firstThicknessCT1);
+	// set second thickness
+	setSecondThickness(secondThicknessCT2);
+	// set tolerance center Thickness
+	setToleranceCenterThickness(toleraceCenterThickness);
+	// set radius first surface
+	setRadiusFirstSurface(radiusFirstSurface);
+	// set radius second surface
+	setRadiusSecondSurface(radiusSecondSurface);
+	// set radius third surface
+	setRadiusThirdSurface(radiusThirdSurface);
+	// set edge thickness 
+	setEdgeThickness(edgeThickness);
+	// set material first
+	setMaterialFirst(materialFirst);
+	// set material second
+	setMaterialSecond(materialSecond);
+	// set max surface quality
+	setMaxSurfaceQuality(maxSurfaceQuality);
+	// set min surface quality
+	setMinSurfaceQuality(minSurfaceQuality);
 	// set numerical aperture
 	setNumericalAperture(numericalAperture);
 	// set coating
@@ -775,7 +1018,7 @@ void LensThreeSurfaces::buildLensThreeSurfaces
 )
 {
 	setLensCatalog(lensCatalog);
-	setItem(Item);
+	setCatalogNumber(Item);
 	setDiameter(diameter);
 	setFocalLength(focalLenght);
 	setBackFocalLength(backFocalLength);
@@ -834,17 +1077,17 @@ void LensThreeSurfaces::buildLensThreeSurfaces_Qioptiq_lenses
 )
 {
 	/*lens catalog*/ setLensCatalog(lensCatalog);
-	/*catalog number*/ setItem(partNumber);
+	/*catalog number*/ setCatalogNumber(partNumber);
 	/*diameter*/ setDiameter(diameter);
 	/*focallength*/ setFocalLength(focalLenght),
-	/*optical centering accurancy*/ setCentration(centering);
+		/*optical centering accurancy*/ setCentration(centering);
 	/*surface quality*/ setSurfaceQuality(surfaceQuality);
 	/*edge thickness*/ setEdgeThickness(edgeThickness);
 	/*back focal length*/ setBackFocalLength(backFocalLength);
 	/*min wavelength*/ setMinimalWavelength(minWavelength);
 	/*max wavelength*/ setMaximumWavelength(maxWavelenght);
 	/*coating*/ setCoating(coating),
-	/*caoting specification*/ setCoatingSpecification(coatinSpecification);
+		/*caoting specification*/ setCoatingSpecification(coatinSpecification);
 	/*radius first surface*/ setRadiusFirstSurface(radiusFirstSurface);
 	/*radius second surface*/ setRadiusSecondSurface(radiusSecondSurface);
 	/*radius thrid surface*/ setRadiusThirdSurface(radiusThridSurface);
@@ -1029,7 +1272,7 @@ std::string LensThreeSurfaces::getLensCatalog()
 	return mLensCatalog;
 }
 // get number in catalog
-unsigned int LensThreeSurfaces::getCatalogNumber()
+std::string LensThreeSurfaces::getCatalogNumber()
 {
 	return mCatalogNumber;
 }
@@ -1233,12 +1476,6 @@ real LensThreeSurfaces::getWavelenghtToTrace()
 {
 	return mWavelengthToTrace;
 }
-// get item
-std::string LensThreeSurfaces::getItem()
-{
-	return mItem;
-}
-
 // get first design wavelength
 real LensThreeSurfaces::getFirstDesignWavelength()
 {

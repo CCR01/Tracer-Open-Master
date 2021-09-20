@@ -9,7 +9,7 @@ enum class testWhat {
 	tOptiIncluding_GeneticAndDLS_Parallel_CardinalPoints, tDLS_optiImageProcessing, tLensReplace, tOPD_obj, tOPD_inf, tGlobalOPD_obj, tGlobalOPD_inf, tImaSim, tPSF, tWienerFilter, tImproveImaQuality_openCV_Func,
 	tDistortion, tNoise, tDetailEnhance_BFA, tDetailEnhance_DLS, tWienerFilterSuperFunction, tWienerFilterSuperFunction_parallel, tUnsharpMasking_BFA, tRemoveChroAber, tSequantialRayTracing,
 	tImproveImaQual_superFct, tSharpnessEvaluation, tLensCatalogThorlabs, tSeidelCoef, tCalcMaxSeidelAber, tLensReplaceAndOptimize, tLensCatalogQioptiq, tCompareTOMandZemaxOptimizer, tLensReplaceAndOptimize_statistic_ALL,
-	tLensReplaceAndOptimize_statistic_twoLenses, tLensReplaceAndOptimize_statistic_threeLenses, tLensReplaceAndOptimize_statistic_fourLenses, tLensReplaceAndOptimize_statistic_fiveLenses
+	tLensReplaceAndOptimize_statistic_twoLenses, tLensReplaceAndOptimize_statistic_threeLenses, tLensReplaceAndOptimize_statistic_fourLenses, tLensReplaceAndOptimize_statistic_fiveLenses, tDGaO2021
 };
 
 class ManagementTests

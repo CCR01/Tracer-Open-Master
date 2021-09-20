@@ -1645,8 +1645,8 @@ void DLS::setNewSystemParameter()
 			newVal = checkBounderiesAndReturnNewVal(tempVal, i, tempMinVal, tempMaxVal, tempWithout_min, tempWithout_max, tempSurfaceNum, tempKindParameter);
 
 			//just for debugging
-			std::cout << "set radius of surface " << tempSurfaceNum << " to " << newVal << std::endl;
-			std::cout << std::endl;
+			//std::cout << "set radius of surface " << tempSurfaceNum << " to " << newVal << std::endl;
+			//std::cout << std::endl;
 
 
 			changeRadiusSurfaceTo_allWavelength(tempSurfaceNum, newVal);
@@ -1697,7 +1697,7 @@ void DLS::saveCurMeritAndBestMeritValue()
 		mTempMeritVal += n;
 
 	// just for debugging --> print temp merit val
-	std::cout << "temp merit value: " << mTempMeritVal << std::endl;
+	//std::cout << "temp merit value: " << mTempMeritVal << std::endl;
 
 	mAllMeritVal.push_back(mTempMeritVal);
 
@@ -1709,7 +1709,7 @@ void DLS::saveCurMeritAndBestMeritValue()
 	}
 
 	// just for debugging --> print best merit value
-	std::cout << "best merit value: " << mBestMeritVal << std::endl;
+	//std::cout << "best merit value: " << mBestMeritVal << std::endl;
 }
 
 bool DLS::checkMeritBetter()
@@ -1867,7 +1867,7 @@ void DLS::optimizeSystem_DLS_multiplicativ_Damping()
 			mIterationCounter++;
 			mIterationCounter = checkImprovementMeritVal(mIterationCounter, improveMeritStop);
 			// just for debugging
-			std::cout << "interation counter: " << mIterationCounter << std::endl;
+			//std::cout << "interation counter: " << mIterationCounter << std::endl;
 		}
 
 		// just for debugging

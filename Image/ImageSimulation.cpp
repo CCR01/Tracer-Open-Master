@@ -798,13 +798,17 @@ void ImageSimulationFunctions::putAllChannlesTogetherScaleAndSaveIma()
 		checkIntensityDistortedImages();
 
 		std::vector<cv::Mat> array_to_merge;
-
 		array_to_merge.push_back(mSimulatedIma_blue_initialSize);
 		array_to_merge.push_back(mSimulatedIma_green_initialSize);
 		array_to_merge.push_back(mSimulatedIma_red_initialSize);
-		
-
 		cv::merge(array_to_merge, mSimulatedIma_bgr_final_initialSize);
+
+		std::vector<cv::Mat> array_to_merge_distortionCorrection;
+		array_to_merge_distortionCorrection.push_back(mSimulatedIma_blue_initialSize_distortionCorrected);
+		array_to_merge_distortionCorrection.push_back(mSimulatedIma_green_initialSize_distortionCorrected);
+		array_to_merge_distortionCorrection.push_back(mSimulatedIma_red_initialSize_distortionCorrected);
+		cv::merge(array_to_merge_distortionCorrection, mSimulatedIma_bgr_final_initialSize_distortionCorrection);
+
 
 	}
 
@@ -2630,6 +2634,7 @@ void ImageSimulationFunctions::calcDistortedImages()
 	lightBlue.setWavelength(mLoadParameterImaSim.getWavelengthBlue());
 	distortionBlue.calculateDistortion_superFunction_obj(mSimulatedIma_blue_initialSize, mOptSysLLT_blue, lightBlue, mLoadParameterImaSim.getSamplingDistortionHeight(), mLoadParameterImaSim.getSamplingDistortionWidth(), 2.0 * mLoadParameterImaSim.getSemiHeightObj(), 2.0 * mLoadParameterImaSim.getSemiWidthObj(), mLoadParameterImaSim.getPosition_Z_Object());
 	mSimulatedIma_blue_initialSize = distortionBlue.getDistortedImage();
+	mSimulatedIma_blue_initialSize_distortionCorrected = distortionBlue.correctDistortion();
 
 	// distortion green
 	Distortion distortionGreen;
@@ -2637,6 +2642,7 @@ void ImageSimulationFunctions::calcDistortedImages()
 	lightBlue.setWavelength(mLoadParameterImaSim.getWavelengthGreen());
 	distortionGreen.calculateDistortion_superFunction_obj(mSimulatedIma_green_initialSize, mOptSysLLT_green, lightGreen, mLoadParameterImaSim.getSamplingDistortionHeight(), mLoadParameterImaSim.getSamplingDistortionWidth(), 2.0 * mLoadParameterImaSim.getSemiHeightObj(), 2.0 * mLoadParameterImaSim.getSemiWidthObj(), mLoadParameterImaSim.getPosition_Z_Object());
 	mSimulatedIma_green_initialSize = distortionGreen.getDistortedImage();
+	mSimulatedIma_green_initialSize_distortionCorrected = distortionGreen.correctDistortion();
 
 	// distortion red
 	Distortion distortionRed;
@@ -2644,7 +2650,15 @@ void ImageSimulationFunctions::calcDistortedImages()
 	lightRed.setWavelength(mLoadParameterImaSim.getWavelengthRed());
 	distortionRed.calculateDistortion_superFunction_obj(mSimulatedIma_red_initialSize, mOptSysLLT_red, lightRed, mLoadParameterImaSim.getSamplingDistortionHeight(), mLoadParameterImaSim.getSamplingDistortionWidth(), 2.0 * mLoadParameterImaSim.getSemiHeightObj(), 2.0 * mLoadParameterImaSim.getSemiWidthObj(), mLoadParameterImaSim.getPosition_Z_Object());
 	mSimulatedIma_red_initialSize = distortionRed.getDistortedImage();
+	mSimulatedIma_red_initialSize_distortionCorrected = distortionRed.correctDistortion();
 }
+
+// get distorten corrected ima
+cv::Mat ImageSimulationFunctions::getSimulatedImage_initialSize_distortionCorrected()
+{
+	return mSimulatedIma_bgr_final_initialSize_distortionCorrection;
+}
+
 
 // get functions
 // ***

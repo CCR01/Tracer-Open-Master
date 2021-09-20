@@ -584,6 +584,8 @@ SphericalElement::SphericalElement(SphericalElement &source)
 	{
 		return;
 	}
+	
+
 	mSphericalSurface_LLT = source.mSphericalSurface_LLT;
 	mRadiusParam = source.mRadiusParam;
 	mSemiHeightElePara = source.mSemiHeightElePara;

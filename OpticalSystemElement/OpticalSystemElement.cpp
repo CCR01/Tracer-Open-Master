@@ -118,6 +118,16 @@ std::vector<PosAndIntsectionSurfaceStruct> OpticalSystemElement::getPosAndInters
 	return mPosAndIntersecSurface_LLT;
 }
 
+void OpticalSystemElement::fillPosAndElementAndInteraction(std::vector<std::shared_ptr<Element_CR>> elements, std::vector<std::shared_ptr<InteractionRay_LLT>> interactions)
+{
+	for (unsigned int i = 0; i < elements.size(); ++i)
+	{
+		fillPosAndElementAndInteraction(i, elements[i], interactions[i]);
+	}
+	
+	// convert the HLT system to LLT
+	convertHLTSurfacesToLLTSurfaces();
+}
 
 // fill the optical system with elements
 void OpticalSystemElement::fillPosAndElementAndInteraction(unsigned int position, std::shared_ptr<Element_CR> element, std::shared_ptr<InteractionRay_LLT> interaction)

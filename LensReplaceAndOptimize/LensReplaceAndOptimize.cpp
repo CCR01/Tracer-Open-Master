@@ -11,19 +11,20 @@
 #include "..\OptimizeSystem\multiThreads\DLS_mulitThreads12.h"
 
 
-LensReplaceAndOptimize::LensReplaceAndOptimize() 
-{ 
-	turn_OFF_DebugMode(); 
+LensReplaceAndOptimize::LensReplaceAndOptimize()
+{
+	turn_OFF_DebugMode();
 }
 
-LensReplaceAndOptimize::~LensReplaceAndOptimize(){}
+LensReplaceAndOptimize::~LensReplaceAndOptimize() {}
 
 
 void LensReplaceAndOptimize::lensReplaceAndOptimize_superFct(OpticalSystemElement optSysEle, std::vector<VectorStructR3> fieldPointsVec, std::vector<real> wavelength_vec, unsigned int rings, unsigned int arms, optimizeMethode optMethode, /*number best fit lenses*/ unsigned int numberBestFitLenses, bool firstInteration, replaceSequence repSequence, Light_LLT light)
 {
+	optSysEle.setRefractiveIndexAccordingToWavelength(wavelength_vec[0]);
 	mInitalOpticalSystemEle_SuperFct = optSysEle.getDeepCopyOptSysEle();
 	OpticalSystem_LLT optSysLLT = optSysEle.getLLTconversion_doConversion();
-	std::vector<OpticalSystem_LLT> optSysLLT_lenses_vec = oftenUse::findLensesInOptSys_LLT(optSysLLT); 
+	std::vector<OpticalSystem_LLT> optSysLLT_lenses_vec = oftenUse::findLensesInOptSys_LLT(optSysLLT);
 	unsigned int lensesInOptSys = optSysLLT_lenses_vec.size();
 
 	OpticalSystemElement tempOptSysToReplace = optSysEle.getDeepCopyOptSysEle();
@@ -36,7 +37,7 @@ void LensReplaceAndOptimize::lensReplaceAndOptimize_superFct(OpticalSystemElemen
 	unsigned int counter = 0;
 
 	if (repSequence == replaceSequence::leftToRight)
-	{		
+	{
 		mSaveReplacedSequence.resize(lensesInOptSys);
 		tempNumberLensToReplace = 0;
 
@@ -52,9 +53,9 @@ void LensReplaceAndOptimize::lensReplaceAndOptimize_superFct(OpticalSystemElemen
 			mSaveReplacedSequence[tempNumberLensToReplace] = tempNumberLensToReplace;
 			tempNumberLensToReplace++;
 			tempFirstInteration = false;
-			
+
 		}
-		
+
 
 	}
 
@@ -96,7 +97,7 @@ void LensReplaceAndOptimize::lensReplaceAndOptimize_superFct(OpticalSystemElemen
 
 		while (counter < lensesInOptSys)
 		{
-			
+
 
 			SeidelCoefficients seidelCoef;
 			seidelCoef.calcSeidelCoef_superFuction(tempOptSysToReplace, wavelength_vec, light, maxStartPoint);
@@ -114,9 +115,9 @@ void LensReplaceAndOptimize::lensReplaceAndOptimize_superFct(OpticalSystemElemen
 
 			for (unsigned int tempLensNum = 0; tempLensNum < lensesInOptSys; ++tempLensNum)
 			{
-				if( std::abs(tempLensNum - nextlensNumber < 0.1))
+				if (std::abs(tempLensNum - nextlensNumber < 0.1))
 				{
-					
+
 					if (lensReplaced[tempLensNum] == false)
 					{
 						// set lens to replaced
@@ -136,10 +137,10 @@ void LensReplaceAndOptimize::lensReplaceAndOptimize_superFct(OpticalSystemElemen
 							seidelSumAllLenses[tempLensNum] = oftenUse::getInfReal();
 							nextlensNumber = seidelCoef.getLensNumber_Min_SeidelAber(seidelSumAllLenses);
 						}
-												
+
 						tempLensNum = -1;
 					}
-					
+
 				}
 			}
 
@@ -150,12 +151,12 @@ void LensReplaceAndOptimize::lensReplaceAndOptimize_superFct(OpticalSystemElemen
 
 			// save best parameter cataloge lens for replace
 			saveBestParameterCatalogLensForReplace(tempNumberLensToReplace);
-						
 
-			++counter; 
+
+			++counter;
 			tempFirstInteration = false;
 		}
-		
+
 
 
 	}
@@ -182,7 +183,7 @@ void LensReplaceAndOptimize::lensReplaceAndOptimize_superFct(OpticalSystemElemen
 
 		while (counter < size)
 		{
-				
+
 			for (unsigned int i = 0; i < lensesInOptSys; ++i)
 			{
 				tempNumberLensToReplace = mAllPossibleSequencesInt[counter][i];
@@ -197,27 +198,30 @@ void LensReplaceAndOptimize::lensReplaceAndOptimize_superFct(OpticalSystemElemen
 			mSaveAllBestLensToReplace_vec_includingFlipedLenses[counter] = mBestCatalogLensesForReplace;
 			mSaveAllBestMeritVal[counter] = mBestMeritVal;
 			mSaveAllBestReplacedOpticalSystem[counter] = tempOptSysToReplace.getDeepCopyOptSysEle();
-						
-		
+
+
 			tempOptSysToReplace = mInitalOpticalSystemEle_SuperFct.getDeepCopyOptSysEle();
 			++counter;
-			
+			tempFirstInteration = firstInteration;
+
 		}
 
 		// find best replace optical system
-		real tempMeritVal = mSaveAllBestMeritVal[0];
+		real tempMeritVal{};
 		mBestMeritVal = mSaveAllBestMeritVal[0];
 		int posBestMeritVal = 0;
 
-		for (unsigned int i = 1; i < mSaveAllBestMeritVal.size(); ++i)
+		for (unsigned int i = 0; i < mSaveAllBestMeritVal.size(); ++i)
 		{
+			tempMeritVal = mSaveAllBestMeritVal[i];
+
 			if (tempMeritVal < mBestMeritVal)
 			{
 				mBestMeritVal = tempMeritVal;
 				posBestMeritVal = i;
 			}
 
-			tempMeritVal = mSaveAllBestMeritVal[i];
+
 		}
 
 
@@ -231,11 +235,11 @@ void LensReplaceAndOptimize::lensReplaceAndOptimize_superFct(OpticalSystemElemen
 	{
 		unsigned int sizeLoadSequence = mLoadSequence.size();
 		int checkSize = sizeLoadSequence - lensesInOptSys;
-		// check size of given sequence
-		if (std::abs(checkSize) > 0.1)
-		{
-			oftenUse::errorProtocol_stopSystem("SIZE OF YOUR REPLACE SEQUENCE DO NOT MATCH WITH THE NUMBER OF LENSES IN THE OPTICAL SYSTEM!!!", "LensReplaceAndOptimize.cpp", 0, true);
-		}
+		//// check size of given sequence
+		//if (std::abs(checkSize) > 0.1)
+		//{
+		//	oftenUse::errorProtocol_stopSystem("SIZE OF YOUR REPLACE SEQUENCE DO NOT MATCH WITH THE NUMBER OF LENSES IN THE OPTICAL SYSTEM!!!", "LensReplaceAndOptimize.cpp", 0, true);
+		//}
 
 		// check given sequence
 		std::vector<unsigned int> sortedSequence = mLoadSequence;
@@ -243,23 +247,23 @@ void LensReplaceAndOptimize::lensReplaceAndOptimize_superFct(OpticalSystemElemen
 		real tolerance = 0.1;
 		real tempValue{};
 		real checker{};
-		for (unsigned int i = 0; i < sortedSequence.size(); ++i)
-		{
-			tempValue = sortedSequence[i] - i;
-			checker = std::abs(tempValue);
-			if (checker > tolerance)
-			{
-				oftenUse::errorProtocol_stopSystem("ATTENTION: YOUR SEQUENCE IS NOT CORRECT!!!", "LensReplaceAndOptimize.cpp", 0, true);
-			}
-
-		}
+		//for (unsigned int i = 0; i < sortedSequence.size(); ++i)
+		//{
+		//	tempValue = sortedSequence[i] - i;
+		//	checker = std::abs(tempValue);
+		//	if (checker > tolerance)
+		//	{
+		//		oftenUse::errorProtocol_stopSystem("ATTENTION: YOUR SEQUENCE IS NOT CORRECT!!!", "LensReplaceAndOptimize.cpp", 0, true);
+		//	}
+		//
+		//}
 
 
 		mSaveReplacedSequence.resize(lensesInOptSys);
 		tempNumberLensToReplace = 0;
 		unsigned int counter = 0;
 
-		while (counter < lensesInOptSys)
+		while (counter < mLoadSequence.size())
 		{
 			tempNumberLensToReplace = mLoadSequence[counter];
 
@@ -301,7 +305,7 @@ void LensReplaceAndOptimize::lensReplaceAndOptimize(OpticalSystemElement optSysE
 
 	else if (optMethode == optimizeMethode::DLS_12)
 	{
-	
+
 		lensReplaceAndOpti_DLS_12(numberLensToReplace, numberBestFitLenses, firstInteration);
 	}
 
@@ -325,7 +329,7 @@ void LensReplaceAndOptimize::lensReplaceAndOpti_DLS(unsigned int numberLensToRep
 	mReplaceOpticalSysEle_opti.clear();
 	mReplaceMeritVal_opti.clear();
 
-	
+
 
 	if (mDebugMode)
 	{
@@ -335,7 +339,7 @@ void LensReplaceAndOptimize::lensReplaceAndOpti_DLS(unsigned int numberLensToRep
 
 	if (mTargetCardinalPoints.getIsOneTargetCardinalPoint())
 	{
-		if(firstInteration)
+		if (firstInteration)
 		{
 			DLS DLS_Fct;
 			DLS_Fct.turnOFF_imageProcessing();
@@ -355,7 +359,7 @@ void LensReplaceAndOptimize::lensReplaceAndOpti_DLS(unsigned int numberLensToRep
 		mOptimizedOpticalSystemEle.setRefractiveIndexAccordingToWavelength(550.0);
 		lensRep.setRefIndexSurroundMat(oftenUse::getStartRefIndex(mOptimizedOpticalSystemEle.getLLTconversion_doConversion()));
 		lensRep.replaceSuperFuction(mOptimizedOpticalSystemEle);
-		
+
 		if (mLoadLensCatalog_vec.size() > 0)
 		{
 			lensRep.loadLensCata(mLoadLensCatalog_vec);
@@ -367,7 +371,7 @@ void LensReplaceAndOptimize::lensReplaceAndOpti_DLS(unsigned int numberLensToRep
 
 		mBestLensToReplace_vec = lensRep.checkLensCatalogsForBestFitLenses_many(/*lens number*/numberLensToReplace, /*parameter lens*/ lensRep.getParameterLenses()[numberLensToReplace],/*number best fit lenses*/ numberBestFitLenses);
 		mBestLensToReplace_vec_includingFlipedLenses = flipOptSysEleBy180Degrees(mBestLensToReplace_vec);
-		
+
 		mReplaceOpticalSysEle.resize(mBestLensToReplace_vec_includingFlipedLenses.size());
 
 		bool first = true;
@@ -418,8 +422,8 @@ void LensReplaceAndOptimize::lensReplaceAndOpti_DLS_12(unsigned int numberLensTo
 	{
 		mDefaulParaDLS.setMaxInterations(1);
 	}
-	
-	
+
+
 
 	if (mTargetCardinalPoints.getIsOneTargetCardinalPoint())
 	{
@@ -565,7 +569,7 @@ void LensReplaceAndOptimize::lensReplaceAndOpti_GeneticAndDLS(unsigned int numbe
 
 			// optimize optical system
 			OptimizeSystemSuperFct_GeneticAndDLS GeneticAndDLS(/*optSysEle*/ mReplaceOpticalSysEle[i],/*fields*/ mFieldPointsVec, /*wavelength*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*populatuion*/ mPopulation, /*target cardinal points*/ mTargetCardinalPoints, /*default Genetic*/mDefaultParaGenetic, /*default DLS*/ mDefaulParaDLS);
-	
+
 			mReplaceOpticalSysEle_opti[i] = GeneticAndDLS.optimizeSuperFct_GeneticAndDLS();
 			mReplaceMeritVal_opti[i] = GeneticAndDLS.getBestMeritValue();
 		}
@@ -617,7 +621,7 @@ void LensReplaceAndOptimize::lensReplaceAndOpti_GeneticAndDLS_12(unsigned int nu
 		mOptimizedOpticalSystemEle.setRefractiveIndexAccordingToWavelength(550.0);
 		lensRep.setRefIndexSurroundMat(oftenUse::getStartRefIndex(mOptimizedOpticalSystemEle.getLLTconversion_doConversion()));
 		lensRep.replaceSuperFuction(mOptimizedOpticalSystemEle);
-		
+
 		if (mLoadLensCatalog_vec.size() > 0)
 		{
 			lensRep.loadLensCata(mLoadLensCatalog_vec);
@@ -751,7 +755,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplaceAndOptimize::flipOptSysEleBy180
 	{
 		returnBestOptSysReplaceIncludingFliped[tempPos] = initialBestOptSysReplace[i];
 		// debug
-		oftenUse::print(returnBestOptSysReplaceIncludingFliped[tempPos].getOptSysEle(), 550.0);
+		// oftenUse::print(returnBestOptSysReplaceIncludingFliped[tempPos].getOptSysEle(), 550.0);
+
 		++tempPos;
 
 
@@ -761,7 +766,8 @@ std::vector<OptSysEle_Merit_LensType> LensReplaceAndOptimize::flipOptSysEleBy180
 		tempOptSysEleMeritLensType.setFlipedBy180Degrees(true);
 		returnBestOptSysReplaceIncludingFliped[tempPos] = tempOptSysEleMeritLensType;
 		// debug
-		oftenUse::print(returnBestOptSysReplaceIncludingFliped[tempPos].getOptSysEle(), 550.0);
+		//oftenUse::print(returnBestOptSysReplaceIncludingFliped[tempPos].getOptSysEle(), 550.0);
+
 		++tempPos;
 	}
 
@@ -869,12 +875,12 @@ void LensReplaceAndOptimize::findBestReplaceOpticalSystem()
 		tempMeritVal = mSaveAllBestMeritVal[i];
 	}
 
-	
+
 	mBestReplacedOptSysEle = mSaveAllBestReplacedOpticalSystem[posBestMeritVal];
 	mBestCatalogLensesForReplace = mSaveAllBestLensToReplace_vec_includingFlipedLenses[posBestMeritVal];
 	mSaveReplacedSequence = mAllPossibleSequencesInt[posBestMeritVal];
-	
-}			
+
+}
 
 
 // get replaced sequence

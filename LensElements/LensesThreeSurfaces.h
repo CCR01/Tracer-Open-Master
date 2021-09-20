@@ -173,6 +173,89 @@ public:
 		/*wavelength to trace*/ real wavelengthToTrace
 	);
 
+	void buildLensThreeSurfaces
+	(
+		/*lens catalog*/ std::string lensCatalog,
+		/*catalog number*/ unsigned int catalogNumber,
+		/*diameter*/ real  diameter,
+		/*max diameter tolerance*/ real maxDiamterTolerance,
+		/*min diameter tolerance*/ real minDiamterTolerance,
+		/*focallength*/ real focalLenght,
+		/*tolerance focal length*/ real toleranceFocalLength,
+		/*back focal length*/ real backFocalLength,
+		/*design wavelength*/ real designWavelength,
+		/*free aperture CA*/ real freeApertureCA,
+		/*max centering*/ real maxCentering,
+		/*first thickness*/ real firstThicknessCT1,
+		/*second thickness*/ real secondThicknessCT2,
+		/*tolerance center thickness*/ real toleraceCenterThickness,
+		/*radius first surface*/ real radiusFirstSurface,
+		/*radius second surface*/ real radiusSecondSurface,
+		/*radius third surface*/ real radiusThirdSurface,
+		/*edge thickness*/ real edgeThickness,
+		/*material first*/ MaterialSellmeier1 materialFirst,
+		/*material second*/ MaterialSellmeier1 materialSecond,
+		/*max surface quality*/ real maxSurfaceQuality,
+		/*min surface quality*/ real minSurfaceQuality,
+		/*stop*/ real stop,
+		/*numerical aperture*/ real numericalAperture,
+		/*coating*/ std::string coating,
+		/*coating specification 1*/ std::string coatingtionSpecification1,
+		/*coating specification 2*/ std::string coatingtionSpecification2,
+		/*coating specification 3*/ std::string coatingtionSpecification3,
+		/*power wavelength*/ real powerWavelength,
+		/*power PV*/ real powerPV,
+		/*vurvature wavelength*/ real curvatureWavelength,
+		/*curvature PV*/ real curvaturePV,
+		/*bevel*/ std::string bevel,
+		/*type*/ std::string type,
+		/*min wavelength*/ real minWavelength,
+		/*max wavelength*/ real maxWavelenght,
+		/*price*/ real price,
+		/*wavelength to trace*/ real wavelengthToTrace
+	);
+
+	void buildLensThreeSurfaces
+	(
+		/*lens catalog*/ std::string lensCatalog,
+		/*catalog number*/ unsigned int catalogNumber,
+		/*diameter*/ real  diameter,
+		/*max diameter tolerance*/ real maxDiamterTolerance,
+		/*min diameter tolerance*/ real minDiamterTolerance,
+		/*focallength*/ real focalLenght,
+		/*tolerance focal length*/ real toleranceFocalLength,
+		/*back focal length*/ real backFocalLength,
+		/*design wavelength*/ real designWavelength,
+		/*free aperture CA*/ real freeApertureCA,
+		/*max centering*/ real maxCentering,
+		/*first thickness*/ real firstThicknessCT1,
+		/*second thickness*/ real secondThicknessCT2,
+		/*tolerance center thickness*/ real toleraceCenterThickness,
+		/*radius first surface*/ real radiusFirstSurface,
+		/*radius second surface*/ real radiusSecondSurface,
+		/*radius third surface*/ real radiusThirdSurface,
+		/*edge thickness*/ real edgeThickness,
+		/*material first*/ MaterialSellmeier1 materialFirst,
+		/*material second*/ MaterialSellmeier1 materialSecond,
+		/*max surface quality*/ real maxSurfaceQuality,
+		/*min surface quality*/ real minSurfaceQuality,
+		/*numerical aperture*/ real numericalAperture,
+		/*coating*/ std::string coating,
+		/*coating specification 1*/ std::string coatingtionSpecification1,
+		/*coating specification 2*/ std::string coatingtionSpecification2,
+		/*coating specification 3*/ std::string coatingtionSpecification3,
+		/*power wavelength*/ real powerWavelength,
+		/*power PV*/ real powerPV,
+		/*vurvature wavelength*/ real curvatureWavelength,
+		/*curvature PV*/ real curvaturePV,
+		/*bevel*/ std::string bevel,
+		/*type*/ std::string type,
+		/*min wavelength*/ real minWavelength,
+		/*max wavelength*/ real maxWavelenght,
+		/*price*/ real price,
+		/*wavelength to trace*/ real wavelengthToTrace
+	);
+
 
 	void buildLensThreeSurfaces
 	(
@@ -231,7 +314,7 @@ public:
 		/*tolerance center thickness*/ real toleranceCenterThickness,
 		/*material first*/ MaterialSellmeier1 materialFirst,
 		/*material second*/ MaterialSellmeier1 materialSecond,
-		/*price*/ real price		
+		/*price*/ real price
 	);
 
 	// build an optical system with three surfaces
@@ -247,6 +330,7 @@ public:
 	// set lens catalog
 	void setLensCatalog(std::string lensCatalog);
 	// set number in catalog
+	void setCatalogNumber(std::string catalogNumber);
 	void setCatalogNumber(unsigned int catalogNumber);
 	// set diameter
 	void setDiameter(real const diameter);
@@ -328,8 +412,6 @@ public:
 	void setPrice(real const price);
 	// set wavelengthToTrace
 	void setWavelenghtToTrace(real const waveToTrace);
-	// set item
-	void setItem(std::string item);
 	// set first design wavelength
 	void setFirstDesignWavelength(real firstDW);
 	// set second design wavelength
@@ -349,7 +431,7 @@ public:
 	// get lens catalog
 	std::string getLensCatalog();
 	// get number in catalog
-	unsigned int getCatalogNumber();
+	std::string getCatalogNumber();
 	// get diameter
 	real getDiameter();
 	// get max diameter tolerance
@@ -431,8 +513,6 @@ public:
 	real getPrice();
 	// get wavelengthToTrace
 	real getWavelenghtToTrace();
-	// get item
-	std::string getItem();
 	// get first design wavelength
 	real getFirstDesignWavelength();
 	// get second design wavelength
@@ -450,7 +530,7 @@ public:
 
 private:
 	std::string mLensCatalog{};
-	unsigned int mCatalogNumber{};
+	std::string mCatalogNumber{};
 	real mDiameter{};
 	real mMaxDiamterTolerance{};
 	real mMinDiamterTolerance{};
@@ -493,7 +573,6 @@ private:
 	real mPrice{};
 	real mWavelengthToTrace{};
 	real mFocalLength{};
-	std::string mItem{};
 
 	real mFirstDesignWavelength{};
 	real mSecondDesignWavelength{};

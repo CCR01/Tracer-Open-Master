@@ -170,6 +170,11 @@
     <ClCompile Include="..\LensReplaceAndOptimize\LensReplaceAndOptimize.cpp" />
     <ClCompile Include="..\tests\testCompareTOMandZemaxOptimizer\testCompareTOMandZemaxOptimizer.cpp" />
     <ClCompile Include="..\tests\testLensReplaceAndOptimiz_statistic\twoLensSystems\testLensReplaceAndOptimize_statistic_twoLensSystem.cpp" />
+    <ClCompile Include="..\tests\testDGaO2021\testDGaO2021.cpp" />
+    <ClCompile Include="..\tests\testLensReplaceAndOptimiz_statistic\threeLensSystems\testLensReplaceAndOptimize_statistic_threeLensSystem.cpp" />
+    <ClCompile Include="..\tests\testLensReplaceAndOptimiz_statistic\testLensRepAndOptimize_statisticStruct.cpp" />
+    <ClCompile Include="..\tests\testLensReplaceAndOptimiz_statistic\fourLensSystems\testLensReplaceAndOptimize_statistic_fourLensSystem.cpp" />
+    <ClCompile Include="..\tests\testLensReplaceAndOptimiz_statistic\fiveLensSystems\testLensReplaceAndOptimize_statistic_fiveLensSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Analyse\CardinalPoints.h" />
@@ -345,5 +350,10 @@
     <ClInclude Include="..\LensReplaceAndOptimize\LensReplaceAndOptimize.h" />
     <ClInclude Include="..\tests\testCompareTOMandZemaxOptimizer\testCompareTOMandZemaxOptimizer.h" />
     <ClInclude Include="..\tests\testLensReplaceAndOptimiz_statistic\twoLensSystems\testLensReplaceAndOptimize_statistic_twoLensSystem.h" />
+    <ClInclude Include="..\tests\testDGaO2021\testDGaO2021.h" />
+    <ClInclude Include="..\tests\testLensReplaceAndOptimiz_statistic\threeLensSystems\testLensReplaceAndOptimize_statistic_threeLensSystem.h" />
+    <ClInclude Include="..\tests\testLensReplaceAndOptimiz_statistic\testLensRepAndOptimize_statisticStruct.h" />
+    <ClInclude Include="..\tests\testLensReplaceAndOptimiz_statistic\fourLensSystems\testLensReplaceAndOptimize_statistic_fourLensSystem.h" />
+    <ClInclude Include="..\tests\testLensReplaceAndOptimiz_statistic\fiveLensSystems\testLensReplaceAndOptimize_statistic_fiveLensSystem.h" />
   </ItemGroup>
 </Project>
