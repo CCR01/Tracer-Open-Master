@@ -1,0 +1,40 @@
+surface: 0	Spherical	radius: 40.51000 F	thickness: 8.40000 F	glass: N-SSK8	refIndex: 1.62037	semi height: 	15.00000
+surface: 1	Spherical	radius: -38.68000 F	thickness: 3.00000 F	glass: N-SF10	refIndex: 1.73366	semi height: 	15.00000
+surface: 2	Spherical	radius: -922.04000 F	thickness: 0.00000 F	glass: Air	refIndex: 1.00000	semi height: 	15.00000
+EO
+49373
+flip by 180° : 0
+pos in best merit vec: 0
+_________________
+surface: 0	Spherical	radius: 51.98263 F	thickness: 8.00000 F	glass: N-BAF10	refIndex: 1.67306	semi height: 	12.70000
+surface: 1	Spherical	radius: -43.36338 F	thickness: 4.00000 F	glass: N-SF6	refIndex: 1.81187	semi height: 	12.70000
+surface: 2	Spherical	radius: -217.36230 F	thickness: 0.00000 F	glass: Air	refIndex: 1.00000	semi height: 	12.70000
+Thorlabs
+AC254-075-AB
+flip by 180° : 0
+pos in best merit vec: 1
+_________________
+surface: 0	Spherical	radius: 48.87000 F	thickness: 8.00000 F	glass: N-BK7	refIndex: 1.51852	semi height: 	15.75000
+surface: 1	Spherical	radius: -36.91700 F	thickness: 2.50000 F	glass: N-SF5	refIndex: 1.67711	semi height: 	15.75000
+surface: 2	Spherical	radius: -106.68300 F	thickness: 0.00000 F	glass: Air	refIndex: 1.00000	semi height: 	15.75000
+Qioptiq
+G322287322
+flip by 180° : 0
+pos in best merit vec: 2
+_________________
+surface: 0	Spherical	radius: 53.76000 F	thickness: 12.07000 F	glass: N-BAF10	refIndex: 1.67306	semi height: 	20.00000
+surface: 1	Spherical	radius: -36.73000 F	thickness: 4.00000 F	glass: N-SF10	refIndex: 1.73366	semi height: 	20.00000
+surface: 2	Spherical	radius: -435.85000 F	thickness: 0.00000 F	glass: Air	refIndex: 1.00000	semi height: 	20.00000
+EO
+45105
+flip by 180° : 0
+pos in best merit vec: 3
+_________________
+surface: 0	Spherical	radius: 53.76000 F	thickness: 12.07000 F	glass: N-BAF10	refIndex: 1.67306	semi height: 	20.00000
+surface: 1	Spherical	radius: -36.73000 F	thickness: 4.00000 F	glass: N-SF10	refIndex: 1.73366	semi height: 	20.00000
+surface: 2	Spherical	radius: -435.85000 F	thickness: 0.00000 F	glass: Air	refIndex: 1.00000	semi height: 	20.00000
+EO
+49380
+flip by 180° : 0
+pos in best merit vec: 4
+_________________

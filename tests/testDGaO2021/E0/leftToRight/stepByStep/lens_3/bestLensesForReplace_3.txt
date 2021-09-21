@@ -1,0 +1,40 @@
+surface: 0	Spherical	radius: 107.85300 F	thickness: 6.00000 F	glass: N-BK10	refIndex: 1.49941	semi height: 	15.75000
+surface: 1	Spherical	radius: -76.62630 F	thickness: 3.00000 F	glass: N-SF2	refIndex: 1.65174	semi height: 	15.75000
+surface: 2	Spherical	radius: -221.47010 F	thickness: 0.00000 F	glass: Air	refIndex: 1.00000	semi height: 	15.75000
+Qioptiq
+G322342322
+flip by 180° : 0
+pos in best merit vec: 0
+_________________
+surface: 0	Spherical	radius: 91.31000 F	thickness: 8.10000 F	glass: N-BK7	refIndex: 1.51852	semi height: 	15.00000
+surface: 1	Spherical	radius: -65.57000 F	thickness: 2.60000 F	glass: N-SF5	refIndex: 1.67711	semi height: 	15.00000
+surface: 2	Spherical	radius: -195.87000 F	thickness: 0.00000 F	glass: Air	refIndex: 1.00000	semi height: 	15.00000
+EO
+32502
+flip by 180° : 0
+pos in best merit vec: 1
+_________________
+surface: 0	Spherical	radius: 91.31000 F	thickness: 8.10000 F	glass: N-BK7	refIndex: 1.51852	semi height: 	15.00000
+surface: 1	Spherical	radius: -65.57000 F	thickness: 2.60000 F	glass: N-SF5	refIndex: 1.67711	semi height: 	15.00000
+surface: 2	Spherical	radius: -195.87000 F	thickness: 0.00000 F	glass: Air	refIndex: 1.00000	semi height: 	15.00000
+EO
+49376
+flip by 180° : 0
+pos in best merit vec: 2
+_________________
+surface: 0	Spherical	radius: 109.16000 F	thickness: 6.00000 F	glass: N-BK7	refIndex: 1.51852	semi height: 	12.50000
+surface: 1	Spherical	radius: -79.38000 F	thickness: 3.00000 F	glass: N-SF5	refIndex: 1.67711	semi height: 	12.50000
+surface: 2	Spherical	radius: -226.03000 F	thickness: 0.00000 F	glass: Air	refIndex: 1.00000	semi height: 	12.50000
+EO
+32884
+flip by 180° : 0
+pos in best merit vec: 3
+_________________
+surface: 0	Spherical	radius: 109.16000 F	thickness: 6.00000 F	glass: N-BK7	refIndex: 1.51852	semi height: 	12.50000
+surface: 1	Spherical	radius: -79.38000 F	thickness: 3.00000 F	glass: N-SF5	refIndex: 1.67711	semi height: 	12.50000
+surface: 2	Spherical	radius: -226.03000 F	thickness: 0.00000 F	glass: Air	refIndex: 1.00000	semi height: 	12.50000
+EO
+49363
+flip by 180° : 0
+pos in best merit vec: 4
+_________________

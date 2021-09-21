@@ -1,0 +1,48 @@
+______________________
+lens number: 	0
+catalog: 	EO
+number: 	49386
+check f: 	1
+check th: 	0
+check sh: 	0
+fliped: 	0
+pos in best lens vec: 	2
+
+______________________
+
+______________________
+lens number: 	1
+catalog: 	Qioptiq
+number: 	G322288322
+check f: 	1
+check th: 	1
+check sh: 	1
+fliped: 	1
+pos in best lens vec: 	0
+
+______________________
+
+______________________
+lens number: 	2
+catalog: 	Qioptiq
+number: 	G322272322
+check f: 	1
+check th: 	0
+check sh: 	1
+fliped: 	1
+pos in best lens vec: 	4
+
+______________________
+
+______________________
+lens number: 	3
+catalog: 	Qioptiq
+number: 	G322287322
+check f: 	1
+check th: 	1
+check sh: 	1
+fliped: 	1
+pos in best lens vec: 	0
+
+______________________
+

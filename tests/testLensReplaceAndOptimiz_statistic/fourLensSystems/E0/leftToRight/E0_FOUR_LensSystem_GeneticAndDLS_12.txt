@@ -1,0 +1,48 @@
+______________________
+lens number: 	0
+catalog: 	EO
+number: 	32498
+check f: 	0
+check th: 	0
+check sh: 	1
+fliped: 	0
+pos in best lens vec: 	0
+
+______________________
+
+______________________
+lens number: 	1
+catalog: 	EO
+number: 	32722
+check f: 	1
+check th: 	1
+check sh: 	1
+fliped: 	0
+pos in best lens vec: 	0
+
+______________________
+
+______________________
+lens number: 	2
+catalog: 	EO
+number: 	45502
+check f: 	0
+check th: 	0
+check sh: 	1
+fliped: 	0
+pos in best lens vec: 	0
+
+______________________
+
+______________________
+lens number: 	3
+catalog: 	EO
+number: 	32722
+check f: 	0
+check th: 	1
+check sh: 	1
+fliped: 	0
+pos in best lens vec: 	0
+
+______________________
+

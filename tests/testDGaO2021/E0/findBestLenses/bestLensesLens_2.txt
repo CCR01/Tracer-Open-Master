@@ -1,0 +1,48 @@
+surface: 0	Spherical	radius: 249.39300 F	thickness: 4.00000 F	glass: N-BK7	refIndex: 1.51852	semi height: 	15.75000
+surface: 1	Spherical	radius: -175.91700 F	thickness: 3.00000 F	glass: N-SF5	refIndex: 1.67711	semi height: 	15.75000
+surface: 2	Spherical	radius: -510.26000 F	thickness: 0.00000 F	glass: Air	refIndex: 1.00000	semi height: 	15.75000
+Qioptiq
+G322275322
+flip by 180° : 0
+pos in best merit vec: 0
+_________________
+surface: 0	Spherical	radius: 257.16000 F	thickness: 8.50000 F	glass: N-BK7	refIndex: 1.51852	semi height: 	20.00000
+surface: 1	Spherical	radius: -169.03000 F	thickness: 4.00000 F	glass: N-SF5	refIndex: 1.67711	semi height: 	20.00000
+surface: 2	Spherical	radius: -473.08000 F	thickness: 0.00000 F	glass: Air	refIndex: 1.00000	semi height: 	20.00000
+EO
+32927
+flip by 180° : 0
+pos in best merit vec: 1
+_________________
+surface: 0	Spherical	radius: 257.16000 F	thickness: 8.50000 F	glass: N-BK7	refIndex: 1.51852	semi height: 	20.00000
+surface: 1	Spherical	radius: -169.03000 F	thickness: 4.00000 F	glass: N-SF5	refIndex: 1.67711	semi height: 	20.00000
+surface: 2	Spherical	radius: -473.05000 F	thickness: 0.00000 F	glass: Air	refIndex: 1.00000	semi height: 	20.00000
+EO
+49386
+flip by 180° : 0
+pos in best merit vec: 2
+_________________
+surface: 0	Spherical	radius: 184.40000 F	thickness: 4.50000 F	glass: N-BK7	refIndex: 1.51852	semi height: 	15.00000
+surface: 1	Spherical	radius: -133.95000 F	thickness: 2.50000 F	glass: N-SF5	refIndex: 1.67711	semi height: 	15.00000
+surface: 2	Spherical	radius: -394.96000 F	thickness: 0.00000 F	glass: Air	refIndex: 1.00000	semi height: 	15.00000
+EO
+45269
+flip by 180° : 0
+pos in best merit vec: 3
+_________________
+surface: 0	Spherical	radius: 184.40000 F	thickness: 4.50000 F	glass: N-BK7	refIndex: 1.51852	semi height: 	15.00000
+surface: 1	Spherical	radius: -133.95000 F	thickness: 2.50000 F	glass: N-SF5	refIndex: 1.67711	semi height: 	15.00000
+surface: 2	Spherical	radius: -394.96000 F	thickness: 0.00000 F	glass: Air	refIndex: 1.00000	semi height: 	15.00000
+EO
+49378
+flip by 180° : 0
+pos in best merit vec: 4
+_________________
+surface: 0	Spherical	radius: 194.96000 F	thickness: 9.00000 F	glass: N-BAK4	refIndex: 1.57100	semi height: 	20.00000
+surface: 1	Spherical	radius: -148.27000 F	thickness: 4.10000 F	glass: N-SF10	refIndex: 1.73366	semi height: 	20.00000
+surface: 2	Spherical	radius: -483.71000 F	thickness: 0.00000 F	glass: Air	refIndex: 1.00000	semi height: 	20.00000
+EO
+45178
+flip by 180° : 0
+pos in best merit vec: 5
+_________________
