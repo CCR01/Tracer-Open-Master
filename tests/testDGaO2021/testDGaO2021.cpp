@@ -118,6 +118,16 @@ void testDGaO2021::loadImportantValues()
 	mTargetCarPoints_E4.setTargetWFNO(5.0);
 	// *** ***
 
+	// *** E4 ***
+	mLocation_E5 = "../tests/testDGaO2021/E5";
+	mField_35355 = { 0.0,35.355,0.0 };
+	mField_50 = { 0.0,50.0,0.0 };;
+	mField_E5_vec.push_back(mField_0);
+	mField_E5_vec.push_back(mField_35355);
+	mField_E5_vec.push_back(mField_50);
+	mTargetCarPoints_E5.setTargetMag(-0.1);
+	mTargetCarPoints_E5.setTargetWFNO(5.0);
+	// *** ***
 
 	// *** basics E21 ***
 	mLocationE21 = "../tests/testDGaO2021/E21";
@@ -155,8 +165,8 @@ bool testDGaO2021::testDGaO2021_superFct()
 	std::vector<bool> workTheSystem;
 
 	
-	//turn_ON_DebugMode();
-	turn_OFF_DebugMode();
+	turn_ON_DebugMode();
+	//turn_OFF_DebugMode();
 
 
 	// E0
@@ -179,6 +189,10 @@ bool testDGaO2021::testDGaO2021_superFct()
 	//bool checkE4 = checkE4_superFct();
 	//workTheSystem.push_back(checkE4);
 	//// *** *** //
+
+	//// *** E5 ***
+	//bool checkE5 = checkE5_superFct();
+	//workTheSystem.push_back(checkE5);
 
 	// E21
 	//bool checkE21 = checkE21_fromStatLensRepl_threeLensSys();
@@ -5616,5 +5630,146 @@ bool testDGaO2021::E4_lensReplace()
 	bool returnChecker = Math::checkTrueOfVectorElements(workTheSystem);
 	return returnChecker;
 }
+// *** *** //
 
+
+// *** E5 ***
+bool testDGaO2021::checkE5_superFct()
+{
+	std::vector<bool> workTheSystem;
+
+	bool checkE5_StartSystem = E5_checkStartSystem();
+	workTheSystem.push_back(checkE5_StartSystem);
+
+	bool checkE5_firstOptimization = E5_checkOptimizeStartSystem_DoOptimization();
+	workTheSystem.push_back(checkE5_firstOptimization);
+
+	bool returnChecker = Math::checkTrueOfVectorElements(workTheSystem);
+	return returnChecker;
+}
+bool testDGaO2021::E5_checkStartSystem()
+{
+	std::vector<bool> workTheSystem;
+
+	real semiHeight = 25.0;
+	real firstThickness = 1000.0;
+
+	ApertureStopElement S0(/* semi height*/10.0, /*point*/{ 0.0,0.0, firstThickness + 10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ mGlasses.getAir());
+
+	SphericalElement S1(/*radius*/ 100.0, /*semi height*/ semiHeight, /*point*/{ 0.0,0.0, firstThickness + 20.0 }, /*direction*/{ 0.0,0.0,  1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNBK7_S1());
+	SphericalElement S2(/*radius*/ 80.0, /*semi height*/semiHeight, /*point*/{ 0.0,0.0, firstThickness + 30.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getNSF5_S1(), /*refractive index B*/mGlasses.getNBK7_S1());
+	SphericalElement S3(/*radius*/ 900.0, /*semi height*/semiHeight, /*point*/{ 0.0,0.0, firstThickness + 35.0 }, /*direction*/{ 0.0,0.0,  -1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNSF5_S1());
+
+	SphericalElement S4(/*radius*/ 150.0, /*semi height*/ semiHeight, /*point*/{ 0.0,0.0, firstThickness + 55.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNBK7_S1());
+	SphericalElement S5(/*radius*/ 150.0, /*semi height*/ semiHeight, /*point*/{ 0.0,0.0, firstThickness + 65.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getNBK7_S1(), /*refractive index B*/mGlasses.getNSF5_S1());
+	SphericalElement S6(/*radius*/ 500.0, /*semi height*/ semiHeight, /*point*/{ 0.0,0.0, firstThickness + 70.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNSF5_S1());
+
+	SphericalElement S7(/*radius*/ 100.0, /*semi height*/ semiHeight, /*point*/{ 0.0,0.0, firstThickness + 90.0 }, /*direction*/{ 0.0,0.0,  1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNBAF10_S1());
+	SphericalElement S8(/*radius*/ 100.0, /*semi height*/ semiHeight, /*point*/{ 0.0,0.0, firstThickness + 100.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getNSF10_S1(), /*refractive index B*/mGlasses.getNBAF10_S1());
+	SphericalElement S9(/*radius*/ 400.0, /*semi height*/ semiHeight, /*point*/{ 0.0,0.0, firstThickness + 105.00 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNSF10_S1());
+
+	SphericalElement S10(/*radius*/ 100.0, /*semi height*/ semiHeight, /*point*/{ 0.0,0.0, firstThickness + 125.0 }, /*direction*/{ 0.0,0.0,  1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNSSK8_S1());
+	SphericalElement S11(/*radius*/100.0, /*semi height*/ semiHeight, /*point*/{ 0.0,0.0, firstThickness + 135.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getNSF10_S1(), /*refractive index B*/mGlasses.getNSSK8_S1());
+	SphericalElement S12(/*radius*/100.0, /*semi height*/ semiHeight, /*point*/{ 0.0,0.0, firstThickness + 140.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getNSF10_S1(), /*refractive index B*/mGlasses.getAir());
+
+	PlanElement S13(/*semi height*/ 99.0, /*point*/{ 0.0,0.0, firstThickness + 155.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ mGlasses.getAir(), /*refractive index B*/ mGlasses.getAir());
+
+	// **********************************
+	// set parameter variable
+	// radii
+	S1.setParameterRadius(/*min value*/ -1000.0, /*max value*/ 1000.0, 0.0, typeModifierVariable);
+	S2.setParameterRadius(/*min value*/ -1000.0, /*max value*/ 1000.0, 0.0, typeModifierVariable);
+	S3.setParameterRadius(/*min value*/ -1000.0, /*max value*/ 1000.0, 0.0, typeModifierVariable);
+	
+	S4.setParameterRadius(/*min value*/ -1000.0, /*max value*/ 1000.0, 0.0, typeModifierVariable);
+	S5.setParameterRadius(/*min value*/ -1000.0, /*max value*/ 1000.0, 0.0, typeModifierVariable);
+	S6.setParameterRadius(/*min value*/ -1000.0, /*max value*/ 1000.0, 0.0, typeModifierVariable);
+	
+	S7.setParameterRadius(/*min value*/ -1000.0, /*max value*/ 1000.0, 0.0, typeModifierVariable);
+	S8.setParameterRadius(/*min value*/ -1000.0, /*max value*/ 1000.0, 0.0, typeModifierVariable);
+	S9.setParameterRadius(/*min value*/ -1000.0, /*max value*/ 1000.0, 0.0, typeModifierVariable);
+	
+	S10.setParameterRadius(/*min value*/ -1000.0, /*max value*/ 1000.0, 0.0, typeModifierVariable);
+	S11.setParameterRadius(/*min value*/ -1000.0, /*max value*/ 1000.0, 0.0, typeModifierVariable);
+	S12.setParameterRadius(/*min value*/ -1000.0, /*max value*/ 1000.0, 0.0, typeModifierVariable);
+
+	// thicknesses
+	S3.setParameterPointZ(/*min value*/ 5.0, /*max value*/ 25.0, 0.0, typeModifierVariable);
+	S6.setParameterPointZ(/*min value*/ 5.0, /*max value*/ 25.0, 0.0, typeModifierVariable);
+	S9.setParameterPointZ(/*min value*/ 5.0, /*max value*/ 25.0, 0.0, typeModifierVariable);
+	S12.setParameterPointZ(/*min value*/5.0, /*max value*/ 25.0, 0.0, typeModifierVariable);
+	// **********************************
+
+	surfacePtr S0_ptr = S0.clone();
+	surfacePtr S1_ptr = S1.clone();
+	surfacePtr S2_ptr = S2.clone();
+	surfacePtr S3_ptr = S3.clone();
+	surfacePtr S4_ptr = S4.clone();
+	surfacePtr S5_ptr = S5.clone();
+	surfacePtr S6_ptr = S6.clone();
+	surfacePtr S7_ptr = S7.clone();
+	surfacePtr S8_ptr = S8.clone();
+	surfacePtr S9_ptr = S9.clone();
+	surfacePtr S10_ptr = S10.clone();
+	surfacePtr S11_ptr = S11.clone();
+	surfacePtr S12_ptr = S12.clone();
+	surfacePtr S13_ptr = S13.clone();
+
+
+	std::vector<surfacePtr> opticalSystem_ptr{ S0_ptr, S1_ptr, S2_ptr, S3_ptr, S4_ptr,S5_ptr,S6_ptr, S7_ptr, S8_ptr, S9_ptr, S10_ptr, S11_ptr, S12_ptr, S13_ptr };
+	std::vector<interaction_ptr> interactions_ptr{ mDoNot.clone(),  mRefrac.clone(),  mRefrac.clone(), mRefrac.clone(),mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
+
+
+	//	build optical system
+	mStartOpticalSystem_E5.fillPosAndElementAndInteraction(opticalSystem_ptr, interactions_ptr);
+	oftenUse::print(mStartOpticalSystem_E5, 550.0);
+	// save the start system
+
+	inportExportData::saveOpticalSystemAsTXT(mStartOpticalSystem_E5, 550.0, mLocation_E5, "E5_start_DGaO2021");
+
+	// check ref indexes
+	bool checkRefIndexes = oftenUse::checkRefractivIndex(mStartOpticalSystem_E5);
+	workTheSystem.push_back(checkRefIndexes);
+	// check the start system
+	std::vector<real> rms_Zemax{ 386.965, 391.544, 396.106 };
+	bool test = oftenUse::checkOptSysELement_Equal_Better_Zemax(mStartOpticalSystem_E5, mField_E5_vec, mWavelength_FdV_vec, rms_Zemax, mTolerance, compareTOM_Zemax::comEqual);
+	workTheSystem.push_back(test);
+
+
+	bool returnChecker = Math::checkTrueOfVectorElements(workTheSystem);
+	return returnChecker;
+}
+
+bool testDGaO2021::E5_checkOptimizeStartSystem_DoOptimization()
+{
+	std::vector<bool> workTheSystem;
+
+	OpticalSystemElement initalOpticalSystemEle = mStartOpticalSystem_E5.getDeepCopyOptSysEle();
+
+	// optimize optical system
+	OptimizeSystemSuperFct_GeneticAndDLS GeneticAndDLS(/*optSysEle*/ initalOpticalSystemEle,/*fields*/ mField_E5_vec, /*wavelength*/ mWavelength_FdV_vec, /*rings*/ mRings, /*arms*/ mArms, /*populatuion*/ mPopulation, /*target cardinal points*/ mTargetCarPoints_E5, /*default Genetic*/mDefaultParameterGenetic, /*default DLS*/ mDefaulParaDLS);
+	mOptimizedOpticalSystemEle_E5 = GeneticAndDLS.optimizeSuperFct_GeneticAndDLS_12Cores();
+
+	// export the first optimized system
+	inportExportData::saveOpticalSystemAsTXT(mOptimizedOpticalSystemEle_E5, mWave587d, mLocation_E5, "E5_optimized_first");
+
+	// check optimized system
+	std::vector<real> rmsVecInitalOptSys = oftenUse::getRMSoptSysHLT(mStartOpticalSystem_E5, mField_E5_vec, mWavelength_FdV_vec, mRings, mArms);
+	std::vector<real> rmsVecGeneticAndDLS_12 = oftenUse::getRMSoptSysHLT(mOptimizedOpticalSystemEle_E5, mField_E5_vec, mWavelength_FdV_vec, mRings, mArms);
+
+	real sumRMS_initalOptSys = oftenUse::sum(rmsVecInitalOptSys);
+	real sumRMS_optimizedOptSys = oftenUse::sum(rmsVecGeneticAndDLS_12);
+
+	bool checkOptimization = sumRMS_initalOptSys > sumRMS_optimizedOptSys;
+	workTheSystem.push_back(checkOptimization);
+
+	// export rms values
+	std::vector<std::string> nameDoubel_vec = { "field0", "field1", "field2" };
+	std::string optiRMSvalue_str = "optimizedFirst_RMSvalue";
+	std::string nameTXT_optiRMSvalueFields = optiRMSvalue_str + "_" + "E5";
+	inportExportData::saveVecDoubleInTXT(mLocation_E5, nameTXT_optiRMSvalueFields, nameDoubel_vec, rmsVecGeneticAndDLS_12, true);
+
+	bool returnChecker = Math::checkTrueOfVectorElements(workTheSystem);
+	return returnChecker;
+}
 // *** *** //

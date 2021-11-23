@@ -125,6 +125,12 @@ public:
 	bool E4_lensReplace();
 	// *** *** //
 
+	// *** E5 ***
+	bool checkE5_superFct();
+	bool E5_checkStartSystem();
+	bool E5_checkOptimizeStartSystem_DoOptimization();
+	// *** *** //
+
 	// *** E21 ***
 	bool checkE21_fromStatLensRepl_threeLensSys();
 	bool loadBestReplaceSystemE21_mono();
@@ -197,6 +203,16 @@ private:
 	VectorStructR3 mField_25{};
 	std::vector<VectorStructR3> mField_E4_vec{};
 	targetCardinalPointsStruct mTargetCarPoints_E4{};
+	// *** ***
+
+	// *** E4 ***
+	std::string mLocation_E5{};
+	OpticalSystemElement mStartOpticalSystem_E5{};
+	OpticalSystemElement mOptimizedOpticalSystemEle_E5{};
+	VectorStructR3 mField_35355{};
+	VectorStructR3 mField_50{};
+	std::vector<VectorStructR3> mField_E5_vec{};
+	targetCardinalPointsStruct mTargetCarPoints_E5{};
 	// *** ***
 
 	// *** E21 ***

@@ -394,14 +394,14 @@ omp_set_num_threads(12);
 		
 
 
-	// save the core
-	unsigned int numberDLS_optimizations = 12;
-	
-	mAllMeritVal_vec.resize(numberDLS_optimizations);
+// save the core
+unsigned int numberDLS_optimizations = 12;
+unsigned int numberOptimizedSystems = numberDLS_optimizations + numberDLS_optimizations;
+mAllMeritVal_vec.resize(numberOptimizedSystems);
+std::vector<OpticalSystemElement> optmizedSystem_vec;
+optmizedSystem_vec.resize(numberOptimizedSystems);
 
-	std::vector<OpticalSystemElement> optmizedSystem_vec;
-	optmizedSystem_vec.resize(numberDLS_optimizations);
-
+omp_set_num_threads(12);
 #pragma omp parallel sections
 {
 	#pragma omp section // 1
@@ -713,7 +713,7 @@ omp_set_num_threads(12);
 }
 
 
-			mBestMeritVal = mAllMeritVal_vec[0];
+		mBestMeritVal = mAllMeritVal_vec[0];
 		mOptimizedOpticalSystemElement_firstIteration = optmizedSystem_vec[0];
 
 		for (unsigned int i = 1; i < numberDLS_optimizations; ++i)
