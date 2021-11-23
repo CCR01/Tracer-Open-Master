@@ -13,29 +13,37 @@ public:
 	testLensReplaceAndOptimize();
 	~testLensReplaceAndOptimize();
 
-	bool testLensReplaceAndOptimize_superFct();
+	// *** object ***
+	bool testLensReplaceAndOptimize_superFct_object();
 	// E0
-	bool testLensReplaceAndOptimize_E0();
+	bool testLensReplaceAndOptimize_E0_obj();
 	// E1
-	bool testLensReplaceAndOptimize_E1();
+	bool testLensReplaceAndOptimize_E1_obj();
 	// E2
-	bool testLensReplaceAndOptimize_E2();
+	bool testLensReplaceAndOptimize_E2_obj();
 	// E3
-	bool testLensReplaceAndOptimize_E3();
+	bool testLensReplaceAndOptimize_E3_obj();
 	// E4
-	bool testLensReplaceAndOptimize_E4();
+	bool testLensReplaceAndOptimize_E4_obj();
 	// E5
-	bool testLensReplaceAndOptimize_E5();
+	bool testLensReplaceAndOptimize_E5_obj();
 	// E6
-	bool testLensReplaceAndOptimize_E6();
+	bool testLensReplaceAndOptimize_E6_obj();
 	// E7
-	bool testLensReplaceAndOptimize_E7();
+	bool testLensReplaceAndOptimize_E7_obj();
 	// E8
-	bool testLensReplaceAndOptimize_E8();
+	bool testLensReplaceAndOptimize_E8_obj();
 	// E9
-	bool testLensReplaceAndOptimize_E9();
+	bool testLensReplaceAndOptimize_E9_obj();
 	// E10
-	bool testLensReplaceAndOptimize_E10();
+	bool testLensReplaceAndOptimize_E10_obj();
+	// *** ***
+
+	// *** inf ***
+	bool testLensReplaceAndOptimize_superFct_infinity();
+	// E0
+	bool testLensReplaceAndOptimize_E0_inf();
+	// *** ***
 
 private:
 

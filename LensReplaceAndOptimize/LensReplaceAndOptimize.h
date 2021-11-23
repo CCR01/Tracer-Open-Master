@@ -20,12 +20,22 @@ public:
 	~LensReplaceAndOptimize();
 
 	void lensReplaceAndOptimize_superFct(OpticalSystemElement optSysEle, std::vector<VectorStructR3> fieldPointsVec, std::vector<real> wavelength_vec, unsigned int rings, unsigned int arms, optimizeMethode optMethode, /*number best fit lenses*/ unsigned int numberBestFitLenses, bool firstInteration, replaceSequence repSequence, Light_LLT light);
+	void lensReplaceAndOptimize_superFct(OpticalSystemElement optSysEle, std::vector<real> fieldAngle_X_Vec, std::vector<real> fieldAngle_Y_Vec, std::vector<real> wavelength_vec, unsigned int rings, unsigned int arms, optimizeMethode optMethode, /*number best fit lenses*/ unsigned int numberBestFitLenses, bool firstInteration, replaceSequence repSequence, Light_LLT light);
 	void lensReplaceAndOptimize(OpticalSystemElement optSysEle, std::vector<VectorStructR3> fieldPointsVec, std::vector<real> wavelength_vec, unsigned int rings, unsigned int arms, optimizeMethode optMethode, unsigned int numberLensToReplace, /*number best fit lenses*/ unsigned int numberBestFitLenses, bool firstInteration);
+	void lensReplaceAndOptimize(OpticalSystemElement optSysEle, std::vector<real> fieldAngle_X_Vec, std::vector<real> fieldAngle_Y_Vec, std::vector<real> wavelength_vec, unsigned int rings, unsigned int arms, optimizeMethode optMethode, unsigned int numberLensToReplace, /*number best fit lenses*/ unsigned int numberBestFitLenses, bool firstInteration);
 	
-	void lensReplaceAndOpti_DLS(unsigned int numberLensToReplace, /*number best fit lenses*/ unsigned int numberBestFitLenses, bool firstInteration);
-	void lensReplaceAndOpti_DLS_12(unsigned int numberLensToReplace, /*number best fit lenses*/ unsigned int numberBestFitLenses, bool firstInteration);
-	void lensReplaceAndOpti_GeneticAndDLS(unsigned int numberLensToReplace, /*number best fit lenses*/ unsigned int numberBestFitLenses, bool firstInteration);
-	void lensReplaceAndOpti_GeneticAndDLS_12(unsigned int numberLensToReplace, /*number best fit lenses*/ unsigned int numberBestFitLenses, bool firstInteration);
+	// *** obj ***
+	void lensReplaceAndOpti_DLS_obj(unsigned int numberLensToReplace, /*number best fit lenses*/ unsigned int numberBestFitLenses, bool firstInteration);
+	void lensReplaceAndOpti_DLS_12_obj(unsigned int numberLensToReplace, /*number best fit lenses*/ unsigned int numberBestFitLenses, bool firstInteration);
+	void lensReplaceAndOpti_GeneticAndDLS_obj(unsigned int numberLensToReplace, /*number best fit lenses*/ unsigned int numberBestFitLenses, bool firstInteration);
+	void lensReplaceAndOpti_GeneticAndDLS_12_obj(unsigned int numberLensToReplace, /*number best fit lenses*/ unsigned int numberBestFitLenses, bool firstInteration);
+
+
+	// *** inf ***
+	void lensReplaceAndOpti_DLS_inf(unsigned int numberLensToReplace, /*number best fit lenses*/ unsigned int numberBestFitLenses, bool firstInteration);
+	void lensReplaceAndOpti_DLS_12_inf(unsigned int numberLensToReplace, /*number best fit lenses*/ unsigned int numberBestFitLenses, bool firstInteration);
+	void lensReplaceAndOpti_GeneticAndDLS_inf(unsigned int numberLensToReplace, /*number best fit lenses*/ unsigned int numberBestFitLenses, bool firstInteration);
+	void lensReplaceAndOpti_GeneticAndDLS_12_inf(unsigned int numberLensToReplace, /*number best fit lenses*/ unsigned int numberBestFitLenses, bool firstInteration);
 
 	// carindal points
 	void setTargetCardinalPoints(targetCardinalPointsStruct tarCarPoints);
@@ -84,6 +94,8 @@ private:
 	
 	OpticalSystemElement mOptimizedOpticalSystemEle{};
 	std::vector<VectorStructR3> mFieldPointsVec{};
+	std::vector<real> mFieldAngle_X_vec{};
+	std::vector<real> mFieldAngle_Y_vec{};
 	std::vector<real> mWavelength_vec{};
 	unsigned int mRings{};
 	unsigned int mArms{};

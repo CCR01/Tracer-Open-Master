@@ -6,7 +6,7 @@
 #include "..\SequentialRayTracing\SequentialRayTracer.h"
 #include "..\RayAiming\RayAiming.h"
 #include "..\FillAptertureStop\FillApertureStop.h"
-//#define unsignedInt_INF (unsigned)!((int)0)
+#include "..\LowLevelTracing\Surfaces\ApertureStop_LLT.h"
 
 bool oftenUse::checkRayTracing(VectorStructR3 startPoint, VectorStructR3 direction, VectorStructR3 targetPoint, OpticalSystem_LLT optSys_LLT, unsigned int surfaceNum, real tolerance)
 {
@@ -1734,8 +1734,9 @@ std::vector<OpticalSystem_LLT> oftenUse::findLensesInOptSys_LLT(OpticalSystem_LL
 {
 	std::vector<OpticalSystem_LLT> optSys_lenses_LLT_vec;
 	real tolerance = 0.0001;
-
 	OpticalSystem_LLT tempOptSys_lens_LLT;
+	real refIndexSurMat = oftenUse::getStartRefIndex(optSys_LLT);
+	ApertureStop_LLT apertureStop{};
 
 	unsigned sizeOptSys = optSys_LLT.getPosAndInteractingSurface().size();
 
@@ -1747,7 +1748,7 @@ std::vector<OpticalSystem_LLT> oftenUse::findLensesInOptSys_LLT(OpticalSystem_LL
 
 	unsigned int tempPos;
 
-	if (std::abs(refIndex_A_before - 1.0) > tolerance || std::abs(refIndex_B_before - 1.0) > tolerance)
+	if (std::abs(refIndex_A_before - refIndexSurMat) > tolerance || std::abs(refIndex_B_before - refIndexSurMat) > tolerance)
 	{
 		tempPos = optSys_LLT.getPosAndInteractingSurface()[0].getPosition();
 		tempOptSys_lens_LLT.fillVectorSurfaceAndInteractingData(tempPos, Surface_ptr_before, optSys_LLT.getPosAndInteraction()[0].getInteractionAtSur_ptr());
@@ -1760,9 +1761,8 @@ std::vector<OpticalSystem_LLT> oftenUse::findLensesInOptSys_LLT(OpticalSystem_LL
 	real refIndex_B_temp;
 
 	bool isThereALens = true;
-	unsigned int sizeTempLens;
 	std::shared_ptr<InteractionRay_LLT> Interaction_ptr_temp;
-	real refIndexSurMat = oftenUse::getStartRefIndex(optSys_LLT);
+
 
 	for (unsigned int i = 1; i < sizeOptSys; ++i)
 	{
@@ -1774,19 +1774,31 @@ std::vector<OpticalSystem_LLT> oftenUse::findLensesInOptSys_LLT(OpticalSystem_LL
 
 		Interaction_ptr_temp = optSys_LLT.getPosAndInteraction()[i].getInteractionAtSur_ptr();
 
+		// check for aperture stop
+
+
 		// lens type 0
 		if (direction_Z_before > 0 && direction_Z_temp < 0)
 		{
 			if ((refIndex_B_before - refIndexSurMat) < tolerance && (refIndex_B_temp - refIndexSurMat) < tolerance && tempOptSys_lens_LLT.getPosAndInteractingSurface().size() > 0) // there is no lens
 			{
-				optSys_lenses_LLT_vec.push_back(tempOptSys_lens_LLT);
-				tempOptSys_lens_LLT.clean_optSys_LLT();
+				if (tempOptSys_lens_LLT.getPosAndInteractingSurface().size() > 1)
+				{
+					if (typeid(*Surface_ptr_temp) != typeid(apertureStop))
+					{
+						optSys_lenses_LLT_vec.push_back(tempOptSys_lens_LLT);
+						tempOptSys_lens_LLT.clean_optSys_LLT();
+					}
+
+				}
 			}
 
 			if (std::abs(refIndex_B_before - refIndex_B_temp) < tolerance) // there is a lens
 			{
-				sizeTempLens = tempOptSys_lens_LLT.getPosAndInteractingSurface().size();
-				tempOptSys_lens_LLT.fillVectorSurfaceAndInteractingData(tempPos, Surface_ptr_temp, Interaction_ptr_temp);
+				if (typeid(*Surface_ptr_temp) != typeid(apertureStop))
+				{
+					tempOptSys_lens_LLT.fillVectorSurfaceAndInteractingData(tempPos, Surface_ptr_temp, Interaction_ptr_temp);
+				}
 			}
 		}
 
@@ -1795,14 +1807,22 @@ std::vector<OpticalSystem_LLT> oftenUse::findLensesInOptSys_LLT(OpticalSystem_LL
 		{
 			if ((refIndex_A_before - refIndexSurMat) < tolerance && (refIndex_B_temp - refIndexSurMat) < tolerance && tempOptSys_lens_LLT.getPosAndInteractingSurface().size() > 0) // there is no lens
 			{
-				optSys_lenses_LLT_vec.push_back(tempOptSys_lens_LLT);
-				tempOptSys_lens_LLT.clean_optSys_LLT();
+				if (tempOptSys_lens_LLT.getPosAndInteractingSurface().size() > 1)
+				{
+
+					optSys_lenses_LLT_vec.push_back(tempOptSys_lens_LLT);
+					tempOptSys_lens_LLT.clean_optSys_LLT();
+
+				}
+
 			}
 
 			if (std::abs(refIndex_A_before - refIndex_B_temp) < tolerance) // there is a lens
 			{
-				sizeTempLens = tempOptSys_lens_LLT.getPosAndInteractingSurface().size();
-				tempOptSys_lens_LLT.fillVectorSurfaceAndInteractingData(tempPos, Surface_ptr_temp, Interaction_ptr_temp);
+				if (typeid(*Surface_ptr_temp) != typeid(apertureStop))
+				{
+					tempOptSys_lens_LLT.fillVectorSurfaceAndInteractingData(tempPos, Surface_ptr_temp, Interaction_ptr_temp);
+				}
 			}
 
 		}
@@ -1812,14 +1832,19 @@ std::vector<OpticalSystem_LLT> oftenUse::findLensesInOptSys_LLT(OpticalSystem_LL
 		{
 			if ((refIndex_B_before - refIndexSurMat) < tolerance && (refIndex_A_temp - refIndexSurMat) < tolerance && tempOptSys_lens_LLT.getPosAndInteractingSurface().size() > 0) // there is no lens
 			{
-				optSys_lenses_LLT_vec.push_back(tempOptSys_lens_LLT);
-				tempOptSys_lens_LLT.clean_optSys_LLT();
+				if (tempOptSys_lens_LLT.getPosAndInteractingSurface().size() > 1)
+				{
+					optSys_lenses_LLT_vec.push_back(tempOptSys_lens_LLT);
+					tempOptSys_lens_LLT.clean_optSys_LLT();
+				}
 			}
 
 			if (std::abs(refIndex_B_before - refIndex_A_temp) < tolerance) // there is a lens
 			{
-				sizeTempLens = tempOptSys_lens_LLT.getPosAndInteractingSurface().size();
-				tempOptSys_lens_LLT.fillVectorSurfaceAndInteractingData(tempPos, Surface_ptr_temp, Interaction_ptr_temp);
+				if (typeid(*Surface_ptr_temp) != typeid(apertureStop))
+				{
+					tempOptSys_lens_LLT.fillVectorSurfaceAndInteractingData(tempPos, Surface_ptr_temp, Interaction_ptr_temp);
+				}
 			}
 
 		}
@@ -1829,14 +1854,20 @@ std::vector<OpticalSystem_LLT> oftenUse::findLensesInOptSys_LLT(OpticalSystem_LL
 		{
 			if ((refIndex_A_before - refIndexSurMat) < tolerance && (refIndex_A_temp - refIndexSurMat) < tolerance && tempOptSys_lens_LLT.getPosAndInteractingSurface().size() > 0) // there is no lens
 			{
-				optSys_lenses_LLT_vec.push_back(tempOptSys_lens_LLT);
-				tempOptSys_lens_LLT.clean_optSys_LLT();
+				if (tempOptSys_lens_LLT.getPosAndInteractingSurface().size() > 1)
+				{
+					optSys_lenses_LLT_vec.push_back(tempOptSys_lens_LLT);
+					tempOptSys_lens_LLT.clean_optSys_LLT();
+				}
 			}
 
 			if (std::abs(refIndex_A_before - refIndex_A_temp) < tolerance) // there is a lens
 			{
-				sizeTempLens = tempOptSys_lens_LLT.getPosAndInteractingSurface().size();
-				tempOptSys_lens_LLT.fillVectorSurfaceAndInteractingData(tempPos, Surface_ptr_temp, Interaction_ptr_temp);
+				if (typeid(*Surface_ptr_temp) != typeid(apertureStop))
+				{
+					tempOptSys_lens_LLT.fillVectorSurfaceAndInteractingData(tempPos, Surface_ptr_temp, Interaction_ptr_temp);
+				}
+
 			}
 
 		}
@@ -1846,7 +1877,6 @@ std::vector<OpticalSystem_LLT> oftenUse::findLensesInOptSys_LLT(OpticalSystem_LL
 		direction_Z_before = direction_Z_temp;
 		refIndex_A_before = refIndex_A_temp;
 		refIndex_B_before = refIndex_B_temp;
-
 	}
 
 	if (optSys_lenses_LLT_vec.size() == 0)
@@ -1958,7 +1988,7 @@ bool oftenUse::compareTwoOpticalSystemsSurfaces(OpticalSystemElement optSysEle1,
 			opticalSystemsSame_vec.push_back(checkDirectionZ);
 			opticalSystemsSame_vec.push_back(checkRefIndexA);
 			opticalSystemsSame_vec.push_back(checkRefIndexB);
-	
+
 		}
 
 	}
@@ -1986,7 +2016,7 @@ VectorStructR3 oftenUse::getMaxStartPoint(VectorStructR3 referencePoint, std::ve
 	}
 
 	return startPointVec[posMax];
-	
+
 }
 
 // calculate faculty
@@ -2017,7 +2047,7 @@ std::vector<std::vector<unsigned int>> oftenUse::calcAllPossibleSequencesInt(std
 	int factorial = calcFacultyInt(vec.size());
 	allPossibleSequencesInt.resize(factorial);
 
-	for(unsigned int i = 0; i< allPossibleSequencesInt.size(); ++i)
+	for (unsigned int i = 0; i < allPossibleSequencesInt.size(); ++i)
 	{
 		allPossibleSequencesInt[i] = vec;
 		std::next_permutation(vec.begin(), vec.end());
@@ -2049,11 +2079,11 @@ bool oftenUse::checkRefractivIndex(OpticalSystem_LLT optSyeLLT)
 	for (unsigned int i = 0; i < sizeOptSysMinOne; ++i)
 	{
 		tempSurface_ptr = optSyeLLT.getPosAndInteractingSurface()[i].getSurfaceInterRay_ptr();
-		tempSurface_ptr_next = optSyeLLT.getPosAndInteractingSurface()[i+1].getSurfaceInterRay_ptr();
-		
+		tempSurface_ptr_next = optSyeLLT.getPosAndInteractingSurface()[i + 1].getSurfaceInterRay_ptr();
+
 		tempDirectionZ = tempSurface_ptr->getDirection().getZ();
 		tempDirectionZ_Next = tempSurface_ptr_next->getDirection().getZ();
-		
+
 		tempRefIndex_A = tempSurface_ptr->getRefractiveIndex_A();
 		tempRefIndex_B = tempSurface_ptr->getRefractiveIndex_B();
 		tempRefIndexNext_A = tempSurface_ptr_next->getRefractiveIndex_A();
@@ -2099,4 +2129,539 @@ bool oftenUse::checkRefractivIndex(OpticalSystemElement optSyeEle)
 	OpticalSystem_LLT optSysLLT = optSyeEle.getLLTconversion_doConversion();
 
 	return checkRefractivIndex(optSysLLT);
+}
+
+// check if two optical systems are the same
+bool oftenUse::checkOpticalSystemsSameParameter(OpticalSystemElement optSysEle_1, OpticalSystemElement optSysEle_2)
+{
+	real wavelength = 550.0;
+	optSysEle_1.setRefractiveIndexAccordingToWavelength(wavelength);
+	optSysEle_2.setRefractiveIndexAccordingToWavelength(wavelength);
+
+	OpticalSystem_LLT optSysLLT_1 = optSysEle_1.getOptSys_LLT_buildSystem();
+	OpticalSystem_LLT optSysLLT_2 = optSysEle_2.getOptSys_LLT_buildSystem();
+
+	real semiHeigh_1{};
+	real semiHeigh_2{};
+
+	VectorStructR3 pointSurface_1{};
+	VectorStructR3 pointSurface_2{};
+
+	VectorStructR3 direction_1{};
+	VectorStructR3 direction_2{};
+
+	real radius_1{};
+	real radius_2{};
+
+	real refIndex_A_1{};
+	real refIndex_A_2{};
+
+	real refIndex_B_1{};
+	real refIndex_B_2{};
+
+	int sizeOptSys_1_Element;
+	int sizeOptSys_2_Element;
+
+	int sizeOptSys_1_LLT;
+	int sizeOptSys_2_LLT;
+
+	int sizeOptSys_1_Interaction;
+	int sizeOptSys_2_Interaction;
+
+	bool checkSize_Elements{};
+	bool checkSize_LLT{};
+	bool checkSize_Interaction{};
+
+	bool checkSemiHeigt{};
+	bool checkPoint{};
+	bool checkDirection{};
+	bool checkRadius{};
+	bool checkRefIndex_A{};
+	bool checkRefIndex_B{};
+
+	real tolerance = 0.1;
+
+	// *** check size ***
+	sizeOptSys_1_Element = optSysEle_1.getPosAndElement().size();
+	sizeOptSys_1_LLT = optSysLLT_1.getPosAndInteractingSurface().size();
+	sizeOptSys_1_Interaction = optSysLLT_1.getPosAndInteraction().size();
+
+	sizeOptSys_2_Element = optSysEle_2.getPosAndElement().size();
+	sizeOptSys_2_LLT = optSysLLT_2.getPosAndInteractingSurface().size();
+	sizeOptSys_2_Interaction = optSysLLT_2.getPosAndInteraction().size();
+
+
+	checkSize_Elements = std::abs(sizeOptSys_1_Element - sizeOptSys_2_Element) <= tolerance;
+	checkSize_LLT = std::abs(sizeOptSys_1_LLT - sizeOptSys_2_LLT) <= tolerance;
+	checkSize_Interaction = std::abs(sizeOptSys_1_Interaction - sizeOptSys_2_Interaction) <= tolerance;
+
+	if (checkSize_Elements == false || checkSize_LLT == false || checkSize_Interaction == false)
+	{
+		return false;
+	}
+	// *** ***
+
+	std::shared_ptr<SurfaceIntersectionRay_LLT> tempSurface_1_ptr{};
+	std::shared_ptr<SurfaceIntersectionRay_LLT> tempSurface_2_ptr{};
+
+	for (unsigned int i = 0; i < sizeOptSys_1_LLT; ++i)
+	{
+		tempSurface_1_ptr = optSysLLT_1.getPosAndInteractingSurface()[i].getSurfaceInterRay_ptr();
+		tempSurface_2_ptr = optSysLLT_2.getPosAndInteractingSurface()[i].getSurfaceInterRay_ptr();
+
+		// *** radius ***
+		radius_1 = tempSurface_1_ptr->getRadius();
+		radius_2 = tempSurface_2_ptr->getRadius();
+		checkRadius = std::abs(radius_1 - radius_2) <= tolerance;
+		if (checkRadius == false) { return false; }
+		// *** ***
+
+		// *** ref index A ***
+		refIndex_A_1 = tempSurface_1_ptr->getRefractiveIndex_A();
+		refIndex_A_2 = tempSurface_2_ptr->getRefractiveIndex_A();
+		checkRefIndex_A = std::abs(refIndex_A_1 - refIndex_A_2) <= tolerance;
+		if (checkRefIndex_A == false) { return false; }
+		// *** ***
+
+		// *** ref index B ***
+		refIndex_B_1 = tempSurface_1_ptr->getRefractiveIndex_B();
+		refIndex_B_2 = tempSurface_2_ptr->getRefractiveIndex_B();
+		checkRefIndex_B = std::abs(refIndex_B_1 - refIndex_B_2) <= tolerance;
+		if (checkRefIndex_B == false) { return false; }
+		// *** ***
+
+		// *** semi heigh ***
+		semiHeigh_1 = tempSurface_1_ptr->getSemiHeight();
+		semiHeigh_2 = tempSurface_2_ptr->getSemiHeight();
+		checkSemiHeigt = std::abs(semiHeigh_1 - semiHeigh_2) <= tolerance;
+		if (checkSemiHeigt == false) { return false; }
+		// *** ***
+
+		// *** point ***
+		pointSurface_1 = tempSurface_1_ptr->getPoint();
+		pointSurface_2 = tempSurface_2_ptr->getPoint();
+		checkPoint = Math::compareTwoVectorStructR3_tolerance(pointSurface_1, pointSurface_2, tolerance);
+		if (checkPoint == false) { return false; }
+		// *** ***
+
+		// *** direction***
+		direction_1 = tempSurface_1_ptr->getDirection();
+		direction_2 = tempSurface_2_ptr->getDirection();
+		checkDirection = Math::compareTwoVectorStructR3_tolerance(direction_1, direction_2, tolerance);
+		if (checkDirection == false) { return false; }
+		// *** ***
+
+	}
+
+	return true;
+}
+
+// get name location
+std::string oftenUse::getNameFolder(replaceSequence repSequence)
+{
+	std::vector<std::string> nameLoc_vec = { "/leftToRight", "/rightToLeft", "/maxSeidel", "/minSeidel", "/allSequences" };
+
+	if (repSequence == replaceSequence::leftToRight)
+	{
+		return nameLoc_vec[0];
+	}
+
+	else if (repSequence == replaceSequence::RightToLeft)
+	{
+		return nameLoc_vec[1];
+	}
+
+	else if (repSequence == replaceSequence::maxSeidelAberLens)
+	{
+		return nameLoc_vec[2];
+	}
+
+	else if (repSequence == replaceSequence::minSeidelAberLens)
+	{
+		return nameLoc_vec[3];
+	}
+
+	else if (repSequence == replaceSequence::allPossibleSequences)
+	{
+		return nameLoc_vec[4];
+	}
+}
+// get name replace seq
+std::string oftenUse::getRepSequence_string(replaceSequence repSequence)
+{
+	std::vector<std::string> nameSequences_vec = { "leftToRight", "rightToLeft", "maxSeidel", "minSeidel", "allSequences" };
+
+	if (repSequence == replaceSequence::leftToRight)
+	{
+		return nameSequences_vec[0];
+	}
+
+	else if (repSequence == replaceSequence::RightToLeft)
+	{
+		return nameSequences_vec[1];
+	}
+
+	else if (repSequence == replaceSequence::maxSeidelAberLens)
+	{
+		return nameSequences_vec[2];
+	}
+
+	else if (repSequence == replaceSequence::minSeidelAberLens)
+	{
+		return nameSequences_vec[3];
+	}
+
+	else if (repSequence == replaceSequence::allPossibleSequences)
+	{
+		return nameSequences_vec[4];
+	}
+}
+
+// get name optimization methode
+std::string oftenUse::getNameOptimizationMetode(optimizeMethode optiMethode)
+{
+	if (optiMethode == optimizeMethode::DLS)
+	{
+		return "DLS";
+	}
+
+	else if (optiMethode == optimizeMethode::DLS_12)
+	{
+		return "DLS12";
+	}
+
+	else if (optiMethode == optimizeMethode::GeneticAndDLS)
+	{
+		return "GeneticAndDLS";
+	}
+
+	else if (optiMethode == optimizeMethode::GeneticAndDLS_12)
+	{
+		return "GeneticAndDLS12";
+	}
+
+
+	return "optiMethodeIsNotKnown";
+}
+
+// do the statistic evaluation left to right, right to left, max seidel, min seidel save intermediate results
+saveLRaO_GeneticAndDLS_12_statistic  oftenUse::doTheStatisticEvaluation_lensSystem_LTR_RTL_MaxSei_MinSei_obj_saveIntermediateResults(OpticalSystemElement optSysEle, std::vector<VectorStructR3> field_vec, std::vector<real> wavelength_vec, targetCardinalPointsStruct targetCarPoints, std::string location, std::string example, replaceSequence repSequence, optimizeMethode optiMethode, unsigned int numberBestFitLenses, bool debugMode, bool firstInteration)
+{
+	unsigned int numberLenses = oftenUse::findLensesInOptSysEle(optSysEle).size();
+	saveLRaO_GeneticAndDLS_12_statistic LRaO_statistic_GeneticAndDLS_12;
+
+	LRaO_statistic_GeneticAndDLS_12.setNumberOfLensesInOptSys(numberLenses);
+	LRaO_statistic_GeneticAndDLS_12.resizeBestLensNumberWasTaken(numberLenses);
+	LRaO_statistic_GeneticAndDLS_12.setExample(example);
+
+	OpticalSystemElement optSysEle_initial;
+	std::string nameOptimizationMethode = getNameOptimizationMetode(optiMethode);
+
+	Light_LLT light = oftenUse::getDefaultLight();
+	real bestMeritVal{};
+	std::vector<unsigned int> usedReplaceSeq{};
+	std::vector<OptSysEle_Merit_LensType> optSysMeritLensType;
+
+
+	std::string locationTotal{};
+	std::string reqFolder = getNameFolder(repSequence);
+	std::string redSeqName = getRepSequence_string(repSequence);
+
+	locationTotal = location + reqFolder;
+	optSysEle_initial = optSysEle.getDeepCopyOptSysEle();
+
+	defaultParaDLS defDLS = getDefaultPara_DLS(true);
+	defaultParaGenetic defGenetic = getDafulatPara_Genetic(true);
+	unsigned int population = 1000;
+	unsigned int rings = 6;
+	unsigned int arms = 8;
+
+
+
+	if (debugMode)
+	{
+		defDLS.setMaxInterations(1);
+		defGenetic.setMaxInterationGenetic(1);
+		numberBestFitLenses = 1;
+		population = 1;
+		optiMethode = optimizeMethode::DLS;
+	}
+
+	LensReplaceAndOptimize testLensReplaceAndOptiSuperFct;
+	testLensReplaceAndOptiSuperFct.setTargetCardinalPoints(targetCarPoints);
+	testLensReplaceAndOptiSuperFct.setDefaulParaDLS(defDLS);
+	testLensReplaceAndOptiSuperFct.setDefaultParaGenetic(defGenetic);
+	testLensReplaceAndOptiSuperFct.setPopulation(population);
+	testLensReplaceAndOptiSuperFct.setLoad_ALL_LensCatalogs();
+
+	if (debugMode)
+	{
+		testLensReplaceAndOptiSuperFct.turn_ON_DebugMode();
+	}
+
+	// start time
+	auto startTime = std::chrono::high_resolution_clock::now();
+	testLensReplaceAndOptiSuperFct.lensReplaceAndOptimize_superFct(optSysEle_initial, field_vec, wavelength_vec, rings, arms, optiMethode, /*number best fit lenses*/ numberBestFitLenses, firstInteration, repSequence, light);
+	// end time
+	auto endTime = std::chrono::high_resolution_clock::now();
+
+	OpticalSystemElement optSysEle_lensRepSuperFct = testLensReplaceAndOptiSuperFct.getBestReplacedOpticalSystem();
+
+
+	std::chrono::duration<double> totalDuration_secondes = endTime - startTime;
+	bestMeritVal = testLensReplaceAndOptiSuperFct.getBestMeritVal();
+	usedReplaceSeq = testLensReplaceAndOptiSuperFct.getReplacedSequence();
+	optSysMeritLensType = testLensReplaceAndOptiSuperFct.getBestCatalogLensesForreplace();
+
+
+	std::string exampleAndOptiMethode = example + "_" + nameOptimizationMethode;
+	testLensReplaceAndOptiSuperFct.exportBestParameterCatalogForReplaceTXT(locationTotal, exampleAndOptiMethode);
+
+	std::string nameOptSys = example + "_replacedOptSys_";
+	std::string totalNameOptSys = nameOptSys + nameOptimizationMethode;
+	inportExportData::saveOpticalSystemAsTXT(optSysEle_lensRepSuperFct, 550.0, locationTotal, totalNameOptSys);
+
+	// export rms values
+	std::vector<std::string> nameDoubel_vec = { "field0", "field1", "field2" };
+	std::string replaceRMSvalue_str = "replaceRMSvalue";
+	std::string nameTXT_ReplaceRMSvalueFields = replaceRMSvalue_str + "_" + redSeqName;
+	std::vector<real> rmsVecReplaceSys = oftenUse::getRMSoptSysHLT(optSysEle_lensRepSuperFct, field_vec, wavelength_vec, rings, arms);
+	inportExportData::saveVecDoubleInTXT(locationTotal, nameTXT_ReplaceRMSvalueFields, nameDoubel_vec, rmsVecReplaceSys, true);
+
+	std::vector<unsigned int> bestLensWasTaken;
+	bestLensWasTaken.resize(optSysMeritLensType.size());
+	for (unsigned int i = 0; i < optSysMeritLensType.size(); ++i)
+	{
+		bestLensWasTaken[i] = optSysMeritLensType[i].getPositionInBestMatchLensVec();
+	}
+
+
+	LRaO_statistic_GeneticAndDLS_12.setMeritVal_GeneticAndDLS_12(bestMeritVal);
+	LRaO_statistic_GeneticAndDLS_12.setDurationTime_GeneticAndDLS_12(totalDuration_secondes.count());
+	LRaO_statistic_GeneticAndDLS_12.setReplaceSequence_GeneticAndDLS(usedReplaceSeq);
+	LRaO_statistic_GeneticAndDLS_12.setBestLensNumberWasTaken(bestLensWasTaken);
+
+
+
+	return LRaO_statistic_GeneticAndDLS_12;
+}
+
+saveLRaO_GeneticAndDLS_12_statistic  oftenUse::doTheStatisticEvaluation_lensSystem_givenSequence_saveIntermediateResults(OpticalSystemElement optSysEle, std::vector<VectorStructR3> field_vec, std::vector<real> wavelength_vec, targetCardinalPointsStruct targetCarPoints, std::string location, std::string example, optimizeMethode optiMethode, unsigned int numberBestFitLenses, bool debugMode, bool firstInteration, std::vector<unsigned int> givenSequnce)
+{
+	unsigned int numberLenses = oftenUse::findLensesInOptSysEle(optSysEle).size();
+	saveLRaO_GeneticAndDLS_12_statistic LRaO_statistic_GeneticAndDLS_12;
+
+	LRaO_statistic_GeneticAndDLS_12.setNumberOfLensesInOptSys(numberLenses);
+	LRaO_statistic_GeneticAndDLS_12.resizeBestLensNumberWasTaken(numberLenses);
+	LRaO_statistic_GeneticAndDLS_12.setExample(example);
+
+	OpticalSystemElement optSysEle_initial;
+	std::string nameOptimizationMethode = getNameOptimizationMetode(optiMethode);
+
+	Light_LLT light = oftenUse::getDefaultLight();
+	real bestMeritVal{};
+	std::vector<unsigned int> usedReplaceSeq{};
+	std::vector<OptSysEle_Merit_LensType> optSysMeritLensType;
+
+
+	std::string locationTotal{};
+	std::string reqFolder_0 = std::to_string(givenSequnce[0]);
+	std::string reqFolder_1 = std::to_string(givenSequnce[1]);
+	std::string reqFolder_2 = std::to_string(givenSequnce[2]);
+	std::string reqFolder_tot = reqFolder_0 + reqFolder_1 + reqFolder_2;
+
+	locationTotal = location + "/" + reqFolder_tot;
+	optSysEle_initial = optSysEle.getDeepCopyOptSysEle();
+
+	defaultParaDLS defDLS = getDefaultPara_DLS(true);
+	defaultParaGenetic defGenetic = getDafulatPara_Genetic(true);
+	unsigned int population = 1000;
+	unsigned int rings = 6;
+	unsigned int arms = 8;
+
+
+
+	if (debugMode)
+	{
+		defDLS.setMaxInterations(1);
+		defGenetic.setMaxInterationGenetic(1);
+		numberBestFitLenses = 1;
+		population = 1;
+		optiMethode = optimizeMethode::DLS;
+	}
+
+	LensReplaceAndOptimize testLensReplaceAndOptiSuperFct;
+	testLensReplaceAndOptiSuperFct.setTargetCardinalPoints(targetCarPoints);
+	testLensReplaceAndOptiSuperFct.setDefaulParaDLS(defDLS);
+	testLensReplaceAndOptiSuperFct.setDefaultParaGenetic(defGenetic);
+	testLensReplaceAndOptiSuperFct.setPopulation(population);
+	testLensReplaceAndOptiSuperFct.setLoad_ALL_LensCatalogs();
+	testLensReplaceAndOptiSuperFct.loadSequence(givenSequnce);
+
+	if (debugMode)
+	{
+		testLensReplaceAndOptiSuperFct.turn_ON_DebugMode();
+	}
+
+	// start time
+	auto startTime = std::chrono::high_resolution_clock::now();
+	testLensReplaceAndOptiSuperFct.lensReplaceAndOptimize_superFct(optSysEle_initial, field_vec, wavelength_vec, rings, arms, optiMethode, /*number best fit lenses*/ numberBestFitLenses, firstInteration, replaceSequence::givenSequence, light);
+	// end time
+	auto endTime = std::chrono::high_resolution_clock::now();
+
+	OpticalSystemElement optSysEle_lensRepSuperFct = testLensReplaceAndOptiSuperFct.getBestReplacedOpticalSystem();
+
+
+	std::chrono::duration<double> totalDuration_secondes = endTime - startTime;
+	bestMeritVal = testLensReplaceAndOptiSuperFct.getBestMeritVal();
+	usedReplaceSeq = testLensReplaceAndOptiSuperFct.getReplacedSequence();
+	optSysMeritLensType = testLensReplaceAndOptiSuperFct.getBestCatalogLensesForreplace();
+
+
+	std::string exampleAndOptiMethode = example + "_" + nameOptimizationMethode;
+	testLensReplaceAndOptiSuperFct.exportBestParameterCatalogForReplaceTXT(locationTotal, exampleAndOptiMethode);
+
+	std::string nameOptSys = example + "_replacedOptSys_";
+	std::string totalNameOptSys = nameOptSys + nameOptimizationMethode;
+	inportExportData::saveOpticalSystemAsTXT(optSysEle_lensRepSuperFct, 550.0, locationTotal, totalNameOptSys);
+
+	// export rms values
+	std::vector<std::string> nameDoubel_vec = { "field0", "field1", "field2" };
+	std::string replaceRMSvalue_str = "replaceRMSvalue";
+	std::string nameTXT_ReplaceRMSvalueFields = replaceRMSvalue_str + "_" + reqFolder_tot;
+	std::vector<real> rmsVecReplaceSys = oftenUse::getRMSoptSysHLT(optSysEle_lensRepSuperFct, field_vec, wavelength_vec, rings, arms);
+	inportExportData::saveVecDoubleInTXT(locationTotal, nameTXT_ReplaceRMSvalueFields, nameDoubel_vec, rmsVecReplaceSys, true);
+
+	std::vector<unsigned int> bestLensWasTaken;
+	bestLensWasTaken.resize(optSysMeritLensType.size());
+	for (unsigned int i = 0; i < optSysMeritLensType.size(); ++i)
+	{
+		bestLensWasTaken[i] = optSysMeritLensType[i].getPositionInBestMatchLensVec();
+	}
+
+
+	LRaO_statistic_GeneticAndDLS_12.setMeritVal_GeneticAndDLS_12(bestMeritVal);
+	LRaO_statistic_GeneticAndDLS_12.setDurationTime_GeneticAndDLS_12(totalDuration_secondes.count());
+	LRaO_statistic_GeneticAndDLS_12.setReplaceSequence_GeneticAndDLS(usedReplaceSeq);
+	LRaO_statistic_GeneticAndDLS_12.setBestLensNumberWasTaken(bestLensWasTaken);
+
+
+
+	return LRaO_statistic_GeneticAndDLS_12;
+}
+
+// export data lens replace
+void oftenUse::exportDataReplace_THREE_LensesGeneticAndDLS_12(std::string location, std::string repSeq, saveLRaO_GeneticAndDLS_12_statistic dataToExport)
+{
+	std::vector<real> dataToExport_vec;
+	dataToExport_vec.resize(8);
+
+	std::string nameExcel = "data_THREE_";
+	std::string nameExcelTot = nameExcel + repSeq;
+	std::string dataToExportString = "merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ";
+
+	inportExportData::exportDataToExcel_name(location, nameExcelTot, dataToExport.getExample());
+
+
+	// Genetic and DLS 12 -> four lens system
+	dataToExport_vec[0] = dataToExport.getMeritVaL_GeneticAndDLS_12();
+	dataToExport_vec[1] = dataToExport.getDurationTime_GeneticAndDLS_12();
+
+	dataToExport_vec[2] = dataToExport.getReplacedSequence_GeneticAndDLS12()[0];
+	dataToExport_vec[3] = dataToExport.getReplacedSequence_GeneticAndDLS12()[1];
+	dataToExport_vec[4] = dataToExport.getReplacedSequence_GeneticAndDLS12()[2];
+
+	dataToExport_vec[6] = dataToExport.getBestLensNumberWasTaken()[0];
+	dataToExport_vec[7] = dataToExport.getBestLensNumberWasTaken()[1];
+	dataToExport_vec[8] = dataToExport.getBestLensNumberWasTaken()[2];
+
+
+	inportExportData::exportDataToExcel_vector(location, nameExcelTot, dataToExportString, dataToExport_vec);
+}
+
+// export data lens replace
+void oftenUse::exportDataReplace_FOUR_LensesGeneticAndDLS_12(std::string location, std::string repSeq, saveLRaO_GeneticAndDLS_12_statistic dataToExport)
+{
+	std::vector<real> dataToExport_vec;
+	dataToExport_vec.resize(10);
+
+	std::string nameExcel = "data_FOUR_";
+	std::string nameExcelTot = nameExcel + repSeq;
+	std::string dataToExportString = "merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ";
+
+	inportExportData::exportDataToExcel_name(location, nameExcelTot, dataToExport.getExample());
+
+
+	// Genetic and DLS 12 -> four lens system
+	dataToExport_vec[0] = dataToExport.getMeritVaL_GeneticAndDLS_12();
+	dataToExport_vec[1] = dataToExport.getDurationTime_GeneticAndDLS_12();
+
+	dataToExport_vec[2] = dataToExport.getReplacedSequence_GeneticAndDLS12()[0];
+	dataToExport_vec[3] = dataToExport.getReplacedSequence_GeneticAndDLS12()[1];
+	dataToExport_vec[4] = dataToExport.getReplacedSequence_GeneticAndDLS12()[2];
+	dataToExport_vec[5] = dataToExport.getReplacedSequence_GeneticAndDLS12()[3];
+
+	dataToExport_vec[6] = dataToExport.getBestLensNumberWasTaken()[0];
+	dataToExport_vec[7] = dataToExport.getBestLensNumberWasTaken()[1];
+	dataToExport_vec[8] = dataToExport.getBestLensNumberWasTaken()[2];
+	dataToExport_vec[9] = dataToExport.getBestLensNumberWasTaken()[3];
+
+
+	inportExportData::exportDataToExcel_vector(location, nameExcelTot, dataToExportString, dataToExport_vec);
+}
+
+
+// get camera parameter Vistec Eco655
+cameraParameterStruct oftenUse::getCamPara_VistecEco655()
+{
+	// VistecEco655
+	cameraParameterStruct paraVistecEco655{};
+	paraVistecEco655.setgQWC(12000.0);
+	paraVistecEco655.setgPS(5.3);
+	paraVistecEco655.setgDS(38);
+	paraVistecEco655.setgDS_dt(9.7);
+	paraVistecEco655.setgDSNU(21.0);
+	paraVistecEco655.setgDSNU_dt(9.4);
+	paraVistecEco655.setgPRNU(1.5);
+	paraVistecEco655.setgRON(15.0);
+	paraVistecEco655.setgEta400(0.6);
+	paraVistecEco655.setgEta500(0.7);
+	paraVistecEco655.setgEta600(0.7);
+	paraVistecEco655.setgEta700(0.6);
+	paraVistecEco655.setgEta800(0.5);
+	paraVistecEco655.setgEta900(0.3);
+	paraVistecEco655.setgADCFaktor(0.085);
+	paraVistecEco655.setgASCDynamik(10);
+	paraVistecEco655.setgNonlinearity(1.0);
+	paraVistecEco655.setgMin(100.0);
+	paraVistecEco655.setgMax(900.0);
+
+	return paraVistecEco655;
+}
+// get camera parameter Ximea
+cameraParameterStruct oftenUse::getCamPara_Ximea()
+{
+	// Ximea
+	cameraParameterStruct paraXimea{};
+	paraXimea.setgQWC(12000.0);
+	paraXimea.setgPS(5.3);
+	paraXimea.setgDS(25);
+	paraXimea.setgDS_dt(9.7);
+	paraXimea.setgDSNU(6.0);
+	paraXimea.setgDSNU_dt(9.4);
+	paraXimea.setgPRNU(1.0);
+	paraXimea.setgRON(15.0);
+	paraXimea.setgEta400(0.55);
+	paraXimea.setgEta500(0.6);
+	paraXimea.setgEta600(0.58);
+	paraXimea.setgEta700(0.46);
+	paraXimea.setgEta800(0.3);
+	paraXimea.setgEta900(0.15);
+	paraXimea.setgADCFaktor(0.085);
+	paraXimea.setgASCDynamik(10);
+	paraXimea.setgNonlinearity(1.0);
+	paraXimea.setgMin(100.0);
+	paraXimea.setgMax(900.0);
+
+	return paraXimea;
 }

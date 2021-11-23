@@ -44,7 +44,7 @@ void TestImageSimulation::loadImportantStuff()
 	mObject_vec_012[2] = { 0.0,2.0,0.0 };
 
 	mDefaulParaImaSim.setWavelengthBlue(486.1327);
-	mDefaulParaImaSim.setWavelengthGreen(587.5818);
+	mDefaulParaImaSim.setWavelengthGreen(587.5618);
 	mDefaulParaImaSim.setWavelengthRed(656.2725);
 	mDefaulParaImaSim.setRayDensity(6);
 

@@ -532,7 +532,13 @@ Parameter<real> ApertureStopElement::getParameterRadius()
 {
 	//TODO: we ask here for the radius parameters. They do not exit for a plan surface!
 	// maybe we cen change that to infinity
-	return mPointParamZ;
+	Parameter<real> dummyPara;
+	dummyPara.setMaximum(0.0);
+	dummyPara.setMinimum(0.0);
+	dummyPara.setModifier(typeModifier::typeModifierFixed);
+	dummyPara.setStdDev(0.0);
+
+	return dummyPara;
 }
 Parameter<real> ApertureStopElement::getParameterPositionZ()
 {

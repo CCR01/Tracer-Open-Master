@@ -23,7 +23,7 @@ typedef std::shared_ptr< InteractionRay_LLT > interaction_ptr;
 testLensReplaceAndOptimize::testLensReplaceAndOptimize() {}
 testLensReplaceAndOptimize::~testLensReplaceAndOptimize() {}
 
-bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_superFct()
+bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_superFct_object()
 {
 	std::vector<bool> workLensReplace_superFct;
 
@@ -33,47 +33,47 @@ bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_superFct()
 	inportExportData::clearDataInTXT(location, name);
 
 	//// E0
-	//bool checkE0 = testLensReplaceAndOptimize_E0();
+	//bool checkE0 = testLensReplaceAndOptimize_E0_obj();
 	//workLensReplace_superFct.push_back(checkE0);
 	//if (checkE0) { inportExportData::saveStringInTXT_includingTime(location, name, "E0 worked"); };
 	//// E1
-	//bool checkE1 = testLensReplaceAndOptimize_E1();
+	//bool checkE1 = testLensReplaceAndOptimize_E1_obj();
 	//workLensReplace_superFct.push_back(checkE1);
-	//if (checkE0) { inportExportData::saveStringInTXT_includingTime(location, name, "E1 worked"); };
+	//if (checkE1) { inportExportData::saveStringInTXT_includingTime(location, name, "E1 worked"); };
 	//// E2
-	//bool checkE2 = testLensReplaceAndOptimize_E2();
+	//bool checkE2 = testLensReplaceAndOptimize_E2_obj();
 	//workLensReplace_superFct.push_back(checkE2);
-	//if (checkE0) { inportExportData::saveStringInTXT_includingTime(location, name, "E2 worked"); };
+	//if (checkE2) { inportExportData::saveStringInTXT_includingTime(location, name, "E2 worked"); };
 	//// E3
-	//bool checkE3 = testLensReplaceAndOptimize_E3();
+	//bool checkE3 = testLensReplaceAndOptimize_E3_obj();
 	//workLensReplace_superFct.push_back(checkE3);
-	//if (checkE0) { inportExportData::saveStringInTXT_includingTime(location, name, "E3 worked"); };
+	//if (checkE3) { inportExportData::saveStringInTXT_includingTime(location, name, "E3 worked"); };
 	//// E4
-	//bool checkE4 = testLensReplaceAndOptimize_E4();
+	//bool checkE4 = testLensReplaceAndOptimize_E4_obj();
 	//workLensReplace_superFct.push_back(checkE4);
-	//if (checkE0) { inportExportData::saveStringInTXT_includingTime(location, name, "E4 worked"); };
+	//if (checkE4) { inportExportData::saveStringInTXT_includingTime(location, name, "E4 worked"); };
 	//// E5
-	//bool checkE5 = testLensReplaceAndOptimize_E5();
+	//bool checkE5 = testLensReplaceAndOptimize_E5_obj();
 	//workLensReplace_superFct.push_back(checkE5);
-	//if (checkE0) { inportExportData::saveStringInTXT_includingTime(location, name, "E5 worked"); };
+	//if (checkE5) { inportExportData::saveStringInTXT_includingTime(location, name, "E5 worked"); };
 	//// E6
-	//bool checkE6 = testLensReplaceAndOptimize_E6();
+	//bool checkE6 = testLensReplaceAndOptimize_E6_obj();
 	//workLensReplace_superFct.push_back(checkE6);
-	//if (checkE0) { inportExportData::saveStringInTXT_includingTime(location, name, "E6 worked"); };
-	//// E7
-	//bool checkE7 = testLensReplaceAndOptimize_E7();
-	//workLensReplace_superFct.push_back(checkE7);
-	//if (checkE0) { inportExportData::saveStringInTXT_includingTime(location, name, "E7 worked"); };
+	//if (checkE6) { inportExportData::saveStringInTXT_includingTime(location, name, "E6 worked"); };
+	// E7
+	bool checkE7 = testLensReplaceAndOptimize_E7_obj();
+	workLensReplace_superFct.push_back(checkE7);
+	if (checkE7) { inportExportData::saveStringInTXT_includingTime(location, name, "E7 worked"); };
 	//// E8
-	//bool checkE8 = testLensReplaceAndOptimize_E8();
+	//bool checkE8 = testLensReplaceAndOptimize_E8_obj();
 	//workLensReplace_superFct.push_back(checkE8);
-	//if (checkE0) { inportExportData::saveStringInTXT_includingTime(location, name, "E8 worked"); };
+	//if (checkE8) { inportExportData::saveStringInTXT_includingTime(location, name, "E8 worked"); };
 	//// E9
-	//bool checkE9 = testLensReplaceAndOptimize_E9();
+	//bool checkE9 = testLensReplaceAndOptimize_E9_obj();
 	//workLensReplace_superFct.push_back(checkE9);
-	//if (checkE0) { inportExportData::saveStringInTXT_includingTime(location, name, "E9 worked"); };
+	//if (checkE9) { inportExportData::saveStringInTXT_includingTime(location, name, "E9 worked"); };
 	// E10
-	bool checkE10 = testLensReplaceAndOptimize_E10();
+	bool checkE10 = testLensReplaceAndOptimize_E10_obj();
 	workLensReplace_superFct.push_back(checkE10);
 	if (checkE10) { inportExportData::saveStringInTXT_includingTime(location, name, "E10 worked"); };
 
@@ -82,7 +82,7 @@ bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_superFct()
 }
 
 // E0
-bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E0()
+bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E0_obj()
 {
 	std::vector<bool> workTheSystem;
 	real tolerance_rms = 0.1;
@@ -198,7 +198,7 @@ bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E0()
 }
 
 // E1
-bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E1()
+bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E1_obj()
 {
 	std::vector<bool> workTheSystem;
 	real tolerance_rms = 0.1;
@@ -315,7 +315,7 @@ bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E1()
 
 
 // E2
-bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E2()
+bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E2_obj()
 {
 	std::vector<bool> workTheSystem;
 	real tolerance_rms = 0.1;
@@ -410,7 +410,7 @@ bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E2()
 }
 
 // E3
-bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E3()
+bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E3_obj()
 {
 	std::vector<bool> workTheSystem;
 	real tolerance_rms = 0.1;
@@ -463,7 +463,7 @@ bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E3()
 	workTheSystem.push_back(test);
 
 	// save the start system
-	std::string location = "../tests/testLensReplaceAndOptimize/E3";
+	std::string location = "../tests/testLensReplaceAndOptimize/object/E3";
 	std::string nameOptSysStart = "E3_optSys_start";
 	inportExportData::saveOpticalSystemAsTXT(optSystemElement, 550.0, location, nameOptSysStart);
 
@@ -520,7 +520,7 @@ bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E3()
 }
 
 // E4
-bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E4()
+bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E4_obj()
 {
 	std::vector<bool> workTheSystem;
 	real tolerance_rms = 0.1;
@@ -569,7 +569,7 @@ bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E4()
 	workTheSystem.push_back(test);
 
 	// save the start system
-	std::string location = "../tests/testLensReplaceAndOptimize/E4";
+	std::string location = "../tests/testLensReplaceAndOptimize/object/E4";
 	std::string nameOptSysStart = "E4_optSys_start";
 	inportExportData::saveOpticalSystemAsTXT(optSystemElement, 550.0, location, nameOptSysStart);
 
@@ -626,7 +626,7 @@ bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E4()
 }
 
 // E5
-bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E5()
+bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E5_obj()
 {
 	std::vector<bool> workTheSystem;
 	real tolerance_rms = 0.1;
@@ -677,7 +677,7 @@ bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E5()
 	workTheSystem.push_back(test);
 
 	// save the start system
-	std::string location = "../tests/testLensReplaceAndOptimize/E5";
+	std::string location = "../tests/testLensReplaceAndOptimize/object/E5";
 	std::string nameOptSysStart = "E5_optSys_start";
 	inportExportData::saveOpticalSystemAsTXT(optSystemElement, 550.0, location, nameOptSysStart);
 
@@ -734,7 +734,7 @@ bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E5()
 }
 
 // E6
-bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E6()
+bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E6_obj()
 {
 	std::vector<bool> workTheSystem;
 	real tolerance_rms = 0.1;
@@ -788,7 +788,7 @@ bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E6()
 	workTheSystem.push_back(test);
 
 	// save the start system
-	std::string location = "../tests/testLensReplaceAndOptimize/E6";
+	std::string location = "../tests/testLensReplaceAndOptimize/object/E6";
 	std::string nameOptSysStart = "E6_optSys_start";
 	inportExportData::saveOpticalSystemAsTXT(optSystemElement, 550.0, location, nameOptSysStart);
 
@@ -847,7 +847,7 @@ bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E6()
 }
 
 // E7
-bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E7()
+bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E7_obj()
 {
 	std::vector<bool> workTheSystem;
 	real tolerance_rms = 0.1;
@@ -901,7 +901,7 @@ bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E7()
 	workTheSystem.push_back(test);
 
 	// save the start system
-	std::string location = "../tests/testLensReplaceAndOptimize/E7";
+	std::string location = "../tests/testLensReplaceAndOptimize/object/E7";
 	std::string nameOptSysStart = "E7_optSys_start";
 	inportExportData::saveOpticalSystemAsTXT(optSystemElement, 550.0, location, nameOptSysStart);
 
@@ -935,7 +935,7 @@ bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E7()
 	std::vector<unsigned int> loadSequence = { 1,0,2 };
 	testLensReplaceAndOptiSuperFct.loadSequence(loadSequence);
 
-	replaceSequence repSequence = replaceSequence::givenSequence;
+	replaceSequence repSequence = replaceSequence::allPossibleSequences;
 	Light_LLT light = oftenUse::getDefaultLight();
 	testLensReplaceAndOptiSuperFct.lensReplaceAndOptimize_superFct(optSystemElement, field_vec, wave_vec, rings, arms, optMethode, /*number best fit lenses*/ numberBestFitLenses, true, repSequence, light);
 	OpticalSystemElement optSysEle_lensRepSuperFct = testLensReplaceAndOptiSuperFct.getBestReplacedOpticalSystem();
@@ -964,7 +964,7 @@ bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E7()
 
 
 // E8
-bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E8()
+bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E8_obj()
 {
 	std::vector<bool> workTheSystem;
 	real tolerance_rms = 0.1;
@@ -1018,7 +1018,7 @@ bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E8()
 	workTheSystem.push_back(test);
 
 	// save the start system
-	std::string location = "../tests/testLensReplaceAndOptimize/E8";
+	std::string location = "../tests/testLensReplaceAndOptimize/object/E8";
 	std::string nameOptSysStart = "E8_optSys_start";
 	inportExportData::saveOpticalSystemAsTXT(optSystemElement, 550.0, location, nameOptSysStart);
 
@@ -1080,7 +1080,7 @@ bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E8()
 }
 
 // E9
-bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E9()
+bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E9_obj()
 {
 	std::vector<bool> workTheSystem;
 	real tolerance_rms = 0.1;
@@ -1134,7 +1134,7 @@ bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E9()
 	workTheSystem.push_back(test);
 
 	// save the start system
-	std::string location = "../tests/testLensReplaceAndOptimize/E9";
+	std::string location = "../tests/testLensReplaceAndOptimize/object/E9";
 	std::string nameOptSysStart = "E9_optSys_start";
 	inportExportData::saveOpticalSystemAsTXT(optSystemElement, 550.0, location, nameOptSysStart);
 
@@ -1196,7 +1196,7 @@ bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E9()
 }
 
 // E10
-bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E10()
+bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E10_obj()
 {
 	std::vector<bool> workTheSystem;
 	real semiHeight = 10.0;
@@ -1255,7 +1255,7 @@ bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E10()
 	workTheSystem.push_back(testSystem);
 
 	// save the start system
-	std::string location = "../tests/testLensReplaceAndOptimize/E10";
+	std::string location = "../tests/testLensReplaceAndOptimize/object/E10";
 	std::string nameOptSysStart = "E10_optSys_start";
 	inportExportData::saveOpticalSystemAsTXT(optSystemElement, 550.0, location, nameOptSysStart);
 
@@ -1353,3 +1353,184 @@ bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E10()
 	bool checker = Math::checkTrueOfVectorElements(workTheSystem);
 	return checker;
 }
+
+
+// *** inf ***
+bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_superFct_infinity()
+{
+	std::vector<bool> workTheSystem;
+
+	// E0
+	bool checkE0 = testLensReplaceAndOptimize_E0_inf();
+	workTheSystem.push_back(checkE0);
+
+
+
+	bool checker = Math::checkTrueOfVectorElements(workTheSystem);
+	return checker;
+}
+// E0
+bool testLensReplaceAndOptimize::testLensReplaceAndOptimize_E0_inf()
+{
+	std::vector<bool> workTheSystem;
+
+	real semiHeight = 10.0;
+	mGlasses.loadGlassCatalog_Schott();
+
+	ApertureStopElement S0(/* semi height*/2.0, /*point*/{ 0.0,0.0,0.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index*/ mGlasses.getAir());
+
+	SphericalElement S1(/*radius*/ 200.0, /*semi height*/ semiHeight, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNBK7_S1());
+	SphericalElement S2(/*radius*/ 150.0, /*semi height*/ semiHeight, /*point*/{ 0.0,0.0,15.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNBK7_S1());
+
+	SphericalElement S3(/*radius*/ 50.0, /*semi height*/ semiHeight, /*point*/{ 0.0,0.0,25.0 }, /*direction*/{ 0.0,0.0, 1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNLAK10_S1());
+	SphericalElement S4(/*radius*/ 80.0, /*semi height*/ semiHeight, /*point*/{ 0.0,0.0,35.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getNSF6_S1(), /*refractive index B*/mGlasses.getNLAK10_S1());
+	SphericalElement S5(/*radius*/ 40.0, /*semi height*/ semiHeight, /*point*/{ 0.0,0.0,40.0 }, /*direction*/{ 0.0,0.0, -1.0 }, /*refractive index A*/ mGlasses.getAir(), /*refractive index B*/mGlasses.getNSF6_S1());
+
+	PlanElement S6(/*semi height*/ 99.0, /*point*/{ 0.0,0.0,60.0 },  /*direction*/{ 0.0,0.0,1.0 }, /*refractiv index A*/ mGlasses.getAir(), /*refractive index B*/ mGlasses.getAir());
+
+	// **********************************
+	// set parameter variable
+	S1.setParameterRadius(/*min value*/ -1000.0, /*max value*/ 1000.0, 0.0, typeModifierVariable);
+	S2.setParameterRadius(/*min value*/ -1000.0, /*max value*/ 1000.0, 0.0, typeModifierVariable);
+	S3.setParameterRadius(/*min value*/ -1000.0, /*max value*/ 1000.0, 0.0, typeModifierVariable);
+	S4.setParameterRadius(/*min value*/ -1000.0, /*max value*/ 1000.0, 0.0, typeModifierVariable);
+	S5.setParameterRadius(/*min value*/ -1000.0, /*max value*/ 1000.0, 0.0, typeModifierVariable);
+
+	S2.setParameterPointZ(/*min value*/ 5.0, /*max value*/ 30.0, 0.0, typeModifierVariable);
+	S5.setParameterPointZ(/*min value*/ 5.0, /*max value*/ 30.0, 0.0, typeModifierVariable);
+	// **********************************
+
+	//surfacePtr Aper0_E5_ptr = AperStop0_E5.clone();
+	surfacePtr S0_ptr = S0.clone();
+	surfacePtr S1_ptr = S1.clone();
+	surfacePtr S2_ptr = S2.clone();
+	surfacePtr S3_ptr = S3.clone();
+	surfacePtr S4_ptr = S4.clone();
+	surfacePtr S5_ptr = S5.clone();
+	surfacePtr S6_ptr = S6.clone();
+
+	std::vector<surfacePtr> opticalSystem_ptr{ S0_ptr, S1_ptr , S2_ptr, S3_ptr, S4_ptr, S5_ptr, S6_ptr };
+	std::vector<interaction_ptr> interactions_ptr{ mDoNot.clone(), mRefrac.clone(),mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mRefrac.clone(), mAbsorb.clone() };
+
+	//	build optical system
+	OpticalSystemElement optSystemElement(opticalSystem_ptr, interactions_ptr);
+
+	// debug
+	oftenUse::print(optSystemElement, 550.0);
+
+	// check the start system
+	bool checkRefIndexes = oftenUse::checkRefractivIndex(optSystemElement);
+	workTheSystem.push_back(checkRefIndexes);
+	std::vector<real> rms_Zemax{ 126.384, 120.322 };
+	std::vector<real> fieldX_vec = {0.0,0.0};
+	std::vector<real> fieldY_vec = {0.0,5.0};
+	std::vector<real> wave_vec = { 587.5618, 486.1327, 656.2725 };
+	real tolerance = 0.1;
+
+	bool testSystem = oftenUse::checkOptSysELement_Equal_Better_Zemax(optSystemElement, fieldX_vec, fieldY_vec, wave_vec, rms_Zemax, tolerance, compareTOM_Zemax::comEqual);
+	workTheSystem.push_back(testSystem);
+
+	// save the start system
+	std::string location = "../tests/testLensReplaceAndOptimize/infinity/E0";
+	std::string nameOptSysStart = "E0_optSys_start";
+	inportExportData::saveOpticalSystemAsTXT(optSystemElement, 550.0, location, nameOptSysStart);
+
+	// set target cardinal points
+	targetCardinalPointsStruct tarCarP;
+	tarCarP.setTargetWFNO(8.0);
+	tarCarP.setTargetEFL(30.0);
+	unsigned int rings = 6;
+	unsigned int arms = 8;
+	unsigned int numberBestFitLenses = 3;
+	Light_LLT light = oftenUse::getDefaultLight();
+	replaceSequence repSequence = replaceSequence::leftToRight;
+
+	defaultParaDLS defParaDLS = oftenUse::getDefaultPara_DLS(true);
+	defaultParaGenetic defParaGenetic = oftenUse::getDafulatPara_Genetic(true);
+	real population = 1000.0;
+
+	bool debug = false;
+	if (debug)
+	{
+		defParaDLS.setMaxInterations(2);
+		defParaGenetic.setMaxInterationGenetic(1);
+		population = 5;
+		numberBestFitLenses = 1;
+	}
+
+	// *** DLS *** //
+	optimizeMethode optMethode_DLS = optimizeMethode::DLS;
+	LensReplaceAndOptimize testLensReplaceAndOptiSuperFct_DLS;
+	testLensReplaceAndOptiSuperFct_DLS.setTargetCardinalPoints(tarCarP);
+	testLensReplaceAndOptiSuperFct_DLS.setDefaulParaDLS(defParaDLS);
+	testLensReplaceAndOptiSuperFct_DLS.setDefaultParaGenetic(defParaGenetic);
+	testLensReplaceAndOptiSuperFct_DLS.setPopulation(population);
+	testLensReplaceAndOptiSuperFct_DLS.setLoad_ALL_LensCatalogs();
+	testLensReplaceAndOptiSuperFct_DLS.lensReplaceAndOptimize_superFct(optSystemElement, fieldX_vec, fieldY_vec, wave_vec, rings, arms, optMethode_DLS, /*number best fit lenses*/ numberBestFitLenses, true, repSequence, light);
+	OpticalSystemElement optSysEle_lensRepSuperFct_DLS = testLensReplaceAndOptiSuperFct_DLS.getBestReplacedOpticalSystem();
+	// debug
+	oftenUse::print(optSysEle_lensRepSuperFct_DLS, 550.0);
+	testLensReplaceAndOptiSuperFct_DLS.printBestParameterCatalogForReplace();
+	real bestMeritVal_DLS = testLensReplaceAndOptiSuperFct_DLS.getBestMeritVal();
+	//debug 
+	std::cout << "best merit value _DLS left to right: " << bestMeritVal_DLS << std::endl;
+	// *** ***
+	
+	// *** DLS 12 *** //
+	optimizeMethode optMethode_DLS_12 = optimizeMethode::DLS_12;
+	LensReplaceAndOptimize testLensReplaceAndOptiSuperFct_DLS_12;
+	testLensReplaceAndOptiSuperFct_DLS_12.setTargetCardinalPoints(tarCarP);
+	testLensReplaceAndOptiSuperFct_DLS_12.setDefaulParaDLS(defParaDLS);
+	testLensReplaceAndOptiSuperFct_DLS_12.setDefaultParaGenetic(defParaGenetic);
+	testLensReplaceAndOptiSuperFct_DLS_12.setPopulation(1000.0);
+	testLensReplaceAndOptiSuperFct_DLS_12.setLoad_ALL_LensCatalogs();
+	testLensReplaceAndOptiSuperFct_DLS_12.lensReplaceAndOptimize_superFct(optSystemElement, fieldX_vec, fieldY_vec,  wave_vec, rings, arms, optMethode_DLS_12, /*number best fit lenses*/ numberBestFitLenses, true, repSequence, light);
+	OpticalSystemElement optSysEle_lensRepSuperFct_DLS_12 = testLensReplaceAndOptiSuperFct_DLS_12.getBestReplacedOpticalSystem();
+	// debug
+	oftenUse::print(optSysEle_lensRepSuperFct_DLS_12, 550.0);
+	testLensReplaceAndOptiSuperFct_DLS_12.printBestParameterCatalogForReplace();
+	real bestMeritVal_DLS_12 = testLensReplaceAndOptiSuperFct_DLS_12.getBestMeritVal();
+	//debug 
+	std::cout << "best merit value _DLS_12 left to right:: " << bestMeritVal_DLS_12 << std::endl;
+	// *** ***
+
+	// *** Genetic and DLS *** //
+	optimizeMethode optMethode_GeneticAndDLS = optimizeMethode::GeneticAndDLS;
+	LensReplaceAndOptimize testLensReplaceAndOptiSuperFct_GeneticAndDLS;
+	testLensReplaceAndOptiSuperFct_GeneticAndDLS.setTargetCardinalPoints(tarCarP);
+	testLensReplaceAndOptiSuperFct_GeneticAndDLS.setDefaulParaDLS(defParaDLS);
+	testLensReplaceAndOptiSuperFct_GeneticAndDLS.setDefaultParaGenetic(defParaGenetic);
+	testLensReplaceAndOptiSuperFct_GeneticAndDLS.setPopulation(1000.0);
+	testLensReplaceAndOptiSuperFct_GeneticAndDLS.setLoad_ALL_LensCatalogs();
+	testLensReplaceAndOptiSuperFct_GeneticAndDLS.lensReplaceAndOptimize_superFct(optSystemElement, fieldX_vec, fieldY_vec, wave_vec, rings, arms, optMethode_GeneticAndDLS, /*number best fit lenses*/ numberBestFitLenses, true, repSequence, light);
+	OpticalSystemElement optSysEle_lensRepSuperFct_GeneticAndDLS = testLensReplaceAndOptiSuperFct_GeneticAndDLS.getBestReplacedOpticalSystem();
+	// debug
+	oftenUse::print(optSysEle_lensRepSuperFct_GeneticAndDLS, 550.0);
+	testLensReplaceAndOptiSuperFct_GeneticAndDLS.printBestParameterCatalogForReplace();
+	real bestMeritVal_GeneticAndDLS = testLensReplaceAndOptiSuperFct_GeneticAndDLS.getBestMeritVal();
+	//debug 
+	std::cout << "best merit value _GeneticAndDLS left to right: " << bestMeritVal_GeneticAndDLS << std::endl;
+	// *** ***
+
+	// *** Genetic and DLS 12 *** //
+	optimizeMethode optMethode_GeneticAndDLS_12 = optimizeMethode::GeneticAndDLS_12;
+	LensReplaceAndOptimize testLensReplaceAndOptiSuperFct_GeneticAndDLS_12;
+	testLensReplaceAndOptiSuperFct_GeneticAndDLS_12.setTargetCardinalPoints(tarCarP);
+	testLensReplaceAndOptiSuperFct_GeneticAndDLS_12.setDefaulParaDLS(defParaDLS);
+	testLensReplaceAndOptiSuperFct_GeneticAndDLS_12.setDefaultParaGenetic(defParaGenetic);
+	testLensReplaceAndOptiSuperFct_GeneticAndDLS_12.setPopulation(1000.0);
+	testLensReplaceAndOptiSuperFct_GeneticAndDLS_12.setLoad_ALL_LensCatalogs();
+	testLensReplaceAndOptiSuperFct_GeneticAndDLS_12.lensReplaceAndOptimize_superFct(optSystemElement, fieldX_vec, fieldY_vec, wave_vec, rings, arms, optMethode_GeneticAndDLS_12, /*number best fit lenses*/ numberBestFitLenses, true, repSequence, light);
+	OpticalSystemElement optSysEle_lensRepSuperFct_GeneticAndDLS_12 = testLensReplaceAndOptiSuperFct_GeneticAndDLS_12.getBestReplacedOpticalSystem();
+	// debug
+	oftenUse::print(optSysEle_lensRepSuperFct_GeneticAndDLS_12, 550.0);
+	testLensReplaceAndOptiSuperFct_GeneticAndDLS_12.printBestParameterCatalogForReplace();
+	real bestMeritVal_GeneticAndDLS_12 = testLensReplaceAndOptiSuperFct_GeneticAndDLS_12.getBestMeritVal();
+	//debug 
+	std::cout << "best merit value _GeneticAndDLS_12 left to right: " << bestMeritVal_GeneticAndDLS_12 << std::endl;
+	// *** ***
+
+	bool checker = Math::checkTrueOfVectorElements(workTheSystem);
+	return checker;
+}
+// *** ***

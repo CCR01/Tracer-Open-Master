@@ -1646,6 +1646,16 @@ cv::Mat Distortion::correctDistortion()
 		roi.width = mImage.cols;
 		roi.height = mImage.rows;
 
+		if (mImage.cols > correctedImage.cols)
+		{
+			roi.width = correctedImage.cols;
+		}
+
+		if (mImage.rows > correctedImage.rows)
+		{
+			roi.height = correctedImage.rows;
+		}
+
 		correctedImage = correctedImage(roi);
 	}
 

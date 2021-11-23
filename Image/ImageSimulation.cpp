@@ -797,6 +797,15 @@ void ImageSimulationFunctions::putAllChannlesTogetherScaleAndSaveIma()
 	{
 		checkIntensityDistortedImages();
 
+		// resize the images
+		cv::resize(mSimulatedIma_blue_initialSize, mSimulatedIma_blue_initialSize, mInitialObj.size(), cv::INTER_LANCZOS4);
+		cv::resize(mSimulatedIma_green_initialSize, mSimulatedIma_green_initialSize, mInitialObj.size(), cv::INTER_LANCZOS4);
+		cv::resize(mSimulatedIma_red_initialSize, mSimulatedIma_red_initialSize, mInitialObj.size(), cv::INTER_LANCZOS4);
+
+		cv::resize(mSimulatedIma_blue_initialSize_distortionCorrected, mSimulatedIma_blue_initialSize_distortionCorrected, mInitialObj.size(), cv::INTER_LANCZOS4);
+		cv::resize(mSimulatedIma_green_initialSize_distortionCorrected, mSimulatedIma_green_initialSize_distortionCorrected, mInitialObj.size(), cv::INTER_LANCZOS4);
+		cv::resize(mSimulatedIma_red_initialSize_distortionCorrected, mSimulatedIma_red_initialSize_distortionCorrected, mInitialObj.size(), cv::INTER_LANCZOS4);
+
 		std::vector<cv::Mat> array_to_merge;
 		array_to_merge.push_back(mSimulatedIma_blue_initialSize);
 		array_to_merge.push_back(mSimulatedIma_green_initialSize);

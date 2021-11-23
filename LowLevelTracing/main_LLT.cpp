@@ -133,7 +133,6 @@ int main(int argc, char **argv)
 	//TestImageProcessing testImaProc;
 	//bool chekImaProc = testImaProc.checkImageProcessing();
 
-	// the the system
 	////std::vector<testWhat> testWhatVec_2 = { testWhat::tALL };
 	std::vector<testWhat> testWhatVec_1 = { testWhat::tDGaO2021 };
 	ManagementTests managementTest_1(testWhatVec_1);

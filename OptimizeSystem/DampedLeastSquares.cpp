@@ -484,6 +484,8 @@ void DLS::DLS_superFctDLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vec
 }
 // ***
 
+
+
 void DLS::DLS_superFctDLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, defaultParaDLS defaultParameterDLS)
 {
 	mOpticalSystemEle_initial = optSysEle.getDeepCopyOptSysEle();
@@ -509,6 +511,65 @@ void DLS::DLS_superFctDLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vec
 
 	// optimize using DLS
 	optimizeSystem_DLS_multiplicativ_Damping();
+}
+
+void DLS::DLS_superFctDLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<real> /*fields X*/ fieldVec_X, std::vector<real> /*fields*/ fieldVec_Y, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, targetCardinalPointsStruct targetCardinalPoint, defaultParaDLS defaultParameterDLS)
+{
+	mOpticalSystemEle_initial = optSysEle.getDeepCopyOptSysEle();
+	mOpticaSystemEle_change = optSysEle.getDeepCopyOptSysEle();
+	mFields_X_inf_vec = fieldVec_X;
+	mFields_Y_inf_vec = fieldVec_Y;
+	mWavelenght_vec = wavelengths;
+	mRings = rings;
+	mArms = arms;
+	mTargetCardinalPoints = targetCardinalPoint;
+	mDefaultParamDLS = defaultParameterDLS;
+	mInf_Obj = objectPoint_inf_obj::inf;
+
+	// ***
+	loadAdditionalDefaultParameter();
+	buildOptSys_LLT_wave_vec();
+	mParameterVar.loadSystemParameter(mOpticalSystemEle_initial);
+	mChangedOptSys_LLT_vec = deepCopyOptSysLLT_vec(mOptSys_LLT_vec);
+	mBestOptSys_LLT_vec = deepCopyOptSysLLT_vec(mOptSys_LLT_vec);
+	resizeAllRelevantStdVectorsAndCalcConst();
+	loadWithoutMinMaxDefault();
+	loadThicknessParameter();
+	loadBestFactorBetterFactorWorstCombinations();
+	// ***
+
+	// optimize using DLS
+	optimizeSystem_DLS_multiplicativ_Damping();
+
+}
+
+void DLS::DLS_superFctDLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<real> /*fields X*/ fieldVec_X, std::vector<real> /*fields*/ fieldVec_Y, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, defaultParaDLS defaultParameterDLS)
+{
+	mOpticalSystemEle_initial = optSysEle.getDeepCopyOptSysEle();
+	mOpticaSystemEle_change = optSysEle.getDeepCopyOptSysEle();
+	mFields_X_inf_vec = fieldVec_X;
+	mFields_Y_inf_vec = fieldVec_Y;
+	mWavelenght_vec = wavelengths;
+	mRings = rings;
+	mArms = arms;
+	mDefaultParamDLS = defaultParameterDLS;
+	mInf_Obj = objectPoint_inf_obj::inf;
+
+	// ***
+	loadAdditionalDefaultParameter();
+	buildOptSys_LLT_wave_vec();
+	mParameterVar.loadSystemParameter(mOpticalSystemEle_initial);
+	mChangedOptSys_LLT_vec = deepCopyOptSysLLT_vec(mOptSys_LLT_vec);
+	mBestOptSys_LLT_vec = deepCopyOptSysLLT_vec(mOptSys_LLT_vec);
+	resizeAllRelevantStdVectorsAndCalcConst();
+	loadWithoutMinMaxDefault();
+	loadThicknessParameter();
+	loadBestFactorBetterFactorWorstCombinations();
+	// ***
+
+	// optimize using DLS
+	optimizeSystem_DLS_multiplicativ_Damping();
+
 }
 
 std::vector<OpticalSystem_LLT> DLS::deepCopyOptSysLLT_vec(std::vector<OpticalSystem_LLT> optSys_LLT_vec)

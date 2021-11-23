@@ -353,6 +353,10 @@ OpticalSystemElement OpticalSystemElement::reverseOptSysEle(OpticalSystemElement
 	unsigned int sizeOptSys = optSysEle.getPosAndElement().size();
 	OpticalSystemElement OptSys = optSysEle.getDeepCopyOptSysEle();
 
+	if (sizeOptSys < 1)
+	{
+		oftenUse::errorProtocol_stopSystem("size of optical system is smaller than one", "OpticalSystemElement.cpp", 0, true);
+	}
 
 	std::vector<real> directions_Z;
 	directions_Z.resize(sizeOptSys);
@@ -370,7 +374,8 @@ OpticalSystemElement OpticalSystemElement::reverseOptSysEle(OpticalSystemElement
 	}
 
 	// calculate thickness
-	std::vector<real> thickness(sizeOptSys);
+	std::vector<real> thickness;
+	thickness.resize(sizeOptSys);
 	thickness[0] = 0;
 	real posBefore_Z = point_Z[0];
 	real tempPos_Z;

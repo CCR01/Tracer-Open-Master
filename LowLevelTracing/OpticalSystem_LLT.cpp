@@ -5,6 +5,8 @@
 #include <qwt_plot_curve.h>
 #include "Surfaces/ApertureStop_LLT.h"
 
+// often use
+#include "..\oftenUseNamespace\oftenUseNamespace.h"
 
 // pos AS
 unsigned int infosAS::getPosAS()
@@ -520,6 +522,10 @@ void OpticalSystem_LLT::printAllOptSysParameter_LLT(OpticalSystem_LLT optSys_LLT
 
 infosAS OpticalSystem_LLT::getInforAS()
 {
+	if (mPosAndIntersectionSurfaceVector.size() < 1)
+	{
+		oftenUse::errorProtocol_stopSystem("no surface in the optical system", "OpticalSystem_LLT.cpp", 0, true);
+	}
 
 	infosAS returnInfosAS;
 

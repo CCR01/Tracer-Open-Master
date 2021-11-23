@@ -320,6 +320,16 @@ void Images::saveImage_normalized(std::string fileLocation, std::string nameImag
 
 }
 
+
+void Images::saveImage_NOTnormalized(std::string fileLocation, std::string nameImage, std::string typeIma, const cv::Mat image)
+{
+	std::string localtionAndName = fileLocation + "/" + nameImage + "." + typeIma;
+	cv::Mat imaToSave = image.clone();
+
+	cv::imwrite(localtionAndName, imaToSave);
+
+}
+
 void Images::saveImage_inputReal_multiplyBy(std::string fileLocation, std::string nameImage, std::string typeIma, const cv::Mat image, real factor)
 {
 	cv::Mat saveIma = image.clone();

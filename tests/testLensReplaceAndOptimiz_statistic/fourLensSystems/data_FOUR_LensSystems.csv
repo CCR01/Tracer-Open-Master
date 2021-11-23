@@ -5,3 +5,89 @@ merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS
 merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;45,305531;24,906121;0,000000;3,000000;1,000000;2,000000;0,000000;0,000000;0,000000;0,000000
 merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;875,081158;27,146165;2,000000;3,000000;1,000000;0,000000;0,000000;0,000000;0,000000;0,000000
 merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;81,746214;503,084203;1,000000;0,000000;3,000000;2,000000;0,000000;0,000000;0,000000;0,000000
+ 
+E1_FOUR_LensSystem
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;629,808155;24,612101;0,000000;1,000000;2,000000;3,000000;0,000000;0,000000;0,000000;0,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;5988,391224;21,228392;3,000000;2,000000;1,000000;0,000000;0,000000;0,000000;0,000000;0,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;282,779276;20,168338;3,000000;0,000000;1,000000;2,000000;0,000000;0,000000;0,000000;0,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;332,750838;23,895431;2,000000;3,000000;0,000000;1,000000;0,000000;0,000000;0,000000;0,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;62,180693;441,419233;3,000000;0,000000;2,000000;1,000000;0,000000;0,000000;0,000000;0,000000
+ 
+E16_FOUR_LensSystem
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;1168,369774;31,511380;0,000000;1,000000;2,000000;3,000000;0,000000;0,000000;0,000000;0,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;4589,090406;23,626053;3,000000;2,000000;1,000000;0,000000;0,000000;0,000000;0,000000;0,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;1263,255695;19,198009;0,000000;3,000000;2,000000;1,000000;0,000000;0,000000;0,000000;0,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;791,727251;27,234863;2,000000;1,000000;3,000000;0,000000;0,000000;0,000000;0,000000;0,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;391,570116;480,355340;2,000000;0,000000;3,000000;1,000000;0,000000;0,000000;0,000000;0,000000
+ 
+EXX_FOUR_LensSystem
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;1616,451421;25,589949;0,000000;1,000000;2,000000;3,000000;0,000000;0,000000;0,000000;0,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;289,519088;24,106822;3,000000;2,000000;1,000000;0,000000;0,000000;0,000000;0,000000;0,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;1181,387728;25,457279;2,000000;1,000000;0,000000;3,000000;0,000000;0,000000;0,000000;0,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;1426,194392;19,624079;3,000000;1,000000;0,000000;2,000000;0,000000;0,000000;0,000000;0,000000
+ 
+E0_FOUR_LensSystem
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;87,342393;4448,407438;0,000000;1,000000;2,000000;3,000000;2,000000;0,000000;0,000000;2,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;30,317014;4558,488698;3,000000;2,000000;1,000000;0,000000;0,000000;1,000000;2,000000;2,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;70,192390;4124,945806;0,000000;3,000000;1,000000;2,000000;2,000000;2,000000;1,000000;1,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;240,378398;4491,231988;2,000000;0,000000;1,000000;3,000000;1,000000;2,000000;1,000000;2,000000
+ 
+E2_FOUR_LensSystem
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;52,865354;4468,608583;0,000000;1,000000;2,000000;3,000000;2,000000;1,000000;2,000000;1,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;272,630342;4503,601722;3,000000;2,000000;1,000000;0,000000;1,000000;0,000000;1,000000;1,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;147,830393;4320,701735;0,000000;1,000000;2,000000;3,000000;0,000000;0,000000;0,000000;2,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;200,183870;5275,898490;2,000000;3,000000;0,000000;1,000000;2,000000;1,000000;1,000000;2,000000
+ 
+E4_FOUR_LensSystem
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;19,736068;4916,359756;0,000000;1,000000;2,000000;3,000000;0,000000;2,000000;1,000000;1,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;22,726475;4825,504478;3,000000;2,000000;1,000000;0,000000;1,000000;1,000000;2,000000;1,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;19,539997;4745,266720;2,000000;0,000000;1,000000;3,000000;1,000000;0,000000;1,000000;0,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;34,846943;4295,622174;1,000000;3,000000;2,000000;0,000000;0,000000;0,000000;0,000000;0,000000
+ 
+E5_FOUR_LensSystem
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;495,707902;5379,809572;0,000000;1,000000;2,000000;3,000000;2,000000;0,000000;2,000000;2,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;153,541386;5364,985699;3,000000;2,000000;1,000000;0,000000;2,000000;0,000000;2,000000;2,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;36,300284;5585,004736;1,000000;3,000000;0,000000;2,000000;1,000000;2,000000;1,000000;2,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;82,784236;5561,280733;3,000000;1,000000;0,000000;2,000000;0,000000;0,000000;0,000000;0,000000
+ 
+E8_FOUR_LensSystem
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;144,213852;4149,738906;0,000000;1,000000;2,000000;3,000000;0,000000;2,000000;2,000000;0,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;59,860810;4189,153586;3,000000;2,000000;1,000000;0,000000;2,000000;2,000000;0,000000;1,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;120,338133;3873,374308;0,000000;3,000000;2,000000;1,000000;2,000000;2,000000;2,000000;2,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;51,914216;4497,638633;3,000000;1,000000;0,000000;2,000000;1,000000;1,000000;2,000000;1,000000
+ 
+94_FOUR_LensSystem
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;129,799023;4142,841537;0,000000;1,000000;2,000000;3,000000;2,000000;2,000000;1,000000;1,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;956,781244;3727,988348;3,000000;2,000000;1,000000;0,000000;2,000000;0,000000;1,000000;0,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;111,794094;3808,256322;2,000000;0,000000;3,000000;1,000000;0,000000;1,000000;0,000000;0,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;66,999404;4212,835384;0,000000;3,000000;1,000000;2,000000;0,000000;0,000000;1,000000;0,000000
+ 
+E10_FOUR_LensSystem
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;671,931148;5270,507093;0,000000;1,000000;2,000000;3,000000;1,000000;2,000000;1,000000;2,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;118,381663;6542,843584;3,000000;2,000000;1,000000;0,000000;2,000000;2,000000;0,000000;0,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;1183,253677;5079,578256;1,000000;2,000000;0,000000;3,000000;1,000000;1,000000;1,000000;2,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;21,121229;5787,750068;3,000000;2,000000;0,000000;1,000000;0,000000;0,000000;0,000000;2,000000
+ 
+E11_FOUR_LensSystem
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;430,511402;4188,489775;0,000000;1,000000;2,000000;3,000000;2,000000;0,000000;0,000000;1,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;169,661288;3817,218574;3,000000;2,000000;1,000000;0,000000;0,000000;2,000000;2,000000;0,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;114,211291;3903,522477;1,000000;2,000000;0,000000;3,000000;1,000000;1,000000;0,000000;1,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;272,304817;4066,916271;3,000000;0,000000;1,000000;2,000000;2,000000;1,000000;1,000000;0,000000
+ 
+E15_FOUR_LensSystem
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;22,438841;4306,150950;0,000000;1,000000;2,000000;3,000000;0,000000;2,000000;2,000000;2,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;180,325450;4453,481759;3,000000;2,000000;1,000000;0,000000;1,000000;1,000000;2,000000;2,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;71,279812;3938,707273;3,000000;0,000000;1,000000;2,000000;2,000000;0,000000;1,000000;2,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;82,854316;3811,057674;2,000000;1,000000;3,000000;0,000000;0,000000;1,000000;0,000000;1,000000
+ 
+E16_FOUR_LensSystem
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;150,223822;3977,491939;0,000000;1,000000;2,000000;3,000000;2,000000;0,000000;0,000000;0,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;213,546919;3872,702722;3,000000;2,000000;1,000000;0,000000;1,000000;0,000000;0,000000;2,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;680,462783;4130,378087;0,000000;1,000000;3,000000;2,000000;0,000000;2,000000;2,000000;2,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;273,720252;3993,146861;2,000000;3,000000;1,000000;0,000000;1,000000;2,000000;1,000000;0,000000
+ 
+E19_FOUR_LensSystem
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;80,448646;5106,092100;0,000000;1,000000;2,000000;3,000000;0,000000;0,000000;0,000000;0,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;23,650076;5861,626297;3,000000;2,000000;1,000000;0,000000;1,000000;0,000000;0,000000;1,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;588,236053;6082,883450;2,000000;1,000000;3,000000;0,000000;0,000000;0,000000;2,000000;1,000000
+merit_GeneticAndDLS_12, duration_GeneticAndDLS_12, replaceSequence_GeneticAndDLS_12, bestLensNumber_GeneticAndDLS_12 ;28,730445;5165,237399;3,000000;0,000000;2,000000;1,000000;1,000000;2,000000;0,000000;0,000000

@@ -21,9 +21,9 @@ OptimizeSystemSuperFct_GeneticAndDLS::OptimizeSystemSuperFct_GeneticAndDLS(Optic
 	mObjPoint_inf_obj = objectPoint_inf_obj::obj;
 	mTargetCarPoints.setIsOneTargetCardinalPoint(false);
 	mFactorBetter_1 = 0.4;
-	mFactorWorst_1 = 2.1;
+	mFactorWorst_1 = 1.9;
 	mFactorBetter_2 = 0.2;
-	mFactorWorst_2 = 1.9;
+	mFactorWorst_2 = 2.1;
 	loadBestFactorBetterFactorWorstCombinations();
 }
 
@@ -213,7 +213,7 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 	OpticalSystemElement optSysEleThread12_1_forDLS;
 	OpticalSystemElement optSysEleThread12_2_forDLS;
 
-//omp_set_num_threads(12);
+omp_set_num_threads(12);
 #pragma omp parallel sections
 		{
 		#pragma omp section // 1
@@ -395,7 +395,7 @@ OpticalSystemElement OptimizeSystemSuperFct_GeneticAndDLS::optimizeSuperFct_Gene
 
 
 	// save the core
-	unsigned int numberDLS_optimizations = 24;
+	unsigned int numberDLS_optimizations = 12;
 	
 	mAllMeritVal_vec.resize(numberDLS_optimizations);
 

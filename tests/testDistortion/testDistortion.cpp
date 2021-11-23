@@ -39,14 +39,20 @@ bool testDistortion::testDistortion_superFuction()
 	//bool check1 = test1();
 	//test_vec.push_back(check1);
 	// test 2
-	bool check2 = test2();
-	test_vec.push_back(check2);
+	//bool check2 = test2();
+	//test_vec.push_back(check2);
 	//// test 3
 	//bool check3 = test3();
 	//test_vec.push_back(check3);
 	//test 4
 	//bool check4 = test4();
 	//test_vec.push_back(check4);
+	//test 5
+	//bool check5 = test5();
+	//test_vec.push_back(check5);
+	//test 6
+	bool check6 = test6();
+	test_vec.push_back(check6);
 
 	bool checker = Math::checkTrueOfVectorElements(test_vec);
 	return checker;
@@ -79,7 +85,7 @@ bool testDistortion::test0()
 	dis.calcDistortedIma(elefantObj_210, disIma, mapX_resized, mapY);
 
 	// just for debugging
-	 Images::showImage_inputUint8("distorted ima", disIma);
+	Images::showImage_inputUint8("distorted ima", disIma);
 
 	bool checker = Math::checkTrueOfVectorElements(test_vec);
 	return checker;
@@ -180,7 +186,7 @@ bool testDistortion::test2()
 
 	Distortion disFunc;
 	disFunc.calculateDistortion_superFunction_obj(/*image*/ imaElefant, /*optical system LLT*/ optSys, /*lght*/ light, /*sampling height*/ 75, /*sampling width*/ 150, /*hight object*/ 3.0,/*width object*/ 5.0, /*start point Z*/ 0.0);
- 
+
 
 	//// *** export distortion map
 	//cv::Mat disMap_Q0 = disFunc.getDistortionMap_Q0();
@@ -214,7 +220,7 @@ bool testDistortion::test2()
 	//test_vec.push_back(check1);
 	//test_vec.push_back(check2);
 	//test_vec.push_back(check3);
-	
+
 	//float val4 = disMap_total.at<float>(5, 10);
 	//float val4_1 = disMap_total.at<float>(heightPos - 5, widthPos - 10);
 	//bool check4 = Math::compareTwoNumbers_tolerance(val4, val4_1, tolerance);
@@ -240,15 +246,15 @@ bool testDistortion::test2()
 	//inportExportData::exportCV_MatToExcel(remapMatrix_X, location, "remapMatrix_X");
 	//cv::Mat remapMatrix_Y = disFunc.getRemap_Y();
 	//inportExportData::exportCV_MatToExcel(remapMatrix_Y, location, "remapMatrix_Y");
-	
+
 	// distorted image
 	cv::Mat distortedIma = disFunc.getDistortedImage();
-	
+
 	// save the distorted image
 	Images::saveImage_normalized(location, "distortedImageS2", "png", distortedIma);
-	
+
 	// just for debugging
-	Images::showImage_inputUint8("distortedImage", distortedIma);
+	// Images::showImage_inputUint8("distortedImage", distortedIma);
 
 	// correct distortion
 	cv::Mat disCorrectedIma = disFunc.correctDistortion();
@@ -350,7 +356,7 @@ bool testDistortion::test4()
 	SphericalSurface_LLT S6(/*radius*/5.7, /*semiHeight*/10.0, /*Apex of the sphere*/{ 0.0, 0.0, 60.1 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.5, /*refIndexSideB*/1.0);
 	PlanGeometry_LLT S7(/*semiHeight*/30.0, /*point*/{ 0.0,0.0,110.1 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
 
-	std::vector< surfacePtr> surfacePtr_vec = { S0.clone(),S1.clone(),S2.clone() ,S3.clone(),S4.clone(),S5.clone(), S6.clone(), S7.clone()};
+	std::vector< surfacePtr> surfacePtr_vec = { S0.clone(),S1.clone(),S2.clone() ,S3.clone(),S4.clone(),S5.clone(), S6.clone(), S7.clone() };
 	std::vector< interaction_ptr > interac_ptr = { doNothing.clone(), refrac.clone(), refrac.clone(), refrac.clone(),refrac.clone(), refrac.clone(), refrac.clone(), absorb.clone() };
 
 	OpticalSystem_LLT optSys;
@@ -401,8 +407,8 @@ bool testDistortion::test4()
 	// total distortion map
 	cv::Mat totalDistortionMap = disFunc.getTotalDistortionMap();
 
-	cv::Mat distortionCorrectionIma =  disFunc.correctDistortion();
-	
+	cv::Mat distortionCorrectionIma = disFunc.correctDistortion();
+
 	// just for debugging
 	Images::showImage_inputUint8("distortionCorrectionIma", distortionCorrectionIma);
 
@@ -410,3 +416,126 @@ bool testDistortion::test4()
 	return checker;
 }
 
+
+// test 5
+bool testDistortion::test5()
+{
+	std::string location = "../tests/testDistortion/s5";
+	std::vector<bool> test_vec{};
+	real tolerance = 0.001;
+
+	RefractedRay_LLT refrac{};
+	DoNothingInteraction_LLT doNothing{};
+	Absorb_LLT absorb{};
+
+	// optical system
+	//all the surfaces
+	ApertureStop_LLT S0(/*semi height*/ 1.0, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index*/ 1.0);
+	SphericalSurface_LLT S1(/*radius*/30, /*semiHeight*/10.0, /*Apex of the sphere*/{ 0.0, 0.0, 20.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
+	SphericalSurface_LLT S2(/*radius*/30.0, /*semiHeight*/10.0, /*Apex of the sphere*/{ 0.0, 0.0, 30.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
+	SphericalSurface_LLT S3(/*radius*/40.0, /*semiHeight*/10.0, /*Apex of the sphere*/{ 0.0, 0.0, 40.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
+	SphericalSurface_LLT S4(/*radius*/40.0, /*semiHeight*/10.0, /*Apex of the sphere*/{ 0.0, 0.0, 50.0 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
+	PlanGeometry_LLT S5(/*semiHeight*/10.0, /*point*/{ 0.0,0.0,100.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
+
+	std::vector< surfacePtr> surfacePtr_vec = { S0.clone(),S1.clone(),S2.clone() ,S3.clone(),S4.clone(),S5.clone() };
+	std::vector< interaction_ptr > interac_ptr = { doNothing.clone(), refrac.clone(), refrac.clone(), refrac.clone(),refrac.clone(), absorb.clone() };
+
+	OpticalSystem_LLT optSys;
+	optSys.fillOptSysWithSurfaceAndInteractions(surfacePtr_vec, interac_ptr);
+
+	// test the start system
+	bool testStartSystem = oftenUse::checkOptSysLLT_Equal_Better_Zemax(optSys, { 0.0,0.0,0.0 }, 422.821, 0.01, compareTOM_Zemax::comEqual);
+	test_vec.push_back(testStartSystem);
+
+	cv::Mat chessBoard = cv::imread("../images/gray/chessBoard640x480.png", CV_LOAD_IMAGE_GRAYSCALE);
+	Light_LLT light = oftenUse::getDefaultLight();
+
+	Distortion disFunc;
+	disFunc.calculateDistortion_superFunction_obj(/*image*/ chessBoard, /*optical system LLT*/ optSys, /*lght*/ light, /*sampling height*/ 1250, /*sampling width*/ 1667, /*hight object*/ 4.0,/*width object*/ 5.3333, /*start point Z*/ 0.0);
+
+
+	// distorted image
+	cv::Mat distortedImaChessBoard = disFunc.getDistortedImage();
+
+	// save the distorted image
+	Images::saveImage_normalized(location, "distortedImaChessBoardS5", "png", distortedImaChessBoard);
+
+	// just for debugging
+	// Images::showImage_inputUint8("distortedImage", distortedIma);
+
+	// correct distortion
+	cv::Mat disCorrectedIma = disFunc.correctDistortion();
+	// just for debugging
+	// Images::showImage_inputUint8("distortion corrected ima", disCorrectedIma);
+
+	Images::saveImage_normalized(location, "distortedCorrectedImaChessBoardS5", "png", disCorrectedIma);
+
+
+	bool checker = Math::checkTrueOfVectorElements(test_vec);
+	return checker;
+}
+
+// test 6
+bool testDistortion::test6()
+{
+	std::string location = "../tests/testDistortion/s6";
+	std::vector<bool> test_vec{};
+	real tolerance = 0.001;
+
+	RefractedRay_LLT refrac{};
+	DoNothingInteraction_LLT doNothing{};
+	Absorb_LLT absorb{};
+
+	// optical system
+	//all the surfaces
+	ApertureStop_LLT S0(/*semi height*/ 1.0, /*point*/{ 0.0,0.0,10.0 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractive index*/ 1.0);
+	PlanGeometry_LLT S1(/*semiHeight*/10.0, /*point*/{ 0.0,0.0,10.1 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.5);
+	SphericalSurface_LLT S2(/*radius*/10.0, /*semiHeight*/10.0, /*Apex of the sphere*/{ 0.0, 0.0, 20.1 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, -1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
+	SphericalSurface_LLT S3(/*radius*/15.6, /*semiHeight*/10.0, /*Apex of the sphere*/{ 0.0, 0.0, 30.1 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
+	SphericalSurface_LLT S4(/*radius*/30.0, /*semiHeight*/10.0, /*Apex of the sphere*/{ 0.0, 0.0, 40.1 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.5, /*refIndexSideB*/1.0);
+	SphericalSurface_LLT S5(/*radius*/10.0, /*semiHeight*/10.0, /*Apex of the sphere*/{ 0.0, 0.0, 50.1 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.0, /*refIndexSideB*/1.5);
+	SphericalSurface_LLT S6(/*radius*/5.7, /*semiHeight*/10.0, /*Apex of the sphere*/{ 0.0, 0.0, 60.1 }, /*Direction*/ VectorStructR3{ 0.0, 0.0, 1.0 }, /*refIndexSideA*/1.5, /*refIndexSideB*/1.0);
+	PlanGeometry_LLT S7(/*semiHeight*/30.0, /*point*/{ 0.0,0.0,110.1 }, /*direction*/{ 0.0,0.0,1.0 }, /*refractiveSideA*/ 1.0, /*refractiveSideB*/ 1.0);
+
+	std::vector< surfacePtr> surfacePtr_vec = { S0.clone(),S1.clone(),S2.clone() ,S3.clone(),S4.clone(),S5.clone(), S6.clone(), S7.clone() };
+	std::vector< interaction_ptr > interac_ptr = { doNothing.clone(), refrac.clone(), refrac.clone(), refrac.clone(),refrac.clone(), refrac.clone(), refrac.clone(), absorb.clone() };
+
+	OpticalSystem_LLT optSys;
+	optSys.fillOptSysWithSurfaceAndInteractions(surfacePtr_vec, interac_ptr);
+
+	// test the start system
+	bool testStartSystem = oftenUse::checkOptSysLLT_Equal_Better_Zemax(optSys, { 0.0,0.0,0.0 }, 19.527, 0.01, compareTOM_Zemax::comEqual);
+	test_vec.push_back(testStartSystem);
+
+
+
+	cv::Mat checkBoard = cv::imread("../images/gray/chessBoard640x480.png", CV_LOAD_IMAGE_GRAYSCALE);
+	Light_LLT light = oftenUse::getDefaultLight();
+
+	Distortion disFunc;
+	disFunc.calculateDistortion_superFunction_obj(/*image*/ checkBoard, /*optical system LLT*/ optSys, /*lght*/ light,  /*sampling height*/ 1250, /*sampling width*/ 1667,  /*hight object*/ 3.0,/*width object*/ 4.0, /*start point Z*/ 0.0);
+
+
+	// distorted image
+	cv::Mat distortedIma = disFunc.getDistortedImage();
+
+	// save the distorted image
+	Images::saveImage_normalized(location, "distortedImageS6", "png", distortedIma);
+
+	// just for debugging
+	//Images::showImage_inputUint8("distortedImage", distortedIma);
+
+	// total distortion map
+	cv::Mat totalDistortionMap = disFunc.getTotalDistortionMap();
+
+	cv::Mat distortionCorrectionIma = disFunc.correctDistortion();
+
+	// save the distorted image
+	Images::saveImage_normalized(location, "distortionCorrectionImaS6", "png", distortionCorrectionIma);
+
+	// just for debugging
+	//Images::showImage_inputUint8("distortionCorrectionIma", distortionCorrectionIma);
+
+	bool checker = Math::checkTrueOfVectorElements(test_vec);
+	return checker;
+}

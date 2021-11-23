@@ -86,13 +86,13 @@ private:
 struct saveLRaO_GeneticAndDLS_12_statistic
 {
 public:
-	
+
 	void setMeritVal_GeneticAndDLS_12(real meritValGeneticAndDLS12);
 	real getMeritVaL_GeneticAndDLS_12();
 
 	void setDurationTime_GeneticAndDLS_12(real DurationTimeGeneticAndDLS12);
 	real getDurationTime_GeneticAndDLS_12();
-	
+
 	void setReplaceSequence_GeneticAndDLS(std::vector<unsigned int> repSeq_vec);
 	std::vector<unsigned int> getReplacedSequence_GeneticAndDLS12();
 

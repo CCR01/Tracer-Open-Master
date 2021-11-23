@@ -348,6 +348,8 @@ public:
 
 	void checkForThicknessVariablesInSurroundingMaterialAndAdjust();
 
+
+
 private:
 	OpticalSystemElement mOpticalSystemEle;
 	OpticalSystemElement mOpticalSystemEle_replaceLens;

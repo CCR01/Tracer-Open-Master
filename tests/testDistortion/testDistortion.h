@@ -20,8 +20,10 @@ public:
 	bool test3();
 	// test 4
 	bool test4();
-
-
+	// test 5
+	bool test5();
+	// test 6
+	bool test6();
 
 private:
 

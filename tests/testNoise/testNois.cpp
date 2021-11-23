@@ -6,9 +6,11 @@
 // images
 #include "..\..\Image\Images.h"
 
+// often use
+#include "..\..\oftenUseNamespace\oftenUseNamespace.h"
 
 
-testNoise::testNoise() 
+testNoise::testNoise()
 {
 	loadCameraParameter();
 }
@@ -18,64 +20,31 @@ testNoise::~testNoise() {}
 void testNoise::loadCameraParameter()
 {
 	// VistecEco655
-	mCaraPara_VistecEco655.setgQWC(12000.0);
-	mCaraPara_VistecEco655.setgPS(5.3);
-	mCaraPara_VistecEco655.setgDS(38);
-	mCaraPara_VistecEco655.setgDS_dt(9.7);
-	mCaraPara_VistecEco655.setgDSNU(21.0);
-	mCaraPara_VistecEco655.setgDSNU_dt(9.4);
-	mCaraPara_VistecEco655.setgPRNU(1.5);
-	mCaraPara_VistecEco655.setgRON(15.0);
-	mCaraPara_VistecEco655.setgEta400(0.6);
-	mCaraPara_VistecEco655.setgEta500(0.7);
-	mCaraPara_VistecEco655.setgEta600(0.7);
-	mCaraPara_VistecEco655.setgEta700(0.6);
-	mCaraPara_VistecEco655.setgEta800(0.5);
-	mCaraPara_VistecEco655.setgEta900(0.3);
-	mCaraPara_VistecEco655.setgADCFaktor(0.085);
-	mCaraPara_VistecEco655.setgASCDynamik(10);
-	mCaraPara_VistecEco655.setgNonlinearity(1.0);
-	mCaraPara_VistecEco655.setgMin(100.0);
-	mCaraPara_VistecEco655.setgMax(900.0);
+	mCamPara_VistecEco655 = oftenUse::getCamPara_VistecEco655();
 
 	// Ximea
-	mCaraPara_Ximea.setgQWC(12000.0);
-	mCaraPara_Ximea.setgPS(5.3);
-	mCaraPara_Ximea.setgDS(25);
-	mCaraPara_Ximea.setgDS_dt(9.7);
-	mCaraPara_Ximea.setgDSNU(6.0);
-	mCaraPara_Ximea.setgDSNU_dt(9.4);
-	mCaraPara_Ximea.setgPRNU(1.0);
-	mCaraPara_Ximea.setgRON(15.0);
-	mCaraPara_Ximea.setgEta400(0.55);
-	mCaraPara_Ximea.setgEta500(0.6);
-	mCaraPara_Ximea.setgEta600(0.58);
-	mCaraPara_Ximea.setgEta700(0.46);
-	mCaraPara_Ximea.setgEta800(0.3);
-	mCaraPara_Ximea.setgEta900(0.15);
-	mCaraPara_Ximea.setgADCFaktor(0.085);
-	mCaraPara_Ximea.setgASCDynamik(10);
-	mCaraPara_Ximea.setgNonlinearity(1.0);
-	mCaraPara_Ximea.setgMin(100.0);
-	mCaraPara_Ximea.setgMax(900.0);
-
+	mCamPara_Ximea = oftenUse::getCamPara_Ximea();
 }
 
 bool testNoise::testNoise_superFct()
 {
 	std::vector<bool> test_vec;
 
-	//E0
-	bool checkE0 = testNoise_E0();
-	test_vec.push_back(checkE0);
-
-	// E1
-	bool checkE1 = testNoise_E1();
-	test_vec.push_back(checkE1);
+	////E0
+	//bool checkE0 = testNoise_E0();
+	//test_vec.push_back(checkE0);
 	//
-	// E2
-	bool checkE2 = testNoise_E2();
-	test_vec.push_back(checkE2);
+	//// E1
+	//bool checkE1 = testNoise_E1();
+	//test_vec.push_back(checkE1);
+	////
+	//// E2
+	//bool checkE2 = testNoise_E2();
+	//test_vec.push_back(checkE2);
+
+	// E3
+	bool checkE3 = testNoise_E3();
+	test_vec.push_back(checkE3);
 
 	bool returnChecker = Math::checkTrueOfVectorElements(test_vec);
 	return returnChecker;
@@ -96,7 +65,7 @@ bool testNoise::testNoise_E0()
 
 
 	Noise noise;
-	noise.noiseSuperFunction_grayImage(greyMat,mCaraPara_VistecEco655,21,0.002,/*Frage: welcher Wert passt hier*/ 0.035,550.0, true);
+	noise.noiseSuperFunction_grayImage(greyMat, mCamPara_VistecEco655, 21, 0.002,/*Frage: welcher Wert passt hier*/ 0.035, 550.0, true);
 
 	cv::Mat imageWithNoise = noise.getImageWithNoise_Gray_uint8_normed();
 
@@ -121,12 +90,12 @@ bool testNoise::testNoise_E0()
 
 	int valInitialIma_1 = greyMat.at<uchar>(2, 12);
 	int valNoiseIma_1 = imageWithNoise.at<uchar>(2, 12);
-	bool check_1 = valInitialIma_1 !=valNoiseIma_1;
+	bool check_1 = valInitialIma_1 != valNoiseIma_1;
 	compare.push_back(check_1);
 
 	int valInitialIma_2 = greyMat.at<uchar>(13, 55);
 	int valNoiseIma_2 = imageWithNoise.at<uchar>(13, 55);
-	bool check_2 = valInitialIma_2 !=valNoiseIma_2;
+	bool check_2 = valInitialIma_2 != valNoiseIma_2;
 	compare.push_back(check_2);
 
 	int valInitialIma_3 = greyMat.at<uchar>(85, 66);
@@ -141,7 +110,7 @@ bool testNoise::testNoise_E0()
 
 	int valInitialIma_5 = greyMat.at<uchar>(21, 52);
 	int valNoiseIma_5 = imageWithNoise.at<uchar>(21, 52);
-	bool check_5 = valInitialIma_5 !=valNoiseIma_5;
+	bool check_5 = valInitialIma_5 != valNoiseIma_5;
 	compare.push_back(check_5);
 
 
@@ -150,7 +119,7 @@ bool testNoise::testNoise_E0()
 	{
 		if (compare[i] == true)
 		{
-			tureCouner = ++ tureCouner;
+			tureCouner = ++tureCouner;
 		}
 	}
 
@@ -180,7 +149,7 @@ bool testNoise::testNoise_E1()
 	//std::string cameraParametes = "../tests/testNoise(E0/ximea.txt";
 
 	Noise noiseE1;
-	noiseE1.noiseSuperFunction_grayImage(greyMat, mCaraPara_Ximea, 21, 0.002,/*Frage: welcher Wert passt hier*/ 0.035, 550.0, true);
+	noiseE1.noiseSuperFunction_grayImage(greyMat, mCamPara_Ximea, 21, 0.002,/*Frage: welcher Wert passt hier*/ 0.035, 550.0, true);
 
 	cv::Mat imageWithNoise = noiseE1.getImageWithNoise_Gray_uint8_normed();
 
@@ -256,14 +225,14 @@ bool testNoise::testNoise_E2()
 	std::vector<bool> test_vec;
 	std::string location = "../tests/testNoise/E2";
 
-	// load gray image
+	// load color image
 	std::string locationImagesColor = "../images/color/useThatImages/useThat/elefant_sharp_250x188.png";
 	cv::Mat colorMat = cv::imread(locationImagesColor, cv::IMREAD_COLOR); // Source image
 	//std::string cameraParametes = "../tests/testNoise(E0/ximea.txt";
 
 	Noise noise;
 	std::vector<float> wavelength{ 400.0, 550.0, 700.0 };
-	noise.noiseSuperFunction_colorImage(colorMat, mCaraPara_Ximea, 21, 0.002,/*Frage: welcher Wert passt hier*/ 0.035, wavelength, true);
+	noise.noiseSuperFunction_colorImage(colorMat, mCamPara_Ximea, 21, 0.002,/*Frage: welcher Wert passt hier*/ 0.035, wavelength, true);
 
 	cv::Mat imageWithNoise = noise.getImageWithNoise_Color_uint8_normed();
 
@@ -326,6 +295,39 @@ bool testNoise::testNoise_E2()
 	{
 		test_vec.push_back(false);
 	}
+
+	bool returnChecker = Math::checkTrueOfVectorElements(test_vec);
+	return returnChecker;
+}
+
+//E3
+bool testNoise::testNoise_E3()
+{
+	std::vector<bool> test_vec;
+	std::string location = "../tests/testNoise/E3";
+
+	// load color image
+	std::string locationImagesColor = "../images/color/useThatImages/useThat/manyFlowers_sharp.jpg";
+	cv::Mat colorMat = cv::imread(locationImagesColor, cv::IMREAD_COLOR); // Source image
+	//std::string cameraParametes = "../tests/testNoise(E0/ximea.txt";
+
+	Noise noise;
+	std::vector<float> wavelength{ 500.0, 500.0, 500.0 };
+	noise.noiseSuperFunction_colorImage(colorMat, mCamPara_VistecEco655, 21, 0.002,/*Frage: welcher Wert passt hier*/ 0.035, wavelength, true);
+
+	cv::Mat imageWithNoise = noise.getImageWithNoise_Color_uint8_normed();
+
+	// save the image
+	Images::saveImage_normalized(location, "imageWithNoise", "png", imageWithNoise);
+
+	// make noise visable
+	cv::Mat noiseImage = colorMat - imageWithNoise;
+	//cv::normalize(noiseImage, noiseImage, 0, 255, cv::NORM_MINMAX);
+	Images::saveImage_normalized(location, "noiseVisable_normalized", "png", noiseImage);
+	Images::saveImage_NOTnormalized(location, "noiseVisable_NOTnormalized", "png", noiseImage);
+
+
+
 
 	bool returnChecker = Math::checkTrueOfVectorElements(test_vec);
 	return returnChecker;

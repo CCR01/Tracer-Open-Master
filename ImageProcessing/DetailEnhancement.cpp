@@ -259,7 +259,7 @@ void DetailEnhancement_BGR_parallel::findBestParameter_DE_parallel()
 	mImprovement_vec.resize(24);
 	mSharpness_vec.resize(24);
 
-	omp_set_num_threads(24);
+omp_set_num_threads(24);
 #pragma omp parallel
 	{
 #pragma omp sections

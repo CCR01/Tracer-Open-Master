@@ -115,10 +115,15 @@ public:
 	~DLS();
 
 
-	// *** obj
+	// *** obj ***
 	void DLS_superFctDLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, targetCardinalPointsStruct targetCardinalPoint, defaultParaDLS defaultParameterDLS);
 	void DLS_superFctDLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, defaultParaDLS defaultParameterDLS);
-	// ***
+	// *** ***
+
+	// *** inf ***
+	void DLS_superFctDLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<real> /*fields X*/ fieldVec_X, std::vector<real> /*fields*/ fieldVec_Y, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, targetCardinalPointsStruct targetCardinalPoint, defaultParaDLS defaultParameterDLS);
+	void DLS_superFctDLS(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<real> /*fields X*/ fieldVec_X, std::vector<real> /*fields*/ fieldVec_Y, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, defaultParaDLS defaultParameterDLS);
+	// *** ***
 
 	void buildAndLoad(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms, defaultParaDLS defaultParameterDLS);
 	std::vector<OpticalSystem_LLT> deepCopyOptSysLLT_vec(std::vector<OpticalSystem_LLT> optSys_LLT_vec);

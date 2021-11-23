@@ -197,7 +197,7 @@ void ImaProcSuperFct::ImageProcessingSuperFunction(cv::Mat& inputIma, cv::Mat& b
 		unsharpMasking_24_Second.setParameterUM_green(mParaUnsMas_green);
 		unsharpMasking_24_Second.setParameterUM_red(mParaUnsMas_red);
 
-		unsharpMasking_24_Second.improveImaQual_UnsharpMasking_superFct_BGR_parallel(mInputIma, tempFilteredImages);
+		unsharpMasking_24_Second.improveImaQual_UnsharpMasking_superFct_BGR_parallel(mInputIma, mBlueredIma);
 		tempFilteredImages = unsharpMasking_24_Second.getFilteredResults_normedZeroAndMaxUchar();
 
 		mBestParaUnsMas_blue = unsharpMasking_24_Second.getBestParameter_blue();
@@ -246,8 +246,11 @@ void ImaProcSuperFct::ImageProcessingSuperFunction(cv::Mat& inputIma, cv::Mat& b
 		reinitializeBestParaWD(reinizializePrecent, mParaWD_blue.getStepsSNR() / devideStepsByFactorForSecondSearch, mParaWD_blue.getStepsSigmaXY() / devideStepsByFactorForSecondSearch);
 		
 		WienerDeconvolutionSF_parallel_BGR wienerDeconParallelBGR_Second;
+		wienerDeconParallelBGR_Second.setParameterWD_Global_blue(mParaWD_blue);
+		wienerDeconParallelBGR_Second.setParameterWD_Global_green(mParaWD_green);
+		wienerDeconParallelBGR_Second.setParameterWD_Global_red(mParaWD_red);
+
 		wienerDeconParallelBGR_Second.improveImaQual_WD_superFct_BGR_parallel(mInputIma, tempFilteredImages);
-		
 		mBestParaWD_blue = wienerDeconParallelBGR_Second.getBestParameter_blue();
 		mBestParaWD_green = wienerDeconParallelBGR_Second.getBestParameter_green();
 		mBestParaWD_red = wienerDeconParallelBGR_Second.getBestParameter_red();

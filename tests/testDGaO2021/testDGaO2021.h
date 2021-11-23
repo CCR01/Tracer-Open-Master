@@ -78,6 +78,72 @@ public:
 	bool E1_improveImageQuality_AllPossibleSequences();
 	// *** ***
 
+	// *** E2 ***
+	bool checkE2_DGaO2021();
+	bool E2_checkStartSystem();
+	bool E2_checkOptimizeStartSystem_DoOptimization();
+	bool E2_loadFirstOptimizedSystem();
+	bool E2_lensReplaceAllSequences();
+	bool E2_loadReplacedSystemAllSequences();
+	bool E2_imageSimulationWithReplacesSysAllSequences();
+	// filtering sharp image
+	bool E2_improveImageQuality_AllPossibleSequences_refImage_UM_DE_WD();
+	bool E2_improveImageQuality_AllPossibleSequences_refImage_UM();
+	bool E2_improveImageQuality_AllPossibleSequences_refImage_DE();
+	bool E2_improveImageQuality_AllPossibleSequences_refImage_WD();
+	// filtering blur and noise
+	bool E2_improveImageQuality_AllPossibleSequences_BlurAndNois_UM_DE_WD();
+	bool E2_improveImageQuality_AllPossibleSequences_BlurAndNois_UM();
+	bool E2_improveImageQuality_AllPossibleSequences_BlurAndNois_DE();
+	bool E2_improveImageQuality_AllPossibleSequences_BlurAndNois_WD();
+	// *** ***
+
+	// *** E3 ***
+	bool checkE3_DGaO2021();
+	bool E3_checkStartSystem();
+	bool E3_checkOptimizeStartSystem_DoOptimization();
+	bool E3_lensReplace();
+	bool E3_loadReplaceSystemLeftToRight();
+	bool E3_doImageSimulation_replayedSysLeftToRight();
+	// filtering sharp image
+	bool E3_improveImageQuality_AllPossibleSequences_refImage_UM_DE_WD();
+	bool E3_improveImageQuality_AllPossibleSequences_refImage_UM();
+	bool E3_improveImageQuality_AllPossibleSequences_refImage_DE();
+	bool E3_improveImageQuality_AllPossibleSequences_refImage_WD();
+	// filtering blur and noise
+	bool E3_improveImageQuality_AllPossibleSequences_BlurAndNoise_UM_DE_WD();
+	bool E3_improveImageQuality_AllPossibleSequences_BlurAndNois_UM();
+	bool E3_improveImageQuality_AllPossibleSequences_BlurAndNois_DE();
+	bool E3_improveImageQuality_AllPossibleSequences_BlurAndNois_WD();
+	// *** *** //
+
+	// *** E4 ***
+	bool checkE4_superFct();
+	bool E4_checkStartSystem();
+	bool E4_checkOptimizeStartSystem_DoOptimization();
+	bool E4_loadOptimizedSystemFirst();
+	bool E4_lensReplace();
+	// *** *** //
+
+	// *** E21 ***
+	bool checkE21_fromStatLensRepl_threeLensSys();
+	bool loadBestReplaceSystemE21_mono();
+	bool optimizeThicknessesAirSpace_poly();
+	bool loadReplacedSysE21_poly();
+	bool doImageSimulationE21_poly();
+	// filtering sharp image
+	bool E21_improveImageQuality_AllPossibleSequences_refImage_UM_DE_WD();
+	bool E21_improveImageQuality_AllPossibleSequences_refImage_UM();
+	bool E21_improveImageQuality_AllPossibleSequences_refImage_DE();
+	bool E21_improveImageQuality_AllPossibleSequences_refImage_WD();
+	// filtering blur and noise
+	bool E21_improveImageQuality_AllPossibleSequences_BlurAndNoise_UM_DE_WD();
+	bool E21_improveImageQuality_AllPossibleSequences_BlurAndNois_UM();
+	bool E21_improveImageQuality_AllPossibleSequences_BlurAndNois_DE();
+	bool E21_improveImageQuality_AllPossibleSequences_BlurAndNois_WD();
+
+
+
 private:
 
 	// *** E0 ***
@@ -100,6 +166,47 @@ private:
 	std::string mLocation_E1{};
 	std::string mLocation_E1_LeftToRight{};
 	std::string mLocation_E1_allSequences{};
+	std::string mLocation_E2;
+	std::string mLocation_E2_allSequences;
+	// *** ***
+
+	// *** E2 ***
+	OpticalSystemElement mStartOpticalSystem_E2{};
+	OpticalSystemElement mOptimizedOpticalSystemEle_E2{};
+	OpticalSystemElement mReplacedOpticalSystemEle_E2_allSequences{};
+	// *** ***
+
+	// *** E3 ***
+	OpticalSystemElement mStartOpticalSystem_E3{};
+	OpticalSystemElement mOptimizedOpticalSystemEle_E3{};
+	OpticalSystemElement mReplacedOpticalSystemEle_E3_leftToRight{};
+	std::string mLocationE3{};
+	VectorStructR3 mField_0{};
+	VectorStructR3 mField_176{};
+	VectorStructR3 mField_250{};
+	std::vector<VectorStructR3> mField_E3_vec{};
+	targetCardinalPointsStruct mTargetCarPoints_E3{};
+	std::string mLocation_E3_leftToRight;
+	// *** ***
+
+	// *** E4 ***
+	std::string mLocation_E4{};
+	OpticalSystemElement mStartOpticalSystem_E4{};
+	OpticalSystemElement mOptimizedOpticalSystemEle_E4{};
+	VectorStructR3 mField_17_67{};
+	VectorStructR3 mField_25{};
+	std::vector<VectorStructR3> mField_E4_vec{};
+	targetCardinalPointsStruct mTargetCarPoints_E4{};
+	// *** ***
+
+	// *** E21 ***
+	OpticalSystemElement mReplacedOpticalSystemEle_E21_allSequences_mono{};
+	OpticalSystemElement mReplacedOpticalSystemEle_E21_allSequences_poly{};
+	std::string mLocationE21{};
+	VectorStructR3 mField_E21_0{};
+	VectorStructR3 mField_E21_283{};
+	VectorStructR3 mField_E21_4{};
+	std::vector<VectorStructR3> mField_E21_vec{};
 	// *** ***
 
 	// load glass catalog
@@ -120,11 +227,14 @@ private:
 	std::vector<Light_LLT> mLight_FdC_Vec{};
 
 
+
 	// field obj
 	VectorStructR3 mField0{};
 	VectorStructR3 mField707{};
 	VectorStructR3 mField1000{};
 	std::vector<VectorStructR3> mField_vec{};
+
+
 
 	real mTolerance{};
 	unsigned int mRings{};

@@ -36,6 +36,7 @@ namespace Images
 
 	// save an image
 	void saveImage_normalized(std::string fileLocation, std::string nameImage, std::string typeIma, const cv::Mat image);
+	void saveImage_NOTnormalized(std::string fileLocation, std::string nameImage, std::string typeIma, const cv::Mat image);
 	void saveImage_inputReal_multiplyBy(std::string fileLocation, std::string nameImage, std::string typeIma, const cv::Mat image, real factor);
 	void saveImage_inputReal_normByROI_percent(std::string fileLocation, std::string nameImage, std::string typeIma, const cv::Mat image, real percent);
 	void saveImage_inputUN8C3_normByROI_percent(std::string fileLocation, std::string nameImage, std::string typeIma, const cv::Mat image, real percent);

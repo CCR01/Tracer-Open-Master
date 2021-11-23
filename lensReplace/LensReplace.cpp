@@ -2099,6 +2099,26 @@ std::vector<OptSysEle_Merit_LensType> LensReplace::getBestOptSys(std::vector<Opt
 		bestMetchOptSys_vec[numSys].setPositionInBestMatchLensVec(numSys);
 		optSysEle_merit_lensType_vec[counter].setMerit(oftenUse::getInfReal());
 		bestMeritValue = oftenUse::getInfReal();
+
+		// check if the lenses have the same parameters
+		if (numSys > 1)
+		{
+			bool checkLensSamePara = oftenUse::checkOpticalSystemsSameParameter(bestMetchOptSys_vec[numSys-1].getOptSysEle(), bestMetchOptSys_vec[numSys].getOptSysEle());
+
+			if (checkLensSamePara)
+			{
+				std::string numberLens1 = bestMetchOptSys_vec[numSys - 1].getCatalogNumber();
+				std::string numberLens2 = bestMetchOptSys_vec[numSys].getCatalogNumber();
+
+				std::cout << "two lenses have the same parameter" << std::endl;
+				std::cout << "we used lens: " << numberLens1 << " instead of: " << numberLens2 << std::endl;
+
+				--numSys;
+			}
+		}
+		
+
+
 	}
 
 	return bestMetchOptSys_vec;

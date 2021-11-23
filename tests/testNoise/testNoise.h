@@ -19,12 +19,13 @@ public:
 	bool testNoise_E1();
 	//E2
 	bool testNoise_E2();
-
+	//E3
+	bool testNoise_E3();
 
 private:
-	
-	cameraParameterStruct mCaraPara_VistecEco655;
-	cameraParameterStruct mCaraPara_Ximea;
+
+	cameraParameterStruct mCamPara_VistecEco655;
+	cameraParameterStruct mCamPara_Ximea;
 
 };
 

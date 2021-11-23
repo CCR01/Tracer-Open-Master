@@ -1,5 +1,5 @@
 #include "DLS_mulitThreads12.h"
-
+#include <omp.h>
 
 DLS_multiThreads_12::DLS_multiThreads_12(){}
 DLS_multiThreads_12::DLS_multiThreads_12(OpticalSystemElement /*optSysEle*/ optSysEle, std::vector<VectorStructR3> /*fields*/ fields, std::vector<real> /*wavelengths*/ wavelengths, unsigned int /*rings*/ rings, unsigned int /*arms*/ arms):
@@ -121,6 +121,7 @@ OpticalSystemElement DLS_multiThreads_12::DLS_optimisation_multiThreads_12_obj()
 	mBestOptSysEle_vec.resize(numberThreads);
 	//mOpticalSystemElement_start.getOptSys_LLT_buildSystem();
 
+omp_set_num_threads(numberThreads);
 #pragma omp parallel sections
 	{
 	#pragma omp section // 1
@@ -336,6 +337,7 @@ OpticalSystemElement DLS_multiThreads_12::DLS_optimisation_multiThreads_12_inf()
 			DLS DLS_1(/*optSysEle*/ optSysEle_1, /*angleX*/ mAnglesX, /*angleY*/ mAnglesY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultParameterDLS);
 			DLS_1.setFactorGettingBetter(mFactorBetter_vec[0]);
 			DLS_1.setFactorGettingWorst(mFactorWorst_vec[0]);
+			DLS_1.turnOffImaProc();
 			std::cout << "start DLS core 1" << std::endl;
 			DLS_1.optimizeSystem_DLS_multiplicativ_Damping();
 			std::cout << "thread 1 completed" << std::endl;
@@ -350,6 +352,7 @@ OpticalSystemElement DLS_multiThreads_12::DLS_optimisation_multiThreads_12_inf()
 			DLS DLS_2(/*optSysEle*/ optSysEle_2, /*angleX*/ mAnglesX, /*angleY*/ mAnglesY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultParameterDLS);
 			DLS_2.setFactorGettingBetter(mFactorBetter_vec[1]);
 			DLS_2.setFactorGettingWorst(mFactorWorst_vec[1]);
+			DLS_2.turnOffImaProc();
 			std::cout << "start DLS core 2" << std::endl;
 			DLS_2.optimizeSystem_DLS_multiplicativ_Damping();
 			std::cout << "thread 2 completed" << std::endl;
@@ -364,6 +367,7 @@ OpticalSystemElement DLS_multiThreads_12::DLS_optimisation_multiThreads_12_inf()
 			DLS DLS_3(/*optSysEle*/ optSysEle_3, /*angleX*/ mAnglesX, /*angleY*/ mAnglesY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultParameterDLS);
 			DLS_3.setFactorGettingBetter(mFactorBetter_vec[2]);
 			DLS_3.setFactorGettingWorst(mFactorWorst_vec[2]);
+			DLS_3.turnOffImaProc();
 			std::cout << "start DLS core 3" << std::endl;
 			DLS_3.optimizeSystem_DLS_multiplicativ_Damping();
 			std::cout << "thread 3 completed" << std::endl;
@@ -378,6 +382,7 @@ OpticalSystemElement DLS_multiThreads_12::DLS_optimisation_multiThreads_12_inf()
 			DLS DLS_4(/*optSysEle*/ optSysEle_4, /*angleX*/ mAnglesX, /*angleY*/ mAnglesY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultParameterDLS);
 			DLS_4.setFactorGettingBetter(mFactorBetter_vec[3]);
 			DLS_4.setFactorGettingWorst(mFactorWorst_vec[3]);
+			DLS_4.turnOffImaProc();
 			std::cout << "start DLS core 4" << std::endl;
 			DLS_4.optimizeSystem_DLS_multiplicativ_Damping();
 			std::cout << "thread 4 completed" << std::endl;
@@ -392,6 +397,7 @@ OpticalSystemElement DLS_multiThreads_12::DLS_optimisation_multiThreads_12_inf()
 			DLS DLS_5(/*optSysEle*/ optSysEle_5, /*angleX*/ mAnglesX, /*angleY*/ mAnglesY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultParameterDLS);
 			DLS_5.setFactorGettingBetter(mFactorBetter_vec[4]);
 			DLS_5.setFactorGettingWorst(mFactorWorst_vec[4]);
+			DLS_5.turnOffImaProc();
 			std::cout << "start DLS core 5" << std::endl;
 			DLS_5.optimizeSystem_DLS_multiplicativ_Damping();
 			std::cout << "thread 5 completed" << std::endl;
@@ -406,6 +412,7 @@ OpticalSystemElement DLS_multiThreads_12::DLS_optimisation_multiThreads_12_inf()
 			DLS DLS_6(/*optSysEle*/ optSysEle_6, /*angleX*/ mAnglesX, /*angleY*/ mAnglesY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultParameterDLS);
 			DLS_6.setFactorGettingBetter(mFactorBetter_vec[5]);
 			DLS_6.setFactorGettingWorst(mFactorWorst_vec[5]);
+			DLS_6.turnOffImaProc();
 			std::cout << "start DLS core 6" << std::endl;
 			DLS_6.optimizeSystem_DLS_multiplicativ_Damping();
 			std::cout << "thread 6 completed" << std::endl;
@@ -420,6 +427,7 @@ OpticalSystemElement DLS_multiThreads_12::DLS_optimisation_multiThreads_12_inf()
 			DLS DLS_7(/*optSysEle*/ optSysEle_7, /*angleX*/ mAnglesX, /*angleY*/ mAnglesY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultParameterDLS);
 			DLS_7.setFactorGettingBetter(mFactorBetter_vec[6]);
 			DLS_7.setFactorGettingWorst(mFactorWorst_vec[6]);
+			DLS_7.turnOffImaProc();
 			std::cout << "start DLS core 7" << std::endl;
 			DLS_7.optimizeSystem_DLS_multiplicativ_Damping();
 			std::cout << "thread 7 completed" << std::endl;
@@ -434,6 +442,7 @@ OpticalSystemElement DLS_multiThreads_12::DLS_optimisation_multiThreads_12_inf()
 			DLS DLS_8(/*optSysEle*/ optSysEle_8, /*angleX*/ mAnglesX, /*angleY*/ mAnglesY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultParameterDLS);
 			DLS_8.setFactorGettingBetter(mFactorBetter_vec[7]);
 			DLS_8.setFactorGettingWorst(mFactorWorst_vec[7]);
+			DLS_8.turnOffImaProc();
 			std::cout << "start DLS core 8" << std::endl;
 			DLS_8.optimizeSystem_DLS_multiplicativ_Damping();
 			std::cout << "thread 8 completed" << std::endl;
@@ -448,6 +457,7 @@ OpticalSystemElement DLS_multiThreads_12::DLS_optimisation_multiThreads_12_inf()
 			DLS DLS_9(/*optSysEle*/ optSysEle_9, /*angleX*/ mAnglesX, /*angleY*/ mAnglesY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultParameterDLS);
 			DLS_9.setFactorGettingBetter(mFactorBetter_vec[8]);
 			DLS_9.setFactorGettingWorst(mFactorWorst_vec[8]);
+			DLS_9.turnOffImaProc();
 			std::cout << "start DLS core 9" << std::endl;
 			DLS_9.optimizeSystem_DLS_multiplicativ_Damping();
 			std::cout << "thread 9 completed" << std::endl;
@@ -462,6 +472,7 @@ OpticalSystemElement DLS_multiThreads_12::DLS_optimisation_multiThreads_12_inf()
 			DLS DLS_10(/*optSysEle*/ optSysEle_10, /*angleX*/ mAnglesX, /*angleY*/ mAnglesY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultParameterDLS);
 			DLS_10.setFactorGettingBetter(mFactorBetter_vec[9]);
 			DLS_10.setFactorGettingWorst(mFactorWorst_vec[9]);
+			DLS_10.turnOffImaProc();
 			std::cout << "start DLS core 10" << std::endl;
 			DLS_10.optimizeSystem_DLS_multiplicativ_Damping();
 			std::cout << "thread 10 completed" << std::endl;
@@ -476,6 +487,7 @@ OpticalSystemElement DLS_multiThreads_12::DLS_optimisation_multiThreads_12_inf()
 			DLS DLS_11(/*optSysEle*/ optSysEle_11, /*angleX*/ mAnglesX, /*angleY*/ mAnglesY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultParameterDLS);
 			DLS_11.setFactorGettingBetter(mFactorBetter_vec[10]);
 			DLS_11.setFactorGettingWorst(mFactorWorst_vec[10]);
+			DLS_11.turnOffImaProc();
 			std::cout << "start DLS core 11" << std::endl;
 			DLS_11.optimizeSystem_DLS_multiplicativ_Damping();
 			std::cout << "thread 11 completed" << std::endl;
@@ -490,6 +502,7 @@ OpticalSystemElement DLS_multiThreads_12::DLS_optimisation_multiThreads_12_inf()
 			DLS DLS_12(/*optSysEle*/ optSysEle_12, /*angleX*/ mAnglesX, /*angleY*/ mAnglesY, /*wavelengths*/ mWavelength_vec, /*rings*/ mRings, /*arms*/ mArms, /*target cardinal points*/ mTargetCarPoints, /*default DLS*/ mDefaultParameterDLS);
 			DLS_12.setFactorGettingBetter(mFactorBetter_vec[11]);
 			DLS_12.setFactorGettingWorst(mFactorWorst_vec[11]);
+			DLS_12.turnOffImaProc();
 			std::cout << "start DLS core 12" << std::endl;
 			DLS_12.optimizeSystem_DLS_multiplicativ_Damping();
 			std::cout << "thread 12 completed" << std::endl;

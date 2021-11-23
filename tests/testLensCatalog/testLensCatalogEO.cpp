@@ -18,7 +18,7 @@ bool TestLensCatalogEO::testcatalogEO_PCV()
 {
 	// test VIS-NIR beschichtete PCV Linsen
 	// https://www.edmundoptics.de/f/vis-nir-coated-plano-concave-pcv-lenses/13512/
-	
+
 	std::vector<bool> workTheLensCatalogEO_TwoSurfaces;
 	//---
 	// load lens catalog from edmund optics
@@ -30,133 +30,133 @@ bool TestLensCatalogEO::testcatalogEO_PCV()
 	light1.setWavelength(550.0);
 	LightRayStruct testLightRay1(light1, testRay1, 1);
 	//---
-	
-	
+
+
 	//EO84380
 	OpticalSystem_LLT EO84380_LLT(edmundLensCatalog.getEO84380().getHLT_TwoSurfaces().getPosAndIntersection_LLT(), edmundLensCatalog.getEO84380().getHLT_TwoSurfaces().getPosAndInteraction_LLT());
 	bool testEO84380 = testOneLensTwoSurfaces(/*test light ray*/ testLightRay1, /*lens two surface opt sys*/ EO84380_LLT, /*position image surface*/{ 0.0,0.0,5.0 }, /*target point*/{ 0.0,0.44187608216,5.0 });
 	workTheLensCatalogEO_TwoSurfaces.push_back(testEO84380);
-	
+
 	//EO84381
 	OpticalSystem_LLT EO84381_LLT(edmundLensCatalog.getEO84381().getHLT_TwoSurfaces().getPosAndIntersection_LLT(), edmundLensCatalog.getEO84381().getHLT_TwoSurfaces().getPosAndInteraction_LLT());
 	bool testEO84381 = testOneLensTwoSurfaces(/*test light ray*/ testLightRay1, /*lens two surface opt sys*/ EO84381_LLT, /*position image surface*/{ 0.0,0.0,5.0 }, /*target point*/{ 0.0,0.37785995665,5.0 });
 	workTheLensCatalogEO_TwoSurfaces.push_back(testEO84381);
-	
+
 	//EO45910
 	OpticalSystem_LLT EO45910_LLT(edmundLensCatalog.getEO45910().getHLT_TwoSurfaces().getPosAndIntersection_LLT(), edmundLensCatalog.getEO45910().getHLT_TwoSurfaces().getPosAndInteraction_LLT());
 	bool testEO45910 = testOneLensTwoSurfaces(/*test light ray*/ testLightRay1, /*lens two surface opt sys*/ EO45910_LLT, /*position image surface*/{ 0.0,0.0,5.0 }, /*target point*/{ 0.0,0.43257948412,5.0 });
 	workTheLensCatalogEO_TwoSurfaces.push_back(testEO84380);
-	
+
 	//EO48345
 	OpticalSystem_LLT EO48345_LLT(edmundLensCatalog.getEO48345().getHLT_TwoSurfaces().getPosAndIntersection_LLT(), edmundLensCatalog.getEO48345().getHLT_TwoSurfaces().getPosAndInteraction_LLT());
 	bool testEO48345 = testOneLensTwoSurfaces(/*test light ray*/ testLightRay1, /*lens two surface opt sys*/ EO48345_LLT, /*position image surface*/{ 0.0,0.0,5.0 }, /*target point*/{ 0.0,0.37166623317,5.0 });
 	workTheLensCatalogEO_TwoSurfaces.push_back(testEO84380);
-	
+
 	//EO45911
 	OpticalSystem_LLT EO45911_LLT(edmundLensCatalog.getEO45911().getHLT_TwoSurfaces().getPosAndIntersection_LLT(), edmundLensCatalog.getEO45911().getHLT_TwoSurfaces().getPosAndInteraction_LLT());
 	bool testEO45911 = testOneLensTwoSurfaces(/*test light ray*/ testLightRay1, /*lens two surface opt sys*/ EO45911_LLT, /*position image surface*/{ 0.0,0.0,5.0 }, /*target point*/{ 0.0,0.38858188858,5.0 });
 	workTheLensCatalogEO_TwoSurfaces.push_back(testEO84380);
-	
+
 	//EO48696
 	OpticalSystem_LLT EO48696_LLT(edmundLensCatalog.getEO48696().getHLT_TwoSurfaces().getPosAndIntersection_LLT(), edmundLensCatalog.getEO48696().getHLT_TwoSurfaces().getPosAndInteraction_LLT());
 	bool testEO48696 = testOneLensTwoSurfaces(/*test light ray*/ testLightRay1, /*lens two surface opt sys*/ EO48696_LLT, /*position image surface*/{ 0.0,0.0,5.0 }, /*target point*/{ 0.0,0.36646421692,5.0 });
 	workTheLensCatalogEO_TwoSurfaces.push_back(testEO84380);
-	
+
 	//EO45912
 	OpticalSystem_LLT EO45912_LLT(edmundLensCatalog.getEO45912().getHLT_TwoSurfaces().getPosAndIntersection_LLT(), edmundLensCatalog.getEO45912().getHLT_TwoSurfaces().getPosAndInteraction_LLT());
 	bool testEO45912 = testOneLensTwoSurfaces(/*test light ray*/ testLightRay1, /*lens two surface opt sys*/ EO45912_LLT, /*position image surface*/{ 0.0,0.0,5.0 }, /*target point*/{ 0.0,0.33762222888,5.0 });
 	workTheLensCatalogEO_TwoSurfaces.push_back(testEO84380);
-	
+
 	//EO45913
 	OpticalSystem_LLT EO45913_LLT(edmundLensCatalog.getEO45913().getHLT_TwoSurfaces().getPosAndIntersection_LLT(), edmundLensCatalog.getEO45913().getHLT_TwoSurfaces().getPosAndInteraction_LLT());
 	bool testEO45913 = testOneLensTwoSurfaces(/*test light ray*/ testLightRay1, /*lens two surface opt sys*/ EO45913_LLT, /*position image surface*/{ 0.0,0.0,5.0 }, /*target point*/{ 0.0,0.36221639393,5.0 });
 	workTheLensCatalogEO_TwoSurfaces.push_back(testEO84380);
-	
+
 	//EO48346
 	OpticalSystem_LLT EO48346_LLT(edmundLensCatalog.getEO48346().getHLT_TwoSurfaces().getPosAndIntersection_LLT(), edmundLensCatalog.getEO48346().getHLT_TwoSurfaces().getPosAndInteraction_LLT());
 	bool testEO48346 = testOneLensTwoSurfaces(/*test light ray*/ testLightRay1, /*lens two surface opt sys*/ EO48346_LLT, /*position image surface*/{ 0.0,0.0,5.0 }, /*target point*/{ 0.0,0.033418477602,5.0 });
 	workTheLensCatalogEO_TwoSurfaces.push_back(testEO84380);
-	
+
 	//EO45914
 	OpticalSystem_LLT EO45914_LLT(edmundLensCatalog.getEO45914().getHLT_TwoSurfaces().getPosAndIntersection_LLT(), edmundLensCatalog.getEO45914().getHLT_TwoSurfaces().getPosAndInteraction_LLT());
 	bool testEO45914 = testOneLensTwoSurfaces(/*test light ray*/ testLightRay1, /*lens two surface opt sys*/ EO45914_LLT, /*position image surface*/{ 0.0,0.0,5.0 }, /*target point*/{ 0.0,0.30614277256,5.0 });
 	workTheLensCatalogEO_TwoSurfaces.push_back(testEO84380);
-	
+
 	//EO45915
 	OpticalSystem_LLT EO45915_LLT(edmundLensCatalog.getEO45915().getHLT_TwoSurfaces().getPosAndIntersection_LLT(), edmundLensCatalog.getEO45915().getHLT_TwoSurfaces().getPosAndInteraction_LLT());
 	bool testEO45915 = testOneLensTwoSurfaces(/*test light ray*/ testLightRay1, /*lens two surface opt sys*/ EO45915_LLT, /*position image surface*/{ 0.0,0.0,5.0 }, /*target point*/{ 0.0,0.28431116574,5.0 });
 	workTheLensCatalogEO_TwoSurfaces.push_back(testEO84380);
-	
+
 	//EO45916
 	OpticalSystem_LLT EO45916_LLT(edmundLensCatalog.getEO45916().getHLT_TwoSurfaces().getPosAndIntersection_LLT(), edmundLensCatalog.getEO45916().getHLT_TwoSurfaces().getPosAndInteraction_LLT());
 	bool testEO45916 = testOneLensTwoSurfaces(/*test light ray*/ testLightRay1, /*lens two surface opt sys*/ EO45916_LLT, /*position image surface*/{ 0.0,0.0,5.0 }, /*target point*/{ 0.0,0.3346875578,5.0 });
 	workTheLensCatalogEO_TwoSurfaces.push_back(testEO84380);
-	
+
 	//EO48697
 	OpticalSystem_LLT EO48697_LLT(edmundLensCatalog.getEO48697().getHLT_TwoSurfaces().getPosAndIntersection_LLT(), edmundLensCatalog.getEO48697().getHLT_TwoSurfaces().getPosAndInteraction_LLT());
 	bool testEO48697 = testOneLensTwoSurfaces(/*test light ray*/ testLightRay1, /*lens two surface opt sys*/ EO48697_LLT, /*position image surface*/{ 0.0,0.0,5.0 }, /*target point*/{ 0.0,0.31179235807,5.0 });
 	workTheLensCatalogEO_TwoSurfaces.push_back(testEO84380);
-	
+
 	//EO48347
 	OpticalSystem_LLT EO48347_LLT(edmundLensCatalog.getEO48347().getHLT_TwoSurfaces().getPosAndIntersection_LLT(), edmundLensCatalog.getEO48347().getHLT_TwoSurfaces().getPosAndInteraction_LLT());
 	bool testEO48347 = testOneLensTwoSurfaces(/*test light ray*/ testLightRay1, /*lens two surface opt sys*/ EO48347_LLT, /*position image surface*/{ 0.0,0.0,5.0 }, /*target point*/{ 0.0,0.29840691558,5.0 });
 	workTheLensCatalogEO_TwoSurfaces.push_back(testEO84380);
-	
+
 	//EO45917
 	OpticalSystem_LLT EO45917_LLT(edmundLensCatalog.getEO45917().getHLT_TwoSurfaces().getPosAndIntersection_LLT(), edmundLensCatalog.getEO45917().getHLT_TwoSurfaces().getPosAndInteraction_LLT());
 	bool testEO45917 = testOneLensTwoSurfaces(/*test light ray*/ testLightRay1, /*lens two surface opt sys*/ EO45917_LLT, /*position image surface*/{ 0.0,0.0,5.0 }, /*target point*/{ 0.0,0.28980054720,5.0 });
 	workTheLensCatalogEO_TwoSurfaces.push_back(testEO84380);
-	
+
 	//EO45918
 	OpticalSystem_LLT EO45918_LLT(edmundLensCatalog.getEO45918().getHLT_TwoSurfaces().getPosAndIntersection_LLT(), edmundLensCatalog.getEO45918().getHLT_TwoSurfaces().getPosAndInteraction_LLT());
 	bool testEO45918 = testOneLensTwoSurfaces(/*test light ray*/ testLightRay1, /*lens two surface opt sys*/ EO45918_LLT, /*position image surface*/{ 0.0,0.0,5.0 }, /*target point*/{ 0.0,0.269885380080,5.0 });
 	workTheLensCatalogEO_TwoSurfaces.push_back(testEO84380);
-	
+
 	//EO45919
 	OpticalSystem_LLT EO45919_LLT(edmundLensCatalog.getEO45919().getHLT_TwoSurfaces().getPosAndIntersection_LLT(), edmundLensCatalog.getEO45919().getHLT_TwoSurfaces().getPosAndInteraction_LLT());
 	bool testEO45919 = testOneLensTwoSurfaces(/*test light ray*/ testLightRay1, /*lens two surface opt sys*/ EO45919_LLT, /*position image surface*/{ 0.0,0.0,5.0 }, /*target point*/{ 0.0,0.27902902805,5.0 });
 	workTheLensCatalogEO_TwoSurfaces.push_back(testEO84380);
-	
+
 	//EO45920
 	OpticalSystem_LLT EO45920_LLT(edmundLensCatalog.getEO45920().getHLT_TwoSurfaces().getPosAndIntersection_LLT(), edmundLensCatalog.getEO45920().getHLT_TwoSurfaces().getPosAndInteraction_LLT());
 	bool testEO45920 = testOneLensTwoSurfaces(/*test light ray*/ testLightRay1, /*lens two surface opt sys*/ EO45920_LLT, /*position image surface*/{ 0.0,0.0,5.0 }, /*target point*/{ 0.0,0.2738697173,5.0 });
 	workTheLensCatalogEO_TwoSurfaces.push_back(testEO84380);
-	
+
 	//EO45921
 	OpticalSystem_LLT EO45921_LLT(edmundLensCatalog.getEO45921().getHLT_TwoSurfaces().getPosAndIntersection_LLT(), edmundLensCatalog.getEO45921().getHLT_TwoSurfaces().getPosAndInteraction_LLT());
 	bool testEO45921 = testOneLensTwoSurfaces(/*test light ray*/ testLightRay1, /*lens two surface opt sys*/ EO45921_LLT, /*position image surface*/{ 0.0,0.0,5.0 }, /*target point*/{ 0.0,0.26909250683,5.0 });
 	workTheLensCatalogEO_TwoSurfaces.push_back(testEO84380);
-	
+
 	//EO45922
 	OpticalSystem_LLT EO45922_LLT(edmundLensCatalog.getEO45922().getHLT_TwoSurfaces().getPosAndIntersection_LLT(), edmundLensCatalog.getEO45922().getHLT_TwoSurfaces().getPosAndInteraction_LLT());
 	bool testEO45922 = testOneLensTwoSurfaces(/*test light ray*/ testLightRay1, /*lens two surface opt sys*/ EO45922_LLT, /*position image surface*/{ 0.0,0.0,5.0 }, /*target point*/{ 0.0,0.28483122042,5.0 });
 	workTheLensCatalogEO_TwoSurfaces.push_back(testEO84380);
-	
+
 	//EO48698
 	OpticalSystem_LLT EO48698_LLT(edmundLensCatalog.getEO48698().getHLT_TwoSurfaces().getPosAndIntersection_LLT(), edmundLensCatalog.getEO48698().getHLT_TwoSurfaces().getPosAndInteraction_LLT());
 	bool testEO48698 = testOneLensTwoSurfaces(/*test light ray*/ testLightRay1, /*lens two surface opt sys*/ EO48698_LLT, /*position image surface*/{ 0.0,0.0,5.0 }, /*target point*/{ 0.0,0.23919047185,5.0 });
 	workTheLensCatalogEO_TwoSurfaces.push_back(testEO84380);
-	
+
 	//EO45923
 	OpticalSystem_LLT EO45923_LLT(edmundLensCatalog.getEO45923().getHLT_TwoSurfaces().getPosAndIntersection_LLT(), edmundLensCatalog.getEO45923().getHLT_TwoSurfaces().getPosAndInteraction_LLT());
 	bool testEO45923 = testOneLensTwoSurfaces(/*test light ray*/ testLightRay1, /*lens two surface opt sys*/ EO45923_LLT, /*position image surface*/{ 0.0,0.0,5.0 }, /*target point*/{ 0.0,0.26909250683,5.0 });
 	workTheLensCatalogEO_TwoSurfaces.push_back(testEO84380);
-	
+
 	//EO45924
 	OpticalSystem_LLT EO45924_LLT(edmundLensCatalog.getEO45924().getHLT_TwoSurfaces().getPosAndIntersection_LLT(), edmundLensCatalog.getEO45924().getHLT_TwoSurfaces().getPosAndInteraction_LLT());
 	bool testEO45924 = testOneLensTwoSurfaces(/*test light ray*/ testLightRay1, /*lens two surface opt sys*/ EO45924_LLT, /*position image surface*/{ 0.0,0.0,5.0 }, /*target point*/{ 0.0,0.25954497468,5.0 });
 	workTheLensCatalogEO_TwoSurfaces.push_back(testEO84380);
-	
+
 	//EO45925
 	OpticalSystem_LLT EO45925_LLT(edmundLensCatalog.getEO45925().getHLT_TwoSurfaces().getPosAndIntersection_LLT(), edmundLensCatalog.getEO45925().getHLT_TwoSurfaces().getPosAndInteraction_LLT());
 	bool testEO45925 = testOneLensTwoSurfaces(/*test light ray*/ testLightRay1, /*lens two surface opt sys*/ EO45925_LLT, /*position image surface*/{ 0.0,0.0,10.0 }, /*target point*/{ 0.0,0.27080199061,10.0 });
 	workTheLensCatalogEO_TwoSurfaces.push_back(testEO84380);
-	
+
 	//EO45926
 	OpticalSystem_LLT EO45926_LLT(edmundLensCatalog.getEO45926().getHLT_TwoSurfaces().getPosAndIntersection_LLT(), edmundLensCatalog.getEO45926().getHLT_TwoSurfaces().getPosAndInteraction_LLT());
 	bool testEO45926 = testOneLensTwoSurfaces(/*test light ray*/ testLightRay1, /*lens two surface opt sys*/ EO45926_LLT, /*position image surface*/{ 0.0,0.0,10.0 }, /*target point*/{ 0.0,0.25837885356,10.0 });
 	workTheLensCatalogEO_TwoSurfaces.push_back(testEO84380);
-	
+
 	//---
 	bool returnCheckTheLensCatalogEO_TwoSurfaces = Math::checkTrueOfVectorElements(workTheLensCatalogEO_TwoSurfaces);
 	return returnCheckTheLensCatalogEO_TwoSurfaces;
@@ -2755,8 +2755,81 @@ bool TestLensCatalogEO::test_LensCatalogEO_double_concav_lenses_NIR_I()
 
 	// 49540
 	OpticalSystemElement EO49540 = edmundLensCata.getEO49540().getHLT_TwoSurfaces();
-	bool checkEO49540 = testLensCata::testOneLensTwoSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49540, /*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 1790.56, /*tolerance*/ tolerance);
+	bool checkEO49540 = testLensCata::testOneLensTwoSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49540,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 1790.56, /*tolerance*/ tolerance);
 	workLensCatalogEO.push_back(checkEO49540);
+
+	// 49541
+	OpticalSystemElement EO49541 = edmundLensCata.getEO49541().getHLT_TwoSurfaces();
+	bool checkEO49541 = testLensCata::testOneLensTwoSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49541,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 1475.07, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49541);
+
+	// 49542
+	OpticalSystemElement EO49542 = edmundLensCata.getEO49542().getHLT_TwoSurfaces();
+	bool checkEO49542 = testLensCata::testOneLensTwoSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49542,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 1293.62, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49542);
+
+	// 49543
+	OpticalSystemElement EO49543 = edmundLensCata.getEO49543().getHLT_TwoSurfaces();
+	bool checkEO49543 = testLensCata::testOneLensTwoSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49543,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 1392.63, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49543);
+
+	// 49544
+	OpticalSystemElement EO49544 = edmundLensCata.getEO49544().getHLT_TwoSurfaces();
+	bool checkEO49544 = testLensCata::testOneLensTwoSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49544,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 1268.54, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49544);
+
+	// 49545
+	OpticalSystemElement EO49545 = edmundLensCata.getEO49545().getHLT_TwoSurfaces();
+	bool checkEO49545 = testLensCata::testOneLensTwoSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49545,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 1100.25, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49545);
+
+	// 49546
+	OpticalSystemElement EO49546 = edmundLensCata.getEO49546().getHLT_TwoSurfaces();
+	bool checkEO49546 = testLensCata::testOneLensTwoSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49546,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 1197.60, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49546);
+
+	// 49547
+	OpticalSystemElement EO49547 = edmundLensCata.getEO49547().getHLT_TwoSurfaces();
+	bool checkEO49547 = testLensCata::testOneLensTwoSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49547,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 1085.75, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49547);
+
+	// 49548
+	OpticalSystemElement EO49548 = edmundLensCata.getEO49548().getHLT_TwoSurfaces();
+	bool checkEO49548 = testLensCata::testOneLensTwoSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49548,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 1004.31, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49548);
+
+	// 49549
+	OpticalSystemElement EO49549 = edmundLensCata.getEO49549().getHLT_TwoSurfaces();
+	bool checkEO49549 = testLensCata::testOneLensTwoSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49549,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 1050.67, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49549);
+
+	// 49550
+	OpticalSystemElement EO49550 = edmundLensCata.getEO49550().getHLT_TwoSurfaces();
+	bool checkEO49550 = testLensCata::testOneLensTwoSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49550,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 981.401, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49550);
+
+	// 49551
+	OpticalSystemElement EO49551 = edmundLensCata.getEO49551().getHLT_TwoSurfaces();
+	bool checkEO49551 = testLensCata::testOneLensTwoSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49551,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 872.453, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49551);
+
+	// 49552
+	OpticalSystemElement EO49552 = edmundLensCata.getEO49552().getHLT_TwoSurfaces();
+	bool checkEO49552 = testLensCata::testOneLensTwoSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49552,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 803.741, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49552);
 
 
 
@@ -2780,8 +2853,885 @@ bool TestLensCatalogEO::test_LensCatalogEO_achromat_VIS_NIR_Coating()
 
 	// 84127
 	OpticalSystemElement EO84127 = edmundLensCata.getEO84127().getHLT_ThreeSurfaces();
-	bool checkEO84127 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO84127, /*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	bool checkEO84127 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*size aperture stop*/0.5, /*wavelength*/ wavelength, /*lens*/ EO84127,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 15.424, /*tolerance*/ tolerance);
 	workLensCatalogEO.push_back(checkEO84127);
+
+	// 84128
+	OpticalSystemElement EO84128 = edmundLensCata.getEO84128().getHLT_ThreeSurfaces();
+	bool checkEO84128 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO84128,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 121.419, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO84128);
+
+	// 84129
+	OpticalSystemElement EO84129 = edmundLensCata.getEO84129().getHLT_ThreeSurfaces();
+	bool checkEO84129 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO84129,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 259.829, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO84129);
+
+	// 83980
+	OpticalSystemElement EO83980 = edmundLensCata.getEO83980().getHLT_ThreeSurfaces();
+	bool checkEO83980 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO83980,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 349.312, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO83980);
+
+	// 83981
+	OpticalSystemElement EO83981 = edmundLensCata.getEO83981().getHLT_ThreeSurfaces();
+	bool checkEO83981 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO83981,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 392.878, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO83981);
+
+	// 63714
+	OpticalSystemElement EO63714 = edmundLensCata.getEO63714().getHLT_ThreeSurfaces();
+	bool checkEO63714 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO63714,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 172.996, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO63714);
+
+	// 49300
+	OpticalSystemElement EO49300 = edmundLensCata.getEO49300().getHLT_ThreeSurfaces();
+	bool checkEO49300 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49300,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 175.592, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49300);
+
+	// 49947
+	OpticalSystemElement EO49947 = edmundLensCata.getEO49947().getHLT_ThreeSurfaces();
+	bool checkEO49947 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49947,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 315.810, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49947);
+
+	// 49301
+	OpticalSystemElement EO49301 = edmundLensCata.getEO49301().getHLT_ThreeSurfaces();
+	bool checkEO49301 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49301,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 366.343, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49301);
+
+	// 49302
+	OpticalSystemElement EO49302 = edmundLensCata.getEO49302().getHLT_ThreeSurfaces();
+	bool checkEO49302 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49302,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 465.580, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49302);
+
+	// 49948
+	OpticalSystemElement EO49948 = edmundLensCata.getEO49948().getHLT_ThreeSurfaces();
+	bool checkEO49948 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49948,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 144.018, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49948);
+
+	// 49303
+	OpticalSystemElement EO49303 = edmundLensCata.getEO49303().getHLT_ThreeSurfaces();
+	bool checkEO49303 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49303,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 218.799, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49303);
+
+	// 49304
+	OpticalSystemElement EO49304 = edmundLensCata.getEO49304().getHLT_ThreeSurfaces();
+	bool checkEO49304 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49304,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 314.078, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49304);
+
+	// 49305
+	OpticalSystemElement EO49305 = edmundLensCata.getEO49305().getHLT_ThreeSurfaces();
+	bool checkEO49305 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49305,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 356.400, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49305);
+
+	// 49949
+	OpticalSystemElement EO49949 = edmundLensCata.getEO49949().getHLT_ThreeSurfaces();
+	bool checkEO49949 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49949,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 444.378, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49949);
+
+	// 49306
+	OpticalSystemElement EO49306 = edmundLensCata.getEO49306().getHLT_ThreeSurfaces();
+	bool checkEO49306 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49306,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 488.263, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49306);
+
+	// 49307
+	OpticalSystemElement EO49307 = edmundLensCata.getEO49307().getHLT_ThreeSurfaces();
+	bool checkEO49307 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49307,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 537.404, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49307);
+
+	// 49308
+	OpticalSystemElement EO49308 = edmundLensCata.getEO49308().getHLT_ThreeSurfaces();
+	bool checkEO49308 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49308,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 572.046, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49308);
+
+	// 49309
+	OpticalSystemElement EO49309 = edmundLensCata.getEO49309().getHLT_ThreeSurfaces();
+	bool checkEO49309 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49309,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 604.166, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49309);
+
+	// 49310
+	OpticalSystemElement EO49310 = edmundLensCata.getEO49310().getHLT_ThreeSurfaces();
+	bool checkEO49310 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49310,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 623.254, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49310);
+
+	// 49311
+	OpticalSystemElement EO49311 = edmundLensCata.getEO49311().getHLT_ThreeSurfaces();
+	bool checkEO49311 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49311,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 648.185, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49311);
+
+	// 49312
+	OpticalSystemElement EO49312 = edmundLensCata.getEO49312().getHLT_ThreeSurfaces();
+	bool checkEO49312 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49312,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 668.800, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49312);
+
+	// 49313
+	OpticalSystemElement EO49313 = edmundLensCata.getEO49313().getHLT_ThreeSurfaces();
+	bool checkEO49313 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49313,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 401.525, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49313);
+
+	// 49950
+	OpticalSystemElement EO49950 = edmundLensCata.getEO49950().getHLT_ThreeSurfaces();
+	bool checkEO49950 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49950,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 435.561, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49950);
+
+	// 49314
+	OpticalSystemElement EO49314 = edmundLensCata.getEO49314().getHLT_ThreeSurfaces();
+	bool checkEO49314 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49314,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 481.114, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49314);
+
+	// 49951
+	OpticalSystemElement EO49951 = edmundLensCata.getEO49951().getHLT_ThreeSurfaces();
+	bool checkEO49951 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49951,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 531.375, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49951);
+
+	// 49315
+	OpticalSystemElement EO49315 = edmundLensCata.getEO49315().getHLT_ThreeSurfaces();
+	bool checkEO49315 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49315,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 575.118, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49315);
+
+	// 49316
+	OpticalSystemElement EO49316 = edmundLensCata.getEO49316().getHLT_ThreeSurfaces();
+	bool checkEO49316 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49316,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 616.495, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49316);
+
+	// 49317
+	OpticalSystemElement EO49317 = edmundLensCata.getEO49317().getHLT_ThreeSurfaces();
+	bool checkEO49317 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49317,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 639.235, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49317);
+
+	// 49318
+	OpticalSystemElement EO49318 = edmundLensCata.getEO49318().getHLT_ThreeSurfaces();
+	bool checkEO49318 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49318,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 646.959, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49318);
+
+	// 49319
+	OpticalSystemElement EO49319 = edmundLensCata.getEO49319().getHLT_ThreeSurfaces();
+	bool checkEO49319 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49319,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 679.490, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49319);
+
+	// 49320
+	OpticalSystemElement EO49320 = edmundLensCata.getEO49320().getHLT_ThreeSurfaces();
+	bool checkEO49320 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49320,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 694.285, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49320);
+
+	// 63717
+	OpticalSystemElement EO63717 = edmundLensCata.getEO63717().getHLT_ThreeSurfaces();
+	bool checkEO63717 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO63717,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 464.461, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO63717);
+
+	// 63718
+	OpticalSystemElement EO63718 = edmundLensCata.getEO63718().getHLT_ThreeSurfaces();
+	bool checkEO63718 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO63718,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 504.213, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO63718);
+
+	// 63719
+	OpticalSystemElement EO63719 = edmundLensCata.getEO63719().getHLT_ThreeSurfaces();
+	bool checkEO63719 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO63719,
+		/*position image plan*/{ 0.0,0.0,10.0 }, /*rms*/ 566.145, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO63719);
+
+	// 63720
+	OpticalSystemElement EO63720 = edmundLensCata.getEO63720().getHLT_ThreeSurfaces();
+	bool checkEO63720 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO63720,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO63720);
+
+	// 63721
+	OpticalSystemElement EO63721 = edmundLensCata.getEO63721().getHLT_ThreeSurfaces();
+	bool checkEO63721 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO63721,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO63721);
+
+	// 63722
+	OpticalSystemElement EO63722 = edmundLensCata.getEO63722().getHLT_ThreeSurfaces();
+	bool checkEO63722 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO63722,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO63722);
+
+	// 63723
+	OpticalSystemElement EO63723 = edmundLensCata.getEO63723().getHLT_ThreeSurfaces();
+	bool checkEO63723 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO63723,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO63723);
+
+	// 49321
+	OpticalSystemElement EO49321 = edmundLensCata.getEO49321().getHLT_ThreeSurfaces();
+	bool checkEO49321 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49321,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49321);
+
+	// 63724
+	OpticalSystemElement EO63724 = edmundLensCata.getEO63724().getHLT_ThreeSurfaces();
+	bool checkEO63724 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO63724,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO63724);
+
+	//// 49952
+	//OpticalSystemElement EO49952 = edmundLensCata.getEO49952().getHLT_ThreeSurfaces();
+	//bool checkEO49952 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49952,
+	///*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	//workLensCatalogEO.push_back(checkEO49952);
+
+	// 49322
+	OpticalSystemElement EO49322 = edmundLensCata.getEO49322().getHLT_ThreeSurfaces();
+	bool checkEO49322 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49322,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49322);
+
+	// 49323
+	OpticalSystemElement EO49323 = edmundLensCata.getEO49323().getHLT_ThreeSurfaces();
+	bool checkEO49323 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49323,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49323);
+
+	// 49324
+	OpticalSystemElement EO49324 = edmundLensCata.getEO49324().getHLT_ThreeSurfaces();
+	bool checkEO49324 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49324,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49324);
+
+	// 49325
+	OpticalSystemElement EO49325 = edmundLensCata.getEO49325().getHLT_ThreeSurfaces();
+	bool checkEO49325 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49325,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49325);
+
+	// 49326
+	OpticalSystemElement EO49326 = edmundLensCata.getEO49326().getHLT_ThreeSurfaces();
+	bool checkEO49326 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49326,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49326);
+
+	// 49327
+	OpticalSystemElement EO49327 = edmundLensCata.getEO49327().getHLT_ThreeSurfaces();
+	bool checkEO49327 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49327,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49327);
+
+	// 49328
+	OpticalSystemElement EO49328 = edmundLensCata.getEO49328().getHLT_ThreeSurfaces();
+	bool checkEO49328 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49328,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49328);
+
+	// 49329
+	OpticalSystemElement EO49329 = edmundLensCata.getEO49329().getHLT_ThreeSurfaces();
+	bool checkEO49329 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49329,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49329);
+
+	// 49330
+	OpticalSystemElement EO49330 = edmundLensCata.getEO49330().getHLT_ThreeSurfaces();
+	bool checkEO49330 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49330,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49330);
+
+	// 49331
+	OpticalSystemElement EO49331 = edmundLensCata.getEO49331().getHLT_ThreeSurfaces();
+	bool checkEO49331 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49331,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49331);
+
+	// 49332
+	OpticalSystemElement EO49332 = edmundLensCata.getEO49332().getHLT_ThreeSurfaces();
+	bool checkEO49332 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49332,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49332);
+
+	// 49333
+	OpticalSystemElement EO49333 = edmundLensCata.getEO49333().getHLT_ThreeSurfaces();
+	bool checkEO49333 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49333,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49333);
+
+	// 49784
+	OpticalSystemElement EO49784 = edmundLensCata.getEO49784().getHLT_ThreeSurfaces();
+	bool checkEO49784 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49784,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49784);
+
+	// 49785
+	OpticalSystemElement EO49785 = edmundLensCata.getEO49785().getHLT_ThreeSurfaces();
+	bool checkEO49785 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49785,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49785);
+
+	// 49786
+	OpticalSystemElement EO49786 = edmundLensCata.getEO49786().getHLT_ThreeSurfaces();
+	bool checkEO49786 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49786,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49786);
+
+	// 49787
+	OpticalSystemElement EO49787 = edmundLensCata.getEO49787().getHLT_ThreeSurfaces();
+	bool checkEO49787 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49787,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49787);
+
+	// 49788
+	OpticalSystemElement EO49788 = edmundLensCata.getEO49788().getHLT_ThreeSurfaces();
+	bool checkEO49788 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49788,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49788);
+
+	// 49790
+	OpticalSystemElement EO49790 = edmundLensCata.getEO49790().getHLT_ThreeSurfaces();
+	bool checkEO49790 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49790,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49790);
+
+	// 83417
+	OpticalSystemElement EO83417 = edmundLensCata.getEO83417().getHLT_ThreeSurfaces();
+	bool checkEO83417 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO83417,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO83417);
+
+	// 49953
+	OpticalSystemElement EO49953 = edmundLensCata.getEO49953().getHLT_ThreeSurfaces();
+	bool checkEO49953 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49953,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49953);
+
+	//// 49334
+	//OpticalSystemElement EO49334 = edmundLensCata.getEO49334().getHLT_ThreeSurfaces();
+	//bool checkEO49334 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49334,
+	///*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	//workLensCatalogEO.push_back(checkEO49334);
+
+	// 49335
+	OpticalSystemElement EO49335 = edmundLensCata.getEO49335().getHLT_ThreeSurfaces();
+	bool checkEO49335 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49335,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49335);
+
+	// 49336
+	OpticalSystemElement EO49336 = edmundLensCata.getEO49336().getHLT_ThreeSurfaces();
+	bool checkEO49336 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49336,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49336);
+
+	// 49337
+	OpticalSystemElement EO49337 = edmundLensCata.getEO49337().getHLT_ThreeSurfaces();
+	bool checkEO49337 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49337,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49337);
+
+	// 49954
+	OpticalSystemElement EO49954 = edmundLensCata.getEO49954().getHLT_ThreeSurfaces();
+	bool checkEO49954 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49954,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49954);
+
+	// 49338
+	OpticalSystemElement EO49338 = edmundLensCata.getEO49338().getHLT_ThreeSurfaces();
+	bool checkEO49338 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49338,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49338);
+
+	// 49955
+	OpticalSystemElement EO49955 = edmundLensCata.getEO49955().getHLT_ThreeSurfaces();
+	bool checkEO49955 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49955,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49955);
+
+	// 49339
+	OpticalSystemElement EO49339 = edmundLensCata.getEO49339().getHLT_ThreeSurfaces();
+	bool checkEO49339 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49339,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49339);
+
+	// 49340
+	OpticalSystemElement EO49340 = edmundLensCata.getEO49340().getHLT_ThreeSurfaces();
+	bool checkEO49340 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49340,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49340);
+
+	// 49341
+	OpticalSystemElement EO49341 = edmundLensCata.getEO49341().getHLT_ThreeSurfaces();
+	bool checkEO49341 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49341,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49341);
+
+	// 49342
+	OpticalSystemElement EO49342 = edmundLensCata.getEO49342().getHLT_ThreeSurfaces();
+	bool checkEO49342 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49342,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49342);
+
+	// 49343
+	OpticalSystemElement EO49343 = edmundLensCata.getEO49343().getHLT_ThreeSurfaces();
+	bool checkEO49343 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49343,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49343);
+
+	// 49344
+	OpticalSystemElement EO49344 = edmundLensCata.getEO49344().getHLT_ThreeSurfaces();
+	bool checkEO49344 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49344,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49344);
+
+	// 49345
+	OpticalSystemElement EO49345 = edmundLensCata.getEO49345().getHLT_ThreeSurfaces();
+	bool checkEO49345 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49345,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49345);
+
+	// 49346
+	OpticalSystemElement EO49346 = edmundLensCata.getEO49346().getHLT_ThreeSurfaces();
+	bool checkEO49346 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49346,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49346);
+
+	// 49347
+	OpticalSystemElement EO49347 = edmundLensCata.getEO49347().getHLT_ThreeSurfaces();
+	bool checkEO49347 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49347,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49347);
+
+	// 49956
+	OpticalSystemElement EO49956 = edmundLensCata.getEO49956().getHLT_ThreeSurfaces();
+	bool checkEO49956 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49956,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49956);
+
+	//// 49348
+	//OpticalSystemElement EO49348 = edmundLensCata.getEO49348().getHLT_ThreeSurfaces();
+	//bool checkEO49348 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49348,
+	///*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	//workLensCatalogEO.push_back(checkEO49348);
+
+	//// 49349
+	//OpticalSystemElement EO49349 = edmundLensCata.getEO49349().getHLT_ThreeSurfaces();
+	//bool checkEO49349 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49349,
+	///*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	//workLensCatalogEO.push_back(checkEO49349);
+
+	// 49350
+	OpticalSystemElement EO49350 = edmundLensCata.getEO49350().getHLT_ThreeSurfaces();
+	bool checkEO49350 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49350,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49350);
+
+	// 49957
+	OpticalSystemElement EO49957 = edmundLensCata.getEO49957().getHLT_ThreeSurfaces();
+	bool checkEO49957 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49957,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49957);
+
+	// 49351
+	OpticalSystemElement EO49351 = edmundLensCata.getEO49351().getHLT_ThreeSurfaces();
+	bool checkEO49351 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49351,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49351);
+
+	// 49958
+	OpticalSystemElement EO49958 = edmundLensCata.getEO49958().getHLT_ThreeSurfaces();
+	bool checkEO49958 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49958,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49958);
+
+	// 49352
+	OpticalSystemElement EO49352 = edmundLensCata.getEO49352().getHLT_ThreeSurfaces();
+	bool checkEO49352 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49352,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49352);
+
+	//// 49353
+	//OpticalSystemElement EO49353 = edmundLensCata.getEO49353().getHLT_ThreeSurfaces();
+	//bool checkEO49353 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49353,
+	///*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	//workLensCatalogEO.push_back(checkEO49353);
+
+	//// 49354
+	//OpticalSystemElement EO49354 = edmundLensCata.getEO49354().getHLT_ThreeSurfaces();
+	//bool checkEO49354 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49354,
+	///*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	//workLensCatalogEO.push_back(checkEO49354);
+
+	// 49355
+	OpticalSystemElement EO49355 = edmundLensCata.getEO49355().getHLT_ThreeSurfaces();
+	bool checkEO49355 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49355,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49355);
+
+	// 49356
+	OpticalSystemElement EO49356 = edmundLensCata.getEO49356().getHLT_ThreeSurfaces();
+	bool checkEO49356 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49356,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49356);
+
+	// 49357
+	OpticalSystemElement EO49357 = edmundLensCata.getEO49357().getHLT_ThreeSurfaces();
+	bool checkEO49357 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49357,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49357);
+
+	// 49358
+	OpticalSystemElement EO49358 = edmundLensCata.getEO49358().getHLT_ThreeSurfaces();
+	bool checkEO49358 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49358,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49358);
+
+	// 49359
+	OpticalSystemElement EO49359 = edmundLensCata.getEO49359().getHLT_ThreeSurfaces();
+	bool checkEO49359 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49359,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49359);
+
+	// 49360
+	OpticalSystemElement EO49360 = edmundLensCata.getEO49360().getHLT_ThreeSurfaces();
+	bool checkEO49360 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49360,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49360);
+
+	// 49361
+	OpticalSystemElement EO49361 = edmundLensCata.getEO49361().getHLT_ThreeSurfaces();
+	bool checkEO49361 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49361,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49361);
+
+	// 49362
+	OpticalSystemElement EO49362 = edmundLensCata.getEO49362().getHLT_ThreeSurfaces();
+	bool checkEO49362 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49362,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49362);
+
+	// 67334
+	OpticalSystemElement EO67334 = edmundLensCata.getEO67334().getHLT_ThreeSurfaces();
+	bool checkEO67334 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO67334,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO67334);
+
+	// 49363
+	OpticalSystemElement EO49363 = edmundLensCata.getEO49363().getHLT_ThreeSurfaces();
+	bool checkEO49363 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49363,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49363);
+
+	// 49364
+	OpticalSystemElement EO49364 = edmundLensCata.getEO49364().getHLT_ThreeSurfaces();
+	bool checkEO49364 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49364,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49364);
+
+	// 49365
+	OpticalSystemElement EO49365 = edmundLensCata.getEO49365().getHLT_ThreeSurfaces();
+	bool checkEO49365 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49365,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49365);
+
+	// 49366
+	OpticalSystemElement EO49366 = edmundLensCata.getEO49366().getHLT_ThreeSurfaces();
+	bool checkEO49366 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49366,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49366);
+
+	// 49367
+	OpticalSystemElement EO49367 = edmundLensCata.getEO49367().getHLT_ThreeSurfaces();
+	bool checkEO49367 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49367,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49367);
+
+	// 49368
+	OpticalSystemElement EO49368 = edmundLensCata.getEO49368().getHLT_ThreeSurfaces();
+	bool checkEO49368 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49368,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49368);
+
+	// 49369
+	OpticalSystemElement EO49369 = edmundLensCata.getEO49369().getHLT_ThreeSurfaces();
+	bool checkEO49369 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49369,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49369);
+
+	// 49370
+	OpticalSystemElement EO49370 = edmundLensCata.getEO49370().getHLT_ThreeSurfaces();
+	bool checkEO49370 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49370,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49370);
+
+	// 67335
+	OpticalSystemElement EO67335 = edmundLensCata.getEO67335().getHLT_ThreeSurfaces();
+	bool checkEO67335 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO67335,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO67335);
+
+	// 49791
+	OpticalSystemElement EO49791 = edmundLensCata.getEO49791().getHLT_ThreeSurfaces();
+	bool checkEO49791 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49791,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49791);
+
+	// 49792
+	OpticalSystemElement EO49792 = edmundLensCata.getEO49792().getHLT_ThreeSurfaces();
+	bool checkEO49792 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49792,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49792);
+
+	// 49793
+	OpticalSystemElement EO49793 = edmundLensCata.getEO49793().getHLT_ThreeSurfaces();
+	bool checkEO49793 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49793,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49793);
+
+	// 49794
+	OpticalSystemElement EO49794 = edmundLensCata.getEO49794().getHLT_ThreeSurfaces();
+	bool checkEO49794 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49794,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49794);
+
+	// 49795
+	OpticalSystemElement EO49795 = edmundLensCata.getEO49795().getHLT_ThreeSurfaces();
+	bool checkEO49795 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49795,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49795);
+
+	// 49796
+	OpticalSystemElement EO49796 = edmundLensCata.getEO49796().getHLT_ThreeSurfaces();
+	bool checkEO49796 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49796,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49796);
+
+	// 33923
+	OpticalSystemElement EO33923 = edmundLensCata.getEO33923().getHLT_ThreeSurfaces();
+	bool checkEO33923 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO33923,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO33923);
+
+	// 49371
+	OpticalSystemElement EO49371 = edmundLensCata.getEO49371().getHLT_ThreeSurfaces();
+	bool checkEO49371 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49371,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49371);
+
+	// 49372
+	OpticalSystemElement EO49372 = edmundLensCata.getEO49372().getHLT_ThreeSurfaces();
+	bool checkEO49372 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49372,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49372);
+
+	// 49373
+	OpticalSystemElement EO49373 = edmundLensCata.getEO49373().getHLT_ThreeSurfaces();
+	bool checkEO49373 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49373,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49373);
+
+	// 49374
+	OpticalSystemElement EO49374 = edmundLensCata.getEO49374().getHLT_ThreeSurfaces();
+	bool checkEO49374 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49374,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49374);
+
+	// 49375
+	OpticalSystemElement EO49375 = edmundLensCata.getEO49375().getHLT_ThreeSurfaces();
+	bool checkEO49375 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49375,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49375);
+
+	// 49376
+	OpticalSystemElement EO49376 = edmundLensCata.getEO49376().getHLT_ThreeSurfaces();
+	bool checkEO49376 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49376,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49376);
+
+	// 49377
+	OpticalSystemElement EO49377 = edmundLensCata.getEO49377().getHLT_ThreeSurfaces();
+	bool checkEO49377 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49377,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49377);
+
+	// 49378
+	OpticalSystemElement EO49378 = edmundLensCata.getEO49378().getHLT_ThreeSurfaces();
+	bool checkEO49378 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49378,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49378);
+
+	// 89683
+	OpticalSystemElement EO89683 = edmundLensCata.getEO89683().getHLT_ThreeSurfaces();
+	bool checkEO89683 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO89683,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO89683);
+
+	// 49379
+	OpticalSystemElement EO49379 = edmundLensCata.getEO49379().getHLT_ThreeSurfaces();
+	bool checkEO49379 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49379,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49379);
+
+	// 49380
+	OpticalSystemElement EO49380 = edmundLensCata.getEO49380().getHLT_ThreeSurfaces();
+	bool checkEO49380 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49380,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49380);
+
+	// 63725
+	OpticalSystemElement EO63725 = edmundLensCata.getEO63725().getHLT_ThreeSurfaces();
+	bool checkEO63725 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO63725,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO63725);
+
+	// 49381
+	OpticalSystemElement EO49381 = edmundLensCata.getEO49381().getHLT_ThreeSurfaces();
+	bool checkEO49381 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49381,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49381);
+
+	// 49382
+	OpticalSystemElement EO49382 = edmundLensCata.getEO49382().getHLT_ThreeSurfaces();
+	bool checkEO49382 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49382,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49382);
+
+	// 49383
+	OpticalSystemElement EO49383 = edmundLensCata.getEO49383().getHLT_ThreeSurfaces();
+	bool checkEO49383 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49383,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49383);
+
+	// 49384
+	OpticalSystemElement EO49384 = edmundLensCata.getEO49384().getHLT_ThreeSurfaces();
+	bool checkEO49384 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49384,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49384);
+
+	// 49385
+	OpticalSystemElement EO49385 = edmundLensCata.getEO49385().getHLT_ThreeSurfaces();
+	bool checkEO49385 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49385,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49385);
+
+	// 49386
+	OpticalSystemElement EO49386 = edmundLensCata.getEO49386().getHLT_ThreeSurfaces();
+	bool checkEO49386 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49386,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49386);
+
+	// 49387
+	OpticalSystemElement EO49387 = edmundLensCata.getEO49387().getHLT_ThreeSurfaces();
+	bool checkEO49387 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49387,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49387);
+
+	// 49388
+	OpticalSystemElement EO49388 = edmundLensCata.getEO49388().getHLT_ThreeSurfaces();
+	bool checkEO49388 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49388,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49388);
+
+	// 67336
+	OpticalSystemElement EO67336 = edmundLensCata.getEO67336().getHLT_ThreeSurfaces();
+	bool checkEO67336 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO67336,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO67336);
+
+	// 49389
+	OpticalSystemElement EO49389 = edmundLensCata.getEO49389().getHLT_ThreeSurfaces();
+	bool checkEO49389 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49389,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49389);
+
+	// 49390
+	OpticalSystemElement EO49390 = edmundLensCata.getEO49390().getHLT_ThreeSurfaces();
+	bool checkEO49390 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49390,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49390);
+
+	// 49391
+	OpticalSystemElement EO49391 = edmundLensCata.getEO49391().getHLT_ThreeSurfaces();
+	bool checkEO49391 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49391,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49391);
+
+	// 49392
+	OpticalSystemElement EO49392 = edmundLensCata.getEO49392().getHLT_ThreeSurfaces();
+	bool checkEO49392 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49392,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49392);
+
+	// 49393
+	OpticalSystemElement EO49393 = edmundLensCata.getEO49393().getHLT_ThreeSurfaces();
+	bool checkEO49393 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49393,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49393);
+
+	// 49394
+	OpticalSystemElement EO49394 = edmundLensCata.getEO49394().getHLT_ThreeSurfaces();
+	bool checkEO49394 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49394,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49394);
+
+	// 49395
+	OpticalSystemElement EO49395 = edmundLensCata.getEO49395().getHLT_ThreeSurfaces();
+	bool checkEO49395 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49395,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49395);
+
+	// 49396
+	OpticalSystemElement EO49396 = edmundLensCata.getEO49396().getHLT_ThreeSurfaces();
+	bool checkEO49396 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO49396,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO49396);
+
+	// 33924
+	OpticalSystemElement EO33924 = edmundLensCata.getEO33924().getHLT_ThreeSurfaces();
+	bool checkEO33924 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO33924,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO33924);
+
+	// 33925
+	OpticalSystemElement EO33925 = edmundLensCata.getEO33925().getHLT_ThreeSurfaces();
+	bool checkEO33925 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO33925,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO33925);
+
+	// 88596
+	OpticalSystemElement EO88596 = edmundLensCata.getEO88596().getHLT_ThreeSurfaces();
+	bool checkEO88596 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO88596,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO88596);
+
+	// 88597
+	OpticalSystemElement EO88597 = edmundLensCata.getEO88597().getHLT_ThreeSurfaces();
+	bool checkEO88597 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO88597,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO88597);
+
+	// 88598
+	OpticalSystemElement EO88598 = edmundLensCata.getEO88598().getHLT_ThreeSurfaces();
+	bool checkEO88598 = testLensCata::testOneLensThreeSurfaces_startInf_0deg(/*wavelength*/ wavelength, /*lens*/ EO88598,
+		/*position image plan*/{ 0.0,0.0,5.0 }, /*rms*/ 21.963, /*tolerance*/ tolerance);
+	workLensCatalogEO.push_back(checkEO88598);
 
 
 
@@ -2958,8 +3908,8 @@ bool TestLensCatalogEO::checkLensCatalogEO_Micro_Plano_Convex_PCX_Lenses()
 
 bool TestLensCatalogEO::checkLensCatalogEO_Large_PCX_Condenser_Lenses()
 {
-	https://www.edmundoptics.de/f/large-pcx-condenser-lenses/13572/
-	
+https://www.edmundoptics.de/f/large-pcx-condenser-lenses/13572/
+
 	std::vector<bool> workLensCatalogEO;
 
 	real wavelength = 550.0;

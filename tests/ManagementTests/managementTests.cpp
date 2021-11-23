@@ -661,13 +661,22 @@ bool ManagementTests::testSuperFct()
 		checkerAndCout(checkCalcMaxSeiAber, "test calc max Seidel Aberration");
 	}
 
-	// test lens replace and Optimize
-	if (testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize) || testAll)
+	// test lens replace and optimize from object points
+	if (testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_object) || testAll)
 	{
-		testLensReplaceAndOptimize checkLensReplaceAndOptimize;
-		bool checkLendRepAndOpti = checkLensReplaceAndOptimize.testLensReplaceAndOptimize_superFct();
-		workTheSystem_test.push_back(checkLendRepAndOpti);
-		checkerAndCout(checkLendRepAndOpti, "test lens replace and optimize");
+		testLensReplaceAndOptimize checkLensReplaceAndOptimize_object;
+		bool checkLendRepAndOpti_object = checkLensReplaceAndOptimize_object.testLensReplaceAndOptimize_superFct_object();
+		workTheSystem_test.push_back(checkLendRepAndOpti_object);
+		checkerAndCout(checkLendRepAndOpti_object, "test lens replace and optimize from object point");
+	}
+
+	// test lens replace and optimize from infinity
+	if (testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_inf) || testAll)
+	{
+		testLensReplaceAndOptimize checkLensReplaceAndOptimize_inf;
+		bool checkLendRepAndOpti_inf = checkLensReplaceAndOptimize_inf.testLensReplaceAndOptimize_superFct_infinity();
+		workTheSystem_test.push_back(checkLendRepAndOpti_inf);
+		checkerAndCout(checkLendRepAndOpti_inf, "test lens replace and optimize from infinity");
 	}
 
 	// test Compare TOM and Zemax Optimizer
@@ -679,42 +688,77 @@ bool ManagementTests::testSuperFct()
 		checkerAndCout(checkComTOMandZemaxOptimizer, "test Compare TOM and Zemax Optimizer");
 	}
 
-	// test lens replace and optimize statistic two lens system
-	if (testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_twoLenses) || testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_ALL) || testAll )
+	// test lens replace and optimize statistic two lens system obj
+	if (testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_twoLenses_obj) || testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_ALL) || testAll )
 	{
 		testLensReplaceAndOptimize_statistic_twoLensSystem testLRaOstatTwoLensSystem{};
-		bool testLRaO_statistic_TWO_LensSystem = testLRaOstatTwoLensSystem.testLRaO_stat_twoLensSystem_superFct();
-		workTheSystem_test.push_back(testLRaO_statistic_TWO_LensSystem);
-		checkerAndCout(testLRaO_statistic_TWO_LensSystem, "test lens replace and optimize statistic two lens system");
+		bool testLRaO_statistic_TWO_LensSystem_obj = testLRaOstatTwoLensSystem.testLRaO_stat_twoLensSystem_superFct_obj();
+		workTheSystem_test.push_back(testLRaO_statistic_TWO_LensSystem_obj);
+		checkerAndCout(testLRaO_statistic_TWO_LensSystem_obj, "test lens replace and optimize statistic two lens system obj");
 	}
 
-	// test lens replace and optimize statistic three lens system
-	if (testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_threeLenses) || testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_ALL) || testAll)
+	// test lens replace and optimize statistic three lens system obj
+	if (testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_threeLenses_obj) || testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_ALL) || testAll)
 	{
 		testLensReplaceAndOptimize_statistic_THREE_LensSystem testLRaOstat_Three_LensSystem{};
-		bool testLRaO_statistic_THREE_LensSystem = testLRaOstat_Three_LensSystem.testLRaO_stat_THREE_lensSystem_superFct();
-		workTheSystem_test.push_back(testLRaO_statistic_THREE_LensSystem);
-		checkerAndCout(testLRaO_statistic_THREE_LensSystem, "test lens replace and optimize statistic three lens system");
+		bool testLRaO_statistic_THREE_LensSystem_obj = testLRaOstat_Three_LensSystem.testLRaO_stat_THREE_lensSystem_superFct_obj();
+		workTheSystem_test.push_back(testLRaO_statistic_THREE_LensSystem_obj);
+		checkerAndCout(testLRaO_statistic_THREE_LensSystem_obj, "test lens replace and optimize statistic three lens system obj");
 	}
 
-	// test lens replace and optimize statistic four lens system
-	if (testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_fourLenses) || testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_ALL) || testAll)
+	// test lens replace and optimize statistic four lens system obj
+	if (testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_fourLenses_obj) || testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_ALL) || testAll)
 	{
 		testLensReplaceAndOptimize_statistic_FOUR_LensSystem testLRaOstat_FOUR_LensSystem{};
-		bool testLRaO_statistic_FIVE_LensSystem = testLRaOstat_FOUR_LensSystem.testLRaO_stat_FOUR_lensSystem_superFct();
-		workTheSystem_test.push_back(testLRaO_statistic_FIVE_LensSystem);
-		checkerAndCout(testLRaO_statistic_FIVE_LensSystem, "test lens replace and optimize statistic four lens system");
+		bool testLRaO_statistic_FIVE_LensSystem_obj = testLRaOstat_FOUR_LensSystem.testLRaO_stat_FOUR_lensSystem_superFct_obj();
+		workTheSystem_test.push_back(testLRaO_statistic_FIVE_LensSystem_obj);
+		checkerAndCout(testLRaO_statistic_FIVE_LensSystem_obj, "test lens replace and optimize statistic four lens system obj");
 	}
 
-	// test lens replace and optimize statistic four five system
-	if (testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_fiveLenses) || testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_ALL) || testAll)
+	// test lens replace and optimize statistic five system obj
+	if (testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_fiveLenses_obj) || testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_ALL) || testAll)
 	{
 		testLensReplaceAndOptimize_statistic_FIVE_LensSystem testLRaOstat_FIVE_LensSystem{};
-		bool testLRaO_statistic_FIVE_LensSystem = testLRaOstat_FIVE_LensSystem.testLRaO_stat_FIVE_lensSystem_superFct();
-		workTheSystem_test.push_back(testLRaO_statistic_FIVE_LensSystem);
-		checkerAndCout(testLRaO_statistic_FIVE_LensSystem, "test lens replace and optimize statistic five lens system");
+		bool testLRaO_statistic_FIVE_LensSystem_obj = testLRaOstat_FIVE_LensSystem.testLRaO_stat_FIVE_lensSystem_superFct_obj();
+		workTheSystem_test.push_back(testLRaO_statistic_FIVE_LensSystem_obj);
+		checkerAndCout(testLRaO_statistic_FIVE_LensSystem_obj, "test lens replace and optimize statistic five lens system obj");
 	}
 
+	// test lens replace and optimize statistic two lens system inf
+	if (testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_twoLenses_inf) || testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_ALL) || testAll)
+	{
+		testLensReplaceAndOptimize_statistic_twoLensSystem testLRaOstatTwoLensSystem{};
+		bool testLRaO_statistic_TWO_LensSystem_inf = testLRaOstatTwoLensSystem.testLRaO_stat_twoLensSystem_superFct_inf();
+		workTheSystem_test.push_back(testLRaO_statistic_TWO_LensSystem_inf);
+		checkerAndCout(testLRaO_statistic_TWO_LensSystem_inf, "test lens replace and optimize statistic two lens system inf");
+	}
+
+	// test lens replace and optimize statistic three lens system inf
+	if (testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_threeLenses_inf) || testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_ALL) || testAll)
+	{
+		testLensReplaceAndOptimize_statistic_THREE_LensSystem testLRaOstat_THREE_LensSystem{};
+		bool testLRaO_statistic_THREE_LensSystem_inf = testLRaOstat_THREE_LensSystem.testLRaO_stat_THREE_LensSystem_superFct_inf();
+		workTheSystem_test.push_back(testLRaO_statistic_THREE_LensSystem_inf);
+		checkerAndCout(testLRaO_statistic_THREE_LensSystem_inf, "test lens replace and optimize statistic three lens system inf");
+	}
+
+	// test lens replace and optimize statistic four lens system inf
+	if (testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_fourLenses_inf) || testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_ALL) || testAll)
+	{
+		testLensReplaceAndOptimize_statistic_FOUR_LensSystem testLRaOstat_FOUR_LensSystem_inf{};
+		bool testLRaO_statistic_FIVE_LensSystem_inf = testLRaOstat_FOUR_LensSystem_inf.testLRaO_stat_FOUR_LensSystem_superFct_inf();
+		workTheSystem_test.push_back(testLRaO_statistic_FIVE_LensSystem_inf);
+		checkerAndCout(testLRaO_statistic_FIVE_LensSystem_inf, "test lens replace and optimize statistic four lens system inf");
+	}
+
+	// test lens replace and optimize statistic five system inf
+	if (testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_fiveLenses_inf) || testWhatInTestWhatVec(testWhat::tLensReplaceAndOptimize_statistic_ALL) || testAll)
+	{
+		testLensReplaceAndOptimize_statistic_FIVE_LensSystem testLRaOstat_FIVE_LensSystem_inf{};
+		bool testLRaO_statistic_FIVE_LensSystem_inf = testLRaOstat_FIVE_LensSystem_inf.testLRaO_stat_FIVE_LensSystem_superFct_inf();
+		workTheSystem_test.push_back(testLRaO_statistic_FIVE_LensSystem_inf);
+		checkerAndCout(testLRaO_statistic_FIVE_LensSystem_inf, "test lens replace and optimize statistic five lens system inf");
+	}
 
 	// systems for DGaO 2021
 	if (testWhatInTestWhatVec(testWhat::tDGaO2021) || testAll)

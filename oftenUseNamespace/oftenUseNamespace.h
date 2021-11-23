@@ -5,6 +5,10 @@
 #include "..\OpticalSystemElement\OpticalSystemElement.h"
 #include "..\OptimizeSystem\DampedLeastSquares.h"
 #include "..\OptimizeSystem\Genetic.h"
+#include "..\Noise\Noise.h"
+
+// structs for statistic evaluation
+#include "..\tests\testLensReplaceAndOptimiz_statistic\testLensRepAndOptimize_statisticStruct.h"
 
 enum class compareTOM_Zemax { comEqual, comBetter };
 
@@ -145,5 +149,28 @@ namespace oftenUse
 	// check refractiv index 
 	bool checkRefractivIndex(OpticalSystem_LLT optSyeLLT);
 	bool checkRefractivIndex(OpticalSystemElement optSyeEle);
+
+	// check if two optical systems are the same
+	bool checkOpticalSystemsSameParameter(OpticalSystemElement optSysEle_1, OpticalSystemElement optSysEle_2);
+
+	// get name location
+	std::string getNameFolder(replaceSequence repSequence);
+	// get name replace seq
+	std::string getRepSequence_string(replaceSequence repSequence);
+	// get name optimization methode
+	std::string getNameOptimizationMetode(optimizeMethode optiMethode);
+
+	// do the statistic evaluation left to right, right to left, max seidel, min seidel save intermediate results
+	saveLRaO_GeneticAndDLS_12_statistic  doTheStatisticEvaluation_lensSystem_LTR_RTL_MaxSei_MinSei_obj_saveIntermediateResults(OpticalSystemElement optSysEle, std::vector<VectorStructR3> field_vec, std::vector<real> wavelength_vec, targetCardinalPointsStruct targetCarPoints, std::string location, std::string example, replaceSequence repSequence, optimizeMethode optiMethode, unsigned int numberBestFitLenses, bool debugMode, bool firstInteration);
+	saveLRaO_GeneticAndDLS_12_statistic  doTheStatisticEvaluation_lensSystem_givenSequence_saveIntermediateResults(OpticalSystemElement optSysEle, std::vector<VectorStructR3> field_vec, std::vector<real> wavelength_vec, targetCardinalPointsStruct targetCarPoints, std::string location, std::string example, optimizeMethode optiMethode, unsigned int numberBestFitLenses, bool debugMode, bool firstInteration, std::vector<unsigned int> givenSequnce);
+	
+	// export data lens replace
+	void exportDataReplace_THREE_LensesGeneticAndDLS_12(std::string location, std::string repSeq, saveLRaO_GeneticAndDLS_12_statistic dataToExport);
+	void exportDataReplace_FOUR_LensesGeneticAndDLS_12(std::string location, std::string repSeq, saveLRaO_GeneticAndDLS_12_statistic dataToExport);
+
+	// get camera parameter Vistec Eco655
+	cameraParameterStruct getCamPara_VistecEco655();
+	// get camera parameter Ximea
+	cameraParameterStruct getCamPara_Ximea();
 
 }

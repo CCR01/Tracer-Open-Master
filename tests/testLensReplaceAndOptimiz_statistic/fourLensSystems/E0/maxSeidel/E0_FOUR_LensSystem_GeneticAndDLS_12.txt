@@ -1,48 +1,48 @@
 ______________________
 lens number: 	0
 catalog: 	EO
-number: 	49769
-check f: 	1
+number: 	45412
+check f: 	0
 check th: 	1
 check sh: 	0
 fliped: 	1
-pos in best lens vec: 	0
+pos in best lens vec: 	2
 
 ______________________
 
 ______________________
 lens number: 	1
-catalog: 	EO
-number: 	32498
-check f: 	1
+catalog: 	Thorlabs
+number: 	LF1988
+check f: 	0
 check th: 	0
-check sh: 	1
-fliped: 	1
-pos in best lens vec: 	0
+check sh: 	0
+fliped: 	0
+pos in best lens vec: 	2
 
 ______________________
 
 ______________________
 lens number: 	2
 catalog: 	EO
-number: 	45214
+number: 	49922
 check f: 	1
 check th: 	0
-check sh: 	0
-fliped: 	1
-pos in best lens vec: 	0
+check sh: 	1
+fliped: 	0
+pos in best lens vec: 	1
 
 ______________________
 
 ______________________
 lens number: 	3
 catalog: 	EO
-number: 	32722
+number: 	62493
 check f: 	0
-check th: 	1
-check sh: 	1
-fliped: 	0
-pos in best lens vec: 	0
+check th: 	0
+check sh: 	0
+fliped: 	1
+pos in best lens vec: 	1
 
 ______________________
 

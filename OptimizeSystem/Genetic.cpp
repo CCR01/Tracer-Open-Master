@@ -728,7 +728,7 @@ void Genetic::doTheGeneticProcess()
 {
 	
 	// just for debugging 
-	std::cout << "build first generation" << std::endl;
+	// std::cout << "build first generation" << std::endl;
 	generateValuesFor_FIRST_Generations();
 	buildTheGenerationsAndEvaluate();
 	bool checker = true;
@@ -739,7 +739,7 @@ void Genetic::doTheGeneticProcess()
 	while (checker)
 	{
 		// just for debugging
-		std::cout << "generation number: " << iterations << std::endl;
+		//std::cout << "generation number: " << iterations << std::endl;
 				
 		setEvaluateSystemFalse();
 
@@ -841,7 +841,7 @@ void Genetic::findBestSystemNum()
 
 	mMeritVal_bestSystem = mAllMeritVal[mNumBestOptSysInGeneration];
 	// just for debugging
-	std::cout << "best merit value: " << mMeritVal_bestSystem << std::endl;
+	// std::cout << "best merit value: " << mMeritVal_bestSystem << std::endl;
 
 	mSaveAllBestMeritValues.push_back(mMeritVal_bestSystem);
 }
@@ -1155,7 +1155,7 @@ real Genetic::defaultNormalDistribution(real min, real max)
 		
 	if (max < min)
 	{
-		std::cout << "max is smaller than min !!!" << std::endl;
+		// std::cout << "max is smaller than min !!!" << std::endl;
 		return returnVal;
 	}
 
@@ -1190,7 +1190,7 @@ real Genetic::normalDistribution(real mean, real stddev, real min, real max)
 
 	if (max < min)
 	{
-		std::cout << "max is smaller than min !!!" << std::endl;
+		// std::cout << "max is smaller than min !!!" << std::endl;
 		return returnVal;
 	}
 
